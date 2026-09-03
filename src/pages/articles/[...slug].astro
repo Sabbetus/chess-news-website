@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import { LENS_META } from '../../lib/lens';
 import { estimateReadMinutes } from '../../lib/reading';
+import { excerptFrom } from '../../lib/excerpt';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -23,9 +24,18 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
   month: 'long',
   year: 'numeric',
 });
+const description = excerptFrom(article.body, 200);
 ---
 
-<BaseLayout title={`${article.data.title} — Chessori`} activeContinent={article.data.continent}>
+<BaseLayout
+  title={`${article.data.title} — Chessori`}
+  description={description}
+  activeContinent={article.data.continent}
+  articleMeta={{
+    publishedTime: article.data.publishDate.toISOString(),
+    source: article.data.sourceName,
+  }}
+>
   <article class="story">
     <ArticleThumb lens={article.data.lens} continent={article.data.continent} size="lead" />
 

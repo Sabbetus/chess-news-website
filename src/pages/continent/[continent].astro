@@ -16,9 +16,14 @@ const allArticles = await getCollection('articles', ({ data }) => data.reviewSta
 const articles = allArticles
   .filter((a) => a.data.continent === continent)
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+const description =
+  meta.label === 'Global'
+    ? 'Chess news and analysis with no single regional angle, curated by Chessori.'
+    : `Chess news, original analysis, and tournament coverage from ${meta.label}, curated by Chessori.`;
 ---
 
-<BaseLayout title={`${meta.label} — Chessori`} activeContinent={continent}>
+<BaseLayout title={`${meta.label} — Chessori`} description={description} activeContinent={continent}>
   <header class="section-head">
     <h1>{meta.label}</h1>
     <p>{articles.length} {articles.length === 1 ? 'story' : 'stories'}</p>
