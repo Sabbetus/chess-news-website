@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
+const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+---
+<BaseLayout title="Chess News">
+  <h1>Chess News</h1>
+  {articles.length === 0 && <p>No articles published yet.</p>}
+  <ul>
+    {articles.map((article) => (
+      <li>
+        <a href={`/articles/${article.slug}/`}>{article.data.title}</a>
+        <p>
+          Source: <a href={article.data.sourceUrl} rel="noopener">{article.data.sourceName}</a>
+        </p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
