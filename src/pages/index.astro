@@ -11,6 +11,7 @@ const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.dat
 
 const [lead, ...rest] = articles;
 const secondary = rest.slice(0, 4);
+const latest = articles.slice(0, 5);
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
@@ -49,14 +50,13 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
               <span>{dateFmt(lead.data.publishDate)}</span>
             </div>
           </div>
-          {secondary.length > 0 && (
+          {latest.length > 0 && (
             <aside class="issue-index">
-              <span class="label">In This Issue</span>
+              <span class="label">Latest Articles</span>
               <ol>
-                {secondary.map((a, i) => (
+                {latest.map((a) => (
                   <li>
                     <a href={`/articles/${a.slug}/`}>
-                      <span class="num">{String(i + 2).padStart(2, '0')}</span>
                       <span class="txt">{a.data.title}</span>
                     </a>
                   </li>
@@ -109,6 +109,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     grid-template-columns: 1fr 300px;
     gap: 48px;
     align-items: start;
+    margin-top: 30px;
   }
   .lead h2 {
     margin: 0 0 14px;
@@ -164,13 +165,6 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
   }
   .issue-index li:last-child {
     border-bottom: none;
-  }
-  .issue-index .num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--brass);
-    font-variant-numeric: tabular-nums;
-    padding-top: 1px;
   }
   .issue-index .txt {
     font-family: 'Source Serif 4', serif;
