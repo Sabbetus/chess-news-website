@@ -15,7 +15,10 @@ const secondary = rest.slice(0, 4);
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
-<BaseLayout title="Chessori" activeContinent="front-page">
+<BaseLayout
+  title="Chessori — Chess News, Original Analysis &amp; Tournament Statistics"
+  activeContinent="front-page"
+>
   {
     !lead && (
       <section class="empty-state">
