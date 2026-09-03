@@ -1,9 +1,17 @@
 """
 Selection: scores every candidate in data/candidates.json with a simple,
-explainable heuristic and picks the day's articles -- 3 guaranteed, up to
-5 more if they clear the quality bar (SCORE_THRESHOLD_FOR_4_5). This is a
-v1 heuristic, expected to need tuning once real data is flowing; keep the
-scoring criteria named and separable so that's easy.
+explainable heuristic and picks the day's articles.
+
+Daily volume, per user decision:
+  - At most 1 calendar-sourced (chesstournamentcalendar.com aggregate) article.
+    Ingestion (see CALENDAR_SCHEDULE in ingest.py) already guarantees at most
+    one such candidate exists on any given day, so this is really just "take
+    it if it's there" -- but the cap is enforced here too, defensively.
+  - 2 external (Chess.com / FIDE) articles guaranteed, up to 4 if enough of
+    them clear the quality bar (SCORE_THRESHOLD_FOR_EXTRA).
+
+This is a v1 heuristic, expected to need tuning once real data is flowing;
+keep the scoring criteria named and separable so that's easy.
 
 Output: data/selected.json -- ranked list of chosen candidates, each with
 its score and score breakdown for auditability (shows up in the draft's
@@ -18,15 +26,18 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 CANDIDATES_PATH = DATA_DIR / "candidates.json"
 SELECTED_PATH = DATA_DIR / "selected.json"
 
-MIN_DAILY_ARTICLES = 3
-MAX_DAILY_ARTICLES = 5
-SCORE_THRESHOLD_FOR_EXTRA = 60  # out of 100 -- above this, articles 4-5 are allowed through
+MIN_EXTERNAL_ARTICLES = 2
+MAX_EXTERNAL_ARTICLES = 4
+MAX_CALENDAR_ARTICLES_PER_DAY = 1
+SCORE_THRESHOLD_FOR_EXTRA = 60  # out of 100 -- above this, external articles 3-4 are allowed through
+
+CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 
 # Higher-traffic / more clearly newsworthy outlets get a base bump.
 SOURCE_TIER_SCORE = {
     "drama": 25,    # Chess.com -- high engagement potential
     "serious": 20,  # FIDE -- official/authoritative
-    "own-data": 15, # calendar previews -- always relevant to us, but not breaking news
+    "own-data": 15, # calendar aggregates -- always relevant to us, but not breaking news
 }
 
 # Keyword weight groups: title/summary matches add points per hit (capped).
@@ -42,8 +53,6 @@ MAX_KEYWORD_SCORE = 30
 # Nordic/regional relevance -- ties into the Nordic-angle lens.
 NORDIC_KEYWORDS = ["norway", "sweden", "denmark", "finland", "iceland", "nordic", "scandinavia"]
 NORDIC_BONUS = 15
-
-MIN_CALENDAR_PLAYERS = 150  # below this, a calendar preview isn't "notable" enough
 
 
 def score_keywords(text: str) -> int:
@@ -80,15 +89,6 @@ def score_item(item: dict) -> tuple[int, dict]:
     breakdown["nordic"] = score_nordic(text)
     breakdown["specificity"] = score_specificity(item)
 
-    if item["kind"] == "calendar-preview":
-        players = (item.get("tournamentData") or {}).get("playersRegistered") or 0
-        if not isinstance(players, (int, float)) or players < MIN_CALENDAR_PLAYERS:
-            breakdown["calendarSizeGate"] = -1000  # effectively excludes it
-        else:
-            # Scale a modest bonus with size, capped -- bigger tournaments are
-            # more broadly interesting previews.
-            breakdown["calendarSizeGate"] = min(int(players / 50), 20)
-
     total = sum(breakdown.values())
     return total, breakdown
 
@@ -123,11 +123,14 @@ def main() -> None:
     scored.sort(key=lambda x: x["selectionScore"], reverse=True)
     scored = dedupe_by_topic(scored)
 
-    guaranteed = scored[:MIN_DAILY_ARTICLES]
-    extra_pool = scored[MIN_DAILY_ARTICLES:MAX_DAILY_ARTICLES]
-    extras = [item for item in extra_pool if item["selectionScore"] >= SCORE_THRESHOLD_FOR_EXTRA]
+    calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
+    external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
 
-    selected = guaranteed + extras
+    guaranteed_external = external_items[:MIN_EXTERNAL_ARTICLES]
+    extra_pool = external_items[MIN_EXTERNAL_ARTICLES:MAX_EXTERNAL_ARTICLES]
+    extra_external = [item for item in extra_pool if item["selectionScore"] >= SCORE_THRESHOLD_FOR_EXTRA]
+
+    selected = calendar_items + guaranteed_external + extra_external
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     SELECTED_PATH.write_text(json.dumps(selected, indent=2))

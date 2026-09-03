@@ -19,6 +19,13 @@ lens: tournament-db | nordic-angle | organizer-pov
 selectionScore: number    # from scripts/select.py -- why this story was picked
 reviewStatus: draft | approved | published
 socialCopy: string        # suggested post text for Phase 2 social automation
+
+# Calendar aggregate articles (see below) also carry, for reviewer context
+# only -- stripped from the built site's data, visible only in the raw file:
+aggregateKind: calendar-biggest | calendar-comingup
+continentName: string
+monthLabel: string
+totalTracked: number
 ```
 
 `reviewStatus` is deliberately kept as article-level data, not something

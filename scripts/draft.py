@@ -7,8 +7,11 @@ that only happens when a human approves and merges the PR (see
 scripts/open_review_pr.py / the pipeline workflow).
 
 Lens selection:
-  - calendar-preview items always use "tournament-db" (they ARE our own
-    tournament data -- no other lens makes sense).
+  - calendar-biggest / calendar-comingup items (per-continent monthly
+    aggregates from our own tournament data) always use "tournament-db" --
+    they ARE our own tournament data, no other lens makes sense. The two
+    kinds get different prompt instructions (retrospective ranking vs.
+    forward-looking highlights) even though they share the same lens label.
   - news items use "nordic-angle" if the story mentions a Nordic country
     (scored during selection), otherwise "organizer-pov" as the default
     analytical angle for regular news.
@@ -30,15 +33,40 @@ ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 
 MODEL = "claude-sonnet-5"
 
-LENS_INSTRUCTIONS = {
-    "tournament-db": (
-        "Write an original preview piece about this upcoming tournament, grounded "
-        "entirely in the tournament data provided (field size, location, format, "
-        "prize fund, notable entrants if given). This is not commentary on someone "
-        "else's article -- it's original reporting from our own database. Note what "
-        "makes this event worth watching and any useful context (comparable past "
-        "events, what a strong result here would mean)."
+# Instructions for the two calendar aggregate kinds -- keyed by candidate
+# "kind" rather than "lens", since both use the tournament-db lens but need
+# very different framing (retrospective ranking vs. forward-looking list).
+AGGREGATE_INSTRUCTIONS = {
+    "calendar-biggest": (
+        "Write an original retrospective piece ranking the biggest tournaments "
+        "in this continent last month, grounded entirely in the tournament data "
+        "provided (a JSON list, already sorted by players registered, largest "
+        "first). This is original reporting from our own database, not "
+        "commentary on someone else's article. Cover the top entries by name, "
+        "player count, location, and anything else notable (format, rating "
+        "requirement) given in the data -- do not invent details not present in "
+        "the data. Note that this ranking is limited to tournaments with a "
+        "known player count in our data; if the total tracked count is "
+        "meaningfully higher than the number ranked, say so plainly rather than "
+        "implying the list is exhaustive (e.g. some countries, like the US, "
+        "don't reliably report player counts to our sources, so they may be "
+        "under-represented here even if they hosted plenty of tournaments)."
     ),
+    "calendar-comingup": (
+        "Write an original preview piece highlighting notable tournaments "
+        "coming up next month in this continent, grounded entirely in the "
+        "tournament data provided (a JSON list of highlights, some ranked by "
+        "player count, others -- where player counts aren't reliably reported "
+        "-- selected as notable by name/format/rating requirement). This is "
+        "original reporting from our own database, not commentary on someone "
+        "else's article. Cover a handful of the most interesting entries by "
+        "name, date, location, and any other notable detail given in the data "
+        "-- do not invent details not present in the data. Mention the overall "
+        "count of tracked tournaments in the continent that month for context."
+    ),
+}
+
+LENS_INSTRUCTIONS = {
     "nordic-angle": (
         "Write a companion piece analyzing this story specifically through a "
         "Nordic/regional lens -- most chess news coverage is Anglo-centric, so "
@@ -81,8 +109,11 @@ def slugify(title: str) -> str:
     return slug[:80].rstrip("-")
 
 
+CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
+
+
 def pick_lens(item: dict) -> str:
-    if item["kind"] == "calendar-preview":
+    if item["kind"] in CALENDAR_KINDS:
         return "tournament-db"
     if item.get("scoreBreakdown", {}).get("nordic", 0) > 0:
         return "nordic-angle"
@@ -90,6 +121,18 @@ def pick_lens(item: dict) -> str:
 
 
 def build_user_prompt(item: dict, lens: str) -> str:
+    if item["kind"] in CALENDAR_KINDS:
+        parts = [
+            AGGREGATE_INSTRUCTIONS[item["kind"]],
+            "",
+            f"Continent: {item['continentName']}",
+            f"Month: {item['monthLabel']}",
+            f"Total tournaments tracked in this continent this month: {item['totalTracked']}",
+            f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
+            f"Tournament data (JSON list): {json.dumps(item['tournamentData'])}",
+        ]
+        return "\n".join(parts)
+
     parts = [
         LENS_INSTRUCTIONS[lens],
         "",
@@ -99,8 +142,6 @@ def build_user_prompt(item: dict, lens: str) -> str:
     ]
     if item.get("summary"):
         parts.append(f"Source summary/excerpt: {item['summary']}")
-    if item.get("tournamentData"):
-        parts.append(f"Tournament data (JSON): {json.dumps(item['tournamentData'])}")
     return "\n".join(parts)
 
 
@@ -144,6 +185,14 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         "reviewStatus": "draft",
         "socialCopy": parsed["socialCopy"],
     }
+    if item["kind"] in CALENDAR_KINDS:
+        # Extra context for reviewers -- not part of the content schema (unknown
+        # frontmatter keys are stripped at build time), but visible in the raw
+        # file/PR diff, which is where a reviewer actually looks.
+        frontmatter["aggregateKind"] = item["kind"]
+        frontmatter["continentName"] = item["continentName"]
+        frontmatter["monthLabel"] = item["monthLabel"]
+        frontmatter["totalTracked"] = item["totalTracked"]
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():
