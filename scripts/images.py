@@ -14,6 +14,7 @@ fall back to the site's SVG placeholder thumbnail instead.
 import html
 import re
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -30,24 +31,34 @@ ACCEPTED_LICENSE_PREFIXES = ("cc0", "cc by", "public domain")
 
 # Wikimedia Commons throttles unauthenticated/shared-IP traffic; keep a
 # small gap between requests so a run of several articles doesn't trip it.
-REQUEST_DELAY_SECONDS = 1.0
+REQUEST_DELAY_SECONDS = 2.0
 
 _last_request_time = 0.0
 
 
-def _get(params: dict) -> dict:
+def _get(params: dict, retries: int = 3) -> dict:
     global _last_request_time
-    elapsed = time.monotonic() - _last_request_time
-    if elapsed < REQUEST_DELAY_SECONDS:
-        time.sleep(REQUEST_DELAY_SECONDS - elapsed)
+    import json
 
     query = urllib.parse.urlencode({**params, "format": "json"})
     request = urllib.request.Request(f"{API_URL}?{query}", headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=20) as response:
-        _last_request_time = time.monotonic()
-        import json
 
-        return json.loads(response.read())
+    for attempt in range(retries + 1):
+        elapsed = time.monotonic() - _last_request_time
+        if elapsed < REQUEST_DELAY_SECONDS:
+            time.sleep(REQUEST_DELAY_SECONDS - elapsed)
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                _last_request_time = time.monotonic()
+                return json.loads(response.read())
+        except urllib.error.HTTPError as exc:
+            _last_request_time = time.monotonic()
+            if exc.code == 429 and attempt < retries:
+                retry_after = exc.headers.get("Retry-After")
+                delay = float(retry_after) if retry_after and retry_after.isdigit() else 8.0
+                time.sleep(delay)
+                continue
+            raise
 
 
 def _strip_html(text: str) -> str:
@@ -127,10 +138,42 @@ def search_image(query: str) -> dict | None:
         return None
 
 
-def build_query_cascade(item: dict, drafted_title: str) -> list:
+# Matches runs of 2-3 consecutive Capitalized Words -- a cheap fallback for
+# a full name/event phrase ("Magnus Carlsen", "Total Chess") when Claude's
+# own `imageSubject` pick (see draft.py) is empty or turns up nothing.
+# Deliberately does NOT fall back further to single capitalized words:
+# tried in testing, a lone surname like "Carlsen" matched a Wikimedia file
+# for a completely unrelated person (a 19th-century painter also named
+# Carlsen) -- too high a risk of a flatly wrong photo for too little
+# marginal recall.
+_ENTITY_PATTERN = re.compile(r"\b[A-Z][a-zA-Z'-]*(?:\s+[A-Z][a-zA-Z'-]*){1,2}\b")
+
+_ENTITY_STOPWORDS = {
+    "the", "a", "an", "why", "who", "what", "how", "chess", "world", "new",
+}
+
+
+def _extract_entity_candidates(*texts: str) -> list:
+    seen = set()
+    candidates = []
+    for text in texts:
+        for match in _ENTITY_PATTERN.finditer(text or ""):
+            phrase = match.group(0).strip()
+            first_word = phrase.split()[0].lower()
+            key = phrase.lower()
+            if first_word in _ENTITY_STOPWORDS or key in seen:
+                continue
+            seen.add(key)
+            candidates.append(phrase)
+    return candidates
+
+
+def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "") -> list:
     """Ordered list of search queries to try, most specific first, for a
     drafted article. `item` is the original candidate dict (from
-    selected.json); `drafted_title` is the headline Claude wrote."""
+    selected.json); `drafted_title` is the headline Claude wrote;
+    `image_subject` is the specific person/org/event Claude named in its
+    drafting response, if any -- the most reliable candidate available."""
     queries = []
     continent_code = item.get("continentCode")
     continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
@@ -141,11 +184,9 @@ def build_query_cascade(item: dict, drafted_title: str) -> list:
             queries.append(f"{name} chess tournament")
             queries.append(f"{name} chess")
     else:
-        # Most specific: the drafted headline and the original source
-        # headline usually both contain the actual subject (a player name,
-        # an event name, an organization).
-        queries.append(drafted_title)
-        queries.append(item["title"])
+        if image_subject:
+            queries.append(image_subject)
+        queries.extend(_extract_entity_candidates(drafted_title, item["title"]))
         source_name = item.get("sourceName", "")
         if source_name:
             queries.append(f"{source_name} logo")
@@ -156,8 +197,8 @@ def build_query_cascade(item: dict, drafted_title: str) -> list:
     return queries
 
 
-def pick_image_for_item(item: dict, drafted_title: str) -> dict | None:
-    for query in build_query_cascade(item, drafted_title):
+def pick_image_for_item(item: dict, drafted_title: str, image_subject: str = "") -> dict | None:
+    for query in build_query_cascade(item, drafted_title, image_subject):
         result = search_image(query)
         if result:
             return result

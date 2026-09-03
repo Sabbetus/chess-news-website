@@ -8,9 +8,9 @@ continent: "europe"
 selectionScore: 70
 reviewStatus: "published"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/88/Chesscom_logo_pawn_flat.svg"
-  credit: "Chess.com, Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File:Chesscom_logo_pawn_flat.svg"
+  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Carlsen_Magnus_(30238051906).jpg/1280px-Carlsen_Magnus_(30238051906).jpg"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Carlsen_Magnus_(30238051906).jpg"
 socialCopy: "Carlsen and Caruana didn't just sign up for a new format in Budapest. They signaled where the money in elite chess might be heading next."
 ---
 
