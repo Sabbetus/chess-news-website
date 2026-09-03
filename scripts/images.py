@@ -66,6 +66,21 @@ def _strip_html(text: str) -> str:
     return html.unescape(text).strip()
 
 
+_DATE_PATTERN = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+
+
+def _photo_date(meta: dict) -> str:
+    """Sortable date string for when the photo was actually taken, from
+    Commons' DateTimeOriginal field -- deliberately NOT falling back to the
+    file's upload timestamp, which reflects nothing about the photo's
+    subject (an old document scanned and uploaded yesterday would otherwise
+    sort as "recent"). A file with no DateTimeOriginal sorts as unknown/
+    oldest rather than winning on a recency it can't actually claim."""
+    raw = _strip_html(meta.get("DateTimeOriginal", {}).get("value", ""))
+    match = _DATE_PATTERN.search(raw)
+    return match.group(0) if match else "0000-00-00"
+
+
 def _search_titles(query: str, limit: int = 5) -> list:
     data = _get(
         {
@@ -85,6 +100,11 @@ def _license_ok(license_short_name: str) -> bool:
 
 
 def _fetch_first_licensed_file(titles: list) -> dict | None:
+    """Among the given candidate titles, return the most recently-taken
+    acceptably-licensed file -- not just the first one Commons' text search
+    happened to rank highest. Search relevance has no relationship to photo
+    age, and an old photo of a young player (or a much-changed player) reads
+    as wrong even when it's the "right" person and properly licensed."""
     if not titles:
         return None
 
@@ -93,7 +113,7 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
             "action": "query",
             "titles": "|".join(titles),
             "prop": "imageinfo",
-            "iiprop": "url|extmetadata",
+            "iiprop": "url|extmetadata|timestamp",
             "iiurlwidth": 1200,
         }
     )
@@ -102,6 +122,7 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
     # response doesn't match titles order).
     pages_by_title = {p.get("title"): p for p in pages.values() if p.get("title")}
 
+    candidates = []
     for title in titles:
         page = pages_by_title.get(title)
         if not page:
@@ -118,21 +139,31 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
         artist = _strip_html(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
         url = info.get("thumburl") or info.get("url")
         page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
+        date = _photo_date(meta)
 
-        return {
-            "url": url,
-            "credit": f"{artist}, {license_name}, via Wikimedia Commons",
-            "sourceUrl": page_url,
-        }
+        candidates.append(
+            (
+                date,
+                {
+                    "url": url,
+                    "credit": f"{artist}, {license_name}, via Wikimedia Commons",
+                    "sourceUrl": page_url,
+                },
+            )
+        )
 
-    return None
+    if not candidates:
+        return None
+
+    candidates.sort(key=lambda c: c[0], reverse=True)
+    return candidates[0][1]
 
 
 def search_image(query: str) -> dict | None:
     """Search Commons for one query, return the first acceptably-licensed
     file, or None if nothing usable was found."""
     try:
-        titles = _search_titles(query)
+        titles = _search_titles(query, limit=8)
         return _fetch_first_licensed_file(titles)
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
