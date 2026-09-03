@@ -44,7 +44,7 @@ const description = excerptFrom(article.body, 200);
       <div class="byline">
         <span>{LENS_META[article.data.lens].label}</span>
         <span class="dot">&bull;</span>
-        <a class="src" href={article.data.sourceUrl} rel="noopener">
+        <a class="src" href={article.data.sourceUrl} target="_blank" rel="noopener">
           Source: {article.data.sourceName}
         </a>
         <span class="dot">&bull;</span>
@@ -59,7 +59,7 @@ const description = excerptFrom(article.body, 200);
     </div>
 
     <p class="source-callout">
-      Original source: <a href={article.data.sourceUrl} rel="noopener">{article.data.sourceUrl}</a>
+      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a>
     </p>
   </article>
 </BaseLayout>
@@ -69,7 +69,7 @@ const description = excerptFrom(article.body, 200);
     padding: 34px 0 60px;
   }
   .story :global(.thumb) {
-    margin-bottom: 26px;
+    margin-bottom: 22px;
   }
   .story-head {
     max-width: 68ch;

@@ -25,8 +25,8 @@ const piece = pieceForLens(lens, seed);
   {!image && <span class="piece">{piece}</span>}
   {
     image && (
-      <a class="thumb-credit" href={image.sourceUrl} target="_blank" rel="noopener">
-        {image.credit}
+      <a class="thumb-credit" href={image.sourceUrl} target="_blank" rel="noopener" title={image.credit} aria-label={`Image credit: ${image.credit}`}>
+        i
       </a>
     )
   }
