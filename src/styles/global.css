@@ -10,7 +10,7 @@
   --ink-soft: #514d43;
   --green: #2e5233;
   --green-tint: #e3ece4;
-  --green-deep: #203a24;
+  --accent: #203a24;
   --brass: #8c6a2a;
   --brass-tint: #f1e8d4;
   --blue: #2c4d6e;
@@ -35,7 +35,7 @@
     --ink-soft: #a39c8b;
     --green: #6fa87c;
     --green-tint: #212d24;
-    --green-deep: #8fc79a;
+    --accent: #c99a7a;
     --brass: #d9ac5c;
     --brass-tint: #2c2415;
     --blue: #8bb1d6;
@@ -60,7 +60,7 @@
   --ink-soft: #a39c8b;
   --green: #6fa87c;
   --green-tint: #212d24;
-  --green-deep: #8fc79a;
+  --accent: #c99a7a;
   --brass: #d9ac5c;
   --brass-tint: #2c2415;
   --blue: #8bb1d6;
@@ -197,7 +197,7 @@ button:focus-visible {
 }
 .lens-tag.tournament {
   background: var(--green-tint);
-  color: var(--green-deep);
+  color: var(--accent);
 }
 .lens-tag.historical {
   background: var(--brass-tint);
@@ -238,7 +238,7 @@ button:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 .masthead {
-  padding: 36px 0 26px;
+  padding: 9px 0 26px;
   text-align: center;
   border-bottom: 3px solid var(--ink);
 }
@@ -261,7 +261,7 @@ button:focus-visible {
   font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green-deep);
+  color: var(--accent);
 }
 .masthead .tagline .sep {
   color: var(--brass);
@@ -286,9 +286,9 @@ nav.sections a {
   padding: 4px 2px;
 }
 nav.sections a.on {
-  color: var(--green-deep);
+  color: var(--accent);
   font-weight: 500;
-  border-bottom: 2px solid var(--green-deep);
+  border-bottom: 2px solid var(--accent);
 }
 nav.sections a:hover {
   color: var(--ink);
@@ -329,12 +329,12 @@ footer.site-footer {
   color: var(--ink-soft);
 }
 footer.site-footer .partners a {
-  color: var(--green-deep);
+  color: var(--accent);
   text-decoration: none;
   border-bottom: 1px solid var(--rule);
 }
 footer.site-footer .partners a:hover {
-  border-color: var(--green-deep);
+  border-color: var(--accent);
 }
 footer.site-footer .partners .sep {
   color: var(--rule);
