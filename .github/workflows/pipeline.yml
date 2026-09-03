@@ -4,6 +4,16 @@ on:
   schedule:
     - cron: '0 6 * * *' # once daily; adjust once real cadence is validated
   workflow_dispatch: # allow manual trigger
+  # TEMPORARY: schedule/workflow_dispatch-only workflows appear to register
+  # with GitHub through a slower path than push-triggered ones (this one
+  # never showed up in the Actions workflow list at all, even after a
+  # no-op edit+push). Scoping a push trigger to this file forces the same
+  # instant registration path proven by deploy.yml, and doubles as this
+  # run's manual trigger. Remove once workflow_dispatch is confirmed working
+  # on its own.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/pipeline.yml']
 
 permissions:
   contents: write
