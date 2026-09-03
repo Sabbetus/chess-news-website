@@ -31,14 +31,14 @@ npm run preview   # serve the built dist/
 python3 -m venv .venv && .venv/bin/pip install -r scripts/requirements.txt
 
 .venv/bin/python scripts/ingest.py   # -> data/candidates.json
-.venv/bin/python scripts/select.py   # -> data/selected.json
+.venv/bin/python scripts/selection.py   # -> data/selected.json
 ANTHROPIC_API_KEY=... .venv/bin/python scripts/draft.py  # -> src/content/articles/*.md
 ```
 
 ### Sources
 
 - **Chess.com news** (RSS) and **FIDE news** (RSS) -- 2-4 articles/day,
-  selected by `scripts/select.py`'s scoring heuristic.
+  selected by `scripts/selection.py`'s scoring heuristic.
 - **chesstournamentcalendar.com** -- at most 1 article/day, always one of
   two per-continent monthly aggregate types (never a single-tournament
   preview -- that duplicated what the calendar site itself already shows):

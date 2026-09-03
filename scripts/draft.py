@@ -252,7 +252,7 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
 
 def main() -> None:
     if not SELECTED_PATH.exists():
-        print("No selected.json found -- run select.py first.")
+        print("No selected.json found -- run selection.py first.")
         sys.exit(1)
 
     selected = json.loads(SELECTED_PATH.read_text())
