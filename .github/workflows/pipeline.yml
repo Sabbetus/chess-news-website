@@ -2,8 +2,8 @@ name: Ingest, select, and draft articles
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # once daily; adjust once real cadence is validated
-  workflow_dispatch:  # allow manual trigger
+    - cron: '0 6 * * *' # once daily; adjust once real cadence is validated
+  workflow_dispatch: # allow manual trigger
 
 permissions:
   contents: write
