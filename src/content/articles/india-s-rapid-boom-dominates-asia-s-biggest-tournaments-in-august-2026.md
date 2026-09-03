@@ -12,6 +12,10 @@ aggregateKind: "calendar-biggest"
 continentName: "Asia"
 monthLabel: "August 2026"
 totalTracked: 1836
+image:
+  url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Asian_Team_Chess_Championship1_%28Mehr%2C_2014%29.jpg"
+  credit: "Mina Noei, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Asian_Team_Chess_Championship1_(Mehr,_2014).jpg"
 ---
 
 August 2026 was a big month for grassroots chess across Asia, and our database's ranking of tournaments by registered players tells a clear story: India's district- and state-level rapid events, often run out of school halls and community centers, are pulling in crowds that rival major international opens.

@@ -7,6 +7,10 @@ lens: "money-angle"
 continent: "europe"
 selectionScore: 70
 reviewStatus: "published"
+image:
+  url: "https://upload.wikimedia.org/wikipedia/commons/8/88/Chesscom_logo_pawn_flat.svg"
+  credit: "Chess.com, Public domain, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Chesscom_logo_pawn_flat.svg"
 socialCopy: "Carlsen and Caruana didn't just sign up for a new format in Budapest. They signaled where the money in elite chess might be heading next."
 ---
 

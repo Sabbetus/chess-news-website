@@ -7,14 +7,27 @@ interface Props {
   continent: Continent;
   size: 'lead' | 'card';
   seed?: number;
+  image?: { url: string; credit: string; sourceUrl: string };
 }
-const { lens, continent, size, seed = 0 } = Astro.props;
+const { lens, continent, size, seed = 0, image } = Astro.props;
 const lensMeta = LENS_META[lens];
 const continentMeta = CONTINENT_META[continent];
 const piece = pieceForLens(lens, seed);
 ---
 
 <div class={`thumb thumb--${size} ${lensMeta.className}`}>
+  {
+    image ? (
+      <img class="thumb-photo" src={image.url} alt="" loading="lazy" />
+    ) : null
+  }
   <span class="chip">{continentMeta.label}</span>
-  <span class="piece">{piece}</span>
+  {!image && <span class="piece">{piece}</span>}
+  {
+    image && (
+      <a class="thumb-credit" href={image.sourceUrl} target="_blank" rel="noopener">
+        {image.credit}
+      </a>
+    )
+  }
 </div>

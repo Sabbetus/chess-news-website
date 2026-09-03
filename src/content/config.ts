@@ -24,6 +24,17 @@ const articles = defineCollection({
     selectionScore: z.number(),
     reviewStatus: z.enum(['draft', 'approved', 'published']),
     socialCopy: z.string().optional(),
+    // A real photo/logo sourced from Wikimedia Commons (see scripts/images.py),
+    // used only when a license-clean, reasonably-relevant match was found --
+    // absent whenever it wasn't, in which case ArticleThumb falls back to its
+    // SVG placeholder.
+    image: z
+      .object({
+        url: z.string().url(),
+        credit: z.string(),
+        sourceUrl: z.string().url(),
+      })
+      .optional(),
   }),
 });
 
