@@ -41,7 +41,7 @@ CALENDAR_DATA_URL = "https://chesstournamentcalendar.com/data/tournaments.json"
 CALENDAR_ARCHIVE_URL = "https://chesstournamentcalendar.com/data/archive.json"
 
 REQUEST_TIMEOUT = 20
-USER_AGENT = "chess-news-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
+USER_AGENT = "chessori-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
 
 
 def load_seen() -> set[str]:
