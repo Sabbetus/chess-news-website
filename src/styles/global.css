@@ -209,9 +209,11 @@ button:focus-visible {
 .thumb--lead {
   aspect-ratio: 3 / 2;
   width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
 }
 .thumb--lead .piece {
-  font-size: 90px;
+  font-size: 70px;
 }
 .thumb--card {
   aspect-ratio: 16 / 9;
