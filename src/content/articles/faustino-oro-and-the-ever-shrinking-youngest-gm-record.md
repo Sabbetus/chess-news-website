@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/faustino-oro-officially-becomes-worl
 lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 66
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Faustino Oro is now the youngest active GM, but not the youngest ever. A look at how that record has kept shrinking since Karjakin in 2002."
 ---
 

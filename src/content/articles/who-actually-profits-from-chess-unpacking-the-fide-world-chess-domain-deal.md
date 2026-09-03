@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/chess-is-getting-its-own-home-on-the-internet-f
 lens: "money-angle"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE isn't paying for .chess. World Chess is. A look at who actually profits if the sport gets its own internet domain."
 ---
 

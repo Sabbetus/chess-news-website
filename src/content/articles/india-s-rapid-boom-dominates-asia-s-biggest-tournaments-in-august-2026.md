@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
 continent: "asia"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Asia's biggest chess tournaments by turnout in August 2026: a Malaysian rapid festival tops the list, but India's district-level events dominate the field. See the full ranking 👇"
 aggregateKind: "calendar-biggest"
 continentName: "Asia"
