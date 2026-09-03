@@ -1,0 +1,17 @@
+---
+import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
+
+interface Props {
+  lens: Lens;
+  size: 'lead' | 'card';
+  seed?: number;
+}
+const { lens, size, seed = 0 } = Astro.props;
+const meta = LENS_META[lens];
+const piece = pieceForLens(lens, seed);
+---
+
+<div class={`thumb thumb--${size} ${meta.className}`}>
+  <span class="chip">{meta.label}</span>
+  <span class="piece">{piece}</span>
+</div>

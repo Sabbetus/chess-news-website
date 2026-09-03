@@ -1,6 +1,8 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleThumb from '../../components/ArticleThumb.astro';
+import { estimateReadMinutes } from '../../lib/reading';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -15,13 +17,105 @@ interface Props {
 }
 const { article } = Astro.props;
 const { Content } = await article.render();
+const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 ---
-<BaseLayout title={article.data.title}>
-  <article>
-    <h1>{article.data.title}</h1>
-    <p>
-      Source: <a href={article.data.sourceUrl} rel="noopener">{article.data.sourceName}</a>
+
+<BaseLayout title={`${article.data.title} — Chessori`}>
+  <article class="story">
+    <ArticleThumb lens={article.data.lens} size="lead" />
+
+    <div class="story-head">
+      <h1>{article.data.title}</h1>
+      <div class="byline">
+        <a class="src" href={article.data.sourceUrl} rel="noopener">
+          Source: {article.data.sourceName}
+        </a>
+        <span class="dot">&bull;</span>
+        <span>{estimateReadMinutes(article.body)} min read</span>
+        <span class="dot">&bull;</span>
+        <span>{dateFmt}</span>
+      </div>
+    </div>
+
+    <div class="story-body">
+      <Content />
+    </div>
+
+    <p class="source-callout">
+      Original source: <a href={article.data.sourceUrl} rel="noopener">{article.data.sourceUrl}</a>
     </p>
-    <Content />
   </article>
 </BaseLayout>
+
+<style>
+  .story {
+    padding: 34px 0 60px;
+  }
+  .story :global(.thumb) {
+    margin-bottom: 14px;
+  }
+  .story-head {
+    max-width: 68ch;
+    margin: 0 auto 30px;
+  }
+  .story-head h1 {
+    margin: 0 0 16px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.008em;
+    text-wrap: balance;
+  }
+
+  .story-body {
+    max-width: 68ch;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.72;
+  }
+  .story-body :global(p) {
+    margin: 0 0 1.3em;
+  }
+  .story-body :global(h2) {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: 28px;
+    margin: 1.6em 0 0.6em;
+  }
+  .story-body :global(h3) {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 520;
+    font-size: 22px;
+    margin: 1.4em 0 0.5em;
+  }
+  .story-body :global(a) {
+    color: var(--green-deep);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  .story-body :global(blockquote) {
+    margin: 1.4em 0;
+    padding-left: 20px;
+    border-left: 3px solid var(--brass);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .source-callout {
+    max-width: 68ch;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: 'Spectral Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+  .source-callout a {
+    color: var(--nordic);
+  }
+</style>
