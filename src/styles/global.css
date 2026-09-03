@@ -13,8 +13,12 @@
   --green-deep: #203a24;
   --brass: #8c6a2a;
   --brass-tint: #f1e8d4;
-  --nordic: #2c4d6e;
-  --nordic-tint: #e2eaf1;
+  --blue: #2c4d6e;
+  --blue-tint: #e2eaf1;
+  --terracotta: #a13f2a;
+  --terracotta-tint: #f3e0da;
+  --teal: #1f6357;
+  --teal-tint: #dfece8;
   --rule: #c7c2b4;
   --rule-soft: #dbd7ca;
   --rule-faint: #e2dfd2;
@@ -34,8 +38,12 @@
     --green-deep: #8fc79a;
     --brass: #d9ac5c;
     --brass-tint: #2c2415;
-    --nordic: #8bb1d6;
-    --nordic-tint: #1c2733;
+    --blue: #8bb1d6;
+    --blue-tint: #1c2733;
+    --terracotta: #d97a5f;
+    --terracotta-tint: #332019;
+    --teal: #6bbba8;
+    --teal-tint: #16261f;
     --rule: #38362f;
     --rule-soft: #28271f;
     --rule-faint: #211f1a;
@@ -55,8 +63,12 @@
   --green-deep: #8fc79a;
   --brass: #d9ac5c;
   --brass-tint: #2c2415;
-  --nordic: #8bb1d6;
-  --nordic-tint: #1c2733;
+  --blue: #8bb1d6;
+  --blue-tint: #1c2733;
+  --terracotta: #d97a5f;
+  --terracotta-tint: #332019;
+  --teal: #6bbba8;
+  --teal-tint: #16261f;
   --rule: #38362f;
   --rule-soft: #28271f;
   --rule-faint: #211f1a;
@@ -127,13 +139,21 @@ button:focus-visible {
   --tint: color-mix(in srgb, var(--green) 16%, transparent);
   --mark: color-mix(in srgb, var(--green) 55%, var(--ink) 10%);
 }
-.thumb.organizer {
+.thumb.historical {
   --tint: color-mix(in srgb, var(--brass) 18%, transparent);
   --mark: color-mix(in srgb, var(--brass) 60%, var(--ink) 10%);
 }
-.thumb.nordic {
-  --tint: color-mix(in srgb, var(--nordic) 16%, transparent);
-  --mark: color-mix(in srgb, var(--nordic) 55%, var(--ink) 10%);
+.thumb.community {
+  --tint: color-mix(in srgb, var(--blue) 16%, transparent);
+  --mark: color-mix(in srgb, var(--blue) 55%, var(--ink) 10%);
+}
+.thumb.drama {
+  --tint: color-mix(in srgb, var(--terracotta) 18%, transparent);
+  --mark: color-mix(in srgb, var(--terracotta) 55%, var(--ink) 10%);
+}
+.thumb.money {
+  --tint: color-mix(in srgb, var(--teal) 16%, transparent);
+  --mark: color-mix(in srgb, var(--teal) 55%, var(--ink) 10%);
 }
 .thumb .chip {
   position: absolute;
@@ -179,13 +199,21 @@ button:focus-visible {
   background: var(--green-tint);
   color: var(--green-deep);
 }
-.lens-tag.organizer {
+.lens-tag.historical {
   background: var(--brass-tint);
   color: var(--brass);
 }
-.lens-tag.nordic {
-  background: var(--nordic-tint);
-  color: var(--nordic);
+.lens-tag.community {
+  background: var(--blue-tint);
+  color: var(--blue);
+}
+.lens-tag.drama {
+  background: var(--terracotta-tint);
+  color: var(--terracotta);
+}
+.lens-tag.money {
+  background: var(--teal-tint);
+  color: var(--teal);
 }
 
 /* ---- masthead ---- */

@@ -1,17 +1,21 @@
-export type Lens = 'tournament-db' | 'nordic-angle' | 'organizer-pov';
+export type Lens = 'tournament-db' | 'drama' | 'historical-parallel' | 'money-angle' | 'community-pulse';
 
 export const LENS_META: Record<Lens, { label: string; className: string }> = {
   'tournament-db': { label: 'Tournament DB', className: 'tournament' },
-  'nordic-angle': { label: 'Nordic Angle', className: 'nordic' },
-  'organizer-pov': { label: "Organizer's Desk", className: 'organizer' },
+  drama: { label: 'Drama Angle', className: 'drama' },
+  'historical-parallel': { label: 'Historical Parallel', className: 'historical' },
+  'money-angle': { label: 'Money Angle', className: 'money' },
+  'community-pulse': { label: 'Community Pulse', className: 'community' },
 };
 
 // One piece glyph per lens so thumbnails aren't visually identical across a
 // page full of cards -- purely decorative, not meaningful per-article.
 const LENS_PIECES: Record<Lens, string[]> = {
   'tournament-db': ['♟', '♙'],
-  'organizer-pov': ['♔', '♘', '♖'],
-  'nordic-angle': ['♛', '♕'],
+  drama: ['♛', '♕'],
+  'historical-parallel': ['♔', '♚'],
+  'money-angle': ['♘', '♞'],
+  'community-pulse': ['♖', '♜'],
 };
 
 export function pieceForLens(lens: Lens, seed: number): string {

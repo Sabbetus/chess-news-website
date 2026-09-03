@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
+import { LENS_META } from '../../lib/lens';
 import { estimateReadMinutes } from '../../lib/reading';
 
 export async function getStaticPaths() {
@@ -24,13 +25,15 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
 });
 ---
 
-<BaseLayout title={`${article.data.title} — Chessori`}>
+<BaseLayout title={`${article.data.title} — Chessori`} activeContinent={article.data.continent}>
   <article class="story">
-    <ArticleThumb lens={article.data.lens} size="lead" />
+    <ArticleThumb lens={article.data.lens} continent={article.data.continent} size="lead" />
 
     <div class="story-head">
       <h1>{article.data.title}</h1>
       <div class="byline">
+        <span>{LENS_META[article.data.lens].label}</span>
+        <span class="dot">&bull;</span>
         <a class="src" href={article.data.sourceUrl} rel="noopener">
           Source: {article.data.sourceName}
         </a>
