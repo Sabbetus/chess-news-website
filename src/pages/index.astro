@@ -41,7 +41,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
             </h2>
             <p class="dek">{excerptFrom(lead.body, 280)}</p>
             <div class="byline">
-              <a class="src" href={lead.data.sourceUrl} rel="noopener">
+              <a class="src" href={lead.data.sourceUrl} target="_blank" rel="noopener">
                 Source: {lead.data.sourceName}
               </a>
               <span class="dot">&bull;</span>
