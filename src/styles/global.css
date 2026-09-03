@@ -161,6 +161,12 @@ button:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Most sourced photos are portrait-oriented headshots (players at the
+     board), cropped into a much wider slot -- centering the crop on the
+     image's vertical middle tends to land on the chest/hands rather than
+     the face. Biasing toward the top keeps faces in frame in the common
+     case, at the cost of sometimes leaving more headroom than ideal. */
+  object-position: center 20%;
 }
 .thumb-credit {
   position: absolute;
