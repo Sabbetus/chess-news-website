@@ -40,7 +40,7 @@ jobs:
         run: python scripts/ingest.py
 
       - name: Select today's stories
-        run: python scripts/select.py
+        run: python scripts/selection.py
 
       - name: Draft articles with Claude
         env:

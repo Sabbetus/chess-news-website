@@ -3,7 +3,7 @@
 Every article starts life as an AI-drafted Markdown file in
 `src/content/articles/`, written by the daily pipeline
 (`.github/workflows/pipeline.yml` → `scripts/ingest.py` →
-`scripts/select.py` → `scripts/draft.py`). Nothing the pipeline writes
+`scripts/selection.py` → `scripts/draft.py`). Nothing the pipeline writes
 appears on the live site immediately: the site only lists/renders articles
 where frontmatter `reviewStatus: "published"` (see
 `src/pages/index.astro` and `src/pages/articles/[...slug].astro`).
@@ -17,7 +17,7 @@ sourceName: string       # e.g. "Chess.com", "FIDE", "Chess Tournament Calendar"
 sourceUrl: string         # always linked prominently in the article
 lens: tournament-db | drama | historical-parallel | money-angle | community-pulse
 continent: europe | asia | north-america | south-america | africa | oceania | global
-selectionScore: number    # from scripts/select.py -- why this story was picked
+selectionScore: number    # from scripts/selection.py -- why this story was picked
 reviewStatus: draft | approved | published
 socialCopy: string        # suggested post text for Phase 2 social automation
 
