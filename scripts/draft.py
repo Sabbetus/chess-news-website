@@ -226,7 +226,7 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         "continent": continent,
         "selectionScore": item["selectionScore"],
         "reviewStatus": "draft",
-        "socialCopy": parsed["socialCopy"],
+        "socialCopy": parsed.get("socialCopy", ""),
     }
     if is_aggregate:
         # Extra context for reviewers -- not part of the content schema (unknown
