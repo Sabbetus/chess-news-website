@@ -1,21 +1,19 @@
 ---
 import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
+import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continent';
 
 interface Props {
   title: string;
-  activeSection?: 'front-page' | 'tournaments' | 'nordic-angle' | 'organizers-desk' | 'sources';
+  activeContinent?: Continent | 'front-page';
 }
-const { title, activeSection = 'front-page' } = Astro.props;
+const { title, activeContinent = 'front-page' } = Astro.props;
 
 const today = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
-const sections: Array<{ id: typeof activeSection; label: string; href: string }> = [
-  { id: 'front-page', label: 'Front Page', href: '/' },
-  { id: 'tournaments', label: 'Tournaments', href: '/#tournament-db' },
-  { id: 'nordic-angle', label: 'Nordic Angle', href: '/#nordic-angle' },
-  { id: 'organizers-desk', label: "Organizer's Desk", href: '/#organizer-pov' },
-  { id: 'sources', label: 'Sources', href: '/#sources' },
+const sections = [
+  { id: 'front-page' as const, label: 'Front Page', href: '/' },
+  ...CONTINENT_ORDER.map((c) => ({ id: c, label: CONTINENT_META[c].navLabel, href: `/continent/${c}/` })),
 ];
 ---
 
@@ -46,7 +44,7 @@ const sections: Array<{ id: typeof activeSection; label: string; href: string }>
   <body>
     <div class="wrap">
       <div class="masthead-top">
-        <span>Vol. I &middot; No. 1</span>
+        <span>Chess news from around the world</span>
         <span class="masthead-top-right">
           <span class="date">{today}</span>
           <ThemeSwitch />
@@ -56,15 +54,15 @@ const sections: Array<{ id: typeof activeSection; label: string; href: string }>
       <header class="masthead">
         <h1><a href="/">Chessori</a></h1>
         <div class="tagline">
-          Curated chess coverage<span class="sep">&middot;</span>original analysis<span class="sep">&middot;</span>every
-          source linked
+          Chess news &amp; articles<span class="sep">&middot;</span>original analysis<span class="sep">&middot;</span>tournament
+          statistics
         </div>
       </header>
 
       <nav class="sections">
         {
           sections.map((s) => (
-            <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
+            <a href={s.href} class={s.id === activeContinent ? 'on' : ''}>
               {s.label}
             </a>
           ))
