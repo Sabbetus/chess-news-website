@@ -106,12 +106,31 @@ LENS_OPTIONS = {
 
 CONTINENT_OPTIONS = "europe, asia, north-america, south-america, africa, oceania, global"
 
+# Shared prose-style guidance -- aimed squarely at the tells that make AI-drafted
+# text read as AI-drafted, independent of what the piece is arguing.
+STYLE_GUIDE = """Writing style: write like an experienced human beat writer, not an \
+AI assistant. Concretely:
+- Do not use em dashes (--) or en dashes as a substitute for commas, periods, or \
+parentheses. Use a period, comma, or colon instead, or just write two sentences.
+- Avoid AI-tell stock phrases and constructions: "it's not just X, it's Y", \
+"the real story is/isn't", "at the end of the day", "in a world where", \
+"underscores", "highlights the fact that", "serves as a reminder", "speaks to", \
+"paints a picture of". If a sentence would fit unchanged into any other article on \
+any other topic, rewrite or cut it.
+- Vary sentence length and structure. Do not open consecutive paragraphs with the \
+same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do not \
+default to three-item lists.
+- No false triads ("informs, entertains, and connects"). Say the specific thing.
+- Prefer plain, direct verbs and concrete nouns over hedge-y abstractions."""
+
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \
 summary of the source. Add genuine analysis and context a casual reader wouldn't \
 get from the source alone. Be accurate: never invent facts, quotes, or statistics \
 not present in the source material given to you. If you are not confident about a \
 detail, omit it rather than guess.
+
+{STYLE_GUIDE}
 
 First, pick the single best-fitting lens for THIS story from these options:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
@@ -132,11 +151,13 @@ exact keys:
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
 }}"""
 
-AGGREGATE_SYSTEM_PROMPT = """You are writing for a small, curated chess news site. \
+AGGREGATE_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. \
 This piece is original reporting from the site's own tournament database, not \
 commentary on someone else's article. Be accurate: never invent facts or figures \
 not present in the tournament data given to you. If you are not confident about a \
 detail, omit it rather than guess.
+
+{STYLE_GUIDE}
 
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
