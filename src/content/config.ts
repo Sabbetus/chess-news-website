@@ -7,7 +7,7 @@ const articles = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    publishDate: z.date(),
+    publishDate: z.coerce.date(),
     sourceName: z.string(),
     sourceUrl: z.string().url(),
     // The analytical angle the piece is written through -- shapes the
