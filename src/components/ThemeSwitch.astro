@@ -1,0 +1,61 @@
+---
+// Light/dark switch: defaults to the visitor's system preference, click to
+// override, choice persisted in localStorage. See src/styles/global.css for
+// the token definitions this toggles between.
+---
+
+<button
+  class="theme-switch"
+  id="themeToggle"
+  type="button"
+  role="switch"
+  aria-checked="false"
+  aria-label="Switch between light and dark mode"
+>
+  <span class="ts-label" id="labelLight">Light</span>
+  <span class="track"><span class="thumb-dot"></span></span>
+  <span class="ts-label" id="labelDark">Dark</span>
+</button>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var KEY = 'chessori-theme';
+
+    function systemPrefersDark() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function currentIsDark() {
+      var stored = null;
+      try {
+        stored = localStorage.getItem(KEY);
+      } catch (e) {}
+      if (stored === 'dark') return true;
+      if (stored === 'light') return false;
+      return systemPrefersDark();
+    }
+    function apply(isDark) {
+      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      var btn = document.getElementById('themeToggle');
+      var labelLight = document.getElementById('labelLight');
+      var labelDark = document.getElementById('labelDark');
+      if (!btn) return;
+      btn.setAttribute('aria-checked', String(isDark));
+      if (labelLight) labelLight.classList.toggle('active', !isDark);
+      if (labelDark) labelDark.classList.toggle('active', isDark);
+    }
+    // Applied as early as possible (this script runs inline, in <head> via
+    // BaseLayout) so there's no flash of the wrong theme on load.
+    apply(currentIsDark());
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('#themeToggle');
+      if (!btn) return;
+      var next = !(root.getAttribute('data-theme') === 'dark');
+      try {
+        localStorage.setItem(KEY, next ? 'dark' : 'light');
+      } catch (e) {}
+      apply(next);
+    });
+  })();
+</script>
