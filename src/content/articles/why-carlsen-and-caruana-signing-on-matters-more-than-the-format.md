@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/carlsen-caruana-total-chess-pilot-bu
 lens: "money-angle"
 continent: "europe"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen and Caruana didn't just sign up for a new format in Budapest. They signaled where the money in elite chess might be heading next."
 ---
 
