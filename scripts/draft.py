@@ -1,24 +1,25 @@
 """
 AI drafting: for each item in data/selected.json, calls Claude (Sonnet 5) to
-write a companion piece through one of three lenses, then writes a Markdown
-file into src/content/articles/ with reviewStatus: "draft" in its
-frontmatter -- nothing here ever sets reviewStatus to "published" directly;
-that only happens when a human approves and merges the PR (see
-scripts/open_review_pr.py / the pipeline workflow).
+write a companion piece, then writes a Markdown file into
+src/content/articles/ with reviewStatus: "draft" in its frontmatter --
+nothing here ever sets reviewStatus to "published" directly; that only
+happens when a human approves and merges the PR (see the pipeline workflow).
 
-Lens selection:
-  - calendar-biggest / calendar-comingup items (per-continent monthly
-    aggregates from our own tournament data) always use "tournament-db" --
-    they ARE our own tournament data, no other lens makes sense. The two
-    kinds get different prompt instructions (retrospective ranking vs.
-    forward-looking highlights) even though they share the same lens label.
-  - news items use "nordic-angle" if the story mentions a Nordic country
-    (scored during selection), otherwise "organizer-pov" as the default
-    analytical angle for regular news.
+Every article carries two independent pieces of metadata:
+  - continent: the site's primary browsing category (europe/asia/
+    north-america/south-america/africa/oceania/global). Calendar aggregate
+    items already know theirs from ingestion; for news items the model
+    infers it from the story content, falling back to "global" when no
+    single continent fits.
+  - lens: the analytical angle the piece is written through -- shapes the
+    prompt, shown on-site as a secondary label, not the primary category.
+    "tournament-db" is reserved for calendar aggregates (forced, not
+    chosen); news items get one of four lenses (drama, historical-parallel,
+    money-angle, community-pulse), picked by the model as whichever best
+    fits that specific story.
 """
 
 import json
-import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -26,12 +27,16 @@ from pathlib import Path
 
 import anthropic
 
+from continents import CONTINENT_SLUGS
+
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
 SELECTED_PATH = DATA_DIR / "selected.json"
 ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 
 MODEL = "claude-sonnet-5"
+
+CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 
 # Instructions for the two calendar aggregate kinds -- keyed by candidate
 # "kind" rather than "lens", since both use the tournament-db lens but need
@@ -66,39 +71,77 @@ AGGREGATE_INSTRUCTIONS = {
     ),
 }
 
-LENS_INSTRUCTIONS = {
-    "nordic-angle": (
-        "Write a companion piece analyzing this story specifically through a "
-        "Nordic/regional lens -- most chess news coverage is Anglo-centric, so "
-        "highlight what this means for Nordic players, federations, or the Nordic "
-        "chess scene specifically. If the story doesn't have an obvious direct "
-        "Nordic connection, draw a genuine, non-forced comparison (e.g. how a "
-        "similar situation has played out in Nordic chess, or what Nordic "
-        "organizers/players could take from it). Do not restate the source "
-        "article -- add real analysis."
+# The four lenses a news item can be drafted through -- the model picks
+# whichever fits the specific story best (see NEWS_SYSTEM_PROMPT).
+LENS_OPTIONS = {
+    "drama": (
+        "Drama angle: lean into any scandal, controversy, or conflict in the "
+        "story -- add color and reasonable speculation about motives, stakes, "
+        "and fallout, the way a sharp opinion columnist would. Only pick this "
+        "lens when the story actually has a scandal/conflict/controversy "
+        "element to work with -- don't manufacture drama that isn't there."
     ),
-    "organizer-pov": (
-        "Write a companion piece analyzing this story from the perspective of "
-        "someone who actually organizes chess tournaments -- the logistics, "
-        "decisions, and tradeoffs a reporter without that experience wouldn't "
-        "surface (e.g. arbiting decisions, venue/scheduling implications, "
-        "registration or funding angles, what this means operationally for other "
-        "organizers). Do not restate the source article -- add real analysis."
+    "historical-parallel": (
+        "Historical parallel: ground the story against chess history -- a "
+        "similar record, controversy, or milestone from the past, and what "
+        "changed (or didn't) between then and now. Only pick this lens when a "
+        "genuine, specific historical parallel exists -- not a vague "
+        "'chess has always had drama' gesture."
+    ),
+    "money-angle": (
+        "Money angle: analyze the story through prize funds, sponsorship, "
+        "appearance fees, or the broader economics of the event/players "
+        "involved -- what it costs, who's paying, what it signals about where "
+        "money is moving in chess. Only pick this lens when there's a real "
+        "financial angle to dig into."
+    ),
+    "community-pulse": (
+        "Community pulse: characterize how players, streamers, and fans are "
+        "actually reacting to this story -- the range of takes, where "
+        "opinion splits, what's getting argued about. Do not invent specific "
+        "quotes or usernames; characterize the reaction in general terms "
+        "grounded in what's plausible for a story like this."
     ),
 }
 
-SYSTEM_PROMPT = """You are writing for a small, curated chess news site. Every \
-piece is a companion analysis to a linked source article (or, for tournament \
-previews, original writing from the site's own tournament database) -- never a \
-reworded summary of the source. Add genuine analysis and context a casual reader \
-wouldn't get from the source alone. Be accurate: never invent facts, quotes, or \
-statistics not present in the source material or tournament data given to you. \
-If you are not confident about a detail, omit it rather than guess.
+CONTINENT_OPTIONS = "europe, asia, north-america, south-america, africa, oceania, global"
+
+NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
+piece is a companion analysis to a linked source article -- never a reworded \
+summary of the source. Add genuine analysis and context a casual reader wouldn't \
+get from the source alone. Be accurate: never invent facts, quotes, or statistics \
+not present in the source material given to you. If you are not confident about a \
+detail, omit it rather than guess.
+
+First, pick the single best-fitting lens for THIS story from these options:
+{chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
+
+Then pick the single most relevant continent for this story from: {CONTINENT_OPTIONS}. \
+Use "global" only when no single continent genuinely fits (e.g. a story about \
+international chess governance or an online-only event with no regional angle) -- \
+prefer picking a real continent whenever the story has any regional anchor \
+(a player's federation, a tournament's location, etc.).
+
+Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
+exact keys:
+{{
+  "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
+  "continent": "one of: {CONTINENT_OPTIONS}",
+  "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
+  "bodyMarkdown": "the full article body in Markdown, 300-600 words",
+  "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
+}}"""
+
+AGGREGATE_SYSTEM_PROMPT = """You are writing for a small, curated chess news site. \
+This piece is original reporting from the site's own tournament database, not \
+commentary on someone else's article. Be accurate: never invent facts or figures \
+not present in the tournament data given to you. If you are not confident about a \
+detail, omit it rather than guess.
 
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
 {
-  "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
+  "title": "a clear, specific headline for this piece (not a generic restatement)",
   "bodyMarkdown": "the full article body in Markdown, 300-600 words",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
 }"""
@@ -109,18 +152,7 @@ def slugify(title: str) -> str:
     return slug[:80].rstrip("-")
 
 
-CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
-
-
-def pick_lens(item: dict) -> str:
-    if item["kind"] in CALENDAR_KINDS:
-        return "tournament-db"
-    if item.get("scoreBreakdown", {}).get("nordic", 0) > 0:
-        return "nordic-angle"
-    return "organizer-pov"
-
-
-def build_user_prompt(item: dict, lens: str) -> str:
+def build_user_prompt(item: dict) -> str:
     if item["kind"] in CALENDAR_KINDS:
         parts = [
             AGGREGATE_INSTRUCTIONS[item["kind"]],
@@ -134,8 +166,6 @@ def build_user_prompt(item: dict, lens: str) -> str:
         return "\n".join(parts)
 
     parts = [
-        LENS_INSTRUCTIONS[lens],
-        "",
         f"Source title: {item['title']}",
         f"Source URL: {item['sourceUrl']}",
         f"Source name: {item['sourceName']}",
@@ -154,13 +184,14 @@ def parse_response(text: str) -> dict:
 
 
 def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
-    lens = pick_lens(item)
-    user_prompt = build_user_prompt(item, lens)
+    is_aggregate = item["kind"] in CALENDAR_KINDS
+    system_prompt = AGGREGATE_SYSTEM_PROMPT if is_aggregate else NEWS_SYSTEM_PROMPT
+    user_prompt = build_user_prompt(item)
 
     response = client.messages.create(
         model=MODEL,
         max_tokens=4096,
-        system=SYSTEM_PROMPT,
+        system=system_prompt,
         output_config={"effort": "medium"},
         messages=[{"role": "user", "content": user_prompt}],
     )
@@ -170,6 +201,17 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         raise RuntimeError(f"No text content returned for: {item['title']}")
 
     parsed = parse_response("".join(text_blocks))
+
+    if is_aggregate:
+        lens = "tournament-db"
+        continent = CONTINENT_SLUGS[item["continentCode"]]
+    else:
+        lens = parsed["lens"]
+        if lens not in LENS_OPTIONS:
+            raise ValueError(f"Model returned unknown lens {lens!r} for: {item['title']}")
+        continent = parsed["continent"]
+        if continent not in CONTINENT_SLUGS.values() and continent != "global":
+            raise ValueError(f"Model returned unknown continent {continent!r} for: {item['title']}")
 
     slug = slugify(parsed["title"])
     ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
@@ -181,11 +223,12 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         "sourceName": item["sourceName"],
         "sourceUrl": item["sourceUrl"],
         "lens": lens,
+        "continent": continent,
         "selectionScore": item["selectionScore"],
         "reviewStatus": "draft",
         "socialCopy": parsed["socialCopy"],
     }
-    if item["kind"] in CALENDAR_KINDS:
+    if is_aggregate:
         # Extra context for reviewers -- not part of the content schema (unknown
         # frontmatter keys are stripped at build time), but visible in the raw
         # file/PR diff, which is where a reviewer actually looks.

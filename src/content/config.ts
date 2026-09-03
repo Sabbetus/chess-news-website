@@ -10,7 +10,17 @@ const articles = defineCollection({
     publishDate: z.date(),
     sourceName: z.string(),
     sourceUrl: z.string().url(),
-    lens: z.enum(['tournament-db', 'nordic-angle', 'organizer-pov']),
+    // The analytical angle the piece is written through -- shapes the
+    // drafting prompt, shown as a secondary label (not the site's primary
+    // category, that's `continent`). tournament-db is reserved for the
+    // calendar aggregate pieces; the other four are picked by the AI per
+    // news story, whichever fits best.
+    lens: z.enum(['tournament-db', 'drama', 'historical-parallel', 'money-angle', 'community-pulse']),
+    // The site's primary browsing category. Calendar aggregates already
+    // know their continent from ingestion; news stories get it inferred by
+    // the AI at drafting time, falling back to "global" when no single
+    // continent fits (e.g. a FIDE policy story with no regional angle).
+    continent: z.enum(['europe', 'asia', 'north-america', 'south-america', 'africa', 'oceania', 'global']),
     selectionScore: z.number(),
     reviewStatus: z.enum(['draft', 'approved', 'published']),
     socialCopy: z.string().optional(),
