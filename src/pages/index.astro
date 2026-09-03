@@ -31,7 +31,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     lead && (
       <section class="lead">
         <a href={`/articles/${lead.slug}/`}>
-          <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" />
+          <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} />
         </a>
         <div class="lead-cols">
           <div class="lead-main">
@@ -75,7 +75,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
         {secondary.map((a, i) => (
           <article class="card">
             <a href={`/articles/${a.slug}/`}>
-              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i + 1} />
+              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i + 1} image={a.data.image} />
             </a>
             <h3>
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>

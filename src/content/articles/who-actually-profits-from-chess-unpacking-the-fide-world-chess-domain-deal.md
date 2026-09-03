@@ -7,6 +7,10 @@ lens: "money-angle"
 continent: "europe"
 selectionScore: 65
 reviewStatus: "published"
+image:
+  url: "https://upload.wikimedia.org/wikipedia/commons/6/65/FIDE_text_on_white.svg"
+  credit: "M5, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:FIDE_text_on_white.svg"
 socialCopy: "FIDE isn't paying for .chess. World Chess is. A look at who actually profits if the sport gets its own internet domain."
 ---
 

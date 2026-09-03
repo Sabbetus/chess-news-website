@@ -28,6 +28,7 @@ from pathlib import Path
 import anthropic
 
 from continents import CONTINENT_SLUGS
+from images import pick_image_for_item
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -258,11 +259,20 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         frontmatter["monthLabel"] = item["monthLabel"]
         frontmatter["totalTracked"] = item["totalTracked"]
 
+    image = pick_image_for_item(item, parsed["title"])
+    if image:
+        frontmatter["image"] = image
+
     fm_lines = ["---"]
     for key, value in frontmatter.items():
         if isinstance(value, str):
             escaped = value.replace('"', '\\"')
             fm_lines.append(f'{key}: "{escaped}"')
+        elif isinstance(value, dict):
+            fm_lines.append(f"{key}:")
+            for sub_key, sub_value in value.items():
+                escaped = str(sub_value).replace('"', '\\"')
+                fm_lines.append(f'  {sub_key}: "{escaped}"')
         else:
             fm_lines.append(f"{key}: {value}")
     fm_lines.append("---")

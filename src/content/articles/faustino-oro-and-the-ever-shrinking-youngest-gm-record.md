@@ -7,6 +7,10 @@ lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 66
 reviewStatus: "published"
+image:
+  url: "https://upload.wikimedia.org/wikipedia/commons/8/88/Chesscom_logo_pawn_flat.svg"
+  credit: "Chess.com, Public domain, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Chesscom_logo_pawn_flat.svg"
 socialCopy: "Faustino Oro is now the youngest active GM, but not the youngest ever. A look at how that record has kept shrinking since Karjakin in 2002."
 ---
 
