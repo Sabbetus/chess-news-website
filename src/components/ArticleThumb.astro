@@ -1,17 +1,20 @@
 ---
 import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
+import { CONTINENT_META, type Continent } from '../lib/continent';
 
 interface Props {
   lens: Lens;
+  continent: Continent;
   size: 'lead' | 'card';
   seed?: number;
 }
-const { lens, size, seed = 0 } = Astro.props;
-const meta = LENS_META[lens];
+const { lens, continent, size, seed = 0 } = Astro.props;
+const lensMeta = LENS_META[lens];
+const continentMeta = CONTINENT_META[continent];
 const piece = pieceForLens(lens, seed);
 ---
 
-<div class={`thumb thumb--${size} ${meta.className}`}>
-  <span class="chip">{meta.label}</span>
+<div class={`thumb thumb--${size} ${lensMeta.className}`}>
+  <span class="chip">{continentMeta.label}</span>
   <span class="piece">{piece}</span>
 </div>

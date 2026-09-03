@@ -15,7 +15,8 @@ title: string
 publishDate: date
 sourceName: string       # e.g. "Chess.com", "FIDE", "Chess Tournament Calendar"
 sourceUrl: string         # always linked prominently in the article
-lens: tournament-db | nordic-angle | organizer-pov
+lens: tournament-db | drama | historical-parallel | money-angle | community-pulse
+continent: europe | asia | north-america | south-america | africa | oceania | global
 selectionScore: number    # from scripts/select.py -- why this story was picked
 reviewStatus: draft | approved | published
 socialCopy: string        # suggested post text for Phase 2 social automation
@@ -27,6 +28,13 @@ continentName: string
 monthLabel: string
 totalTracked: number
 ```
+
+`continent` is the site's primary browsing category (nav links, `/continent/<slug>/`
+pages). `lens` is a secondary "analytical angle" label shown on the article
+itself -- it shapes the drafting prompt but isn't a nav category. Calendar
+aggregates are always `lens: tournament-db` with a known `continent` from
+ingestion; news articles get both inferred by the model at drafting time
+(see `scripts/draft.py`).
 
 `reviewStatus` is deliberately kept as article-level data, not something
 implied only by "which PR is open" -- this is what lets an admin UI be

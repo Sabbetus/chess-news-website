@@ -50,7 +50,9 @@ KEYWORD_WEIGHTS = {
 }
 MAX_KEYWORD_SCORE = 30
 
-# Nordic/regional relevance -- ties into the Nordic-angle lens.
+# Nordic/regional relevance -- boosts stories that matter for the site's
+# Nordic Chess Festival backlink strategy, independent of which lens ends up
+# writing the piece.
 NORDIC_KEYWORDS = ["norway", "sweden", "denmark", "finland", "iceland", "nordic", "scandinavia"]
 NORDIC_BONUS = 15
 

@@ -3,7 +3,8 @@ title: "Welcome to Chessori"
 publishDate: 2026-09-03
 sourceName: "Chessori"
 sourceUrl: "https://chesstournamentcalendar.com"
-lens: "organizer-pov"
+lens: "community-pulse"
+continent: "global"
 selectionScore: 100
 reviewStatus: "published"
 ---
