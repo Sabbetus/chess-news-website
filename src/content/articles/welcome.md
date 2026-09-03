@@ -1,7 +1,7 @@
 ---
-title: "Welcome to Chess News"
+title: "Welcome to Chessori"
 publishDate: 2026-09-03
-sourceName: "Chess News"
+sourceName: "Chessori"
 sourceUrl: "https://chesstournamentcalendar.com"
 lens: "organizer-pov"
 selectionScore: 100

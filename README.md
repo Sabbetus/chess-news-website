@@ -1,4 +1,4 @@
-# Chess News
+# Chessori
 
 A curated chess news aggregator: original/companion pieces on select
 stories, each linked to its source, drafted with AI assistance and
@@ -67,6 +67,6 @@ run; nothing goes live until an article's `reviewStatus` frontmatter is
 ## Phasing
 
 Phase 1 (current): scaffold, ingestion, selection, AI drafting, PR review,
-deploy. Phase 2 (later, once the site has a name/domain): Google
-Analytics, the Nordic Chess Festival banner (currently a plain footer
-link), and social auto-posting (X, Facebook).
+deploy. Phase 2 (later, once `chessori.com` is registered and the site is
+ready to go public): Google Analytics, the Nordic Chess Festival banner
+(currently a plain footer link), and social auto-posting (X, Facebook).
