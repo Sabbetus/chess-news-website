@@ -67,13 +67,20 @@ const description = excerptFrom(article.body, 200);
 <style>
   .story {
     padding: 34px 0 60px;
+    /* A single shared width, rather than 68ch repeated on several
+       elements -- ch resolves against each element's own font-size, and
+       .story-body sets an explicit 18px while .story-head/.thumb don't
+       (inheriting the body's 17px), so the same "68ch" was quietly
+       computing to different pixel widths and misaligning the title,
+       image, and body text. */
+    --content-width: 680px;
   }
   .story :global(.thumb) {
-    max-width: 68ch;
+    max-width: var(--content-width);
     margin: 0 auto 22px;
   }
   .story-head {
-    max-width: 68ch;
+    max-width: var(--content-width);
     margin: 0 auto 30px;
   }
   .story-head h1 {
@@ -87,7 +94,7 @@ const description = excerptFrom(article.body, 200);
   }
 
   .story-body {
-    max-width: 68ch;
+    max-width: var(--content-width);
     margin: 0 auto;
     font-size: 18px;
     line-height: 1.72;
@@ -121,7 +128,7 @@ const description = excerptFrom(article.body, 200);
   }
 
   .source-callout {
-    max-width: 68ch;
+    max-width: var(--content-width);
     margin: 40px auto 0;
     padding-top: 20px;
     border-top: 1px solid var(--rule-soft);
