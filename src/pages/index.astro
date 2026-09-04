@@ -10,7 +10,7 @@ const allArticles = await getCollection('articles', ({ data }) => data.reviewSta
 const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
 const [lead, ...rest] = articles;
-const secondary = rest.slice(0, 4);
+const secondary = rest.slice(0, 8);
 const latest = articles.slice(0, 5);
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -108,6 +108,14 @@ const jsonLd = [
           </article>
         ))}
       </section>
+    )
+  }
+
+  {
+    articles.length > secondary.length + 1 && (
+      <p class="view-all">
+        <a href="/archive/">View all {articles.length} articles &rarr;</a>
+      </p>
     )
   }
 </BaseLayout>
@@ -231,6 +239,22 @@ const jsonLd = [
   }
   .card .byline {
     font-size: 11.5px;
+  }
+
+  .view-all {
+    padding: 10px 0 40px;
+    text-align: center;
+  }
+  .view-all a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .view-all a:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: 860px) {
