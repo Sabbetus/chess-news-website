@@ -48,6 +48,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start", required=True, help="YYYY-MM-DD, inclusive")
     parser.add_argument("--end", required=True, help="YYYY-MM-DD, inclusive")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--calendar-only",
+        action="store_true",
+        help="Skip news selection entirely -- only build the range's calendar-aggregate slots. "
+        "Use this to safely retry just a failed calendar aggregate without touching news, since "
+        "re-running news selection for a range that's already (partly) drafted is not reliably "
+        "idempotent -- see already_drafted_news_dates().",
+    )
     return parser.parse_args()
 
 
@@ -69,6 +77,26 @@ def already_drafted_urls() -> set[str]:
         if match:
             urls.add(match.group(1))
     return urls
+
+
+def already_drafted_news_dates() -> set[date]:
+    """Dates that already have at least one non-aggregate article. A rerun
+    must treat that day's news selection as finished, not just filter out
+    the specific URLs already drafted -- excluding only URLs and re-running
+    select_for_day on what's left silently promotes a previously
+    passed-over, lower-scored candidate to fill the day's quota again,
+    which is not what a rerun should do (found the hard way: a rerun meant
+    to pick up 2 failed calendar aggregates instead drafted 7 unrelated
+    extra news articles by topping every day back up to quota)."""
+    dates = set()
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text()
+        if re.search(r'^aggregateKind:\s*"', text, re.MULTILINE):
+            continue
+        match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
+        if match:
+            dates.add(date.fromisoformat(match.group(1)))
+    return dates
 
 
 def item_date(item: dict) -> date | None:
@@ -200,11 +228,19 @@ def main() -> None:
     end = date.fromisoformat(args.end)
 
     exclude_urls = already_drafted_urls()
-    news_by_day = collect_news_candidates(start, end, exclude_urls)
+    done_days = already_drafted_news_dates()
+    news_by_day = {} if args.calendar_only else collect_news_candidates(start, end, exclude_urls)
     calendar_slots = collect_calendar_slots(start, end)
 
     plan: list[tuple[date, dict]] = []
     for d in daterange(start, end):
+        if args.calendar_only or d in done_days:
+            # This day's news selection already ran (on this backfill or
+            # the live pipeline) -- topping it back up from whatever
+            # candidates are left over would promote a previously
+            # passed-over, lower-scored story into the quota, which a
+            # rerun must never do (see already_drafted_news_dates).
+            continue
         for item in select_for_day(news_by_day.get(d, [])):
             plan.append((d, item))
     plan += calendar_slots
