@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-4"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 48
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana beat Praggnanandhaa with the Italian Game, chess's oldest opening. Here's why the \"boring\" 1.e4 e5 line keeps resurfacing at elite level."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Fabiano_Caruana_in_2025.jpg/1280px-Fabiano_Caruana_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

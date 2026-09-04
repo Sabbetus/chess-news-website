@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/gcl-season-4-preview-what-to-expect-as-the-worl
 lens: "money-angle"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GCL Season 4 lands in Bengaluru with Carlsen back and Divya Deshmukh debuting, but the real story is the media value numbers behind the franchise bet."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg/1280px-Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

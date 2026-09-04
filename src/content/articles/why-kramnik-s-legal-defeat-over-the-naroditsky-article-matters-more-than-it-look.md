@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/vladimir-kramnik-loses-new-in-chess-
 lens: "drama"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Kramnik lost his case against New In Chess over the Naroditsky cyberbullying article. He's appealing, but the ruling itself may matter more than the appeal does."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Rue_Vladimir_Kramnik_-_Asni%C3%A8res-sur-Seine_%28FR92%29_-_2024-04-06_-_1.jpg/1280px-Rue_Vladimir_Kramnik_-_Asni%C3%A8res-sur-Seine_%28FR92%29_-_2024-04-06_-_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

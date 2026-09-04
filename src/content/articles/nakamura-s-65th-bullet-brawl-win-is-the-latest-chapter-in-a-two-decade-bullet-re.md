@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/hikaru-nakamura-wins-bullet-brawl-au
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Nakamura's 65th Bullet Brawl title isn't a new story, it's the same story he's been writing since his ICC bullet days two decades ago."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Hikaru_Nakamura_%282016%29_crop.jpg/1280px-Hikaru_Nakamura_%282016%29_crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

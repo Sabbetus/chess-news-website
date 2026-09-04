@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/kasparov-topalov-chess960-match-st-l
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Kasparov's last classical game ended in defeat to Topalov in 2005. Nearly 20 years later they meet again in St. Louis, in Chess960 this time."
 image:
   url: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Garry_Kasparov_European_Union_2023_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"

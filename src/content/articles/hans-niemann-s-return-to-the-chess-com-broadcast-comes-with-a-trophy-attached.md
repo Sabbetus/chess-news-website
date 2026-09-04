@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/niemann-wins-titled-tuesday-septembe
 lens: "drama"
 continent: "global"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Hans Niemann's return to the Chess.com broadcast wasn't quiet: he snatched Titled Tuesday from a 10/10 Duda at the last second. The scandal history makes the timing impossible to ignore."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Hans_Niemann_Uzchess_cup_3_masters_%28cropped%29.jpg/1280px-Hans_Niemann_Uzchess_cup_3_masters_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
