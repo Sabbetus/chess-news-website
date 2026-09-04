@@ -112,6 +112,26 @@ def _is_photo_file(title: str) -> bool:
     return not title.lower().endswith(_REJECTED_EXTENSIONS)
 
 
+# A person's name is also, not infrequently, a street, square, or building
+# named after them -- "Rue Vladimir Kramnik - Asnieres-sur-Seine" matches a
+# "Vladimir Kramnik" query under every other filter (real photo file,
+# correctly licensed, high enough resolution) while being a street sign,
+# not a picture of the person. These filename prefixes are how Commons
+# titles that kind of file across the languages sourced articles are
+# likely to come from.
+_PLACE_NAME_PREFIXES = (
+    "rue ", "avenue ", "boulevard ", "place ", "square ", "plaza ", "street ",
+    "via ", "calle ", "strasse ", "straße ", "platz ",
+)
+
+
+def _is_place_named_after_subject(title: str) -> bool:
+    # Titles are "File:<name>.ext" once the namespace prefix is stripped by
+    # the caller -- check the bare name, case-insensitively.
+    name = title.split(":", 1)[-1].lower()
+    return name.startswith(_PLACE_NAME_PREFIXES)
+
+
 # The lead image slot renders at 680px wide. A source photo much narrower
 # than that gets stretched to fill it and looks visibly blurry -- found in
 # testing with a 222x224px Commons photo that was otherwise a perfectly
@@ -161,12 +181,20 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     return any(word.lower() in title_lower for word in significant_words)
 
 
-def _fetch_first_licensed_file(titles: list, query: str, strict: bool) -> dict | None:
+def _fetch_first_licensed_file(
+    titles: list, query: str, strict: bool, exclude_source_urls: set | None = None
+) -> dict | None:
     """Among the given candidate titles, return the most recently-taken
     acceptably-licensed file -- not just the first one Commons' text search
     happened to rank highest. Search relevance has no relationship to photo
     age, and an old photo of a young player (or a much-changed player) reads
-    as wrong even when it's the "right" person and properly licensed."""
+    as wrong even when it's the "right" person and properly licensed.
+
+    `exclude_source_urls` skips files already used as another article's
+    image -- the query cascade is deterministic, so two articles that both
+    name the same central subject (e.g. two money-angle pieces that both
+    cite Magnus Carlsen) would otherwise pick the identical top-ranked
+    photo of him."""
     if not titles:
         return None
 
@@ -188,6 +216,8 @@ def _fetch_first_licensed_file(titles: list, query: str, strict: bool) -> dict |
     for title in titles:
         if not _is_photo_file(title):
             continue
+        if _is_place_named_after_subject(title):
+            continue
         if not _title_matches_query(title, query, strict):
             continue
         page = pages_by_title.get(title)
@@ -204,9 +234,12 @@ def _fetch_first_licensed_file(titles: list, query: str, strict: bool) -> dict |
         if not _license_ok(license_name):
             continue
 
+        page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
+        if exclude_source_urls and page_url in exclude_source_urls:
+            continue
+
         artist = _strip_html(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
         url = info.get("thumburl") or info.get("url")
-        page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
         date = _photo_date(meta)
 
         candidates.append(
@@ -227,12 +260,12 @@ def _fetch_first_licensed_file(titles: list, query: str, strict: bool) -> dict |
     return candidates[0][1]
 
 
-def search_image(query: str, strict: bool = False) -> dict | None:
+def search_image(query: str, strict: bool = False, exclude_source_urls: set | None = None) -> dict | None:
     """Search Commons for one query, return the first acceptably-licensed
     file, or None if nothing usable was found."""
     try:
         titles = _search_titles(query, limit=8)
-        return _fetch_first_licensed_file(titles, query, strict)
+        return _fetch_first_licensed_file(titles, query, strict, exclude_source_urls)
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
 
@@ -304,9 +337,11 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
     return queries
 
 
-def pick_image_for_item(item: dict, drafted_title: str, image_subjects: list | None = None) -> dict | None:
+def pick_image_for_item(
+    item: dict, drafted_title: str, image_subjects: list | None = None, exclude_source_urls: set | None = None
+) -> dict | None:
     for query, strict in build_query_cascade(item, drafted_title, image_subjects):
-        result = search_image(query, strict)
+        result = search_image(query, strict, exclude_source_urls)
         if result:
             return result
     return None
