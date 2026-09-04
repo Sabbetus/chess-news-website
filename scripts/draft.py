@@ -47,15 +47,17 @@ AGGREGATE_INSTRUCTIONS = {
         "Write an original retrospective piece ranking the biggest tournaments "
         "in this continent last month, grounded entirely in the tournament data "
         "provided (a JSON list, already sorted by players registered, largest "
-        "first). This is original reporting from our own database, not "
-        "commentary on someone else's article. Cover the top entries by name, "
-        "player count, location, and anything else notable (format, rating "
-        "requirement) given in the data -- do not invent details not present in "
-        "the data. Note that this ranking is limited to tournaments with a "
-        "known player count in our data; if the total tracked count is "
+        "first). This is original reporting, not commentary on someone else's "
+        "article. Cover the top entries by name, player count, location, and "
+        "anything else notable (format, rating requirement) given in the data "
+        "-- do not invent details not present in the data. Every tournament you "
+        "mention by name MUST be a Markdown link using its \"url\" field from "
+        "the data -- link the tournament's own name text, not generic text like "
+        "\"here\". Note that this ranking is limited to tournaments with a "
+        "known player count in the data; if the total tracked count is "
         "meaningfully higher than the number ranked, say so plainly rather than "
         "implying the list is exhaustive (e.g. some countries, like the US, "
-        "don't reliably report player counts to our sources, so they may be "
+        "don't reliably report player counts to these sources, so they may be "
         "under-represented here even if they hosted plenty of tournaments)."
     ),
     "calendar-comingup": (
@@ -64,11 +66,14 @@ AGGREGATE_INSTRUCTIONS = {
         "tournament data provided (a JSON list of highlights, some ranked by "
         "player count, others -- where player counts aren't reliably reported "
         "-- selected as notable by name/format/rating requirement). This is "
-        "original reporting from our own database, not commentary on someone "
-        "else's article. Cover a handful of the most interesting entries by "
-        "name, date, location, and any other notable detail given in the data "
-        "-- do not invent details not present in the data. Mention the overall "
-        "count of tracked tournaments in the continent that month for context."
+        "original reporting, not commentary on someone else's article. Cover a "
+        "handful of the most interesting entries by name, date, location, and "
+        "any other notable detail given in the data -- do not invent details "
+        "not present in the data. Every tournament you mention by name MUST be "
+        "a Markdown link using its \"url\" field from the data -- link the "
+        "tournament's own name text, not generic text like \"here\". Mention "
+        "the overall count of tracked tournaments in the continent that month "
+        "for context."
     ),
 }
 
@@ -122,7 +127,9 @@ any other topic, rewrite or cut it.
 same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do not \
 default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
-- Prefer plain, direct verbs and concrete nouns over hedge-y abstractions."""
+- Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
+- Keep paragraphs short: 2-4 sentences each, one idea per paragraph. Break up any \
+paragraph that's running long rather than letting it stretch to 5+ sentences."""
 
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \
@@ -154,10 +161,10 @@ exact keys:
 }}"""
 
 AGGREGATE_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. \
-This piece is original reporting from the site's own tournament database, not \
-commentary on someone else's article. Be accurate: never invent facts or figures \
-not present in the tournament data given to you. If you are not confident about a \
-detail, omit it rather than guess.
+This piece is original reporting on tournament data, not commentary on someone \
+else's article. Be accurate: never invent facts or figures not present in the \
+tournament data given to you. If you are not confident about a detail, omit it \
+rather than guess.
 
 {STYLE_GUIDE}
 
@@ -177,6 +184,14 @@ def slugify(title: str) -> str:
 
 def build_user_prompt(item: dict) -> str:
     if item["kind"] in CALENDAR_KINDS:
+        # Each tournament gets its own chesstournamentcalendar.com page at
+        # /tournament/<slug>/ -- add that as a "url" field so the model can
+        # link each tournament's name directly to its own page rather than
+        # just the continent-level overview.
+        tournament_data = [
+            {**t, "url": f"https://chesstournamentcalendar.com/tournament/{t['slug']}/"}
+            for t in item["tournamentData"]
+        ]
         parts = [
             AGGREGATE_INSTRUCTIONS[item["kind"]],
             "",
@@ -184,7 +199,7 @@ def build_user_prompt(item: dict) -> str:
             f"Month: {item['monthLabel']}",
             f"Total tournaments tracked in this continent this month: {item['totalTracked']}",
             f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
-            f"Tournament data (JSON list): {json.dumps(item['tournamentData'])}",
+            f"Tournament data (JSON list): {json.dumps(tournament_data)}",
         ]
         return "\n".join(parts)
 
