@@ -15,7 +15,9 @@ DS28 - crop., CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHikaru_Nakamura_%282016%29_crop.jpg"
 ---
 
-Hikaru Nakamura picked up his 65th career Bullet Brawl title on Saturday, finishing 23 points clear of the field even after visibly coasting late in the arena. It's the kind of result that barely registers as news anymore, and that's precisely the point worth dwelling on.
+Hikaru Nakamura picked up his 65th career Bullet Brawl title on Saturday, his 16th of 2026 alone, scoring 51/65 for 170 points and finishing 23 points clear of the field even after visibly coasting late in the arena. He put together a 19-game winning streak along the way. It's the kind of result that barely registers as news anymore, and that's precisely the point worth dwelling on.
+
+GM Nihal Sarin took second with 147 points and $250, and IM Renato Terry, who has been building his own reputation this year as one of Chess.com's 3+0 Thursday specialists, rounded out the podium in third with 138 points and $150. GM Amin Tabatabaei took fourth. Nakamura's own first-place check was $400, a modest sum next to the margin he won it by.
 
 Long before Bullet Brawl existed as a Chess.com event, Nakamura was already the player everyone associated with one-minute chess. On the old Internet Chess Club in the mid-2000s, playing under a well-known alias, he built a reputation for grinding out bullet games at a volume and quality that other strong grandmasters simply couldn't match. That reputation predates his world top-10 ranking, his classical title runs, and his current life as a streamer. It's arguably the oldest and most stable part of his chess identity.
 
