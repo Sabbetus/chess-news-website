@@ -1,9 +1,12 @@
 name: Ingest, select, and draft articles
 
 on:
-  # No schedule for now -- run manually (workflow_dispatch) while still
-  # reviewing every batch by hand. Add a schedule back once there's enough
-  # trust in the pipeline to let it run unattended.
+  # Runs daily; still opens a PR for human review before anything goes
+  # live -- reviewStatus only flips to "published" on merge, never
+  # automatically. workflow_dispatch stays available for manual/backfill
+  # runs alongside the schedule.
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 permissions:
