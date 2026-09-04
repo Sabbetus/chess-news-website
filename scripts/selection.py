@@ -50,6 +50,24 @@ KEYWORD_WEIGHTS = {
 }
 MAX_KEYWORD_SCORE = 30
 
+# Chess.com's RSS feed mixes real news with site-feature/product promotion
+# posts ("Play In The Special Edition Of The Gambit Cup", "Get Coached By
+# The Almighty Mittens"). These read as calls-to-action addressed straight
+# at the reader, not declarative news headlines ("X Wins Y", "X Signs With
+# Y") -- a title starting with an imperative verb aimed at the reader is a
+# reliable tell. Hard veto rather than a score penalty: no legitimate news
+# story is worth publishing as a companion piece to an ad.
+PROMO_TITLE_PATTERNS = [
+    r"^play in\b", r"^get coached\b", r"^sign up\b", r"^register (for|now)\b",
+    r"^enter the\b", r"^join (the|us)\b", r"^watch (the|as)\b", r"^try (the|our)\b",
+]
+
+
+def is_promotional(item: dict) -> bool:
+    title = (item.get("title") or "").strip().lower()
+    return any(re.match(pattern, title) for pattern in PROMO_TITLE_PATTERNS)
+
+
 # Nordic/regional relevance -- boosts stories that matter for the site's
 # Nordic Chess Festival backlink strategy, independent of which lens ends up
 # writing the piece.
@@ -117,6 +135,8 @@ def main() -> None:
 
     scored = []
     for item in candidates:
+        if is_promotional(item):
+            continue
         total, breakdown = score_item(item)
         if total <= 0:
             continue
