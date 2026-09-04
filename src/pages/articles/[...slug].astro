@@ -59,7 +59,7 @@ const description = excerptFrom(article.body, 200);
     </div>
 
     <p class="source-callout">
-      By Claude Henry<br />
+      <span class="byline-credit">By Claude Henry</span><br />
       Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a>
     </p>
   </article>
@@ -139,5 +139,9 @@ const description = excerptFrom(article.body, 200);
   }
   .source-callout a {
     color: var(--nordic);
+  }
+  .byline-credit {
+    display: inline-block;
+    margin-bottom: 6px;
   }
 </style>
