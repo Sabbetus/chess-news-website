@@ -13,9 +13,9 @@ continentName: "Asia"
 monthLabel: "August 2026"
 totalTracked: 1836
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Asian_Team_Chess_Championship1_%28Mehr%2C_2014%29.jpg"
-  credit: "Mina Noei, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File:Asian_Team_Chess_Championship1_(Mehr,_2014).jpg"
+  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg/1280px-Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg"
+  credit: "Jess M. Escaros for the Philippine News Agency, Public domain, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg"
 ---
 
 August 2026 was a big month for grassroots chess across Asia, and our database's ranking of tournaments by registered players tells a clear story: India's district- and state-level rapid events, often run out of school halls and community centers, are pulling in crowds that rival major international opens.
