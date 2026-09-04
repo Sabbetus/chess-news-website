@@ -52,9 +52,14 @@ const jsonLd = [
       <section class="lead">
         <div class="lead-cols">
           <div class="lead-main">
-            <a href={`/articles/${lead.slug}/`}>
-              <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} alt={lead.data.title} />
-            </a>
+            <ArticleThumb
+              lens={lead.data.lens}
+              continent={lead.data.continent}
+              size="lead"
+              image={lead.data.image}
+              alt={lead.data.title}
+              href={`/articles/${lead.slug}/`}
+            />
             <h2>
               <a href={`/articles/${lead.slug}/`}>{lead.data.title}</a>
             </h2>
@@ -93,9 +98,15 @@ const jsonLd = [
       <section class="grid">
         {secondary.map((a, i) => (
           <article class="card">
-            <a href={`/articles/${a.slug}/`}>
-              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i + 1} image={a.data.image} alt={a.data.title} />
-            </a>
+            <ArticleThumb
+              lens={a.data.lens}
+              continent={a.data.continent}
+              size="card"
+              seed={i + 1}
+              image={a.data.image}
+              alt={a.data.title}
+              href={`/articles/${a.slug}/`}
+            />
             <h3>
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
             </h3>

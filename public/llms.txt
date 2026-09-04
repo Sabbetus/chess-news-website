@@ -20,16 +20,23 @@
 - "reviewStatus: published" in an article's frontmatter is the signal a
   human editor has reviewed and approved that specific piece.
 
-## Content
+## Docs
 
-- Homepage: https://chessori.com/ -- latest published articles.
-- Per-continent sections: https://chessori.com/continent/{europe,asia,north-america,south-america,africa,oceania,global}/
-- RSS feed of all published articles: https://chessori.com/rss.xml
-- Sitemap: https://chessori.com/sitemap-index.xml
+- [Homepage](https://chessori.com/): latest published articles.
+- [All Articles](https://chessori.com/archive/): every published article, newest first.
+- [Europe](https://chessori.com/continent/europe/): Europe section.
+- [Asia](https://chessori.com/continent/asia/): Asia section.
+- [North America](https://chessori.com/continent/north-america/): North America section.
+- [South America](https://chessori.com/continent/south-america/): South America section.
+- [Africa](https://chessori.com/continent/africa/): Africa section.
+- [Oceania](https://chessori.com/continent/oceania/): Oceania section.
+- [Global](https://chessori.com/continent/global/): stories with no single regional angle.
+- [RSS feed](https://chessori.com/rss.xml): all published articles.
+- [Sitemap](https://chessori.com/sitemap-index.xml): full URL index.
 
 ## Reuse
 
-Article text may be quoted with attribution to Chessori and a link back
-to the specific article. The original source article linked from each
-piece carries its own outlet's rights, separate from Chessori's own
-analysis text.
+Article text may be quoted with attribution to [Chessori](https://chessori.com/)
+and a link back to the specific article. The original source article linked
+from each piece carries its own outlet's rights, separate from Chessori's
+own analysis text.
