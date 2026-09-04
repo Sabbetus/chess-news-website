@@ -170,11 +170,11 @@ rather than guess.
 
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
-{
+{{
   "title": "a clear, specific headline for this piece (not a generic restatement)",
   "bodyMarkdown": "the full article body in Markdown, 300-600 words",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
-}"""
+}}"""
 
 
 def slugify(title: str) -> str:
