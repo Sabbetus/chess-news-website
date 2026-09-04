@@ -7,7 +7,7 @@ import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continen
 interface Props {
   title: string;
   description?: string;
-  activeContinent?: Continent | 'front-page';
+  activeContinent?: Continent | 'front-page' | 'archive';
   articleMeta?: { publishedTime: string; source: string };
   jsonLd?: Record<string, unknown>[];
   image?: string;
@@ -38,6 +38,7 @@ const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
 const sections = [
   { id: 'front-page' as const, label: 'Front Page', href: '/' },
   ...CONTINENT_ORDER.map((c) => ({ id: c, label: CONTINENT_META[c].navLabel, href: `/continent/${c}/` })),
+  { id: 'archive' as const, label: 'All Articles', href: '/archive/' },
 ];
 ---
 

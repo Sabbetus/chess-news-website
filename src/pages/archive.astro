@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleThumb from '../components/ArticleThumb.astro';
+import { excerptFrom } from '../lib/excerpt';
+
+const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
+const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+---
+
+<BaseLayout
+  title="All Articles | Chessori"
+  description="Every Chessori article, newest first."
+  activeContinent="archive"
+>
+  <header class="section-head">
+    <h1>All Articles</h1>
+    <p>{articles.length} {articles.length === 1 ? 'story' : 'stories'}</p>
+  </header>
+
+  {
+    articles.length === 0 && (
+      <section class="empty-state">
+        <p>No articles published yet -- check back soon.</p>
+      </section>
+    )
+  }
+
+  {
+    articles.length > 0 && (
+      <section class="grid">
+        {articles.map((a, i) => (
+          <article class="card">
+            <a href={`/articles/${a.slug}/`}>
+              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i} image={a.data.image} alt={a.data.title} />
+            </a>
+            <h3>
+              <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+            </h3>
+            <p>{excerptFrom(a.body, 160)}</p>
+            <div class="byline">
+              <span class="src">Source: {a.data.sourceName}</span>
+            </div>
+          </article>
+        ))}
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .section-head {
+    padding: 34px 0 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head h1 {
+    margin: 0 0 6px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(30px, 4.5vw, 44px);
+  }
+  .section-head p {
+    margin: 0 0 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .empty-state {
+    padding: 60px 0;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  .grid {
+    padding: 36px 0 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 46px;
+    row-gap: 6px;
+  }
+  .card {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule-faint);
+  }
+  .card h3 {
+    margin: 0 0 9px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  .card h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .card h3 a:hover {
+    color: var(--accent);
+  }
+  .card p {
+    margin: 0 0 11px;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+  .card .byline {
+    font-size: 11.5px;
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
