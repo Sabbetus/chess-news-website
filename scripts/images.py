@@ -112,7 +112,56 @@ def _is_photo_file(title: str) -> bool:
     return not title.lower().endswith(_REJECTED_EXTENSIONS)
 
 
-def _fetch_first_licensed_file(titles: list) -> dict | None:
+# The lead image slot renders at 680px wide. A source photo much narrower
+# than that gets stretched to fill it and looks visibly blurry -- found in
+# testing with a 222x224px Commons photo that was otherwise a perfectly
+# relevant, correctly-licensed match. SVGs are vector and scale cleanly
+# regardless of their reported "native" size, so they're exempt.
+MIN_IMAGE_WIDTH = 500
+MIN_IMAGE_HEIGHT = 350
+
+
+def _is_high_enough_resolution(title: str, info: dict) -> bool:
+    if title.lower().endswith(".svg"):
+        return True
+    width = info.get("width") or 0
+    height = info.get("height") or 0
+    return width >= MIN_IMAGE_WIDTH and height >= MIN_IMAGE_HEIGHT
+
+
+_QUERY_WORD_PATTERN = re.compile(r"[A-Za-z]+")
+
+
+def _title_matches_query(title: str, query: str, strict: bool) -> bool:
+    """Require the candidate's filename to actually contain part of the
+    search query, not just something Commons' full-text search matched
+    somewhere in the file's page. Without this, a resolution or license
+    rejection on the one genuinely relevant result can fall through to an
+    unrelated file that only coincidentally shares a word with the query
+    (found in testing: "Renato Terry" fell through to a photo of a
+    different, unrelated person once the real match was filtered out for
+    being too small).
+
+    `strict` requires ALL significant query words to appear in the title,
+    not just one -- used for auto-extracted headline-fragment queries like
+    "Terry Extends" (not a real name; "Extends" only got capitalized by
+    Title Case styling), where a single-word match let through a
+    completely different "Terry" once tried in testing. Lenient (any-word)
+    matching stays for the deliberately-constructed queries (explicit
+    subject, org name, continent/country) that testing already confirmed
+    work well with it -- e.g. "Asian Team Chess Championship..." correctly
+    matches an "{continent} chess tournament" query without containing
+    every word of it."""
+    significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 4]
+    if not significant_words:
+        return True
+    title_lower = title.lower()
+    if strict:
+        return all(word.lower() in title_lower for word in significant_words)
+    return any(word.lower() in title_lower for word in significant_words)
+
+
+def _fetch_first_licensed_file(titles: list, query: str, strict: bool) -> dict | None:
     """Among the given candidate titles, return the most recently-taken
     acceptably-licensed file -- not just the first one Commons' text search
     happened to rank highest. Search relevance has no relationship to photo
@@ -126,7 +175,7 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
             "action": "query",
             "titles": "|".join(titles),
             "prop": "imageinfo",
-            "iiprop": "url|extmetadata|timestamp",
+            "iiprop": "url|extmetadata|timestamp|size",
             "iiurlwidth": 1200,
         }
     )
@@ -139,6 +188,8 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
     for title in titles:
         if not _is_photo_file(title):
             continue
+        if not _title_matches_query(title, query, strict):
+            continue
         page = pages_by_title.get(title)
         if not page:
             continue
@@ -146,6 +197,8 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
         if not info_list:
             continue
         info = info_list[0]
+        if not _is_high_enough_resolution(title, info):
+            continue
         meta = info.get("extmetadata", {})
         license_name = meta.get("LicenseShortName", {}).get("value", "")
         if not _license_ok(license_name):
@@ -174,52 +227,25 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
     return candidates[0][1]
 
 
-def search_image(query: str) -> dict | None:
+def search_image(query: str, strict: bool = False) -> dict | None:
     """Search Commons for one query, return the first acceptably-licensed
     file, or None if nothing usable was found."""
     try:
         titles = _search_titles(query, limit=8)
-        return _fetch_first_licensed_file(titles)
+        return _fetch_first_licensed_file(titles, query, strict)
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
 
 
-# Matches runs of 2-3 consecutive Capitalized Words -- a cheap fallback for
-# a full name/event phrase ("Magnus Carlsen", "Total Chess") when Claude's
-# own `imageSubject` pick (see draft.py) is empty or turns up nothing.
-# Deliberately does NOT fall back further to single capitalized words:
-# tried in testing, a lone surname like "Carlsen" matched a Wikimedia file
-# for a completely unrelated person (a 19th-century painter also named
-# Carlsen) -- too high a risk of a flatly wrong photo for too little
-# marginal recall.
-_ENTITY_PATTERN = re.compile(r"\b[A-Z][a-zA-Z'-]*(?:\s+[A-Z][a-zA-Z'-]*){1,2}\b")
-
-_ENTITY_STOPWORDS = {
-    "the", "a", "an", "why", "who", "what", "how", "chess", "world", "new",
-}
-
-
-def _extract_entity_candidates(*texts: str) -> list:
-    seen = set()
-    candidates = []
-    for text in texts:
-        for match in _ENTITY_PATTERN.finditer(text or ""):
-            phrase = match.group(0).strip()
-            first_word = phrase.split()[0].lower()
-            key = phrase.lower()
-            if first_word in _ENTITY_STOPWORDS or key in seen:
-                continue
-            seen.add(key)
-            candidates.append(phrase)
-    return candidates
-
-
 def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "") -> list:
-    """Ordered list of search queries to try, most specific first, for a
-    drafted article. `item` is the original candidate dict (from
+    """Ordered list of (query, strict) tuples to try, most specific first,
+    for a drafted article. `item` is the original candidate dict (from
     selected.json); `drafted_title` is the headline Claude wrote;
     `image_subject` is the specific person/org/event Claude named in its
-    drafting response, if any -- the most reliable candidate available."""
+    drafting response, if any -- the most reliable candidate available.
+    `strict` marks auto-extracted headline-fragment queries, which need a
+    stronger title-match bar than the deliberately-constructed ones (see
+    _title_matches_query)."""
     queries = []
     continent_code = item.get("continentCode")
     continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
@@ -240,36 +266,44 @@ def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "")
             tournament_name = (top.get("name") or "").strip()
             country = (top.get("country") or "").strip()
             if tournament_name:
-                queries.append(tournament_name)
+                queries.append((tournament_name, False))
             if country:
                 # Deliberately just "{country} chess", not "... chess
                 # tournament": the 3-word version matched Commons' full-text
                 # search against unrelated scanned documents (a 1967 school
                 # yearbook that happened to mention both words somewhere in
                 # its OCR'd text) rather than actual tournament photography.
-                queries.append(f"{country} chess")
+                queries.append((f"{country} chess", False))
 
         name = item.get("continentName") or continent_name
         if name:
-            queries.append(f"{name} chess tournament")
-            queries.append(f"{name} chess")
+            queries.append((f"{name} chess tournament", False))
+            queries.append((f"{name} chess", False))
     else:
         if image_subject:
-            queries.append(image_subject)
-        queries.extend(_extract_entity_candidates(drafted_title, item["title"]))
+            queries.append((image_subject, False))
+        # No auto-extracted headline-fragment fallback here: tried and
+        # dropped in testing. Even requiring every word to match, generic
+        # capitalized fragments like "Thursday Record" (from a headline,
+        # not a real name) matched Wikimedia files for entirely unrelated
+        # subjects (a musician, in one case) -- too unreliable to keep at
+        # any strictness. Claude's own imageSubject already covers this
+        # case when a real subject exists; when it's empty or too specific
+        # to find, falling straight to the org/continent/generic queries
+        # below is safer than guessing from the headline text.
         source_name = item.get("sourceName", "")
         if source_name:
-            queries.append(f"{source_name} logo")
+            queries.append((f"{source_name} logo", False))
         if continent_name:
-            queries.append(f"{continent_name} chess")
+            queries.append((f"{continent_name} chess", False))
 
-    queries.append("chess tournament")
+    queries.append(("chess tournament", False))
     return queries
 
 
 def pick_image_for_item(item: dict, drafted_title: str, image_subject: str = "") -> dict | None:
-    for query in build_query_cascade(item, drafted_title, image_subject):
-        result = search_image(query)
+    for query, strict in build_query_cascade(item, drafted_title, image_subject):
+        result = search_image(query, strict)
         if result:
             return result
     return None

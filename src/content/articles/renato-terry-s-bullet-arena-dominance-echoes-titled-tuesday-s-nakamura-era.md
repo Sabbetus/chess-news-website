@@ -9,9 +9,9 @@ selectionScore: 56
 reviewStatus: "published"
 socialCopy: "IM Renato Terry just hit 18 titles in Chess.com's 3+0 Thursday arena. How his bullet dominance compares to Nakamura's old Titled Tuesday reign."
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/4/42/RenatoTerry.png"
-  credit: "Pro Chess League, CC BY 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File:RenatoTerry.png"
+  url: "https://upload.wikimedia.org/wikipedia/commons/8/88/Chesscom_logo_pawn_flat.svg"
+  credit: "Chess.com, Public domain, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Chesscom_logo_pawn_flat.svg"
 ---
 
 Eighteen. That's how many 3+0 Thursday titles IM Renato Terry has now collected after his 9.5/11 performance in the day's final event, a number that starts to look less like a hot streak and more like a monopoly.
