@@ -30,4 +30,4 @@ Sydney's contribution centers on the Norths Chess Club, which is running two sec
 
 Canberra and Adelaide round out the geography. Canberra's long-running weekly series continues with [Street Chess 5 September 2026](https://chesstournamentcalendar.com/tournament/street-chess-5-september-2026-fide-478890/), a rapid event on the 5th, while Adelaide opens its pennant season with the [2026 SA Pennant Teams A Grade Round 1](https://chesstournamentcalendar.com/tournament/2026-sa-pennant-teams-a-grade-round-1-fide-495475/) on September 22.
 
-No player counts or prize funds were reported for any of these events, so scale is hard to gauge from the data alone. Still, the spread across five cities suggests a steady month of grassroots and club-level chess, anchored by Perth's international weekend.
+We don't have player counts or prize funds for most of these events in this data, so scale is hard to gauge from it alone. Still, the spread across five cities suggests a steady month of grassroots and club-level chess, anchored by Perth's international weekend.
