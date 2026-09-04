@@ -335,14 +335,41 @@ nav.sections a:hover {
   color: var(--ink);
 }
 
+.eyebrow-short {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .masthead-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
   }
   .masthead-top .date {
     display: none;
+  }
+  .eyebrow-full {
+    display: none;
+  }
+  .eyebrow-short {
+    display: inline;
+  }
+  .masthead-top-right {
+    gap: 10px;
+  }
+  .theme-switch {
+    font-size: 9.5px;
+    gap: 6px;
+  }
+  .theme-switch .track {
+    width: 30px;
+    height: 17px;
+  }
+  .theme-switch .thumb-dot {
+    width: 13px;
+    height: 13px;
+  }
+  .theme-switch[aria-checked='true'] .thumb-dot {
+    transform: translateX(13px);
   }
   nav.sections {
     flex-wrap: nowrap;
