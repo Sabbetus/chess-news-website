@@ -13,6 +13,10 @@ on:
       end:
         description: 'End date (YYYY-MM-DD, inclusive)'
         required: true
+      calendar_only:
+        description: 'Skip news, only build calendar-aggregate slots (safe way to retry a failed one)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -38,7 +42,9 @@ jobs:
       - name: Backfill articles with Claude
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python scripts/backfill.py --start "${{ inputs.start }}" --end "${{ inputs.end }}"
+        run: >
+          python scripts/backfill.py --start "${{ inputs.start }}" --end "${{ inputs.end }}"
+          ${{ inputs.calendar_only == true && '--calendar-only' || '' }}
 
       - name: Open review PR
         env:
