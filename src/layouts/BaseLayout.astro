@@ -9,6 +9,8 @@ interface Props {
   description?: string;
   activeContinent?: Continent | 'front-page';
   articleMeta?: { publishedTime: string; source: string };
+  jsonLd?: Record<string, unknown>[];
+  image?: string;
 }
 const DEFAULT_DESCRIPTION =
   'Curated chess news from around the world, with original analysis and tournament statistics you won’t find anywhere else. Every story linked back to its source.';
@@ -17,12 +19,21 @@ const {
   description = DEFAULT_DESCRIPTION,
   activeContinent = 'front-page',
   articleMeta,
+  jsonLd = [],
+  image,
 } = Astro.props;
+
+// Every page needs exactly one <h1>. The front page has no other page-level
+// heading, so the masthead brand mark IS that page's h1 there; every other
+// page has its own more specific h1 (the article title, the continent
+// name), so the brand there is a non-heading element carrying the same
+// look via a shared class -- not a second, competing h1.
+const BrandTag = activeContinent === 'front-page' ? 'h1' : 'p';
 
 const today = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL('/og-image.png', Astro.site);
+const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
 
 const sections = [
   { id: 'front-page' as const, label: 'Front Page', href: '/' },
@@ -38,6 +49,7 @@ const sections = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
@@ -55,6 +67,12 @@ const sections = [
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+
+    {
+      jsonLd.map((entry) => (
+        <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+      ))
+    }
 
     <script is:inline>
       // Applied before first paint to avoid a flash of the wrong theme --
@@ -82,7 +100,7 @@ const sections = [
       </div>
 
       <header class="masthead">
-        <h1><a href="/">Chessori</a></h1>
+        <BrandTag class="brand"><a href="/">Chessori</a></BrandTag>
         <div class="tagline">
           Chess news &amp; articles<span class="sep">&middot;</span>original analysis<span class="sep">&middot;</span>tournament
           statistics

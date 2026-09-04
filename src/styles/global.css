@@ -283,7 +283,7 @@ button:focus-visible {
   text-align: center;
   border-bottom: 3px solid var(--ink);
 }
-.masthead h1 {
+.masthead .brand {
   margin: 0;
   font-family: 'Fraunces', Georgia, serif;
   font-optical-sizing: auto;
@@ -293,7 +293,7 @@ button:focus-visible {
   text-wrap: balance;
   color: var(--ink);
 }
-.masthead h1 a {
+.masthead .brand a {
   text-decoration: none;
 }
 .masthead .tagline {

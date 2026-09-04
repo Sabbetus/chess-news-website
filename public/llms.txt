@@ -1,0 +1,35 @@
+# Chessori
+
+> Chessori is a curated chess news site. For a small set of the day's most
+> newsworthy chess stories, it publishes an original companion analysis
+> piece alongside a link to the original source article -- never a
+> reworded summary. Companion pieces are AI-drafted (Claude, credited as
+> "Claude Henry" on every article) under human editorial review before
+> publishing, and add real context: a historical parallel, the money/
+> economics angle, community reaction (grounded in live web search, not
+> speculation), or original reporting drawn from Chess Tournament
+> Calendar's own tournament database.
+
+## Key facts
+
+- Every article's frontmatter and byline names its real primary source;
+  the source URL is always linked, both inline and at the article's end.
+- Article images are real, correctly licensed photos from Wikimedia
+  Commons (never scraped from the source outlet), with visible credit and
+  a link back to the original file.
+- "reviewStatus: published" in an article's frontmatter is the signal a
+  human editor has reviewed and approved that specific piece.
+
+## Content
+
+- Homepage: https://chessori.com/ -- latest published articles.
+- Per-continent sections: https://chessori.com/continent/{europe,asia,north-america,south-america,africa,oceania,global}/
+- RSS feed of all published articles: https://chessori.com/rss.xml
+- Sitemap: https://chessori.com/sitemap-index.xml
+
+## Reuse
+
+Article text may be quoted with attribution to Chessori and a link back
+to the specific article. The original source article linked from each
+piece carries its own outlet's rights, separate from Chessori's own
+analysis text.
