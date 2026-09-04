@@ -336,6 +336,11 @@ nav.sections a:hover {
 }
 
 @media (max-width: 640px) {
+  .masthead-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
   .masthead-top .date {
     display: none;
   }
