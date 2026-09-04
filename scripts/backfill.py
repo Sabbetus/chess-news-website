@@ -147,9 +147,18 @@ _TOPIC_STOPWORDS = {
 }
 
 
-def _topic_words(title: str) -> set[str]:
-    words = set(_SIGNIFICANT_WORD.findall(title.lower())) - _TOPIC_STOPWORDS
-    return words
+def _topic_words(item: dict) -> set[str]:
+    """URL slugs are a more reliable topic signal than headlines -- outlets
+    editorialize titles differently ("Wins 2026 Grand Chess Tour, Wesley So
+    Clinches 3rd" vs. "Rameshbabu wins Grand Chess Tour 2026") but a slug is
+    a plain, literal restatement of what the story is about
+    (praggnanandhaa-wins-2026-grand-chess-tour vs.
+    praggnanandhaa-rameshbabu-wins-grand-chess-tour-2026 -- much more
+    overlap). Use both the slug and the title so a match on either counts."""
+    slug = re.sub(r"^https?://[^/]+/?", "", item.get("sourceUrl", "")).rstrip("/")
+    slug = slug.rsplit("/", 1)[-1]
+    text = f"{slug} {item.get('title', '')}"
+    return set(_SIGNIFICANT_WORD.findall(text.lower())) - _TOPIC_STOPWORDS
 
 
 def dedupe_across_days(plan: list[tuple[date, dict]]) -> list[tuple[date, dict]]:
@@ -169,7 +178,7 @@ def dedupe_across_days(plan: list[tuple[date, dict]]) -> list[tuple[date, dict]]
     result = []
     for d, item in plan:
         if item["kind"] not in {"calendar-biggest", "calendar-comingup"}:
-            words = _topic_words(item["title"])
+            words = _topic_words(item)
             # Any shared significant word (after stopword removal, so this
             # is proper nouns / distinctive terms, not generic chess-news
             # vocabulary) is treated as the same topic -- two stories about
