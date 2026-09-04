@@ -31,11 +31,11 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
   {
     lead && (
       <section class="lead">
-        <a href={`/articles/${lead.slug}/`}>
-          <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} />
-        </a>
         <div class="lead-cols">
           <div class="lead-main">
+            <a href={`/articles/${lead.slug}/`}>
+              <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} />
+            </a>
             <h2>
               <a href={`/articles/${lead.slug}/`}>{lead.data.title}</a>
             </h2>
@@ -109,7 +109,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     grid-template-columns: 1fr 300px;
     gap: 48px;
     align-items: start;
-    margin-top: 30px;
+  }
+  .lead-main :global(.thumb) {
+    margin-bottom: 22px;
   }
   .lead h2 {
     margin: 0 0 14px;
