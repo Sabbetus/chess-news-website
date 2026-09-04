@@ -43,7 +43,7 @@ const description =
         {articles.map((a, i) => (
           <article class="card">
             <a href={`/articles/${a.slug}/`}>
-              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i} image={a.data.image} />
+              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i} image={a.data.image} alt={a.data.title} />
             </a>
             <h3>
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>

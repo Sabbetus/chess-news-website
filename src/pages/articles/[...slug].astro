@@ -25,6 +25,28 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
   year: 'numeric',
 });
 const description = excerptFrom(article.body, 200);
+const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.data.title,
+    description,
+    datePublished: article.data.publishDate.toISOString(),
+    mainEntityOfPage: pageURL,
+    url: pageURL,
+    ...(article.data.image ? { image: [article.data.image.url] } : {}),
+    author: { '@type': 'Person', name: 'Claude Henry' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Chessori',
+      logo: { '@type': 'ImageObject', url: new URL('/favicon.png', Astro.site).toString() },
+    },
+    isBasedOn: article.data.sourceUrl,
+    citation: article.data.sourceUrl,
+  },
+];
 ---
 
 <BaseLayout
@@ -35,9 +57,11 @@ const description = excerptFrom(article.body, 200);
     publishedTime: article.data.publishDate.toISOString(),
     source: article.data.sourceName,
   }}
+  image={article.data.image?.url}
+  jsonLd={jsonLd}
 >
   <article class="story">
-    <ArticleThumb lens={article.data.lens} continent={article.data.continent} size="lead" image={article.data.image} />
+    <ArticleThumb lens={article.data.lens} continent={article.data.continent} size="lead" image={article.data.image} alt={article.data.title} />
 
     <div class="story-head">
       <h1>{article.data.title}</h1>

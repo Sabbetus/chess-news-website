@@ -14,11 +14,30 @@ const secondary = rest.slice(0, 4);
 const latest = articles.slice(0, 5);
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Chessori',
+    url: 'https://chessori.com/',
+    description:
+      'Curated chess news from around the world, with original analysis and tournament statistics. Every story linked back to its source.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Chessori',
+    url: 'https://chessori.com/',
+    sameAs: ['https://nordicchess.fi', 'https://chesstournamentcalendar.com'],
+  },
+];
 ---
 
 <BaseLayout
   title="Chessori: Chess News, Original Analysis &amp; Tournament Statistics"
   activeContinent="front-page"
+  jsonLd={jsonLd}
 >
   {
     !lead && (
@@ -34,7 +53,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
         <div class="lead-cols">
           <div class="lead-main">
             <a href={`/articles/${lead.slug}/`}>
-              <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} />
+              <ArticleThumb lens={lead.data.lens} continent={lead.data.continent} size="lead" image={lead.data.image} alt={lead.data.title} />
             </a>
             <h2>
               <a href={`/articles/${lead.slug}/`}>{lead.data.title}</a>
@@ -75,7 +94,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
         {secondary.map((a, i) => (
           <article class="card">
             <a href={`/articles/${a.slug}/`}>
-              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i + 1} image={a.data.image} />
+              <ArticleThumb lens={a.data.lens} continent={a.data.continent} size="card" seed={i + 1} image={a.data.image} alt={a.data.title} />
             </a>
             <h3>
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
