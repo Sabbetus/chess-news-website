@@ -62,7 +62,13 @@ def _get(params: dict, retries: int = 3) -> dict:
 
 
 def _strip_html(text: str) -> str:
-    text = re.sub(r"<[^>]+>", "", text or "")
+    # Commons' extmetadata fields (Artist in particular) commonly carry a
+    # visible value plus a hidden duplicate for machine parsing, e.g.
+    # 'Unknown author<span style="display: none;">Unknown author</span>' --
+    # stripping tags alone concatenates both into "Unknown authorUnknown
+    # author". Drop the hidden span's content before stripping the rest.
+    text = re.sub(r'<span style="display:\s*none;?">.*?</span>', "", text or "", flags=re.DOTALL)
+    text = re.sub(r"<[^>]+>", "", text)
     return html.unescape(text).strip()
 
 
@@ -301,7 +307,15 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
             tournament_name = (top.get("name") or "").strip()
             country = (top.get("country") or "").strip()
             if tournament_name:
-                queries.append((tournament_name, False))
+                # Strict: a specific multi-word tournament name matching on
+                # just one generic word is a real failure mode, not a
+                # hypothetical -- "2026 Perth International Open" lenient-
+                # matched a Hungry Jack's ad photo titled "...Perth
+                # International Airport..." purely off "Perth" and
+                # "International". A genuine photo of this exact tournament
+                # would still match every word easily; requiring that is a
+                # much safer bar than "any one word in common".
+                queries.append((tournament_name, True))
             if country:
                 # Deliberately just "{country} chess", not "... chess
                 # tournament": the 3-word version matched Commons' full-text
