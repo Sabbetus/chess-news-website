@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/praggnanandhaa-interview-olympiad-gu
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Anand once carried Indian chess alone. Now he's calling Pragg the world's best amid a genuine embarrassment of riches: Gukesh, Erigaisi, and more. How India built a bench."
 image:
   url: "https://upload.wikimedia.org/wikipedia/commons/8/85/Praggnanandhaa_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
