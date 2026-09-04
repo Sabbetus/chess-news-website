@@ -340,10 +340,6 @@ nav.sections a:hover {
 }
 
 @media (max-width: 640px) {
-  .masthead-top {
-    font-size: 9.5px;
-    letter-spacing: 0.06em;
-  }
   .masthead-top .date {
     display: none;
   }
@@ -352,24 +348,6 @@ nav.sections a:hover {
   }
   .eyebrow-short {
     display: inline;
-  }
-  .masthead-top-right {
-    gap: 10px;
-  }
-  .theme-switch {
-    font-size: 9.5px;
-    gap: 6px;
-  }
-  .theme-switch .track {
-    width: 30px;
-    height: 17px;
-  }
-  .theme-switch .thumb-dot {
-    width: 13px;
-    height: 13px;
-  }
-  .theme-switch[aria-checked='true'] .thumb-dot {
-    transform: translateX(13px);
   }
   nav.sections {
     flex-wrap: nowrap;
