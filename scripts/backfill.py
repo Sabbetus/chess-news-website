@@ -159,6 +159,14 @@ def collect_calendar_slots(start: date, end: date) -> list[tuple[date, dict]]:
             continue
         if ingest.dedupe_key(item) in seen:
             continue
+        # draft_one() reads item["selectionScore"] unconditionally for
+        # every kind (it's just informational for calendar pieces, shown
+        # in the reviewer-facing frontmatter) -- the live pipeline gets
+        # this from selection.py scoring every candidate, calendar items
+        # included, before drafting. Score it here the same way so this
+        # doesn't KeyError.
+        total, breakdown = selection.score_item(item)
+        item = {**item, "selectionScore": total, "scoreBreakdown": breakdown}
         slots.append((d, item))
     return slots
 
