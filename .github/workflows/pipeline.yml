@@ -1,9 +1,10 @@
 name: Ingest, select, and draft articles
 
 on:
-  schedule:
-    - cron: '0 6 * * *' # once daily; adjust once real cadence is validated
-  workflow_dispatch: # allow manual trigger
+  # No schedule for now -- run manually (workflow_dispatch) while still
+  # reviewing every batch by hand. Add a schedule back once there's enough
+  # trust in the pipeline to let it run unattended.
+  workflow_dispatch:
 
 permissions:
   contents: write
