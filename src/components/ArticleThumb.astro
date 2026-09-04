@@ -9,21 +9,36 @@ interface Props {
   seed?: number;
   image?: { url: string; credit: string; sourceUrl: string };
   alt?: string;
+  href?: string;
 }
-const { lens, continent, size, seed = 0, image, alt = '' } = Astro.props;
+const { lens, continent, size, seed = 0, image, alt = '', href } = Astro.props;
 const lensMeta = LENS_META[lens];
 const continentMeta = CONTINENT_META[continent];
 const piece = pieceForLens(lens, seed);
+
+// The image-credit link (to the photo's Commons page) and a link to the
+// article itself must never nest -- <a> inside <a> is invalid HTML and
+// breaks the outer link's accessible name/content. When href is given,
+// this component owns the article link itself (wrapping only the image/
+// chip/piece), so callers should NOT also wrap <ArticleThumb> in an <a>.
 ---
 
 <div class={`thumb thumb--${size} ${lensMeta.className}`}>
   {
-    image ? (
-      <img class="thumb-photo" src={image.url} alt={alt} loading="lazy" />
-    ) : null
+    href ? (
+      <a href={href} class="thumb-link">
+        {image && <img class="thumb-photo" src={image.url} alt={alt} loading="lazy" />}
+        <span class="chip">{continentMeta.label}</span>
+        {!image && <span class="piece">{piece}</span>}
+      </a>
+    ) : (
+      <>
+        {image && <img class="thumb-photo" src={image.url} alt={alt} loading="lazy" />}
+        <span class="chip">{continentMeta.label}</span>
+        {!image && <span class="piece">{piece}</span>}
+      </>
+    )
   }
-  <span class="chip">{continentMeta.label}</span>
-  {!image && <span class="piece">{piece}</span>}
   {
     image && (
       <a class="thumb-credit" href={image.sourceUrl} target="_blank" rel="noopener" title={image.credit} aria-label={`Image credit: ${image.credit}`}>
@@ -32,3 +47,9 @@ const piece = pieceForLens(lens, seed);
     )
   }
 </div>
+
+<style>
+  .thumb-link {
+    display: contents;
+  }
+</style>
