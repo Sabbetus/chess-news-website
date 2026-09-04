@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/assaubayeva-anna-muzychuk-2026-wr-wo
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Anna Muzychuk once gave up two world titles rather than compete in Riyadh. Now she's headed to the WR Women's Chess Tour Grand Final via Saint-Tropez. What changed?"
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Anna_Muzychuk_at_Gibraltar.png/1280px-Anna_Muzychuk_at_Gibraltar.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
