@@ -99,6 +99,19 @@ def _license_ok(license_short_name: str) -> bool:
     return any(name.startswith(prefix) for prefix in ACCEPTED_LICENSE_PREFIXES)
 
 
+# Commons' full-text search matches words anywhere in a file's page (OCR'd
+# text in a scanned document, a caption, a description), not just its
+# title or subject -- a query can land on a completely unrelated PDF/book
+# scan that happens to contain the search words somewhere. Real tournament
+# photos and logos are never document-scan formats, so excluding those
+# extensions outright is a cheap, general guard against that failure mode.
+_REJECTED_EXTENSIONS = (".pdf", ".djvu", ".tiff", ".tif")
+
+
+def _is_photo_file(title: str) -> bool:
+    return not title.lower().endswith(_REJECTED_EXTENSIONS)
+
+
 def _fetch_first_licensed_file(titles: list) -> dict | None:
     """Among the given candidate titles, return the most recently-taken
     acceptably-licensed file -- not just the first one Commons' text search
@@ -124,6 +137,8 @@ def _fetch_first_licensed_file(titles: list) -> dict | None:
 
     candidates = []
     for title in titles:
+        if not _is_photo_file(title):
+            continue
         page = pages_by_title.get(title)
         if not page:
             continue
@@ -210,6 +225,30 @@ def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "")
     continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
 
     if item["kind"] in ("calendar-biggest", "calendar-comingup"):
+        # The generic "{continent} chess tournament" query returns the same
+        # small, static pool of Commons results every time, so every
+        # calendar piece for a given continent ends up with the same photo
+        # regardless of what month or country it's actually about. Trying
+        # the month's actual top tournament (name, then country) first
+        # gives the search something that genuinely differs month to
+        # month, without ever forcing a worse match -- if nothing specific
+        # is found, it still falls through to the same safe continent-level
+        # queries as before.
+        tournaments = item.get("tournamentData") or []
+        if tournaments:
+            top = tournaments[0]
+            tournament_name = (top.get("name") or "").strip()
+            country = (top.get("country") or "").strip()
+            if tournament_name:
+                queries.append(tournament_name)
+            if country:
+                # Deliberately just "{country} chess", not "... chess
+                # tournament": the 3-word version matched Commons' full-text
+                # search against unrelated scanned documents (a 1967 school
+                # yearbook that happened to mention both words somewhere in
+                # its OCR'd text) rather than actual tournament photography.
+                queries.append(f"{country} chess")
+
         name = item.get("continentName") or continent_name
         if name:
             queries.append(f"{name} chess tournament")
