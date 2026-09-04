@@ -13,9 +13,9 @@ continentName: "Oceania"
 monthLabel: "September 2026"
 totalTracked: 14
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Large_Bistro_Whopper_Value_Meal%2C_Hungry_Jack%27s_Perth_International_Airport%2C_2026_%2801%29.jpg/1280px-Large_Bistro_Whopper_Value_Meal%2C_Hungry_Jack%27s_Perth_International_Airport%2C_2026_%2801%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  credit: "Bahnfrend, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALarge_Bistro_Whopper_Value_Meal%2C_Hungry_Jack%27s_Perth_International_Airport%2C_2026_%2801%29.jpg"
+  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Hornsby_chess_002.jpg/1280px-Hornsby_chess_002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  credit: "Sardaka, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHornsby_chess_002.jpg"
 ---
 
 Oceania's tournament calendar for September 2026 is modest in size but heavy on Australian club activity, with 14 tournaments tracked across the continent. Perth, Melbourne, Sydney, Canberra and Adelaide all get a turn on the schedule, and the month's headline event arrives right at the end of it.

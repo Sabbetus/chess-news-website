@@ -13,9 +13,9 @@ continentName: "Europe"
 monthLabel: "August 2026"
 totalTracked: 783
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/87/2002_Chess_Olympiad_Romanian_stamp.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
-  credit: "Unknown authorUnknown author, Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2002_Chess_Olympiad_Romanian_stamp.jpg"
+  url: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Robert_Aloma_Sants_2015.jpg"
+  credit: "Picapedres, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARobert_Aloma_Sants_2015.jpg"
 ---
 
 August's tournament calendar in Europe was topped, by registration numbers at least, by a rapid event in Transylvania rather than one of the continent's classical institutions. The [Alba Grand Prix Rapid 2026](https://chesstournamentcalendar.com/tournament/alba-grand-prix-rapid-2026-1303046/) in Alba Iulia, Romania drew 402 players over a single weekend (August 1-2), the biggest field recorded on the continent this month among tournaments with known player counts.
