@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Europe's August chess calendar, ranked by turnout: a Romanian rapid in Alba Iulia tops the list at 402 players, with Barcelona's Sants Open and two Greek internationals close behind. Full breakdown inside."
 aggregateKind: "calendar-biggest"
 continentName: "Europe"

@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"
 continent: "oceania"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Oceania's September 2026 chess calendar: the Perth International Open headlines a month otherwise built on club cups, pennant rounds and rapid nights across Melbourne, Sydney, Canberra and Adelaide."
 aggregateKind: "calendar-comingup"
 continentName: "Oceania"
