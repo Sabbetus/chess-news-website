@@ -259,6 +259,36 @@ def parse_response(text: str) -> dict:
     return json.loads(text, strict=False)
 
 
+# How many of the most recently published articles count as "recently
+# used" for image-reuse purposes -- covers the homepage's lead + featured
+# grid (see index.astro) so the same photo can't appear twice on the front
+# page at once, without banning a photo outright forever. The Commons pool
+# for a lot of chess subjects is small enough that a permanent ban would
+# eventually starve the picker of any real photo at all; a cooldown lets a
+# photo come back into rotation once enough new articles have gone out.
+RECENT_IMAGE_COOLDOWN = 10
+
+
+def used_image_source_urls() -> set[str]:
+    """Commons page URLs used as the image on one of the RECENT_IMAGE_COOLDOWN
+    most recently published articles (by publishDate) -- not a permanent,
+    site-wide ban, just a cooldown. Read from disk each call rather than
+    cached, so this can't go stale within a batch as draft_one writes new
+    files. The image's sourceUrl is written with a 2-space indent (nested
+    under "image:"); the top-level article sourceUrl has none, so matching
+    just the indented form can't collide with it."""
+    dated_urls: list[tuple[str, str]] = []
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text()
+        date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
+        image_match = re.search(r'^  sourceUrl:\s*"(.*?)"\s*$', text, re.MULTILINE)
+        if date_match and image_match:
+            dated_urls.append((date_match.group(1), image_match.group(1)))
+
+    dated_urls.sort(key=lambda pair: pair[0], reverse=True)
+    return {url for _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
+
+
 def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None = None) -> Path:
     is_aggregate = item["kind"] in CALENDAR_KINDS
     system_prompt = AGGREGATE_SYSTEM_PROMPT if is_aggregate else NEWS_SYSTEM_PROMPT
@@ -333,7 +363,9 @@ def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None 
         frontmatter["monthLabel"] = item["monthLabel"]
         frontmatter["totalTracked"] = item["totalTracked"]
 
-    image = pick_image_for_item(item, parsed["title"], parsed.get("imageSubjects", []))
+    image = pick_image_for_item(
+        item, parsed["title"], parsed.get("imageSubjects", []), exclude_source_urls=used_image_source_urls()
+    )
     if image:
         frontmatter["image"] = image
 
