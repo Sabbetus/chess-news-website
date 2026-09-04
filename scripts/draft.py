@@ -141,7 +141,9 @@ default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
 - Keep paragraphs short: 2-4 sentences each, one idea per paragraph. Break up any \
-paragraph that's running long rather than letting it stretch to 5+ sentences."""
+paragraph that's running long rather than letting it stretch to 5+ sentences. This \
+is a paragraph-length rule, not an article-length one -- add more short paragraphs \
+to fit everything in, don't cut content to keep the piece itself short."""
 
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \
@@ -149,6 +151,14 @@ summary of the source. Add genuine analysis and context a casual reader wouldn't
 get from the source alone. Be accurate: never invent facts, quotes, or statistics \
 not present in the source material given to you. If you are not confident about a \
 detail, omit it rather than guess.
+
+Do not trade away the source's own concrete details to make room for your added \
+context -- include the specific facts the source gives (scores, streaks, dollar \
+figures, quotes, named results) alongside your analysis, not instead of it. A \
+reader should come away knowing both what actually happened and why it matters; \
+losing the former to make room for the latter is a failure, not a stylistic choice. \
+It's fine, expected even, for the piece to run longer to fit both in -- do not \
+compress by cutting real source detail.
 
 The piece must stand alone for a reader who has never seen the source. Never refer \
 back to the source by form ("the interview", "the piece", "his comments", "the \
@@ -179,7 +189,7 @@ before that, never mixed into it:
   "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
   "continent": "one of: {CONTINENT_OPTIONS}",
   "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
-  "bodyMarkdown": "the full article body in Markdown, 300-600 words",
+  "bodyMarkdown": "the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag",
   "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
 }}"""
@@ -242,7 +252,11 @@ def parse_response(text: str) -> dict:
     # Defensive: strip accidental code fences even though the prompt asks for none.
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
-    return json.loads(text)
+    # strict=False: the model occasionally emits a literal newline inside a
+    # string value (e.g. a paragraph break in bodyMarkdown) instead of an
+    # escaped \n -- technically invalid JSON, but unambiguous to parse, and
+    # rejecting it outright loses an entire drafted article over whitespace.
+    return json.loads(text, strict=False)
 
 
 def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None = None) -> Path:
