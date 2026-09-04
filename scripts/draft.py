@@ -37,6 +37,12 @@ ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 
 MODEL = "claude-sonnet-5"
 
+# Only offered on news-item drafting calls (see draft_one) -- the prompt
+# restricts actual use to the community-pulse lens. $10/1,000 searches plus
+# normal token cost for result content; at this volume (at most one
+# community-pulse piece a day) the added cost is negligible.
+WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 3}
+
 CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 
 # Instructions for the two calendar aggregate kinds -- keyed by candidate
@@ -104,9 +110,15 @@ LENS_OPTIONS = {
     "community-pulse": (
         "Community pulse: characterize how players, streamers, and fans are "
         "actually reacting to this story -- the range of takes, where "
-        "opinion splits, what's getting argued about. Do not invent specific "
-        "quotes or usernames; characterize the reaction in general terms "
-        "grounded in what's plausible for a story like this."
+        "opinion splits, what's getting argued about. Use the web_search tool "
+        "to find real, current discussion of this story (forums, social "
+        "media commentary, other chess sites' coverage, comment sections) and "
+        "ground the piece in what you actually find. If search turns up "
+        "little or nothing relevant, fall back to characterizing the likely "
+        "reaction in general terms based on how chess fandom has responded to "
+        "comparable stories before -- but never invent specific quotes, "
+        "usernames, or claim a specific post/comment exists when you're "
+        "actually extrapolating."
     ),
 }
 
@@ -149,8 +161,13 @@ international chess governance or an online-only event with no regional angle) -
 prefer picking a real continent whenever the story has any regional anchor \
 (a player's federation, a tournament's location, etc.).
 
-Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
-exact keys:
+You have a web_search tool available. Only use it if you choose the \
+community-pulse lens (see its description above for how) -- for every other \
+lens, do not search, just write from the source material given to you.
+
+Your FINAL message must be ONLY a JSON object (no markdown fences, no \
+commentary) with these exact keys -- any searching or reasoning happens \
+before that, never mixed into it:
 {{
   "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
   "continent": "one of: {CONTINENT_OPTIONS}",
@@ -226,19 +243,39 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
     system_prompt = AGGREGATE_SYSTEM_PROMPT if is_aggregate else NEWS_SYSTEM_PROMPT
     user_prompt = build_user_prompt(item)
 
-    response = client.messages.create(
+    create_kwargs = dict(
         model=MODEL,
         max_tokens=4096,
         system=system_prompt,
         output_config={"effort": "medium"},
-        messages=[{"role": "user", "content": user_prompt}],
     )
+    if not is_aggregate:
+        # Available for every news item regardless of which lens gets picked --
+        # the prompt restricts actual use to community-pulse; the tool call
+        # itself is free to include, only real uses are billed.
+        create_kwargs["tools"] = [WEB_SEARCH_TOOL]
+
+    messages = [{"role": "user", "content": user_prompt}]
+    response = client.messages.create(messages=messages, **create_kwargs)
+
+    # A web search turn can pause on long-running searches (stop_reason
+    # "pause_turn"); resume by sending the paused assistant turn back
+    # unchanged, per Anthropic's docs. Capped so a stuck loop can't hang the
+    # whole batch.
+    for _ in range(3):
+        if response.stop_reason != "pause_turn":
+            break
+        messages.append({"role": "assistant", "content": response.content})
+        response = client.messages.create(messages=messages, **create_kwargs)
 
     text_blocks = [b.text for b in response.content if b.type == "text"]
     if not text_blocks:
         raise RuntimeError(f"No text content returned for: {item['title']}")
 
-    parsed = parse_response("".join(text_blocks))
+    # With web search enabled, earlier text blocks can be the model's own
+    # "I'll search for..." narration -- only the final block is the
+    # structured answer the prompt asked for.
+    parsed = parse_response(text_blocks[-1])
 
     if is_aggregate:
         lens = "tournament-db"
