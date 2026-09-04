@@ -6,12 +6,12 @@ sourceUrl: "https://www.chess.com/news/view/lazavik-maghsoodloo-terry-3-0-thursd
 lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 56
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "IM Renato Terry just hit 18 titles in Chess.com's 3+0 Thursday arena. How his bullet dominance compares to Nakamura's old Titled Tuesday reign."
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/4/42/RenatoTerry.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  url: "https://upload.wikimedia.org/wikipedia/commons/4/42/RenatoTerry.png"
   credit: "Pro Chess League, CC BY 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARenatoTerry.png"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:RenatoTerry.png"
 ---
 
 Eighteen. That's how many 3+0 Thursday titles IM Renato Terry has now collected after his 9.5/11 performance in the day's final event, a number that starts to look less like a hot streak and more like a monopoly.
