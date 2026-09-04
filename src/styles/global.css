@@ -120,7 +120,11 @@ button:focus-visible {
   );
   background-size: 28px 28px;
 }
-.thumb::after {
+/* Only the SVG placeholder pattern needs this fade (keeps the continent
+   chip legible against the checkerboard); a real photo doesn't, and the
+   fade to --paper was washing photos out with a visible white bleed in
+   light mode. */
+.thumb:not(:has(.thumb-photo))::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -329,6 +333,27 @@ nav.sections a.on {
 }
 nav.sections a:hover {
   color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .masthead-top .date {
+    display: none;
+  }
+  nav.sections {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 18px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav.sections::-webkit-scrollbar {
+    display: none;
+  }
+  nav.sections a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
 }
 
 /* ---- byline ---- */
