@@ -42,8 +42,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
-            echo "No changes -- nothing to review today."
+          # Only open a PR when there's an actual article to review -- data/
+          # (seen.json, candidates.json, selected.json) changes on every run
+          # regardless of whether anything was drafted, so checking the full
+          # working tree here would open an empty PR on a quiet news day.
+          if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
+            echo "No new articles -- nothing to review today."
             exit 0
           fi
 
@@ -56,10 +60,6 @@ jobs:
           # state and are useful to review alongside the drafts (shows what was
           # considered and why), so commit them too.
           git add data/ src/content/articles/
-          if git diff --cached --quiet; then
-            echo "No drafts or state changes to commit."
-            exit 0
-          fi
           git commit -m "chore: daily draft batch $(date -u +%Y-%m-%d)"
           git push origin "$BRANCH"
 
