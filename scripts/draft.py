@@ -150,6 +150,13 @@ get from the source alone. Be accurate: never invent facts, quotes, or statistic
 not present in the source material given to you. If you are not confident about a \
 detail, omit it rather than guess.
 
+The piece must stand alone for a reader who has never seen the source. Never refer \
+back to the source by form ("the interview", "the piece", "his comments", "the \
+article") unless you first establish, in your own words, that that form of source \
+exists (e.g. "In a recent interview with Chess.com, Praggnanandhaa said...") -- a \
+bare "the interview's mention of X" with no earlier sentence establishing an \
+interview took place is confusing and reads as broken.
+
 {STYLE_GUIDE}
 
 First, pick the single best-fitting lens for THIS story from these options:
