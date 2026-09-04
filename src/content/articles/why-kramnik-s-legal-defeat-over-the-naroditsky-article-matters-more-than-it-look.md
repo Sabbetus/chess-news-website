@@ -9,9 +9,9 @@ selectionScore: 55
 reviewStatus: "published"
 socialCopy: "Kramnik lost his case against New In Chess over the Naroditsky cyberbullying article. He's appealing, but the ruling itself may matter more than the appeal does."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Rue_Vladimir_Kramnik_-_Asni%C3%A8res-sur-Seine_%28FR92%29_-_2024-04-06_-_1.jpg/1280px-Rue_Vladimir_Kramnik_-_Asni%C3%A8res-sur-Seine_%28FR92%29_-_2024-04-06_-_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  credit: "Chabe01, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARue_Vladimir_Kramnik_-_Asni%C3%A8res-sur-Seine_%28FR92%29_-_2024-04-06_-_1.jpg"
+  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Kramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg/1280px-Kramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg"
 ---
 
 An Amsterdam court has thrown out Vladimir Kramnik's lawsuit against New In Chess, ruling that the Dutch magazine's article accusing the former world champion of cyberbullying GM Daniel Naroditsky was not unlawful. Kramnik had demanded the article be taken down, a published correction, a ban on the magazine repeating similar statements, and €30,000 in damages. The court refused all of it, and ordered him to cover €4,449 of the magazine's litigation costs, a fraction of the more than €25,000 New In Chess says it actually spent defending the case. Kramnik says he will appeal, which means this fight is far from finished.
