@@ -99,6 +99,8 @@ def select_for_day(items: list[dict]) -> list[dict]:
     candidates in isolation -- never competing against another day's crop."""
     scored = []
     for item in items:
+        if selection.is_promotional(item):
+            continue
         total, breakdown = selection.score_item(item)
         if total <= 0:
             continue
