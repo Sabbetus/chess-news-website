@@ -133,6 +133,56 @@ def collect_calendar_slots(start: date, end: date) -> list[tuple[date, dict]]:
     return slots
 
 
+_SIGNIFICANT_WORD = re.compile(r"[a-z]{4,}")
+_TOPIC_STOPWORDS = {
+    "chess", "wins", "2026", "grand", "tour", "with", "from", "over", "into",
+    "world", "champion", "championship", "title", "titled", "tuesday",
+    "final", "finals", "prize", "player", "players", "news", "view", "match",
+    "matches", "rivalry", "renew", "continues", "unrivalled", "dominance",
+    "coasts", "gets", "other", "coaches", "special", "edition", "signs",
+    "joins", "results", "list", "published", "decisions", "meeting",
+    "council", "announcing", "announces", "official", "officially",
+    "january", "february", "march", "april", "may", "june", "july",
+    "august", "september", "october", "november", "december",
+}
+
+
+def _topic_words(title: str) -> set[str]:
+    words = set(_SIGNIFICANT_WORD.findall(title.lower())) - _TOPIC_STOPWORDS
+    return words
+
+
+def dedupe_across_days(plan: list[tuple[date, dict]]) -> list[tuple[date, dict]]:
+    """selection.dedupe_by_topic() only ever runs within a single day's
+    candidates, same as the real pipeline -- fine for normal daily runs, but
+    a backfill spanning many days will otherwise happily draft the same
+    story twice a day apart just because a second outlet covered it later
+    (e.g. Chess.com on day N, FIDE repeating it on day N+1). Titles for the
+    same event often don't even share a prefix (compare "Praggnanandhaa
+    Wins 2026 Grand Chess Tour, Wesley So Clinches 3rd" against
+    "Praggnanandhaa Rameshbabu wins Grand Chess Tour 2026"), so this
+    compares significant-word overlap rather than a literal prefix match.
+    Keeps only the first (earliest-dated) occurrence of each topic across
+    the whole plan. Calendar aggregates are exempt -- they're never the
+    same topic twice."""
+    seen_word_sets: list[set[str]] = []
+    result = []
+    for d, item in plan:
+        if item["kind"] not in {"calendar-biggest", "calendar-comingup"}:
+            words = _topic_words(item["title"])
+            # Any shared significant word (after stopword removal, so this
+            # is proper nouns / distinctive terms, not generic chess-news
+            # vocabulary) is treated as the same topic -- two stories about
+            # different things essentially never share a specific player
+            # name or event name by coincidence at this volume.
+            is_dupe = any(words & prior for prior in seen_word_sets)
+            if is_dupe:
+                continue
+            seen_word_sets.append(words)
+        result.append((d, item))
+    return result
+
+
 def main() -> None:
     args = parse_args()
     start = date.fromisoformat(args.start)
@@ -148,6 +198,7 @@ def main() -> None:
             plan.append((d, item))
     plan += calendar_slots
     plan.sort(key=lambda pair: pair[0])
+    plan = dedupe_across_days(plan)
 
     print(f"Backfill plan for {start} .. {end}: {len(plan)} article(s)\n")
     for d, item in plan:
