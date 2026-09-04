@@ -238,7 +238,7 @@ def parse_response(text: str) -> dict:
     return json.loads(text)
 
 
-def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
+def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None = None) -> Path:
     is_aggregate = item["kind"] in CALENDAR_KINDS
     system_prompt = AGGREGATE_SYSTEM_PROMPT if is_aggregate else NEWS_SYSTEM_PROMPT
     user_prompt = build_user_prompt(item)
@@ -294,7 +294,7 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
 
     frontmatter = {
         "title": parsed["title"],
-        "publishDate": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "publishDate": publish_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "sourceName": item["sourceName"],
         "sourceUrl": item["sourceUrl"],
         "lens": lens,
