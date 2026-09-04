@@ -48,6 +48,22 @@ CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 # Instructions for the two calendar aggregate kinds -- keyed by candidate
 # "kind" rather than "lens", since both use the tournament-db lens but need
 # very different framing (retrospective ranking vs. forward-looking list).
+# Shared caveat for both aggregate kinds: when player counts/prize funds are
+# missing from the data, that's a gap in what chesstournamentcalendar.com
+# tracks, not a fact about the tournaments themselves -- plenty of them
+# genuinely do report this information, just not to that source. Phrasing
+# like "no player counts were reported for any of these events" reads as a
+# claim about the tournaments/organizers, which is neither true nor ours to
+# assert; frame it as our data's limitation instead (e.g. "we don't have
+# player counts for most of these" / "not tracked here").
+AGGREGATE_DATA_GAP_NOTE = (
+    "When player counts, prize funds, or other data points are missing for some or all "
+    "tournaments, frame that as a gap in what this data covers, not as something the "
+    "tournaments or their organizers failed to do (never write \"no player counts were "
+    "reported for any of these events\" or similar -- write \"we don't have player counts "
+    "for most of these\" or \"not tracked in this data\" instead)."
+)
+
 AGGREGATE_INSTRUCTIONS = {
     "calendar-biggest": (
         "Write an original retrospective piece ranking the biggest tournaments "
@@ -199,6 +215,8 @@ This piece is original reporting on tournament data, not commentary on someone \
 else's article. Be accurate: never invent facts or figures not present in the \
 tournament data given to you. If you are not confident about a detail, omit it \
 rather than guess.
+
+{AGGREGATE_DATA_GAP_NOTE}
 
 {STYLE_GUIDE}
 
