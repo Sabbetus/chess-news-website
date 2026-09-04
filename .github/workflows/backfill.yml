@@ -1,0 +1,65 @@
+name: Backfill past days
+
+# One-off manual tool: replays the daily select+draft cycle over a past date
+# range instead of "today" (see scripts/backfill.py for why this is a
+# separate script, not just re-running the normal pipeline repeatedly).
+# Not meant to run unattended -- always inputs a specific range by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'Start date (YYYY-MM-DD, inclusive)'
+        required: true
+      end:
+        description: 'End date (YYYY-MM-DD, inclusive)'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Backfill articles with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/backfill.py --start "${{ inputs.start }}" --end "${{ inputs.end }}"
+
+      - name: Open review PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
+            echo "No articles backfilled -- nothing to review."
+            exit 0
+          fi
+
+          BRANCH="drafts/backfill-${{ inputs.start }}-to-${{ inputs.end }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+
+          git add data/ src/content/articles/
+          git commit -m "chore: backfill drafts ${{ inputs.start }} to ${{ inputs.end }}"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Backfill batch: ${{ inputs.start }} to ${{ inputs.end }}" \
+            --body "One-off backfill replaying the daily selection over ${{ inputs.start }} .. ${{ inputs.end }}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging."
