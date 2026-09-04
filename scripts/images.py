@@ -237,15 +237,17 @@ def search_image(query: str, strict: bool = False) -> dict | None:
         return None
 
 
-def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "") -> list:
+def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | None = None) -> list:
     """Ordered list of (query, strict) tuples to try, most specific first,
     for a drafted article. `item` is the original candidate dict (from
     selected.json); `drafted_title` is the headline Claude wrote;
-    `image_subject` is the specific person/org/event Claude named in its
-    drafting response, if any -- the most reliable candidate available.
-    `strict` marks auto-extracted headline-fragment queries, which need a
-    stronger title-match bar than the deliberately-constructed ones (see
-    _title_matches_query)."""
+    `image_subjects` is the list of specific people/orgs/events Claude named
+    as central to the piece, if any, most likely to have a good photo first
+    -- e.g. a piece comparing a lesser-known player to Magnus Carlsen should
+    try Carlsen too, not just fall to a generic org logo once the primary
+    subject comes up empty. `strict` marks auto-extracted headline-fragment
+    queries, which need a stronger title-match bar than the
+    deliberately-constructed ones (see _title_matches_query)."""
     queries = []
     continent_code = item.get("continentCode")
     continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
@@ -280,8 +282,9 @@ def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "")
             queries.append((f"{name} chess tournament", False))
             queries.append((f"{name} chess", False))
     else:
-        if image_subject:
-            queries.append((image_subject, False))
+        for subject in image_subjects or []:
+            if subject:
+                queries.append((subject, False))
         # No auto-extracted headline-fragment fallback here: tried and
         # dropped in testing. Even requiring every word to match, generic
         # capitalized fragments like "Thursday Record" (from a headline,
@@ -301,8 +304,8 @@ def build_query_cascade(item: dict, drafted_title: str, image_subject: str = "")
     return queries
 
 
-def pick_image_for_item(item: dict, drafted_title: str, image_subject: str = "") -> dict | None:
-    for query, strict in build_query_cascade(item, drafted_title, image_subject):
+def pick_image_for_item(item: dict, drafted_title: str, image_subjects: list | None = None) -> dict | None:
+    for query, strict in build_query_cascade(item, drafted_title, image_subjects):
         result = search_image(query, strict)
         if result:
             return result

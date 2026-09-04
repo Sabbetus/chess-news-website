@@ -174,7 +174,7 @@ before that, never mixed into it:
   "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
   "bodyMarkdown": "the full article body in Markdown, 300-600 words",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag",
-  "imageSubject": "the single real-world subject this piece is most about, for photo search purposes -- a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen'), or an organization/event name (e.g. 'FIDE', 'Chess Olympiad'). Empty string if no single subject fits."
+  "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
 }}"""
 
 AGGREGATE_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. \
@@ -312,7 +312,7 @@ def draft_one(client: anthropic.Anthropic, item: dict) -> Path:
         frontmatter["monthLabel"] = item["monthLabel"]
         frontmatter["totalTracked"] = item["totalTracked"]
 
-    image = pick_image_for_item(item, parsed["title"], parsed.get("imageSubject", ""))
+    image = pick_image_for_item(item, parsed["title"], parsed.get("imageSubjects", []))
     if image:
         frontmatter["image"] = image
 
