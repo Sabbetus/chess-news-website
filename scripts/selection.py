@@ -47,8 +47,23 @@ KEYWORD_WEIGHTS = {
     "world champion": 15, "world championship": 15, "olympiad": 12,
     "record": 10, "youngest": 10, "grandmaster": 8, "gm title": 8,
     "prize": 6, "upset": 8, "protest": 10, "investigation": 12,
+    "rating list": 18, "fide rating": 14,
 }
 MAX_KEYWORD_SCORE = 30
+
+# The monthly FIDE rating list release (and chess.com/FIDE pieces built
+# around it, e.g. "Praggnanandhaa Indian No. 1 On September FIDE Rating
+# List") is a recurring, evergreen-interest story that the plain keyword
+# score can lose to that day's scandal/drama pieces -- but unlike those,
+# it only exists once a month, so losing the slot means it's just gone.
+# Guarantee it a spot the same way calendar items get one.
+RATING_LIST_PATTERN = re.compile(r"\brating list\b", re.IGNORECASE)
+MAX_RATING_LIST_ARTICLES_PER_DAY = 1
+
+
+def is_rating_list_story(item: dict) -> bool:
+    text = f"{item.get('title', '')} {item.get('summary', '')}"
+    return bool(RATING_LIST_PATTERN.search(text))
 
 # Chess.com's RSS feed mixes real news with site-feature/product promotion
 # posts ("Play In The Special Edition Of The Gambit Cup", "Get Coached By
@@ -152,11 +167,14 @@ def main() -> None:
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
 
-    guaranteed_external = external_items[:MIN_EXTERNAL_ARTICLES]
-    extra_pool = external_items[MIN_EXTERNAL_ARTICLES:MAX_EXTERNAL_ARTICLES]
+    rating_list_items = [item for item in external_items if is_rating_list_story(item)][:MAX_RATING_LIST_ARTICLES_PER_DAY]
+    remaining_external = [item for item in external_items if item not in rating_list_items]
+
+    guaranteed_external = remaining_external[:MIN_EXTERNAL_ARTICLES]
+    extra_pool = remaining_external[MIN_EXTERNAL_ARTICLES:MAX_EXTERNAL_ARTICLES]
     extra_external = [item for item in extra_pool if item["selectionScore"] >= SCORE_THRESHOLD_FOR_EXTRA]
 
-    selected = calendar_items + guaranteed_external + extra_external
+    selected = calendar_items + rating_list_items + guaranteed_external + extra_external
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     SELECTED_PATH.write_text(json.dumps(selected, indent=2))
