@@ -9,9 +9,9 @@ selectionScore: 65
 reviewStatus: "published"
 socialCopy: "FIDE just renumbered its entire youth chess ladder, U8-U18 becomes U7-U17. Here's the decades of history behind the switch, and what's really changing ahead of Roquetas de Mar 2026."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/FIDE_text_on_white.svg/1280px-FIDE_text_on_white.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  credit: "M5, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_text_on_white.svg"
+  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg/1280px-Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  credit: "ATM622, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg"
 ---
 
 FIDE and the Spanish Chess Federation have opened registration for the FIDE World Youth Chess Championships, inviting national federations to send players in six age categories: Under-7, Under-9, Under-11, Under-13, Under-15, and Under-17. The event will be held in Roquetas de Mar, a Mediterranean resort town on Spain's Costa de Almería in Andalusia, with players arriving October 13 and departing October 21, 2026.
