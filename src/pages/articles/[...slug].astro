@@ -27,6 +27,11 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
 const shortDateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 const description = excerptFrom(article.body, 200);
 const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
+const correctionHref = `/contact/?${new URLSearchParams({
+  topic: 'Article correction',
+  title: article.data.title,
+  url: pageURL,
+}).toString()}`;
 
 // Similar articles: same continent or same lens, most recent first,
 // excluding this one. Falls back to just "most recent overall" if there
@@ -100,7 +105,8 @@ const jsonLd = [
 
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
-      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a>
+      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a><br />
+      <a class="correction-link" href={correctionHref}>Noticed an error in the article? Report it from here.</a>
     </p>
 
     {
@@ -206,6 +212,11 @@ const jsonLd = [
   }
   .source-callout a {
     color: var(--nordic);
+  }
+  .source-callout a.correction-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--ink-soft);
   }
   .byline-credit {
     display: inline-block;
