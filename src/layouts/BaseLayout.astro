@@ -86,6 +86,17 @@ const sections = [
         } catch (e) {}
       })();
     </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-KY9DGJ4ZDQ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-KY9DGJ4ZDQ');
+    </script>
   </head>
   <body>
     <div class="wrap">
