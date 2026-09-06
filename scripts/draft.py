@@ -169,12 +169,26 @@ not present in the source material given to you. If you are not confident about 
 detail, omit it rather than guess.
 
 Do not trade away the source's own concrete details to make room for your added \
-context -- include the specific facts the source gives (scores, streaks, dollar \
-figures, quotes, named results) alongside your analysis, not instead of it. A \
-reader should come away knowing both what actually happened and why it matters; \
-losing the former to make room for the latter is a failure, not a stylistic choice. \
-It's fine, expected even, for the piece to run longer to fit both in -- do not \
-compress by cutting real source detail.
+context -- include the specific facts the source gives alongside your analysis, \
+not instead of it. A reader should come away knowing both what actually happened \
+and why it matters; losing the former to make room for the latter is a failure, \
+not a stylistic choice. It's fine, expected even, for the piece to run longer to \
+fit both in -- do not compress by cutting real source detail.
+
+Before finalizing, check the source material against each of these categories and \
+include whatever it actually gives you -- do not stop at the single headline \
+figure or result if the source has more:
+- Full numeric breakdowns, not just the top line: every prize-money tier given \
+(not only 1st place), all named standings/scores given (not only the winner), \
+every score/streak/count in the piece, not a representative one or two.
+- Format/structure specifics: bracket or match format, time control, schedule/dates, \
+qualification path -- anything the source says about how the event was actually run.
+- The specific turning point: a notable move, tactic, quote, or moment the source \
+describes, not just the final result stripped of how it happened.
+- Series/scheduling context: what this event is part of, what's next, prior \
+meetings/history the source mentions.
+Omit a category only if the source genuinely doesn't cover it -- never because \
+including it would make the piece longer.
 
 The piece must stand alone for a reader who has never seen the source. Never refer \
 back to the source by form ("the interview", "the piece", "his comments", "the \
