@@ -118,6 +118,21 @@ def _is_photo_file(title: str) -> bool:
     return not title.lower().endswith(_REJECTED_EXTENSIONS)
 
 
+# A generic country/continent query can genuinely satisfy a lenient
+# "{country} chess" match with a postage stamp, banknote, or coin
+# depicting a chess motif (found real: "2002 Chess Olympiad Romanian
+# stamp" for "Romania chess") -- these aren't wrong matches, they really
+# do have both words, but they're philatelic/numismatic ephemera, not a
+# photo of anyone or anything happening, and don't belong here regardless
+# of how well they match.
+_EPHEMERA_WORDS = ("stamp", "stamps", "banknote", "banknotes", "postcard", "postcards", "coin", "coins")
+_EPHEMERA_PATTERN = re.compile(r"\b(" + "|".join(_EPHEMERA_WORDS) + r")\b", re.IGNORECASE)
+
+
+def _is_ephemera(title: str) -> bool:
+    return bool(_EPHEMERA_PATTERN.search(title))
+
+
 # A person's name is also, not infrequently, a street, square, or building
 # named after them -- "Rue Vladimir Kramnik - Asnieres-sur-Seine" matches a
 # "Vladimir Kramnik" query under every other filter (real photo file,
@@ -224,6 +239,8 @@ def _fetch_first_licensed_file(
             continue
         if _is_place_named_after_subject(title):
             continue
+        if _is_ephemera(title):
+            continue
         if not _title_matches_query(title, query, strict):
             continue
         page = pages_by_title.get(title)
@@ -303,19 +320,29 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
         # queries as before.
         tournaments = item.get("tournamentData") or []
         if tournaments:
-            top = tournaments[0]
-            tournament_name = (top.get("name") or "").strip()
-            country = (top.get("country") or "").strip()
-            if tournament_name:
-                # Strict: a specific multi-word tournament name matching on
-                # just one generic word is a real failure mode, not a
-                # hypothetical -- "2026 Perth International Open" lenient-
-                # matched a Hungry Jack's ad photo titled "...Perth
-                # International Airport..." purely off "Perth" and
-                # "International". A genuine photo of this exact tournament
-                # would still match every word easily; requiring that is a
-                # much safer bar than "any one word in common".
-                queries.append((tournament_name, True))
+            # Try more than just the single top tournament -- when the #1
+            # entry has no real photo on Commons (common; most of these are
+            # small regional opens), falling straight to a generic
+            # continent-level query produces the same recycled, often
+            # barely-relevant image every time (a 2002 Olympiad postage
+            # stamp standing in for an unrelated Craiova rapid open, in one
+            # case). Every additional named tournament tried here is a real
+            # chance at a genuinely specific photo before giving up on
+            # specificity altogether.
+            for candidate in tournaments[:5]:
+                name = (candidate.get("name") or "").strip()
+                if name:
+                    # Strict: a specific multi-word tournament name matching on
+                    # just one generic word is a real failure mode, not a
+                    # hypothetical -- "2026 Perth International Open" lenient-
+                    # matched a Hungry Jack's ad photo titled "...Perth
+                    # International Airport..." purely off "Perth" and
+                    # "International". A genuine photo of this exact tournament
+                    # would still match every word easily; requiring that is a
+                    # much safer bar than "any one word in common".
+                    queries.append((name, True))
+
+            country = (tournaments[0].get("country") or "").strip()
             if country:
                 # Deliberately just "{country} chess", not "... chess
                 # tournament": the 3-word version matched Commons' full-text

@@ -225,7 +225,7 @@ before that, never mixed into it:
   "continent": "one of: {CONTINENT_OPTIONS}",
   "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
   "bodyMarkdown": "the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other",
-  "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag",
+  "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty",
   "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
 }}"""
 
@@ -389,7 +389,11 @@ def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None 
         "continent": continent,
         "selectionScore": item["selectionScore"],
         "reviewStatus": "draft",
-        "socialCopy": parsed.get("socialCopy", ""),
+        # Fall back to the title itself if the model ever returns an empty
+        # string despite the prompt -- happened once in practice (a
+        # calendar aggregate with a blank socialCopy), and a blank social
+        # teaser is a worse failure mode than a slightly generic one.
+        "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
     }
     if is_aggregate:
         # Extra context for reviewers -- not part of the content schema (unknown
