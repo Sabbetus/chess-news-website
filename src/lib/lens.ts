@@ -12,7 +12,7 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
     description: 'Scandal, conflict, and the fallout when chess politics gets messy.',
   },
   'historical-parallel': {
-    label: 'Historical Parallel',
+    label: 'History',
     className: 'historical',
     description: 'Today’s story set against a genuine parallel from chess history.',
   },
@@ -30,6 +30,23 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
 
 // Nav/listing order -- roughly how often each lens gets used.
 export const LENS_ORDER: Lens[] = ['drama', 'historical-parallel', 'money-angle', 'community-pulse', 'tournament-db'];
+
+// URL slugs, kept separate from the Lens type itself -- the type value is
+// also the content-schema key stored in every article's frontmatter, which
+// isn't worth touching just to get a cleaner URL. Slugs match the current
+// display labels (money-angle -> money, historical-parallel -> history,
+// drama -> controversy) rather than leaking the internal key into URLs.
+export const LENS_SLUGS: Record<Lens, string> = {
+  drama: 'controversy',
+  'historical-parallel': 'history',
+  'money-angle': 'money',
+  'community-pulse': 'community-pulse',
+  'tournament-db': 'otb-tournaments',
+};
+
+export const SLUG_TO_LENS: Record<string, Lens> = Object.fromEntries(
+  (Object.entries(LENS_SLUGS) as [Lens, string][]).map(([lens, slug]) => [slug, lens])
+);
 
 // One piece glyph per lens so thumbnails aren't visually identical across a
 // page full of cards -- purely decorative, not meaningful per-article.

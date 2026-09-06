@@ -1,5 +1,5 @@
 ---
-import { LENS_META, type Lens } from '../lib/lens';
+import { LENS_META, LENS_SLUGS, type Lens } from '../lib/lens';
 import { CONTINENT_META, type Continent } from '../lib/continent';
 
 interface Props {
@@ -12,7 +12,7 @@ const continentMeta = CONTINENT_META[continent];
 ---
 
 <div class="tag-row">
-  <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${lens}/`}>{lensMeta.label}</a>
+  <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${LENS_SLUGS[lens]}/`}>{lensMeta.label}</a>
   <a class="continent-tag" href={`/continent/${continent}/`}>{continentMeta.label}</a>
 </div>
 
