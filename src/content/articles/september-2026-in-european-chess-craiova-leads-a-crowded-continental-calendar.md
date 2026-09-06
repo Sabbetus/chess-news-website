@@ -6,16 +6,16 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Craiova's rapid Grand Prix, a Basque classical marathon, and a Subotica double-header: here's what's on Europe's chess calendar in September 2026."
 aggregateKind: "calendar-comingup"
 continentName: "Europe"
 monthLabel: "September 2026"
 totalTracked: 392
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/87/2002_Chess_Olympiad_Romanian_stamp.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
-  credit: "Unknown author, Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2002_Chess_Olympiad_Romanian_stamp.jpg"
+  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Chess_set_MET_146544.jpg/1280px-Chess_set_MET_146544.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  credit: "Wikimedia Commons contributor, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_MET_146544.jpg"
 ---
 
 Europe's tournament calendar keeps rolling into autumn, with 392 events tracked across the continent for September 2026. The list spans everything from big-field rapid opens to regional classical festivals, and a handful stand out enough to flag now.

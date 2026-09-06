@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"
 continent: "north-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "117 tournaments tracked across North America this September, led by Mexico's sprawling Copa Independencia circuit. Full preview of the month's biggest entries:"
 aggregateKind: "calendar-comingup"
 continentName: "North America"
