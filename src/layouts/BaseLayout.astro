@@ -59,6 +59,35 @@ const sections = [
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
 
+    <!-- Every article photo is hotlinked from Wikimedia's thumbnail service,
+         opening that connection before it's needed (rather than only once
+         the browser reaches an img tag) shaves the DNS/TLS handshake off
+         the path to the LCP image. -->
+    <link rel="preconnect" href="https://thumb.wikimedia.org" crossorigin />
+
+    <!-- Without this, fonts are only discovered once the stylesheet has
+         been fetched and parsed, adding them sequentially to the critical
+         path (each around 500ms in testing). Preloading the two fonts used
+         above the fold (the Fraunces masthead/headlines and the Source
+         Serif 4 body text) lets them fetch in parallel with the CSS
+         instead of after it, and as a side effect shortens the window
+         where fallback-font text is visible before the swap, which is the
+         likely source of the measured layout shift. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/fraunces-variable-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/source-serif-4-400-normal-latin.woff2"
+      crossorigin
+    />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
