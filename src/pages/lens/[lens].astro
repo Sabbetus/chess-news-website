@@ -4,13 +4,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import { excerptFrom } from '../../lib/excerpt';
-import { LENS_META, LENS_ORDER, type Lens } from '../../lib/lens';
+import { LENS_META, LENS_ORDER, LENS_SLUGS, SLUG_TO_LENS } from '../../lib/lens';
 
 export async function getStaticPaths() {
-  return LENS_ORDER.map((lens) => ({ params: { lens } }));
+  return LENS_ORDER.map((lensKey) => ({ params: { lens: LENS_SLUGS[lensKey] } }));
 }
 
-const { lens } = Astro.params as { lens: Lens };
+const { lens: slug } = Astro.params as { lens: string };
+const lens = SLUG_TO_LENS[slug];
 const meta = LENS_META[lens];
 
 const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
