@@ -1,5 +1,5 @@
 ---
-title: "Carlsen and Nepomniachtchi Meet Again, This Time With Nothing Like a World Title at Stake"
+title: "Carlsen and Nepomniachtchi Meet Again, but This Time Board Six Matters More Than They Do"
 publishDate: "2026-09-06"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/gcl-s4-day-2-preview-can-anyone-stop-the-gambits/"
