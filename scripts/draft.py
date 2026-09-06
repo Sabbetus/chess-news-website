@@ -229,7 +229,7 @@ before that, never mixed into it:
 {{
   "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
   "continent": "one of: {CONTINENT_OPTIONS}",
-  "title": "a clear, specific headline for this companion piece (not the source's title verbatim)",
+  "title": "a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler (\"What This Means For...\", \"Here's Why...\", \"And That's the Point\") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default.",
   "bodyMarkdown": "the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty",
   "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
@@ -248,7 +248,7 @@ rather than guess.
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
 {{
-  "title": "a clear, specific headline for this piece (not a generic restatement)",
+  "title": "a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline.",
   "bodyMarkdown": "the full article body in Markdown, 300-600 words",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
 }}"""
