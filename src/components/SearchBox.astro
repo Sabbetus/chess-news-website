@@ -219,11 +219,16 @@
   }
 
   @media (max-width: 640px) {
-    .search-input {
-      width: 60px;
-    }
+    /* No growth on focus here (unlike desktop): the masthead-top row is
+       already tight against the eyebrow text and theme switch on narrow
+       phones, and letting the input claim 50+ extra px there is what
+       caused it to visually collide with the eyebrow text. The dropdown
+       below does the real work of showing results either way, so the
+       input itself doesn't need the extra typing room. 84px is enough to
+       show the "Search" placeholder in full with a little breathing room. */
+    .search-input,
     .search-input:focus {
-      width: 130px;
+      width: 84px;
     }
   }
 </style>
