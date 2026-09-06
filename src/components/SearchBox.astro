@@ -44,6 +44,30 @@
       return indexPromise;
     }
 
+    function formatDate(iso) {
+      var d = new Date(iso);
+      return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // The dropdown is position:fixed and placed here in JS (rather than
+    // anchored via CSS right:0 on the input) because the input doesn't sit
+    // at the edge of the page -- the theme switch sits to its right -- so a
+    // dropdown wide enough to be readable would push past the left edge of
+    // the viewport on narrow screens if it were simply right-aligned to the
+    // input. Computing left/width from the actual viewport keeps it fully
+    // on-screen at any width.
+    function positionResults() {
+      var rect = input.getBoundingClientRect();
+      var margin = 12;
+      var width = Math.min(340, window.innerWidth - margin * 2);
+      var left = rect.right - width;
+      if (left < margin) left = margin;
+      if (left + width > window.innerWidth - margin) left = window.innerWidth - margin - width;
+      results.style.width = width + 'px';
+      results.style.left = left + 'px';
+      results.style.top = rect.bottom + 8 + 'px';
+    }
+
     function render(matches, query) {
       results.innerHTML = '';
       if (!query) {
@@ -55,23 +79,23 @@
         empty.className = 'search-empty';
         empty.textContent = 'No matching articles.';
         results.appendChild(empty);
-        results.hidden = false;
-        return;
+      } else {
+        matches.slice(0, 8).forEach(function (item) {
+          var a = document.createElement('a');
+          a.className = 'search-result';
+          a.href = '/articles/' + item.slug + '/';
+          var title = document.createElement('span');
+          title.className = 'search-result-title';
+          title.textContent = item.title;
+          var meta = document.createElement('span');
+          meta.className = 'search-result-meta';
+          meta.textContent = item.sourceName + ' · ' + formatDate(item.publishDate);
+          a.appendChild(title);
+          a.appendChild(meta);
+          results.appendChild(a);
+        });
       }
-      matches.slice(0, 8).forEach(function (item) {
-        var a = document.createElement('a');
-        a.className = 'search-result';
-        a.href = '/articles/' + item.slug + '/';
-        var title = document.createElement('span');
-        title.className = 'search-result-title';
-        title.textContent = item.title;
-        var meta = document.createElement('span');
-        meta.className = 'search-result-meta';
-        meta.textContent = item.sourceName;
-        a.appendChild(title);
-        a.appendChild(meta);
-        results.appendChild(a);
-      });
+      positionResults();
       results.hidden = false;
     }
 
@@ -106,6 +130,9 @@
         results.hidden = true;
       }
     });
+    window.addEventListener('resize', function () {
+      if (!results.hidden) positionResults();
+    });
   })();
 </script>
 
@@ -114,7 +141,7 @@
     position: relative;
   }
   .search-input {
-    width: 140px;
+    width: 76px;
     padding: 5px 10px;
     background: var(--paper-raised);
     border: 1px solid var(--rule);
@@ -130,7 +157,7 @@
     opacity: 1;
   }
   .search-input:focus {
-    width: 200px;
+    width: 190px;
     outline: 2px solid var(--focus);
     outline-offset: 1px;
   }
@@ -141,12 +168,12 @@
      elements) never lands on them. Without :global() here, every rule
      targeting them is silently dropped and they fall back to whatever
      ambient styles their ancestors impose (in this case .masthead-top's
-     uppercase), which is exactly the "bad UI" this replaces. */
+     uppercase), which is exactly the "bad UI" this replaces.
+
+     position/left/top/width are set in JS (positionResults() above), not
+     here -- see that function for why. */
   :global(.search-results) {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    width: 320px;
+    position: fixed;
     max-height: 400px;
     overflow-y: auto;
     background: var(--paper);
@@ -192,12 +219,11 @@
   }
 
   @media (max-width: 640px) {
-    .search-input,
-    .search-input:focus {
-      width: 110px;
+    .search-input {
+      width: 60px;
     }
-    :global(.search-results) {
-      width: 240px;
+    .search-input:focus {
+      width: 130px;
     }
   }
 </style>
