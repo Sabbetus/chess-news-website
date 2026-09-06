@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
 continent: "asia"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "263 tournaments tracked across Asia this September, from a 643-player rating-band open in Hyderabad to Tehran's youth championships and a Shanghai schools rapid. Full rundown:"
 aggregateKind: "calendar-comingup"
 continentName: "Asia"

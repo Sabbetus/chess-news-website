@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "September 2026's African chess calendar: 13 tournaments tracked, led by an 83-player U20 rapid in Sharqia, Egypt, plus classical opens in Emalahleni and Rhodes, South Africa. Full preview:"
 aggregateKind: "calendar-comingup"
 continentName: "Africa"
