@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"
 continent: "north-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Mexico's Pilares rapid drew 212 players and Canada's Chess4win Ladder Open pulled in 138 to top North America's August chess calendar. A look at the numbers behind the month's biggest events."
 aggregateKind: "calendar-biggest"
 continentName: "North America"
