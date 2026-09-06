@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-sinquefield-cairns-cup-round-7"
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "So still leads, Sindarov keeps his GCT Finals hopes alive, and Tan Zhongyi survives a two-pawn deficit to stretch her Cairns Cup lead. Round 7 recap + why it matters. #chess"
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Javokhir_Sindarov.jpg/1280px-Javokhir_Sindarov.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

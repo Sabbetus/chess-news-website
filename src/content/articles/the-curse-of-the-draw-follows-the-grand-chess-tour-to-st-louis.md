@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-1"
 lens: "community-pulse"
 continent: "north-america"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Two fights, two draws, zero decisive games. Day 1 of the Grand Chess Tour Finals had everyone in St. Louis asking the same question: why do the best players alive keep splitting the point? #chess"
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Vincent_Keymer_in_2025.jpg/1280px-Vincent_Keymer_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
