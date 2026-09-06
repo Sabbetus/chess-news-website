@@ -2,6 +2,7 @@
 import '../styles/fonts.css';
 import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
+import SearchBox from '../components/SearchBox.astro';
 import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continent';
 
 interface Props {
@@ -29,8 +30,6 @@ const {
 // name), so the brand there is a non-heading element carrying the same
 // look via a shared class -- not a second, competing h1.
 const BrandTag = activeContinent === 'front-page' ? 'h1' : 'p';
-
-const today = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
@@ -106,7 +105,7 @@ const sections = [
           <span class="eyebrow-short">Chess news</span>
         </span>
         <span class="masthead-top-right">
-          <span class="date">{today}</span>
+          <SearchBox />
           <ThemeSwitch />
         </span>
       </div>

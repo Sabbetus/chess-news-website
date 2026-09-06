@@ -261,9 +261,6 @@ button:focus-visible {
   align-items: center;
   gap: 16px;
 }
-.masthead-top .date {
-  font-variant-numeric: tabular-nums;
-}
 .masthead {
   padding: 9px 0 26px;
   text-align: center;
@@ -326,9 +323,6 @@ nav.sections a:hover {
 }
 
 @media (max-width: 640px) {
-  .masthead-top .date {
-    display: none;
-  }
   .eyebrow-full {
     display: none;
   }

@@ -1,0 +1,187 @@
+---
+// Client-side search: fetches the small static index at /search-index.json
+// once (there's no backend to query on a static site) and filters it
+// locally by substring match against title/excerpt as the visitor types.
+---
+
+<div class="search-box" id="searchBox">
+  <input
+    type="search"
+    id="searchInput"
+    class="search-input"
+    placeholder="Search articles…"
+    autocomplete="off"
+    aria-label="Search articles"
+  />
+  <div class="search-results" id="searchResults" hidden></div>
+</div>
+
+<script is:inline>
+  (function () {
+    var box = document.getElementById('searchBox');
+    var input = document.getElementById('searchInput');
+    var results = document.getElementById('searchResults');
+    if (!box || !input || !results) return;
+
+    var index = null;
+    var indexPromise = null;
+
+    function loadIndex() {
+      if (!indexPromise) {
+        indexPromise = fetch('/search-index.json')
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (data) {
+            index = data;
+            return data;
+          })
+          .catch(function () {
+            index = [];
+            return index;
+          });
+      }
+      return indexPromise;
+    }
+
+    function render(matches, query) {
+      results.innerHTML = '';
+      if (!query) {
+        results.hidden = true;
+        return;
+      }
+      if (matches.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'search-empty';
+        empty.textContent = 'No matching articles.';
+        results.appendChild(empty);
+        results.hidden = false;
+        return;
+      }
+      matches.slice(0, 8).forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = 'search-result';
+        a.href = '/articles/' + item.slug + '/';
+        var title = document.createElement('span');
+        title.className = 'search-result-title';
+        title.textContent = item.title;
+        var meta = document.createElement('span');
+        meta.className = 'search-result-meta';
+        meta.textContent = item.sourceName;
+        a.appendChild(title);
+        a.appendChild(meta);
+        results.appendChild(a);
+      });
+      results.hidden = false;
+    }
+
+    function search(query) {
+      var q = query.trim().toLowerCase();
+      if (!q) {
+        render([], '');
+        return;
+      }
+      loadIndex().then(function (data) {
+        var matches = data.filter(function (item) {
+          return item.title.toLowerCase().indexOf(q) !== -1 || item.excerpt.toLowerCase().indexOf(q) !== -1;
+        });
+        render(matches, q);
+      });
+    }
+
+    input.addEventListener('input', function () {
+      search(input.value);
+    });
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) search(input.value);
+    });
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target)) {
+        results.hidden = true;
+      }
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        input.blur();
+        results.hidden = true;
+      }
+    });
+  })();
+</script>
+
+<style>
+  .search-box {
+    position: relative;
+  }
+  .search-input {
+    width: 140px;
+    padding: 5px 10px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    transition: width 0.15s ease;
+  }
+  .search-input:focus {
+    width: 200px;
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+  .search-results {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    width: 280px;
+    max-height: 360px;
+    overflow-y: auto;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+  }
+  .search-result {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-faint);
+  }
+  .search-result:last-child {
+    border-bottom: none;
+  }
+  .search-result:hover {
+    background: var(--paper-raised);
+  }
+  .search-result-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .search-result-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .search-empty {
+    padding: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 640px) {
+    .search-input,
+    .search-input:focus {
+      width: 110px;
+    }
+    .search-results {
+      width: 240px;
+    }
+  }
+</style>
