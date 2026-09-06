@@ -156,10 +156,15 @@ same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do no
 default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
-- Keep paragraphs short: 2-4 sentences each, one idea per paragraph. Break up any \
-paragraph that's running long rather than letting it stretch to 5+ sentences. This \
-is a paragraph-length rule, not an article-length one -- add more short paragraphs \
-to fit everything in, don't cut content to keep the piece itself short."""
+- Keep paragraphs short: 2-4 sentences each, one idea per paragraph, hard cap at 4 \
+sentences with no exceptions. Break up any paragraph that's running long rather \
+than letting it stretch to 5+ sentences. This is a paragraph-length rule, not an \
+article-length one -- add more short paragraphs to fit everything in, don't cut \
+content to keep the piece itself short. When a paragraph is already at 3-4 \
+sentences and you have another fact to add to it (a format detail, a prize tier, \
+a piece of context), that is the signal to start a new paragraph, not to extend \
+the current one -- never grow a paragraph past the cap by appending a clause or \
+another sentence onto the end of it."""
 
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \
