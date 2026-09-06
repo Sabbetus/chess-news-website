@@ -60,12 +60,16 @@ MAX_KEYWORD_SCORE = 30
 PROMO_TITLE_PATTERNS = [
     r"^play in\b", r"^get coached\b", r"^sign up\b", r"^register (for|now)\b",
     r"^enter the\b", r"^join (the|us)\b", r"^watch (the|as)\b", r"^try (the|our)\b",
+    # Not anchored to the start -- this is a site-feature-update framing
+    # ("Daily Puzzles Just Got More Exciting"), not something a real news
+    # headline about a player/event/tournament result would ever say.
+    r"just got (more|better|easier|faster)\b",
 ]
 
 
 def is_promotional(item: dict) -> bool:
     title = (item.get("title") or "").strip().lower()
-    return any(re.match(pattern, title) for pattern in PROMO_TITLE_PATTERNS)
+    return any(re.search(pattern, title) for pattern in PROMO_TITLE_PATTERNS)
 
 
 # Nordic/regional relevance -- boosts stories that matter for the site's
