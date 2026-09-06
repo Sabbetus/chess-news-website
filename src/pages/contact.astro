@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact | Chessori"
+  description="Get in touch with Chessori -- feedback, corrections, or general inquiries."
+  activeContinent="contact"
+>
+  <header class="section-head">
+    <h1>Contact</h1>
+    <p>Feedback, corrections, or anything else</p>
+  </header>
+
+  <form id="contact-form" class="contact-form">
+    <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" />
+
+    <div class="form-group">
+      <label for="c-name">Name</label>
+      <input id="c-name" name="name" type="text" placeholder="Optional" />
+    </div>
+
+    <div class="form-group">
+      <label for="c-email">Your email</label>
+      <input id="c-email" name="email" type="email" placeholder="So we can reply" required />
+    </div>
+
+    <div class="form-group">
+      <label for="c-topic">Topic</label>
+      <select id="c-topic" name="topic">
+        <option value="General feedback">General feedback</option>
+        <option value="Article correction">Article correction</option>
+        <option value="Partnership">Partnership</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="c-message">Message</label>
+      <textarea id="c-message" name="message" rows="7" required></textarea>
+    </div>
+
+    <button type="submit" class="form-submit" id="form-submit">Send message</button>
+
+    <p class="form-status" id="form-status"></p>
+  </form>
+</BaseLayout>
+
+<style>
+  .section-head {
+    padding: 34px 0 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head h1 {
+    margin: 0 0 6px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(30px, 4.5vw, 44px);
+  }
+  .section-head p {
+    margin: 0 0 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-form {
+    max-width: 480px;
+    margin: 40px 0 60px;
+  }
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 15px;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+  .form-group textarea {
+    resize: vertical;
+  }
+  .form-submit {
+    padding: 11px 22px;
+    background: var(--accent);
+    color: var(--paper);
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .form-submit:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .form-status {
+    margin: 14px 0 0;
+    font-size: 14px;
+  }
+  .form-status-success {
+    color: var(--green);
+  }
+  .form-status-error {
+    color: var(--terracotta);
+  }
+</style>
+
+<script>
+  const WEB3FORMS_ACCESS_KEY = '41850aed-2199-4e6d-a059-e14c608a66a9';
+
+  // If arriving from an article's "report a correction" link, pre-select
+  // the topic and pre-fill the message with the article's title/URL so the
+  // reporter only has to type the actual correction.
+  const params = new URLSearchParams(window.location.search);
+  const topicParam = params.get('topic');
+  const titleParam = params.get('title');
+  const urlParam = params.get('url');
+
+  if (topicParam) {
+    const topicSelect = document.getElementById('c-topic') as HTMLSelectElement | null;
+    if (topicSelect && [...topicSelect.options].some((o) => o.value === topicParam)) {
+      topicSelect.value = topicParam;
+    }
+  }
+  if (topicParam === 'Article correction' && (titleParam || urlParam)) {
+    const messageField = document.getElementById('c-message') as HTMLTextAreaElement | null;
+    if (messageField) {
+      messageField.value = `Regarding: "${titleParam ?? ''}"\n${urlParam ?? ''}\n\n`;
+    }
+  }
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('form-submit') as HTMLButtonElement | null;
+  const status = document.getElementById('form-status');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submitBtn || !status || !form) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    status.textContent = '';
+    status.className = 'form-status';
+
+    const formData = new FormData(form);
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+    formData.append('subject', `Chessori — ${formData.get('topic')}`);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        form.reset();
+        status.textContent = 'Thanks — your message has been sent.';
+        status.classList.add('form-status-success');
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please try again later.';
+      status.classList.add('form-status-error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
+    }
+  });
+</script>
