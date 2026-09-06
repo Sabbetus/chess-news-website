@@ -196,20 +196,6 @@ button:focus-visible {
   opacity: 1;
   background: rgba(0, 0, 0, 0.65);
 }
-.thumb .chip {
-  position: absolute;
-  left: 14px;
-  top: 14px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
 .thumb--lead {
   aspect-ratio: 1.91 / 1;
   width: 100%;
@@ -375,6 +361,7 @@ nav.sections a:hover {
   gap: 14px;
   flex-wrap: wrap;
   align-items: center;
+  margin-top: 10px;
 }
 .byline .src {
   color: var(--ink);

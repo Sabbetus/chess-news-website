@@ -1,19 +1,16 @@
 ---
 import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
-import { CONTINENT_META, type Continent } from '../lib/continent';
 
 interface Props {
   lens: Lens;
-  continent: Continent;
   size: 'lead' | 'card';
   seed?: number;
   image?: { url: string; credit: string; sourceUrl: string };
   alt?: string;
   href?: string;
 }
-const { lens, continent, size, seed = 0, image, alt = '', href } = Astro.props;
+const { lens, size, seed = 0, image, alt = '', href } = Astro.props;
 const lensMeta = LENS_META[lens];
-const continentMeta = CONTINENT_META[continent];
 const piece = pieceForLens(lens, seed);
 
 // The image-credit link (to the photo's Commons page) and a link to the
@@ -28,13 +25,11 @@ const piece = pieceForLens(lens, seed);
     href ? (
       <a href={href} class="thumb-link">
         {image && <img class="thumb-photo" src={image.url} alt={alt} loading="lazy" />}
-        <span class="chip">{continentMeta.label}</span>
         {!image && <span class="piece">{piece}</span>}
       </a>
     ) : (
       <>
         {image && <img class="thumb-photo" src={image.url} alt={alt} loading="lazy" />}
-        <span class="chip">{continentMeta.label}</span>
         {!image && <span class="piece">{piece}</span>}
       </>
     )
