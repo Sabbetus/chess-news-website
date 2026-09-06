@@ -217,6 +217,12 @@ You have a web_search tool available. Only use it if you choose the \
 community-pulse lens (see its description above for how) -- for every other \
 lens, do not search, just write from the source material given to you.
 
+over raw citation markup like <cite index="...">...</cite> from search results \
+over raw citation markup like <cite index="...">...</cite> from search results \
+into your output -- that markup is for your own internal reference only, and \
+must never appear anywhere in the final JSON. Paraphrase and attribute in \
+plain prose instead (e.g. "according to the tour's recap...").
+
 Your FINAL message must be ONLY a JSON object (no markdown fences, no \
 commentary) with these exact keys -- any searching or reasoning happens \
 before that, never mixed into it:
@@ -293,7 +299,18 @@ def parse_response(text: str) -> dict:
     # string value (e.g. a paragraph break in bodyMarkdown) instead of an
     # escaped \n -- technically invalid JSON, but unambiguous to parse, and
     # rejecting it outright loses an entire drafted article over whitespace.
-    return json.loads(text, strict=False)
+    parsed = json.loads(text, strict=False)
+
+    # Defensive backstop for the community-pulse (web_search) lens: despite
+    # the prompt telling the model not to, it has carried raw <cite
+    # index="...">...</cite> markup from search results straight into
+    # bodyMarkdown in practice. Strip the tags but keep the inner text so a
+    # slip here doesn't cost an otherwise-good draft.
+    for key in ("title", "bodyMarkdown", "socialCopy"):
+        if isinstance(parsed.get(key), str):
+            parsed[key] = re.sub(r"</?cite[^>]*>", "", parsed[key])
+
+    return parsed
 
 
 # How many of the most recently published articles count as "recently
