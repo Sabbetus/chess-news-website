@@ -34,6 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+import archive_fetch
 import ingest
 import selection
 
@@ -106,11 +107,40 @@ def item_date(item: dict) -> date | None:
     return datetime.fromisoformat(raw).astimezone(timezone.utc).date()
 
 
-def collect_news_candidates(start: date, end: date, exclude_urls: set[str]) -> dict[date, list[dict]]:
-    raw_items: list[dict] = []
-    raw_items += ingest.fetch_rss(ingest.CHESS_COM_RSS, "Chess.com", "drama")
-    raw_items += ingest.fetch_rss(ingest.FIDE_RSS, "FIDE", "serious")
+def _extend_with_archive_if_needed(
+    rss_items: list[dict], fetch_archive, start: date, end: date, source_label: str
+) -> list[dict]:
+    """RSS only ever carries a rolling recent window -- if the requested
+    range reaches further back than what RSS currently has, fill just that
+    gap from the source's real archive (see archive_fetch.py) rather than
+    re-fetching the whole range, which RSS already covers more cheaply for
+    whatever's recent."""
+    rss_dates = [d for d in (item_date(item) for item in rss_items) if d is not None]
+    rss_min = min(rss_dates) if rss_dates else None
 
+    if rss_min is not None and rss_min <= start:
+        return rss_items  # RSS already reaches back far enough
+
+    gap_end = (rss_min - timedelta(days=1)) if rss_min else end
+    if gap_end < start:
+        return rss_items
+
+    print(f"RSS doesn't reach back to {start} for {source_label} -- filling {start}..{gap_end} from archive.")
+    archive_items = fetch_archive(start, gap_end)
+    seen_urls = {item["sourceUrl"] for item in rss_items}
+    return rss_items + [item for item in archive_items if item["sourceUrl"] not in seen_urls]
+
+
+def collect_news_candidates(start: date, end: date, exclude_urls: set[str]) -> dict[date, list[dict]]:
+    chesscom_items = ingest.fetch_rss(ingest.CHESS_COM_RSS, "Chess.com", "drama")
+    fide_items = ingest.fetch_rss(ingest.FIDE_RSS, "FIDE", "serious")
+
+    chesscom_items = _extend_with_archive_if_needed(
+        chesscom_items, archive_fetch.fetch_chesscom_archive, start, end, "Chess.com"
+    )
+    fide_items = _extend_with_archive_if_needed(fide_items, archive_fetch.fetch_fide_archive, start, end, "FIDE")
+
+    raw_items = chesscom_items + fide_items
     by_day: dict[date, list[dict]] = {}
     for item in raw_items:
         if item["sourceUrl"] in exclude_urls:
