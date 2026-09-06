@@ -22,7 +22,7 @@ const articles = allArticles
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
-<BaseLayout title={`${meta.label} | Chessori`} description={meta.description}>
+<BaseLayout title={`${meta.label} | Chessori`} description={meta.description} activeContinent="lens">
   <header class="section-head">
     <h1>{meta.label}</h1>
     <p class="desc">{meta.description}</p>

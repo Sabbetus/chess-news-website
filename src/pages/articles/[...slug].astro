@@ -5,6 +5,7 @@ import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
+import { seoTitle } from '../../lib/seoTitle';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -71,7 +72,8 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={`${article.data.title} | Chessori`}
+  title={seoTitle(article.data.title)}
+  ogTitle={`${article.data.title} | Chessori`}
   description={description}
   activeContinent={article.data.continent}
   articleMeta={{
