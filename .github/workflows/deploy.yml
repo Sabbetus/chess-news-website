@@ -48,3 +48,57 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  indexnow:
+    needs: deploy
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Submit new/changed article URLs to IndexNow
+        run: |
+          set -euo pipefail
+
+          # Only articles actually added or modified by this push -- a
+          # correction to one old article shouldn't re-submit the whole
+          # site, and this also naturally covers "new page published"
+          # (a brand new file) and "existing page updated" (frontmatter/
+          # body edits) the same way.
+          changed_files=$(git diff --name-only --diff-filter=ACMR "${{ github.event.before }}" "${{ github.event.after }}" -- 'src/content/articles/*.md' || true)
+
+          if [ -z "$changed_files" ]; then
+            echo "No article files changed in this push -- nothing to submit."
+            exit 0
+          fi
+
+          urls="[]"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            slug=$(basename "$file" .md)
+            url="https://chessori.com/articles/${slug}/"
+            urls=$(echo "$urls" | jq --arg u "$url" '. + [$u]')
+            echo "Queued: $url"
+          done <<< "$changed_files"
+
+          count=$(echo "$urls" | jq 'length')
+          if [ "$count" -eq 0 ]; then
+            echo "Nothing to submit."
+            exit 0
+          fi
+
+          payload=$(jq -n \
+            --arg host "chessori.com" \
+            --arg key "e2896e653d1775c123c54b70832ef208" \
+            --arg keyLocation "https://chessori.com/e2896e653d1775c123c54b70832ef208.txt" \
+            --argjson urlList "$urls" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+
+          echo "Submitting $count URL(s) to IndexNow..."
+          curl -sS -X POST 'https://api.indexnow.org/indexnow' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "$payload" \
+            -w '\nIndexNow responded: %{http_code}\n'
