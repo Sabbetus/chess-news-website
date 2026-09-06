@@ -2,9 +2,9 @@ export type Lens = 'tournament-db' | 'drama' | 'historical-parallel' | 'money-an
 
 export const LENS_META: Record<Lens, { label: string; className: string }> = {
   'tournament-db': { label: 'OTB Tournaments', className: 'tournament' },
-  drama: { label: 'Drama Angle', className: 'drama' },
+  drama: { label: 'Controversy', className: 'drama' },
   'historical-parallel': { label: 'Historical Parallel', className: 'historical' },
-  'money-angle': { label: 'Money Angle', className: 'money' },
+  'money-angle': { label: 'Money', className: 'money' },
   'community-pulse': { label: 'Community Pulse', className: 'community' },
 };
 
