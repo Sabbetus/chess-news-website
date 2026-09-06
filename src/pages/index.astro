@@ -115,6 +115,8 @@ const jsonLd = [
               <span class="src">Source: {a.data.sourceName}</span>
               <span class="dot">&bull;</span>
               <span>{LENS_META[a.data.lens].label}</span>
+              <span class="dot">&bull;</span>
+              <span>{dateFmt(a.data.publishDate)}</span>
             </div>
           </article>
         ))}
