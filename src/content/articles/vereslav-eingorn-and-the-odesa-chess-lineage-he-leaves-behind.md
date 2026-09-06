@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/in-memoriam-vereslav-eingorn-1956-2026/"
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 43
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GM Vereslav Eingorn has died at 69. His path from an Odesa chess family to grandmaster, coach and author traces the outline of a whole Soviet-era chess culture now fading fast."
 image:
   url: "https://upload.wikimedia.org/wikipedia/commons/3/31/Kotelnikov_vs._Geller_1979.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"

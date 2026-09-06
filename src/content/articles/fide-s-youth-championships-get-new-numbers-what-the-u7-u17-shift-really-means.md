@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fide-world-championships-u7-u17-registration-no
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE just renumbered its entire youth chess ladder, U8-U18 becomes U7-U17. Here's the decades of history behind the switch, and what's really changing ahead of Roquetas de Mar 2026."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/FIDE_text_on_white.svg/1280px-FIDE_text_on_white.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

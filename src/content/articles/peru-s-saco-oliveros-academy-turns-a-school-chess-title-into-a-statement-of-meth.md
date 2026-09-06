@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/saco-oliveros-de-lince-takes-gold-as-san-jose-c
 lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 35
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Peru's Saco Oliveros academy went unbeaten all week to win the FIDE ISCF Schools Team title in San José, closing with a Mother's Day tribute. What the win says about academy chess."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/FIDE_text_on_white.svg/1280px-FIDE_text_on_white.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"

@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/jeffery-xiong-wins-bullet-brawl-aug-
 lens: "money-angle"
 continent: "global"
 selectionScore: 46
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Jeffery Xiong just defended his Bullet Brawl title for $400. Small prize, big signal about how online chess actually pays its players. ♟️"
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/JefferyXiong23a.jpg/1280px-JefferyXiong23a.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
