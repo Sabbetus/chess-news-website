@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
+import TagRow from '../../components/TagRow.astro';
 import { excerptFrom } from '../../lib/excerpt';
 import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../../lib/continent';
 
@@ -21,6 +22,8 @@ const description =
   meta.label === 'Global'
     ? 'Chess news and analysis with no single regional angle, curated by Chessori.'
     : `Chess news, original analysis, and tournament coverage from ${meta.label}, curated by Chessori.`;
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
 <BaseLayout title={`${meta.label} | Chessori`} description={description} activeContinent={continent}>
@@ -44,7 +47,6 @@ const description =
           <article class="card">
             <ArticleThumb
               lens={a.data.lens}
-              continent={a.data.continent}
               size="card"
               seed={i}
               image={a.data.image}
@@ -55,8 +57,11 @@ const description =
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
             </h3>
             <p>{excerptFrom(a.body, 160)}</p>
+            <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
               <span class="src">Source: {a.data.sourceName}</span>
+              <span class="dot">&bull;</span>
+              <span>{dateFmt(a.data.publishDate)}</span>
             </div>
           </article>
         ))}

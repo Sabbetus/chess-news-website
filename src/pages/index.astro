@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleThumb from '../components/ArticleThumb.astro';
-import { LENS_META } from '../lib/lens';
+import TagRow from '../components/TagRow.astro';
 import { estimateReadMinutes } from '../lib/reading';
 import { excerptFrom } from '../lib/excerpt';
 
@@ -54,7 +54,6 @@ const jsonLd = [
           <div class="lead-main">
             <ArticleThumb
               lens={lead.data.lens}
-              continent={lead.data.continent}
               size="lead"
               image={lead.data.image}
               alt={lead.data.title}
@@ -64,6 +63,7 @@ const jsonLd = [
               <a href={`/articles/${lead.slug}/`}>{lead.data.title}</a>
             </h2>
             <p class="dek">{excerptFrom(lead.body, 280)}</p>
+            <TagRow lens={lead.data.lens} continent={lead.data.continent} />
             <div class="byline">
               <a class="src" href={lead.data.sourceUrl} target="_blank" rel="noopener">
                 Source: {lead.data.sourceName}
@@ -100,7 +100,6 @@ const jsonLd = [
           <article class="card">
             <ArticleThumb
               lens={a.data.lens}
-              continent={a.data.continent}
               size="card"
               seed={i + 1}
               image={a.data.image}
@@ -111,10 +110,9 @@ const jsonLd = [
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
             </h3>
             <p>{excerptFrom(a.body, 160)}</p>
+            <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
               <span class="src">Source: {a.data.sourceName}</span>
-              <span class="dot">&bull;</span>
-              <span>{LENS_META[a.data.lens].label}</span>
               <span class="dot">&bull;</span>
               <span>{dateFmt(a.data.publishDate)}</span>
             </div>

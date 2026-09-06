@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
-import { LENS_META } from '../../lib/lens';
+import TagRow from '../../components/TagRow.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 
@@ -24,8 +24,25 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
   month: 'long',
   year: 'numeric',
 });
+const shortDateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 const description = excerptFrom(article.body, 200);
 const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Similar articles: same continent or same lens, most recent first,
+// excluding this one. Falls back to just "most recent overall" if there
+// aren't enough matches, so the section is never empty once other
+// articles exist.
+const allArticles = await getCollection(
+  'articles',
+  ({ data, slug }) => data.reviewStatus === 'published' && slug !== article.slug
+);
+const related = allArticles
+  .filter((a) => a.data.continent === article.data.continent || a.data.lens === article.data.lens)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const fallback = allArticles
+  .filter((a) => !related.includes(a))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const similar = [...related, ...fallback].slice(0, 3);
 
 const jsonLd = [
   {
@@ -61,13 +78,12 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <article class="story">
-    <ArticleThumb lens={article.data.lens} continent={article.data.continent} size="lead" image={article.data.image} alt={article.data.title} />
+    <ArticleThumb lens={article.data.lens} size="lead" image={article.data.image} alt={article.data.title} />
 
     <div class="story-head">
       <h1>{article.data.title}</h1>
+      <TagRow lens={article.data.lens} continent={article.data.continent} />
       <div class="byline">
-        <span>{LENS_META[article.data.lens].label}</span>
-        <span class="dot">&bull;</span>
         <a class="src" href={article.data.sourceUrl} target="_blank" rel="noopener">
           Source: {article.data.sourceName}
         </a>
@@ -86,6 +102,28 @@ const jsonLd = [
       <span class="byline-credit">By Claude Henry</span><br />
       Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a>
     </p>
+
+    {
+      similar.length > 0 && (
+        <section class="similar">
+          <span class="similar-label">Similar Articles</span>
+          <div class="similar-grid">
+            {similar.map((a, i) => (
+              <article class="similar-card">
+                <ArticleThumb lens={a.data.lens} size="card" seed={i} image={a.data.image} alt={a.data.title} href={`/articles/${a.slug}/`} />
+                <h3>
+                  <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+                </h3>
+                <TagRow lens={a.data.lens} continent={a.data.continent} />
+                <div class="byline">
+                  <span>{shortDateFmt(a.data.publishDate)}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </article>
 </BaseLayout>
 
@@ -167,5 +205,50 @@ const jsonLd = [
   .byline-credit {
     display: inline-block;
     margin-bottom: 6px;
+  }
+
+  .similar {
+    max-width: var(--content-width);
+    margin: 48px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+  .similar-label {
+    display: block;
+    margin-bottom: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .similar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .similar-card h3 {
+    margin: 12px 0 8px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .similar-card h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .similar-card h3 a:hover {
+    color: var(--accent);
+  }
+  .similar-card .byline {
+    font-size: 11px;
+  }
+
+  @media (max-width: 640px) {
+    .similar-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
