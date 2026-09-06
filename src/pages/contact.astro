@@ -142,12 +142,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const WEB3FORMS_ACCESS_KEY = '41850aed-2199-4e6d-a059-e14c608a66a9';
 
   // If arriving from an article's "report a correction" link, pre-select
-  // the topic and pre-fill the message with the article's title/URL so the
+  // the topic and pre-fill the message with the article's title so the
   // reporter only has to type the actual correction.
   const params = new URLSearchParams(window.location.search);
   const topicParam = params.get('topic');
   const titleParam = params.get('title');
-  const urlParam = params.get('url');
 
   if (topicParam) {
     const topicSelect = document.getElementById('c-topic') as HTMLSelectElement | null;
@@ -155,10 +154,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       topicSelect.value = topicParam;
     }
   }
-  if (topicParam === 'Article correction' && (titleParam || urlParam)) {
+  if (topicParam === 'Article correction' && titleParam) {
     const messageField = document.getElementById('c-message') as HTMLTextAreaElement | null;
     if (messageField) {
-      messageField.value = `Regarding: "${titleParam ?? ''}"\n${urlParam ?? ''}\n\n`;
+      messageField.value = `Regarding: "${titleParam}"\n\n`;
     }
   }
 
