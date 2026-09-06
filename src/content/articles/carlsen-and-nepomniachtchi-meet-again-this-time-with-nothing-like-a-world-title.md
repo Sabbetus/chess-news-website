@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/gcl-s4-day-2-preview-can-anyone-stop-the-gambit
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 43
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen and Nepomniachtchi meet again after their 2021 title clash, but this time the real GCL story is whether anyone can slow down the American Gambits."
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg/1280px-Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
@@ -16,7 +16,7 @@ image:
 
 The last time Magnus Carlsen and Ian Nepomniachtchi sat across a board with real stakes attached, it ended with a five-hour, 136-move slog in Dubai that broke Nepomniachtchi and handed Carlsen his fifth world championship. That match finished 7.5-3.5, and the psychological gap it opened between the two men has never fully closed. On Sunday they meet again, this time on board one of Global Chess League Season 4, and the stakes could not be more different.
 
-What makes it strange is how identical their situations are heading in. Carlsen's American Gambits and Nepomniachtchi's Ganges Grandmasters both sit on 3 match points, 10 game points, and one scrappy win apiece from Day 1. Neither man actually earned that win himself. Carlsen won a pawn off Maxime Vachier-Lagrave and couldn't finish the job, while Nepomniachtchi's team survived on the strength of Levon Aronian grinding down Wei Yi in 29 moves and a late sweep of both women's boards by Polina Shuvalova and Stavroula Tsolakidou. The heavyweight names, in other words, have been quietly outplayed by their own supporting cast.
+What makes it strange is how identical their situations are heading in. Carlsen's Alpine Pipers and Nepomniachtchi's Ganges Grandmasters both sit on 3 match points, 10 game points, and one scrappy win apiece from Day 1. Neither man actually earned that win himself. Carlsen won a pawn off Maxime Vachier-Lagrave and couldn't finish the job, while Nepomniachtchi's team survived on the strength of Levon Aronian grinding down Wei Yi in 29 moves and a late sweep of both women's boards by Polina Shuvalova and Stavroula Tsolakidou. The heavyweight names, in other words, have been quietly outplayed by their own supporting cast.
 
 That's the joke buried in this rivalry now. In 2021, Carlsen-Nepomniachtchi was the whole story: two men, one board, a title. In a league format built on six boards per side, their individual result barely moves the needle next to what Vidit Gujrathi, Koneru Humpy, or Divya Deshmukh do lower down the lineup. The preview flags boards four and five, Divya Deshmukh and Humpy against Shuvalova and Tsolakidou, as the likely decider, since Ganges won that pairing in their opener and the Pipers nearly lost theirs there in an earlier match.
 
