@@ -1,4 +1,4 @@
-# Chessori
+# Chess News Website
 
 A curated chess news aggregator: original/companion pieces on select
 stories, each linked to its source, drafted with AI assistance and
