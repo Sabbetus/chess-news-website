@@ -7,8 +7,15 @@ import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continen
 
 interface Props {
   title: string;
+  // The <title> tag has a hard practical length limit (search engines
+  // truncate/ignore past ~70 characters) that the on-page headline
+  // shouldn't be bent to fit -- see lib/seoTitle.ts. Social cards don't
+  // have that constraint and read better with the full headline, so
+  // og:title/twitter:title default to the possibly-shortened `title`
+  // but can be overridden with the untruncated version via `ogTitle`.
+  ogTitle?: string;
   description?: string;
-  activeContinent?: Continent | 'front-page' | 'archive' | 'contact';
+  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens';
   articleMeta?: { publishedTime: string; source: string };
   jsonLd?: Record<string, unknown>[];
   image?: string;
@@ -17,6 +24,7 @@ const DEFAULT_DESCRIPTION =
   'Curated chess news from around the world, with original analysis and tournament statistics you won’t find anywhere else. Every story linked back to its source.';
 const {
   title,
+  ogTitle = title,
   description = DEFAULT_DESCRIPTION,
   activeContinent = 'front-page',
   articleMeta,
@@ -57,14 +65,14 @@ const sections = [
 
     <meta property="og:type" content={articleMeta ? 'article' : 'website'} />
     <meta property="og:site_name" content="Chessori" />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
     {articleMeta && <meta property="article:published_time" content={articleMeta.publishedTime} />}
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
