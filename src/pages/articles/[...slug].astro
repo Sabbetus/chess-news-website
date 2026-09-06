@@ -30,7 +30,6 @@ const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
 const correctionHref = `/contact/?${new URLSearchParams({
   topic: 'Article correction',
   title: article.data.title,
-  url: pageURL,
 }).toString()}`;
 
 // Similar articles: same continent or same lens, most recent first,
@@ -106,7 +105,7 @@ const jsonLd = [
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
       Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a><br />
-      <a class="correction-link" href={correctionHref}>Noticed an error in the article? Report it from here.</a>
+      <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>
     </p>
 
     {
@@ -213,10 +212,13 @@ const jsonLd = [
   .source-callout a {
     color: var(--nordic);
   }
-  .source-callout a.correction-link {
+  .correction-note {
     display: inline-block;
     margin-top: 10px;
+  }
+  .source-callout a.correction-link {
     color: var(--ink-soft);
+    text-decoration: underline;
   }
   .byline-credit {
     display: inline-block;
