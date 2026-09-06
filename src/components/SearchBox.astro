@@ -9,7 +9,7 @@
     type="search"
     id="searchInput"
     class="search-input"
-    placeholder="Search articles…"
+    placeholder="Search"
     autocomplete="off"
     aria-label="Search articles"
   />
@@ -122,57 +122,73 @@
     color: var(--ink);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11.5px;
+    text-transform: none;
     transition: width 0.15s ease;
+  }
+  .search-input::placeholder {
+    color: var(--ink-soft);
+    opacity: 1;
   }
   .search-input:focus {
     width: 200px;
     outline: 2px solid var(--focus);
     outline-offset: 1px;
   }
-  .search-results {
+
+  /* The results below are appended via document.createElement in the
+     inline script, not written in this component's template -- so Astro's
+     scoped-CSS attribute (which it only stamps onto template-authored
+     elements) never lands on them. Without :global() here, every rule
+     targeting them is silently dropped and they fall back to whatever
+     ambient styles their ancestors impose (in this case .masthead-top's
+     uppercase), which is exactly the "bad UI" this replaces. */
+  :global(.search-results) {
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
-    width: 280px;
-    max-height: 360px;
+    width: 320px;
+    max-height: 400px;
     overflow-y: auto;
     background: var(--paper);
     border: 1px solid var(--rule);
     border-radius: 6px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
     z-index: 20;
+    text-transform: none;
   }
-  .search-result {
+  :global(.search-result) {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 10px 12px;
+    gap: 4px;
+    padding: 12px 14px;
     text-decoration: none;
     border-bottom: 1px solid var(--rule-faint);
   }
-  .search-result:last-child {
+  :global(.search-result:last-child) {
     border-bottom: none;
   }
-  .search-result:hover {
+  :global(.search-result:hover) {
     background: var(--paper-raised);
   }
-  .search-result-title {
+  :global(.search-result-title) {
     font-family: 'Fraunces', Georgia, serif;
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 15px;
     color: var(--ink);
-    line-height: 1.3;
+    line-height: 1.35;
   }
-  .search-result-meta {
+  :global(.search-result-meta) {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     color: var(--ink-soft);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .search-empty {
-    padding: 12px;
+  :global(.search-empty) {
+    padding: 14px;
     font-size: 13px;
     color: var(--ink-soft);
+    text-transform: none;
   }
 
   @media (max-width: 640px) {
@@ -180,7 +196,7 @@
     .search-input:focus {
       width: 110px;
     }
-    .search-results {
+    :global(.search-results) {
       width: 240px;
     }
   }
