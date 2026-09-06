@@ -15,6 +15,7 @@ export async function GET() {
     slug: article.slug,
     excerpt: excerptFrom(article.body, 140),
     sourceName: article.data.sourceName,
+    publishDate: article.data.publishDate.toISOString(),
   }));
 
   return new Response(JSON.stringify(index), {
