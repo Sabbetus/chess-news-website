@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-tech-mahindra-global-chess-leag
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 40
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Anand once was the young gun beating the legends. On day one of the 2026 Global Chess League, 20-year-old Sindarov flipped the script on him. #chess"
 image:
   url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Viswanathan_Anand_%282016%29.jpeg/1280px-Viswanathan_Anand_%282016%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
