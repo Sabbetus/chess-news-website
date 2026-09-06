@@ -1,6 +1,6 @@
 ---
 import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
-import { buildSrcset } from '../lib/wikimediaSrcset';
+import { buildSrcset, resizeUrl } from '../lib/wikimediaSrcset';
 
 interface Props {
   lens: Lens;
@@ -21,7 +21,18 @@ const piece = pieceForLens(lens, seed);
 // site. Build a real srcset from the already-stored URL (no re-fetch, no
 // pipeline change) so the browser picks a width close to what it actually
 // needs.
-const srcset = image && buildSrcset(image.url, [400, 640, 900]);
+//
+// The base `src` is resized too, not just the srcset -- some stored URLs
+// are the raw, un-resized Commons original rather than a thumbnail
+// (MediaWiki's API sometimes omits thumburl; observed on a file 1.17MB in
+// size), and browsers that ignore srcset/sizes would otherwise still fetch
+// that full original via src.
+const maxWidth = size === 'lead' ? 960 : 500;
+const src = image && resizeUrl(image.url, maxWidth);
+// Widths here must be ones Wikimedia's thumbnail service actually serves
+// for direct/hotlinked requests (resizeUrl/buildSrcset round up to the
+// nearest one) -- see lib/wikimediaSrcset.ts for the full list and why.
+const srcset = image && buildSrcset(image.url, [330, 500, 960]);
 const sizes = size === 'lead' ? '(max-width: 700px) 100vw, 680px' : '(max-width: 640px) 100vw, 45vw';
 
 // The lead image is always the single largest above-the-fold image on
@@ -47,7 +58,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
         {image && (
           <img
             class="thumb-photo"
-            src={image.url}
+            src={src}
             srcset={srcset}
             sizes={srcset ? sizes : undefined}
             alt={alt}
@@ -62,7 +73,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
         {image && (
           <img
             class="thumb-photo"
-            src={image.url}
+            src={src}
             srcset={srcset}
             sizes={srcset ? sizes : undefined}
             alt={alt}
