@@ -198,6 +198,11 @@ const jsonLd = [
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
     color: var(--ink-soft);
+    /* The raw source URL printed below has no spaces for the browser to
+       break on -- long enough URLs (varies per article/source) overflow
+       the content column and force horizontal scroll on narrow viewports
+       without this. */
+    overflow-wrap: anywhere;
   }
   .source-callout a {
     color: var(--nordic);
