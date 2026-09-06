@@ -325,19 +325,29 @@ RECENT_IMAGE_COOLDOWN = 10
 
 def used_image_source_urls() -> set[str]:
     """Commons page URLs used as the image on one of the RECENT_IMAGE_COOLDOWN
-    most recently published articles (by publishDate) -- not a permanent,
-    site-wide ban, just a cooldown. Read from disk each call rather than
-    cached, so this can't go stale within a batch as draft_one writes new
-    files. The image's sourceUrl is written with a 2-space indent (nested
-    under "image:"); the top-level article sourceUrl has none, so matching
-    just the indented form can't collide with it."""
-    dated_urls: list[tuple[str, str]] = []
+    most recently *drafted* articles -- not a permanent, site-wide ban, just
+    a cooldown. Read from disk each call rather than cached, so this can't go
+    stale within a batch as draft_one writes new files.
+
+    Ranked by file mtime, not publishDate. publishDate reflects an article's
+    real-world story date, which for a backfill run is backdated into the
+    past -- so ranking by publishDate let a whole batch of backfilled
+    articles fall outside the cooldown window whenever 10+ already-published
+    articles happened to carry a later publishDate (e.g. today's daily
+    pipeline output), even though those backfilled articles were drafted,
+    and picked their images, only moments apart from each other. mtime
+    reflects actual draft order regardless of what date ends up in the
+    frontmatter, so it's correct for both the daily pipeline and backfill.
+
+    The image's sourceUrl is written with a 2-space indent (nested under
+    "image:"); the top-level article sourceUrl has none, so matching just
+    the indented form can't collide with it."""
+    dated_urls: list[tuple[float, str]] = []
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text()
-        date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
         image_match = re.search(r'^  sourceUrl:\s*"(.*?)"\s*$', text, re.MULTILINE)
-        if date_match and image_match:
-            dated_urls.append((date_match.group(1), image_match.group(1)))
+        if image_match:
+            dated_urls.append((path.stat().st_mtime, image_match.group(1)))
 
     dated_urls.sort(key=lambda pair: pair[0], reverse=True)
     return {url for _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
