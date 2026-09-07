@@ -169,6 +169,13 @@ const sections = [
     </script>
   </head>
   <body>
+    <!-- First focusable thing on the page, so a keyboard or screen-reader
+         user can jump straight past the masthead, search box, theme switch
+         and eight nav links instead of tabbing through all of them on every
+         page. Off-screen until focused (see .skip-link in global.css) --
+         never display:none, which would hide it from screen readers too and
+         defeat the point. -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="wrap">
       <div class="masthead-top">
         <a href="/" class="eyebrow">
@@ -199,7 +206,10 @@ const sections = [
         }
       </nav>
 
-      <main>
+      <!-- tabindex="-1" so the skip link can actually move focus here.
+           Without it browsers scroll to the anchor but leave focus in the
+           header, and the next Tab drops the reader back at the top. -->
+      <main id="main-content" tabindex="-1">
         <slot />
       </main>
 
