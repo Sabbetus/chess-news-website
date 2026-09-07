@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Deliberately non-technical: nothing here names the stack, the pipeline,
+// or how drafting works. It's a reader-facing page about editorial
+// standards, not a colophon.
+//
+// The AI wording is load-bearing. "AI-assisted and human-moderated", with
+// the human role described as judgement over what's covered/published/
+// corrected rather than a per-article review promise, stays true both
+// today (every piece is checked before merge) and under a more hands-off
+// approach later. Don't tighten it into "every article is reviewed by a
+// human" -- that's a promise the site would then have to keep.
+//
+// Origin info is kept to exactly what /privacy/ already says: a non-profit
+// publication operated from Finland. Nothing further about who operates it.
+---
+
+<BaseLayout
+  title="About Chessori"
+  description="What Chessori publishes, how stories are chosen, and how the site handles photos, AI and corrections."
+  activeContinent="about"
+>
+  <header class="section-head">
+    <h1>About Chessori</h1>
+    <p>What this site is, and how it works</p>
+  </header>
+
+  <div class="prose">
+    <p class="lede">
+      Chess is well covered. What's harder to find is the second read &mdash; the piece that tells you why a result
+      matters, what it echoes, or where the money actually went.
+    </p>
+
+    <p>
+      That's what this site is for. When something happens in chess, we link you to whoever reported it first, and
+      publish our own companion piece alongside it: a historical parallel, the economics, the reaction, or what the
+      tournament numbers actually show. Never a reworded version of someone else's article. If you only want the
+      news itself, follow the source link &mdash; it's on every page, twice.
+    </p>
+
+    <h2>How stories get picked</h2>
+    <p>
+      A handful a day, no more. We'd rather publish three things worth reading than everything that happened.
+      Stories are chosen on how much there is genuinely new to say about them, and the ones we'd only be repeating
+      get dropped.
+    </p>
+
+    <h2>Photos</h2>
+    <p>
+      Every photo comes from Wikimedia Commons under a licence that allows reuse, credited to the photographer,
+      with a link back to the original file. We don't take images from the outlets we link to.
+    </p>
+
+    <h2>AI, and people</h2>
+    <p>
+      Chessori's articles are AI-assisted and human-moderated. The tools do much of the writing; the judgement
+      stays with people &mdash; what's worth covering, what gets published, and what gets fixed when it turns out
+      to be wrong.
+    </p>
+
+    <h2>When we get it wrong</h2>
+    <p>
+      We will, eventually. Every article carries a link at the foot for reporting an error, and it reaches a person.
+      Corrections get made rather than quietly buried.
+    </p>
+
+    <h2>Who runs this</h2>
+    <p>
+      Chessori is a non-profit publication operated from Finland. You can reach us any time through the
+      <a href="/contact/">contact form</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .section-head {
+    padding: 34px 0 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head h1 {
+    margin: 0 0 6px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(30px, 4.5vw, 44px);
+  }
+  .section-head p {
+    margin: 0 0 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Same measure and left alignment as /privacy/ -- .section-head spans
+     the full width, so a centred column would leave the h1 stranded out
+     to the left of its own body text. */
+  .prose {
+    max-width: 680px;
+    margin: 0;
+    padding: 30px 0 60px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .prose .lede {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 1.1em;
+  }
+  .prose h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: 24px;
+    margin: 1.8em 0 0.45em;
+  }
+  .prose p {
+    margin: 0 0 1.1em;
+  }
+  .prose a {
+    color: var(--accent);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+</style>
