@@ -27,7 +27,11 @@ const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
   year: 'numeric',
 });
 const shortDateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-const description = excerptFrom(article.body, 200);
+// 155, not 200: Google truncates meta descriptions around 155-160 characters,
+// so the tail of a longer one is cut mid-sentence in results. Feeds the
+// JSON-LD description and og:description too, which have no such limit but
+// read better consistent with what search actually shows.
+const description = excerptFrom(article.body, 155);
 const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
 const correctionHref = `/contact/?${new URLSearchParams({
   topic: 'Article correction',

@@ -11,7 +11,12 @@
   --green: #2e5233;
   --green-tint: #e3ece4;
   --accent: #203a24;
-  --brass: #8c6a2a;
+  /* Darkened from #8c6a2a, which rendered the History lens tag at 4.09:1
+     against --brass-tint and failed WCAG AA for small text. This clears it
+     at 5.04:1, in line with the other lens tags (drama 5.06, money 5.80),
+     rather than squeaking past the 4.5 threshold. The dark theme defines
+     its own --brass and already passed, so it is left alone. */
+  --brass: #7a5d25;
   --brass-tint: #f1e8d4;
   --blue: #2c4d6e;
   --blue-tint: #e2eaf1;
