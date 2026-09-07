@@ -14,7 +14,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
 ---
 
-Edward Khachatryan of Israel needed to beat defending champion IM Nhat Minh To twice in one day to become the 2026 Duck Chess Champion, and he did exactly that. Khachatryan won the Winners Final and then had to do it again in the Grand Final, a quirk of the double-elimination bracket that gives the loser of the first meeting one last shot before the title is settled. For that, he pocketed a winner's purse of $750, out of a total prize fund of just $2,500 for the entire event.
+Edward Khachatryan of Israel [needed to beat defending champion IM Nhat Minh To twice in one day](https://www.chess.com/news/view/2026-duck-chess-championship-khachatryan-wins) to become the 2026 Duck Chess Champion, and he did exactly that. Khachatryan won the Winners Final and then had to do it again in the Grand Final, a quirk of the double-elimination bracket that gives the loser of the first meeting one last shot before the title is settled. For that, he pocketed a winner's purse of $750, out of a total prize fund of just $2,500 for the entire event.
 
 That number is worth sitting with for a second. In an era when top-flight rapid and blitz events routinely hand out six-figure prize funds, a world championship title in a chess variant settling for a $750 top prize, with the runner-up taking home $500 and third place just $350, tells you exactly where Duck Chess sits in the sport's economy: it is entertainment programming first, competitive circuit second.
 
@@ -28,7 +28,7 @@ The finish had real chess in it too, not just bracket math. Khachatryan reported
 
 Nhat Minh didn't walk away empty-handed, taking home that $500 runner-up prize alongside the title he surrendered. The payouts kept going deeper than most variant events bother with: $350 for third, $250 for fourth, $175 apiece for fifth and sixth, $100 apiece for seventh and eighth, plus a separate $100 streamer prize for WGM Adriana Nikolova.
 
-Even a modest check further down that ladder functions less as compensation for playing chess and more as an appearance fee for showing up and putting on a show. It's the same economic logic that keeps blitz arenas, bullet brawls, and freestyle side events stocked with recognizable names even when the prize pool wouldn't cover a mid-tier open tournament's entry fees.
+Even a modest check further down that ladder functions less as compensation for playing chess and more as an appearance fee for showing up and putting on a show. It's the same economic logic that keeps blitz arenas, [bullet brawls](/articles/what-a-400-first-prize-says-about-bullet-chess-s-economics/), and freestyle side events stocked with recognizable names even when the prize pool wouldn't cover a mid-tier open tournament's entry fees.
 
 The real money in variant chess was never going to be the purse anyway. It's the audience numbers a $2,500 event can pull in when it's dressed up as a championship, streamed with commentary, and attached to names players already recognize from serious over-the-board chess. Nhat Minh To holds an International Master title earned the traditional way; Khachatryan has built a reputation specifically as a Duck Chess specialist, and that specialization is itself a small, telling data point about how chess content creators are starting to carve out niches the same way streamers do in any other game.
 

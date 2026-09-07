@@ -16,9 +16,9 @@ image:
 
 Magnus Carlsen needed an escape act to keep his Global Chess League team perfect, and the man on the other side of the board was the opponent who has given him more trouble than almost anyone else in the last five years.
 
-According to Chess.com's recap of day two of the 2026 Tech Mahindra Global Chess League, Carlsen's Alpine APL Pipers remain the only team with a spotless record after a dramatic win over Ian Nepomniachtchi's Ganges Grandmasters, with Nepomniachtchi again unable to get the better of the world number one.
+According to [Chess.com's recap of day two of the 2026 Tech Mahindra Global Chess League](https://www.chess.com/news/view/2026-tech-mahindra-global-chess-league-day-2), Carlsen's Alpine APL Pipers remain the only team with a spotless record after a dramatic win over Ian Nepomniachtchi's Ganges Grandmasters, with Nepomniachtchi again unable to get the better of the world number one.
 
-That single sentence carries a lot of weight for anyone who has followed this rivalry since 2021. Nepomniachtchi and Carlsen have played some of the most psychologically loaded chess of the last decade, and the pattern keeps repeating itself: Nepomniachtchi generates real chances, sometimes very good ones, and Carlsen finds a way to survive or turn the tables anyway.
+That single sentence carries a lot of weight for anyone who has followed this rivalry since 2021. Nepomniachtchi and Carlsen have played some of [the most psychologically loaded chess of the last decade](/articles/carlsen-and-nepomniachtchi-meet-again-this-time-with-nothing-like-a-world-title/), and the pattern keeps repeating itself: Nepomniachtchi generates real chances, sometimes very good ones, and Carlsen finds a way to survive or turn the tables anyway.
 
 The most famous instance remains their 2021 World Championship match in Dubai, where Nepomniachtchi held a strong position through the middlegame of the marathon Game 6 before Carlsen ground him down over nearly eight hours, a result that arguably broke the match psychologically. Since then, the two have crossed paths repeatedly in rapid and blitz events, and while results have varied, the broader storyline has stayed consistent: Nepomniachtchi is one of the few players who can consistently rattle Carlsen over the board, yet the Norwegian keeps finding the resources to avoid losing when it matters.
 
