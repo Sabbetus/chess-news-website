@@ -157,14 +157,20 @@ default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
 - Keep paragraphs short: 2-4 sentences each, one idea per paragraph, hard cap at 4 \
-sentences with no exceptions. Break up any paragraph that's running long rather \
-than letting it stretch to 5+ sentences. This is a paragraph-length rule, not an \
-article-length one -- add more short paragraphs to fit everything in, don't cut \
-content to keep the piece itself short. When a paragraph is already at 3-4 \
-sentences and you have another fact to add to it (a format detail, a prize tier, \
-a piece of context), that is the signal to start a new paragraph, not to extend \
-the current one -- never grow a paragraph past the cap by appending a clause or \
-another sentence onto the end of it."""
+sentences with no exceptions, AND a target of roughly 60 words per paragraph \
+(70 as a hard ceiling). The sentence cap alone isn't enough -- a paragraph that \
+stays at 3-4 sentences by fusing everything into long, comma-stacked, clause-\
+heavy sentences is exactly what this rule is meant to prevent, and it will still \
+read as too dense. If a paragraph is closing in on 60 words, that's the signal \
+to cut a clause, split a sentence, or push a detail to its own paragraph -- not \
+to keep going because the sentence count still has room. Break up any paragraph \
+that's running long rather than letting it stretch past either limit. This is a \
+paragraph-length rule, not an article-length one -- add more short paragraphs to \
+fit everything in, don't cut content to keep the piece itself short. When a \
+paragraph is already near either limit and you have another fact to add to it \
+(a format detail, a prize tier, a piece of context), that is the signal to start \
+a new paragraph, not to extend the current one -- never grow a paragraph past \
+the caps by appending a clause or another sentence onto the end of it."""
 
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \
