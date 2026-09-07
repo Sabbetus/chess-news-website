@@ -299,6 +299,17 @@ rather than guess.
 
 {STYLE_GUIDE}
 
+LINKING TO THE COMPANION PIECE. Where the user turn lists earlier Chessori \
+calendar pieces for this same continent, link the most recent one exactly once, \
+using the "/articles/<slug>/" path exactly as given. These pieces come in pairs \
+-- a retrospective on the month just gone and a preview of the month ahead -- so \
+the other one is genuinely the next thing a reader of this piece would want. Put \
+it wherever you naturally refer to the neighbouring month, and make the anchor a \
+noun phrase describing what that piece covers ("how [the same tournaments \
+actually turned out](/articles/slug/)"), never "read more" or "our previous \
+article". One link only, and none at all if the list is empty. This is separate \
+from, and additional to, the tournament links required above.
+
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
 {{
@@ -335,10 +346,36 @@ def published_articles(exclude_slug: str | None = None) -> list[dict]:
         date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
         if not title or not date or path.stem == exclude_slug:
             continue
-        entries.append({"slug": path.stem, "title": title.group(1), "date": date.group(1)})
+        continent = re.search(r'^continent:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        lens = re.search(r'^lens:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        entries.append(
+            {
+                "slug": path.stem,
+                "title": title.group(1),
+                "date": date.group(1),
+                "continent": continent.group(1) if continent else "",
+                "lens": lens.group(1) if lens else "",
+            }
+        )
 
     entries.sort(key=lambda e: e["date"], reverse=True)
     return entries[:INTERNAL_LINK_CANDIDATES]
+
+
+def calendar_pieces_for_continent(continent_slug: str) -> list[dict]:
+    """Previously published calendar aggregates for one continent, newest
+    first. Each continent gets two of these a month -- a retrospective on
+    last month and a preview of next -- so its counterpart is reliably the
+    one other article a reader of either would actually want. Matched on
+    frontmatter rather than by asking the model to infer it from titles,
+    which are written for readers and don't name the continent
+    consistently ("Barcelona's Sants Open and a Romanian Rapid Lead
+    Europe's August Field")."""
+    return [
+        entry
+        for entry in published_articles()
+        if entry["lens"] == "tournament-db" and entry["continent"] == continent_slug
+    ]
 
 
 def build_user_prompt(item: dict) -> str:
@@ -360,6 +397,17 @@ def build_user_prompt(item: dict) -> str:
             f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
             f"Tournament data (JSON list): {json.dumps(tournament_data)}",
         ]
+
+        companions = calendar_pieces_for_continent(CONTINENT_SLUGS[item["continentCode"]])
+        if companions:
+            parts.append("")
+            parts.append(
+                "Earlier Chessori calendar pieces covering this same continent, newest "
+                "first. Link the most recent one once, per the linking rule in your "
+                "instructions:"
+            )
+            for entry in companions:
+                parts.append(f"- \"{entry['title']}\" ({entry['date']}) -> /articles/{entry['slug']}/")
         return "\n".join(parts)
 
     parts = [
