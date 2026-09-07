@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Brazil's rapid circuits and a Medellín blitz festival topped South America's biggest tracked chess fields in August. Full breakdown of the numbers we have:"
 aggregateKind: "calendar-biggest"
 continentName: "South America"
