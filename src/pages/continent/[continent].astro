@@ -53,9 +53,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
               alt={a.data.title}
               href={`/articles/${a.slug}/`}
             />
-            <h3>
+            <h2>
               <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
-            </h3>
+            </h2>
             <p>{excerptFrom(a.body, 160)}</p>
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
@@ -107,18 +107,18 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     padding: 24px 0;
     border-bottom: 1px solid var(--rule-faint);
   }
-  .card h3 {
+  .card h2 {
     margin: 0 0 9px;
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 500;
     font-size: 23px;
     line-height: 1.2;
   }
-  .card h3 a {
+  .card h2 a {
     text-decoration: none;
     color: var(--ink);
   }
-  .card h3 a:hover {
+  .card h2 a:hover {
     color: var(--accent);
   }
   .card p {

@@ -8,6 +8,11 @@ export async function GET(context) {
   );
 
   return rss({
+    // RSS 2.0's own <author> element is specified as an email address --
+    // @astrojs/rss types it as one too -- so a plain byline there is invalid
+    // and gets flagged by feed validators. dc:creator is the element actually
+    // meant for a display name, and is what readers look for.
+    xmlns: { dc: 'http://purl.org/dc/elements/1.1/' },
     title: 'Chessori',
     description:
       'Curated chess news from around the world, with original analysis and tournament statistics. Every story linked back to its source.',
@@ -22,7 +27,7 @@ export async function GET(context) {
       // description the same article serves on the web.
       description: excerptFrom(article.body, 200),
       link: `/articles/${article.slug}/`,
-      author: 'Claude Henry',
+      customData: '<dc:creator>Claude Henry</dc:creator>',
     })),
   });
 }

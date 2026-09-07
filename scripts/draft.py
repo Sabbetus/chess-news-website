@@ -195,7 +195,17 @@ fit everything in, don't cut content to keep the piece itself short. When a \
 paragraph is already near either limit and you have another fact to add to it \
 (a format detail, a prize tier, a piece of context), that is the signal to start \
 a new paragraph, not to extend the current one -- never grow a paragraph past \
-the caps by appending a clause or another sentence onto the end of it."""
+the caps by appending a clause or another sentence onto the end of it.
+- Vary how the piece ENDS. The default failure mode here is closing every \
+article by zooming out to a summarising pronouncement about what it all means \
+("...and that's exactly the point", "...says something about where chess is \
+heading next", "...in this corner of chess, the story is the product"). One of \
+those reads fine; every article ending that way reads as a template, which is \
+exactly what a returning reader notices. Only reach for the zoom-out ending when \
+this specific piece has genuinely earned a broader claim. Otherwise end on \
+something concrete: the next fixture or what happens next, a specific number, a \
+quote, an unresolved question, or simply the last relevant fact -- and let it \
+stand without a closing line explaining its significance."""
 
 NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
 piece is a companion analysis to a linked source article -- never a reworded \

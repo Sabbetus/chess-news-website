@@ -65,11 +65,13 @@ const sections = [
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
 
-    <!-- Every article photo is hotlinked from Wikimedia's thumbnail service,
-         opening that connection before it's needed (rather than only once
-         the browser reaches an img tag) shaves the DNS/TLS handshake off
-         the path to the LCP image. -->
-    <link rel="preconnect" href="https://thumb.wikimedia.org" crossorigin />
+    <!-- Every article photo is hotlinked from Wikimedia, so opening that
+         connection before it's needed (rather than only once the browser
+         reaches an img tag) shaves the DNS/TLS handshake off the path to
+         the LCP image. lib/wikimediaSrcset.ts normalises every image URL
+         onto this one host, so this hint now covers all of them rather
+         than the ~80% that happened to come back on thumb.wikimedia.org. -->
+    <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin />
 
     <!-- Without this, fonts are only discovered once the stylesheet has
          been fetched and parsed, adding them sequentially to the critical
