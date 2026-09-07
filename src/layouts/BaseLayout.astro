@@ -123,15 +123,41 @@ const sections = [
       })();
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-KY9DGJ4ZDQ"></script>
+    <!-- Google tag (gtag.js), gated on the opt-out set from /privacy/.
+         Injected from script rather than a plain <script src> so that an
+         opted-out visitor never issues the request at all: a tag that
+         loads and is then disabled has already handed Google the IP
+         address, which defeats the point of offering the choice. -->
     <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-KY9DGJ4ZDQ');
+      (function () {
+        var GA_ID = 'G-KY9DGJ4ZDQ';
+        try {
+          if (localStorage.getItem('chessori-analytics-optout') === '1') {
+            // Also set for the benefit of anything that might load a tag
+            // later in the page's life; the early return is what actually
+            // prevents the request.
+            window['ga-disable-' + GA_ID] = true;
+            return;
+          }
+        } catch (e) {
+          // Storage blocked -- fall through and load as normal rather
+          // than silently opting everyone out.
+        }
+
+        var tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(tag);
+
+        window.dataLayer = window.dataLayer || [];
+        // gtag has to be global for gtag.js to pick it up; declaring it
+        // inside this IIFE would otherwise scope it away.
+        window.gtag = function () {
+          dataLayer.push(arguments);
+        };
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      })();
     </script>
   </head>
   <body>
