@@ -267,6 +267,7 @@ button:focus-visible {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 .masthead-top .masthead-top-right {
   display: flex;
