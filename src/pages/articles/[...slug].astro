@@ -76,7 +76,13 @@ const jsonLd = [
     // thumb.wikimedia.org, and 1280 is a standard Wikimedia width that
     // clears Google's 1200px-wide preference for article images.
     ...(article.data.image ? { image: [resizeUrl(article.data.image.url, 1280)] } : {}),
-    author: { '@type': 'Person', name: 'Claude Henry' },
+    // Organization, not Person. "Claude Henry" is a house byline, and this
+    // is the one place the site made a typed, machine-readable claim that a
+    // person by that name wrote the piece -- which contradicted llms.txt,
+    // where the AI drafting is disclosed. The visible byline is unchanged;
+    // institutional authorship is standard for news, and Google retired
+    // author rich results, so Person was not buying anything either.
+    author: { '@type': 'Organization', name: 'Chessori' },
     publisher: {
       '@type': 'Organization',
       name: 'Chessori',
