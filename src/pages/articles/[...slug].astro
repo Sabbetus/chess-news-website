@@ -7,6 +7,7 @@ import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
 import { resizeUrl } from '../../lib/wikimediaSrcset';
+import { CONTINENT_META } from '../../lib/continent';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -54,6 +55,8 @@ const fallback = allArticles
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 const similar = [...related, ...fallback].slice(0, 3);
 
+const continentMeta = CONTINENT_META[article.data.continent];
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -61,9 +64,18 @@ const jsonLd = [
     headline: article.data.title,
     description,
     datePublished: article.data.publishDate.toISOString(),
+    // Falls back to the publish date rather than being omitted: for a piece
+    // never corrected since publication, those genuinely are the same
+    // moment, and search engines treat a missing dateModified as unknown
+    // freshness rather than inferring it.
+    dateModified: (article.data.updatedDate ?? article.data.publishDate).toISOString(),
     mainEntityOfPage: pageURL,
     url: pageURL,
-    ...(article.data.image ? { image: [article.data.image.url] } : {}),
+    // Through resizeUrl like every other reference to this image, rather
+    // than the raw stored URL: that was the last thing still emitting
+    // thumb.wikimedia.org, and 1280 is a standard Wikimedia width that
+    // clears Google's 1200px-wide preference for article images.
+    ...(article.data.image ? { image: [resizeUrl(article.data.image.url, 1280)] } : {}),
     author: { '@type': 'Person', name: 'Claude Henry' },
     publisher: {
       '@type': 'Organization',
@@ -72,6 +84,33 @@ const jsonLd = [
     },
     isBasedOn: article.data.sourceUrl,
     citation: article.data.sourceUrl,
+  },
+  // The site already has a real Home > Continent > Article hierarchy in its
+  // URLs and nav; describing it in markup is what lets search results show
+  // that trail instead of a bare URL.
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Chessori',
+        item: new URL('/', Astro.site).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: continentMeta.label,
+        item: new URL(`/continent/${article.data.continent}/`, Astro.site).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.data.title,
+        item: pageURL,
+      },
+    ],
   },
 ];
 ---
@@ -118,7 +157,7 @@ const jsonLd = [
     {
       similar.length > 0 && (
         <section class="similar">
-          <span class="similar-label">Similar Articles</span>
+          <h2 class="similar-label">Similar Articles</h2>
           <div class="similar-grid">
             {similar.map((a, i) => (
               <article class="similar-card">
@@ -237,9 +276,15 @@ const jsonLd = [
     padding-top: 28px;
     border-top: 1px solid var(--rule);
   }
+  /* A real <h2> rather than a styled span: it's the heading for the
+     section, and without it the h3 cards below sat directly under the
+     article's h1 with nothing at level 2 in between -- a jump screen-reader
+     users hit when navigating by heading. Styled to look exactly as it did
+     as a span, so nothing moves visually; the explicit margin overrides the
+     browser's default h2 spacing. */
   .similar-label {
     display: block;
-    margin-bottom: 18px;
+    margin: 0 0 18px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     letter-spacing: 0.12em;

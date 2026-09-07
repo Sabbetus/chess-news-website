@@ -39,6 +39,22 @@ function isSvg(pathname: string): boolean {
   return /\.svg$/i.test(pathname);
 }
 
+// Commons image URLs arrive on two interchangeable hosts depending on which
+// field the API returned -- measured across the built site, 639 on
+// thumb.wikimedia.org and 146 on upload.wikimedia.org. Browsers treat those
+// as separate origins, so the split costs a second DNS + TLS handshake and
+// means a preconnect hint can only ever cover part of the images.
+//
+// upload is the normalisation target rather than thumb: it serves both
+// thumbnail and raw (un-resized) paths directly, where thumb 301-redirects
+// the raw ones -- and six stored URLs are still raw originals.
+const CANONICAL_HOST = 'upload.wikimedia.org';
+const WIKIMEDIA_HOSTS = new Set(['upload.wikimedia.org', 'thumb.wikimedia.org']);
+
+function canonicalizeHost(url: URL): void {
+  if (WIKIMEDIA_HOSTS.has(url.hostname)) url.hostname = CANONICAL_HOST;
+}
+
 /** Resize a Commons image URL (thumb or raw) to (at least) the given
  * width, rounded up to the nearest width Wikimedia's thumbnail service
  * actually serves. Returns the URL unchanged if it's not a recognized
@@ -50,13 +66,19 @@ export function resizeUrl(urlStr: string, width: number): string {
   } catch {
     return urlStr;
   }
-  if (isSvg(url.pathname)) return urlStr;
+  // SVGs are returned unresized, but still normalised onto the canonical
+  // host so they don't reopen the second origin on their own.
+  if (isSvg(url.pathname)) {
+    canonicalizeHost(url);
+    return url.toString();
+  }
 
   const standardWidth = roundToStandardWidth(width);
 
   const thumbMatch = url.pathname.match(THUMB_WIDTH_SEGMENT);
   if (thumbMatch) {
     url.pathname = url.pathname.replace(THUMB_WIDTH_SEGMENT, `/${standardWidth}px-`);
+    canonicalizeHost(url);
     return url.toString();
   }
 
@@ -64,6 +86,7 @@ export function resizeUrl(urlStr: string, width: number): string {
   if (rawMatch) {
     const [, h1, h2, filename] = rawMatch;
     url.pathname = `/wikipedia/commons/thumb/${h1}/${h2}/${filename}/${standardWidth}px-${filename}`;
+    canonicalizeHost(url);
     return url.toString();
   }
 

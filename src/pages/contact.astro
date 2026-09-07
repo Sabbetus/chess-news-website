@@ -13,7 +13,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </header>
 
   <form id="contact-form" class="contact-form">
-    <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" />
+    <!-- Spam honeypot: bots that fill every field tick it, humans never see
+         it. tabindex="-1" already kept it out of the tab order, but without
+         aria-hidden a screen reader still announced an unlabelled checkbox
+         in the middle of the form. -->
+    <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
     <div class="form-group">
       <label for="c-name">Name</label>

@@ -1,3 +1,4 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
@@ -21,10 +22,45 @@ function externalLinksNewTab() {
   };
 }
 
+// Article slug -> its own last-changed date, read straight from the content
+// files at config time. The sitemap integration doesn't see frontmatter, so
+// without this every URL ships with no lastmod at all and crawlers get no
+// freshness signal for a site whose whole point is being current.
+function articleLastmod() {
+  const dir = new URL('./src/content/articles/', import.meta.url);
+  const dates = new Map();
+  for (const name of readdirSync(dir)) {
+    if (!name.endsWith('.md')) continue;
+    const text = readFileSync(new URL(name, dir), 'utf-8');
+    const frontmatter = text.split('---')[1] ?? '';
+    // updatedDate when a piece has been corrected, publishDate otherwise --
+    // matching the dateModified the article page itself reports.
+    const updated = frontmatter.match(/^updatedDate:\s*"?(\d{4}-\d{2}-\d{2})/m);
+    const published = frontmatter.match(/^publishDate:\s*"?(\d{4}-\d{2}-\d{2})/m);
+    const date = updated?.[1] ?? published?.[1];
+    if (date) dates.set(name.replace(/\.md$/, ''), date);
+  }
+  return dates;
+}
+
+const ARTICLE_LASTMOD = articleLastmod();
+
 export default defineConfig({
   site: 'https://chessori.com',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      serialize(item) {
+        const slug = item.url.match(/\/articles\/([^/]+)\/$/)?.[1];
+        const date = slug && ARTICLE_LASTMOD.get(slug);
+        // Only articles carry a meaningful per-URL date. Listing pages change
+        // whenever any article does, so stamping them with a build time would
+        // be noise rather than signal, and they're left without one.
+        if (date) item.lastmod = new Date(`${date}T00:00:00Z`).toISOString();
+        return item;
+      },
+    }),
+  ],
   markdown: {
     rehypePlugins: [externalLinksNewTab],
   },
