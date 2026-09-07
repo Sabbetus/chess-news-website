@@ -15,7 +15,7 @@ interface Props {
   // but can be overridden with the untruncated version via `ogTitle`.
   ogTitle?: string;
   description?: string;
-  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens';
+  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens' | 'privacy';
   articleMeta?: { publishedTime: string; source: string };
   jsonLd?: Record<string, unknown>[];
   image?: string;
@@ -177,7 +177,9 @@ const sections = [
             >&middot;</span
           ><a href="https://chesstournamentcalendar.com" target="_blank" rel="noopener">Chess Tournament Calendar</a>
         </span>
-        <span class="footer-contact"><a href="/contact/">Contact</a></span>
+        <span class="footer-contact">
+          <a href="/privacy/">Privacy</a><span class="sep">&middot;</span><a href="/contact/">Contact</a>
+        </span>
       </footer>
     </div>
   </body>

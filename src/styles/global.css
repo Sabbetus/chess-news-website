@@ -403,7 +403,8 @@ footer.site-footer .partners a {
 footer.site-footer .partners a:hover {
   border-color: var(--accent);
 }
-footer.site-footer .partners .sep {
+footer.site-footer .partners .sep,
+footer.site-footer .footer-contact .sep {
   color: var(--rule);
   margin: 0 0.6em;
 }
