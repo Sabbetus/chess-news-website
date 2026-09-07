@@ -15,7 +15,11 @@ interface Props {
   // but can be overridden with the untruncated version via `ogTitle`.
   ogTitle?: string;
   description?: string;
-  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens' | 'privacy' | 'about';
+  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens' | 'privacy' | 'about' | 'not-found';
+  // Keeps a page out of search results. Only the 404 uses this -- it has no
+  // stable URL of its own (GitHub Pages serves it for every unmatched path),
+  // so an indexed copy would compete with real pages for no benefit.
+  noindex?: boolean;
   articleMeta?: { publishedTime: string; source: string };
   jsonLd?: Record<string, unknown>[];
   image?: string;
@@ -30,6 +34,7 @@ const {
   articleMeta,
   jsonLd = [],
   image,
+  noindex = false,
 } = Astro.props;
 
 // Every page needs exactly one <h1>. The front page has no other page-level
@@ -56,6 +61,7 @@ const sections = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
 
