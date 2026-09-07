@@ -42,7 +42,6 @@ jobs:
       - name: Backfill articles with Claude
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        env:
           START: ${{ inputs.start }}
           END: ${{ inputs.end }}
           CALENDAR_ONLY: ${{ inputs.calendar_only }}
