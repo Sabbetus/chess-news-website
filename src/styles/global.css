@@ -232,8 +232,12 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Not italic. This badge is a single "i" glyph, and it was the only thing
+     on the site pulling source-serif-4-400-italic (19.6 KB) into the render
+     path -- on every page showing a photo, which is nearly all of them. The
+     upright "i" reads the same at 11px. Article blockquotes still use
+     italic, so the face stays declared for when one appears. */
   font-family: 'Source Serif 4', serif;
-  font-style: italic;
   font-size: 11px;
   color: #fff;
   background: rgba(0, 0, 0, 0.4);

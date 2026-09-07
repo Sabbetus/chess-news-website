@@ -66,8 +66,16 @@ jobs:
           git commit -m "chore: daily draft batch $(date -u +%Y-%m-%d)"
           git push origin "$BRANCH"
 
+          # draft.py writes a short report naming anything it failed to
+          # draft. Without it in the body, an article lost to a transient
+          # API error leaves no trace in front of whoever merges the PR.
+          BODY="Automated draft batch from the ingestion/selection/drafting pipeline. Review each article's frontmatter (source, lens, selectionScore) and body before merging. Merging sets these live once reviewStatus is flipped to \`approved\`/\`published\` -- see docs/review-workflow.md."
+          if [ -s data/draft-report.md ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$(cat data/draft-report.md)"
+          fi
+
           gh pr create \
             --base main \
             --head "$BRANCH" \
             --title "Draft batch: $(date -u +%Y-%m-%d)" \
-            --body "Automated draft batch from the ingestion/selection/drafting pipeline. Review each article's frontmatter (source, lens, selectionScore) and body before merging. Merging sets these live once reviewStatus is flipped to \`approved\`/\`published\` -- see docs/review-workflow.md."
+            --body "$BODY"

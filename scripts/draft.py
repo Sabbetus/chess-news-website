@@ -633,6 +633,31 @@ def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None 
     return out_path
 
 
+# The SDK already retries 408/409/429 and every 5xx (so 529 overloaded is
+# covered) with exponential backoff, plus connection errors and timeouts --
+# its default is 2. That default is tuned for interactive apps, where failing
+# fast beats making a user wait. This is an unattended daily batch: a draft
+# lost to a transient overload is simply gone until someone notices, and the
+# run has all day, so it is worth waiting out a longer wobble.
+BATCH_MAX_RETRIES = 5
+
+# Written for the workflow to fold into the review PR's body. Without it a
+# failed article is a line on a CI log nobody reads: the PR still opens, the
+# remaining drafts still look fine, and the piece that never got written
+# leaves no trace in front of the person deciding what to merge.
+RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
+
+
+def write_run_report(written: list, failed: list, selected_count: int) -> None:
+    lines = [f"Drafted {len(written)} of {selected_count} selected item(s)."]
+    if failed:
+        lines += ["", f"**{len(failed)} failed and are not in this PR:**", ""]
+        lines += [f"- {title} — `{error}`" for title, error in failed]
+        lines += ["", "Re-run the workflow to retry them, or draft them by hand."]
+    RUN_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RUN_REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     if not SELECTED_PATH.exists():
         print("No selected.json found -- run selection.py first.")
@@ -643,17 +668,19 @@ def main() -> None:
         print("No items selected -- nothing to draft.")
         return
 
-    client = anthropic.Anthropic()
+    client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
 
-    written = []
+    written, failed = [], []
     for item in selected:
         try:
             path = draft_one(client, item)
             written.append(path)
             print(f"Drafted: {path.relative_to(ROOT)}")
         except Exception as exc:  # noqa: BLE001 -- one bad draft shouldn't kill the run
+            failed.append((item["title"], f"{type(exc).__name__}: {exc}"))
             print(f"FAILED to draft '{item['title']}': {exc}", file=sys.stderr)
 
+    write_run_report(written, failed, len(selected))
     print(f"Wrote {len(written)}/{len(selected)} draft(s).")
 
 

@@ -42,30 +42,46 @@ jobs:
       - name: Backfill articles with Claude
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: >
-          python scripts/backfill.py --start "${{ inputs.start }}" --end "${{ inputs.end }}"
-          ${{ inputs.calendar_only == true && '--calendar-only' || '' }}
+        env:
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+          CALENDAR_ONLY: ${{ inputs.calendar_only }}
+        run: |
+          # Inputs come in through env rather than being interpolated into
+          # the script text. Only someone with write access can dispatch
+          # this workflow, so the practical risk was near zero, but an
+          # expression expansion inside a run block is substituted before
+          # the shell ever sees it -- a value containing shell
+          # metacharacters would execute, not be passed as an argument.
+          # (Which is also why this comment spells that out rather than
+          # writing the expansion syntax literally: Actions would expand
+          # it here too.)
+          args=(--start "$START" --end "$END")
+          [ "$CALENDAR_ONLY" = "true" ] && args+=(--calendar-only)
+          python scripts/backfill.py "${args[@]}"
 
       - name: Open review PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
         run: |
           if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
             echo "No articles backfilled -- nothing to review."
             exit 0
           fi
 
-          BRANCH="drafts/backfill-${{ inputs.start }}-to-${{ inputs.end }}-$(date -u +%H%M%S)"
+          BRANCH="drafts/backfill-${START}-to-${END}-$(date -u +%H%M%S)"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
 
           git add data/ src/content/articles/
-          git commit -m "chore: backfill drafts ${{ inputs.start }} to ${{ inputs.end }}"
+          git commit -m "chore: backfill drafts ${START} to ${END}"
           git push origin "$BRANCH"
 
           gh pr create \
             --base main \
             --head "$BRANCH" \
-            --title "Backfill batch: ${{ inputs.start }} to ${{ inputs.end }}" \
-            --body "One-off backfill replaying the daily selection over ${{ inputs.start }} .. ${{ inputs.end }}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging."
+            --title "Backfill batch: ${START} to ${END}" \
+            --body "One-off backfill replaying the daily selection over ${START} .. ${END}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging."
