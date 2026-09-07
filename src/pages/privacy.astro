@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Describes what the site actually does today, not a generic template --
+// every third party named below was confirmed against the built output.
+// Two of them are easy to miss: article photos are hotlinked from
+// Wikimedia (so a visitor's IP reaches Wikimedia on any page showing a
+// photo, without them clicking anything), and the fonts are self-hosted,
+// so there is deliberately no Google Fonts entry here.
+//
+// Keep this in sync when the analytics setup changes -- the cookie
+// section below describes Google Analytics running without a consent
+// gate, which is the current state, not a permanent decision.
+const LAST_UPDATED = '7 September 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy | Chessori"
+  description="What Chessori collects, who it goes to, and how to opt out. Plain English, no boilerplate."
+  activeContinent="privacy"
+>
+  <header class="section-head">
+    <h1>Privacy Policy</h1>
+    <p>Last updated {LAST_UPDATED}</p>
+  </header>
+
+  <div class="policy">
+    <p class="lede">
+      Chessori is a small, non-commercial chess news site. It doesn't sell anything, doesn't run ads, and has no
+      accounts to sign up for. This page sets out the data that does get collected, who receives it, and how to
+      stop it.
+    </p>
+
+    <h2>Who is responsible for this site</h2>
+    <p>
+      Chessori is operated by <strong>[CONTROLLER NAME]</strong>, based in Finland, who is the data controller for
+      the purposes of the GDPR. For any question about this policy, or to exercise any of the rights listed below,
+      use the <a href="/contact/">contact form</a>.
+    </p>
+
+    <h2>What gets collected</h2>
+
+    <h3>Analytics</h3>
+    <p>
+      This site uses Google Analytics 4 to count visits and see which articles get read. It sets cookies in your
+      browser and collects your IP address, approximate location, device and browser type, the pages you view, and
+      the site you arrived from. This is used only to understand what's worth writing more of. It is never used to
+      identify you personally, and it is never sold or shared with anyone beyond Google.
+    </p>
+    <p>
+      Google acts as a processor for this data and may transfer it to the United States under the EU&ndash;US Data
+      Privacy Framework. Google's own handling is governed by
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>, and
+      how long the data is kept is set by the retention setting on the Analytics property. Chessori does not keep a
+      separate copy.
+    </p>
+    <p class="note">
+      Analytics currently loads on page view rather than after a consent prompt. If you'd rather not be counted, the
+      opt-out options below all work, and this is under review.
+    </p>
+
+    <h3>Article photos</h3>
+    <p>
+      Photos are not stored on this site. They're loaded directly from Wikimedia Commons, which means your browser
+      requests them from Wikimedia and your IP address and browser type reach Wikimedia's servers on any page showing
+      a photo &mdash; without you clicking anything. Wikimedia's handling is covered by the
+      <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" target="_blank" rel="noopener"
+        >Wikimedia Foundation privacy policy</a
+      >.
+    </p>
+
+    <h3>Hosting</h3>
+    <p>
+      The site is hosted on GitHub Pages. GitHub receives and logs the usual server request data, including IP
+      addresses, as part of serving the pages. See
+      <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener"
+        >GitHub's privacy statement</a
+      >.
+    </p>
+
+    <h3>The contact form</h3>
+    <p>
+      If &mdash; and only if &mdash; you submit the <a href="/contact/">contact form</a>, the name (optional), email
+      address, topic and message you type are sent through
+      <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms</a>, which forwards them to a
+      private email inbox. That's used to reply to you and nothing else. Messages stay in that inbox until they're
+      deleted; ask via the form and yours will be removed.
+    </p>
+
+    <h3>Your theme preference</h3>
+    <p>
+      Choosing light or dark mode saves a single value (<code>chessori-theme</code>) in your browser's local storage
+      so the site remembers it next time. It never leaves your device, isn't a cookie, and isn't seen by anyone. It
+      goes away if you clear your browser data.
+    </p>
+
+    <h2>What is not collected</h2>
+    <ul>
+      <li>No accounts, logins or passwords &mdash; there's nothing to register for.</li>
+      <li>No advertising or advertising trackers.</li>
+      <li>No social media pixels or embedded trackers.</li>
+      <li>No fonts loaded from third parties &mdash; they're served from this site, so nothing is sent to a font provider.</li>
+      <li>No payment data of any kind.</li>
+    </ul>
+
+    <h2>Legal basis</h2>
+    <p>
+      Hosting logs and the contact form rest on legitimate interest &mdash; serving the site securely and answering
+      people who write in. Analytics cookies require consent under the ePrivacy rules; see the note above about the
+      current setup. The theme preference is strictly necessary for a setting you asked for.
+    </p>
+
+    <h2>How to opt out</h2>
+    <ul>
+      <li>Block or clear cookies for this site in your browser settings.</li>
+      <li>
+        Install
+        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener"
+          >Google's Analytics opt-out browser add-on</a
+        >, which applies across every site using Analytics.
+      </li>
+      <li>Use a browser with tracking protection on by default, or private browsing.</li>
+      <li>Don't use the contact form, and nothing you type will be sent anywhere.</li>
+    </ul>
+
+    <h2>Your rights</h2>
+    <p>
+      Under the GDPR you can ask for a copy of your data, ask for it to be corrected or deleted, object to it being
+      processed, or ask for processing to be restricted. Use the <a href="/contact/">contact form</a> and it will be
+      handled without charge, normally within a month.
+    </p>
+    <p>
+      If you aren't satisfied with the response, you can complain to the Finnish Data Protection Ombudsman
+      (<a href="https://tietosuoja.fi/en/home" target="_blank" rel="noopener">tietosuoja.fi</a>), or to the data
+      protection authority in your own EU country.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      This site is a general-audience chess publication. It isn't directed at children and doesn't knowingly collect
+      data from them.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      Any change will be reflected here with a new date at the top. The analytics arrangement described above is
+      being reviewed, and this page will be updated when it changes.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .section-head {
+    padding: 34px 0 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head h1 {
+    margin: 0 0 6px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(30px, 4.5vw, 44px);
+  }
+  .section-head p {
+    margin: 0 0 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Matches the article body's measure and rhythm -- this is a page to be
+     read, not scanned, so it gets the same treatment as a story rather
+     than the full page width. Left-aligned rather than centred, so the
+     prose starts under the h1: .section-head spans the full width here
+     (as on contact/archive), and centring the column instead would leave
+     the heading stranded out to the left of its own body text. */
+  .policy {
+    max-width: 680px;
+    margin: 0;
+    padding: 30px 0 60px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .policy .lede {
+    font-size: 19px;
+    line-height: 1.62;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .policy h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: 26px;
+    margin: 1.7em 0 0.5em;
+  }
+  .policy h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 520;
+    font-size: 19px;
+    margin: 1.4em 0 0.4em;
+  }
+  .policy p {
+    margin: 0 0 1.1em;
+  }
+  .policy ul {
+    margin: 0 0 1.1em;
+    padding-left: 1.2em;
+  }
+  .policy li {
+    margin-bottom: 0.4em;
+  }
+  .policy a {
+    color: var(--accent);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  .policy code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88em;
+    background: var(--paper-raised);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .policy .note {
+    padding: 12px 16px;
+    border-left: 3px solid var(--brass);
+    background: var(--paper-raised);
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+</style>
