@@ -8,9 +8,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // photo, without them clicking anything), and the fonts are self-hosted,
 // so there is deliberately no Google Fonts entry here.
 //
-// Keep this in sync when the analytics setup changes -- the cookie
-// section below describes Google Analytics running without a consent
-// gate, which is the current state, not a permanent decision.
+// Keep this in sync when the analytics setup changes. The page states
+// plainly what analytics collects and offers a working switch to stop it,
+// but deliberately doesn't comment on the site's own compliance posture
+// or cite the rules it's measured against -- a privacy policy is a
+// disclosure of what happens, not a self-assessment. Adding a consent
+// gate later is a content change here, not just a code one.
 const LAST_UPDATED = '7 September 2026';
 ---
 
@@ -55,9 +58,9 @@ const LAST_UPDATED = '7 September 2026';
       separate copy.
     </p>
     <p class="note">
-      Analytics currently loads on page view rather than after a consent prompt, which is under review. If you'd
-      rather not be counted, there's a switch under <a href="#opt-out">How to opt out</a> below that turns it off
-      for good &mdash; it stops the script being loaded at all, rather than just discarding what it sends.
+      If you'd rather not be counted, there's a switch under <a href="#opt-out">How to opt out</a> below that turns
+      analytics off for good. It stops the script from loading at all, rather than loading it and discarding what
+      it sends.
     </p>
 
     <h3>Article photos</h3>
@@ -106,9 +109,9 @@ const LAST_UPDATED = '7 September 2026';
 
     <h2>Legal basis</h2>
     <p>
-      Hosting logs and the contact form rest on legitimate interest &mdash; serving the site securely and answering
-      people who write in. Analytics cookies require consent under the ePrivacy rules; see the note above about the
-      current setup. The theme preference is strictly necessary for a setting you asked for.
+      Hosting logs and the contact form rest on legitimate interest: serving the site securely and answering people
+      who write in. The theme preference is strictly necessary for a setting you asked for. Analytics can be turned
+      off at any time using the switch below, and stays off on this browser once you do.
     </p>
 
     <h2 id="opt-out">How to opt out</h2>
