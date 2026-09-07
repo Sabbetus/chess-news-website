@@ -56,13 +56,38 @@ CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 # claim about the tournaments/organizers, which is neither true nor ours to
 # assert; frame it as our data's limitation instead (e.g. "we don't have
 # player counts for most of these" / "not tracked here").
-AGGREGATE_DATA_GAP_NOTE = (
-    "When player counts, prize funds, or other data points are missing for some or all "
-    "tournaments, frame that as a gap in what this data covers, not as something the "
-    "tournaments or their organizers failed to do (never write \"no player counts were "
-    "reported for any of these events\" or similar -- write \"we don't have player counts "
-    "for most of these\" or \"not tracked in this data\" instead)."
-)
+# Only North America and Oceania have a genuine, continent-wide player-count
+# reporting gap (the US and Australia specifically don't report much through
+# chess-results, which is where most of this data comes from). Everywhere
+# else, the vast majority of countries do report through chess-results, so a
+# sweeping "we don't have numbers for a lot of these" caveat is simply
+# inaccurate there -- it happened on a South America piece where it wasn't
+# true. A country here or there with thin data (e.g. Norway/Denmark within
+# Europe) is normal noise, not a pattern worth a caveat paragraph about.
+_CONTINENTS_WITH_REPORTING_GAP = {"NA", "OC"}
+
+
+def aggregate_data_gap_note(continent_code: str) -> str:
+    if continent_code in _CONTINENTS_WITH_REPORTING_GAP:
+        return (
+            "This continent has a genuine, known gap: some countries here (notably the US and "
+            "Australia) don't report through chess-results, the main source for this data, so "
+            "plenty of real tournaments from those countries are likely missing player counts "
+            "or missing from this data entirely. It's fine, and often worth a line, to caveat "
+            "the ranking on that basis. When player counts or other data points are missing for "
+            "some tournaments, frame that as a gap in what this data covers, not as something "
+            "the tournaments or their organizers failed to do (never write \"no player counts "
+            "were reported for any of these events\" or similar -- write \"we don't have player "
+            "counts for most of these\" or \"not tracked in this data\" instead)."
+        )
+    return (
+        "Most countries on this continent report reliably through chess-results, the main "
+        "source for this data, so do NOT add a general caveat suggesting player counts are "
+        "widely missing or that the ranking might be unrepresentative -- that would be "
+        "inaccurate here. If a specific tournament or country in the data you were given is "
+        "genuinely missing a player count, it's fine to note that one specific gap, but don't "
+        "generalize it into a claim about the continent's data coverage as a whole."
+    )
 
 AGGREGATE_INSTRUCTIONS = {
     "calendar-biggest": (
@@ -241,13 +266,14 @@ before that, never mixed into it:
   "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
 }}"""
 
-AGGREGATE_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. \
+def build_aggregate_system_prompt(continent_code: str) -> str:
+    return f"""You are writing for a small, curated chess news site. \
 This piece is original reporting on tournament data, not commentary on someone \
 else's article. Be accurate: never invent facts or figures not present in the \
 tournament data given to you. If you are not confident about a detail, omit it \
 rather than guess.
 
-{AGGREGATE_DATA_GAP_NOTE}
+{aggregate_data_gap_note(continent_code)}
 
 {STYLE_GUIDE}
 
@@ -385,7 +411,7 @@ def used_image_source_urls() -> set[str]:
 
 def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None = None) -> Path:
     is_aggregate = item["kind"] in CALENDAR_KINDS
-    system_prompt = AGGREGATE_SYSTEM_PROMPT if is_aggregate else NEWS_SYSTEM_PROMPT
+    system_prompt = build_aggregate_system_prompt(item["continentCode"]) if is_aggregate else NEWS_SYSTEM_PROMPT
     user_prompt = build_user_prompt(item)
 
     create_kwargs = dict(
