@@ -6,12 +6,12 @@ sourceUrl: "https://www.fide.com/gcl-2026-fyers-american-gambits-make-a-perfect-
 lens: "community-pulse"
 continent: "asia"
 selectionScore: 58
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Magnus Carlsen is back in the Global Chess League... on a team that won it all without him. Meanwhile Sindarov is stealing day one in Bengaluru. #GCL2026"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Magnus_Carlsen_sig.svg/1280px-Magnus_Carlsen_sig.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  credit: "Magnus Carlsen, Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_sig.svg"
+  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Magnus_Carlsen_-_Zagreb.jpg/1280px-Magnus_Carlsen_-_Zagreb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  credit: "Miroslav.vajdic, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_-_Zagreb.jpg"
 ---
 
 Magnus Carlsen walked back into the Global Chess League on Saturday for the first time in a year, and by the end of the night his team, the Alpine APL Pipers, had a 10-8 win over CheQ Mumba Masters to show for it. That result is loaded with irony that fans in Bengaluru and online have already started chewing over: the Pipers won the whole thing last season without him.
