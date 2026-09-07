@@ -16,7 +16,7 @@ image:
 
 Mai Narva doesn't often make international news outside chess circles, but this week she made front pages back home. Estonia's national broadcaster ERR ran a story on the 40th-ranked player in the world stunning the world number four, and the framing tells you something about how rare this kind of result is.
 
-The four-time Estonian Women's Champion beat GM Zhu Jiner in both the rapid and blitz finals of the WR Women's Chess Tour - Africa 2026 in Maputo, Mozambique, walking away with $14,000 and a guaranteed seat at the Grand Final in Stuttgart, Germany later this year. Zhu still qualifies too, but had to settle for $4,000 after finishing runner-up in the rapid.
+The four-time Estonian Women's Champion [beat GM Zhu Jiner in both the rapid and blitz finals](https://www.chess.com/news/view/narva-zhu-2026-wr-womens-chess-tour-africa) of the WR Women's Chess Tour - Africa 2026 in Maputo, Mozambique, walking away with $14,000 and a guaranteed seat at the Grand Final in Stuttgart, Germany later this year. Zhu still qualifies too, but had to settle for $4,000 after finishing runner-up in the rapid.
 
 **The numbers behind the upset**
 
@@ -30,7 +30,7 @@ The blitz final the next day, back at Maputo's Radisson Blu Hotel, was even tigh
 
 The WR Women's Chess Tour is built as a tournament series that spans four continents, a season-long qualifying path into a Grand Final. Other coverage of the tour describes each two-day leg as an eight-player knockout, rapid on day one at a 15+10 time control with best-of-two matches, blitz on day two at 3+2 with best-of-four matches, and armageddon breaking any tie. The winner of each discipline earns $7,000 and a Grand Final berth.
 
-Maputo was the third of four legs, following Tokyo in June and Punta Cana in July, with Saint-Tropez, France starting August 25 as the fourth. GMs Vaishali Rameshbabu and Kateryna Lagno were the winners of the event in Tokyo, IMs Carissa Yip and Leya Garifullina triumphed in Punta Cana, so Narva and Zhu's Maputo sweep now fills six of the eight Grand Final slots ahead of the trip to France.
+Maputo was the third of four legs, following Tokyo in June and Punta Cana in July, with [Saint-Tropez, France](/articles/how-anna-muzychuk-went-from-boycotting-saudi-arabia-to-booking-a-spot-in-saint-t/) starting August 25 as the fourth. GMs Vaishali Rameshbabu and Kateryna Lagno were the winners of the event in Tokyo, IMs Carissa Yip and Leya Garifullina triumphed in Punta Cana, so Narva and Zhu's Maputo sweep now fills six of the eight Grand Final slots ahead of the trip to France.
 
 **Why this one traveled further than most tour stops**
 

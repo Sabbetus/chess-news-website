@@ -235,6 +235,28 @@ interview took place is confusing and reads as broken.
 
 {STYLE_GUIDE}
 
+LINKS IN THE BODY. Every piece must carry links in its own text, not just in \
+the byline the site adds automatically:
+
+1. Link the source article exactly once, early on, at the point where you first \
+report what actually happened. Use the "Source URL" you were given, as a normal \
+Markdown link, with the anchor text being the fact or result itself (e.g. \
+"[picked up his 65th career Bullet Brawl title](url)"). Never use bare "here", \
+"this article", "according to Chess.com" as the whole anchor, or the raw URL as \
+the visible text. Once is enough; the site prints the source again at the foot of \
+every piece.
+
+2. Where the user turn lists previously published Chessori articles, link one or \
+two of them from a phrase in your own text that genuinely refers to what that \
+article covers -- a player, event, tournament or theme you are already \
+mentioning. Use the "/articles/<slug>/" path exactly as given, and make the \
+anchor a natural noun phrase already in the sentence rather than bolting on \
+"as we reported" or "read more about". Do not reword a sentence just to create a \
+link, do not link the same article twice, and if none of the listed pieces is \
+genuinely relevant to this story, link none of them -- a forced link is worse \
+than no link. Note these are companion pieces, not news reports: never describe \
+one as having "broken" or "first reported" anything.
+
 First, pick the single best-fitting lens for THIS story from these options:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
 
@@ -291,6 +313,34 @@ def slugify(title: str) -> str:
     return slug[:80].rstrip("-")
 
 
+# How many previously-published pieces to offer the model as internal-link
+# candidates. Newest first: recent stories are far likelier to share a
+# subject with today's news than something from months back, and a list long
+# enough to cover the whole archive would be mostly noise the model has to
+# read past on every call.
+INTERNAL_LINK_CANDIDATES = 40
+
+
+def published_articles(exclude_slug: str | None = None) -> list[dict]:
+    """Title + slug for every published article on disk, newest first, for
+    the model to link from a new piece. Read from the files rather than
+    tracked separately so a manually-added or hand-edited article is a
+    link candidate too."""
+    entries = []
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text:
+            continue
+        title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
+        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
+        if not title or not date or path.stem == exclude_slug:
+            continue
+        entries.append({"slug": path.stem, "title": title.group(1), "date": date.group(1)})
+
+    entries.sort(key=lambda e: e["date"], reverse=True)
+    return entries[:INTERNAL_LINK_CANDIDATES]
+
+
 def build_user_prompt(item: dict) -> str:
     if item["kind"] in CALENDAR_KINDS:
         # Each tournament gets its own chesstournamentcalendar.com page at
@@ -319,6 +369,19 @@ def build_user_prompt(item: dict) -> str:
     ]
     if item.get("summary"):
         parts.append(f"Source summary/excerpt: {item['summary']}")
+
+    # Internal-link candidates. Supplied as data rather than baked into the
+    # system prompt because the list changes with every published batch.
+    previous = published_articles()
+    if previous:
+        parts.append("")
+        parts.append(
+            "Previously published Chessori articles you may link to (see the linking "
+            "rules in your instructions). Link one only where it genuinely helps the "
+            "reader; skip them all if nothing here is actually related:"
+        )
+        for entry in previous:
+            parts.append(f"- \"{entry['title']}\" -> /articles/{entry['slug']}/")
     return "\n".join(parts)
 
 

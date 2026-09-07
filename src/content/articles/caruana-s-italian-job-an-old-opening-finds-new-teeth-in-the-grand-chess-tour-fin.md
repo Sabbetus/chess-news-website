@@ -14,7 +14,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_in_2025.jpg"
 ---
 
-Fabiano Caruana didn't need a novelty from the computer age to take the first game of his 2026 Grand Chess Tour Finals title match against Praggnanandhaa Rameshbabu. He needed the Italian Game, chess's oldest documented opening, dressed up in a shape modern engines still haven't fully tamed.
+Fabiano Caruana didn't need a novelty from the computer age to [take the first game of his 2026 Grand Chess Tour Finals title match](https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-4) against Praggnanandhaa Rameshbabu. He needed the Italian Game, chess's oldest documented opening, dressed up in a shape modern engines still haven't fully tamed.
 
 The Italian has a strange biography. It was the sharpest weapon in the game for centuries, the choice of Greco and later the great 19th-century attacking players, before falling out of elite fashion for most of the 20th century as theory decided 1.e4 e5 2.Nf3 Nc6 3.Bc4 simply let Black equalize too comfortably. For decades it was considered a club-level opening, something you played against weaker opposition rather than a peer at a title match.
 
@@ -24,4 +24,4 @@ Caruana's use of it here fits that same logic, and the source material specifica
 
 There's a nice symmetry in Praggnanandhaa facing this in a title match. He's part of a generation of Indian players raised almost entirely on engine preparation, for whom the Italian's return represents something closer to archaeology than to nostalgia. The report notes he held his own in the position, which suggests the opening's charm hasn't disappeared just because a database exists for it now.
 
-Caruana's six points from that opening put him ahead early, and history suggests it won't be the last time a supposedly antique opening decides something important. Chess keeps rediscovering that the oldest ideas in the game are often the ones nobody has fully worked out yet. Meanwhile, in the tournament's other semifinal-style pairing, Vincent Keymer and Wesley So remained level, a reminder that not every match in this event is being decided by opening choice alone.
+Caruana's six points from that opening put him ahead early, and history suggests it won't be the last time a supposedly antique opening decides something important. Chess keeps rediscovering that the oldest ideas in the game are often the ones nobody has fully worked out yet. Meanwhile, in the tournament's other semifinal-style pairing, Vincent Keymer and Wesley So remained level after [an opening round heavy on draws](/articles/the-curse-of-the-draw-follows-the-grand-chess-tour-to-st-louis/), a reminder that not every match in this event is being decided by opening choice alone.
