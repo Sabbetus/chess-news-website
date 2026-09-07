@@ -33,9 +33,9 @@ const LAST_UPDATED = '7 September 2026';
 
     <h2>Who is responsible for this site</h2>
     <p>
-      Chessori is operated by <strong>[CONTROLLER NAME]</strong>, based in Finland, who is the data controller for
+      Chessori is an independent, non-commercial publication operated from Finland, and is the data controller for
       the purposes of the GDPR. For any question about this policy, or to exercise any of the rights listed below,
-      use the <a href="/contact/">contact form</a>.
+      use the <a href="/contact/">contact form</a> &mdash; it reaches the person who runs the site directly.
     </p>
 
     <h2>What gets collected</h2>
@@ -55,8 +55,9 @@ const LAST_UPDATED = '7 September 2026';
       separate copy.
     </p>
     <p class="note">
-      Analytics currently loads on page view rather than after a consent prompt. If you'd rather not be counted, the
-      opt-out options below all work, and this is under review.
+      Analytics currently loads on page view rather than after a consent prompt, which is under review. If you'd
+      rather not be counted, there's a switch under <a href="#opt-out">How to opt out</a> below that turns it off
+      for good &mdash; it stops the script being loaded at all, rather than just discarding what it sends.
     </p>
 
     <h3>Article photos</h3>
@@ -110,17 +111,46 @@ const LAST_UPDATED = '7 September 2026';
       current setup. The theme preference is strictly necessary for a setting you asked for.
     </p>
 
-    <h2>How to opt out</h2>
+    <h2 id="opt-out">How to opt out</h2>
+    <p>
+      The switch below is the direct route: turn it off and this site stops loading Google Analytics for you
+      entirely, so nothing is requested from Google and no data about your visit leaves this page.
+    </p>
+
+    <div class="optout" id="optout" hidden>
+      <div class="optout-row">
+        <span class="optout-label">Analytics in this browser</span>
+        <button type="button" class="optout-btn" id="optoutBtn">Turn off</button>
+      </div>
+      <p class="optout-status" id="optoutStatus" role="status">Analytics is currently on.</p>
+      <p class="optout-caveat">
+        This preference is stored in this browser only, so you'd need to set it again on another device &mdash; and,
+        awkwardly, clearing your browsing data also clears it.
+      </p>
+    </div>
+    <noscript>
+      <p class="note">
+        You have JavaScript disabled, so Google Analytics isn't loading at all and there's nothing to opt out of.
+      </p>
+    </noscript>
+
+    <p>These all work too, and don't depend on this site honouring anything:</p>
     <ul>
-      <li>Block or clear cookies for this site in your browser settings.</li>
+      <li>Block or clear cookies for this site in your browser settings. Nothing here breaks if you do.</li>
       <li>
-        Install
-        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener"
-          >Google's Analytics opt-out browser add-on</a
-        >, which applies across every site using Analytics.
+        Use a browser that blocks trackers by default &mdash; Brave, DuckDuckGo, or Firefox with Enhanced Tracking
+        Protection set to Strict. These stop Analytics outright.
       </li>
-      <li>Use a browser with tracking protection on by default, or private browsing.</li>
-      <li>Don't use the contact form, and nothing you type will be sent anywhere.</li>
+      <li>
+        On a desktop browser, install
+        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener"
+          >Google's Analytics opt-out add-on</a
+        >, which applies to every site using Analytics. There's no mobile version.
+      </li>
+      <li>
+        Private browsing helps, but less than it looks: it clears the cookies afterwards rather than preventing the
+        data being collected in the first place.
+      </li>
     </ul>
 
     <h2>Your rights</h2>
@@ -148,6 +178,68 @@ const LAST_UPDATED = '7 September 2026';
     </p>
   </div>
 </BaseLayout>
+
+<script is:inline>
+  // The opt-out control. The flag it writes is read by BaseLayout before
+  // the Analytics script is injected, so opting out means the script is
+  // never requested at all -- Google receives nothing, not even the IP
+  // address a blocked-but-loaded script would still have leaked.
+  //
+  // Rendered hidden and revealed here rather than shown by default: with
+  // JavaScript off, Analytics never loads in the first place, so a
+  // visible control would be both dead and misleading. The <noscript>
+  // block covers that case instead.
+  (function () {
+    var KEY = 'chessori-analytics-optout';
+    var GA_ID = 'G-KY9DGJ4ZDQ';
+    var box = document.getElementById('optout');
+    var btn = document.getElementById('optoutBtn');
+    var status = document.getElementById('optoutStatus');
+    if (!box || !btn || !status) return;
+
+    function readOptedOut() {
+      try {
+        return localStorage.getItem(KEY) === '1';
+      } catch (e) {
+        return null; // storage unavailable -- can't read or persist a choice
+      }
+    }
+
+    function render(optedOut) {
+      if (optedOut === null) {
+        btn.hidden = true;
+        status.textContent =
+          "This browser is blocking site storage, so the preference can't be saved here. One of the options below will work instead.";
+        return;
+      }
+      btn.textContent = optedOut ? 'Turn back on' : 'Turn off';
+      status.textContent = optedOut
+        ? 'Analytics is off. Nothing is being loaded from Google on any page you visit here.'
+        : 'Analytics is currently on.';
+    }
+
+    btn.addEventListener('click', function () {
+      var next = !readOptedOut();
+      try {
+        if (next) localStorage.setItem(KEY, '1');
+        else localStorage.removeItem(KEY);
+      } catch (e) {
+        render(null);
+        return;
+      }
+      // Analytics already loaded on this pageview if they're opting out
+      // now; this is the documented kill switch for an in-flight tag, so
+      // the choice takes effect immediately rather than on next
+      // navigation. Turning it back on needs a reload to inject the
+      // script, which the status text doesn't promise otherwise.
+      window['ga-disable-' + GA_ID] = next;
+      render(next);
+    });
+
+    render(readOptedOut());
+    box.hidden = false;
+  })();
+</script>
 
 <style>
   .section-head {
@@ -228,5 +320,56 @@ const LAST_UPDATED = '7 September 2026';
     background: var(--paper-raised);
     color: var(--ink-soft);
     font-size: 15.5px;
+  }
+
+  /* The one interactive control on an otherwise static page -- given a
+     surface and a border so it reads as something to operate rather than
+     more prose to read past. */
+  .optout {
+    margin: 0 0 1.4em;
+    padding: 16px 18px 14px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .optout-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .optout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .optout-btn {
+    flex-shrink: 0;
+    padding: 7px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: opacity 0.15s ease;
+  }
+  .optout-btn:hover {
+    opacity: 0.82;
+  }
+  .policy .optout-status {
+    margin: 12px 0 0;
+    font-size: 15.5px;
+  }
+  .policy .optout-caveat {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--ink-soft);
   }
 </style>
