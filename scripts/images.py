@@ -118,6 +118,20 @@ def _is_photo_file(title: str) -> bool:
     return not title.lower().endswith(_REJECTED_EXTENSIONS)
 
 
+_FILENAME_WORD_PATTERN = re.compile(r"[A-Za-z]+")
+
+
+def _filename_words(title: str) -> set[str]:
+    """Commons file titles are underscore-separated ("Magnus_Carlsen_sig.svg"),
+    not space-separated -- a raw \\b-anchored regex never fires around an
+    underscore (it's a \\w character, same as the letters on either side of
+    it), so a pattern like r"\\bsig\\b" silently never matches real
+    filenames despite looking correct. Splitting into alpha-only tokens
+    first, then matching against that set, sidesteps the problem
+    entirely."""
+    return {w.lower() for w in _FILENAME_WORD_PATTERN.findall(title)}
+
+
 # A generic country/continent query can genuinely satisfy a lenient
 # "{country} chess" match with a postage stamp, banknote, or coin
 # depicting a chess motif (found real: "2002 Chess Olympiad Romanian
@@ -125,12 +139,23 @@ def _is_photo_file(title: str) -> bool:
 # do have both words, but they're philatelic/numismatic ephemera, not a
 # photo of anyone or anything happening, and don't belong here regardless
 # of how well they match.
-_EPHEMERA_WORDS = ("stamp", "stamps", "banknote", "banknotes", "postcard", "postcards", "coin", "coins")
-_EPHEMERA_PATTERN = re.compile(r"\b(" + "|".join(_EPHEMERA_WORDS) + r")\b", re.IGNORECASE)
+_EPHEMERA_WORDS = {"stamp", "stamps", "banknote", "banknotes", "postcard", "postcards", "coin", "coins"}
 
 
 def _is_ephemera(title: str) -> bool:
-    return bool(_EPHEMERA_PATTERN.search(title))
+    return bool(_filename_words(title) & _EPHEMERA_WORDS)
+
+
+# A person-name query can also turn up that person's signature/autograph as
+# a standalone Commons file (found real: "Magnus_Carlsen_sig.svg") -- a
+# vector squiggle, not a photo of them, but one that otherwise sails
+# through every other filter (real file, correctly licensed, SVGs exempt
+# from the resolution check since they're vector).
+_SIGNATURE_WORDS = {"sig", "signature", "signatures", "autograph", "autographs"}
+
+
+def _is_signature_file(title: str) -> bool:
+    return bool(_filename_words(title) & _SIGNATURE_WORDS)
 
 
 # A person's name is also, not infrequently, a street, square, or building
@@ -240,6 +265,8 @@ def _fetch_first_licensed_file(
         if _is_place_named_after_subject(title):
             continue
         if _is_ephemera(title):
+            continue
+        if _is_signature_file(title):
             continue
         if not _title_matches_query(title, query, strict):
             continue
