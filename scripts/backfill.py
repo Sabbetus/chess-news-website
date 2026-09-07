@@ -299,9 +299,11 @@ def main() -> None:
         return
 
     import anthropic
-    from draft import draft_one
+    from draft import BATCH_MAX_RETRIES, draft_one
 
-    client = anthropic.Anthropic()
+    # Same reasoning as draft.py: the SDK's default of 2 retries suits
+    # interactive use, not an unattended replay over a date range.
+    client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
     seen = ingest.load_seen()
     written = []
     for d, item in plan:

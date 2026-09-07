@@ -75,12 +75,19 @@ const sections = [
 
     <!-- Without this, fonts are only discovered once the stylesheet has
          been fetched and parsed, adding them sequentially to the critical
-         path (each around 500ms in testing). Preloading the two fonts used
-         above the fold (the Fraunces masthead/headlines and the Source
-         Serif 4 body text) lets them fetch in parallel with the CSS
-         instead of after it, and as a side effect shortens the window
-         where fallback-font text is visible before the swap, which is the
-         likely source of the measured layout shift. -->
+         path (each around 500ms in testing). Preloading lets them fetch in
+         parallel with the CSS instead of after it, and shortens the window
+         where fallback-font text is visible before the swap.
+
+         All four faces below are measured as requested on every page type,
+         and all four render above the fold: Fraunces in the masthead and
+         headlines, Source Serif in body text, and both IBM Plex Mono
+         weights in the eyebrow, section nav (500 marks the active one) and
+         bylines. The two mono files are 14 KB each, so covering them costs
+         little. Deliberately not preloaded: the latin-ext subsets, which
+         unicode-range only pulls for the minority of articles carrying
+         diacritics, and the italic face, which now loads only where a
+         blockquote appears. -->
     <link
       rel="preload"
       as="font"
@@ -93,6 +100,20 @@ const sections = [
       as="font"
       type="font/woff2"
       href="/fonts/source-serif-4-400-normal-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/ibm-plex-mono-400-normal-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/ibm-plex-mono-500-normal-latin.woff2"
       crossorigin
     />
 
