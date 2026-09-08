@@ -60,12 +60,13 @@ const continentMeta = CONTINENT_META[article.data.continent];
 // The social-card crop: fixed 1200x630 (1.91:1), the size Meta's own docs
 // recommend for Facebook/Threads link previews and the same ratio X's
 // summary_large_image card uses -- one crop serves all three. position=
-// "attention" matches the on-site thumb crop (see ArticleThumb.astro) so
-// the same photo reads the same way whether seen on the site or shared.
-// jpg for broadest crawler compatibility (Facebook/Threads/X all handle it
-// natively; no AVIF/WebP guessing needed on their end).
+// "top" matches the on-site thumb crop (see ArticleThumb.astro, and its
+// comment on why "attention" was reverted) so the same photo reads the
+// same way whether seen on the site or shared. jpg for broadest crawler
+// compatibility (Facebook/Threads/X all handle it natively; no AVIF/WebP
+// guessing needed on their end).
 const ogImage = article.data.image
-  ? await getImage({ src: article.data.image.src, width: 1200, height: 630, fit: 'cover', position: 'attention', format: 'jpg' })
+  ? await getImage({ src: article.data.image.src, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpg' })
   : null;
 // JSON-LD's `image` has no crop requirement -- Google just wants a
 // reasonably large, accessible copy (1280 clears its 1200px-wide
