@@ -261,17 +261,16 @@ const jsonLd = [
 
   .source-callout {
     max-width: var(--content-width);
-    /* Adjacent-sibling margins collapse (take the larger, not the sum) as
-       long as nothing else sits between them -- so matching this margin
-       to .similar's margin-top below, with no padding-bottom on this
-       block, is what actually makes the whitespace above this rule equal
-       the whitespace after this text and before the next rule. Adding a
-       padding-bottom here (tried, reverted) breaks that: padding doesn't
-       collapse, so it stacks with .similar's margin-top instead of
-       matching this block's own margin-top -- a real, worse asymmetry,
-       not the fix it looked like. 32px (down from 48px) for both. */
+    /* Two rules are visible around this block: this one's own border-top,
+       and .similar's border-top right below it, which reads as this
+       block's closing line even though it belongs to the next section.
+       Balance is judged against THOSE two lines, not against the
+       whitespace further out -- the inset from each rule to the text it's
+       next to (this padding-top, and padding-bottom below) needs to
+       match. 32px above this rule is a separate, independent gap (nothing
+       to balance it against locally) and stays as-is. */
     margin: 32px auto 0;
-    padding-top: 20px;
+    padding: 20px 0;
     border-top: 1px solid var(--rule-soft);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
@@ -303,12 +302,14 @@ const jsonLd = [
 
   .similar {
     max-width: var(--content-width);
-    /* Matches .source-callout's outer margin above (32px) -- see its
-       comment. padding-top stays larger than the callout's (28px vs
-       20px): this rule opens onto an <h2> and a card grid, not three
-       lines of small monospace text, and deserves more breathing room on
-       its own terms, independent of the outer-gap symmetry. */
-    margin: 32px auto 0;
+    /* No margin-top -- .source-callout's own padding-bottom now owns the
+       inset between its text and this rule (see its comment), so adding
+       a margin here on top of that would just push the rule further
+       away without a matching push on the other side of it. padding-top
+       stays larger than the callout's (28px vs 20px): this rule opens
+       onto an <h2> and a card grid, not three lines of small monospace
+       text, and deserves more breathing room on its own terms. */
+    margin: 0 auto;
     padding-top: 28px;
     border-top: 1px solid var(--rule);
   }
