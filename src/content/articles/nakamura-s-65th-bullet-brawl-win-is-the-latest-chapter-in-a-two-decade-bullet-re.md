@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "Nakamura's 65th Bullet Brawl title isn't a new story, it's the same story he's been writing since his ICC bullet days two decades ago."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Hikaru_Nakamura_%282016%29_crop.jpg/1280px-Hikaru_Nakamura_%282016%29_crop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/nakamura-s-65th-bullet-brawl-win-is-the-latest-chapter-in-a-two-decade-bullet-re.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece - photo
 DS28 - crop., CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHikaru_Nakamura_%282016%29_crop.jpg"

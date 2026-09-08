@@ -9,7 +9,7 @@ selectionScore: 35
 reviewStatus: "published"
 socialCopy: "Peru's Saco Oliveros academy went unbeaten all week to win the FIDE ISCF Schools Team title in San José, closing with a Mother's Day tribute. What the win says about academy chess."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Emilio_Cordova_Peru_%2829391240486%29.jpg/1280px-Emilio_Cordova_Peru_%2829391240486%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/peru-s-saco-oliveros-academy-turns-a-school-chess-title-into-a-statement-of-meth.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEmilio_Cordova_Peru_%2829391240486%29.jpg"
 ---

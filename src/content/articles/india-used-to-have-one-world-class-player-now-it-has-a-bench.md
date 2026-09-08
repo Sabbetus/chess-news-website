@@ -9,7 +9,7 @@ selectionScore: 67
 reviewStatus: "published"
 socialCopy: "Anand once carried Indian chess alone. Now he's calling Pragg the world's best amid a genuine embarrassment of riches: Gukesh, Erigaisi, and more. How India built a bench."
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/85/Praggnanandhaa_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APraggnanandhaa_in_2025.jpg"
 ---

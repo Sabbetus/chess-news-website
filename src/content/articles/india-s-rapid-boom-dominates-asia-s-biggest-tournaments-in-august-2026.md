@@ -13,7 +13,7 @@ continentName: "Asia"
 monthLabel: "August 2026"
 totalTracked: 1836
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg/1280px-Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg"
+  src: "./_images/india-s-rapid-boom-dominates-asia-s-biggest-tournaments-in-august-2026.webp"
   credit: "Jess M. Escaros for the Philippine News Agency, Public domain, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg"
 ---

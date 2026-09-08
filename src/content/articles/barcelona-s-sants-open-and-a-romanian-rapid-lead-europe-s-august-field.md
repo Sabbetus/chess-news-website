@@ -13,7 +13,7 @@ continentName: "Europe"
 monthLabel: "August 2026"
 totalTracked: 783
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Robert_Aloma_Sants_2015.jpg"
+  src: "./_images/barcelona-s-sants-open-and-a-romanian-rapid-lead-europe-s-august-field.webp"
   credit: "Picapedres, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARobert_Aloma_Sants_2015.jpg"
 ---

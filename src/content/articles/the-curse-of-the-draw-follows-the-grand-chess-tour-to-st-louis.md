@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "Two fights, two draws, zero decisive games. Day 1 of the Grand Chess Tour Finals had everyone in St. Louis asking the same question: why do the best players alive keep splitting the point? #chess"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Vincent_Keymer_in_2025.jpg/1280px-Vincent_Keymer_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/the-curse-of-the-draw-follows-the-grand-chess-tour-to-st-louis.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVincent_Keymer_in_2025.jpg"
 ---

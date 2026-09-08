@@ -214,13 +214,13 @@ button:focus-visible {
   inset: 0;
   width: 100%;
   height: 100%;
+  /* The actual crop now happens once, at build time (Astro's Sharp
+     pipeline, fit="cover" + position="attention" -- see ArticleThumb.astro)
+     baked into the file at exactly this box's pixel dimensions. object-fit
+     here is just a defensive fallback in case a stored file's dimensions
+     ever drift from the box's aspect-ratio (e.g. a manually-edited image),
+     not the primary cropping mechanism it used to be. */
   object-fit: cover;
-  /* Most sourced photos are portrait-oriented headshots (players at the
-     board), cropped into a much wider slot -- centering the crop on the
-     image's vertical middle tends to land on the chest/hands rather than
-     the face. Biasing toward the top keeps faces in frame in the common
-     case, at the cost of sometimes leaving more headroom than ideal. */
-  object-position: center 20%;
 }
 .thumb-credit {
   position: absolute;

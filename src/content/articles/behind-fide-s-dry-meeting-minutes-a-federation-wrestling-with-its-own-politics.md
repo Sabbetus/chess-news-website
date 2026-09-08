@@ -9,7 +9,7 @@ selectionScore: 65
 reviewStatus: "published"
 socialCopy: "FIDE's latest council minutes look dry, but read closely: Russia's Olympiad status, an African confederation election under legal review, and Nigel Short abruptly cut loose in Sierra Leone. Governance drama hiding in plain sight."
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Nigel_Short_%282018%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  src: "./_images/behind-fide-s-dry-meeting-minutes-a-federation-wrestling-with-its-own-politics.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
 ---

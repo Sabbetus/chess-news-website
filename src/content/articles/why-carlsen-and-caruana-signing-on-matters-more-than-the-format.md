@@ -8,7 +8,7 @@ continent: "europe"
 selectionScore: 70
 reviewStatus: "published"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Magnus_Carlsen_at_Rapid_$_Blitz_2025.jpg/1280px-Magnus_Carlsen_at_Rapid_$_Blitz_2025.jpg"
+  src: "./_images/why-carlsen-and-caruana-signing-on-matters-more-than-the-format.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Magnus_Carlsen_at_Rapid_$_Blitz_2025.jpg"
 socialCopy: "Carlsen and Caruana didn't just sign up for a new format in Budapest. They signaled where the money in elite chess might be heading next."

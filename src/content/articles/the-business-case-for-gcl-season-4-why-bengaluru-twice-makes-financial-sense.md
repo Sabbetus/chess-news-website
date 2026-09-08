@@ -9,7 +9,7 @@ selectionScore: 65
 reviewStatus: "published"
 socialCopy: "GCL Season 4 lands in Bengaluru with Carlsen back and Divya Deshmukh debuting, but the real story is the media value numbers behind the franchise bet."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Divya_Deshmukh_in_2025.jpg/1280px-Divya_Deshmukh_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/the-business-case-for-gcl-season-4-why-bengaluru-twice-makes-financial-sense.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADivya_Deshmukh_in_2025.jpg"
 ---

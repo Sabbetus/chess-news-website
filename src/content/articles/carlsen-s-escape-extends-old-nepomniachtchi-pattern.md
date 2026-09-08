@@ -9,7 +9,7 @@ selectionScore: 58
 reviewStatus: "published"
 socialCopy: "Carlsen dodges another bullet from Nepomniachtchi, this time in team chess. Alpine APL Pipers stay perfect in the 2026 Global Chess League, but the old pattern between these two just repeated itself again."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Ian_Nepomniachtchi_vs_Nodirbek_Abdusattorov.jpg/1280px-Ian_Nepomniachtchi_vs_Nodirbek_Abdusattorov.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/carlsen-s-escape-extends-old-nepomniachtchi-pattern.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIan_Nepomniachtchi_vs_Nodirbek_Abdusattorov.jpg"
 ---

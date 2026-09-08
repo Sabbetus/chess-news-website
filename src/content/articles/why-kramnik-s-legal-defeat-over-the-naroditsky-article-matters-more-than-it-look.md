@@ -9,7 +9,7 @@ selectionScore: 55
 reviewStatus: "published"
 socialCopy: "Kramnik lost his case against New In Chess over the Naroditsky cyberbullying article. He's appealing, but the ruling itself may matter more than the appeal does."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Kramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg/1280px-Kramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/why-kramnik-s-legal-defeat-over-the-naroditsky-article-matters-more-than-it-look.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg"
 ---

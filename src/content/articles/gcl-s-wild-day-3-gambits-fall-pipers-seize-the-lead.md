@@ -9,7 +9,7 @@ selectionScore: 53
 reviewStatus: "published"
 socialCopy: "Carlsen beat Anand and his team still lost the match. GCL Day 3 flipped the standings on their head as the Gambits' unbeaten run collapsed. #GCL2026"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/2/2b/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
+  src: "./_images/gcl-s-wild-day-3-gambits-fall-pipers-seize-the-lead.webp"
   credit: "Lennart Ootes, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
 ---

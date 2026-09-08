@@ -13,7 +13,7 @@ continentName: "Asia"
 monthLabel: "September 2026"
 totalTracked: 263
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/WGM_NANDHIDHAA.P.V_WINNING_NATIONAL_CHESS_TITLE-_2024.jpg/1280px-WGM_NANDHIDHAA.P.V_WINNING_NATIONAL_CHESS_TITLE-_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/september-2026-in-asian-chess-india-dominates-a-crowded-calendar.webp"
   credit: "NOVKILOSIERRA, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWGM_NANDHIDHAA.P.V_WINNING_NATIONAL_CHESS_TITLE-_2024.jpg"
 ---

@@ -13,7 +13,7 @@ continentName: "South America"
 monthLabel: "August 2026"
 totalTracked: 801
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Chess_in_Brazil_%283243_69%29.jpg/1280px-Chess_in_Brazil_%283243_69%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/brazil-dominates-south-america-s-biggest-august-fields.webp"
   credit: "Wilfredor, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_in_Brazil_%283243_69%29.jpg"
 ---

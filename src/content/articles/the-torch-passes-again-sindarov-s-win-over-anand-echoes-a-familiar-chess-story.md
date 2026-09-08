@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "Anand once was the young gun beating the legends. On day one of the 2026 Global Chess League, 20-year-old Sindarov flipped the script on him. #chess"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Viswanathan_Anand_%282016%29.jpeg/1280px-Viswanathan_Anand_%282016%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/the-torch-passes-again-sindarov-s-win-over-anand-echoes-a-familiar-chess-story.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_%282016%29.jpeg"
 ---

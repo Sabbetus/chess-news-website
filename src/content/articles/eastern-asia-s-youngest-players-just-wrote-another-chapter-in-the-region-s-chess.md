@@ -9,7 +9,7 @@ selectionScore: 35
 reviewStatus: "published"
 socialCopy: "New champions across six age brackets at the Eastern Asia Youth Rapid Championship 2026. Here's why these under-the-radar youth events have quietly built China's chess dynasty for decades."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Ju_Wenjun_in_2024_%28cropped%29.jpg/1280px-Ju_Wenjun_in_2024_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/eastern-asia-s-youngest-players-just-wrote-another-chapter-in-the-region-s-chess.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJu_Wenjun_in_2024_%28cropped%29.jpg"
 ---

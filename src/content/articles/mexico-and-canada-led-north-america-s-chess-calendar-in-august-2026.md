@@ -13,7 +13,7 @@ continentName: "North America"
 monthLabel: "August 2026"
 totalTracked: 162
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Giant_chess_at_De_Vargas_Center.jpg/1280px-Giant_chess_at_De_Vargas_Center.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/mexico-and-canada-led-north-america-s-chess-calendar-in-august-2026.webp"
   credit: "Arlo Barnes, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGiant_chess_at_De_Vargas_Center.jpg"
 ---

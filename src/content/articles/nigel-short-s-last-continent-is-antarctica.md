@@ -9,7 +9,7 @@ selectionScore: 53
 reviewStatus: "published"
 socialCopy: "Nigel Short won on six continents. Antarctica was the missing one, until now. Six players, one FIDE-rated tournament, the South Pole as the finish line. ♟️"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Nigel_Short_%282018%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  src: "./_images/nigel-short-s-last-continent-is-antarctica.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
 ---
