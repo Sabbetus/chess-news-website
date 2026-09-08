@@ -169,7 +169,7 @@ const jsonLd = [
 
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
-      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceUrl}</a><br />
+      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceName}</a><br />
       <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>
     </p>
 
@@ -267,10 +267,10 @@ const jsonLd = [
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
     color: var(--ink-soft);
-    /* The raw source URL printed below has no spaces for the browser to
-       break on -- long enough URLs (varies per article/source) overflow
-       the content column and force horizontal scroll on narrow viewports
-       without this. */
+    /* The source link now shows a short name (see below), but this stays
+       as a defensive default -- the correction-link href/topic query
+       string and other unbroken runs of text in this block could still
+       overflow the content column on narrow viewports without it. */
     overflow-wrap: anywhere;
   }
   .source-callout a {
