@@ -9,9 +9,9 @@ selectionScore: 53
 reviewStatus: "published"
 socialCopy: "Carlsen beat Anand and his team still lost the match. GCL Day 3 flipped the standings on their head as the Gambits' unbeaten run collapsed. #GCL2026"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/5/56/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen_%28cropped1%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  url: "https://upload.wikimedia.org/wikipedia/commons/2/2b/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
   credit: "Lennart Ootes, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen_%28cropped1%29.jpg"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
 ---
 
 Three days into Global Chess League Season 4, the top of the table has already been turned upside down. Monday's round produced the kind of results that make franchise chess format genuinely unpredictable: a team can lose a match and still end the day in first place, while last week's unbeaten leaders can lose twice in a row and drop to second. That's exactly what happened as [Alpine APL Pipers seized the lead](https://www.fide.com/gcl-2026-day-3-alpine-apl-pipers-seize-the-lead/) despite dropping one of their two matches.
