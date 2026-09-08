@@ -8,6 +8,10 @@ continent: "europe"
 selectionScore: 65
 reviewStatus: "published"
 socialCopy: "FIDE isn't paying for .chess. World Chess is. A look at who actually profits if the sport gets its own internet domain."
+image:
+  src: "./_images/who-actually-profits-from-chess-unpacking-the-fide-world-chess-domain-deal.svg"
+  credit: "M5, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:FIDE_text_on_white.svg"
 ---
 
 Buried in the [celebratory language about chess finally getting "its own place on the internet"](https://www.fide.com/chess-is-getting-its-own-home-on-the-internet-fide-and-world-chess-apply-for-the-chess-domain-extension/) is a straightforward commercial arrangement worth examining: World Chess (LSE: CHSS) is funding and will operate the .chess top-level domain, while FIDE lends its institutional weight as sponsor and takes a cut of the revenue. This is not a charitable infrastructure project. It's a listed company betting that owning the naming rights to an entire sport's internet identity is worth the ICANN application costs and the multi-year approval process.

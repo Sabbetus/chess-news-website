@@ -512,15 +512,22 @@ def _download_bytes(url: str, retries: int = 3) -> bytes:
         match = _THUMB_FILENAME.search(urllib.parse.urlparse(url).path)
         if not match:
             raise
-        filename = urllib.parse.quote(match.group(1))
+        # match.group(1) comes from urlparse().path, which does NOT decode
+        # percent-escapes -- it's already URL-encoded (e.g. "...%28cropped
+        # %29.jpg"). quote()-ing it again without unquoting first turns
+        # "%28" into "%2528", a filename that doesn't exist on Commons and
+        # 404s outright (found live: a real, existing file failed to
+        # localize this way). Round-trip through unquote first so the
+        # re-encoding starts from the real filename, not its escaped form.
+        filename = urllib.parse.quote(urllib.parse.unquote(match.group(1)))
         fallback_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width={MASTER_MAX_WIDTH}"
         return _fetch_bytes(fallback_url, retries)
 
 
 def localize_image(image: dict, slug: str) -> dict | None:
     """Download the Commons photo `pick_image_for_item` chose, once, and
-    store a single compressed WebP master locally -- see IMAGES_DIR above
-    for why co-located with the content and why just one file. Returns a
+    store a single compressed master locally -- see IMAGES_DIR above for
+    why co-located with the content and why just one file. Returns a
     frontmatter-ready dict (relative `src` path in place of the hotlinked
     `url`, same `credit`/`sourceUrl`), or None if the download/decode fails.
 
@@ -528,18 +535,30 @@ def localize_image(image: dict, slug: str) -> dict | None:
     transient fetch failure here is a missing image, not a failed draft --
     matching how `search_image` already treats "nothing found" as normal
     rather than an error."""
+    is_svg = urllib.parse.urlparse(image["url"]).path.lower().endswith(".svg")
     try:
         raw = _download_bytes(image["url"])
-        photo = Image.open(io.BytesIO(raw)).convert("RGB")
-        if photo.width > MASTER_MAX_WIDTH:
-            new_height = round(photo.height * MASTER_MAX_WIDTH / photo.width)
-            photo = photo.resize((MASTER_MAX_WIDTH, new_height), Image.LANCZOS)
         IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-        photo.save(IMAGES_DIR / f"{slug}.webp", "WEBP", quality=MASTER_QUALITY)
+        if is_svg:
+            # Pillow can't decode SVG at all (it's vector, not raster) --
+            # every organization-logo pick from build_query_cascade's
+            # "{source} logo" fallback query is one of these. Store the
+            # vector file as-is; Astro's own image() pipeline (Sharp) can
+            # rasterize an SVG source into whatever raster crop/size a
+            # given slot needs, same as it does for real photos.
+            filename = f"{slug}.svg"
+            (IMAGES_DIR / filename).write_bytes(raw)
+        else:
+            filename = f"{slug}.webp"
+            photo = Image.open(io.BytesIO(raw)).convert("RGB")
+            if photo.width > MASTER_MAX_WIDTH:
+                new_height = round(photo.height * MASTER_MAX_WIDTH / photo.width)
+                photo = photo.resize((MASTER_MAX_WIDTH, new_height), Image.LANCZOS)
+            photo.save(IMAGES_DIR / filename, "WEBP", quality=MASTER_QUALITY)
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
     return {
-        "src": f"./_images/{slug}.webp",
+        "src": f"./_images/{filename}",
         "credit": image["credit"],
         "sourceUrl": image["sourceUrl"],
     }
