@@ -292,8 +292,27 @@ def _fetch_first_licensed_file(
         url = info.get("thumburl") or info.get("url")
         date = _photo_date(meta)
 
+        # Every on-site slot this image can land in is a wide landscape box
+        # (1.91:1 lead, 16:9 card) rendered with object-fit: cover -- a
+        # portrait-oriented source gets scaled up until its width fills the
+        # box, then has most of its height cropped away. A tight face-closeup
+        # portrait (the common case for headshot-style Commons photos) loses
+        # so much of that height that only eyes/nose/mouth survive the crop,
+        # blown up far larger than intended (found in testing: a 869x1303
+        # Carlsen closeup read as a giant, awkwardly-cropped face on-site).
+        # A well-composed portrait with headroom and shoulders survives the
+        # same crop fine, and there's no metadata that distinguishes the two
+        # -- but ANY portrait is strictly more likely to crop badly than a
+        # landscape or square photo of the same subject, so treat orientation
+        # as a soft preference (not a hard filter -- a portrait is still
+        # better than no image) rather than trying to guess crop tightness.
+        width = info.get("width") or 0
+        height = info.get("height") or 1
+        is_portrait = width < height
+
         candidates.append(
             (
+                is_portrait,
                 date,
                 {
                     "url": url,
@@ -306,8 +325,14 @@ def _fetch_first_licensed_file(
     if not candidates:
         return None
 
-    candidates.sort(key=lambda c: c[0], reverse=True)
-    return candidates[0][1]
+    # Two stable passes, least-significant key first: sort by recency, then
+    # re-sort by orientation -- the recency order survives within each
+    # orientation tier, so this is "most recent landscape/square photo, or
+    # if none exists, most recent portrait photo" rather than a pure date
+    # sort or a pure orientation sort.
+    candidates.sort(key=lambda c: c[1], reverse=True)
+    candidates.sort(key=lambda c: c[0])
+    return candidates[0][2]
 
 
 def search_image(query: str, strict: bool = False, exclude_source_urls: set | None = None) -> dict | None:
