@@ -8,6 +8,10 @@ continent: "north-america"
 selectionScore: 55
 reviewStatus: "published"
 socialCopy: "Kasparov's last classical game ended in defeat to Topalov in 2005. Nearly 20 years later they meet again in St. Louis, in Chess960 this time."
+image:
+  src: "./_images/why-kasparov-vs-topalov-in-chess960-feels-like-unfinished-business.webp"
+  credit: "Lukasz Kobus, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Garry_Kasparov_European_Union_2023_(cropped).jpg"
 ---
 
 Garry Kasparov and Veselin Topalov are set to meet again, this time at the Saint Louis Chess Club for Clutch Chess: The Legends, a $144,000 Chess960 match running September 11-13. [According to Chess.com](https://www.chess.com/news/view/kasparov-topalov-chess960-match-st-louis), Kasparov will face the man who beat him in the final rated classical game of his career, with the two former world champions playing 12 games across the three days, four a day split between rapid and blitz, each round starting from a new random back-rank setup. For anyone who followed the sport closely, that detail is not a footnote. It is the whole reason this match matters.
