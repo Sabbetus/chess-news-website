@@ -261,7 +261,12 @@ const jsonLd = [
 
   .source-callout {
     max-width: var(--content-width);
-    margin: 40px auto 0;
+    /* Matches .similar's margin-top below -- measured empirically, the gap
+       above this section's rule (40px) and below it, before the next
+       section's rule (48px, from .similar's own margin-top), didn't
+       match. Both now 48px so the section sits evenly between its
+       neighbors. */
+    margin: 48px auto 0;
     padding-top: 20px;
     border-top: 1px solid var(--rule-soft);
     font-family: 'IBM Plex Mono', monospace;
