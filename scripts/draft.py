@@ -261,8 +261,13 @@ two of them from a phrase in your own text that genuinely refers to what that \
 article covers -- a player, event, tournament or theme you are already \
 mentioning. Use the "/articles/<slug>/" path exactly as given, and make the \
 anchor a natural noun phrase already in the sentence rather than bolting on \
-"as we reported" or "read more about". Do not reword a sentence just to create a \
-link, do not link the same article twice, and if none of the listed pieces is \
+"as we reported" or "read more about". If you mention that Chessori has \
+covered something before, that mention MUST itself be the Markdown link -- \
+never describe or gesture at a previous piece in prose ("as covered in \
+Chessori's look at...") without the "[...](/articles/<slug>/)" markup actually \
+wrapped around it; an unlinked reference to a specific past article reads as a \
+broken or fabricated citation. Do not reword a sentence just to create a link, \
+do not link the same article twice, and if none of the listed pieces is \
 genuinely relevant to this story, link none of them -- a forced link is worse \
 than no link. Note these are companion pieces, not news reports: never describe \
 one as having "broken" or "first reported" anything.
@@ -292,7 +297,7 @@ before that, never mixed into it:
 {{
   "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
   "continent": "one of: {CONTINENT_OPTIONS}",
-  "title": "a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler (\"What This Means For...\", \"Here's Why...\", \"And That's the Point\") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default.",
+  "title": "a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler (\"What This Means For...\", \"Here's Why...\", \"And That's the Point\") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like \"anyway\", \"and more\", or \"explained\" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place).",
   "bodyMarkdown": "the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other",
   "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty",
   "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
