@@ -251,14 +251,20 @@ button:focus-visible {
   background: rgba(0, 0, 0, 0.65);
 }
 .thumb--lead {
-  aspect-ratio: 1.91 / 1;
+  /* Was 1.91/1 (the standard social-share ratio) -- but that ratio has no
+     bearing on social sharing here, since og:image ships the raw,
+     uncropped source photo (see BaseLayout's og:image tag), not anything
+     run through this box. Taller gives real relief to the portrait/
+     headshot photos most sourced images actually are under object-fit:
+     cover, without reading as a portrait-gallery layout. */
+  aspect-ratio: 1.5 / 1;
   width: 100%;
 }
 .thumb--lead .piece {
   font-size: 100px;
 }
 .thumb--card {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   width: 100%;
   margin-bottom: 16px;
 }
