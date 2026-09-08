@@ -215,7 +215,7 @@ button:focus-visible {
   width: 100%;
   height: 100%;
   /* The actual crop now happens once, at build time (Astro's Sharp
-     pipeline, fit="cover" + position="attention" -- see ArticleThumb.astro)
+     pipeline, fit="cover" + position="top" -- see ArticleThumb.astro)
      baked into the file at exactly this box's pixel dimensions. object-fit
      here is just a defensive fallback in case a stored file's dimensions
      ever drift from the box's aspect-ratio (e.g. a manually-edited image),

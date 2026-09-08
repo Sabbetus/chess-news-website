@@ -18,12 +18,16 @@ const piece = pieceForLens(lens, seed);
 // Fixed pixel dimensions matching each slot's CSS aspect-ratio exactly
 // (.thumb--lead: 1.5/1, .thumb--card: 4/3 -- see global.css) so Astro's
 // fit="cover" crop lands on the same box the CSS already draws, with no
-// mismatch between the requested crop and the rendered one. position=
-// "attention" asks Sharp's saliency detector to center the crop on
-// whatever's visually busiest in the source photo (a face, in the common
-// case) rather than a fixed top-bias -- most sourced photos are portrait
-// headshots cropped into a much wider slot, where a plain center crop
-// tends to land on the chest/hands instead of the face.
+// mismatch between the requested crop and the rendered one.
+//
+// position="attention" (Sharp's saliency-based smart crop) was tried
+// first and reverted -- on real site photos it repeatedly cropped out
+// the subject's face entirely (found live, across multiple articles),
+// picking some other "busy" region of the frame instead. A fixed
+// top-bias is boring but predictable: most sourced photos are portrait
+// headshots cropped into a much wider slot, and a face sits in the top
+// third of the frame far more reliably than any saliency heuristic
+// picked it out correctly in practice.
 const DIMS = {
   lead: { width: 960, height: 640 },
   card: { width: 500, height: 375 },
@@ -56,7 +60,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
             width={DIMS.width}
             height={DIMS.height}
             fit="cover"
-            position="attention"
+            position="top"
             densities={[1, 1.5, 2]}
             alt={alt}
             loading={loading}
@@ -74,7 +78,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
             width={DIMS.width}
             height={DIMS.height}
             fit="cover"
-            position="attention"
+            position="top"
             densities={[1, 1.5, 2]}
             alt={alt}
             loading={loading}
