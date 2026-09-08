@@ -261,12 +261,16 @@ const jsonLd = [
 
   .source-callout {
     max-width: var(--content-width);
-    /* Matches .similar's margin-top below -- measured empirically, the gap
-       above this section's rule (40px) and below it, before the next
-       section's rule (48px, from .similar's own margin-top), didn't
-       match. Both now 48px so the section sits evenly between its
-       neighbors. */
-    margin: 48px auto 0;
+    /* Adjacent-sibling margins collapse (take the larger, not the sum) as
+       long as nothing else sits between them -- so matching this margin
+       to .similar's margin-top below, with no padding-bottom on this
+       block, is what actually makes the whitespace above this rule equal
+       the whitespace after this text and before the next rule. Adding a
+       padding-bottom here (tried, reverted) breaks that: padding doesn't
+       collapse, so it stacks with .similar's margin-top instead of
+       matching this block's own margin-top -- a real, worse asymmetry,
+       not the fix it looked like. 32px (down from 48px) for both. */
+    margin: 32px auto 0;
     padding-top: 20px;
     border-top: 1px solid var(--rule-soft);
     font-family: 'IBM Plex Mono', monospace;
@@ -299,7 +303,12 @@ const jsonLd = [
 
   .similar {
     max-width: var(--content-width);
-    margin: 48px auto 0;
+    /* Matches .source-callout's outer margin above (32px) -- see its
+       comment. padding-top stays larger than the callout's (28px vs
+       20px): this rule opens onto an <h2> and a card grid, not three
+       lines of small monospace text, and deserves more breathing room on
+       its own terms, independent of the outer-gap symmetry. */
+    margin: 32px auto 0;
     padding-top: 28px;
     border-top: 1px solid var(--rule);
   }
