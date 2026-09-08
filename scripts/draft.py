@@ -128,11 +128,18 @@ AGGREGATE_INSTRUCTIONS = {
 # whichever fits the specific story best (see NEWS_SYSTEM_PROMPT).
 LENS_OPTIONS = {
     "drama": (
-        "Drama angle: lean into any scandal, controversy, or conflict in the "
-        "story -- add color and reasonable speculation about motives, stakes, "
-        "and fallout, the way a sharp opinion columnist would. Only pick this "
-        "lens when the story actually has a scandal/conflict/controversy "
-        "element to work with -- don't manufacture drama that isn't there."
+        "Drama angle: lean into any scandal, controversy, or genuine "
+        "interpersonal conflict in the story -- add color and reasonable "
+        "speculation about motives, stakes, and fallout, the way a sharp "
+        "opinion columnist would. Only pick this lens when there's a real "
+        "scandal, dispute, grievance, or falling-out to work with -- someone "
+        "objecting to something, a rules or conduct controversy, a rivalry "
+        "with real tension behind it. A team simply winning or losing a "
+        "match, even in an upset or unusual format, is competition, not "
+        "drama -- that's historical-parallel (if there's a genuine echo of "
+        "the past) or community-pulse (if the story is really about how "
+        "people are reacting) territory instead. Don't reach for this lens "
+        "just because a result was surprising."
     ),
     "historical-parallel": (
         "Historical parallel: ground the story against chess history -- a "
