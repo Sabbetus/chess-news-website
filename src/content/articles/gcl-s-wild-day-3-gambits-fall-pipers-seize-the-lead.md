@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/gcl-2026-day-3-alpine-apl-pipers-seize-the-lead
 lens: "drama"
 continent: "asia"
 selectionScore: 53
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen beat Anand and his team still lost the match. GCL Day 3 flipped the standings on their head as the Gambits' unbeaten run collapsed. #GCL2026"
 image:
   url: "https://upload.wikimedia.org/wikipedia/commons/5/56/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen_%28cropped1%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
