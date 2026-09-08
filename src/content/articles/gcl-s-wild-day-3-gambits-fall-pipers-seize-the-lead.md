@@ -1,5 +1,5 @@
 ---
-title: "GCL's Wild Day 3: Gambits Fall, Pipers Rise Anyway"
+title: "GCL's Wild Day 3: Gambits Fall, Pipers Seize the Lead"
 publishDate: "2026-09-08"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/gcl-2026-day-3-alpine-apl-pipers-seize-the-lead/"
@@ -26,4 +26,4 @@ Elsewhere, CheQ Mumba Masters delivered the day's most one-sided result. Pranesh
 
 The day's sharpest individual moment belonged to Triveni Continental Kings, who badly needed a result to stay relevant in the title race. Wei Yi punished Arjun Erigaisi for grabbing a poisoned pawn, picking up his first win in four games, and Aravindh Chithambaram followed by outplaying Erdogmus in a Maroczy structure before delivering checkmate on move 52. With Kateryna Lagno and Alexandra Kosteniuk trading wins on the women's boards and the Icon and Prodigy games ending drawn, the Kings finally broke their winless streak and grabbed three matchpoints.
 
-That kind of individual brilliance amid a crowded team battle is a familiar theme this season, echoing how India's depth on show at GCL has already been a story in itself, as covered in Chessori's look at how India used to have one world-class player and now has a bench. Tuesday's schedule offers little breathing room: Ganges face the Knights, the Gambits get a shot at revenge against the Mumba Masters, the Kings face the new leaders in the Pipers, and the Gambits play a second match against the Knights. With four teams bunched at 6 matchpoints, one more day like Monday could reshuffle the table all over again.
+That kind of individual brilliance amid a crowded team battle is a familiar theme this season, echoing how [India used to have one world-class player and now has a bench](/articles/india-used-to-have-one-world-class-player-now-it-has-a-bench/). Tuesday's schedule offers little breathing room: Ganges face the Knights, the Gambits get a shot at revenge against the Mumba Masters, the Kings face the new leaders in the Pipers, and the Gambits play a second match against the Knights. With four teams bunched at 6 matchpoints, one more day like Monday could reshuffle the table all over again.
