@@ -1,12 +1,12 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
-import { resizeUrl } from '../../lib/wikimediaSrcset';
 import { CONTINENT_META } from '../../lib/continent';
 
 export async function getStaticPaths() {
@@ -57,6 +57,22 @@ const similar = [...related, ...fallback].slice(0, 3);
 
 const continentMeta = CONTINENT_META[article.data.continent];
 
+// The social-card crop: fixed 1200x630 (1.91:1), the size Meta's own docs
+// recommend for Facebook/Threads link previews and the same ratio X's
+// summary_large_image card uses -- one crop serves all three. position=
+// "attention" matches the on-site thumb crop (see ArticleThumb.astro) so
+// the same photo reads the same way whether seen on the site or shared.
+// jpg for broadest crawler compatibility (Facebook/Threads/X all handle it
+// natively; no AVIF/WebP guessing needed on their end).
+const ogImage = article.data.image
+  ? await getImage({ src: article.data.image.src, width: 1200, height: 630, fit: 'cover', position: 'attention', format: 'jpg' })
+  : null;
+// JSON-LD's `image` has no crop requirement -- Google just wants a
+// reasonably large, accessible copy (1280 clears its 1200px-wide
+// preference) -- so this reuses the same source with a plain resize, no
+// fixed aspect ratio forced onto it.
+const jsonLdImage = article.data.image ? await getImage({ src: article.data.image.src, width: 1280, format: 'jpg' }) : null;
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -71,11 +87,7 @@ const jsonLd = [
     dateModified: (article.data.updatedDate ?? article.data.publishDate).toISOString(),
     mainEntityOfPage: pageURL,
     url: pageURL,
-    // Through resizeUrl like every other reference to this image, rather
-    // than the raw stored URL: that was the last thing still emitting
-    // thumb.wikimedia.org, and 1280 is a standard Wikimedia width that
-    // clears Google's 1200px-wide preference for article images.
-    ...(article.data.image ? { image: [resizeUrl(article.data.image.url, 1280)] } : {}),
+    ...(jsonLdImage ? { image: [new URL(jsonLdImage.src, Astro.site).toString()] } : {}),
     // Organization, not Person. "Claude Henry" is a house byline, and this
     // is the one place the site made a typed, machine-readable claim that a
     // person by that name wrote the piece -- which contradicted llms.txt,
@@ -130,7 +142,7 @@ const jsonLd = [
     publishedTime: article.data.publishDate.toISOString(),
     source: article.data.sourceName,
   }}
-  image={article.data.image && resizeUrl(article.data.image.url, 1200)}
+  image={ogImage && new URL(ogImage.src, Astro.site).toString()}
   jsonLd={jsonLd}
 >
   <article class="story">

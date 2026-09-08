@@ -13,7 +13,7 @@ continentName: "Africa"
 monthLabel: "September 2026"
 totalTracked: 13
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Egyptian_Chess_Set_Benaki_1.jpg/1280px-Egyptian_Chess_Set_Benaki_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/september-s-african-chess-calendar-egypt-and-algeria-lead-a-grassroots-month.webp"
   credit: "Catlemur, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEgyptian_Chess_Set_Benaki_1.jpg"
 ---

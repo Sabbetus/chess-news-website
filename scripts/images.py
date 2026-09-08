@@ -12,13 +12,28 @@ fall back to the site's SVG placeholder thumbnail instead.
 """
 
 import html
+import io
 import re
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
+
+from PIL import Image
 
 from continents import CONTINENT_NAMES
+
+ROOT = Path(__file__).parent.parent
+# Co-located with the article content, not public/ -- this is what lets
+# each article's frontmatter reference its master photo as a relative path
+# ("./_images/<slug>.webp") through Astro's content-collection image()
+# schema helper (see src/content/config.ts), which resolves it into a real
+# typed image asset. That's what gives every on-site display size AND the
+# social-card crop (see BaseLayout/article page) to Astro's own build-time
+# Sharp pipeline, from this one committed file -- nothing else is generated
+# or stored.
+IMAGES_DIR = ROOT / "src" / "content" / "articles" / "_images"
 
 API_URL = "https://commons.wikimedia.org/w/api.php"
 USER_AGENT = "Chessori-ImagePicker/1.0 (https://chessori.com; contact: sabbe.the.technomage@gmail.com)"
@@ -438,3 +453,93 @@ def pick_image_for_item(
         if result:
             return result
     return None
+
+
+# The only local master ever stored -- every on-site display size (lead,
+# card) and the social-card crop are derived from this one file by Astro's
+# build-time image pipeline (see ArticleThumb.astro and the article page's
+# og:image generation), not generated or committed here. 1280px covers the
+# widest on-site use (960px lead slot) with real headroom for high-DPI
+# screens without shipping Wikimedia's often much larger originals.
+MASTER_MAX_WIDTH = 1280
+MASTER_QUALITY = 82
+
+
+def _fetch_bytes(url: str, retries: int) -> bytes:
+    global _last_request_time
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+
+    for attempt in range(retries + 1):
+        elapsed = time.monotonic() - _last_request_time
+        if elapsed < REQUEST_DELAY_SECONDS:
+            time.sleep(REQUEST_DELAY_SECONDS - elapsed)
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                _last_request_time = time.monotonic()
+                return response.read()
+        except urllib.error.HTTPError as exc:
+            _last_request_time = time.monotonic()
+            if exc.code == 429 and attempt < retries:
+                retry_after = exc.headers.get("Retry-After")
+                # Capped, not honored outright: a shared-IP throttle can
+                # advertise a Retry-After in the hundreds of seconds (seen
+                # in testing: 600), and waiting that out here would stall
+                # the whole batch on one photo. _download_bytes has a
+                # fallback endpoint for exactly this case -- better to fail
+                # this attempt quickly and let it try that than block.
+                delay = min(float(retry_after), 15.0) if retry_after and retry_after.isdigit() else 8.0
+                time.sleep(delay)
+                continue
+            raise
+
+
+_THUMB_FILENAME = re.compile(r"/(?:\d+px-)?([^/]+)$")
+
+
+def _download_bytes(url: str, retries: int = 3) -> bytes:
+    """Fetch raw bytes from Commons, sharing the same rate-limit pacing and
+    429/Retry-After handling as `_get` -- this hits the same Wikimedia
+    infrastructure as the search API, just for a file instead of JSON.
+
+    Falls back to commons.wikimedia.org/wiki/Special:FilePath/<filename> --
+    a different endpoint that in practice sits on a separate rate-limit
+    pool from direct upload.wikimedia.org fetches -- if the direct URL is
+    still failing once retries are exhausted, rather than losing the image
+    outright over what's often a transient, endpoint-specific throttle."""
+    try:
+        return _fetch_bytes(url, retries=1)
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
+        match = _THUMB_FILENAME.search(urllib.parse.urlparse(url).path)
+        if not match:
+            raise
+        filename = urllib.parse.quote(match.group(1))
+        fallback_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width={MASTER_MAX_WIDTH}"
+        return _fetch_bytes(fallback_url, retries)
+
+
+def localize_image(image: dict, slug: str) -> dict | None:
+    """Download the Commons photo `pick_image_for_item` chose, once, and
+    store a single compressed WebP master locally -- see IMAGES_DIR above
+    for why co-located with the content and why just one file. Returns a
+    frontmatter-ready dict (relative `src` path in place of the hotlinked
+    `url`, same `credit`/`sourceUrl`), or None if the download/decode fails.
+
+    Best-effort like the search step itself (see module docstring): a
+    transient fetch failure here is a missing image, not a failed draft --
+    matching how `search_image` already treats "nothing found" as normal
+    rather than an error."""
+    try:
+        raw = _download_bytes(image["url"])
+        photo = Image.open(io.BytesIO(raw)).convert("RGB")
+        if photo.width > MASTER_MAX_WIDTH:
+            new_height = round(photo.height * MASTER_MAX_WIDTH / photo.width)
+            photo = photo.resize((MASTER_MAX_WIDTH, new_height), Image.LANCZOS)
+        IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        photo.save(IMAGES_DIR / f"{slug}.webp", "WEBP", quality=MASTER_QUALITY)
+    except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
+        return None
+    return {
+        "src": f"./_images/{slug}.webp",
+        "credit": image["credit"],
+        "sourceUrl": image["sourceUrl"],
+    }

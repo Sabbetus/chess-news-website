@@ -9,7 +9,7 @@ selectionScore: 43
 reviewStatus: "published"
 socialCopy: "Carlsen and Nepomniachtchi meet again after their 2021 title clash, but this time the real GCL story is whether anyone can slow down the American Gambits."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg/1280px-Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/carlsen-and-nepomniachtchi-meet-again-this-time-with-nothing-like-a-world-title.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
 ---

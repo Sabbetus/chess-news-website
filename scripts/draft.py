@@ -28,7 +28,7 @@ from pathlib import Path
 import anthropic
 
 from continents import CONTINENT_SLUGS
-from images import pick_image_for_item
+from images import localize_image, pick_image_for_item
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -624,8 +624,14 @@ def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None 
         item, parsed["title"], parsed.get("imageSubjects", []), exclude_source_urls=used_image_source_urls()
     )
     if image:
-        frontmatter["image"] = image
+        # Mark the Commons source as used regardless of what localize_image
+        # does next -- a photo we already downloaded (even if the download
+        # then failed to decode/save) shouldn't be offered to the very next
+        # sibling article in this same run.
         _session_used_urls.add(image["sourceUrl"])
+        localized = localize_image(image, slug)
+        if localized:
+            frontmatter["image"] = localized
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():

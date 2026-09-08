@@ -9,7 +9,7 @@ selectionScore: 48
 reviewStatus: "published"
 socialCopy: "World #40 Mai Narva swept world #4 Zhu Jiner in BOTH rapid and blitz finals in Maputo, $14K and a Grand Final spot in tow. Estonia noticed. #chess"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Vaade_Narva_Joaoru_linnam%C3%A4elt_%28Narva_j%C3%B5gi_ja_raudteesild%29.jpg/1280px-Vaade_Narva_Joaoru_linnam%C3%A4elt_%28Narva_j%C3%B5gi_ja_raudteesild%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/how-an-estonian-im-s-double-upset-in-mozambique-became-a-national-story.webp"
   credit: "Minnekon, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVaade_Narva_Joaoru_linnam%C3%A4elt_%28Narva_j%C3%B5gi_ja_raudteesild%29.jpg"
 ---

@@ -8,7 +8,7 @@ continent: "global"
 selectionScore: 56
 reviewStatus: "published"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Wesley_So_Tata_2023_-_63.jpg/1280px-Wesley_So_Tata_2023_-_63.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/deekshithas-record-gain-shows-how-fast-the-fide-rating-list-can-move.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_Tata_2023_-_63.jpg"
 socialCopy: "An Indian teenager just posted the biggest rating gain since FIDE started reporting them. What the September list says about how fast a career can turn."

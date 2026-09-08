@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "So still leads, Sindarov keeps his GCT Finals hopes alive, and Tan Zhongyi survives a two-pawn deficit to stretch her Cairns Cup lead. Round 7 recap + why it matters. #chess"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Javokhir_Sindarov.jpg/1280px-Javokhir_Sindarov.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/sindarov-s-round-seven-win-echoes-his-candidates-surge-as-tan-survives-a-near-co.webp"
   credit: "MiroJP, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov.jpg"
 ---

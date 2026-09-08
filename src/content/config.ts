@@ -5,7 +5,7 @@ import { defineCollection, z } from 'astro:content';
 // instead of needing a new data model.
 const articles = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     publishDate: z.coerce.date(),
     // Set by hand when a published piece is substantively corrected, so
@@ -29,13 +29,18 @@ const articles = defineCollection({
     selectionScore: z.number(),
     reviewStatus: z.enum(['draft', 'approved', 'published']),
     socialCopy: z.string().optional(),
-    // A real photo/logo sourced from Wikimedia Commons (see scripts/images.py),
-    // used only when a license-clean, reasonably-relevant match was found --
-    // absent whenever it wasn't, in which case ArticleThumb falls back to its
-    // SVG placeholder.
+    // A real photo/logo sourced from Wikimedia Commons and downloaded once
+    // at draft time (see scripts/images.py), used only when a
+    // license-clean, reasonably-relevant match was found -- absent
+    // whenever it wasn't, in which case ArticleThumb falls back to its SVG
+    // placeholder. `src` is a relative path to the locally-stored master
+    // (./_images/<slug>.webp, a sibling of every article file) resolved by
+    // Astro's image() helper into a real typed asset -- every on-site
+    // display size and the social-card crop are generated from that one
+    // file by Astro's own build-time pipeline, nothing is hotlinked.
     image: z
       .object({
-        url: z.string().url(),
+        src: image(),
         credit: z.string(),
         sourceUrl: z.string().url(),
       })

@@ -9,7 +9,7 @@ selectionScore: 46
 reviewStatus: "published"
 socialCopy: "Jeffery Xiong just defended his Bullet Brawl title for $400. Small prize, big signal about how online chess actually pays its players. ♟️"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/JefferyXiong23a.jpg/1280px-JefferyXiong23a.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/what-a-400-first-prize-says-about-bullet-chess-s-economics.webp"
   credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJefferyXiong23a.jpg"
 ---

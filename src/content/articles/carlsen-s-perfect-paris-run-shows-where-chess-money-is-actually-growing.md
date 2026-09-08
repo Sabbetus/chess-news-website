@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "Magnus Carlsen won the Esports World Cup in Paris without losing a game and pocketed $250,000 doing it. What that payday says about where chess money is actually flowing. ♟️"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg/1280px-Magnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/carlsen-s-perfect-paris-run-shows-where-chess-money-is-actually-growing.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
 ---

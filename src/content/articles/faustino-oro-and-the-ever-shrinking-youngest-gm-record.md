@@ -8,7 +8,7 @@ continent: "south-america"
 selectionScore: 66
 reviewStatus: "published"
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/FaustinoOroTata2025_(cropped).jpg/1280px-FaustinoOroTata2025_(cropped).jpg"
+  src: "./_images/faustino-oro-and-the-ever-shrinking-youngest-gm-record.webp"
   credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:FaustinoOroTata2025_(cropped).jpg"
 socialCopy: "Faustino Oro is now the youngest active GM, but not the youngest ever. A look at how that record has kept shrinking since Karjakin in 2002."

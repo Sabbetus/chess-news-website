@@ -9,7 +9,7 @@ selectionScore: 48
 reviewStatus: "published"
 socialCopy: "Caruana beat Praggnanandhaa with the Italian Game, chess's oldest opening. Here's why the \"boring\" 1.e4 e5 line keeps resurfacing at elite level."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Fabiano_Caruana_in_2025.jpg/1280px-Fabiano_Caruana_in_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/caruana-s-italian-job-an-old-opening-finds-new-teeth-in-the-grand-chess-tour-fin.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_in_2025.jpg"
 ---

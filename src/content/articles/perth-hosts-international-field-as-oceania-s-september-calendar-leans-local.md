@@ -13,7 +13,7 @@ continentName: "Oceania"
 monthLabel: "September 2026"
 totalTracked: 14
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Hornsby_chess_002.jpg/1280px-Hornsby_chess_002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/perth-hosts-international-field-as-oceania-s-september-calendar-leans-local.webp"
   credit: "Sardaka, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHornsby_chess_002.jpg"
 ---

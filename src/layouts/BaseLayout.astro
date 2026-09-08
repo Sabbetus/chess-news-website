@@ -46,6 +46,14 @@ const BrandTag = activeContinent === 'front-page' ? 'h1' : 'p';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
+// Both the per-article crop (generated at exactly 1200x630 -- see the
+// article page's getImage() call) and this fallback (public/og-image.png,
+// also 1200x630) are the same fixed size, so width/height can be stated
+// unconditionally rather than measured per page. Meta's docs recommend
+// setting these explicitly: it lets Facebook/Threads' scraper skip a
+// fetch-and-guess round trip on first share. Type is inferred from the
+// extension since the two cases use different formats (jpg vs png).
+const ogImageType = ogImageURL.toString().endsWith('.png') ? 'image/png' : 'image/jpeg';
 
 const sections = [
   { id: 'front-page' as const, label: 'Front Page', href: '/' },
@@ -64,14 +72,6 @@ const sections = [
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
-
-    <!-- Every article photo is hotlinked from Wikimedia, so opening that
-         connection before it's needed (rather than only once the browser
-         reaches an img tag) shaves the DNS/TLS handshake off the path to
-         the LCP image. lib/wikimediaSrcset.ts normalises every image URL
-         onto this one host, so this hint now covers all of them rather
-         than the ~80% that happened to come back on thumb.wikimedia.org. -->
-    <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin />
 
     <!-- Without this, fonts are only discovered once the stylesheet has
          been fetched and parsed, adding them sequentially to the critical
@@ -127,6 +127,9 @@ const sections = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content={ogImageType} />
     {articleMeta && <meta property="article:published_time" content={articleMeta.publishedTime} />}
 
     <meta name="twitter:card" content="summary_large_image" />

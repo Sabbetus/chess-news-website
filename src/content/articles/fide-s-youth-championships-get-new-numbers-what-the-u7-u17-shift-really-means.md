@@ -9,7 +9,7 @@ selectionScore: 65
 reviewStatus: "published"
 socialCopy: "FIDE just renumbered its entire youth chess ladder, U8-U18 becomes U7-U17. Here's the decades of history behind the switch, and what's really changing ahead of Roquetas de Mar 2026."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg/1280px-Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/fide-s-youth-championships-get-new-numbers-what-the-u7-u17-shift-really-means.webp"
   credit: "ATM622, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg"
 ---

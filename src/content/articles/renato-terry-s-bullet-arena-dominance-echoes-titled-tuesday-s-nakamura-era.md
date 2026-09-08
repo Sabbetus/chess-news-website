@@ -9,7 +9,7 @@ selectionScore: 56
 reviewStatus: "published"
 socialCopy: "IM Renato Terry just hit 18 titles in Chess.com's 3+0 Thursday arena. How his bullet dominance compares to Nakamura's old Titled Tuesday reign."
 image:
-  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Hikaru_Nakamura_(2016)_crop.jpg/1280px-Hikaru_Nakamura_(2016)_crop.jpg"
+  src: "./_images/renato-terry-s-bullet-arena-dominance-echoes-titled-tuesday-s-nakamura-era.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Hikaru_Nakamura_(2016)_crop.jpg"
 ---

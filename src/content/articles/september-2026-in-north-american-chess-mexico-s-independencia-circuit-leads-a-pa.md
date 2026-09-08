@@ -13,7 +13,7 @@ continentName: "North America"
 monthLabel: "September 2026"
 totalTracked: 117
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Battle_field_with_chess_board.jpg/1280px-Battle_field_with_chess_board.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/september-2026-in-north-american-chess-mexico-s-independencia-circuit-leads-a-pa.webp"
   credit: "Carlos Valenzuela, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABattle_field_with_chess_board.jpg"
 ---

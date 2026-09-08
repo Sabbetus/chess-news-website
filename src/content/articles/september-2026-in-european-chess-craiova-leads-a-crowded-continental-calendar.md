@@ -13,7 +13,7 @@ continentName: "Europe"
 monthLabel: "September 2026"
 totalTracked: 392
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Chess_set_MET_146544.jpg/1280px-Chess_set_MET_146544.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/september-2026-in-european-chess-craiova-leads-a-crowded-continental-calendar.webp"
   credit: "Wikimedia Commons contributor, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_MET_146544.jpg"
 ---

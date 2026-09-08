@@ -9,7 +9,7 @@ selectionScore: 58
 reviewStatus: "published"
 socialCopy: "Magnus Carlsen is back in the Global Chess League... on a team that won it all without him. Meanwhile Sindarov is stealing day one in Bengaluru. #GCL2026"
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Magnus_Carlsen_-_Zagreb.jpg/1280px-Magnus_Carlsen_-_Zagreb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/carlsen-returns-but-gcl-day-one-belongs-to-sindarov.webp"
   credit: "Miroslav.vajdic, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_-_Zagreb.jpg"
 ---

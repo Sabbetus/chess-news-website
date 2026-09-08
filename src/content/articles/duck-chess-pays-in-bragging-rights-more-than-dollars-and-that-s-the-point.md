@@ -9,7 +9,7 @@ selectionScore: 40
 reviewStatus: "published"
 socialCopy: "Edward Khachatryan beat the reigning champ twice in one day to win the 2026 Duck Chess title, and the $750 purse tells you exactly what kind of event this is. Money angle inside."
 image:
-  url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Chess_game_Staunton_No._6_perfil_view_8.jpg/1280px-Chess_game_Staunton_No._6_perfil_view_8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  src: "./_images/duck-chess-pays-in-bragging-rights-more-than-dollars-and-that-s-the-point.webp"
   credit: "Wilfredor, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
 ---

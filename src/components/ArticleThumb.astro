@@ -1,12 +1,13 @@
 ---
+import { Image } from 'astro:assets';
 import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
-import { buildSrcset, resizeUrl } from '../lib/wikimediaSrcset';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   lens: Lens;
   size: 'lead' | 'card';
   seed?: number;
-  image?: { url: string; credit: string; sourceUrl: string };
+  image?: { src: ImageMetadata; credit: string; sourceUrl: string };
   alt?: string;
   href?: string;
 }
@@ -14,26 +15,19 @@ const { lens, size, seed = 0, image, alt = '', href } = Astro.props;
 const lensMeta = LENS_META[lens];
 const piece = pieceForLens(lens, seed);
 
-// images.py requests every Commons photo at a flat 1200px width regardless
-// of where it ends up displayed -- the lead image only ever renders around
-// ~680px CSS wide and grid cards well under that, so shipping the full
-// 1200px JPEG everywhere was the single largest PageSpeed cost on the
-// site. Build a real srcset from the already-stored URL (no re-fetch, no
-// pipeline change) so the browser picks a width close to what it actually
-// needs.
-//
-// The base `src` is resized too, not just the srcset -- some stored URLs
-// are the raw, un-resized Commons original rather than a thumbnail
-// (MediaWiki's API sometimes omits thumburl; observed on a file 1.17MB in
-// size), and browsers that ignore srcset/sizes would otherwise still fetch
-// that full original via src.
-const maxWidth = size === 'lead' ? 960 : 500;
-const src = image && resizeUrl(image.url, maxWidth);
-// Widths here must be ones Wikimedia's thumbnail service actually serves
-// for direct/hotlinked requests (resizeUrl/buildSrcset round up to the
-// nearest one) -- see lib/wikimediaSrcset.ts for the full list and why.
-const srcset = image && buildSrcset(image.url, [330, 500, 960]);
-const sizes = size === 'lead' ? '(max-width: 700px) 100vw, 680px' : '(max-width: 640px) 100vw, 45vw';
+// Fixed pixel dimensions matching each slot's CSS aspect-ratio exactly
+// (.thumb--lead: 1.5/1, .thumb--card: 4/3 -- see global.css) so Astro's
+// fit="cover" crop lands on the same box the CSS already draws, with no
+// mismatch between the requested crop and the rendered one. position=
+// "attention" asks Sharp's saliency detector to center the crop on
+// whatever's visually busiest in the source photo (a face, in the common
+// case) rather than a fixed top-bias -- most sourced photos are portrait
+// headshots cropped into a much wider slot, where a plain center crop
+// tends to land on the chest/hands instead of the face.
+const DIMS = {
+  lead: { width: 960, height: 640 },
+  card: { width: 500, height: 375 },
+}[size];
 
 // The lead image is always the single largest above-the-fold image on
 // whichever page it appears on (homepage lead story, or an article's own
@@ -56,11 +50,14 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
     href ? (
       <a href={href} class="thumb-link">
         {image && (
-          <img
+          <Image
             class="thumb-photo"
-            src={src}
-            srcset={srcset}
-            sizes={srcset ? sizes : undefined}
+            src={image.src}
+            width={DIMS.width}
+            height={DIMS.height}
+            fit="cover"
+            position="attention"
+            densities={[1, 1.5, 2]}
             alt={alt}
             loading={loading}
             fetchpriority={fetchpriority}
@@ -71,11 +68,14 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
     ) : (
       <>
         {image && (
-          <img
+          <Image
             class="thumb-photo"
-            src={src}
-            srcset={srcset}
-            sizes={srcset ? sizes : undefined}
+            src={image.src}
+            width={DIMS.width}
+            height={DIMS.height}
+            fit="cover"
+            position="attention"
+            densities={[1, 1.5, 2]}
             alt={alt}
             loading={loading}
             fetchpriority={fetchpriority}
