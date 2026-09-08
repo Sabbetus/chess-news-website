@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import { excerptFrom } from '../../lib/excerpt';
+import { estimateReadMinutes } from '../../lib/reading';
 import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../../lib/continent';
 
 export async function getStaticPaths() {
@@ -60,6 +61,8 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
               <span class="src">Source: {a.data.sourceName}</span>
+              <span class="dot">&bull;</span>
+              <span>{estimateReadMinutes(a.body)} min read</span>
               <span class="dot">&bull;</span>
               <span>{dateFmt(a.data.publishDate)}</span>
             </div>

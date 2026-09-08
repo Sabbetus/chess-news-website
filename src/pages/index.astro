@@ -114,6 +114,8 @@ const jsonLd = [
             <div class="byline">
               <span class="src">Source: {a.data.sourceName}</span>
               <span class="dot">&bull;</span>
+              <span>{estimateReadMinutes(a.body)} min read</span>
+              <span class="dot">&bull;</span>
               <span>{dateFmt(a.data.publishDate)}</span>
             </div>
           </article>
