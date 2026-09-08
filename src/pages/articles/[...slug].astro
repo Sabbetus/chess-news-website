@@ -278,7 +278,10 @@ const jsonLd = [
   }
   .correction-note {
     display: inline-block;
-    margin-top: 10px;
+    /* Matches .byline-credit's margin-bottom below -- these two, plus the
+       plain source-link line between them, read as three stacked rows of
+       one meta block, and the gaps between all three should be equal. */
+    margin-top: 8px;
   }
   .source-callout a.correction-link {
     color: var(--ink-soft);
@@ -286,7 +289,7 @@ const jsonLd = [
   }
   .byline-credit {
     display: inline-block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .similar {
