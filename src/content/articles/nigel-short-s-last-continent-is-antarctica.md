@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/polar-chess-expedition-brings-the-first-fide-ra
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 53
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Nigel Short won on six continents. Antarctica was the missing one, until now. Six players, one FIDE-rated tournament, the South Pole as the finish line. ♟️"
 image:
   url: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Nigel_Short_%282018%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
