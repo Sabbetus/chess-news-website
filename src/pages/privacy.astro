@@ -3,10 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Describes what the site actually does today, not a generic template --
 // every third party named below was confirmed against the built output.
-// Two of them are easy to miss: article photos are hotlinked from
-// Wikimedia (so a visitor's IP reaches Wikimedia on any page showing a
-// photo, without them clicking anything), and the fonts are self-hosted,
-// so there is deliberately no Google Fonts entry here.
+// Article photos are downloaded once at draft time and served from this
+// site, not hotlinked -- a visitor's browser only reaches Wikimedia if
+// they click a photo's credit link through to its Commons page, not on
+// every page load. The fonts are self-hosted too, so there is
+// deliberately no Google Fonts entry here.
 //
 // Keep this in sync when the analytics setup changes. The page states
 // plainly what analytics collects and offers a working switch to stop it,
@@ -14,7 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // or cite the rules it's measured against -- a privacy policy is a
 // disclosure of what happens, not a self-assessment. Adding a consent
 // gate later is a content change here, not just a code one.
-const LAST_UPDATED = '7 September 2026';
+const LAST_UPDATED = '8 September 2026';
 ---
 
 <BaseLayout
@@ -65,9 +66,11 @@ const LAST_UPDATED = '7 September 2026';
 
     <h3>Article photos</h3>
     <p>
-      Photos are not stored on this site. They're loaded directly from Wikimedia Commons, which means your browser
-      requests them from Wikimedia and your IP address and browser type reach Wikimedia's servers on any page showing
-      a photo &mdash; without you clicking anything. Wikimedia's handling is covered by the
+      Photos used in articles are sourced from Wikimedia Commons, but a copy is downloaded once when the article is
+      written and served from this site from then on &mdash; your browser doesn't request anything from Wikimedia
+      just by reading an article. The only time it does is if you click a photo's small credit link through to its
+      original Commons page, which is a normal off-site link like any other in an article. Wikimedia's handling of
+      that click is covered by the
       <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" target="_blank" rel="noopener"
         >Wikimedia Foundation privacy policy</a
       >.
@@ -104,6 +107,7 @@ const LAST_UPDATED = '7 September 2026';
       <li>No advertising or advertising trackers.</li>
       <li>No social media pixels or embedded trackers.</li>
       <li>No fonts loaded from third parties &mdash; they're served from this site, so nothing is sent to a font provider.</li>
+      <li>No automatic connection to Wikimedia &mdash; article photos are downloaded once and served from this site, not hotlinked.</li>
       <li>No payment data of any kind.</li>
     </ul>
 
