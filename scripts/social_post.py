@@ -7,7 +7,9 @@ Run on a schedule (see .github/workflows/social.yml). Each run:
      up newly merged articles automatically, with no separate "enqueue on
      merge" step needed.
   2. Posts the oldest POSTS_PER_RUN still-unposted entries to Facebook and
-     Threads together (same article, same run), title + link only.
+     Threads together (same article, same run) -- each article's socialCopy
+     frontmatter (a hook written for sharing, distinct from its page title)
+     plus the article link.
   3. Marks each as posted (with a timestamp) and writes the queue back.
 
 Oldest-first, not newest-first: new articles just join the back of the
@@ -55,9 +57,20 @@ def load_published_articles() -> list[dict]:
             continue
         title = _frontmatter_field(text, "title")
         publish_date = _frontmatter_field(text, "publishDate")
+        social_copy = _frontmatter_field(text, "socialCopy")
         if not title or not publish_date:
             continue
-        articles.append({"slug": path.stem, "title": title, "publishDate": publish_date})
+        articles.append(
+            {
+                "slug": path.stem,
+                "title": title,
+                # socialCopy is written as a hook for sharing (tension, a
+                # concrete detail, sometimes a hashtag) -- falls back to
+                # the article title only if a draft is missing the field.
+                "socialCopy": social_copy or title,
+                "publishDate": publish_date,
+            }
+        )
     return articles
 
 
@@ -77,6 +90,7 @@ def sync_queue(queue: list[dict], articles: list[dict]) -> list[dict]:
         {
             "slug": a["slug"],
             "title": a["title"],
+            "socialCopy": a["socialCopy"],
             "publishDate": a["publishDate"],
             "postedFacebookAt": None,
             "postedThreadsAt": None,
@@ -154,14 +168,14 @@ def main() -> None:
 
     for entry in to_post:
         link = f"{SITE_URL}/articles/{entry['slug']}/"
-        message = f"{entry['title']}\n\n{link}"
+        message = f"{entry['socialCopy']}\n\n{link}"
         print(f"Posting: {entry['title']}")
 
         # Each platform is tracked independently so a failure on one
         # doesn't cause the next run to re-post to the other.
         if entry["postedFacebookAt"] is None:
             try:
-                post_to_facebook(entry["title"], link)
+                post_to_facebook(entry["socialCopy"], link)
                 entry["postedFacebookAt"] = now
             except urllib.error.HTTPError as exc:
                 print(f"  Facebook post failed: {exc.code} {exc.read().decode()}", file=sys.stderr)
