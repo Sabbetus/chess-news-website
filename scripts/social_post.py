@@ -21,6 +21,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -97,6 +98,26 @@ def post_to_facebook(message: str, link: str) -> None:
         response.read()
 
 
+def _wait_for_threads_container(creation_id: str, token: str) -> None:
+    """Threads processes a media container asynchronously after creation --
+    publishing before it reaches FINISHED fails with a "Media Not Found"
+    error, even though the create call already returned an id. Poll status
+    with a short backoff instead of publishing immediately."""
+    status_url = (
+        f"https://graph.threads.net/{THREADS_API_VERSION}/{creation_id}"
+        f"?fields=status,error_message&access_token={token}"
+    )
+    for attempt in range(10):
+        with urllib.request.urlopen(status_url) as response:
+            status = json.loads(response.read())
+        if status.get("status") == "FINISHED":
+            return
+        if status.get("status") == "ERROR":
+            raise RuntimeError(f"Threads container failed to process: {status}")
+        time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"Threads container {creation_id} did not finish processing in time")
+
+
 def post_to_threads(text: str) -> None:
     user_id = os.environ["THREADS_USER_ID"]
     token = os.environ["THREADS_ACCESS_TOKEN"]
@@ -108,6 +129,8 @@ def post_to_threads(text: str) -> None:
     create_request = urllib.request.Request(f"{base}/threads", data=create_data, method="POST")
     with urllib.request.urlopen(create_request) as response:
         creation_id = json.loads(response.read())["id"]
+
+    _wait_for_threads_container(creation_id, token)
 
     publish_data = urllib.parse.urlencode(
         {"creation_id": creation_id, "access_token": token}
@@ -149,6 +172,8 @@ def main() -> None:
                 entry["postedThreadsAt"] = now
             except urllib.error.HTTPError as exc:
                 print(f"  Threads post failed: {exc.code} {exc.read().decode()}", file=sys.stderr)
+            except RuntimeError as exc:
+                print(f"  Threads post failed: {exc}", file=sys.stderr)
 
     save_queue(queue)
 
