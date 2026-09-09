@@ -1,0 +1,46 @@
+name: Post to social media
+
+on:
+  # 4x/day, staggered through the day so a batch of published articles
+  # doesn't all land on Facebook/Threads at once. Times are UTC.
+  schedule:
+    - cron: '0 8 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 16 * * *'
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+
+      - name: Post pending articles
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python scripts/social_post.py
+
+      - name: Commit updated queue
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/social-queue.json; then
+            echo "No queue changes."
+            exit 0
+          fi
+          git add data/social-queue.json
+          git commit -m "chore: social posting queue update"
+          git push
