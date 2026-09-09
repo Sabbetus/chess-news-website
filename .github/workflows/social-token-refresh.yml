@@ -1,0 +1,26 @@
+name: Refresh Threads access token
+
+on:
+  # Threads long-lived tokens last 60 days; refreshing monthly leaves a
+  # wide safety margin even if a run or two gets missed.
+  schedule:
+    - cron: '0 5 1 * *'
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+
+      - name: Refresh token and update secret
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.SECRETS_ADMIN_TOKEN }}
+        run: python scripts/refresh_threads_token.py
