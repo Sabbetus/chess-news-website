@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- data/social-queue.json; then
+          if git diff --quiet -- data/social-queue.json && [ -z "$(git status --porcelain -- data/social-queue.json)" ]; then
             echo "No queue changes."
             exit 0
           fi
