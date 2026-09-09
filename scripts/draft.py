@@ -342,9 +342,15 @@ article":
 - Linking to a (retrospective): past tense, it already happened, e.g. "how \
 [the same tournaments actually turned out](/articles/slug/)".
 - Linking to a (preview): future tense, nothing has happened yet, e.g. "a \
-first look at [what's coming up next month](/articles/slug/)". Never use \
-turned-out/already-happened phrasing for one of these -- the tournaments it \
-covers haven't been played yet.
+first look at [what's coming up this month](/articles/slug/)" -- THIS month, \
+not next: the preview was published the month before, when the month it \
+covers genuinely was "next month," but a retrospective always publishes \
+during the very month the paired preview covers, so by the time a reader \
+sees this link that month is the current one, not the next one (caught \
+live: a retrospective published Sept. 9 said "next month" about a preview \
+that was already covering September). Never use turned-out/already-happened \
+phrasing for one of these -- the tournaments it covers haven't been played \
+yet.
 One link only, and none at all if the list is empty. This is separate from, \
 and additional to, the tournament links required above.
 
