@@ -18,7 +18,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_for_Peace.jpg"
 ---
 
-South Africa supplied most of the biggest fields on the African chess calendar in August 2026, though the single largest turnout came from a women's championship on the Western Cape coast. Of the 177 tournaments tracked across the continent this month, only a portion reported player counts, and this ranking covers those.
+South Africa supplied most of the biggest fields on the African chess calendar in August 2026, though the single largest turnout came from a women's championship on the Western Cape coast.
 
 The [Western Cape Women's Championship 2026](https://chesstournamentcalendar.com/tournament/western-cape-womens-championship-2026-1468738/) topped the list with 206 players over classical time control at Club Mykonos in Langebaan, running August 8 to 11. It was the only tournament in the data to clear 200 entrants.
 
@@ -34,4 +34,4 @@ Morocco's contribution to the month centered on Agadir, where the [Classique des
 
 Kenya's [KICC Rapids & Blitz 3rd Edition](https://chesstournamentcalendar.com/tournament/kicc-rapids-blitz-3rd-edition-1346962/) in Nairobi matched the Moroccan classical event with 107 players on August 7. Mauritius chipped in with the [Gymkhana Rapid Championship 2026](https://chesstournamentcalendar.com/tournament/gymkhana-rapid-championship-2026-1468721/) in Vacoas, drawing 96, while Nigeria's [3rd South-East Zonal Chess Championship](https://chesstournamentcalendar.com/tournament/3rd-south-east-zonal-chess-championship-1472838/) in Onitsha ran four days and gathered 72.
 
-None of the tournaments in this month's data listed a prize pool, currency, or rating requirement, so no format-based cut existed among the top entries. For a look at how the previous month's African fields actually played out, see [how the same tournaments actually turned out](/articles/september-s-african-chess-calendar-egypt-and-algeria-lead-a-grassroots-month/).
+Nigeria's zonal championship closes out the ranked list, though a handful of smaller fields across the continent finished close behind it. For [a first look at what's coming up next month](/articles/september-s-african-chess-calendar-egypt-and-algeria-lead-a-grassroots-month/), Chessori's September preview is already up.

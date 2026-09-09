@@ -100,12 +100,11 @@ AGGREGATE_INSTRUCTIONS = {
         "-- do not invent details not present in the data. Every tournament you "
         "mention by name MUST be a Markdown link using its \"url\" field from "
         "the data -- link the tournament's own name text, not generic text like "
-        "\"here\". Note that this ranking is limited to tournaments with a "
-        "known player count in the data; if the total tracked count is "
-        "meaningfully higher than the number ranked, say so plainly rather than "
-        "implying the list is exhaustive (e.g. some countries, like the US, "
-        "don't reliably report player counts to these sources, so they may be "
-        "under-represented here even if they hosted plenty of tournaments)."
+        "\"here\". Whether to caveat the gap between the total tracked count "
+        "and the number actually ranked is entirely covered by the data-gap "
+        "guidance below -- don't add your own version of that caveat on top of "
+        "it, and don't reach for one at all on a continent that guidance says "
+        "not to."
     ),
     "calendar-comingup": (
         "Write an original preview piece highlighting notable tournaments "
@@ -319,18 +318,35 @@ rather than guess.
 
 {aggregate_data_gap_note(continent_code)}
 
+Don't manufacture a caveat about fields the data happens not to have for any \
+given tournament -- prize pool, currency, or rating requirement in particular. \
+Mention one of these when a tournament in the data actually has it (a real, \
+concrete detail worth reporting), but its absence is not itself a finding: \
+never write a sentence like "none of the tournaments listed a prize pool, so \
+no format-based cut existed" -- that both invents a narrative frame nobody \
+asked for and, like the player-count case above, misattributes an ordinary \
+gap in what this data covers to the tournaments themselves.
+
 {STYLE_GUIDE}
 
 LINKING TO THE COMPANION PIECE. Where the user turn lists earlier Chessori \
 calendar pieces for this same continent, link the most recent one exactly once, \
-using the "/articles/<slug>/" path exactly as given. These pieces come in pairs \
--- a retrospective on the month just gone and a preview of the month ahead -- so \
-the other one is genuinely the next thing a reader of this piece would want. Put \
-it wherever you naturally refer to the neighbouring month, and make the anchor a \
-noun phrase describing what that piece covers ("how [the same tournaments \
-actually turned out](/articles/slug/)"), never "read more" or "our previous \
-article". One link only, and none at all if the list is empty. This is separate \
-from, and additional to, the tournament links required above.
+using the "/articles/<slug>/" path exactly as given. Each is labelled \
+(retrospective) or (preview) -- these pieces come in pairs, one of each per \
+continent per month, so the other one is genuinely the next thing a reader of \
+this piece would want, and its label tells you which direction to phrase the \
+anchor in. Put the link wherever you naturally refer to the neighbouring \
+month, and make the anchor a noun phrase describing what that piece covers, \
+matching its own tense to its label -- never "read more" or "our previous \
+article":
+- Linking to a (retrospective): past tense, it already happened, e.g. "how \
+[the same tournaments actually turned out](/articles/slug/)".
+- Linking to a (preview): future tense, nothing has happened yet, e.g. "a \
+first look at [what's coming up next month](/articles/slug/)". Never use \
+turned-out/already-happened phrasing for one of these -- the tournaments it \
+covers haven't been played yet.
+One link only, and none at all if the list is empty. This is separate from, \
+and additional to, the tournament links required above.
 
 Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
 exact keys:
@@ -370,6 +386,7 @@ def published_articles(exclude_slug: str | None = None) -> list[dict]:
             continue
         continent = re.search(r'^continent:\s*"?([a-z-]+)"?\s*$', text, re.M)
         lens = re.search(r'^lens:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        aggregate_kind = re.search(r'^aggregateKind:\s*"?([a-z-]+)"?\s*$', text, re.M)
         entries.append(
             {
                 "slug": path.stem,
@@ -377,6 +394,7 @@ def published_articles(exclude_slug: str | None = None) -> list[dict]:
                 "date": date.group(1),
                 "continent": continent.group(1) if continent else "",
                 "lens": lens.group(1) if lens else "",
+                "aggregateKind": aggregate_kind.group(1) if aggregate_kind else "",
             }
         )
 
@@ -429,7 +447,8 @@ def build_user_prompt(item: dict) -> str:
                 "instructions:"
             )
             for entry in companions:
-                parts.append(f"- \"{entry['title']}\" ({entry['date']}) -> /articles/{entry['slug']}/")
+                kind_label = "preview" if entry["aggregateKind"] == "calendar-comingup" else "retrospective"
+                parts.append(f"- \"{entry['title']}\" ({entry['date']}, {kind_label}) -> /articles/{entry['slug']}/")
         return "\n".join(parts)
 
     parts = [
