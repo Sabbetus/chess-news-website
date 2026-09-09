@@ -1,1 +1,1 @@
-Drafted 2 of 2 selected item(s).
+Drafted 3 of 3 selected item(s).
