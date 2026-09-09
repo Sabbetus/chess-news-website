@@ -686,7 +686,7 @@ def draft_one(
         # then failed to decode/save) shouldn't be offered to the very next
         # sibling article in this same run.
         _session_used_urls.add(image["sourceUrl"])
-        localized = localize_image(image, slug)
+        localized = localize_image(image)
         if localized:
             frontmatter["image"] = localized
 

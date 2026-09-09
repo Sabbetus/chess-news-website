@@ -549,18 +549,50 @@ def _download_bytes(url: str, retries: int = 3) -> bytes:
         return _fetch_bytes(fallback_url, retries)
 
 
-def localize_image(image: dict, slug: str) -> dict | None:
+_COMMONS_FILE_TITLE = re.compile(r"/([^/]+)$")
+
+
+def _commons_file_stem(source_url: str) -> str:
+    """A stable, filesystem-safe identifier for a Commons file, derived
+    from its wiki page URL ("File:Name.jpg") rather than the article
+    slug -- used as the stored filename so the same photo picked for two
+    different articles (a recurring figure like Carlsen, easily picked
+    again months apart, once the reuse cooldown has passed) resolves to
+    one shared file on disk instead of a duplicate copy per article, and
+    skips the download and re-encode entirely on the second pick. Two
+    distinct Commons files can never collide here: this is the same
+    "File:Title.ext" name Commons itself already guarantees is unique."""
+    match = _COMMONS_FILE_TITLE.search(urllib.parse.unquote(urllib.parse.urlparse(source_url).path))
+    title = re.sub(r"^File:", "", match.group(1)) if match else source_url
+    title = re.sub(r"\.[A-Za-z0-9]+$", "", title)  # drop the original extension; we control the stored one
+    return re.sub(r"[^A-Za-z0-9_-]+", "_", title).strip("_") or "image"
+
+
+def localize_image(image: dict) -> dict | None:
     """Download the Commons photo `pick_image_for_item` chose, once, and
     store a single compressed master locally -- see IMAGES_DIR above for
     why co-located with the content and why just one file. Returns a
     frontmatter-ready dict (relative `src` path in place of the hotlinked
     `url`, same `credit`/`sourceUrl`), or None if the download/decode fails.
 
+    Reuses an already-stored file for the same Commons source without any
+    network call at all when one exists (see _commons_file_stem) -- pure
+    storage/bandwidth win on top of the localization itself, and it only
+    grows as the same well-known players and organizations recur.
+
     Best-effort like the search step itself (see module docstring): a
     transient fetch failure here is a missing image, not a failed draft --
     matching how `search_image` already treats "nothing found" as normal
     rather than an error."""
     is_svg = urllib.parse.urlparse(image["url"]).path.lower().endswith(".svg")
+    stem = _commons_file_stem(image["sourceUrl"])
+    filename = f"{stem}.svg" if is_svg else f"{stem}.webp"
+    if (IMAGES_DIR / filename).exists():
+        return {
+            "src": f"./_images/{filename}",
+            "credit": image["credit"],
+            "sourceUrl": image["sourceUrl"],
+        }
     try:
         raw = _download_bytes(image["url"])
         IMAGES_DIR.mkdir(parents=True, exist_ok=True)
@@ -571,10 +603,8 @@ def localize_image(image: dict, slug: str) -> dict | None:
             # vector file as-is; Astro's own image() pipeline (Sharp) can
             # rasterize an SVG source into whatever raster crop/size a
             # given slot needs, same as it does for real photos.
-            filename = f"{slug}.svg"
             (IMAGES_DIR / filename).write_bytes(raw)
         else:
-            filename = f"{slug}.webp"
             photo = Image.open(io.BytesIO(raw)).convert("RGB")
             if photo.width > MASTER_MAX_WIDTH:
                 new_height = round(photo.height * MASTER_MAX_WIDTH / photo.width)
