@@ -6,11 +6,11 @@ sourceUrl: "https://www.fide.com/gcl-2026-day-4-fyers-american-gambits-go-on-top
 lens: "drama"
 continent: "asia"
 selectionScore: 51
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "One illegal queen promotion, one second on the clock, and a match swung entirely. Inside GCL Day 4's wildest finish and the shake-up atop the standings."
 image:
   src: "./_images/a-second-s-difference-gcl-s-prodigy-board-controversy.webp"
-  credit: "This photo was taken by Eldar Azimov.Foto Eldar Əzimov tərəfindən çəkilib.Mention the author's name, when using an image:Eldar Azimov / Wikimedia Commons, CC BY-SA 4.0, via Wikimedia Commons"
+  credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIan_Nepomniachtchi_at_the_Candidates_Tournament_2024_02.jpg"
 ---
 
