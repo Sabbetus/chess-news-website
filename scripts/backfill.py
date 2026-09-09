@@ -308,9 +308,11 @@ def main() -> None:
     written = []
     for d, item in plan:
         try:
-            path = draft_one(client, item, publish_date=d.isoformat())
+            path, offenders = draft_one(client, item, publish_date=d.isoformat())
             written.append(path)
             print(f"Drafted: {path.relative_to(ROOT)}")
+            if offenders:
+                print(f"  NOTE: {len(offenders)} paragraph(s) over the style-guide word ceiling", file=sys.stderr)
             if item["kind"] in {"calendar-biggest", "calendar-comingup"}:
                 seen.add(ingest.dedupe_key(item))
         except Exception as exc:  # noqa: BLE001 -- one bad draft shouldn't kill the run

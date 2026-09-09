@@ -189,19 +189,25 @@ default to three-item lists.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
 - Keep paragraphs short: 2-4 sentences each, one idea per paragraph, hard cap at 4 \
 sentences with no exceptions, AND a target of roughly 60 words per paragraph \
-(70 as a hard ceiling). The sentence cap alone isn't enough -- a paragraph that \
-stays at 3-4 sentences by fusing everything into long, comma-stacked, clause-\
-heavy sentences is exactly what this rule is meant to prevent, and it will still \
-read as too dense. If a paragraph is closing in on 60 words, that's the signal \
-to cut a clause, split a sentence, or push a detail to its own paragraph -- not \
-to keep going because the sentence count still has room. Break up any paragraph \
-that's running long rather than letting it stretch past either limit. This is a \
-paragraph-length rule, not an article-length one -- add more short paragraphs to \
-fit everything in, don't cut content to keep the piece itself short. When a \
-paragraph is already near either limit and you have another fact to add to it \
-(a format detail, a prize tier, a piece of context), that is the signal to start \
-a new paragraph, not to extend the current one -- never grow a paragraph past \
-the caps by appending a clause or another sentence onto the end of it.
+(70 as a hard ceiling). Tracking a running word count while you write is not \
+reliable -- don't try. Use this concrete rule instead, checked sentence by \
+sentence as you write it, not after the fact: the moment a sentence names a \
+SECOND person's individual result, a second direct quote, or a second distinct \
+outcome, joined by "and," a comma, or a semicolon, stop -- that fact starts a \
+new sentence, and if the paragraph is already at 3-4 sentences, a new paragraph. \
+"X beat Y in N moves, A beat B, and C also won" is three facts stapled into one \
+sentence with commas; it must be two or three sentences, and likely two \
+paragraphs, not one. This is the actual, observed failure mode: a paragraph \
+that stays at 3-4 sentences by fusing several separate results or quotes \
+together with commas reads as dense and cluttered no matter how short the \
+sentence count makes it look, and it still blows past the word ceiling even \
+though nothing here "counted" as too many sentences. This is a paragraph-length \
+rule, not an article-length one -- add more short paragraphs to fit everything \
+in, don't cut content to keep the piece itself short. When you have another \
+fact to add to a paragraph that already has 2+ sentences (a format detail, a \
+prize tier, a second player's result, a piece of context), that is the signal \
+to start a new paragraph, not to fold it into the current sentence with "and" \
+or a comma.
 - Vary how the piece ENDS. The default failure mode here is closing every \
 article by zooming out to a summarising pronouncement about what it all means \
 ("...and that's exactly the point", "...says something about where chess is \
@@ -567,7 +573,33 @@ def used_image_source_urls() -> set[str]:
     return recent_on_disk | _session_used_urls
 
 
-def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None = None) -> Path:
+# Matches the "70 as a hard ceiling" language in STYLE_GUIDE. A separate
+# constant rather than parsing it back out of that prose: measured against
+# real published output, paragraph-length compliance turned out to depend on
+# the model reliably self-tracking a running word count while generating
+# linearly, which it does not do well (the same class of limitation as
+# asking for an exact word or letter count) -- verifying it after the fact
+# and surfacing violations to the human reviewer is the actual backstop,
+# not a substitute for the prompt wording but a check on whether it worked.
+PARAGRAPH_WORD_CEILING = 70
+
+
+def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
+    """(paragraph number, word count) for every paragraph over the style
+    guide's hard ceiling -- heading lines are skipped since they're not
+    prose paragraphs and aren't subject to the rule. Best-effort like image
+    sourcing: this never blocks or fails a draft, only flags it for review."""
+    paragraphs = [p.strip() for p in body_markdown.split("\n\n") if p.strip() and not p.strip().startswith("#")]
+    return [
+        (i, word_count)
+        for i, para in enumerate(paragraphs, 1)
+        if (word_count := len(para.split())) > PARAGRAPH_WORD_CEILING
+    ]
+
+
+def draft_one(
+    client: anthropic.Anthropic, item: dict, publish_date: str | None = None
+) -> tuple[Path, list[tuple[int, int]]]:
     is_aggregate = item["kind"] in CALENDAR_KINDS
     system_prompt = build_aggregate_system_prompt(item["continentCode"]) if is_aggregate else NEWS_SYSTEM_PROMPT
     user_prompt = build_user_prompt(item)
@@ -673,7 +705,7 @@ def draft_one(client: anthropic.Anthropic, item: dict, publish_date: str | None 
     fm_lines.append("---")
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + parsed["bodyMarkdown"].strip() + "\n")
-    return out_path
+    return out_path, check_paragraph_lengths(parsed["bodyMarkdown"])
 
 
 # The SDK already retries 408/409/429 and every 5xx (so 529 overloaded is
@@ -691,12 +723,22 @@ BATCH_MAX_RETRIES = 5
 RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
 
 
-def write_run_report(written: list, failed: list, selected_count: int) -> None:
+def write_run_report(written: list, failed: list, selected_count: int, long_paragraphs: list) -> None:
     lines = [f"Drafted {len(written)} of {selected_count} selected item(s)."]
     if failed:
         lines += ["", f"**{len(failed)} failed and are not in this PR:**", ""]
         lines += [f"- {title} — `{error}`" for title, error in failed]
         lines += ["", "Re-run the workflow to retry them, or draft them by hand."]
+    if long_paragraphs:
+        # The style guide's paragraph-length rule depends on the model
+        # tracking its own running word count while writing, which isn't
+        # reliable -- this is the actual backstop, not just a restatement
+        # of the prompt rule, so it's worth a reviewer's attention even
+        # though it never blocks the draft itself.
+        lines += ["", f"**{len(long_paragraphs)} article(s) have a paragraph over the {PARAGRAPH_WORD_CEILING}-word style-guide ceiling:**", ""]
+        for path, offenders in long_paragraphs:
+            spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
+            lines.append(f"- {path.stem} — paragraph {spots}")
     RUN_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     RUN_REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -713,17 +755,20 @@ def main() -> None:
 
     client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
 
-    written, failed = [], []
+    written, failed, long_paragraphs = [], [], []
     for item in selected:
         try:
-            path = draft_one(client, item)
+            path, offenders = draft_one(client, item)
             written.append(path)
             print(f"Drafted: {path.relative_to(ROOT)}")
+            if offenders:
+                long_paragraphs.append((path, offenders))
+                print(f"  NOTE: {len(offenders)} paragraph(s) over {PARAGRAPH_WORD_CEILING} words", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001 -- one bad draft shouldn't kill the run
             failed.append((item["title"], f"{type(exc).__name__}: {exc}"))
             print(f"FAILED to draft '{item['title']}': {exc}", file=sys.stderr)
 
-    write_run_report(written, failed, len(selected))
+    write_run_report(written, failed, len(selected), long_paragraphs)
     print(f"Wrote {len(written)}/{len(selected)} draft(s).")
 
 
