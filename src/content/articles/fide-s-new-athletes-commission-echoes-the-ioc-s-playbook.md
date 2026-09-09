@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fide-announces-call-for-candidates-for-athletes
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE wants players to help run FIDE. The new Athletes Commission mirrors a decades-old IOC model, but does it have real teeth yet? Nominations open now."
 image:
   src: "./_images/fide-s-new-athletes-commission-echoes-the-ioc-s-playbook.webp"

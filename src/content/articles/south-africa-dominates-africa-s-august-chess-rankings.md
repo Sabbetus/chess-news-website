@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "August in African chess: a 206-player women's championship in Langebaan tops the month, with Egypt, Tunisia, Morocco, Kenya and Nigeria all fielding sizeable events. Full ranking inside."
 aggregateKind: "calendar-biggest"
 continentName: "Africa"

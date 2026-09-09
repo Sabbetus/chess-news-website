@@ -87,6 +87,31 @@ def _strip_html(text: str) -> str:
     return html.unescape(text).strip()
 
 
+_BOLD_TAG = re.compile(r"<b>(.*?)</b>", re.DOTALL)
+
+
+def _extract_artist_name(raw: str) -> str:
+    """Some Commons uploaders use a full "photographer credit" template for
+    the Artist field instead of a plain name -- a table/paragraph with
+    instructional text repeated in multiple languages, e.g. "This photo was
+    taken by <b>Name</b>.<br>Foto <b>Name</b> ... çəkilib.<br>Mention the
+    author's name ...: <b>Name</b>". `_strip_html` alone turns that into one
+    long run-on sentence with the name repeated 2-3 times and translator/
+    instruction text mixed in -- a real credit shown on real articles this
+    way (caught live: an Azerbaijani/English credit-line template).
+
+    The name is reliably wrapped in <b> in these templates, so prefer the
+    first bolded span when the field looks like this template rather than a
+    plain name: either multiple identical <b> spans, or a stripped length
+    long enough that it's prose, not a name. A plain name (with or without
+    HTML) is always shorter than that and passes through unchanged."""
+    bold_matches = _BOLD_TAG.findall(raw or "")
+    stripped = _strip_html(raw)
+    if bold_matches and (len(bold_matches) > 1 or len(stripped) > 60):
+        return _strip_html(bold_matches[0]) or stripped
+    return stripped
+
+
 _DATE_PATTERN = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 
 
@@ -303,7 +328,7 @@ def _fetch_first_licensed_file(
         if exclude_source_urls and page_url in exclude_source_urls:
             continue
 
-        artist = _strip_html(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
+        artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
         url = info.get("thumburl") or info.get("url")
         date = _photo_date(meta)
 
