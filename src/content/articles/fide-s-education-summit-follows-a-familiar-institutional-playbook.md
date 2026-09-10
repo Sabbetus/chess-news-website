@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/every-lesson-counts-fide-summit-on-chess-in-edu
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 47
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE is turning the 2026 Olympiad congress into a full education summit in Samarkand. Same instinct that built the Athletes Commission, now aimed at classrooms. ♟️"
 image:
   src: "./_images/FIDE_text_on_white.webp"
