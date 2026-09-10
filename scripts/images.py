@@ -284,6 +284,19 @@ def _fetch_first_licensed_file(
     if not titles:
         return None
 
+    # Normalize once: articles written at different times (or by different
+    # code versions) can have their image sourceUrl percent-encoded
+    # differently -- e.g. "File:Name.jpg" vs "File%3AName.jpg", the exact
+    # same Commons page as two different strings. Comparing raw strings let
+    # a photo already used in another recent article slip past the
+    # exclusion check and get picked again (caught live: the same Carlsen
+    # photo on two GCL articles two days apart, because the older article's
+    # stored URL used a raw colon that no longer matched what this function
+    # constructs). Unquoting both sides makes the comparison encoding-proof.
+    normalized_excludes = (
+        {urllib.parse.unquote(u) for u in exclude_source_urls} if exclude_source_urls else set()
+    )
+
     data = _get(
         {
             "action": "query",
@@ -325,7 +338,7 @@ def _fetch_first_licensed_file(
             continue
 
         page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
-        if exclude_source_urls and page_url in exclude_source_urls:
+        if urllib.parse.unquote(page_url) in normalized_excludes:
             continue
 
         artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
