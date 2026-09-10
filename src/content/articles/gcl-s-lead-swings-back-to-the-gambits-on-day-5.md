@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/gcl-2026-day-5-gambits-beat-kings-pipers-defeat
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 58
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The GCL lead swaps hands again: Gambits reclaim top spot from the Pipers on Day 5, with Sindarov's icon-board win over Firouzja the difference-maker. Three teams now sit level on match points. #GCL2026"
 image:
   src: "./_images/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.webp"
