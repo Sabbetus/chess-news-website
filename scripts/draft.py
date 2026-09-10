@@ -297,23 +297,33 @@ You have a web_search tool available. Only use it if you choose the \
 community-pulse lens (see its description above for how) -- for every other \
 lens, do not search, just write from the source material given to you.
 
-over raw citation markup like <cite index="...">...</cite> from search results \
-over raw citation markup like <cite index="...">...</cite> from search results \
-into your output -- that markup is for your own internal reference only, and \
-must never appear anywhere in the final JSON. Paraphrase and attribute in \
+Don't carry over raw citation markup like <cite index="...">...</cite> \
+from search results into your output -- that markup is for your own \
+internal reference only, and \
+must never appear anywhere in your final answer. Paraphrase and attribute in \
 plain prose instead (e.g. "according to the tour's recap...").
 
-Your FINAL message must be ONLY a JSON object (no markdown fences, no \
-commentary) with these exact keys -- any searching or reasoning happens \
-before that, never mixed into it:
-{{
-  "lens": "one of: {', '.join(LENS_OPTIONS.keys())}",
-  "continent": "one of: {CONTINENT_OPTIONS}",
-  "title": "a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler (\"What This Means For...\", \"Here's Why...\", \"And That's the Point\") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like \"anyway\", \"and more\", or \"explained\" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place).",
-  "bodyMarkdown": "the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other",
-  "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty",
-  "imageSubjects": "an ARRAY of up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. 'Magnus Carlsen', not just 'Carlsen') or a specific organization/event name (e.g. 'FIDE', 'Chess Olympiad', 'Titled Tuesday'). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Empty array if truly nothing fits."
-}}"""
+Your FINAL message must consist ONLY of the fields below, each introduced by \
+its marker line exactly as shown (@@NAME@@ alone on its own line, nothing \
+else on that line) -- no markdown fences, no JSON, no commentary before, \
+between, or after them. Any searching or reasoning happens before this \
+final message, never mixed into it. Write each field's actual content on \
+the line(s) that follow its marker; the text under BODY_MARKDOWN can \
+freely contain quotes, apostrophes, or any other character -- there is no \
+escaping to worry about, just write normal prose:
+
+@@LENS@@
+one of: {', '.join(LENS_OPTIONS.keys())}
+@@CONTINENT@@
+one of: {CONTINENT_OPTIONS}
+@@TITLE@@
+a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler ("What This Means For...", "Here's Why...", "And That's the Point") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like "anyway", "and more", or "explained" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place).
+@@SOCIAL_COPY@@
+a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
+@@IMAGE_SUBJECTS@@
+up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, one per line, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Leave this field's content empty if truly nothing fits.
+@@BODY_MARKDOWN@@
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other"""
 
 def build_aggregate_system_prompt(continent_code: str) -> str:
     return f"""You are writing for a small, curated chess news site. \
@@ -360,13 +370,18 @@ yet.
 One link only, and none at all if the list is empty. This is separate from, \
 and additional to, the tournament links required above.
 
-Respond with ONLY a JSON object (no markdown fences, no commentary) with these \
-exact keys:
-{{
-  "title": "a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline.",
-  "bodyMarkdown": "the full article body in Markdown, 300-600 words",
-  "socialCopy": "a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag"
-}}"""
+Respond with ONLY the fields below, each introduced by its marker line \
+exactly as shown (@@NAME@@ alone on its own line) -- no markdown fences, no \
+JSON, no commentary before, between, or after them. The text under \
+BODY_MARKDOWN can freely contain quotes, apostrophes, or any other \
+character -- there is no escaping to worry about, just write normal prose:
+
+@@TITLE@@
+a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline.
+@@SOCIAL_COPY@@
+a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag
+@@BODY_MARKDOWN@@
+the full article body in Markdown, 300-600 words"""
 
 
 def slugify(title: str) -> str:
@@ -486,16 +501,48 @@ def build_user_prompt(item: dict) -> str:
     return "\n".join(parts)
 
 
+# Maps each @@NAME@@ marker to its dict key. Field order in the prompts
+# always ends with BODY_MARKDOWN, so its content can safely run to the end
+# of the message without a closing marker.
+_FIELD_MARKERS = {
+    "LENS": "lens",
+    "CONTINENT": "continent",
+    "TITLE": "title",
+    "SOCIAL_COPY": "socialCopy",
+    "IMAGE_SUBJECTS": "imageSubjects",
+    "BODY_MARKDOWN": "bodyMarkdown",
+}
+_FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
+
+
 def parse_response(text: str) -> dict:
     text = text.strip()
     # Defensive: strip accidental code fences even though the prompt asks for none.
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
-    # strict=False: the model occasionally emits a literal newline inside a
-    # string value (e.g. a paragraph break in bodyMarkdown) instead of an
-    # escaped \n -- technically invalid JSON, but unambiguous to parse, and
-    # rejecting it outright loses an entire drafted article over whitespace.
-    parsed = json.loads(text, strict=False)
+
+    # Sentinel-marker format instead of JSON: the model writes each field's
+    # content as plain text after its own @@NAME@@ line, so nothing needs
+    # escaping (a stray unescaped quote in dialogue used to break json.loads
+    # and lose the whole article -- this format has no such failure mode).
+    segments = _FIELD_MARKER_RE.split(text)
+    if len(segments) < 3:
+        raise ValueError(f"No @@FIELD@@ markers found in model response: {text[:200]!r}")
+
+    parsed: dict = {}
+    # segments alternates [preamble, marker, content, marker, content, ...]
+    for marker, content in zip(segments[1::2], segments[2::2]):
+        key = _FIELD_MARKERS.get(marker)
+        if key is None:
+            continue
+        content = content.strip()
+        if key == "imageSubjects":
+            parsed[key] = [line.strip() for line in content.splitlines() if line.strip()]
+        else:
+            parsed[key] = content
+
+    if "title" not in parsed or "bodyMarkdown" not in parsed:
+        raise ValueError(f"Missing required field(s) in model response, got: {sorted(parsed)}")
 
     # Defensive backstop for the community-pulse (web_search) lens: despite
     # the prompt telling the model not to, it has carried raw <cite
