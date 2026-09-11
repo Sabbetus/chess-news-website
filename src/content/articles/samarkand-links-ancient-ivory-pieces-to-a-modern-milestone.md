@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/3rd-fide-chess-olympiad-for-people-with-disabil
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 57
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "A record 41 teams, 200 players, and a first-ever pairing with the main Olympiad: Samarkand opens the 3rd FIDE Chess Olympiad for People with Disabilities. ♟️"
 image:
   src: "./_images/Dana_Reizniece-Ozola_2017.webp"

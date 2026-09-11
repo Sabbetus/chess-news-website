@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/salesforces-agentforce-360-powers-the-future-of
 lens: "money-angle"
 continent: "global"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Salesforce just became FIDE's title sponsor through 2028, and the real product isn't the trophy, it's the CRM stack running underneath the entire federation. Here's what the deal actually buys."
 image:
   src: "./_images/Viswanathan_Anand__2016.webp"
