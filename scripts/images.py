@@ -402,11 +402,11 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
     """Ordered list of (query, strict) tuples to try, most specific first,
     for a drafted article. `item` is the original candidate dict (from
     selected.json); `drafted_title` is the headline Claude wrote;
-    `image_subjects` is the list of specific people/orgs/events Claude named
-    as central to the piece, if any, most likely to have a good photo first
-    -- e.g. a piece comparing a lesser-known player to Magnus Carlsen should
-    try Carlsen too, not just fall to a generic org logo once the primary
-    subject comes up empty. `strict` marks auto-extracted headline-fragment
+    `image_subjects` is the list of specific people/orgs/events Claude named,
+    ordered by centrality to the piece (the actual subject first, a more
+    photogenic secondary mention only after) -- the first one that finds a
+    usable photo wins, so this order determines whose photo the article
+    gets, not just which query happens to run first. `strict` marks auto-extracted headline-fragment
     queries, which need a stronger title-match bar than the
     deliberately-constructed ones (see _title_matches_query)."""
     queries = []
