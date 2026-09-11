@@ -231,7 +231,12 @@ context -- include the specific facts the source gives alongside your analysis, 
 not instead of it. A reader should come away knowing both what actually happened \
 and why it matters; losing the former to make room for the latter is a failure, \
 not a stylistic choice. It's fine, expected even, for the piece to run longer to \
-fit both in -- do not compress by cutting real source detail.
+fit both in -- do not compress by cutting real source detail. Never satisfy this \
+by cramming more into each paragraph, though -- a longer piece means MORE short \
+paragraphs, never fewer, longer ones. This matters most on exactly the stories \
+where it's easiest to forget: a stat-heavy or multi-quote source is precisely \
+when paragraphs need to split more often, not when the paragraph-length rule \
+below quietly stops applying.
 
 Before finalizing, check the source material against each of these categories and \
 include whatever it actually gives you -- do not stop at the single headline \
@@ -334,7 +339,7 @@ a single short social post (under 260 characters) teasing the piece, no hashtags
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece that a photo search is likely to find, one per line, ordered most to least likely to have a good, findable photo -- each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Include every such named subject actually central to the piece, not just the primary one -- e.g. a piece comparing player X to a more famous player Y should list both, since Y often has better photo coverage. Leave this field's content empty if truly nothing fits.
 @@BODY_MARKDOWN@@
-the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other"""
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density."""
 
 def build_aggregate_system_prompt(continent_code: str) -> str:
     return f"""You are writing for a small, curated chess news site. \
@@ -655,6 +660,77 @@ def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     ]
 
 
+_PARAGRAPH_FIX_PROMPT = """You will be given one or more numbered paragraphs from an \
+already-written chess article. Each one runs over a 70-word style-guide ceiling. Your \
+only job is to split each into 2 or more shorter paragraphs at natural sentence or \
+topic boundaries -- do not reword, cut, add, fact-check, or otherwise change a single \
+word. Preserve every word, number, quote, and Markdown link exactly as given, byte for \
+byte; only insert paragraph breaks (a blank line) between existing sentences. Split \
+generously enough that every resulting paragraph is genuinely under 70 words, not just \
+barely under.
+
+Respond with ONLY the fixed paragraphs, each introduced by its own @@PARA_N@@ marker \
+matching the input numbering exactly (e.g. @@PARA_1@@), with no commentary before, \
+between, or after them. Within each @@PARA_N@@ section, separate the resulting \
+paragraphs with a single blank line, same as normal Markdown."""
+
+
+def fix_long_paragraphs(
+    client: anthropic.Anthropic, body_markdown: str, offenders: list[tuple[int, int]]
+) -> str:
+    """Targeted follow-up pass: send back only the paragraphs check_paragraph_lengths
+    flagged, ask the model to split each at natural boundaries with no other changes,
+    and splice the results back in place.
+
+    Deliberately narrower than re-drafting the whole piece: generation already
+    proved unreliable at self-tracking paragraph length while juggling a dozen
+    other simultaneous instructions (accuracy, links, quotes, lens, style) --
+    "find a good place to break this one paragraph" is a much easier, isolated
+    task, and the blast radius of a bad split is a paragraph break in the wrong
+    place, not a reworded fact or a dropped link. Falls back to the original
+    text on any failure (missing markers, wrong count) -- a still-flagged
+    paragraph for human review beats a silently mangled one."""
+    if not offenders:
+        return body_markdown
+
+    paragraphs = body_markdown.split("\n\n")
+    # Mirrors check_paragraph_lengths' own enumeration (skips heading lines) so
+    # offender indices line up with the same paragraphs it flagged.
+    prose_indices = [i for i, p in enumerate(paragraphs) if p.strip() and not p.strip().startswith("#")]
+    offender_numbers = {n for n, _ in offenders}
+
+    request_parts = []
+    for n, para_idx in enumerate(prose_indices, 1):
+        if n in offender_numbers:
+            request_parts.append(f"@@PARA_{n}@@\n{paragraphs[para_idx].strip()}")
+    user_prompt = "\n\n".join(request_parts)
+
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=2048,
+            system=_PARAGRAPH_FIX_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+        )
+        text_blocks = [b.text for b in response.content if b.type == "text"]
+        if not text_blocks:
+            return body_markdown
+
+        segments = re.split(r"^@@PARA_(\d+)@@[ \t]*\r?\n", text_blocks[-1].strip(), flags=re.MULTILINE)
+        fixed = {int(n): content.strip() for n, content in zip(segments[1::2], segments[2::2])}
+
+        if set(fixed) != offender_numbers:
+            return body_markdown  # partial/malformed response -- don't risk a half-applied fix
+
+        for n, para_idx in enumerate(prose_indices, 1):
+            if n in fixed:
+                paragraphs[para_idx] = fixed[n]
+
+        return "\n\n".join(paragraphs)
+    except Exception:  # noqa: BLE001 -- best-effort like image sourcing; never fail the whole draft over this
+        return body_markdown
+
+
 def draft_one(
     client: anthropic.Anthropic, item: dict, publish_date: str | None = None
 ) -> tuple[Path, list[tuple[int, int]]]:
@@ -762,8 +838,14 @@ def draft_one(
             fm_lines.append(f"{key}: {value}")
     fm_lines.append("---")
 
-    out_path.write_text("\n".join(fm_lines) + "\n\n" + parsed["bodyMarkdown"].strip() + "\n")
-    return out_path, check_paragraph_lengths(parsed["bodyMarkdown"])
+    body_markdown = parsed["bodyMarkdown"]
+    offenders = check_paragraph_lengths(body_markdown)
+    if offenders:
+        body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
+        offenders = check_paragraph_lengths(body_markdown)
+
+    out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
+    return out_path, offenders
 
 
 # The SDK already retries 408/409/429 and every 5xx (so 529 overloaded is
