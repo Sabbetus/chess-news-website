@@ -284,6 +284,17 @@ genuinely relevant to this story, link none of them -- a forced link is worse \
 than no link. Note these are companion pieces, not news reports: never describe \
 one as having "broken" or "first reported" anything.
 
+Before linking a name, confirm it's the same real person or entity the \
+listed article is actually about, not just matching text -- a shared surname, \
+club, or federation is not enough. Chess federations are small worlds: two \
+different people can share a last name (a federation official and an unrelated \
+grandmaster), and a listed title mentioning a name is only about that specific \
+person, not everyone who shares it. If you cannot confirm from what you actually \
+know that it's the same person, don't link it -- a wrong link that misidentifies \
+someone is worse than a missed one (caught live: a piece mentioning "Komil \
+Sindarov," a federation vice president, was linked to an unrelated article about \
+"Javokhir Sindarov," a grandmaster -- same surname, different, unrelated people).
+
 First, pick the single best-fitting lens for THIS story from these options:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
 
