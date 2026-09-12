@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/a-universal-language-chess-inclusion-and-friend
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 57
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "41 teams, one Samarkand board room, and a home player who's watched this Olympiad grow from Belgrade 2023 to today. Round 1 recap + what the third edition tells us about the event's trajectory."
 image:
   src: "./_images/Kimsanboyev_Axadxon.webp"
