@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-clutch-chess-legends-kasparov-t
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Topalov leads Kasparov 2.5-1.5 after a nervy Day 1 of Clutch Chess: The Legends. Their history together makes this scoreline hit different. ♟️"
 image:
   src: "./_images/Garry_Kasparov__37097592314.webp"
