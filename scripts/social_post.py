@@ -33,7 +33,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ARTICLES_DIR = REPO_ROOT / "src" / "content" / "articles"
 QUEUE_PATH = REPO_ROOT / "data" / "social-queue.json"
-SITE_URL = "https://chessori.com"
+SITE_URL = "https://chessherald.com"
 
 # Drop to 1 once the backlog of already-published, not-yet-posted articles
 # is cleared -- 2/run x 4 runs/day comfortably outpaces the ~2-3 articles/day

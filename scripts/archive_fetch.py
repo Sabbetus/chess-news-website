@@ -18,7 +18,7 @@ import urllib.request
 from datetime import date, datetime, timezone
 
 REQUEST_TIMEOUT = 20
-USER_AGENT = "chessori-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
+USER_AGENT = "chess-herald-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
 
 CHESS_COM_NEWS_URL = "https://www.chess.com/news"
 FIDE_API_URL = "https://www.fide.com/wp-json/wp/v2/posts"

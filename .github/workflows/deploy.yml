@@ -79,7 +79,7 @@ jobs:
           while IFS= read -r file; do
             [ -z "$file" ] && continue
             slug=$(basename "$file" .md)
-            url="https://chessori.com/articles/${slug}/"
+            url="https://chessherald.com/articles/${slug}/"
             urls=$(echo "$urls" | jq --arg u "$url" '. + [$u]')
             echo "Queued: $url"
           done <<< "$changed_files"
@@ -91,9 +91,9 @@ jobs:
           fi
 
           payload=$(jq -n \
-            --arg host "chessori.com" \
-            --arg key "e2896e653d1775c123c54b70832ef208" \
-            --arg keyLocation "https://chessori.com/e2896e653d1775c123c54b70832ef208.txt" \
+            --arg host "chessherald.com" \
+            --arg key "7081e549d516e07f4b446ccbaa83905b" \
+            --arg keyLocation "https://chessherald.com/7081e549d516e07f4b446ccbaa83905b.txt" \
             --argjson urlList "$urls" \
             '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
 

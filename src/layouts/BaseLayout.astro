@@ -71,7 +71,7 @@ const sections = [
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonicalURL} />
-    <link rel="alternate" type="application/rss+xml" title="Chessori" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Chess Herald" href="/rss.xml" />
 
     <!-- Without this, fonts are only discovered once the stylesheet has
          been fetched and parsed, adding them sequentially to the critical
@@ -122,7 +122,7 @@ const sections = [
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={articleMeta ? 'article' : 'website'} />
-    <meta property="og:site_name" content="Chessori" />
+    <meta property="og:site_name" content="Chess Herald" />
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
@@ -148,7 +148,7 @@ const sections = [
       // ThemeSwitch.astro owns the toggle interaction itself.
       (function () {
         try {
-          var stored = localStorage.getItem('chessori-theme');
+          var stored = localStorage.getItem('chessherald-theme');
           var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
           document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         } catch (e) {}
@@ -164,7 +164,7 @@ const sections = [
       (function () {
         var GA_ID = 'G-KY9DGJ4ZDQ';
         try {
-          if (localStorage.getItem('chessori-analytics-optout') === '1') {
+          if (localStorage.getItem('chessherald-analytics-optout') === '1') {
             // Also set for the benefit of anything that might load a tag
             // later in the page's life; the early return is what actually
             // prevents the request.
@@ -213,7 +213,7 @@ const sections = [
       </div>
 
       <header class="masthead">
-        <BrandTag class="brand"><a href="/">Chessori</a></BrandTag>
+        <BrandTag class="brand"><a href="/">Chess Herald</a></BrandTag>
         <div class="tagline">
           Chess news &amp; articles<span class="sep">&middot;</span>original analysis<span class="sep">&middot;</span>tournament
           statistics
@@ -238,7 +238,7 @@ const sections = [
       </main>
 
       <footer class="site-footer">
-        <span>The next story &middot; Chessori</span>
+        <span>The next story &middot; Chess Herald</span>
         <span class="partners">
           Partners:
           <a href="https://nordicchess.fi" target="_blank" rel="noopener">Nordic Chess Festival</a><span class="sep"
