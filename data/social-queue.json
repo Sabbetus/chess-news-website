@@ -163,16 +163,16 @@
     "slug": "barcelona-s-sants-open-and-a-romanian-rapid-lead-europe-s-august-field",
     "title": "Barcelona's Sants Open and a Romanian Rapid Lead Europe's August Field",
     "publishDate": "2026-09-01",
-    "postedFacebookAt": null,
-    "postedThreadsAt": null,
+    "postedFacebookAt": "2026-09-12T11:53:12.560486+00:00",
+    "postedThreadsAt": "2026-09-12T11:53:12.560486+00:00",
     "socialCopy": "Europe's August chess calendar, ranked by turnout: a Romanian rapid in Alba Iulia tops the list at 402 players, with Barcelona's Sants Open and two Greek internationals close behind. Full breakdown inside."
   },
   {
     "slug": "hans-niemann-s-return-to-the-chess-com-broadcast-comes-with-a-trophy-attached",
     "title": "Hans Niemann's Return to the Chess.com Broadcast Comes With a Trophy Attached",
     "publishDate": "2026-09-01",
-    "postedFacebookAt": null,
-    "postedThreadsAt": null,
+    "postedFacebookAt": "2026-09-12T11:53:12.560486+00:00",
+    "postedThreadsAt": "2026-09-12T11:53:12.560486+00:00",
     "socialCopy": "Hans Niemann's return to the Chess.com broadcast wasn't quiet: he snatched Titled Tuesday from a 10/10 Duda at the last second. The scandal history makes the timing impossible to ignore."
   },
   {
@@ -372,6 +372,22 @@
     "title": "Samarkand Links Ancient Ivory Pieces to a Modern Milestone",
     "socialCopy": "A record 41 teams, 200 players, and a first-ever pairing with the main Olympiad: Samarkand opens the 3rd FIDE Chess Olympiad for People with Disabilities. \u265f\ufe0f",
     "publishDate": "2026-09-11",
+    "postedFacebookAt": null,
+    "postedThreadsAt": null
+  },
+  {
+    "slug": "topalov-s-clutch-chess-lead-echoes-his-old-kasparov-duels",
+    "title": "Topalov's Clutch Chess Lead Echoes His Old Kasparov Duels",
+    "socialCopy": "Topalov leads Kasparov 2.5-1.5 after a nervy Day 1 of Clutch Chess: The Legends. Their history together makes this scoreline hit different. \u265f\ufe0f",
+    "publishDate": "2026-09-12",
+    "postedFacebookAt": null,
+    "postedThreadsAt": null
+  },
+  {
+    "slug": "samarkand-s-disability-olympiad-echoes-belgrade-s-first-steps",
+    "title": "Samarkand's Disability Olympiad Echoes Belgrade's First Steps",
+    "socialCopy": "41 teams, one Samarkand board room, and a home player who's watched this Olympiad grow from Belgrade 2023 to today. Round 1 recap + what the third edition tells us about the event's trajectory.",
+    "publishDate": "2026-09-12",
     "postedFacebookAt": null,
     "postedThreadsAt": null
   }
