@@ -95,10 +95,10 @@ const jsonLd = [
     // where the AI drafting is disclosed. The visible byline is unchanged;
     // institutional authorship is standard for news, and Google retired
     // author rich results, so Person was not buying anything either.
-    author: { '@type': 'Organization', name: 'Chess Herald' },
+    author: { '@type': 'Organization', name: 'The Chess Herald' },
     publisher: {
       '@type': 'Organization',
-      name: 'Chess Herald',
+      name: 'The Chess Herald',
       logo: { '@type': 'ImageObject', url: new URL('/favicon.png', Astro.site).toString() },
     },
     isBasedOn: article.data.sourceUrl,
@@ -114,7 +114,7 @@ const jsonLd = [
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'Chess Herald',
+        name: 'The Chess Herald',
         item: new URL('/', Astro.site).toString(),
       },
       {
@@ -136,7 +136,7 @@ const jsonLd = [
 
 <BaseLayout
   title={seoTitle(article.data.title)}
-  ogTitle={`${article.data.title} | Chess Herald`}
+  ogTitle={`${article.data.title} | The Chess Herald`}
   description={description}
   activeContinent={article.data.continent}
   articleMeta={{

@@ -13,7 +13,7 @@ export async function GET(context) {
     // and gets flagged by feed validators. dc:creator is the element actually
     // meant for a display name, and is what readers look for.
     xmlns: { dc: 'http://purl.org/dc/elements/1.1/' },
-    title: 'Chess Herald',
+    title: 'The Chess Herald',
     description:
       'Curated chess news from around the world, with original analysis and tournament statistics. Every story linked back to its source.',
     site: context.site,

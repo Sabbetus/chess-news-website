@@ -4,7 +4,7 @@
 // title tags past ~70 characters, and search consoles flag it. Rather than
 // shortening the real headline, give the <title> tag its own, possibly
 // truncated, version with the site name appended.
-const SITE_SUFFIX = ' | Chess Herald';
+const SITE_SUFFIX = ' | The Chess Herald';
 const MAX_LENGTH = 70;
 
 export function seoTitle(pageTitle: string): string {
