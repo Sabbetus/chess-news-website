@@ -714,12 +714,24 @@ def fix_long_paragraphs(
         )
         text_blocks = [b.text for b in response.content if b.type == "text"]
         if not text_blocks:
+            print("  paragraph fix-up: no text content in response, falling back", file=sys.stderr)
             return body_markdown
 
         segments = re.split(r"^@@PARA_(\d+)@@[ \t]*\r?\n", text_blocks[-1].strip(), flags=re.MULTILINE)
         fixed = {int(n): content.strip() for n, content in zip(segments[1::2], segments[2::2])}
 
         if set(fixed) != offender_numbers:
+            # Visibility for next time: this used to fail completely silently,
+            # indistinguishable from "the fix-up never ran at all" in the
+            # draft-report -- log what we actually got back so a format
+            # mismatch (stray commentary, wrong marker style) is diagnosable
+            # instead of a mystery.
+            print(
+                f"  paragraph fix-up: expected paragraphs {sorted(offender_numbers)}, "
+                f"got {sorted(fixed)}, falling back. Raw response (first 500 chars): "
+                f"{text_blocks[-1][:500]!r}",
+                file=sys.stderr,
+            )
             return body_markdown  # partial/malformed response -- don't risk a half-applied fix
 
         for n, para_idx in enumerate(prose_indices, 1):
@@ -727,7 +739,8 @@ def fix_long_paragraphs(
                 paragraphs[para_idx] = fixed[n]
 
         return "\n\n".join(paragraphs)
-    except Exception:  # noqa: BLE001 -- best-effort like image sourcing; never fail the whole draft over this
+    except Exception as exc:  # noqa: BLE001 -- best-effort like image sourcing; never fail the whole draft over this
+        print(f"  paragraph fix-up: {type(exc).__name__}: {exc}, falling back", file=sys.stderr)
         return body_markdown
 
 
