@@ -36,7 +36,7 @@ ROOT = Path(__file__).parent.parent
 IMAGES_DIR = ROOT / "src" / "content" / "articles" / "_images"
 
 API_URL = "https://commons.wikimedia.org/w/api.php"
-USER_AGENT = "Chessori-ImagePicker/1.0 (https://chessori.com; contact: sabbe.the.technomage@gmail.com)"
+USER_AGENT = "Chess-Herald-ImagePicker/1.0 (https://chessherald.com; contact: sabbe.the.technomage@gmail.com)"
 
 # Only accept files under licenses that are unambiguously free to reuse
 # (with attribution where the license requires it). Anything else -- most

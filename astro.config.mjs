@@ -5,7 +5,7 @@ import { visit } from 'unist-util-visit';
 
 // Every link in an article body (whether hand-written or AI-drafted) points
 // off-site -- a source article, a tournament page, a Wikimedia Commons file.
-// None of them should navigate the reader away from Chessori in the same
+// None of them should navigate the reader away from Chess Herald in the same
 // tab, so this rewrites every <a href="http(s)://..."> produced from
 // Markdown to open in a new tab, site-wide, without relying on every
 // caller (including future AI-generated content) remembering to add it.
@@ -46,7 +46,7 @@ function articleLastmod() {
 const ARTICLE_LASTMOD = articleLastmod();
 
 export default defineConfig({
-  site: 'https://chessori.com',
+  site: 'https://chessherald.com',
   output: 'static',
   integrations: [
     sitemap({
