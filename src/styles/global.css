@@ -345,7 +345,7 @@ button:focus-visible {
   font-family: 'Fraunces', Georgia, serif;
   font-optical-sizing: auto;
   font-weight: 560;
-  font-size: clamp(46px, 7vw, 76px);
+  font-size: clamp(30px, 8.5vw, 76px);
   letter-spacing: -0.01em;
   text-wrap: balance;
   color: var(--ink);
