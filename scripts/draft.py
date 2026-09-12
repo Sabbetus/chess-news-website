@@ -273,15 +273,15 @@ Markdown link, with the anchor text being the fact or result itself (e.g. \
 the visible text. Once is enough; the site prints the source again at the foot of \
 every piece.
 
-2. Where the user turn lists previously published Chess Herald articles, link one or \
+2. Where the user turn lists previously published The Chess Herald articles, link one or \
 two of them from a phrase in your own text that genuinely refers to what that \
 article covers -- a player, event, tournament or theme you are already \
 mentioning. Use the "/articles/<slug>/" path exactly as given, and make the \
 anchor a natural noun phrase already in the sentence rather than bolting on \
-"as we reported" or "read more about". If you mention that Chess Herald has \
+"as we reported" or "read more about". If you mention that The Chess Herald has \
 covered something before, that mention MUST itself be the Markdown link -- \
 never describe or gesture at a previous piece in prose ("as covered in \
-Chess Herald's look at...") without the "[...](/articles/<slug>/)" markup actually \
+The Chess Herald's look at...") without the "[...](/articles/<slug>/)" markup actually \
 wrapped around it; an unlinked reference to a specific past article reads as a \
 broken or fabricated citation. Do not reword a sentence just to create a link, \
 do not link the same article twice, and if none of the listed pieces is \
@@ -361,7 +361,7 @@ gap in what this data covers to the tournaments themselves.
 
 {STYLE_GUIDE}
 
-LINKING TO THE COMPANION PIECE. Where the user turn lists earlier Chess Herald \
+LINKING TO THE COMPANION PIECE. Where the user turn lists earlier The Chess Herald \
 calendar pieces for this same continent, link the most recent one exactly once, \
 using the "/articles/<slug>/" path exactly as given. Each is labelled \
 (retrospective) or (preview) -- these pieces come in pairs, one of each per \
@@ -485,7 +485,7 @@ def build_user_prompt(item: dict) -> str:
         if companions:
             parts.append("")
             parts.append(
-                "Earlier Chess Herald calendar pieces covering this same continent, newest "
+                "Earlier The Chess Herald calendar pieces covering this same continent, newest "
                 "first. Link the most recent one once, per the linking rule in your "
                 "instructions:"
             )
@@ -508,7 +508,7 @@ def build_user_prompt(item: dict) -> str:
     if previous:
         parts.append("")
         parts.append(
-            "Previously published Chess Herald articles you may link to (see the linking "
+            "Previously published The Chess Herald articles you may link to (see the linking "
             "rules in your instructions). Link one only where it genuinely helps the "
             "reader; skip them all if nothing here is actually related:"
         )

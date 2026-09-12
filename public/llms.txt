@@ -1,6 +1,6 @@
-# Chess Herald
+# The Chess Herald
 
-> Chess Herald is a curated chess news site. For a small set of the day's most
+> The Chess Herald is a curated chess news site. For a small set of the day's most
 > newsworthy chess stories, it publishes an original companion analysis
 > piece alongside a link to the original source article -- never a
 > reworded summary. Companion pieces are AI-drafted (Claude, credited as
@@ -36,7 +36,7 @@
 
 ## Reuse
 
-Article text may be quoted with attribution to [Chess Herald](https://chessherald.com/)
+Article text may be quoted with attribution to [The Chess Herald](https://chessherald.com/)
 and a link back to the specific article. The original source article linked
-from each piece carries its own outlet's rights, separate from Chess Herald's
+from each piece carries its own outlet's rights, separate from The Chess Herald's
 own analysis text.
