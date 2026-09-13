@@ -59,15 +59,23 @@ def eligible_articles() -> dict[str, str]:
     return out
 
 
-def _get_access_token(key_json: str) -> str:
-    # Imported here, not at module level: these are only needed on the
-    # real-credentials path, so a dev/test run with no GA4 secrets set
-    # never needs them installed.
+def _get_access_token() -> str:
+    # Imported here, not at module level: only needed on the real-auth
+    # path, so a dev/test run with no GCP auth set up never needs it.
+    #
+    # No service-account JSON key involved -- the org's policy blocks
+    # creating those entirely. Instead, deploy.yml's "Authenticate to
+    # Google Cloud" step (google-github-actions/auth) exchanges GitHub's
+    # own OIDC token for short-lived Google credentials via Workload
+    # Identity Federation and writes them to Application Default
+    # Credentials, which google.auth.default() picks up automatically
+    # here -- nothing GCP-secret-shaped ever touches disk or a GitHub
+    # secret except a provider path and a service account email, neither
+    # of which is itself a usable credential on its own.
+    import google.auth
     from google.auth.transport.requests import Request
-    from google.oauth2 import service_account
 
-    info = json.loads(key_json)
-    credentials = service_account.Credentials.from_service_account_info(info, scopes=GA4_SCOPES)
+    credentials, _ = google.auth.default(scopes=GA4_SCOPES)
     credentials.refresh(Request())
     return credentials.token
 
@@ -118,13 +126,12 @@ def fetch_pageviews(property_id: str, token: str) -> dict[str, int]:
 
 def main() -> None:
     property_id = os.environ.get("GA4_PROPERTY_ID")
-    key_json = os.environ.get("GA4_SERVICE_ACCOUNT_KEY")
-    if not property_id or not key_json:
-        print("GA4 credentials not configured -- leaving data/popular.json untouched.", file=sys.stderr)
+    if not property_id:
+        print("GA4_PROPERTY_ID not configured -- leaving data/popular.json untouched.", file=sys.stderr)
         return
 
     try:
-        token = _get_access_token(key_json)
+        token = _get_access_token()
         views_by_slug = fetch_pageviews(property_id, token)
     except Exception as exc:  # noqa: BLE001 -- any failure here must leave the last known-good list in place, never wipe it
         print(f"GA4 fetch failed, leaving data/popular.json untouched: {type(exc).__name__}: {exc}", file=sys.stderr)
