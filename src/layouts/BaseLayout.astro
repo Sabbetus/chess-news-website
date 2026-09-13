@@ -15,12 +15,12 @@ interface Props {
   // but can be overridden with the untruncated version via `ogTitle`.
   ogTitle?: string;
   description?: string;
-  activeContinent?: Continent | 'front-page' | 'archive' | 'contact' | 'lens' | 'privacy' | 'about' | 'not-found';
+  activeContinent?: Continent | 'front-page' | 'archive' | 'recaps' | 'contact' | 'lens' | 'privacy' | 'about' | 'not-found';
   // Keeps a page out of search results. Only the 404 uses this -- it has no
   // stable URL of its own (GitHub Pages serves it for every unmatched path),
   // so an indexed copy would compete with real pages for no benefit.
   noindex?: boolean;
-  articleMeta?: { publishedTime: string; source: string };
+  articleMeta?: { publishedTime: string; source?: string };
   jsonLd?: Record<string, unknown>[];
   image?: string;
 }

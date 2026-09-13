@@ -15,7 +15,7 @@ const { lens: slug } = Astro.params as { lens: string };
 const lens = SLUG_TO_LENS[slug];
 const meta = LENS_META[lens];
 
-const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
+const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
 const articles = allArticles
   .filter((a) => a.data.lens === lens)
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
