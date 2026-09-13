@@ -98,20 +98,29 @@ def recent_published_articles(days: int) -> list[dict]:
     return entries
 
 
-def pick_recap_image(entries: list[dict]) -> dict | None:
-    """Reuse the photo from this week's highest-scoring article that
-    actually has one -- the recap has no single subject of its own to
-    source a new photo for, but the site's article-page layout expects a
-    hero image, and one of the week's own articles almost always has a
-    usable one already downloaded. `src` (e.g. "./_images/Foo.webp") is a
-    plain relative path resolved by Astro's image() schema helper from the
-    entry file's own directory -- since every article lives in the same
-    src/content/articles/ directory, the recap can point at the exact same
-    already-downloaded file with no new download or license lookup."""
-    candidates = [e for e in entries if e["image"]]
-    if not candidates:
+def pick_recap_image(entries: list[dict], chosen_slug: str | None) -> dict | None:
+    """Reuse a photo from one of this week's own articles -- the recap has
+    no single subject to source a new photo for, but the site's
+    article-page layout expects a hero image, and one of the week's own
+    articles almost always has a usable one already downloaded. `src`
+    (e.g. "./_images/Foo.webp") is a plain relative path resolved by
+    Astro's image() schema helper from the entry file's own directory --
+    since every article lives in the same src/content/articles/
+    directory, the recap can point at the exact same already-downloaded
+    file with no new download or license lookup.
+
+    Prefers the model's own pick (it wrote the headline, so it knows which
+    story that photo needs to actually match -- a highest-score heuristic
+    picked an unrelated tournament sponsor's photo for a piece about a
+    league standings battle in practice). Falls back to the
+    highest-selectionScore article with a photo if the model left the
+    field empty or named something that turns out to have none."""
+    by_slug = {e["slug"]: e for e in entries if e["image"]}
+    if chosen_slug and chosen_slug in by_slug:
+        return by_slug[chosen_slug]["image"]
+    if not by_slug:
         return None
-    return max(candidates, key=lambda e: e["selectionScore"])["image"]
+    return max(by_slug.values(), key=lambda e: e["selectionScore"])["image"]
 
 
 RECAP_SYSTEM_PROMPT = f"""You are writing the Weekly Recap for a small, curated chess news \
@@ -151,6 +160,13 @@ a headline for this week's recap in the form "Weekly Recap: <the week's actual t
 real theme, not a generic placeholder like "This Week in Chess"
 @@SOCIAL_COPY@@
 a single short social post (under 260 characters) teasing this week's recap, no hashtag spam, at most one relevant hashtag. Never include a URL or domain name of any kind -- the posting script appends the real article link separately, and a guessed one is always wrong.
+@@IMAGE_ARTICLE_SLUG@@
+the slug (exactly as given below) of the ONE article among this week's list whose photo \
+best represents THIS recap's own headline/theme -- not just any photo, the one a reader \
+would expect given the title you just wrote. Only choose from articles marked "(has \
+photo)" below; picking one marked "(no photo)" wastes the choice. Leave this field \
+completely empty if no article's photo genuinely fits the headline -- a missing photo is \
+better than a mismatched one.
 @@BODY_MARKDOWN@@
 the full recap body in Markdown"""
 
@@ -160,9 +176,11 @@ def build_user_prompt(entries: list[dict]) -> str:
     for e in entries:
         parts.append("")
         parts.append(f"- Title: {e['title']}")
+        parts.append(f"  Slug: {e['slug']}")
         parts.append(f"  Link: /articles/{e['slug']}/")
         parts.append(f"  Date: {e['date']}")
         parts.append(f"  Excerpt: {e['excerpt']}")
+        parts.append(f"  Photo: {'(has photo)' if e['image'] else '(no photo)'}")
     return "\n".join(parts)
 
 
@@ -202,7 +220,7 @@ def main() -> None:
         "reviewStatus": "draft",
         "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
     }
-    image = pick_recap_image(entries)
+    image = pick_recap_image(entries, (parsed.get("imageArticleSlug") or "").strip())
     if image:
         frontmatter["image"] = image
 

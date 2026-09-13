@@ -7,9 +7,9 @@ selectionScore: 0
 reviewStatus: "published"
 socialCopy: "GCL's table changed hands four times in five days, Carlsen and Nepomniachtchi crossed paths again, and FIDE picked up a big new sponsor. This week's recap is up now."
 image:
-  src: "./_images/fide-s-new-athletes-commission-echoes-the-ioc-s-playbook.webp"
-  credit: "Ygrek, Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_08_19_2007.jpg"
+  src: "./_images/carlsen-returns-but-gcl-day-one-belongs-to-sindarov.webp"
+  credit: "Miroslav.vajdic, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_-_Zagreb.jpg"
 ---
 
 Global Chess League Season 4 supplied most of the week's drama, with the standings changing hands almost every night in Bengaluru. Around it, FIDE kept adding to its institutional calendar and the rating list moved in some notable ways.
