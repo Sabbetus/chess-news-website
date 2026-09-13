@@ -389,7 +389,14 @@ const jsonLd = [
      it gets its own plain/neutral treatment rather than borrowing the
      recap's brass styling. */
   .digest-row {
-    margin: 24px 0;
+    /* Deliberately more than the 34px used elsewhere on the page: the
+       recap/popular boxes' solid color fill sits right at the edge of
+       this margin with no soft transition, which reads as visually
+       "denser" than the sparse text/photo edges bordering the other
+       gaps -- makes an identical pixel distance look smaller by
+       contrast. Bumped up to compensate for that, not because the
+       raw number needs to match. */
+    margin: 38px 0;
     display: grid;
     grid-template-columns: 1fr 280px;
     /* Matches the lead row's photo-to-sidebar gap (see .lead-cols) so
