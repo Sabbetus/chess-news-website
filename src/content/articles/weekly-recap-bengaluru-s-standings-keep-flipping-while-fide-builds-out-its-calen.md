@@ -5,7 +5,7 @@ publishDate: "2026-09-13"
 continent: "global"
 selectionScore: 0
 reviewStatus: "draft"
-socialCopy: "GCL's table changed hands four times in five days, Carlsen and Nepomniachtchi crossed paths again, and FIDE picked up a big new sponsor. This week's recap: chesstheherald.com"
+socialCopy: "GCL's table changed hands four times in five days, Carlsen and Nepomniachtchi crossed paths again, and FIDE picked up a big new sponsor. This week's recap is up now."
 ---
 
 Global Chess League Season 4 supplied most of the week's drama, with the standings changing hands almost every night in Bengaluru. Around it, FIDE kept adding to its institutional calendar and the rating list moved in some notable ways.
