@@ -168,7 +168,11 @@ button:focus-visible {
 }
 
 .wrap {
-  max-width: 1180px;
+  /* ~10% narrower than the original 1180px -- makes the whole site read
+     a bit tighter/more balanced, most visibly in the homepage lead row
+     (see index.astro's own lead-photo/text-width changes, which this
+     compounds with rather than replaces). */
+  max-width: 1060px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -284,6 +288,15 @@ button:focus-visible {
   aspect-ratio: 4 / 3;
   width: 100%;
   margin-bottom: 16px;
+}
+/* Desktop only -- a smaller-but-matching counterpart to .thumb--lead's
+   own 90% cap (index.astro), so grid-card photos shrink along with the
+   narrower .wrap instead of reading oversized next to it. Card titles/
+   text stay full-width; only the photo narrows. */
+@media (min-width: 641px) {
+  .thumb--card {
+    width: 94%;
+  }
 }
 .thumb--card .piece {
   font-size: 64px;
