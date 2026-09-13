@@ -22,7 +22,7 @@ It also isn't the first time these two have given each other trouble. Kasparov a
 
 Their most famous meeting came at Linares in 1999, a game that still gets replayed and dissected decades later as one of the sharpest attacking efforts of Kasparov's career.
 
-That history is part of why this rematch carries weight beyond nostalgia. Chessori already looked at the pairing when the current series began, in a piece on [why Kasparov vs. Topalov in Chess960 feels like unfinished business](/articles/why-kasparov-vs-topalov-in-chess960-feels-like-unfinished-business/). A day where Topalov leads 2.5-1.5 fits that framing well: two players whose old games still get studied, now generating a new result under modern clocks and modern time pressure.
+That history is part of why this rematch carries weight beyond nostalgia. The Chess Herald already looked at the pairing when the current series began, in a piece on [why Kasparov vs. Topalov in Chess960 feels like unfinished business](/articles/why-kasparov-vs-topalov-in-chess960-feels-like-unfinished-business/). A day where Topalov leads 2.5-1.5 fits that framing well: two players whose old games still get studied, now generating a new result under modern clocks and modern time pressure.
 
 There's an irony in how this particular day unfolded. Kasparov built his reputation partly on ruthless practical play and keeping opponents on the back foot with the clock as a weapon. Watching him be the one undone by time trouble against Topalov, of all opponents, is the kind of role reversal that legends events are almost designed to surface.
 
