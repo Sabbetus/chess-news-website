@@ -23,6 +23,11 @@
      chip) reads as dingy rather than lively on the homepage's three large
      digest panels (Weekly Recap / Latest Articles / Most Popular). */
   --digest-tint: #f1e8d4;
+  /* Body text color for the recap intro paragraph on --digest-tint.
+     --ink-soft (the normal body-text color) against the light tint
+     passes fine, so this just matches it here -- only dark mode's value
+     differs, see below. */
+  --digest-text: #514d43;
   --blue: #2c4d6e;
   --blue-tint: #e2eaf1;
   --terracotta: #a13f2a;
@@ -49,6 +54,10 @@
     --brass: #d9ac5c;
     --brass-tint: #2c2415;
     --digest-tint: #4a3418;
+    /* --ink-soft (#a39c8b) against --digest-tint's dark value only just
+       clears 4:1 contrast (~4.3:1, under the 4.5:1 AA text minimum) --
+       read as noticeably low-contrast in practice. Full --ink instead. */
+    --digest-text: #ece7da;
     --blue: #8bb1d6;
     --blue-tint: #1c2733;
     --terracotta: #d97a5f;
@@ -75,6 +84,7 @@
   --brass: #d9ac5c;
   --brass-tint: #2c2415;
   --digest-tint: #4a3418;
+  --digest-text: #ece7da;
   --blue: #8bb1d6;
   --blue-tint: #1c2733;
   --terracotta: #d97a5f;
