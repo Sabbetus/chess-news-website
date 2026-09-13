@@ -109,7 +109,7 @@ const jsonLd = [
 
   {
     secondaryFirstHalf.length > 0 && (
-      <section class="grid">
+      <section class="grid grid--before-digest">
         {secondaryFirstHalf.map((a, i) => (
           <article class="card">
             <ArticleThumb
@@ -333,6 +333,12 @@ const jsonLd = [
   .card {
     padding: 24px 0;
     border-bottom: 1px solid var(--rule-faint);
+  }
+  /* The row directly above the Weekly Recap box: that box already has its
+     own bottom brass rule as the section boundary, and no rule sits above
+     it on the other side -- so drop this row's border-bottom to match. */
+  .grid--before-digest .card:nth-last-child(-n + 2) {
+    border-bottom: none;
   }
   .card h3 {
     margin: 0 0 9px;
