@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-09-13"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GCL's table changed hands four times in five days, Carlsen and Nepomniachtchi crossed paths again, and FIDE picked up a big new sponsor. This week's recap is up now."
 ---
 
