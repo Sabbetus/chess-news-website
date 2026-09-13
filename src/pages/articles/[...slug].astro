@@ -57,6 +57,16 @@ const similar = [...related, ...fallback].slice(0, 3);
 
 const continentMeta = CONTINENT_META[article.data.continent];
 
+// Recap articles have no `lens` field, so article.data.lens is
+// undefined -- and BaseLayout's destructuring default
+// (`activeSection = 'front-page'`) kicks in for an explicitly-
+// undefined prop the same as an omitted one, wrongly rendering the
+// masthead brand mark as a second <h1> (BrandTag there is 'h1' only
+// when activeSection is 'front-page'). 'recaps' is a real BaseLayout
+// activeSection identifier with no matching nav item, same as recaps
+// not being in the top nav at all.
+const activeSection = article.data.lens ?? 'recaps';
+
 // The social-card crop: fixed 1200x630 (1.91:1), the size Meta's own docs
 // recommend for Facebook/Threads link previews and the same ratio X's
 // summary_large_image card uses -- one crop serves all three. position=
@@ -137,7 +147,7 @@ const jsonLd = [
   title={seoTitle(article.data.title)}
   ogTitle={`${article.data.title} | The Chess Herald`}
   description={description}
-  activeSection={article.data.lens}
+  activeSection={activeSection}
   articleMeta={{
     publishedTime: article.data.publishDate.toISOString(),
     source: article.data.sourceName,
