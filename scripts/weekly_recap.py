@@ -14,6 +14,7 @@ review-PR step, which this script's own workflow mirrors).
 
 import re
 import sys
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -29,6 +30,7 @@ from draft import (
     parse_response,
     slugify,
 )
+from images import _get, _photo_date
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -47,11 +49,10 @@ _IMAGE_BLOCK_RE = re.compile(
 
 
 def recent_published_articles(days: int) -> list[dict]:
-    """Title, slug, publish date, selection score, image (if any), and a
-    short excerpt for every non-recap article published in the last `days`
-    days, oldest first -- read straight from the files like draft.py's own
-    published_articles(), so a hand-edited or manually-added article is
-    included too."""
+    """Title, slug, publish date, and a short excerpt for every non-recap
+    article published in the last `days` days, oldest first -- read
+    straight from the files like draft.py's own published_articles(), so a
+    hand-edited or manually-added article is included too."""
     cutoff = datetime.now(timezone.utc).date() - timedelta(days=days)
     entries = []
     for path in ARTICLES_DIR.glob("*.md"):
@@ -73,24 +74,12 @@ def recent_published_articles(days: int) -> list[dict]:
         first_para = next(
             (p.strip() for p in body.split("\n\n") if p.strip() and not p.strip().startswith("#")), ""
         )
-        score_match = re.search(r"^selectionScore:\s*([\d.]+)\s*$", text, re.M)
-        image_match = _IMAGE_BLOCK_RE.search(text)
         entries.append(
             {
                 "slug": path.stem,
                 "title": title.group(1),
                 "date": date.group(1),
                 "excerpt": first_para,
-                "selectionScore": float(score_match.group(1)) if score_match else 0.0,
-                "image": (
-                    {
-                        "src": image_match.group("src"),
-                        "credit": image_match.group("credit"),
-                        "sourceUrl": image_match.group("sourceUrl"),
-                    }
-                    if image_match
-                    else None
-                ),
             }
         )
 
@@ -98,29 +87,125 @@ def recent_published_articles(days: int) -> list[dict]:
     return entries
 
 
-def pick_recap_image(entries: list[dict], chosen_slug: str | None) -> dict | None:
-    """Reuse a photo from one of this week's own articles -- the recap has
-    no single subject to source a new photo for, but the site's
-    article-page layout expects a hero image, and one of the week's own
-    articles almost always has a usable one already downloaded. `src`
+def all_published_images() -> list[dict]:
+    """Every photo already downloaded across the site's entire published
+    history (not just this week) -- used to find every existing photo of a
+    given subject, regardless of which article originally sourced it.
+
+    Unlike draft.py's RECENT_IMAGE_COOLDOWN (which exists so the homepage
+    grid doesn't show the same photo twice to a visitor at once), the
+    recap's hero image has no such neighbor to duplicate -- it doesn't
+    even appear on the homepage, just its own article page -- so recency
+    of use elsewhere is deliberately not a factor here."""
+    images = []
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        image_match = _IMAGE_BLOCK_RE.search(text)
+        if not image_match:
+            continue
+        images.append(
+            {
+                "src": image_match.group("src"),
+                "credit": image_match.group("credit"),
+                "sourceUrl": image_match.group("sourceUrl"),
+            }
+        )
+    return images
+
+
+def _commons_title_from_source_url(source_url: str) -> str | None:
+    """"https://commons.wikimedia.org/wiki/File%3AFoo_Bar.jpg" ->
+    "File:Foo Bar.jpg", the page title the Commons API expects. Underscores
+    become spaces: the API normalizes titles that way in its response
+    regardless of which form is requested, so matching against its output
+    later requires starting from the same normalized form -- comparing the
+    underscored request form against the spaced response form silently
+    matched nothing in practice. None for anything that isn't a Commons
+    file page (defensive; every image this site sources is one)."""
+    path = urllib.parse.urlparse(source_url).path
+    title = urllib.parse.unquote(path.rsplit("/wiki/", 1)[-1]).replace("_", " ")
+    return title if title.startswith("File:") else None
+
+
+def _real_photo_dates(source_urls: list[str]) -> dict[str, str]:
+    """Commons sourceUrl -> the photo's own DateTimeOriginal (via
+    images.py's _photo_date, which deliberately never falls back to an
+    upload timestamp -- see its docstring). This is the actual recency
+    that matters for picking "the latest photo of this person": when our
+    own site downloaded or wrote about it is unrelated to how old the
+    photograph itself is."""
+    titles_by_url = {u: t for u in source_urls if (t := _commons_title_from_source_url(u))}
+    if not titles_by_url:
+        return {}
+    try:
+        data = _get(
+            {
+                "action": "query",
+                "titles": "|".join(titles_by_url.values()),
+                "prop": "imageinfo",
+                "iiprop": "extmetadata",
+            }
+        )
+    except Exception as exc:  # noqa: BLE001 -- best-effort; caller falls back on a miss
+        print(f"  recap image: Commons date lookup failed, falling back: {exc}", file=sys.stderr)
+        return {}
+
+    pages = data.get("query", {}).get("pages", {})
+    dates_by_title = {}
+    for page in pages.values():
+        title = page.get("title")
+        info_list = page.get("imageinfo")
+        if not title or not info_list:
+            continue
+        dates_by_title[title] = _photo_date(info_list[0].get("extmetadata", {}))
+
+    return {url: dates_by_title[title] for url, title in titles_by_url.items() if title in dates_by_title}
+
+
+def pick_recap_image(subject: str) -> dict | None:
+    """Find every already-downloaded photo of `subject` anywhere in the
+    site's history (matched against each photo's Commons credit/sourceUrl,
+    which reliably carries the subject's name even when the locally-saved
+    file was renamed to an article slug) and return the one with the most
+    recent real-world photo date, per Wikimedia's own metadata -- NOT
+    whichever of our own articles happened to download it most recently,
+    which says nothing about how old the photograph actually is. `src`
     (e.g. "./_images/Foo.webp") is a plain relative path resolved by
     Astro's image() schema helper from the entry file's own directory --
     since every article lives in the same src/content/articles/
     directory, the recap can point at the exact same already-downloaded
     file with no new download or license lookup.
 
-    Prefers the model's own pick (it wrote the headline, so it knows which
-    story that photo needs to actually match -- a highest-score heuristic
-    picked an unrelated tournament sponsor's photo for a piece about a
-    league standings battle in practice). Falls back to the
-    highest-selectionScore article with a photo if the model left the
-    field empty or named something that turns out to have none."""
-    by_slug = {e["slug"]: e for e in entries if e["image"]}
-    if chosen_slug and chosen_slug in by_slug:
-        return by_slug[chosen_slug]["image"]
-    if not by_slug:
+    Matches on the full subject name first, falling back to just the last
+    word (surname) -- Commons credit lines don't follow one fixed format,
+    and a surname-only match is still a correct match for a chess figure,
+    who is essentially never confused with someone else sharing only a
+    first name in this corpus."""
+    if not subject:
         return None
-    return max(by_slug.values(), key=lambda e: e["selectionScore"])["image"]
+    candidates = all_published_images()
+
+    def matches(img: dict, needle: str) -> bool:
+        haystack = f"{img['credit']} {img['sourceUrl']}".lower()
+        return needle.lower() in haystack
+
+    found = [img for img in candidates if matches(img, subject)]
+    if not found:
+        last_word = subject.strip().split()[-1] if subject.strip() else ""
+        if last_word:
+            found = [img for img in candidates if matches(img, last_word)]
+    if not found:
+        return None
+    if len(found) == 1:
+        best = found[0]
+    else:
+        real_dates = _real_photo_dates([img["sourceUrl"] for img in found])
+        # Missing metadata sorts as unknown/oldest ("0000-00-00"), same
+        # convention as images.py's own _photo_date -- never lets a photo
+        # with no confirmed date win over one that's actually dated.
+        best = max(found, key=lambda img: real_dates.get(img["sourceUrl"], "0000-00-00"))
+
+    return {"src": best["src"], "credit": best["credit"], "sourceUrl": best["sourceUrl"]}
 
 
 RECAP_SYSTEM_PROMPT = f"""You are writing the Weekly Recap for a small, curated chess news \
@@ -160,13 +245,12 @@ a headline for this week's recap in the form "Weekly Recap: <the week's actual t
 real theme, not a generic placeholder like "This Week in Chess"
 @@SOCIAL_COPY@@
 a single short social post (under 260 characters) teasing this week's recap, no hashtag spam, at most one relevant hashtag. Never include a URL or domain name of any kind -- the posting script appends the real article link separately, and a guessed one is always wrong.
-@@IMAGE_ARTICLE_SLUG@@
-the slug (exactly as given below) of the ONE article among this week's list whose photo \
-best represents THIS recap's own headline/theme -- not just any photo, the one a reader \
-would expect given the title you just wrote. Only choose from articles marked "(has \
-photo)" below; picking one marked "(no photo)" wastes the choice. Leave this field \
-completely empty if no article's photo genuinely fits the headline -- a missing photo is \
-better than a mismatched one.
+@@IMAGE_SUBJECT@@
+the ONE real person (or, failing that, organization/event) THIS recap's own headline is \
+actually about -- e.g. "Magnus Carlsen", not "Magnus Carlsen and Ian Nepomniachtchi" and \
+not a made-up description. A separate step searches the site's own photo library for this \
+exact name, so it must be a specific full name, not a theme or paraphrase. Leave this \
+field completely empty only if the headline genuinely has no single central figure.
 @@BODY_MARKDOWN@@
 the full recap body in Markdown"""
 
@@ -176,11 +260,9 @@ def build_user_prompt(entries: list[dict]) -> str:
     for e in entries:
         parts.append("")
         parts.append(f"- Title: {e['title']}")
-        parts.append(f"  Slug: {e['slug']}")
         parts.append(f"  Link: /articles/{e['slug']}/")
         parts.append(f"  Date: {e['date']}")
         parts.append(f"  Excerpt: {e['excerpt']}")
-        parts.append(f"  Photo: {'(has photo)' if e['image'] else '(no photo)'}")
     return "\n".join(parts)
 
 
@@ -220,7 +302,7 @@ def main() -> None:
         "reviewStatus": "draft",
         "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
     }
-    image = pick_recap_image(entries, (parsed.get("imageArticleSlug") or "").strip())
+    image = pick_recap_image((parsed.get("imageSubject") or "").strip())
     if image:
         frontmatter["image"] = image
 
