@@ -40,7 +40,7 @@ Interim President Viswanathan Anand said the title sponsorship of both the open 
 
 Salesforce's Patrick Stokes framed it as bringing "the power of the Agentic Enterprise" to a game he called one of the world's most beloved.
 
-FIDE has leaned on outside partners to modernize its infrastructure before, something Chessori has [tracked in the federation's recent domain-name arrangement with World Chess](/articles/who-actually-profits-from-chess-unpacking-the-fide-world-chess-domain-deal/), where the money and the branding didn't always point the same direction.
+FIDE has leaned on outside partners to modernize its infrastructure before, something The Chess Herald has [tracked in the federation's recent domain-name arrangement with World Chess](/articles/who-actually-profits-from-chess-unpacking-the-fide-world-chess-domain-deal/), where the money and the branding didn't always point the same direction.
 
 This deal is bigger in scope and cleaner in structure: Salesforce gets its name on three world championship cycles and a case study in taming a 204-federation bureaucracy, and FIDE gets an enterprise tech stack it almost certainly couldn't have built or afforded on its own.
 
