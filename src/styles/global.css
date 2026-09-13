@@ -18,6 +18,11 @@
      its own --brass and already passed, so it is left alone. */
   --brass: #7a5d25;
   --brass-tint: #f1e8d4;
+  /* Same as --brass-tint in light mode -- only diverges in dark mode (see
+     below), where --brass-tint's subtlety (right for a small lens-tag
+     chip) reads as dingy rather than lively on the homepage's three large
+     digest panels (Weekly Recap / Latest Articles / Most Popular). */
+  --digest-tint: #f1e8d4;
   --blue: #2c4d6e;
   --blue-tint: #e2eaf1;
   --terracotta: #a13f2a;
@@ -43,6 +48,7 @@
     --accent: #c99a7a;
     --brass: #d9ac5c;
     --brass-tint: #2c2415;
+    --digest-tint: #4a3418;
     --blue: #8bb1d6;
     --blue-tint: #1c2733;
     --terracotta: #d97a5f;
@@ -68,6 +74,7 @@
   --accent: #c99a7a;
   --brass: #d9ac5c;
   --brass-tint: #2c2415;
+  --digest-tint: #4a3418;
   --blue: #8bb1d6;
   --blue-tint: #1c2733;
   --terracotta: #d97a5f;
