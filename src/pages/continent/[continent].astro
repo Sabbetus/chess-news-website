@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 const { continent } = Astro.params as { continent: Continent };
 const meta = CONTINENT_META[continent];
 
-const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
+const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
 const articles = allArticles
   .filter((a) => a.data.continent === continent)
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());

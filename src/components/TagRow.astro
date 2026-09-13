@@ -3,16 +3,18 @@ import { LENS_META, LENS_SLUGS, type Lens } from '../lib/lens';
 import { CONTINENT_META, type Continent } from '../lib/continent';
 
 interface Props {
-  lens: Lens;
+  lens?: Lens;
   continent: Continent;
 }
 const { lens, continent } = Astro.props;
-const lensMeta = LENS_META[lens];
+const lensMeta = lens ? LENS_META[lens] : null;
 const continentMeta = CONTINENT_META[continent];
 ---
 
 <div class="tag-row">
-  <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${LENS_SLUGS[lens]}/`}>{lensMeta.label}</a>
+  {lensMeta && lens && (
+    <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${LENS_SLUGS[lens]}/`}>{lensMeta.label}</a>
+  )}
   <a class="continent-tag" href={`/continent/${continent}/`}>{continentMeta.label}</a>
 </div>
 
