@@ -561,7 +561,11 @@ const jsonLd = [
        padding, that made the gap above and below this link far bigger
        than anywhere else on the page. */
     margin: 0;
-    padding: 14px 0;
+    /* Asymmetric on purpose: the gap above (to the last card's content)
+       and below (to the footer's border-top line) weren't equal at a
+       flat 14px each -- measured 54px above vs 40px below -- so the
+       bottom padding is bumped to bring both to the same ~54px. */
+    padding: 14px 0 28px;
     text-align: center;
   }
   .view-all a {
