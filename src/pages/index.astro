@@ -242,18 +242,22 @@ const jsonLd = [
     margin: 0 0 16px;
   }
 
+  /* Same plain bordered-card treatment as .popular-block (see the digest
+     section below) -- both are list-style sidebar widgets, so they read
+     as one consistent pattern rather than two different styles. */
   .issue-index {
-    border-left: 1px solid var(--rule);
-    padding-left: 28px;
+    padding: 22px 24px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
   }
   .issue-index .label {
+    display: block;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-soft);
     margin-bottom: 14px;
-    display: block;
   }
   .issue-index ol {
     list-style: none;
@@ -443,10 +447,7 @@ const jsonLd = [
       grid-template-columns: 1fr;
     }
     .issue-index {
-      border-left: none;
-      padding-left: 0;
-      border-top: 1px solid var(--rule);
-      padding-top: 20px;
+      margin-top: 20px;
     }
   }
   @media (max-width: 640px) {
