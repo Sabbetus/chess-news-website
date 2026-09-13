@@ -346,6 +346,20 @@ const jsonLd = [
   .card {
     padding: 24px 0;
   }
+  /* Both boundary rows against the digest row: a .card's own vertical
+     padding otherwise adds an extra, uncounted 24px on top of the
+     section-level gap (grid's own padding + digest-row's margin) --
+     exactly the discrepancy that made the grid-to-digest-row gaps read
+     larger than the nav-to-lead / lead-to-grid gap they're meant to
+     match. Zeroing it here for just these two rows lets the gap be
+     controlled purely by .grid/.digest-row's own spacing, the same way
+     the lead-row gaps already are. */
+  .grid:has(+ .digest-row) .card:nth-last-child(-n + 2) {
+    padding-bottom: 0;
+  }
+  .digest-row + .grid .card:nth-child(-n + 2) {
+    padding-top: 0;
+  }
   .card h3 {
     margin: 0 0 9px;
     font-family: 'Fraunces', Georgia, serif;
@@ -375,7 +389,7 @@ const jsonLd = [
      it gets its own plain/neutral treatment rather than borrowing the
      recap's brass styling. */
   .digest-row {
-    margin: 24px 0 12px;
+    margin: 24px 0;
     display: grid;
     grid-template-columns: 1fr 280px;
     /* Matches the lead row's photo-to-sidebar gap (see .lead-cols) so
