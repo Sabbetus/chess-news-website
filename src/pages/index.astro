@@ -237,6 +237,17 @@ const jsonLd = [
   .lead-main :global(.thumb) {
     margin-bottom: 22px;
   }
+  /* Desktop only -- shrinks just the photo, not the title/text column
+     below it, so the lead story reads a bit more balanced against the
+     rest of the page. aspect-ratio (set on .thumb--lead itself) keeps
+     the crop proportions, so this only scales it down, not distorts it.
+     Guarded above the 860px breakpoint where .lead-cols stacks to a
+     single column -- no effect on mobile. */
+  @media (min-width: 861px) {
+    .lead-main :global(.thumb--lead) {
+      width: 90%;
+    }
+  }
   .lead h2 {
     margin: 0 0 14px;
     font-family: 'Fraunces', Georgia, serif;
