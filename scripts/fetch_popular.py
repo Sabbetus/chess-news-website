@@ -1,12 +1,13 @@
 """
-Fetches last-7-days pageview counts from Google Analytics 4 for
-last-7-days-published articles, ranks them, and writes the top few to
+Fetches last-7-days pageview counts from Google Analytics 4 for recently
+published articles, ranks them, and writes the top few to
 data/popular.json for the homepage's "Most Popular" panel (see
 src/pages/index.astro).
 
-Eligibility window matches the traffic window deliberately: an article
-published outside the last 7 days can never appear here, even if it
-somehow has more lifetime views than everything currently eligible.
+Eligibility window is anchored to the most recently published article's
+own date, not to "today" -- see eligible_articles() for why. Pageview
+traffic itself is still always the real last 7 days (fetch_pageviews()),
+regardless of where the eligibility window sits.
 
 Best-effort like images.py's photo search: any failure (missing
 credentials, a network error, GA4 down) leaves data/popular.json exactly
@@ -20,7 +21,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import requests
@@ -37,26 +38,34 @@ GA4_SCOPES = ["https://www.googleapis.com/auth/analytics.readonly"]
 
 
 def eligible_articles() -> dict[str, str]:
-    """slug -> title for every non-recap article published in the last
-    WINDOW_DAYS days."""
-    cutoff = datetime.now(timezone.utc).date() - timedelta(days=WINDOW_DAYS)
-    out = {}
+    """slug -> title for every non-recap article published within
+    WINDOW_DAYS of the most recently published article -- anchored to that
+    article's own date, not to "today". A multi-day gap between articles
+    (the daily pipeline can go quiet for a few days) would otherwise age
+    every article out of a today-relative window and empty the list out
+    entirely; anchoring to the latest article instead just holds the last
+    real cohort in place until a new one is published and resets it."""
+    parsed: list[tuple[str, str, date]] = []  # (slug, title, pub_date)
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text(encoding="utf-8")
         if 'reviewStatus: "published"' not in text or 'type: "recap"' in text:
             continue
         title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
-        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
-        if not title or not date:
+        pub_date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
+        if not title or not pub_date_match:
             continue
         try:
-            pub_date = datetime.strptime(date.group(1), "%Y-%m-%d").date()
+            pub_date = datetime.strptime(pub_date_match.group(1), "%Y-%m-%d").date()
         except ValueError:
             continue
-        if pub_date < cutoff:
-            continue
-        out[path.stem] = title.group(1)
-    return out
+        parsed.append((path.stem, title.group(1), pub_date))
+
+    if not parsed:
+        return {}
+
+    most_recent = max(pub_date for _, _, pub_date in parsed)
+    cutoff = most_recent - timedelta(days=WINDOW_DAYS)
+    return {slug: title for slug, title, pub_date in parsed if pub_date >= cutoff}
 
 
 def _get_access_token() -> str:
