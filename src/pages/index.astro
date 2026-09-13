@@ -5,6 +5,11 @@ import ArticleThumb from '../components/ArticleThumb.astro';
 import TagRow from '../components/TagRow.astro';
 import { estimateReadMinutes } from '../lib/reading';
 import { excerptFrom } from '../lib/excerpt';
+// Written by scripts/fetch_popular.py during deploy -- last-7-days GA4
+// pageviews for last-7-days-published articles, ranked. Best-effort: a
+// failed fetch leaves this file (and so this list) exactly as it was
+// after the last successful run, rather than going empty.
+import popular from '../../data/popular.json';
 
 const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
 const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
@@ -156,7 +161,19 @@ const jsonLd = [
 
     <section class="popular-block">
       <span class="popular-label">Most Popular</span>
-      <p class="digest-empty">Coming soon.</p>
+      {
+        popular.length > 0 ? (
+          <ol class="popular-list">
+            {popular.map((p) => (
+              <li>
+                <a href={`/articles/${p.slug}/`}>{p.title}</a>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="digest-empty">Coming soon.</p>
+        )
+      }
     </section>
   </div>
 
@@ -408,6 +425,43 @@ const jsonLd = [
     text-transform: uppercase;
     color: var(--ink-soft);
     margin-bottom: 14px;
+  }
+  .popular-list {
+    list-style: none;
+    counter-reset: popular;
+    margin: 0;
+    padding: 0;
+  }
+  .popular-list li {
+    counter-increment: popular;
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .popular-list li:first-child {
+    padding-top: 0;
+  }
+  .popular-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .popular-list li::before {
+    content: counter(popular);
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--brass);
+  }
+  .popular-list a {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .popular-list a:hover {
+    color: var(--accent);
   }
 
   .digest-empty {
