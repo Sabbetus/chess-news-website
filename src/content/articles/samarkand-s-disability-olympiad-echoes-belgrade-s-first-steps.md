@@ -30,7 +30,7 @@ None of this happens in a vacuum, though. This is only the third running of the 
 
 Sindarov noted that this is the first time the Olympiad for People with Disabilities has run alongside the main Chess Olympiad in the same host city, calling it a foundation he hopes "will help make it possible for the Olympiad for People with Disabilities and the Olympiad to be held at the same time in the future."
 
-Samarkand's hosting duties this year sit alongside other milestones the city has claimed recently, something [Chessori has covered in the context of the region's chess history](/articles/samarkand-links-ancient-ivory-pieces-to-a-modern-milestone/).
+Samarkand's hosting duties this year sit alongside other milestones the city has claimed recently, something [The Chess Herald has covered in the context of the region's chess history](/articles/samarkand-links-ancient-ivory-pieces-to-a-modern-milestone/).
 
 That growth trajectory shows up in the players themselves, not just the schedule. Axadxon Kimsanboyev, who beat Enock Seguya on Board 1 for Uzbekistan 1, has played every edition since the inaugural event in Belgrade in 2023, where he won a Board 4 silver medal.
 
