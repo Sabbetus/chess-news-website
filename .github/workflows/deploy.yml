@@ -40,10 +40,25 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
+      # Keyless: exchanges this job's own GitHub OIDC token (the id-token:
+      # write permission above) for short-lived Google credentials via
+      # Workload Identity Federation. No service-account JSON key exists
+      # anywhere -- the org's policy blocks creating those entirely, and
+      # this is also just the modern recommended approach regardless.
+      # continue-on-error so a not-yet-configured or temporarily-broken
+      # provider never blocks the actual site deploy -- fetch_popular.py
+      # itself already treats "no usable credentials" as a normal,
+      # non-fatal skip.
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        continue-on-error: true
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
       - name: Fetch Most Popular data from GA4
         env:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
-          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
         run: python scripts/fetch_popular.py
 
       - name: Commit updated popular.json
