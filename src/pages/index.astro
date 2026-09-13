@@ -133,33 +133,32 @@ const jsonLd = [
     )
   }
 
-  <section class="digest">
-    <div class="digest-cols">
-      <div class="digest-recap">
-        <span class="digest-label">
-          Weekly Recap
-          <a class="digest-all" href="/recaps/">All recaps &rarr;</a>
-        </span>
-        {
-          latestRecap ? (
-            <>
-              <h2>
-                <a href={`/articles/${latestRecap.slug}/`}>{latestRecap.data.title}</a>
-              </h2>
-              <p>{excerptFrom(latestRecap.body, 220)}</p>
-              <a class="digest-link" href={`/articles/${latestRecap.slug}/`}>Read the full recap &rarr;</a>
-            </>
-          ) : (
-            <p class="digest-empty">The first Weekly Recap is coming soon.</p>
-          )
-        }
-      </div>
-      <div class="digest-popular">
-        <span class="digest-label">Most Popular</span>
-        <p class="digest-empty">Coming soon.</p>
-      </div>
-    </div>
-  </section>
+  <div class="digest-row">
+    <section class="recap-block">
+      <span class="recap-label">
+        Weekly Recap
+        <a class="recap-all" href="/recaps/">All recaps &rarr;</a>
+      </span>
+      {
+        latestRecap ? (
+          <>
+            <h2>
+              <a href={`/articles/${latestRecap.slug}/`}>{latestRecap.data.title}</a>
+            </h2>
+            <p>{excerptFrom(latestRecap.body, 220)}</p>
+            <a class="recap-link" href={`/articles/${latestRecap.slug}/`}>Read the full recap &rarr;</a>
+          </>
+        ) : (
+          <p class="digest-empty">The first Weekly Recap is coming soon.</p>
+        )
+      }
+    </section>
+
+    <section class="popular-block">
+      <span class="popular-label">Most Popular</span>
+      <p class="digest-empty">Coming soon.</p>
+    </section>
+  </div>
 
   {
     secondarySecondHalf.length > 0 && (
@@ -321,23 +320,25 @@ const jsonLd = [
     gap: 8px;
   }
 
-  .digest {
+  /* Two independent blocks, not a shared box -- "Most Popular" is a
+     genuinely different kind of content (usage data, not editorial), so
+     it gets its own plain/neutral treatment rather than borrowing the
+     recap's brass styling. */
+  .digest-row {
     margin: 30px 0;
-    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .recap-block {
+    padding: 28px 32px;
     background: var(--brass-tint);
     border-top: 3px solid var(--brass);
     border-bottom: 3px solid var(--brass);
   }
-  .digest-cols {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 42px;
-  }
-  .digest-recap {
-    border-right: 1px solid var(--rule);
-    padding-right: 42px;
-  }
-  .digest-label {
+  .recap-label {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -349,46 +350,62 @@ const jsonLd = [
     color: var(--brass);
     margin-bottom: 14px;
   }
-  .digest-all {
+  .recap-all {
     font-size: 10.5px;
     letter-spacing: 0.08em;
     text-decoration: none;
     color: var(--ink-soft);
     text-transform: none;
   }
-  .digest-all:hover {
+  .recap-all:hover {
     color: var(--accent);
   }
-  .digest-recap h2 {
+  .recap-block h2 {
     margin: 0 0 10px;
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 540;
-    font-size: clamp(24px, 3vw, 32px);
+    font-size: clamp(22px, 2.6vw, 28px);
     line-height: 1.15;
   }
-  .digest-recap h2 a {
+  .recap-block h2 a {
     text-decoration: none;
     color: var(--ink);
   }
-  .digest-recap h2 a:hover {
+  .recap-block h2 a:hover {
     color: var(--accent);
   }
-  .digest-recap p {
+  .recap-block p {
     margin: 0 0 14px;
     color: var(--ink-soft);
     font-size: 15.5px;
     line-height: 1.6;
   }
-  .digest-link {
+  .recap-link {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.04em;
     text-decoration: none;
     color: var(--accent);
   }
-  .digest-link:hover {
+  .recap-link:hover {
     text-decoration: underline;
   }
+
+  .popular-block {
+    padding: 22px 24px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .popular-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
   .digest-empty {
     margin: 0;
     color: var(--ink-soft);
@@ -397,18 +414,11 @@ const jsonLd = [
   }
 
   @media (max-width: 860px) {
-    .digest {
-      padding: 26px 22px;
-    }
-    .digest-cols {
+    .digest-row {
       grid-template-columns: 1fr;
     }
-    .digest-recap {
-      border-right: none;
-      padding-right: 0;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 22px;
-      margin-bottom: 22px;
+    .recap-block {
+      padding: 24px 22px;
     }
   }
 
