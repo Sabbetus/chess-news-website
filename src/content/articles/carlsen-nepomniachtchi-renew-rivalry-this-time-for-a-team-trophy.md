@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-tech-mahindra-global-chess-leag
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 48
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen and Nepomniachtchi are meeting again, this time with a GCL trophy on the line instead of a world title. Old rivalry, new stakes. ♟️"
 image:
   src: "./_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
