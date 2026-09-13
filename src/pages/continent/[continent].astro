@@ -27,7 +27,7 @@ const description =
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
-<BaseLayout title={`${meta.label} | The Chess Herald`} description={description} activeContinent={continent}>
+<BaseLayout title={`${meta.label} | The Chess Herald`} description={description} activeSection="continent">
   <header class="section-head">
     <h1>{meta.label}</h1>
     <p>{articles.length} {articles.length === 1 ? 'story' : 'stories'}</p>

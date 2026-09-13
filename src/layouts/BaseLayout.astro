@@ -3,7 +3,7 @@ import '../styles/fonts.css';
 import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
 import SearchBox from '../components/SearchBox.astro';
-import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continent';
+import { LENS_META, LENS_ORDER, LENS_SLUGS, type Lens } from '../lib/lens';
 
 interface Props {
   title: string;
@@ -15,7 +15,14 @@ interface Props {
   // but can be overridden with the untruncated version via `ogTitle`.
   ogTitle?: string;
   description?: string;
-  activeContinent?: Continent | 'front-page' | 'archive' | 'recaps' | 'contact' | 'lens' | 'privacy' | 'about' | 'not-found';
+  // Which top-nav item (now the lenses, not the continents -- readers care
+  // more about the analytical angle than the region) to highlight, or one
+  // of a handful of page identifiers with no nav entry of their own
+  // ("continent" covers every /continent/<c>/ page, which still exist as
+  // URLs -- linked from TagRow's continent tag -- just not from the top
+  // nav) so they still get the correct non-front-page BrandTag treatment
+  // below without wrongly lighting up an unrelated nav item.
+  activeSection?: Lens | 'front-page' | 'archive' | 'recaps' | 'continent' | 'contact' | 'privacy' | 'about' | 'not-found';
   // Keeps a page out of search results. Only the 404 uses this -- it has no
   // stable URL of its own (GitHub Pages serves it for every unmatched path),
   // so an indexed copy would compete with real pages for no benefit.
@@ -30,7 +37,7 @@ const {
   title,
   ogTitle = title,
   description = DEFAULT_DESCRIPTION,
-  activeContinent = 'front-page',
+  activeSection = 'front-page',
   articleMeta,
   jsonLd = [],
   image,
@@ -42,7 +49,7 @@ const {
 // page has its own more specific h1 (the article title, the continent
 // name), so the brand there is a non-heading element carrying the same
 // look via a shared class -- not a second, competing h1.
-const BrandTag = activeContinent === 'front-page' ? 'h1' : 'p';
+const BrandTag = activeSection === 'front-page' ? 'h1' : 'p';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
@@ -57,7 +64,7 @@ const ogImageType = ogImageURL.toString().endsWith('.png') ? 'image/png' : 'imag
 
 const sections = [
   { id: 'front-page' as const, label: 'Front Page', href: '/' },
-  ...CONTINENT_ORDER.map((c) => ({ id: c, label: CONTINENT_META[c].navLabel, href: `/continent/${c}/` })),
+  ...LENS_ORDER.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
   { id: 'archive' as const, label: 'All Articles', href: '/archive/' },
 ];
 ---
@@ -223,7 +230,7 @@ const sections = [
       <nav class="sections">
         {
           sections.map((s) => (
-            <a href={s.href} class={s.id === activeContinent ? 'on' : ''}>
+            <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
               {s.label}
             </a>
           ))
