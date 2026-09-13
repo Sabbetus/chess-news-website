@@ -4,15 +4,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      skip_popular_fetch:
-        description: >-
-          Skip the GA4 fetch below -- set by social.yml's dispatch, which
-          already fetched and committed popular.json itself just before
-          triggering this run, so fetching again here would just be a
-          redundant duplicate API call fetching near-identical data.
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -59,7 +50,6 @@ jobs:
       # itself already treats "no usable credentials" as a normal,
       # non-fatal skip.
       - name: Authenticate to Google Cloud
-        if: github.event.inputs.skip_popular_fetch != 'true'
         uses: google-github-actions/auth@v2
         continue-on-error: true
         with:
@@ -67,13 +57,11 @@ jobs:
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Fetch Most Popular data from GA4
-        if: github.event.inputs.skip_popular_fetch != 'true'
         env:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
         run: python scripts/fetch_popular.py
 
       - name: Commit updated popular.json
-        if: github.event.inputs.skip_popular_fetch != 'true'
         run: |
           # Best-effort like fetch_popular.py itself: a failed/skipped
           # fetch leaves data/popular.json unchanged, so there's often
