@@ -583,6 +583,12 @@ const jsonLd = [
     .lead-main {
       width: 100%;
     }
+    /* Desktop's 19px reads too large next to the smaller mobile title
+       (24px floor, down from 28px) -- unbalanced by comparison. */
+    .dek {
+      font-size: 17px;
+      line-height: 1.6;
+    }
     .issue-index {
       width: 100%;
       /* Matches the 34px rhythm used elsewhere on the page (was 20px,
