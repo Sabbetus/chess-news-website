@@ -140,8 +140,8 @@ def _notability_score(t: dict) -> int:
 # Publishing schedule within the month, per user decision: "biggest tournaments"
 # (a look back at last month) runs first, one continent per scheduled day,
 # immediately followed by "what's coming up" (a look ahead at next month) --
-# back-to-back, days 1-23, so the run of 12 calendar slots leaves any gap at
-# the *end* of the month (day 24 through month-end) rather than splitting it
+# back-to-back, days 1-24, so the run of 12 calendar slots leaves any gap at
+# the *end* of the month (day 25 through month-end) rather than splitting it
 # in the middle. This guarantees at most one calendar-sourced article per
 # day -- ingestion only ever builds the single item scheduled for today, if
 # any -- and spreads the 6 continents x 2 article types across the month
@@ -150,9 +150,9 @@ CALENDAR_SCHEDULE = {
     1: ("calendar-biggest", "EU"), 3: ("calendar-biggest", "AS"),
     5: ("calendar-biggest", "NA"), 7: ("calendar-biggest", "SA"),
     9: ("calendar-biggest", "AF"), 11: ("calendar-biggest", "OC"),
-    13: ("calendar-comingup", "EU"), 15: ("calendar-comingup", "AS"),
-    17: ("calendar-comingup", "NA"), 19: ("calendar-comingup", "SA"),
-    21: ("calendar-comingup", "AF"), 23: ("calendar-comingup", "OC"),
+    14: ("calendar-comingup", "EU"), 16: ("calendar-comingup", "AS"),
+    18: ("calendar-comingup", "NA"), 20: ("calendar-comingup", "SA"),
+    22: ("calendar-comingup", "AF"), 24: ("calendar-comingup", "OC"),
 }
 
 
