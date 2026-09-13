@@ -9,9 +9,9 @@ selectionScore: 57
 reviewStatus: "published"
 socialCopy: "Eight teams still perfect after Round 2 in Samarkand, where the Disability Olympiad's field has grown from 26 teams in Belgrade to a record 40 now. Round 3 pits every leader against another."
 image:
-  src: "./_images/Fide_logo.webp"
-  credit: "FIDE, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFide_logo.png"
+  src: "./_images/3rd_disability_chess_olympiad_Germany_team.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A3rd_disability_chess_olympiad_Germany_team.jpg"
 ---
 
 Round 2 of the 3rd FIDE Chess Olympiad for People with Disabilities produced a cluster of lopsided scorelines in Samarkand, and by the end of the day [eight teams sat on a perfect four match points](https://www.fide.com/eight-teams-on-perfect-score-as-inclusion-and-lifelong-love-for-chess-take-center-stage-in-samarkand/), setting up a round of direct collisions at the top of the table.
