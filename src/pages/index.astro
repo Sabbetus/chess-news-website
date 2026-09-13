@@ -386,7 +386,9 @@ const jsonLd = [
     margin: 24px 0 12px;
     display: grid;
     grid-template-columns: 1fr 280px;
-    gap: 24px;
+    /* Matches the lead row's photo-to-sidebar gap (see .lead-cols) so
+       the two side-by-side rows on the page read consistently. */
+    gap: 35px;
     /* stretch (not start): with a real Most Popular list now rendering
        real content, the two boxes are rarely the same natural height --
        stretching them to match keeps their bottom edges aligned instead
