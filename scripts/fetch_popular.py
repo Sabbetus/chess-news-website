@@ -30,7 +30,7 @@ ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 POPULAR_PATH = ROOT / "data" / "popular.json"
 
 WINDOW_DAYS = 7
-MAX_ENTRIES = 5
+MAX_ENTRIES = 4
 
 GA4_API_URL = "https://analyticsdata.googleapis.com/v1beta/properties/{property_id}:runReport"
 GA4_SCOPES = ["https://www.googleapis.com/auth/analytics.readonly"]
