@@ -124,8 +124,20 @@ const sections = [
       crossorigin
     />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!--
+      Google Search explicitly does not support SVG favicons (only BMP,
+      GIF, ICO, PNG, JPEG, PPM, TIFF -- see developers.google.com/search/
+      docs/appearance/favicon-in-search), so the SVG (for browsers, which
+      all support it) is listed last: a browser evaluates every matching
+      <link rel="icon"> and picks its preferred one, so order doesn't cost
+      browsers anything, but a simpler crawler that just takes the first
+      tag now gets a format Google actually indexes. /favicon.ico is also
+      the classic default path several crawlers/bots still check even
+      without any <link> tag at all.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={articleMeta ? 'article' : 'website'} />
