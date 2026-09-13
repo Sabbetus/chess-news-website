@@ -227,7 +227,10 @@ const jsonLd = [
     margin: 0 0 16px;
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 540;
-    font-size: clamp(32px, 5vw, 48px);
+    /* Floor lowered from 32px: a long real headline was wrapping to 5
+       lines at common phone widths (375px, 360px) -- 27px keeps it to
+       4 there. Ceiling trimmed too, per "a bit smaller on both". */
+    font-size: clamp(27px, 4.6vw, 44px);
     line-height: 1.1;
     letter-spacing: -0.008em;
   }
