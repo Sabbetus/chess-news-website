@@ -28,8 +28,8 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
   },
 };
 
-// Nav/listing order -- roughly how often each lens gets used.
-export const LENS_ORDER: Lens[] = ['drama', 'historical-parallel', 'money-angle', 'community-pulse', 'tournament-db'];
+// Nav/listing order.
+export const LENS_ORDER: Lens[] = ['money-angle', 'historical-parallel', 'drama', 'community-pulse', 'tournament-db'];
 
 // URL slugs, kept separate from the Lens type itself -- the type value is
 // also the content-schema key stored in every article's frontmatter, which
