@@ -349,19 +349,31 @@ const jsonLd = [
   .card {
     padding: 24px 0;
   }
-  /* Both boundary rows against the digest row: a .card's own vertical
-     padding otherwise adds an extra, uncounted 24px on top of the
-     section-level gap (grid's own padding + digest-row's margin) --
-     exactly the discrepancy that made the grid-to-digest-row gaps read
-     larger than the nav-to-lead / lead-to-grid gap they're meant to
-     match. Zeroing it here for just these two rows lets the gap be
-     controlled purely by .grid/.digest-row's own spacing, the same way
-     the lead-row gaps already are. */
-  .grid:has(+ .digest-row) .card:nth-last-child(-n + 2) {
-    padding-bottom: 0;
-  }
-  .digest-row + .grid .card:nth-child(-n + 2) {
-    padding-top: 0;
+  /* Desktop (2-column grid) only -- see the 640px breakpoint below that
+     drops the grid to a single column. :nth-last-child(-n+2) / :nth-
+     child(-n+2) mean "the last/first ROW" only when there are 2 cards
+     per row; on a single-column mobile grid the same selectors instead
+     hit two separate, individually-stacked cards, zeroing padding
+     between two cards that aren't even adjacent to the digest row --
+     which is exactly what made mobile's inter-card gaps inconsistent
+     (a visibly smaller gap right next to the digest-row boundary).
+     Gating this behind the breakpoint keeps every mobile card's padding
+     uniform, so every inter-card gap on mobile matches. */
+  @media (min-width: 641px) {
+    /* Both boundary rows against the digest row: a .card's own vertical
+       padding otherwise adds an extra, uncounted 24px on top of the
+       section-level gap (grid's own padding + digest-row's margin) --
+       exactly the discrepancy that made the grid-to-digest-row gaps read
+       larger than the nav-to-lead / lead-to-grid gap they're meant to
+       match. Zeroing it here for just these two rows lets the gap be
+       controlled purely by .grid/.digest-row's own spacing, the same way
+       the lead-row gaps already are. */
+    .grid:has(+ .digest-row) .card:nth-last-child(-n + 2) {
+      padding-bottom: 0;
+    }
+    .digest-row + .grid .card:nth-child(-n + 2) {
+      padding-top: 0;
+    }
   }
   .card h3 {
     margin: 0 0 9px;
@@ -543,7 +555,13 @@ const jsonLd = [
   }
 
   .view-all {
-    padding: 10px 0 40px;
+    /* Was a bare <p>, so the browser's default ~17px margin (top and
+       bottom) was adding on top of this padding uncounted -- combined
+       with the last card's own bottom padding and the grid's own
+       padding, that made the gap above and below this link far bigger
+       than anywhere else on the page. */
+    margin: 0;
+    padding: 14px 0;
     text-align: center;
   }
   .view-all a {
