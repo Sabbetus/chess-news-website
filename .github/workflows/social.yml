@@ -12,6 +12,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  actions: write
 
 jobs:
   post:
@@ -24,6 +26,8 @@ jobs:
         uses: actions/setup-python@v5.6.0
         with:
           python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
 
       - name: Post pending articles
         env:
@@ -44,3 +48,48 @@ jobs:
           git add data/social-queue.json
           git commit -m "chore: social posting queue update"
           git push
+
+      # Refreshes Most Popular between article pushes -- those can go a
+      # couple of days without a new one, but view counts keep changing.
+      # Install deps here too since fetch_popular.py needs requests +
+      # google-auth, unlike social_post.py's stdlib-only urllib.
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        continue-on-error: true
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Fetch Most Popular data from GA4
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+        run: python scripts/fetch_popular.py
+
+      - name: Commit updated popular.json
+        id: popular_commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/popular.json; then
+            echo "No change to data/popular.json."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add data/popular.json
+          git commit -m "chore: update most-popular data"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # A plain git push here (using the default GITHUB_TOKEN) does not
+      # itself trigger deploy.yml -- GitHub suppresses workflow-triggered
+      # pushes from starting new workflow runs, to avoid infinite loops.
+      # Dispatch it explicitly so the refreshed data actually reaches the
+      # live site instead of just sitting committed on main.
+      - name: Trigger a site rebuild
+        if: steps.popular_commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
