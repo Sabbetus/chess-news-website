@@ -108,7 +108,7 @@ a headline for this week's recap in the form "Weekly Recap: <the week's actual t
 (e.g. "Weekly Recap: Rating Shakeups and a Controversial Finish in St. Louis") -- name the \
 real theme, not a generic placeholder like "This Week in Chess"
 @@SOCIAL_COPY@@
-a single short social post (under 260 characters) teasing this week's recap, no hashtag spam, at most one relevant hashtag
+a single short social post (under 260 characters) teasing this week's recap, no hashtag spam, at most one relevant hashtag. Never include a URL or domain name of any kind -- the posting script appends the real article link separately, and a guessed one is always wrong.
 @@BODY_MARKDOWN@@
 the full recap body in Markdown"""
 
