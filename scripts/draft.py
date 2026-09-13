@@ -711,13 +711,28 @@ def fix_long_paragraphs(
     try:
         response = client.messages.create(
             model=MODEL,
-            max_tokens=2048,
+            # Scales with the number of flagged paragraphs, not a flat
+            # 2048 -- caught live: a 4-paragraph batch silently fell back
+            # to the unfixed original because the model's thinking alone
+            # ate the whole fixed budget before it wrote any @@PARA_N@@
+            # output, leaving response.content with no text block at all.
+            max_tokens=max(4096, 1024 * len(offenders)),
             system=_PARAGRAPH_FIX_PROMPT,
             messages=[{"role": "user", "content": user_prompt}],
         )
         text_blocks = [b.text for b in response.content if b.type == "text"]
         if not text_blocks:
-            print("  paragraph fix-up: no text content in response, falling back", file=sys.stderr)
+            # stop_reason == "max_tokens" here means exactly the failure
+            # mode above (ran out of budget before any text); anything
+            # else (e.g. only a thinking or tool-use block with a normal
+            # stop_reason) points somewhere different -- log both so the
+            # next occurrence is diagnosable instead of a repeat mystery.
+            block_types = [b.type for b in response.content]
+            print(
+                f"  paragraph fix-up: no text content in response, falling back "
+                f"(stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+                file=sys.stderr,
+            )
             return body_markdown
 
         segments = re.split(r"^@@PARA_(\d+)@@[ \t]*\r?\n", text_blocks[-1].strip(), flags=re.MULTILINE)
