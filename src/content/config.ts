@@ -7,20 +7,30 @@ const articles = defineCollection({
   type: 'content',
   schema: ({ image }) => z.object({
     title: z.string(),
+    // "article" (the default) is every normal news/aggregate piece, sourced
+    // from one external story or the tournament calendar. "recap" is the
+    // weekly roundup, synthesized from that week's own published articles
+    // rather than an external source -- it skips the daily grid entirely
+    // and gets its own homepage section and archive instead (see
+    // index.astro and recaps.astro).
+    type: z.enum(['article', 'recap']).default('article'),
     publishDate: z.coerce.date(),
     // Set by hand when a published piece is substantively corrected, so
     // search engines see a real dateModified rather than assuming the
     // article has never been touched. Absent on anything unchanged since
     // publication, where dateModified correctly equals datePublished.
     updatedDate: z.coerce.date().optional(),
-    sourceName: z.string(),
-    sourceUrl: z.string().url(),
+    // Absent on a recap -- it has no single external source, it's a
+    // roundup of that week's own articles.
+    sourceName: z.string().optional(),
+    sourceUrl: z.string().url().optional(),
     // The analytical angle the piece is written through -- shapes the
     // drafting prompt, shown as a secondary label (not the site's primary
     // category, that's `continent`). tournament-db is reserved for the
     // calendar aggregate pieces; the other four are picked by the AI per
-    // news story, whichever fits best.
-    lens: z.enum(['tournament-db', 'drama', 'historical-parallel', 'money-angle', 'community-pulse']),
+    // news story, whichever fits best. Absent on a recap, which isn't
+    // written through any one analytical lens.
+    lens: z.enum(['tournament-db', 'drama', 'historical-parallel', 'money-angle', 'community-pulse']).optional(),
     // The site's primary browsing category. Calendar aggregates already
     // know their continent from ingestion; news stories get it inferred by
     // the AI at drafting time, falling back to "global" when no single
