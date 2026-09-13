@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,6 +29,37 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Fetch Most Popular data from GA4
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+        run: python scripts/fetch_popular.py
+
+      - name: Commit updated popular.json
+        run: |
+          # Best-effort like fetch_popular.py itself: a failed/skipped
+          # fetch leaves data/popular.json unchanged, so there's often
+          # nothing to commit here -- that's normal, not an error.
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/popular.json; then
+            echo "No change to data/popular.json."
+            exit 0
+          fi
+          git add data/popular.json
+          git commit -m "chore: update most-popular data"
+          git push
 
       - name: Build Astro site
         run: npm run build
