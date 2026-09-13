@@ -408,7 +408,6 @@ nav.sections {
   font-size: 12px;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--rule);
 }
 nav.sections a {
   color: var(--ink-soft);
