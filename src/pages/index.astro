@@ -252,7 +252,10 @@ const jsonLd = [
     margin: 0 0 14px;
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 520;
-    font-size: clamp(28px, 3.6vw, 41px);
+    /* Floor lowered from 28px: on phone widths a long title was wrapping
+       to 5 lines, tested against real long headlines down to 360px
+       wide -- 24px keeps even the longest ones to 4. */
+    font-size: clamp(24px, 3.6vw, 41px);
     line-height: 1.08;
     letter-spacing: -0.008em;
   }
@@ -564,7 +567,19 @@ const jsonLd = [
     }
     .issue-index {
       width: 100%;
-      margin-top: 20px;
+      /* Matches the 34px rhythm used elsewhere on the page (was 20px,
+         a value that predates that rhythm and was never revisited). */
+      margin-top: 34px;
+    }
+    /* Stacked layout only: .issue-index is now the last visible element
+       of .lead, so its own 22px bottom padding (see .issue-index above)
+       adds an extra, uncounted layer on top of .lead's own bottom
+       padding + .grid's own top padding -- the same kind of double-
+       counting the desktop grid/digest-row gap had. Dropping .lead's
+       mobile bottom padding to 0 here cancels that out, landing on
+       the same ~34px gap instead of ~56px. */
+    .lead {
+      padding-bottom: 0;
     }
   }
   @media (max-width: 640px) {
