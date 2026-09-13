@@ -228,33 +228,26 @@ const jsonLd = [
     padding: 34px 0 36px;
     border-bottom: 1px solid var(--rule);
   }
+  /* flex + space-between, not grid -- deliberately: lead-main and
+     issue-index both get a FIXED desktop width (671px / 330px, the exact
+     sizes the earlier "shrink the photo" and "widen the sidebar" changes
+     landed on), so narrowing .wrap can only eat into the space BETWEEN
+     them. A percentage/1fr-based column would have shrunk the photo
+     itself again every time .wrap narrows, which is exactly the mistake
+     that got reverted earlier today. */
   .lead-cols {
-    display: grid;
-    grid-template-columns: 1fr 330px;
-    gap: 40px;
-    align-items: start;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .lead-main {
+    width: 671px;
   }
   .lead-main :global(.thumb) {
     margin-bottom: 22px;
   }
-  /* Desktop only -- shrinks just the photo, not the title/text column
-     below it, so the lead story reads a bit more balanced against the
-     rest of the page. aspect-ratio (set on .thumb--lead itself) keeps
-     the crop proportions, so this only scales it down, not distorts it.
-     Guarded above the 860px breakpoint where .lead-cols stacks to a
-     single column -- no effect on mobile. Title/dek/tags/byline below
-     get the same 90% cap so the text block doesn't run past the
-     photo's right edge either. */
-  @media (min-width: 861px) {
-    .lead-main :global(.thumb--lead) {
-      width: 90%;
-    }
-    .lead-main h2,
-    .lead-main .dek,
-    .lead-main :global(.tag-row),
-    .lead-main .byline {
-      max-width: 90%;
-    }
+  .lead-main :global(.thumb--lead) {
+    width: 100%;
   }
   .lead h2 {
     margin: 0 0 14px;
@@ -282,6 +275,8 @@ const jsonLd = [
      section below) -- both are list-style sidebar widgets, so they read
      as one consistent pattern rather than two different styles. */
   .issue-index {
+    width: 330px;
+    flex-shrink: 0;
     padding: 22px 24px;
     border: 1px solid var(--rule);
     background: var(--digest-tint);
@@ -547,9 +542,13 @@ const jsonLd = [
 
   @media (max-width: 860px) {
     .lead-cols {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+    }
+    .lead-main {
+      width: 100%;
     }
     .issue-index {
+      width: 100%;
       margin-top: 20px;
     }
   }
