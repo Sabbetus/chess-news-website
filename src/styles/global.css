@@ -168,7 +168,14 @@ button:focus-visible {
 }
 
 .wrap {
-  max-width: 1180px;
+  /* Narrower than the original 1180px. The homepage lead row (see
+     index.astro's .lead-cols) uses fixed pixel widths for the photo/text
+     column and the Latest Articles sidebar specifically so that
+     narrowing this value only shrinks the space BETWEEN them, not either
+     box itself -- do not go narrower than ~1065px, which is where that
+     row's gap hits zero (671px lead column + 330px sidebar + 64px
+     padding, see the math in that file's comment). */
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -284,6 +291,14 @@ button:focus-visible {
   aspect-ratio: 4 / 3;
   width: 100%;
   margin-bottom: 16px;
+}
+/* Desktop only -- a small matching shrink so grid-card photos scale
+   down a touch along with the narrower .wrap, rather than reading
+   slightly oversized against it. Card titles/text stay full-width. */
+@media (min-width: 641px) {
+  .thumb--card {
+    width: 96%;
+  }
 }
 .thumb--card .piece {
   font-size: 64px;
