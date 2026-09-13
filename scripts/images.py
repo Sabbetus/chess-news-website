@@ -398,6 +398,34 @@ def search_image(query: str, strict: bool = False, exclude_source_urls: set | No
         return None
 
 
+# Dropped from a named subject to build its loosened fallback query below.
+# Ordinals/numbers ("3rd", "2026") and these connector words add nothing a
+# reader would search for and only make Commons' own relevance ranking
+# less likely to surface a real match in the handful of results actually
+# fetched (_search_titles only asks for the top 5) -- found live: "3rd FIDE
+# Chess Olympiad for People with Disabilities" found nothing, but stripping
+# it down to "FIDE Chess Olympiad Disabilities" surfaced a real team photo
+# from that exact event on the first try.
+_LOOSENING_STOPWORDS = {"for", "of", "the", "in", "and", "a", "an", "with", "to", "at", "on"}
+_ORDINAL_OR_NUMBER = re.compile(r"^\d+(st|nd|rd|th)?$", re.I)
+
+
+def _loosened_event_query(subject: str) -> str | None:
+    """A shorter fallback phrasing of `subject`, or None when there's
+    nothing to strip. Only ever removes ordinals/numbers and short
+    connector words -- never touches, reorders, or substitutes a single
+    content word -- so a short person's name (already free of both) comes
+    back unchanged and this adds no extra query for it; it's only a real
+    fallback for longer, formally-phrased event names, which is exactly
+    the case that needs Commons search to have fewer, more distinctive
+    words to rank on."""
+    words = subject.split()
+    kept = [w for w in words if not _ORDINAL_OR_NUMBER.match(w) and w.lower() not in _LOOSENING_STOPWORDS]
+    if len(kept) < 2 or len(kept) == len(words):
+        return None
+    return " ".join(kept)
+
+
 def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | None = None) -> list:
     """Ordered list of (query, strict) tuples to try, most specific first,
     for a drafted article. `item` is the original candidate dict (from
@@ -464,6 +492,9 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
         for subject in image_subjects or []:
             if subject:
                 queries.append((subject, False))
+                loosened = _loosened_event_query(subject)
+                if loosened:
+                    queries.append((loosened, False))
         # No auto-extracted headline-fragment fallback here: tried and
         # dropped in testing. Even requiring every word to match, generic
         # capitalized fragments like "Thursday Record" (from a headline,
