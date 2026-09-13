@@ -45,7 +45,7 @@ const correctionHref = `/contact/?${new URLSearchParams({
 // articles exist.
 const allArticles = await getCollection(
   'articles',
-  ({ data, slug }) => data.reviewStatus === 'published' && slug !== article.slug
+  ({ data, slug }) => data.reviewStatus === 'published' && data.type !== 'recap' && slug !== article.slug
 );
 const related = allArticles
   .filter((a) => a.data.continent === article.data.continent || a.data.lens === article.data.lens)
@@ -101,8 +101,7 @@ const jsonLd = [
       name: 'The Chess Herald',
       logo: { '@type': 'ImageObject', url: new URL('/favicon.png', Astro.site).toString() },
     },
-    isBasedOn: article.data.sourceUrl,
-    citation: article.data.sourceUrl,
+    ...(article.data.sourceUrl ? { isBasedOn: article.data.sourceUrl, citation: article.data.sourceUrl } : {}),
   },
   // The site already has a real Home > Continent > Article hierarchy in its
   // URLs and nav; describing it in markup is what lets search results show
@@ -147,16 +146,20 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <article class="story">
-    <ArticleThumb lens={article.data.lens} size="lead" image={article.data.image} alt={article.data.title} />
+    <ArticleThumb lens={article.data.lens ?? 'community-pulse'} size="lead" image={article.data.image} alt={article.data.title} />
 
     <div class="story-head">
       <h1>{article.data.title}</h1>
       <TagRow lens={article.data.lens} continent={article.data.continent} />
       <div class="byline">
-        <a class="src" href={article.data.sourceUrl} target="_blank" rel="noopener">
-          Source: {article.data.sourceName}
-        </a>
-        <span class="dot">&bull;</span>
+        {article.data.sourceUrl && article.data.sourceName ? (
+          <>
+            <a class="src" href={article.data.sourceUrl} target="_blank" rel="noopener">
+              Source: {article.data.sourceName}
+            </a>
+            <span class="dot">&bull;</span>
+          </>
+        ) : null}
         <span>{estimateReadMinutes(article.body)} min read</span>
         <span class="dot">&bull;</span>
         <span>{dateFmt}</span>
@@ -169,7 +172,11 @@ const jsonLd = [
 
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
-      Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceName}</a><br />
+      {article.data.sourceUrl && article.data.sourceName && (
+        <>
+          Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceName}</a><br />
+        </>
+      )}
       <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>
     </p>
 

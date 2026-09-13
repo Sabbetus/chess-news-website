@@ -1,0 +1,64 @@
+name: Draft weekly recap
+
+on:
+  # Sundays, after that day's daily pipeline run (06:00 UTC) has had time to
+  # land -- still opens a PR for human review, same as the daily pipeline;
+  # reviewStatus only flips to "published" on merge.
+  schedule:
+    - cron: '0 7 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  weekly-recap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Draft this week's recap with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/weekly_recap.py
+
+      - name: Open review PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
+            echo "No recap drafted -- nothing to review."
+            exit 0
+          fi
+
+          BRANCH="drafts/weekly-recap-$(date -u +%Y-%m-%d)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+
+          git add src/content/articles/
+          git commit -m "chore: weekly recap draft $(date -u +%Y-%m-%d)"
+          git push origin "$BRANCH"
+
+          BODY="Automated Weekly Recap draft, synthesized from this week's published articles. Review the body and merge to publish -- see docs/review-workflow.md."
+          if [ -s data/weekly-recap-report.md ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$(cat data/weekly-recap-report.md)"
+          fi
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Weekly recap: $(date -u +%Y-%m-%d)" \
+            --body "$BODY"
