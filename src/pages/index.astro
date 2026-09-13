@@ -230,8 +230,8 @@ const jsonLd = [
   }
   .lead-cols {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 48px;
+    grid-template-columns: 1fr 330px;
+    gap: 40px;
     align-items: start;
   }
   .lead-main :global(.thumb) {
@@ -242,10 +242,18 @@ const jsonLd = [
      rest of the page. aspect-ratio (set on .thumb--lead itself) keeps
      the crop proportions, so this only scales it down, not distorts it.
      Guarded above the 860px breakpoint where .lead-cols stacks to a
-     single column -- no effect on mobile. */
+     single column -- no effect on mobile. Title/dek/tags/byline below
+     get the same 90% cap so the text block doesn't run past the
+     photo's right edge either. */
   @media (min-width: 861px) {
     .lead-main :global(.thumb--lead) {
       width: 90%;
+    }
+    .lead-main h2,
+    .lead-main .dek,
+    .lead-main :global(.tag-row),
+    .lead-main .byline {
+      max-width: 90%;
     }
   }
   .lead h2 {
