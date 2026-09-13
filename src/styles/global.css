@@ -57,7 +57,7 @@
     /* --ink-soft (#a39c8b) against --digest-tint's dark value only just
        clears 4:1 contrast (~4.3:1, under the 4.5:1 AA text minimum) --
        read as noticeably low-contrast in practice. Full --ink instead. */
-    --digest-text: #ece7da;
+    --digest-text: #c9c2b0;
     --blue: #8bb1d6;
     --blue-tint: #1c2733;
     --terracotta: #d97a5f;
@@ -84,7 +84,7 @@
   --brass: #d9ac5c;
   --brass-tint: #2c2415;
   --digest-tint: #4a3418;
-  --digest-text: #ece7da;
+  --digest-text: #c9c2b0;
   --blue: #8bb1d6;
   --blue-tint: #1c2733;
   --terracotta: #d97a5f;
