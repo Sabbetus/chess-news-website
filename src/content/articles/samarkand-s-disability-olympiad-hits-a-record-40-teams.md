@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/eight-teams-on-perfect-score-as-inclusion-and-l
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 57
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Eight teams still perfect after Round 2 in Samarkand, where the Disability Olympiad's field has grown from 26 teams in Belgrade to a record 40 now. Round 3 pits every leader against another."
 image:
   src: "./_images/Fide_logo.webp"
