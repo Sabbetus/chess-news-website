@@ -309,6 +309,14 @@ const jsonLd = [
     color: var(--ink);
   }
   .issue-index a {
+    /* Matches .txt's own font-size/line-height exactly: without this,
+       the anchor's box metrics fall back to the page's inherited (larger)
+       font, throwing off the flex alignment between the number and the
+       title text -- unlike .popular-list, where the title sits directly
+       in the anchor with no wrapping span to create that mismatch. */
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    line-height: 1.35;
     text-decoration: none;
   }
   .issue-index a:hover .txt {
@@ -316,7 +324,7 @@ const jsonLd = [
   }
 
   .grid {
-    padding: 36px 0 10px;
+    padding: 22px 0 10px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 46px;
@@ -355,7 +363,7 @@ const jsonLd = [
      it gets its own plain/neutral treatment rather than borrowing the
      recap's brass styling. */
   .digest-row {
-    margin: 30px 0;
+    margin: 24px 0 12px;
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: 24px;
@@ -371,6 +379,9 @@ const jsonLd = [
     background: var(--digest-tint);
     border-top: 3px solid var(--brass);
     border-bottom: 3px solid var(--brass);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .recap-label {
     display: flex;
