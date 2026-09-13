@@ -121,13 +121,43 @@ jobs:
             exit 0
           fi
 
+          # A changed article doesn't just mean its own page changed --
+          # the front page (lead/latest/grid) and the archive listing
+          # always change too, and each article's own lens/continent
+          # listing page (and /recaps/, for a recap) changes as well.
+          # LENS_SLUGS below must match src/lib/lens.ts's own mapping.
           urls="[]"
+          add_url() {
+            urls=$(echo "$urls" | jq --arg u "$1" '. + [$u] | unique')
+          }
+          add_url "https://chessherald.com/"
+          add_url "https://chessherald.com/archive/"
+
           while IFS= read -r file; do
             [ -z "$file" ] && continue
             slug=$(basename "$file" .md)
-            url="https://chessherald.com/articles/${slug}/"
-            urls=$(echo "$urls" | jq --arg u "$url" '. + [$u]')
-            echo "Queued: $url"
+            add_url "https://chessherald.com/articles/${slug}/"
+            echo "Queued article: $slug"
+
+            type=$(grep -oP '^type:\s*"\K[^"]+' "$file" || true)
+            if [ "$type" = "recap" ]; then
+              add_url "https://chessherald.com/recaps/"
+              continue
+            fi
+
+            lens=$(grep -oP '^lens:\s*"\K[^"]+' "$file" || true)
+            case "$lens" in
+              drama) lens_slug="controversy" ;;
+              historical-parallel) lens_slug="history" ;;
+              money-angle) lens_slug="money" ;;
+              community-pulse) lens_slug="community" ;;
+              tournament-db) lens_slug="otb-tournaments" ;;
+              *) lens_slug="" ;;
+            esac
+            [ -n "$lens_slug" ] && add_url "https://chessherald.com/lens/${lens_slug}/"
+
+            continent=$(grep -oP '^continent:\s*"\K[^"]+' "$file" || true)
+            [ -n "$continent" ] && add_url "https://chessherald.com/continent/${continent}/"
           done <<< "$changed_files"
 
           count=$(echo "$urls" | jq 'length')
