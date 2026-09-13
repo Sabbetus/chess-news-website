@@ -109,7 +109,7 @@ const jsonLd = [
 
   {
     secondaryFirstHalf.length > 0 && (
-      <section class="grid grid--before-digest">
+      <section class="grid">
         {secondaryFirstHalf.map((a, i) => (
           <article class="card">
             <ArticleThumb
@@ -225,8 +225,7 @@ const jsonLd = [
   }
 
   .lead {
-    padding: 34px 0 36px;
-    border-bottom: 1px solid var(--rule);
+    padding: 34px 0 24px;
   }
   /* flex + space-between, not grid -- deliberately: lead-main and
      issue-index both get a FIXED desktop width (671px / 330px, the exact
@@ -253,7 +252,7 @@ const jsonLd = [
     margin: 0 0 14px;
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 520;
-    font-size: clamp(30px, 3.9vw, 45px);
+    font-size: clamp(28px, 3.6vw, 41px);
     line-height: 1.08;
     letter-spacing: -0.008em;
   }
@@ -338,7 +337,7 @@ const jsonLd = [
   }
 
   .grid {
-    padding: 22px 0 10px;
+    padding: 10px 0 10px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 46px;
@@ -346,13 +345,6 @@ const jsonLd = [
   }
   .card {
     padding: 24px 0;
-    border-bottom: 1px solid var(--rule-faint);
-  }
-  /* The row directly above the Weekly Recap box: that box already has its
-     own bottom brass rule as the section boundary, and no rule sits above
-     it on the other side -- so drop this row's border-bottom to match. */
-  .grid--before-digest .card:nth-last-child(-n + 2) {
-    border-bottom: none;
   }
   .card h3 {
     margin: 0 0 9px;
