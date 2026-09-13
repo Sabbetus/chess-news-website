@@ -22,7 +22,7 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
     description: 'Prize funds, sponsorship, and where the money in chess is actually moving.',
   },
   'community-pulse': {
-    label: 'Community Pulse',
+    label: 'Community',
     className: 'community',
     description: 'How players, streamers, and fans are actually reacting, grounded in real search.',
   },
@@ -40,7 +40,7 @@ export const LENS_SLUGS: Record<Lens, string> = {
   drama: 'controversy',
   'historical-parallel': 'history',
   'money-angle': 'money',
-  'community-pulse': 'community-pulse',
+  'community-pulse': 'community',
   'tournament-db': 'otb-tournaments',
 };
 
