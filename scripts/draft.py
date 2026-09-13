@@ -526,6 +526,9 @@ _FIELD_MARKERS = {
     "TITLE": "title",
     "SOCIAL_COPY": "socialCopy",
     "IMAGE_SUBJECTS": "imageSubjects",
+    # Only emitted by weekly_recap.py's prompt, not draft.py's own -- shared
+    # here so both scripts can reuse this same parser.
+    "IMAGE_ARTICLE_SLUG": "imageArticleSlug",
     "BODY_MARKDOWN": "bodyMarkdown",
 }
 _FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
