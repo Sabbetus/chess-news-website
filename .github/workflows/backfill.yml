@@ -83,4 +83,5 @@ jobs:
             --base main \
             --head "$BRANCH" \
             --title "Backfill batch: ${START} to ${END}" \
-            --body "One-off backfill replaying the daily selection over ${START} .. ${END}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging."
+            --body "One-off backfill replaying the daily selection over ${START} .. ${END}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging." \
+            --reviewer Sabbetus

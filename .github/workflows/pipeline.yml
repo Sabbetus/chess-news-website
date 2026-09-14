@@ -78,4 +78,5 @@ jobs:
             --base main \
             --head "$BRANCH" \
             --title "Draft batch: $(date -u +%Y-%m-%d)" \
-            --body "$BODY"
+            --body "$BODY" \
+            --reviewer Sabbetus
