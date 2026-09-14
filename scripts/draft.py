@@ -758,6 +758,22 @@ def fix_long_paragraphs(
             if n in fixed:
                 paragraphs[para_idx] = fixed[n]
 
+        # The success path used to log nothing at all -- indistinguishable
+        # after the fact from "never triggered", unlike every failure path
+        # above, which does log. Report exactly what changed (original
+        # word count, and each replacement paragraph's own word count) so
+        # a real run is auditable, not just "something happened".
+        offender_word_counts = dict(offenders)
+        details = []
+        for n in sorted(fixed):
+            pieces = [p for p in fixed[n].split("\n\n") if p.strip()]
+            piece_words = [len(p.split()) for p in pieces]
+            details.append(
+                f"#{n} ({offender_word_counts.get(n, '?')}w -> {len(pieces)} paragraphs, "
+                f"{'/'.join(str(w) + 'w' for w in piece_words)})"
+            )
+        print(f"  paragraph fix-up: split {', '.join(details)}", file=sys.stderr)
+
         return "\n\n".join(paragraphs)
     except Exception as exc:  # noqa: BLE001 -- best-effort like image sourcing; never fail the whole draft over this
         print(f"  paragraph fix-up: {type(exc).__name__}: {exc}, falling back", file=sys.stderr)
