@@ -257,10 +257,22 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     subject, org name, continent/country) that testing already confirmed
     work well with it -- e.g. "Asian Team Chess Championship..." correctly
     matches an "{continent} chess tournament" query without containing
-    every word of it."""
+    every word of it.
+
+    No significant words rejects every candidate outright (found live: a
+    real tournament name, "MAT 2026", is almost entirely decorative
+    Unicode symbols once stripped to plain letters -- its only word,
+    "MAT", is 3 letters, under the >=4 threshold below, leaving nothing
+    to filter on. The old behavior treated "nothing to check" as
+    "anything passes", which let Commons' full-text search return an
+    unrelated "Yoga mat strap" product photo -- matched on the word
+    "mat" somewhere on its page, nothing to do with chess -- straight
+    through with no filter at all. A query too weak to build a real
+    filter from should fail closed and let the cascade move on to its
+    next, more specific query, not accept whatever Commons hands back)."""
     significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 4]
     if not significant_words:
-        return True
+        return False
     title_lower = title.lower()
     if strict:
         return all(word.lower() in title_lower for word in significant_words)
