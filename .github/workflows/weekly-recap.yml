@@ -61,4 +61,5 @@ jobs:
             --base main \
             --head "$BRANCH" \
             --title "Weekly recap: $(date -u +%Y-%m-%d)" \
-            --body "$BODY"
+            --body "$BODY" \
+            --reviewer Sabbetus
