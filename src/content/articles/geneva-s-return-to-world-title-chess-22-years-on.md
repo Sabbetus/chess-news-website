@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/salesforce-fide-world-championship-match-2026-s
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Gukesh vs Sindarov: the youngest World Championship match ever, staged in a Swiss library museum. Switzerland hasn't hosted one since Brissago 2004. Full format, schedule and $2.5m purse breakdown inside. ♟️"
 image:
   src: "./_images/Gukesh_D_at_the_Candidates_2024_tournament_03.webp"

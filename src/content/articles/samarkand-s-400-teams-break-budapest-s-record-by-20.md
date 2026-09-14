@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/samarkand-ready-for-a-record-breaking-chess-oly
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "400 teams, 11 rounds, one Silk Road city. Samarkand's Olympiad smashes Budapest's 2024 record as India defends gold and Uzbekistan chases a repeat of 2022's shock win. ♟️"
 image:
   src: "./_images/SrinathChess.webp"

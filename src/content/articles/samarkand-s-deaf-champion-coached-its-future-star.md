@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/from-inclusion-to-inspiration-three-teams-lead-
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Before Javokhir Sindarov became a grandmaster, a deaf two-time world champion taught him the moves. Now their paths cross again in Samarkand. ♟️"
 image:
   src: "./_images/Zaynidinov_Sirojiddin.webp"

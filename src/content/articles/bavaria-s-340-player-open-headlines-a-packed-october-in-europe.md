@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "340 players in Gmund am Tegernsee, a Sarajevo GM swiss, and 332 tournaments tracked across Europe this October. A look at what's coming up. ♟️"
 aggregateKind: "calendar-comingup"
 continentName: "Europe"
