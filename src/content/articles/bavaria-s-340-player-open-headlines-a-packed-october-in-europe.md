@@ -13,9 +13,9 @@ continentName: "Europe"
 monthLabel: "October 2026"
 totalTracked: 332
 image:
-  src: "./_images/3rd_disability_chess_olympiad_Germany_team.webp"
-  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A3rd_disability_chess_olympiad_Germany_team.jpg"
+  src: "./_images/German_chess_2023.webp"
+  credit: "Yalaktm, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGerman_chess_2023.jpg"
 ---
 
 The Chess Tournament Calendar is tracking 332 events across Europe in October 2026, spanning the usual mix of weekend rapids, club opens, and longer classical swisses. At the top of the field by player count sits the [29. Offene Internationale Bayerische Schachmeister](https://chesstournamentcalendar.com/tournament/29-offene-internationale-bayerische-schachmeister-1434293/) in Gmund am Tegernsee, Germany, which runs October 31 through November 8 with 340 players registered, comfortably the largest gathering on this month's list.
