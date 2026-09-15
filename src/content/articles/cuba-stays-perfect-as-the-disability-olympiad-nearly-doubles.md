@@ -1,5 +1,5 @@
 ---
-title: "Cuba's Perfect Run Echoes Belgrade's Early Growth Story"
+title: "Cuba Stays Perfect as the Disability Olympiad Nearly Doubles"
 publishDate: "2026-09-15"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/cuba-takes-sole-lead-as-the-olympiad-for-people-with-disabilities-crosses-its-halfway-mark/"
