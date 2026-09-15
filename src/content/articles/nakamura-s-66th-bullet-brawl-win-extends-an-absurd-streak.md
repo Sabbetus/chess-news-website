@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/nakamura-wins-bullet-brawl-sept-12"
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 50
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Hikaru Nakamura just won Bullet Brawl for the 66th time, this one by 42 points. At what point does \"dominant\" stop covering it? ♞"
 image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"
