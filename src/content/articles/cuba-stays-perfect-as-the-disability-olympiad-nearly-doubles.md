@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/cuba-takes-sole-lead-as-the-olympiad-for-people
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 57
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Cuba stands alone at 8/8 after beating Israel head-to-head in Samarkand. But the real story of the 3rd Disability Olympiad is how much has changed since Belgrade's 26 teams became this year's 41. ♟️"
 image:
   src: "./_images/Ashutosh_Kumar_Singh.webp"
