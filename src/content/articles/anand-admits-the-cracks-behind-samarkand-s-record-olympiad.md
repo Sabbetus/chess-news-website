@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/opening-press-conference-of-the-46th-fide-chess
 lens: "drama"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Nearly 400 teams, one dead legend mourned, and a president admitting the visas and hotels aren't sorted yet. Samarkand's opening presser had it all. #ChessOlympiad"
 image:
   src: "./_images/Viswanathan_Anand__2016.webp"

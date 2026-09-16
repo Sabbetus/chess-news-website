@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/two-olympiads-two-new-leaders-poland-and-czech-
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Cuba's perfect record is gone. Poland and Czechia now share the lead in Samarkand's Disability Olympiad, with a Round 6 showdown between the two set up already. ♟️"
 image:
   src: "./_images/Gukesh_D_at_the_Candidates_2024_tournament_02.webp"
