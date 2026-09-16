@@ -35,10 +35,12 @@ ARTICLES_DIR = REPO_ROOT / "src" / "content" / "articles"
 QUEUE_PATH = REPO_ROOT / "data" / "social-queue.json"
 SITE_URL = "https://chessherald.com"
 
-# Drop to 1 once the backlog of already-published, not-yet-posted articles
-# is cleared -- 2/run x 4 runs/day comfortably outpaces the ~2-3 articles/day
-# the pipeline currently produces, so this is a temporary catch-up rate.
-POSTS_PER_RUN = 2
+# One per run: at 8 runs/day this still comfortably outpaces the
+# ~2-3 articles/day the pipeline produces, while keeping each run's post
+# count low enough that a newly published article doesn't have to wait
+# behind a backlog before going out. The initial catch-up backlog (this
+# was 2/run while it drained) is gone as of 2026-09-16.
+POSTS_PER_RUN = 1
 
 FACEBOOK_GRAPH_VERSION = "v21.0"
 THREADS_API_VERSION = "v1.0"
