@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
 continent: "asia"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "181 tournaments tracked across Asia in October 2026, and India alone accounts for most of the biggest fields. A look at what's coming up, from Udaipur to Kuala Lumpur. #chess"
 aggregateKind: "calendar-comingup"
 continentName: "Asia"
