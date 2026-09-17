@@ -30,6 +30,7 @@ import anthropic
 
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
+from lichess_game import find_game_embed
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -362,6 +363,12 @@ A headline built as a direct statement ("Cuba Stays Perfect as the Field Nearly 
 a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
+@@GAME_LOOKUP@@
+Leave this field completely empty UNLESS this piece is centrally about ONE specific decisive game between two named players -- not a team match score (multiple boards), not a multi-game or multi-round trend, not a calendar aggregate. A piece like Erigaisi's blunder-loss to Laohawirapap, built around one board's result, qualifies; "India beat Thailand 3-1" or "the standings flipped again" does not, even if a specific game is mentioned in passing. This gets used to look up a real, embeddable copy of the game -- being wrong or vague here wastes that lookup, so when in doubt, leave it empty.
+When it does apply, write exactly these three lines and nothing else, with the real values filled in:
+event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
+player1: first player's full name
+player2: second player's full name
 @@BODY_MARKDOWN@@
 the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density."""
 
@@ -429,6 +436,23 @@ the full article body in Markdown, 300-600 words"""
 def slugify(title: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
     return slug[:80].rstrip("-")
+
+
+def parse_game_lookup(text: str) -> dict | None:
+    """Parses the @@GAME_LOOKUP@@ field's "event: ...\\nplayer1: ...\\n
+    player2: ..." format. Returns None for the (normal, expected) case
+    where the model left it empty or the piece doesn't have one specific
+    game to look up -- see that field's instructions in NEWS_SYSTEM_PROMPT."""
+    event = re.search(r"^event:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player1 = re.search(r"^player1:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player2 = re.search(r"^player2:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    if not (event and player1 and player2):
+        return None
+    return {
+        "event": event.group(1).strip(),
+        "player1": player1.group(1).strip(),
+        "player2": player2.group(1).strip(),
+    }
 
 
 # How many previously-published pieces to offer the model as internal-link
@@ -568,6 +592,7 @@ _FIELD_MARKERS = {
     # IMAGE_SUBJECTS above: the recap names the one person/subject its own
     # headline is about, not a ranked list of Commons search candidates.
     "IMAGE_SUBJECT": "imageSubject",
+    "GAME_LOOKUP": "gameLookup",
     "BODY_MARKDOWN": "bodyMarkdown",
 }
 _FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
@@ -891,6 +916,22 @@ def draft_one(
         localized = localize_image(image)
         if localized:
             frontmatter["image"] = localized
+
+    if not is_aggregate:
+        game_lookup = parse_game_lookup(parsed.get("gameLookup") or "")
+        if game_lookup:
+            # A missing embed is the normal, expected outcome for most
+            # matches attempted (calendar aggregates never reach here at
+            # all, and plenty of named games still won't be on a Lichess
+            # broadcast) -- only log and skip, never fail the whole draft
+            # over a lookup that didn't pan out.
+            try:
+                embed = find_game_embed(client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"])
+            except Exception as exc:
+                print(f"  Game embed lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+                embed = None
+            if embed:
+                frontmatter["gameEmbed"] = embed
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():

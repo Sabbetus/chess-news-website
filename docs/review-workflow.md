@@ -24,6 +24,9 @@ continent: europe | asia | north-america | south-america | africa | oceania | gl
 selectionScore: number    # from scripts/selection.py -- why this story was picked
 reviewStatus: draft | approved | published
 socialCopy: string        # suggested post text for Phase 2 social automation
+gameEmbed:                 # only present when the piece centers on one specific
+  url: string              # game AND scripts/lichess_game.py found a confident
+                            # match on Lichess -- absent on most articles
 
 # Calendar aggregate articles (see below) also carry, for reviewer context
 # only -- stripped from the built site's data, visible only in the raw file:
