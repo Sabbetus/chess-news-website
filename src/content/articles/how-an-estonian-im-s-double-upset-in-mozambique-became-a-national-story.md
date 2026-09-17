@@ -3,7 +3,7 @@ title: "How an Estonian IM's Double Upset in Mozambique Became a National Story"
 publishDate: "2026-08-23"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/narva-zhu-2026-wr-womens-chess-tour-africa"
-lens: "community-pulse"
+lens: "upsets"
 continent: "africa"
 selectionScore: 48
 reviewStatus: "published"

@@ -19,7 +19,7 @@ additionalSources:        # only present when scripts/selection.py detected anot
   - sourceName: string    # outlet covering the same event and merged it into one
     sourceUrl: string      # piece instead of publishing the story twice -- both get
                             # credited in the byline
-lens: tournament-db | drama | historical-parallel | money-angle | community-pulse
+lens: tournament-db | drama | historical-parallel | money-angle | upsets
 continent: europe | asia | north-america | south-america | africa | oceania | global
 selectionScore: number    # from scripts/selection.py -- why this story was picked
 reviewStatus: draft | approved | published

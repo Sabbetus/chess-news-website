@@ -14,9 +14,10 @@ Every article carries two independent pieces of metadata:
   - lens: the analytical angle the piece is written through -- shapes the
     prompt, shown on-site as a secondary label, not the primary category.
     "tournament-db" is reserved for calendar aggregates (forced, not
-    chosen); news items get one of four lenses (drama, historical-parallel,
-    money-angle, community-pulse), picked by the model as whichever best
-    fits that specific story.
+    chosen); news items get one of four lenses (drama, money-angle, upsets,
+    historical-parallel), picked by the model as whichever best fits that
+    specific story -- checked roughly in that order, with historical-parallel
+    as the fallback (see LENS_OPTIONS below).
 """
 
 import json
@@ -36,12 +37,6 @@ SELECTED_PATH = DATA_DIR / "selected.json"
 ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 
 MODEL = "claude-sonnet-5"
-
-# Only offered on news-item drafting calls (see draft_one) -- the prompt
-# restricts actual use to the community-pulse lens. $10/1,000 searches plus
-# normal token cost for result content; at this volume (at most one
-# community-pulse piece a day) the added cost is negligible.
-WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 3}
 
 CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 
@@ -124,7 +119,12 @@ AGGREGATE_INSTRUCTIONS = {
 }
 
 # The four lenses a news item can be drafted through -- the model picks
-# whichever fits the specific story best (see NEWS_SYSTEM_PROMPT).
+# whichever fits the specific story best (see NEWS_SYSTEM_PROMPT). Checked
+# in this order: drama and money-angle first (a real scandal or financial
+# angle is unambiguous when it exists), then upsets, and historical-parallel
+# only as the fallback when none of the other three genuinely fit -- chess
+# has enough documented history that *a* parallel can be found for nearly
+# any story, which is exactly why that ease can't be the deciding factor.
 LENS_OPTIONS = {
     "drama": (
         "Drama angle: lean into any scandal, controversy, or genuine "
@@ -133,19 +133,12 @@ LENS_OPTIONS = {
         "opinion columnist would. Only pick this lens when there's a real "
         "scandal, dispute, grievance, or falling-out to work with -- someone "
         "objecting to something, a rules or conduct controversy, a rivalry "
-        "with real tension behind it. A team simply winning or losing a "
-        "match, even in an upset or unusual format, is competition, not "
-        "drama -- that's historical-parallel (if there's a genuine echo of "
-        "the past) or community-pulse (if the story is really about how "
-        "people are reacting) territory instead. Don't reach for this lens "
-        "just because a result was surprising."
-    ),
-    "historical-parallel": (
-        "Historical parallel: ground the story against chess history -- a "
-        "similar record, controversy, or milestone from the past, and what "
-        "changed (or didn't) between then and now. Only pick this lens when a "
-        "genuine, specific historical parallel exists -- not a vague "
-        "'chess has always had drama' gesture."
+        "with real tension behind it. A team or player simply winning or "
+        "losing, even in a surprising or unusual way, is competition, not "
+        "drama -- that's upsets (if the story is really about how surprising "
+        "or costly the result itself was) or historical-parallel (if there's "
+        "a genuine echo of the past) territory instead. Don't reach for this "
+        "lens just because a result was surprising."
     ),
     "money-angle": (
         "Money angle: analyze the story through prize funds, sponsorship, "
@@ -154,18 +147,35 @@ LENS_OPTIONS = {
         "money is moving in chess. Only pick this lens when there's a real "
         "financial angle to dig into."
     ),
-    "community-pulse": (
-        "Community pulse: characterize how players, streamers, and fans are "
-        "actually reacting to this story -- the range of takes, where "
-        "opinion splits, what's getting argued about. Use the web_search tool "
-        "to find real, current discussion of this story (forums, social "
-        "media commentary, other chess sites' coverage, comment sections) and "
-        "ground the piece in what you actually find. If search turns up "
-        "little or nothing relevant, fall back to characterizing the likely "
-        "reaction in general terms based on how chess fandom has responded to "
-        "comparable stories before -- but never invent specific quotes, "
-        "usernames, or claim a specific post/comment exists when you're "
-        "actually extrapolating."
+    "upsets": (
+        "Upsets: for a story that's fundamentally about a surprising result -- "
+        "an underdog win, a blunder, a favorite's collapse, a shock scoreline -- "
+        "not a scandal or dispute (that's drama instead; a controversial call "
+        "or conduct dispute stays there even if it also produced a surprising "
+        "result). Do two things, not just describe what happened:\n"
+        "1. Quantify the surprise. Use the rating gap (or seed/ranking gap "
+        "when that's what's given) to say something concrete about how "
+        "unlikely a result like this 'should' have been -- a real number or "
+        "grounded estimate, not just an assertion that it was shocking.\n"
+        "2. Look forward, not back. Say what the upset actually changes: "
+        "momentum into the next round, seeding, a psychological edge for a "
+        "rematch, what it costs (or doesn't cost) the team or player overall. "
+        "This is the lens's payoff -- don't end at 'and that was surprising,' "
+        "end at what it means going forward.\n"
+        "Only pick this lens when the story is centrally about the surprising "
+        "result itself, not a story that merely mentions one in passing."
+    ),
+    "historical-parallel": (
+        "Historical parallel -- the fallback lens: pick this only when the "
+        "story doesn't have a clear money, controversy, or upset angle to "
+        "write through instead. When it does, prefer that lens even if a "
+        "historical parallel also exists. Ground the story against chess "
+        "history -- a similar record, controversy, or milestone from the "
+        "past, and what changed (or didn't) between then and now. Still "
+        "requires a genuine, specific parallel, not a vague 'chess has "
+        "always had drama' gesture -- but don't reach for this lens by "
+        "default just because one can always be found somewhere in a "
+        "century-plus of chess history."
     ),
 }
 
@@ -311,7 +321,12 @@ someone is worse than a missed one (caught live: a piece mentioning "Komil \
 Sindarov," a federation vice president, was linked to an unrelated article about \
 "Javokhir Sindarov," a grandmaster -- same surname, different, unrelated people).
 
-First, pick the single best-fitting lens for THIS story from these options:
+First, pick the single best-fitting lens for THIS story from these options, checked \
+in the order listed -- drama and money-angle are unambiguous when they genuinely \
+apply, upsets covers a story that's centrally about a surprising result, and \
+historical-parallel is the fallback: only reach for it when none of the other \
+three genuinely fit, even though a historical parallel can usually be found for \
+almost any story:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
 
 Then pick the single most relevant continent for this story from: {CONTINENT_OPTIONS}. \
@@ -319,16 +334,6 @@ Use "global" only when no single continent genuinely fits (e.g. a story about \
 international chess governance or an online-only event with no regional angle) -- \
 prefer picking a real continent whenever the story has any regional anchor \
 (a player's federation, a tournament's location, etc.).
-
-You have a web_search tool available. Only use it if you choose the \
-community-pulse lens (see its description above for how) -- for every other \
-lens, do not search, just write from the source material given to you.
-
-Don't carry over raw citation markup like <cite index="...">...</cite> \
-from search results into your output -- that markup is for your own \
-internal reference only, and \
-must never appear anywhere in your final answer. Paraphrase and attribute in \
-plain prose instead (e.g. "according to the tour's recap...").
 
 Your FINAL message must consist ONLY of the fields below, each introduced by \
 its marker line exactly as shown (@@NAME@@ alone on its own line, nothing \
@@ -597,15 +602,6 @@ def parse_response(text: str) -> dict:
     if "title" not in parsed or "bodyMarkdown" not in parsed:
         raise ValueError(f"Missing required field(s) in model response, got: {sorted(parsed)}")
 
-    # Defensive backstop for the community-pulse (web_search) lens: despite
-    # the prompt telling the model not to, it has carried raw <cite
-    # index="...">...</cite> markup from search results straight into
-    # bodyMarkdown in practice. Strip the tags but keep the inner text so a
-    # slip here doesn't cost an otherwise-good draft.
-    for key in ("title", "bodyMarkdown", "socialCopy"):
-        if isinstance(parsed.get(key), str):
-            parsed[key] = re.sub(r"</?cite[^>]*>", "", parsed[key])
-
     return parsed
 
 
@@ -825,32 +821,14 @@ def draft_one(
         system=system_prompt,
         output_config={"effort": "medium"},
     )
-    if not is_aggregate:
-        # Available for every news item regardless of which lens gets picked --
-        # the prompt restricts actual use to community-pulse; the tool call
-        # itself is free to include, only real uses are billed.
-        create_kwargs["tools"] = [WEB_SEARCH_TOOL]
 
     messages = [{"role": "user", "content": user_prompt}]
     response = client.messages.create(messages=messages, **create_kwargs)
-
-    # A web search turn can pause on long-running searches (stop_reason
-    # "pause_turn"); resume by sending the paused assistant turn back
-    # unchanged, per Anthropic's docs. Capped so a stuck loop can't hang the
-    # whole batch.
-    for _ in range(3):
-        if response.stop_reason != "pause_turn":
-            break
-        messages.append({"role": "assistant", "content": response.content})
-        response = client.messages.create(messages=messages, **create_kwargs)
 
     text_blocks = [b.text for b in response.content if b.type == "text"]
     if not text_blocks:
         raise RuntimeError(f"No text content returned for: {item['title']}")
 
-    # With web search enabled, earlier text blocks can be the model's own
-    # "I'll search for..." narration -- only the final block is the
-    # structured answer the prompt asked for.
     parsed = parse_response(text_blocks[-1])
 
     if is_aggregate:
