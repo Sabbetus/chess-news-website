@@ -3,7 +3,7 @@ title: "Carlsen Returns, But GCL Day One Belongs to Sindarov"
 publishDate: "2026-09-07"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/gcl-2026-fyers-american-gambits-make-a-perfect-start/"
-lens: "community-pulse"
+lens: "upsets"
 continent: "asia"
 selectionScore: 58
 reviewStatus: "published"

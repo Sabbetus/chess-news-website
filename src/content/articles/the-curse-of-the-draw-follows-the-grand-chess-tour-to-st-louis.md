@@ -3,7 +3,7 @@ title: "The 'Curse of the Draw' Follows the Grand Chess Tour to St. Louis"
 publishDate: "2026-08-23"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-1"
-lens: "community-pulse"
+lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 40
 reviewStatus: "published"
