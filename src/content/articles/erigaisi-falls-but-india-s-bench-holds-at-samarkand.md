@@ -3,7 +3,7 @@ title: "Erigaisi Falls, but India's Bench Holds at Samarkand"
 publishDate: "2026-09-17"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/samarkand-olympiad-day-1-favourites-fireworks-and-a-shock/"
-lens: "historical-parallel"
+lens: "upsets"
 continent: "asia"
 selectionScore: 65
 reviewStatus: "published"
