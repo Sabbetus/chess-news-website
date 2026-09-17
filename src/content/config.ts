@@ -24,6 +24,20 @@ const articles = defineCollection({
     // roundup of that week's own articles.
     sourceName: z.string().optional(),
     sourceUrl: z.string().url().optional(),
+    // Set when selection.py recognized another outlet's coverage of this
+    // same event and merged the two into one piece (see
+    // merge_duplicate_stories in scripts/selection.py) rather than
+    // publishing the same story twice. sourceName/sourceUrl above stay
+    // the primary source; this lists every other outlet the piece also
+    // draws on.
+    additionalSources: z
+      .array(
+        z.object({
+          sourceName: z.string(),
+          sourceUrl: z.string().url(),
+        })
+      )
+      .optional(),
     // The analytical angle the piece is written through -- shapes the
     // drafting prompt, shown as a secondary label (not the site's primary
     // category, that's `continent`). tournament-db is reserved for the

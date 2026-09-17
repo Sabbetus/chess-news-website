@@ -57,6 +57,15 @@ const similar = [...related, ...fallback].slice(0, 3);
 
 const continentMeta = CONTINENT_META[article.data.continent];
 
+// Primary source plus every additional outlet the piece also draws on
+// (see additionalSources in config.ts) -- most articles have just the
+// one, but a piece merged from two outlets' coverage of the same event
+// lists both here so the byline and JSON-LD credit all of them.
+const allSources =
+  article.data.sourceUrl && article.data.sourceName
+    ? [{ sourceName: article.data.sourceName, sourceUrl: article.data.sourceUrl }, ...(article.data.additionalSources ?? [])]
+    : [];
+
 // Recap articles have no `lens` field, so article.data.lens is
 // undefined -- and BaseLayout's destructuring default
 // (`activeSection = 'front-page'`) kicks in for an explicitly-
@@ -111,7 +120,12 @@ const jsonLd = [
       name: 'The Chess Herald',
       logo: { '@type': 'ImageObject', url: new URL('/favicon.png', Astro.site).toString() },
     },
-    ...(article.data.sourceUrl ? { isBasedOn: article.data.sourceUrl, citation: article.data.sourceUrl } : {}),
+    ...(allSources.length > 0
+      ? {
+          isBasedOn: allSources.length === 1 ? allSources[0].sourceUrl : allSources.map((s) => s.sourceUrl),
+          citation: allSources.length === 1 ? allSources[0].sourceUrl : allSources.map((s) => s.sourceUrl),
+        }
+      : {}),
   },
   // The site already has a real Home > Continent > Article hierarchy in its
   // URLs and nav; describing it in markup is what lets search results show
@@ -162,11 +176,17 @@ const jsonLd = [
       <h1>{article.data.title}</h1>
       <TagRow lens={article.data.lens} continent={article.data.continent} />
       <div class="byline">
-        {article.data.sourceUrl && article.data.sourceName ? (
+        {allSources.length > 0 ? (
           <>
-            <a class="src" href={article.data.sourceUrl} target="_blank" rel="noopener">
-              Source: {article.data.sourceName}
-            </a>
+            <span class="src">
+              {allSources.length === 1 ? 'Source: ' : 'Sources: '}
+              {allSources.map((s, i) => (
+                <>
+                  {i > 0 && ', '}
+                  <a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a>
+                </>
+              ))}
+            </span>
             <span class="dot">&bull;</span>
           </>
         ) : null}
@@ -182,9 +202,16 @@ const jsonLd = [
 
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
-      {article.data.sourceUrl && article.data.sourceName && (
+      {allSources.length > 0 && (
         <>
-          Original source: <a href={article.data.sourceUrl} target="_blank" rel="noopener">{article.data.sourceName}</a><br />
+          {allSources.length === 1 ? 'Original source: ' : 'Original sources: '}
+          {allSources.map((s, i) => (
+            <>
+              {i > 0 && ', '}
+              <a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a>
+            </>
+          ))}
+          <br />
         </>
       )}
       <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>

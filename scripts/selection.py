@@ -145,6 +145,104 @@ def dedupe_by_topic(scored: list[dict]) -> list[dict]:
     return result
 
 
+# --- Same-story merging ---
+#
+# Two different outlets often cover the exact same event under totally
+# different headlines ("Samarkand Olympiad Day 1: Favourites, fireworks
+# and a shock" vs "Thai IM Upsets Indian Number-2 As Favorites Prevail"),
+# which dedupe_by_topic's title-prefix check never catches -- it only
+# matches near-identical wording, not near-identical events. Detect this
+# instead by shared distinctive names (players, specific people) between
+# title+summary, and merge every match into one candidate rather than
+# publishing the same story twice.
+#
+# Deliberately never drops one in favor of the other, even though that
+# was considered: a quick word-overlap check against a real duplicate
+# pair (FIDE's 401-significant-word recap vs Chess.com's 21-word blurb
+# of the same event) showed the two texts can look almost entirely
+# different by any similarity score purely because of a length mismatch,
+# while the short one still carried its own genuinely unique fact (a
+# second upset FIDE's piece didn't mention). There's no cheap, reliable
+# way to tell "pure repeat" from "shorter but complementary" apart from
+# actually reading both -- so always merge and let draft.py's own
+# synthesis (which does read both in full) decide what's worth using
+# from each, rather than risk silently discarding a source that had
+# something the other didn't.
+
+# Capitalized words that recur across unrelated stories -- organization
+# names, honorifics, dates, generic event vocabulary -- rather than the
+# distinctive player/person names that actually indicate two write-ups
+# cover the same specific event. A bigram touching one of these is
+# skipped rather than treated as a real name match.
+GENERIC_NAME_WORDS = {
+    "the", "this", "that", "these", "those", "a", "an", "and", "or", "but",
+    "with", "from", "after", "before", "chess", "olympiad", "world", "fide",
+    "gm", "im", "cm", "wgm", "wim", "fm", "wfm", "champion", "championship",
+    "tournament", "round", "day", "team", "open", "cup", "league",
+    "international", "national", "federation", "committee", "council",
+    "president", "interim", "vice", "chief", "arbiter", "commission",
+    "congress", "games", "game", "monday", "tuesday", "wednesday",
+    "thursday", "friday", "saturday", "sunday", "january", "february",
+    "march", "april", "may", "june", "july", "august", "september",
+    "october", "november", "december", "in", "of", "for", "as", "on", "at", "to", "by",
+}
+
+MIN_SHARED_NAMES_FOR_SAME_STORY = 2
+
+
+def _name_bigrams(item: dict) -> set[tuple[str, str]]:
+    """Adjacent-word pairs where both words are capitalized and neither is
+    generic -- a cheap proxy for "this text names a specific person or
+    place", reliable enough to tell "Arjun Erigaisi" apart from ordinary
+    capitalized sentence starts without needing real NER."""
+    text = f"{item.get('title', '')} {item.get('summary', '')}"
+    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    bigrams = set()
+    for a, b in zip(words, words[1:]):
+        if not (a[:1].isupper() and b[:1].isupper()):
+            continue
+        la, lb = a.lower().rstrip("'s"), b.lower().rstrip("'s")
+        if la in GENERIC_NAME_WORDS or lb in GENERIC_NAME_WORDS:
+            continue
+        bigrams.add((la, lb))
+    return bigrams
+
+
+def _is_same_story(a: dict, b: dict) -> bool:
+    return len(_name_bigrams(a) & _name_bigrams(b)) >= MIN_SHARED_NAMES_FOR_SAME_STORY
+
+
+def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
+    """scored is sorted by selectionScore descending, so the first member
+    of any same-story group encountered is already the highest-scoring
+    one -- it stays as the item's own fields, and every later match in
+    the group is folded into its "additionalSources" list instead of
+    appearing as its own separate candidate. Calendar aggregates are
+    exempt: they're built from our own tournament data, not outlet
+    reporting, so "two outlets covered the same event" doesn't apply."""
+    result: list[dict] = []
+    for item in scored:
+        if item["kind"] in CALENDAR_KINDS:
+            result.append(item)
+            continue
+        match = next(
+            (existing for existing in result if existing["kind"] not in CALENDAR_KINDS and _is_same_story(item, existing)),
+            None,
+        )
+        if match is None:
+            result.append(item)
+            continue
+        match.setdefault("additionalSources", []).append(
+            {
+                "sourceName": item["sourceName"],
+                "sourceUrl": item["sourceUrl"],
+                "title": item["title"],
+                "summary": item.get("summary", ""),
+            }
+        )
+    return result
+
+
 def main() -> None:
     if not CANDIDATES_PATH.exists():
         print("No candidates.json found -- run ingest.py first.")
@@ -163,6 +261,7 @@ def main() -> None:
 
     scored.sort(key=lambda x: x["selectionScore"], reverse=True)
     scored = dedupe_by_topic(scored)
+    scored = merge_duplicate_stories(scored)
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
@@ -182,6 +281,8 @@ def main() -> None:
     print(f"Selected {len(selected)} item(s) from {len(candidates)} candidate(s):")
     for item in selected:
         print(f"  [{item['selectionScore']:>3}] {item['sourceName']}: {item['title']}")
+        for extra in item.get("additionalSources", []):
+            print(f"        + merged with {extra['sourceName']}: {extra['title']}")
 
 
 if __name__ == "__main__":
