@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-for-people-with-disabilities-poland-ta
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Poland smashes the Czech Republic 4-0 to grab sole lead at the Disability Olympiad, while Samarkand debuts anti-doping controls and welcomes Vietnam for the first time. #ChessOlympiad"
 image:
   src: "./_images/Nigel_Short__2018.webp"
