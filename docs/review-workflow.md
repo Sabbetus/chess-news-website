@@ -15,6 +15,10 @@ title: string
 publishDate: date
 sourceName: string       # e.g. "Chess.com", "FIDE", "Chess Tournament Calendar"
 sourceUrl: string         # always linked prominently in the article
+additionalSources:        # only present when scripts/selection.py detected another
+  - sourceName: string    # outlet covering the same event and merged it into one
+    sourceUrl: string      # piece instead of publishing the story twice -- both get
+                            # credited in the byline
 lens: tournament-db | drama | historical-parallel | money-angle | community-pulse
 continent: europe | asia | north-america | south-america | africa | oceania | global
 selectionScore: number    # from scripts/selection.py -- why this story was picked

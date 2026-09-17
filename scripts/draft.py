@@ -273,6 +273,17 @@ Markdown link, with the anchor text being the fact or result itself (e.g. \
 the visible text. Once is enough; the site prints the source again at the foot of \
 every piece.
 
+If the user turn gives you more than one source (this happens when two outlets \
+covered the same event -- you'll see a "Source URL" plus one or more "Additional \
+source" blocks), this is one story reported by multiple outlets, not two separate \
+stories: write one piece that draws on whichever of them actually has the detail \
+you're using at that moment, not just the primary one. Link each source once, at \
+the point where you use a fact that specifically came from it -- a detail only the \
+second outlet reported gets linked to the second outlet's URL, not the primary \
+one. Skip a source's link entirely if you end up not using anything specific to \
+it. Never link the same source twice, and never link a source at a point where \
+you're stating a fact that came from a different source.
+
 2. Where the user turn lists previously published The Chess Herald articles, link one or \
 two of them from a phrase in your own text that genuinely refers to what that \
 article covers -- a player, event, tournament or theme you are already \
@@ -511,6 +522,17 @@ def build_user_prompt(item: dict) -> str:
     ]
     if item.get("summary"):
         parts.append(f"Source summary/excerpt: {item['summary']}")
+
+    # Set when selection.py recognized another outlet's item as coverage of
+    # this same event (see merge_duplicate_stories there) -- write one piece
+    # informed by all of them, per the multi-source linking rule above.
+    for extra in item.get("additionalSources", []):
+        parts.append("")
+        parts.append(f"Additional source title: {extra['title']}")
+        parts.append(f"Additional source URL: {extra['sourceUrl']}")
+        parts.append(f"Additional source name: {extra['sourceName']}")
+        if extra.get("summary"):
+            parts.append(f"Additional source summary/excerpt: {extra['summary']}")
 
     # Internal-link candidates. Supplied as data rather than baked into the
     # system prompt because the list changes with every published batch.
@@ -870,6 +892,15 @@ def draft_one(
         frontmatter["monthLabel"] = item["monthLabel"]
         frontmatter["totalTracked"] = item["totalTracked"]
 
+    if item.get("additionalSources"):
+        # Only sourceName/sourceUrl are part of the content schema (see
+        # config.ts) -- the rest of each entry (title/summary) was only
+        # ever needed as drafting input, not published metadata.
+        frontmatter["additionalSources"] = [
+            {"sourceName": extra["sourceName"], "sourceUrl": extra["sourceUrl"]}
+            for extra in item["additionalSources"]
+        ]
+
     image = pick_image_for_item(
         item, parsed["title"], parsed.get("imageSubjects", []), exclude_source_urls=used_image_source_urls()
     )
@@ -893,6 +924,15 @@ def draft_one(
             for sub_key, sub_value in value.items():
                 escaped = str(sub_value).replace('"', '\\"')
                 fm_lines.append(f'  {sub_key}: "{escaped}"')
+        elif isinstance(value, list):
+            fm_lines.append(f"{key}:")
+            for entry in value:
+                items = list(entry.items())
+                first_key, first_value = items[0]
+                fm_lines.append(f'  - {first_key}: "{str(first_value).replace(chr(34), chr(92) + chr(34))}"')
+                for sub_key, sub_value in items[1:]:
+                    escaped = str(sub_value).replace('"', '\\"')
+                    fm_lines.append(f'    {sub_key}: "{escaped}"')
         else:
             fm_lines.append(f"{key}: {value}")
     fm_lines.append("---")
