@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/samarkand-olympiad-day-1-favourites-fireworks-a
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Arjun Erigaisi had it won, then blundered 50.Qg7?? into a mating net against Thailand. India still won 3-1. Day 1 from Samarkand had upsets, ceremony, and Hans Niemann talking padel. ♟️"
 image:
   src: "./_images/Arjun_Erigaisi_Tata_2023_-_27.webp"
