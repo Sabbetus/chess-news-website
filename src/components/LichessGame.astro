@@ -46,12 +46,20 @@ const initialSrc = `${url}?bg=system`;
   }
   .lichess-embed-frame {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    /* Below the breakpoint, Lichess's own embed stacks the movelist/clocks
+       below the board instead of beside it -- that needs real vertical
+       room, not a width-derived aspect ratio (a 4:3 box left almost no
+       space for the stacked panel below a near-square board, forcing an
+       unusable inner scroll area). A fixed height covers the board (which
+       scales with width, roughly square) plus that stacked chrome, which
+       stays about the same height regardless of how narrow the phone is. */
+    height: 560px;
     border: 1px solid var(--rule-soft);
     border-radius: 4px;
   }
-  @media (min-width: 480px) {
+  @media (min-width: 641px) {
     .lichess-embed-frame {
+      height: auto;
       aspect-ratio: 8 / 5;
     }
   }
