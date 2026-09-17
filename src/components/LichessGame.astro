@@ -1,0 +1,58 @@
+---
+// Embeds the one specific game an article centers on (see
+// gameEmbed in config.ts / scripts/lichess_game.py). `url` is already the
+// full https://lichess.org/embed/broadcast/... form.
+interface Props {
+  url: string;
+}
+const { url } = Astro.props;
+
+// Server-rendered default: "system" so the board still matches the
+// visitor's OS preference with JS disabled. The inline script below
+// upgrades it to match the site's own light/dark toggle exactly (including
+// a manual override that differs from system preference), the same way
+// BaseLayout's own inline script sets data-theme before paint.
+const initialSrc = `${url}?bg=system`;
+---
+
+<div class="lichess-embed">
+  <iframe
+    class="lichess-embed-frame"
+    src={initialSrc}
+    data-embed-base={url}
+    title="Interactive chess board"
+    loading="lazy"
+    allowtransparency="true"
+    frameborder="0"
+  ></iframe>
+</div>
+
+<script is:inline>
+  (function () {
+    var frames = document.querySelectorAll('.lichess-embed-frame[data-embed-base]');
+    if (!frames.length) return;
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var bg = isDark ? 'dark' : 'light';
+    frames.forEach(function (frame) {
+      frame.src = frame.getAttribute('data-embed-base') + '?bg=' + bg;
+    });
+  })();
+</script>
+
+<style>
+  .lichess-embed {
+    margin: 1.6em 0;
+    max-width: var(--content-width, 680px);
+  }
+  .lichess-embed-frame {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+  }
+  @media (min-width: 480px) {
+    .lichess-embed-frame {
+      aspect-ratio: 8 / 5;
+    }
+  }
+</style>

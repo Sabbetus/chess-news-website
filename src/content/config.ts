@@ -69,6 +69,16 @@ const articles = defineCollection({
         sourceUrl: z.string().url(),
       })
       .optional(),
+    // A real, embeddable Lichess board for the one specific game a piece
+    // centers on (see @@GAME_LOOKUP@@ in scripts/draft.py's prompt and
+    // scripts/lichess_game.py) -- absent on every article that isn't
+    // built around one specific game (the vast majority), and absent even
+    // on ones that are when no confident match was found on Lichess.
+    gameEmbed: z
+      .object({
+        url: z.string().url(),
+      })
+      .optional(),
   }),
 });
 
