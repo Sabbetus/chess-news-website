@@ -4,6 +4,8 @@ publishDate: "2026-09-18"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-2-big-guns-enter-arena-in-samarkand/"
 lens: "upsets"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-2/HnCuRMmB/BF18NA7x"
 continent: "asia"
 selectionScore: 80
 reviewStatus: "draft"
@@ -16,7 +18,7 @@ image:
 
 Round two of the Chess Olympiad in Samarkand was supposed to be a settling-in day, with the top seeds simply protecting the points they'd banked in round one. Instead, [FIDE's own recap of the day](https://www.fide.com/olympiad-day-2-big-guns-enter-arena-in-samarkand/) shows a round full of upsets, brilliancies, and near-disasters for teams that were supposed to be cruising.
 
-The number that jumps out is 258. That's the rating gap between Awonder Liang, rated 2693, and Mongolia's Khuyagtsogt Itgelt, rated 2435, when the two met on board four of the USA-Mongolia match. Liang chose a risky Benoni setup and got completely dismantled as White, in a result that on paper should happen only a handful of times in a hundred.
+The number that jumps out is 258. That's the rating gap between Awonder Liang, rated 2693, and Mongolia's Khuyagtsogt Itgelt, rated 2435, when the two met on board four of the USA-Mongolia match. Liang chose a risky Benoni setup as Black and got completely dismantled, in a result that on paper should happen only a handful of times in a hundred.
 
 The USA survived the shock anyway. Fabiano Caruana made his debut on board one with a powerful win over Sumiya Bilguun, Levon Aronian ground out a narrow victory, and Hans Niemann held a solid draw, giving the Americans the match despite Liang's loss.
 
