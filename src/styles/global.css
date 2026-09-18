@@ -34,6 +34,14 @@
   --terracotta-tint: #f3e0da;
   --teal: #1f6357;
   --teal-tint: #dfece8;
+  /* OTB Tournaments lens. Previously reused --green/--accent, which put it
+     in the same hue family as the Money lens's --teal (both read as
+     near-identical pale greens at tint strength) and, in dark mode,
+     --accent's warm tan against a dark green tint looked murky rather than
+     distinct. A dedicated plum hue keeps all 5 lens colors visually
+     separable in both themes. */
+  --plum: #6b3a63;
+  --plum-tint: #f2e6ee;
   --rule: #c7c2b4;
   --rule-soft: #dbd7ca;
   --rule-faint: #e2dfd2;
@@ -64,6 +72,8 @@
     --terracotta-tint: #332019;
     --teal: #6bbba8;
     --teal-tint: #16261f;
+    --plum: #d191c7;
+    --plum-tint: #2c1f2b;
     --rule: #38362f;
     --rule-soft: #28271f;
     --rule-faint: #211f1a;
@@ -91,6 +101,8 @@
   --terracotta-tint: #332019;
   --teal: #6bbba8;
   --teal-tint: #16261f;
+  --plum: #d191c7;
+  --plum-tint: #2c1f2b;
   --rule: #38362f;
   --rule-soft: #28271f;
   --rule-faint: #211f1a;
@@ -214,8 +226,8 @@ button:focus-visible {
   font-family: 'Fraunces', serif;
 }
 .thumb.tournament {
-  --tint: color-mix(in srgb, var(--green) 16%, transparent);
-  --mark: color-mix(in srgb, var(--green) 55%, var(--ink) 10%);
+  --tint: color-mix(in srgb, var(--plum) 16%, transparent);
+  --mark: color-mix(in srgb, var(--plum) 55%, var(--ink) 10%);
 }
 .thumb.historical {
   --tint: color-mix(in srgb, var(--brass) 18%, transparent);
@@ -315,8 +327,8 @@ button:focus-visible {
   border-radius: 2px;
 }
 .lens-tag.tournament {
-  background: var(--green-tint);
-  color: var(--accent);
+  background: var(--plum-tint);
+  color: var(--plum);
 }
 .lens-tag.historical {
   background: var(--brass-tint);
