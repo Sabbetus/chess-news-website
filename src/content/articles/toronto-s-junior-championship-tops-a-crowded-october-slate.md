@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"
 continent: "north-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "109 North American tournaments tracked for October 2026, from a Toronto junior championship (84 players) to Puerto Rico's Carlos Ortiz youth series. A preview."
 aggregateKind: "calendar-comingup"
 continentName: "North America"

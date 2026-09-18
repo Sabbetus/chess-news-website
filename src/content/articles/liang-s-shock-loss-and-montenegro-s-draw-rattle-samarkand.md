@@ -8,7 +8,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-2/HnCuRMmB/BF18NA7x"
 continent: "asia"
 selectionScore: 80
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Sindarov sacs his queen twice for a forced mate, Awonder Liang falls to a 258-point underdog, and Montenegro holds Georgia. Round two in Samarkand had it all."
 image:
   src: "./_images/Javokhir_Sindarov.webp"

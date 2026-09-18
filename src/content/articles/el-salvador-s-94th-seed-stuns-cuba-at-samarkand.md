@@ -8,7 +8,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-38-62/round-2/OTXouHZ4/DfEoBZrA"
 continent: "asia"
 selectionScore: 60
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "El Salvador (seed 94) toppled Cuba (seed 44) in round 2 at the Samarkand Olympiad, while Gukesh slipped under 2700 as India beat Indonesia. #ChessOlympiad"
 image:
   src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.webp"
