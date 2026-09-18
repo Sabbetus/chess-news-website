@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/poland-crowned-champions-as-samarkand-olympiad-
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Poland lost round one, then won six straight to take gold at the 3rd FIDE Olympiad for People with Disabilities in Samarkand. Cuba took silver, hosts Uzbekistan bronze."
 image:
   src: "./_images/Viswanathan_Anand_08_19_2007.webp"

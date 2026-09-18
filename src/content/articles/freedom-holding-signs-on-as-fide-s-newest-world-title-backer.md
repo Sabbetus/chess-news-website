@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/freedom-holding-corp-backs-fide-world-champions
 lens: "money-angle"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Freedom Holding Corp. becomes General Partner of the 2026 Gukesh-Sindarov World Championship in Geneva, its third straight year bankrolling FIDE's biggest events."
 image:
   src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_26.webp"
