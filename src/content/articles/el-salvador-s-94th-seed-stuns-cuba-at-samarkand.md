@@ -4,21 +4,21 @@ publishDate: "2026-09-18"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2"
 lens: "upsets"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-38-62/round-2/OTXouHZ4/DfEoBZrA"
 continent: "asia"
 selectionScore: 60
 reviewStatus: "draft"
 socialCopy: "El Salvador (seed 94) toppled Cuba (seed 44) in round 2 at the Samarkand Olympiad, while Gukesh slipped under 2700 as India beat Indonesia. #ChessOlympiad"
-image:
-  src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.webp"
-  credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.jpg"
 ---
 
 Round two of the [46th Chess Olympiad in Samarkand](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2) mostly went to script, but one result stood well outside it. El Salvador, seeded 94th in the field, beat Cuba, seeded 44th, in a result that had almost nothing to do with the pecking order on paper.
 
-A 50-seed gap in an Olympiad match is not a trivial thing to overturn. Seeding at the Olympiad is built off average team rating, so a gap that size usually means a rating difference of well over 100 points per board, sometimes closer to 150 or 200 depending on the federations involved.
+The upset came down to two individual results on the lower boards. El Salvador's FM Carlos Morales, rated 2244, beat Cuban GM Jorge Roberto Elias Reyes, rated 2505, on board one, and FM Santiago Jose Guevara Ruiz, rated 2160, beat Cuban GM Lelys Stanley Martinez Duany, rated 2440, on board three, both by real margins rather than a stolen draw or a late blunder from an otherwise-winning position.
 
-For El Salvador to win outright rather than just steal a draw or two suggests Cuba's board strength didn't translate into results on the day, whatever the numbers said going in.
+Cuba salvaged what it could elsewhere. GM Dylan Isidro Berdayes Ason won on board two, and GM Ermes Espinosa Veloz drew on board four, but the two lower-board upsets were enough to hand El Salvador the match 2½-1½.
+
+Chess.com's own recap put the gap in team terms: El Salvador fielded an all-FM lineup averaging 2165 against a Cuban team averaging 2467, a roughly 300-point gap by that measure. Beating two GMs from a position like that is a real result, not a fluke.
 
 Cuba's Olympiad campaigns have been a recurring thread this cycle. [Cuba's unbeaten run](/articles/cuba-s-unbeaten-run-ends-as-poland-and-czechia-share-the-lead/) has been tracked closely as the team chased a clean scoresheet through the early rounds, which makes a loss to a team nearly fifty places below them in the seedings sting more than a routine draw would.
 
