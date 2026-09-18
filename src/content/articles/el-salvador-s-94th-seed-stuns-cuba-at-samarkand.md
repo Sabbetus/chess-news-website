@@ -1,5 +1,5 @@
 ---
-title: "El Salvador's 94th Seed Stuns Cuba at Samarkand"
+title: "El Salvador Stuns Cuba as Gukesh Slips Below 2700"
 publishDate: "2026-09-18"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2"
@@ -28,9 +28,9 @@ Cuba's Olympiad campaigns have been a recurring thread this cycle. [Cuba's unbea
 
 Everywhere else, the favorites held, even if it wasn't always comfortable. Uzbekistan, the United States, India, and the Netherlands all won their round two matches, but the source description makes clear none of it was smooth sailing for the top seeds.
 
-India's win over Indonesia carried its own subplot. Gukesh, the reigning world champion and one of India's board one options, dropped below a 2700 rating in the process, a symbolic line for a player of his stature even as his team collected the full match points.
+India's win over Indonesia carried its own subplot. Gukesh, the reigning world champion and one of India's board one options, dropped below a 2700 live rating in the process, a symbolic line for a player of his stature even as his team collected the full match points.
 
-It's a reminder that India's Olympiad strength right now isn't resting on any single player carrying the board. The squad's depth has been a running theme of this event, echoed in [India's bench holding up](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/) even when a top board result goes sideways. A dip under 2700 for one player matters far less to the team's chances when the supporting cast is winning matches regardless.
+It's a reminder that India's Olympiad strength right now isn't resting on any single player carrying the board. The squad's depth has been a running theme of this event, echoed in [India's bench holding up](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/) even when a top board result goes sideways. A dip under 2700 in live rating for one player matters far less to the team's chances when the supporting cast is winning matches regardless.
 
 The broader shape of round two also fits a pattern the Olympiad has shown all week: favorites grinding through tougher-than-expected matches rather than steamrolling lower seeds. That's partly a function of just how large this year's field is. Samarkand's Olympiad already broke the record for team entries, and a bigger field means more federations capable of springing exactly the kind of result El Salvador produced against Cuba.
 
