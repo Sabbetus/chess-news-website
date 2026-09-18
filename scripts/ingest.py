@@ -92,6 +92,11 @@ NOTABLE_NAME_KEYWORDS = [
     "festival", "open", "grand prix", "masters", "classic",
 ]
 MAX_TOURNAMENTS_PER_AGGREGATE = 20
+# Floor of "coming up" slots reserved for notable tournaments that lack a
+# reliable playersRegistered figure, so countries that don't report counts
+# (the US, Australia) can't be fully crowded out by smaller counted entries
+# from elsewhere in the same continent. See _build_comingup.
+MIN_UNCOUNTED_SLOTS = 6
 
 # Fields actually useful for drafting -- archive.json entries carry bulky
 # extras (playerHistory, consecutiveMisses, lastSeen, ...) that only add
@@ -236,7 +241,24 @@ def _build_comingup(code: str, today: date) -> dict | None:
     without_players = [t for t in pool if t not in with_players]
     with_players.sort(key=lambda t: t["playersRegistered"], reverse=True)
     without_players.sort(key=_notability_score, reverse=True)
-    highlights = (with_players + without_players)[:MAX_TOURNAMENTS_PER_AGGREGATE]
+
+    # Some countries (notably the US, and Australia in Oceania) rarely report
+    # playersRegistered at all, so a plain "biggest counts first" merge can let
+    # numerous smaller *counted* entries from other countries in the same
+    # continent fill every slot before any uncounted-but-notable tournament is
+    # ever considered -- silently erasing those countries from "coming up"
+    # pieces regardless of how notable their events are. Reserve a floor of
+    # slots for the uncounted pool so that can't happen, then fill the rest
+    # by count.
+    uncounted_floor = min(len(without_players), MIN_UNCOUNTED_SLOTS)
+    counted_slots = MAX_TOURNAMENTS_PER_AGGREGATE - uncounted_floor
+    highlights = with_players[:counted_slots] + without_players[:uncounted_floor]
+    # Backfill any leftover capacity (e.g. too few counted entries to need
+    # the full budget) from whichever pool still has more to offer.
+    remaining = MAX_TOURNAMENTS_PER_AGGREGATE - len(highlights)
+    if remaining > 0:
+        leftover = with_players[counted_slots:] + without_players[uncounted_floor:]
+        highlights += leftover[:remaining]
 
     return {
         "kind": "calendar-comingup",
