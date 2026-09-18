@@ -279,6 +279,28 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     return any(word.lower() in title_lower for word in significant_words)
 
 
+# Commons photosets from a single shoot are near-universally batch-uploaded
+# with a shared filename stem and a trailing running index -- e.g.
+# "Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.jpg" and "..._-_26.jpg"
+# are two different frames of the same moment, not two different photos.
+# Exact-URL exclusion alone missed this (caught live: two articles days
+# apart both got a Gukesh-v-Erigaisi frame from the same shoot -- visually
+# near-identical to a reader, but different Commons pages so the ordinary
+# reuse-cooldown never flagged it). Stripping the trailing index and
+# comparing stems catches every frame from the same batch upload, not just
+# an exact repeat.
+_PHOTOSET_INDEX_RE = re.compile(r"[\s_]*-[\s_]*\d+(\.\w+)$")
+
+
+def _photoset_stem(title_or_url: str) -> str:
+    name = title_or_url.rsplit("/", 1)[-1]
+    name = urllib.parse.unquote(name)
+    if name.lower().startswith("file:"):
+        name = name[5:]
+    name = name.replace("_", " ").strip().lower()
+    return _PHOTOSET_INDEX_RE.sub(r"\1", name)
+
+
 def _fetch_first_licensed_file(
     titles: list, query: str, strict: bool, exclude_source_urls: set | None = None
 ) -> dict | None:
@@ -308,6 +330,7 @@ def _fetch_first_licensed_file(
     normalized_excludes = (
         {urllib.parse.unquote(u) for u in exclude_source_urls} if exclude_source_urls else set()
     )
+    excluded_photoset_stems = {_photoset_stem(u) for u in normalized_excludes}
 
     data = _get(
         {
@@ -351,6 +374,8 @@ def _fetch_first_licensed_file(
 
         page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
         if urllib.parse.unquote(page_url) in normalized_excludes:
+            continue
+        if excluded_photoset_stems and _photoset_stem(title) in excluded_photoset_stems:
             continue
 
         artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
