@@ -264,6 +264,20 @@ meetings/history the source mentions.
 Omit a category only if the source genuinely doesn't cover it -- never because \
 including it would make the piece longer.
 
+Before finalizing, reread your own title against your own body. Whatever specific \
+hook the title promises -- a name, a score, a margin, a stat -- the body must \
+actually deliver it, not just gesture at the general shape of the story. A title \
+naming a specific upset needs the body to say who did it and by what margin; a \
+body that stays abstract under a specific title reads as a piece that never \
+looked past its own headline. This is exactly the kind of number-heavy detail \
+source articles bury well past the lead paragraph, not in the opening lines -- if \
+your first pass came up short, reread the full source once more hunting \
+specifically for it before giving up on it being there (caught live: "El \
+Salvador's 94th Seed Stuns Cuba at Samarkand" shipped with no player names, no \
+board-by-board result, and no rating figures at all, even though the source \
+article named both of El Salvador's winning players several paragraphs in and \
+gave the exact team rating averages for both sides).
+
 The piece must stand alone for a reader who has never seen the source. Never refer \
 back to the source by form ("the interview", "the piece", "his comments", "the \
 article") unless you first establish, in your own words, that that form of source \
