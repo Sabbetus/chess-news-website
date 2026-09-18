@@ -10,6 +10,10 @@ continent: "asia"
 selectionScore: 60
 reviewStatus: "draft"
 socialCopy: "El Salvador (seed 94) toppled Cuba (seed 44) in round 2 at the Samarkand Olympiad, while Gukesh slipped under 2700 as India beat Indonesia. #ChessOlympiad"
+image:
+  src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.webp"
+  credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.jpg"
 ---
 
 Round two of the [46th Chess Olympiad in Samarkand](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2) mostly went to script, but one result stood well outside it. El Salvador, seeded 94th in the field, beat Cuba, seeded 44th, in a result that had almost nothing to do with the pecking order on paper.
