@@ -3,7 +3,7 @@ title: "Kyrgyzstan's 2.5-1.5 Shocker Headlines a Wild Samarkand Round 3"
 publishDate: "2026-09-19"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-3"
-lens: "upsets"
+lens: "results"
 continent: "global"
 selectionScore: 75
 reviewStatus: "draft"

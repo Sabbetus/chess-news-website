@@ -14,7 +14,7 @@ Every article carries two independent pieces of metadata:
   - lens: the analytical angle the piece is written through -- shapes the
     prompt, shown on-site as a secondary label, not the primary category.
     "tournament-db" is reserved for calendar aggregates (forced, not
-    chosen); news items get one of four lenses (drama, money-angle, upsets,
+    chosen); news items get one of four lenses (drama, money-angle, results,
     historical-parallel), picked by the model as whichever best fits that
     specific story -- checked roughly in that order, with historical-parallel
     as the fallback (see LENS_OPTIONS below).
@@ -122,10 +122,20 @@ AGGREGATE_INSTRUCTIONS = {
 # The four lenses a news item can be drafted through -- the model picks
 # whichever fits the specific story best (see NEWS_SYSTEM_PROMPT). Checked
 # in this order: drama and money-angle first (a real scandal or financial
-# angle is unambiguous when it exists), then upsets, and historical-parallel
+# angle is unambiguous when it exists), then results, and historical-parallel
 # only as the fallback when none of the other three genuinely fit -- chess
 # has enough documented history that *a* parallel can be found for nearly
 # any story, which is exactly why that ease can't be the deciding factor.
+#
+# results used to be split into a separate "upsets" lens and no lens at all
+# for standings/contenders stories -- but a shocking individual result and
+# "who's leading the tournament" are two angles on the same underlying
+# question (what actually happened in the competition), not two different
+# stories, and keeping them apart meant a genuinely standings-relevant piece
+# (which sources rarely frame that way early in a long event, but reliably
+# do once the field of perfect scores thins out) had nowhere to go. Merged
+# into one lens that covers both, since a piece can lean on either or both
+# depending on what the story actually is.
 LENS_OPTIONS = {
     "drama": (
         "Drama angle: lean into any scandal, controversy, or genuine "
@@ -136,10 +146,11 @@ LENS_OPTIONS = {
         "objecting to something, a rules or conduct controversy, a rivalry "
         "with real tension behind it. A team or player simply winning or "
         "losing, even in a surprising or unusual way, is competition, not "
-        "drama -- that's upsets (if the story is really about how surprising "
-        "or costly the result itself was) or historical-parallel (if there's "
-        "a genuine echo of the past) territory instead. Don't reach for this "
-        "lens just because a result was surprising."
+        "drama -- that's results (if the story is really about how surprising "
+        "or costly the result itself was, or about the standings it "
+        "reshuffled) or historical-parallel (if there's a genuine echo of the "
+        "past) territory instead. Don't reach for this lens just because a "
+        "result was surprising."
     ),
     "money-angle": (
         "Money angle: analyze the story through prize funds, sponsorship, "
@@ -148,27 +159,39 @@ LENS_OPTIONS = {
         "money is moving in chess. Only pick this lens when there's a real "
         "financial angle to dig into."
     ),
-    "upsets": (
-        "Upsets: for a story that's fundamentally about a surprising result -- "
-        "an underdog win, a blunder, a favorite's collapse, a shock scoreline -- "
-        "not a scandal or dispute (that's drama instead; a controversial call "
-        "or conduct dispute stays there even if it also produced a surprising "
-        "result). Do two things, not just describe what happened:\n"
-        "1. Quantify the surprise. Use the rating gap (or seed/ranking gap "
-        "when that's what's given) to say something concrete about how "
-        "unlikely a result like this 'should' have been -- a real number or "
-        "grounded estimate, not just an assertion that it was shocking.\n"
-        "2. Look forward, not back. Say what the upset actually changes: "
-        "momentum into the next round, seeding, a psychological edge for a "
-        "rematch, what it costs (or doesn't cost) the team or player overall. "
-        "This is the lens's payoff -- don't end at 'and that was surprising,' "
-        "end at what it means going forward.\n"
-        "Only pick this lens when the story is centrally about the surprising "
-        "result itself, not a story that merely mentions one in passing."
+    "results": (
+        "Results: for a story that's fundamentally about what happened in "
+        "the competition itself -- not a scandal or dispute (that's drama "
+        "instead; a controversial call or conduct dispute stays there even "
+        "if it also produced a surprising result). This covers two related "
+        "angles, and a single piece can lean on either or both depending on "
+        "what the story actually is:\n"
+        "1. A surprising individual result -- an underdog win, a blunder, a "
+        "favorite's collapse, a shock scoreline. Quantify the surprise: use "
+        "the rating gap (or seed/ranking gap when that's what's given) to "
+        "say something concrete about how unlikely a result like this "
+        "'should' have been -- a real number or grounded estimate, not just "
+        "an assertion that it was shocking.\n"
+        "2. The shape of the standings -- who's leading, who's still "
+        "unbeaten, who's fallen out of contention, what a specific upcoming "
+        "pairing means for the tournament's actual outcome. This angle is "
+        "usually more relevant later in a long event, once the field of "
+        "perfect scores has thinned out -- don't force a standings framing "
+        "onto an early round where dozens of teams are still tied at the top "
+        "and a 'leader' claim wouldn't mean much yet; most sources won't even "
+        "offer one that early. Only use this angle when the source itself "
+        "gives real standings/contention detail to work with, not by "
+        "inferring a leaderboard from scattered results.\n"
+        "Either way, look forward, not back: say what the result (or the "
+        "standings shift) actually changes -- momentum into the next round, "
+        "seeding, a psychological edge for a rematch, what's now at stake -- "
+        "rather than ending at 'and that was surprising.' Only pick this "
+        "lens when the story is centrally about a result or the standings, "
+        "not one that merely mentions a score in passing."
     ),
     "historical-parallel": (
         "Historical parallel -- the fallback lens: pick this only when the "
-        "story doesn't have a clear money, controversy, or upset angle to "
+        "story doesn't have a clear money, controversy, or results angle to "
         "write through instead. When it does, prefer that lens even if a "
         "historical parallel also exists. Ground the story against chess "
         "history -- a similar record, controversy, or milestone from the "
@@ -351,10 +374,10 @@ Sindarov," a federation vice president, was linked to an unrelated article about
 
 First, pick the single best-fitting lens for THIS story from these options, checked \
 in the order listed -- drama and money-angle are unambiguous when they genuinely \
-apply, upsets covers a story that's centrally about a surprising result, and \
-historical-parallel is the fallback: only reach for it when none of the other \
-three genuinely fit, even though a historical parallel can usually be found for \
-almost any story:
+apply, results covers a story that's centrally about a result or the standings it \
+shifted, and historical-parallel is the fallback: only reach for it when none of \
+the other three genuinely fit, even though a historical parallel can usually be \
+found for almost any story:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
 
 Then pick the single most relevant continent for this story from: {CONTINENT_OPTIONS}. \

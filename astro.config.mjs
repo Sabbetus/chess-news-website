@@ -48,14 +48,17 @@ const ARTICLE_LASTMOD = articleLastmod();
 export default defineConfig({
   site: 'https://chessherald.com',
   output: 'static',
-  // /lens/community/ was a real, published, presumably-indexed page before
-  // the community-pulse lens was retired in favor of upsets (see git log) --
-  // without this, anyone following an old link or search result lands on a
-  // 404 instead of the closest surviving page. GitHub Pages serves static
-  // files only, so Astro's `redirects` (a build-time meta-refresh + JS
-  // redirect page, not a real server 301) is what's available here.
+  // Both of these lens URLs were real, published, presumably-indexed pages
+  // before their lens was retired -- community-pulse -> upsets, and later
+  // upsets -> results, when upsets was broadened to also cover standings/
+  // contenders stories (see git log). Without these, anyone following an
+  // old link or search result lands on a 404 instead of the closest
+  // surviving page. GitHub Pages serves static files only, so Astro's
+  // `redirects` (a build-time meta-refresh + JS redirect page, not a real
+  // server 301) is what's available here.
   redirects: {
-    '/lens/community': '/lens/upsets/',
+    '/lens/community': '/lens/results/',
+    '/lens/upsets': '/lens/results/',
   },
   integrations: [
     sitemap({
