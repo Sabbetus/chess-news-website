@@ -3,6 +3,9 @@ title: "Argentina's 28th Seed Shocks Ukraine at Samarkand"
 publishDate: "2026-09-19"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-3-strong-starts-and-stunning-surprises-in-samarkand/"
+additionalSources:
+  - sourceName: "Chess.com"
+    sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-3"
 lens: "upsets"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-3/bmI956uk/b2vpTBPX"
@@ -18,6 +21,8 @@ image:
 
 Round three of the Chess Olympiad in Samarkand was supposed to be about the favorites stretching their legs. Instead, the Women's section produced two results nobody saw coming: [28th-seeded Argentina knocked out Ukraine, and Iran beat eighth-seeded France 3-1](https://www.fide.com/olympiad-day-3-strong-starts-and-stunning-surprises-in-samarkand/). Both wins landed hard enough that FIDE itself flagged them as the biggest surprises of the day.
 
+Chess.com's account of the day named who actually delivered each result. WFM Ernestina Adam's decisive board-four win sparked Argentina's upset, while France's collapse against Iran turned on GM Marie Sebag blundering on move 40 under time pressure -- exactly the kind of lapse a big favorite can't afford against a team it's supposed to beat comfortably.
+
 A gap of 20 seeding places, or more if you go by rating, is not the kind of thing that gets closed by accident over four boards.
 
 Team seedings at an Olympiad roughly track average rating strength, so Argentina walking out with a win over a team seeded that far above them points to either a genuinely inspired collective performance or a rough day for Ukraine's top boards, and either way it reshuffles the group picture heading into round four.
@@ -26,17 +31,27 @@ Iran's 3-1 win over France carries similar weight given the gap to an eighth see
 
 What matters now is what these results do to the bracket. A shock win this early doesn't guarantee anything over an eleven-round marathon, but it hands Argentina and Iran a psychological cushion and pushes Ukraine and France into must-win territory sooner than either team probably expected.
 
-The Open section, by contrast, mostly went to script. Uzbekistan, the surprise 2022 champions, stayed unbeaten with a 3-1 win over Austria, powered by a quick victory from Mukhiddin Madaminov on board four before Javokhir Sindarov added a second point. Madaminov, who served as Sindarov's second at the Candidates Tournament in Cyprus, is now 2.5/3 himself and making a real case for a permanent spot in Uzbekistan's first team.
+The Open section, by contrast, mostly went to script among the leading teams. Uzbekistan, the surprise 2022 champions, stayed unbeaten with a 3-1 win over Austria, powered by a quick victory from Mukhiddin Madaminov on board four before Javokhir Sindarov added a second point.
 
-India beat Italy 3-1 with two wins and two draws. Nihal Sarin made it three wins from three, and World Champion Gukesh D moved to 2.5/3. Arjun Erigaisi has had a rougher time of it, missing several tactical chances in his games so far, a slump [The Chess Herald covered in more detail after his round two loss](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/).
+Madaminov, who served as Sindarov's second at the Candidates Tournament in Cyprus, is now 2.5/3 himself and making a real case for a permanent spot in Uzbekistan's first team.
+
+India beat Italy 3-1 with two wins and two draws. Nihal Sarin made it three wins from three, and World Champion Gukesh D beat GM Sabino Brunello on board four to move to 2.5/3.
+
+Arjun Erigaisi has had a rougher time of it, missing several tactical chances in his games so far, a slump [The Chess Herald covered in more detail after his round two loss](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/).
 
 China looked sharp too, beating Bulgaria 3.5-0.5 behind a second win from former World Champion Ding Liren. The highlight of the whole round came from board three, where Yu Yangyi finished off Kiril Georgiev in style: 37.Ng6! forced 37...fxg6, and 38.Bg8+! sealed things, with Georgiev resigning rather than face 38...Kh8 39.Bf7+ Kh7 40.fxg6#.
 
 Germany kept up its own streak, following Tuesday's win over Uzbekistan 3 with a 2.5-1.5 win over Uzbekistan 2, Vincent Keymer supplying the decisive point among three draws.
 
-The United States edged past Denmark 2.5-1.5, with Hans Niemann, Wesley So and Fabiano Caruana carrying the load.
+The United States edged past Denmark 2.5-1.5, with Hans Niemann, Wesley So -- who sealed the match with a decisive queen sacrifice -- and Fabiano Caruana carrying the load.
 
 Awonder Liang lost for a second straight round on board four, a slide [The Chess Herald flagged after his first defeat](/articles/liang-s-shock-loss-and-montenegro-s-draw-rattle-samarkand/), and he may be rested soon as a result.
+
+Outside the top boards, two more results stood out. 79th-seeded Kyrgyzstan, a team with no grandmasters, beat 31st-seeded Brazil 2.5-1.5 after untitled Timur Daudov, rated 2063, upset IM Diego Di Berardino.
+
+50th-seeded Singapore beat 21st-seeded Norway by the same 2.5-1.5 margin, behind GM Jingyao Tin's win over GM Johan-Sebastian Christiansen.
+
+Chess.com singled out one other individual result as its game of the day: GM Anish Giri won for the Netherlands over Australia in a tense, opposite-colored-bishops endgame on board one -- the kind of technical grind that doesn't show up in a scoreline but still decided a real match.
 
 Elsewhere, Azerbaijan beat Switzerland 3-1, France overpowered Kazakhstan 3.5-0.5, and Ukraine, Spain, Turkiye and Poland all won 3-1 without dropping a single individual game. Top match results: Denmark 1.5-2.5 USA, India 3-1 Italy, Austria 1-3 Uzbekistan, China 3.5-0.5 Bulgaria, and Uzbekistan 2 1.5-2.5 Germany.
 
