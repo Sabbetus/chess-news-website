@@ -159,3 +159,66 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
         return None
 
     return {"url": embed_url_from_game_url(game_url)}
+
+
+# Matches a numbered SAN move (e.g. "37.Ng6", "50...Qg7", "38.Bg8+",
+# "22...O-O"), the same shape the model actually writes into a body's prose
+# whenever it quotes a specific game's moves. Two or more of these in one
+# body is a strong, deterministic signal that the piece treats one real
+# game closely enough to be worth an embed -- used as a backstop for cases
+# where @@GAME_LOOKUP@@ went unfilled despite the body itself quoting real
+# moves (see find_game_lookup_gap in draft.py for why this exists: the
+# model's own self-report of "does this piece qualify" has repeatedly
+# missed pieces that plainly do, by the site owner's read of them).
+SAN_MOVE_RE = re.compile(
+    r"\b\d{1,3}\.(?:\.\.)?\s?(?:O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?)[+#!?]*\b"
+)
+
+EXTRACT_MODEL = "claude-sonnet-5"
+
+EXTRACT_SYSTEM_PROMPT = """You are given the Markdown body of a chess news \
+article that quotes real move notation for at least one specific game \
+(e.g. "37.Ng6! fxg6 38.Bg8+"). Identify the tournament/event name and the \
+two players of the ONE game whose moves are quoted -- if more than one \
+game has quoted moves, pick whichever the piece treats as its actual \
+headline (the one most central to the piece, usually named early or in \
+the title context).
+
+Respond with exactly these three lines and nothing else:
+event: <tournament/event name>
+player1: <first player's full name>
+player2: <second player's full name>
+
+If you genuinely cannot identify a specific game and both players from the \
+text, respond with exactly NONE and nothing else."""
+
+
+def extract_game_from_body(client, body_markdown: str) -> dict | None:
+    """Deterministic backstop for @@GAME_LOOKUP@@ misses: given a body that
+    SAN_MOVE_RE has already flagged as quoting real moves, asks a plain
+    (non-web-search) extraction call to name the event and both players
+    directly from the text itself -- no web search needed, since the
+    answer is already sitting in the body. Returns the same
+    {"event", "player1", "player2"} shape parse_game_lookup produces, or
+    None."""
+    response = client.messages.create(
+        model=EXTRACT_MODEL,
+        max_tokens=256,
+        system=EXTRACT_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": body_markdown}],
+    )
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        return None
+    text = text_blocks[-1]
+
+    event = re.search(r"^event:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player1 = re.search(r"^player1:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player2 = re.search(r"^player2:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    if not (event and player1 and player2):
+        return None
+    return {
+        "event": event.group(1).strip(),
+        "player1": player1.group(1).strip(),
+        "player2": player2.group(1).strip(),
+    }

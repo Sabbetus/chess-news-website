@@ -30,7 +30,7 @@ import anthropic
 
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
-from lichess_game import find_game_embed
+from lichess_game import SAN_MOVE_RE, extract_game_from_body, find_game_embed
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -933,17 +933,56 @@ def draft_one(
 
     if not is_aggregate:
         game_lookup = parse_game_lookup(parsed.get("gameLookup") or "")
+        body_for_backstop = parsed.get("bodyMarkdown") or ""
+        quoted_move_count = len(SAN_MOVE_RE.findall(body_for_backstop))
+        # Always logged, not just on failure -- @@GAME_LOOKUP@@ relies on the
+        # same model call that wrote the body correctly noticing its own
+        # body qualifies, which has missed real cases in practice (caught
+        # live twice: Liang's shock loss, and Yu Yangyi's forced mate vs.
+        # Georgiev -- both bodies quoted real moves with no lookup filled).
+        # Printing this on every non-aggregate draft, not just misses, is
+        # what makes those cases auditable from CI logs after the fact
+        # instead of only when a human happens to notice on review.
+        print(
+            f"  game lookup: {'requested (' + game_lookup['event'] + ')' if game_lookup else 'not requested'}, "
+            f"body has {quoted_move_count} quoted move(s) for '{item['title']}'",
+            file=sys.stderr,
+        )
+
+        if not game_lookup and quoted_move_count >= 2:
+            # Deterministic backstop: the body itself quotes real moves
+            # (SAN_MOVE_RE matched twice+) but the model didn't fill
+            # @@GAME_LOOKUP@@ in the same generation that wrote them. Ask a
+            # second, plain call to name the event/players straight from
+            # the text already in hand -- no web search needed, the answer
+            # is already in the body -- rather than trusting the model to
+            # have self-reported correctly the first time.
+            print(f"  game lookup: backstop firing for '{item['title']}'", file=sys.stderr)
+            try:
+                game_lookup = extract_game_from_body(client, body_for_backstop)
+            except Exception as exc:
+                print(f"  Game lookup backstop failed for '{item['title']}': {exc}", file=sys.stderr)
+                game_lookup = None
+            print(
+                f"  game lookup: backstop {'found ' + game_lookup['event'] if game_lookup else 'found nothing'} "
+                f"for '{item['title']}'",
+                file=sys.stderr,
+            )
+
         if game_lookup:
-            # A missing embed is the normal, expected outcome for most
-            # matches attempted (calendar aggregates never reach here at
-            # all, and plenty of named games still won't be on a Lichess
-            # broadcast) -- only log and skip, never fail the whole draft
-            # over a lookup that didn't pan out.
+            # A missing embed is still a normal, expected outcome even once
+            # a lookup was attempted (plenty of named games still won't be
+            # on a Lichess broadcast) -- only log and skip, never fail the
+            # whole draft over a lookup that didn't pan out.
             try:
                 embed = find_game_embed(client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"])
             except Exception as exc:
                 print(f"  Game embed lookup failed for '{item['title']}': {exc}", file=sys.stderr)
                 embed = None
+            print(
+                f"  game lookup: embed {'attached' if embed else 'not found'} for '{item['title']}'",
+                file=sys.stderr,
+            )
             if embed:
                 frontmatter["gameEmbed"] = embed
 
