@@ -182,10 +182,7 @@ const jsonLd = [
             <span class="src">
               {allSources.length === 1 ? 'Source: ' : 'Sources: '}
               {allSources.map((s, i) => (
-                <>
-                  {i > 0 && ', '}
-                  <a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a>
-                </>
+                <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
               ))}
             </span>
             <span class="dot">&bull;</span>
@@ -209,10 +206,7 @@ const jsonLd = [
         <>
           {allSources.length === 1 ? 'Original source: ' : 'Original sources: '}
           {allSources.map((s, i) => (
-            <>
-              {i > 0 && ', '}
-              <a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a>
-            </>
+            <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
           ))}
           <br />
         </>
