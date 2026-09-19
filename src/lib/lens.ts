@@ -29,7 +29,7 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
 };
 
 // Nav/listing order.
-export const LENS_ORDER: Lens[] = ['money-angle', 'historical-parallel', 'drama', 'results', 'tournament-db'];
+export const LENS_ORDER: Lens[] = ['results', 'historical-parallel', 'money-angle', 'drama', 'tournament-db'];
 
 // URL slugs, kept separate from the Lens type itself -- the type value is
 // also the content-schema key stored in every article's frontmatter, which
