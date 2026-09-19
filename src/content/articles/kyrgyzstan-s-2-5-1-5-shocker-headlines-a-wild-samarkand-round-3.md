@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-
 lens: "upsets"
 continent: "global"
 selectionScore: 75
-reviewStatus: "published"
+reviewStatus: "draft"
 socialCopy: "79th-seeded Kyrgyzstan just beat 31st-seeded Brazil at the Chess Olympiad. Singapore knocked out Norway. Anish Giri saved the Netherlands. Round 3 in Samarkand had it all."
 image:
   src: "./_images/Nodirbek_Abdusattorov_v_Anish_Giri_Tata_2023_-_10.webp"
