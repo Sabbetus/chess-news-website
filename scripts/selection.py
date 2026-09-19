@@ -187,7 +187,14 @@ GENERIC_NAME_WORDS = {
     "october", "november", "december", "in", "of", "for", "as", "on", "at", "to", "by",
 }
 
-MIN_SHARED_NAMES_FOR_SAME_STORY = 2
+# A bigram match (e.g. "Arjun Erigaisi" in both) is a strong, low-noise
+# signal on its own -- two outlets independently spelling out the same
+# full name essentially never happens by coincidence, so 2 of those is
+# enough. A single-word match (e.g. "Argentina") is much weaker on its
+# own -- team-event recaps routinely share a host country or an unrelated
+# team name by coincidence -- so it takes more of them alone to count.
+MIN_SHARED_BIGRAMS_FOR_SAME_STORY = 2
+MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY = 4
 
 
 def _name_bigrams(item: dict) -> set[tuple[str, str]]:
@@ -208,8 +215,37 @@ def _name_bigrams(item: dict) -> set[tuple[str, str]]:
     return bigrams
 
 
+def _single_names(item: dict) -> set[str]:
+    """Standalone capitalized, non-generic words -- catches the same-event
+    case _name_bigrams misses: two outlets covering the same team-event
+    round often name the same countries/players, but with an ordinary
+    lowercase word breaking up the adjacency bigrams need ("Argentina,
+    seeded 28th, defeated Ukraine" vs. "Iran overcame eighth-seeded
+    France" -- Argentina/Ukraine/Iran/France never sit next to another
+    capitalized word, so two round-3 Olympiad recaps sharing all four of
+    those names still scored zero shared bigrams and were drafted as two
+    separate articles covering the same round). Filtered the same way as
+    bigrams; only used together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY
+    precisely because a lone word is weaker evidence than a matched pair."""
+    text = f"{item.get('title', '')} {item.get('summary', '')}"
+    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    names = set()
+    for w in words:
+        if not w[:1].isupper():
+            continue
+        lw = w.lower().rstrip("'s")
+        if lw in GENERIC_NAME_WORDS or len(lw) < 4:
+            continue
+        names.add(lw)
+    return names
+
+
 def _is_same_story(a: dict, b: dict) -> bool:
-    return len(_name_bigrams(a) & _name_bigrams(b)) >= MIN_SHARED_NAMES_FOR_SAME_STORY
+    shared_bigrams = len(_name_bigrams(a) & _name_bigrams(b))
+    if shared_bigrams >= MIN_SHARED_BIGRAMS_FOR_SAME_STORY:
+        return True
+    shared_singles = len(_single_names(a) & _single_names(b))
+    return shared_singles >= MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY
 
 
 def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
