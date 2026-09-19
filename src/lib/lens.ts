@@ -4,7 +4,7 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
   'tournament-db': {
     label: 'OTB Tournaments',
     className: 'tournament',
-    description: 'Classical and rapid tournaments from around the world: the highlights from the past, and what’s coming up next. Sourced from Chess Tournament Calendar.',
+    description: 'Over the board (OTB) classical and rapid tournaments from around the world: the highlights from the past, and what’s coming up next. Sourced from Chess Tournament Calendar.',
   },
   drama: {
     label: 'Controversy',
