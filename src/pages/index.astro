@@ -84,10 +84,7 @@ const jsonLd = [
               <span class="src">
                 {sourceEntries(lead.data).length === 1 ? 'Source: ' : 'Sources: '}
                 {sourceEntries(lead.data).map((s, i) => (
-                  <>
-                    {i > 0 && ', '}
-                    <a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a>
-                  </>
+                  <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
                 ))}
               </span>
               <span class="dot">&bull;</span>
