@@ -86,7 +86,13 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     margin: 0 0 10px;
     color: var(--ink-soft);
     font-size: 15.5px;
-    max-width: 60ch;
+    /* No max-width -- 60ch (~465px at this font size) wrapped far too
+       early relative to the available column width (.wrap caps at
+       1100px), especially now that the OTB Tournaments description runs
+       long. Let it use the full content column on wide viewports; the
+       page's own .wrap max-width already keeps it from stretching too
+       far on very large screens. */
+    max-width: 100%;
   }
   .section-head .count {
     margin: 0 0 20px;
