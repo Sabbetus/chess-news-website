@@ -4,6 +4,8 @@ publishDate: "2026-09-19"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-3-strong-starts-and-stunning-surprises-in-samarkand/"
 lens: "upsets"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-3/bmI956uk/b2vpTBPX"
 continent: "asia"
 selectionScore: 80
 reviewStatus: "draft"
