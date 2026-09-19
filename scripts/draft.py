@@ -30,7 +30,7 @@ import anthropic
 
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
-from lichess_game import SAN_MOVE_RE, extract_game_from_body, find_game_embed
+from lichess_game import GAME_LOOKUP_CRITERIA, SAN_MOVE_RE, find_game_embed, recheck_game_lookup
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -378,7 +378,7 @@ a single short social post (under 260 characters) teasing the piece, no hashtags
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
 @@GAME_LOOKUP@@
-Fill this in whenever the piece gives ONE specific game real, headline-level treatment -- named players, and either a notable moment (a blunder, a sacrifice, a specific rating/seed gap) or enough of the game's shape to be worth seeing on a real board. This is NOT limited to pieces that are about nothing else: a round-recap piece that covers several results but still singles out one specific game by name, with real detail, qualifies just as much as a piece built entirely around one game -- Erigaisi's blunder-loss to Laohawirapap qualified even though that piece also covered the ceremony and other results, and a round recap that leads with "Liang's Shock Loss" and gives it a real paragraph (the 258-point rating gap, the opening, the result) qualifies on exactly the same basis, even though the same piece also covers Montenegro's draw and other matches. This also covers a title-clinching or decisive-match paragraph that names individual winners and their opponents, even without describing how any single game actually played out move-by-move -- the named result itself (who beat whom, on which board, to seal a title or a match) is the headline-level detail; a real board to show alongside it is worth more than the prose describing it (caught live: "Poland's Rollercoaster Ends in Gold at Samarkand" named three individual winners who clinched the title match against the Philippines by name and board, with no separate move-level description, and shipped with no embed -- any one of those three games qualified). What does NOT qualify: a bare team score with no players named at all ("India beat Thailand 3-1"), or a trend with no specific game attached ("the standings flipped again"). If more than one game in the piece would qualify on its own, pick the one the piece treats as its actual headline (usually whichever is named in the title); for a multi-winner clinching paragraph with no other basis to rank them, pick the highest-rated or highest-titled player among them. When genuinely unsure whether a mention has enough detail to count, err toward filling this in rather than leaving it empty -- a lookup that finds nothing costs little, but skipping a piece that deserved a real embed is the worse failure mode.
+{GAME_LOOKUP_CRITERIA}
 When it does apply, write exactly these three lines and nothing else, with the real values filled in:
 event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
 player1: first player's full name
@@ -933,38 +933,45 @@ def draft_one(
 
     if not is_aggregate:
         game_lookup = parse_game_lookup(parsed.get("gameLookup") or "")
-        body_for_backstop = parsed.get("bodyMarkdown") or ""
-        quoted_move_count = len(SAN_MOVE_RE.findall(body_for_backstop))
-        # Always logged, not just on failure -- @@GAME_LOOKUP@@ relies on the
-        # same model call that wrote the body correctly noticing its own
-        # body qualifies, which has missed real cases in practice (caught
-        # live twice: Liang's shock loss, and Yu Yangyi's forced mate vs.
-        # Georgiev -- both bodies quoted real moves with no lookup filled).
-        # Printing this on every non-aggregate draft, not just misses, is
-        # what makes those cases auditable from CI logs after the fact
-        # instead of only when a human happens to notice on review.
+        body_for_recheck = parsed.get("bodyMarkdown") or ""
+        # Diagnostic only -- see SAN_MOVE_RE's comment for why this can't
+        # gate the recheck below (it misses the named-winner-no-moves-
+        # quoted case entirely). Logged so a body that plainly quotes moves
+        # but still skipped the lookup is obvious in CI logs at a glance.
+        quoted_move_count = len(SAN_MOVE_RE.findall(body_for_recheck))
+        # Always logged, not just on failure -- @@GAME_LOOKUP@@ relies on
+        # the same model call that wrote the body correctly noticing its
+        # own body qualifies, which has missed real cases in practice
+        # (Liang's shock loss, Yu Yangyi's forced mate vs. Georgiev, and
+        # Poland's title-clinching wins over the Philippines all shipped
+        # with no embed despite qualifying). Printing this on every
+        # non-aggregate draft, not just misses, is what makes those cases
+        # auditable from CI logs after the fact instead of only when a
+        # human happens to notice on review.
         print(
             f"  game lookup: {'requested (' + game_lookup['event'] + ')' if game_lookup else 'not requested'}, "
             f"body has {quoted_move_count} quoted move(s) for '{item['title']}'",
             file=sys.stderr,
         )
 
-        if not game_lookup and quoted_move_count >= 2:
-            # Deterministic backstop: the body itself quotes real moves
-            # (SAN_MOVE_RE matched twice+) but the model didn't fill
-            # @@GAME_LOOKUP@@ in the same generation that wrote them. Ask a
-            # second, plain call to name the event/players straight from
-            # the text already in hand -- no web search needed, the answer
-            # is already in the body -- rather than trusting the model to
-            # have self-reported correctly the first time.
-            print(f"  game lookup: backstop firing for '{item['title']}'", file=sys.stderr)
+        if not game_lookup:
+            # Independent second pass, unconditional -- not gated on
+            # quoted_move_count or any other heuristic, since the
+            # qualifying criteria (GAME_LOOKUP_CRITERIA) cover cases no
+            # regex over the text can reliably detect (a title-clinching
+            # paragraph naming winners with no moves quoted). Splitting
+            # "write the piece" and "does this piece qualify" into two
+            # separate calls is the actual fix: a fresh read with no
+            # drafting task competing for the model's attention has
+            # repeatedly caught what the inline self-report missed.
+            print(f"  game lookup: recheck firing for '{item['title']}'", file=sys.stderr)
             try:
-                game_lookup = extract_game_from_body(client, body_for_backstop)
+                game_lookup = recheck_game_lookup(client, body_for_recheck)
             except Exception as exc:
-                print(f"  Game lookup backstop failed for '{item['title']}': {exc}", file=sys.stderr)
+                print(f"  Game lookup recheck failed for '{item['title']}': {exc}", file=sys.stderr)
                 game_lookup = None
             print(
-                f"  game lookup: backstop {'found ' + game_lookup['event'] if game_lookup else 'found nothing'} "
+                f"  game lookup: recheck {'found ' + game_lookup['event'] if game_lookup else 'found nothing'} "
                 f"for '{item['title']}'",
                 file=sys.stderr,
             )

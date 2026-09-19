@@ -162,49 +162,58 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
 
 
 # Matches a numbered SAN move (e.g. "37.Ng6", "50...Qg7", "38.Bg8+",
-# "22...O-O"), the same shape the model actually writes into a body's prose
-# whenever it quotes a specific game's moves. Two or more of these in one
-# body is a strong, deterministic signal that the piece treats one real
-# game closely enough to be worth an embed -- used as a backstop for cases
-# where @@GAME_LOOKUP@@ went unfilled despite the body itself quoting real
-# moves (see find_game_lookup_gap in draft.py for why this exists: the
-# model's own self-report of "does this piece qualify" has repeatedly
-# missed pieces that plainly do, by the site owner's read of them).
+# "22...O-O"), the same shape the model writes into a body's prose whenever
+# it quotes a specific game's moves. Not used to gate the recheck below --
+# it can't catch every qualifying case (a title-clinching paragraph that
+# just names winners by board, with no moves quoted, qualifies just as
+# much -- see GAME_LOOKUP_CRITERIA) -- kept only as a diagnostic signal in
+# draft.py's per-article log line, so a miss where the body plainly quotes
+# moves but still got skipped is easy to spot in CI logs at a glance.
 SAN_MOVE_RE = re.compile(
     r"\b\d{1,3}\.(?:\.\.)?\s?(?:O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?)[+#!?]*\b"
 )
 
-EXTRACT_MODEL = "claude-sonnet-5"
+# Single source of truth for what counts as embed-worthy -- imported into
+# both NEWS_SYSTEM_PROMPT's own @@GAME_LOOKUP@@ field (the model's first,
+# inline self-report while it's writing the piece) and RECHECK_SYSTEM_PROMPT
+# below (an independent second pass over the finished body). Keeping one
+# copy of the criteria means the recheck can't silently drift from what the
+# model was originally told to look for.
+GAME_LOOKUP_CRITERIA = """Fill this in whenever the piece gives ONE specific game real, headline-level treatment -- named players, and either a notable moment (a blunder, a sacrifice, a specific rating/seed gap) or enough of the game's shape to be worth seeing on a real board. This is NOT limited to pieces that are about nothing else: a round-recap piece that covers several results but still singles out one specific game by name, with real detail, qualifies just as much as a piece built entirely around one game -- Erigaisi's blunder-loss to Laohawirapap qualified even though that piece also covered the ceremony and other results, and a round recap that leads with "Liang's Shock Loss" and gives it a real paragraph (the 258-point rating gap, the opening, the result) qualifies on exactly the same basis, even though the same piece also covers Montenegro's draw and other matches. This also covers a title-clinching or decisive-match paragraph that names individual winners and their opponents, even without describing how any single game actually played out move-by-move -- the named result itself (who beat whom, on which board, to seal a title or a match) is the headline-level detail; a real board to show alongside it is worth more than the prose describing it (caught live: "Poland's Rollercoaster Ends in Gold at Samarkand" named three individual winners who clinched the title match against the Philippines by name and board, with no separate move-level description, and shipped with no embed -- any one of those three games qualified). What does NOT qualify: a bare team score with no players named at all ("India beat Thailand 3-1"), or a trend with no specific game attached ("the standings flipped again"). If more than one game in the piece would qualify on its own, pick the one the piece treats as its actual headline (usually whichever is named in the title); for a multi-winner clinching paragraph with no other basis to rank them, pick the highest-rated or highest-titled player among them. When genuinely unsure whether a mention has enough detail to count, err toward filling this in rather than leaving it empty -- a lookup that finds nothing costs little, but skipping a piece that deserved a real embed is the worse failure mode."""
 
-EXTRACT_SYSTEM_PROMPT = """You are given the Markdown body of a chess news \
-article that quotes real move notation for at least one specific game \
-(e.g. "37.Ng6! fxg6 38.Bg8+"). Identify the tournament/event name and the \
-two players of the ONE game whose moves are quoted -- if more than one \
-game has quoted moves, pick whichever the piece treats as its actual \
-headline (the one most central to the piece, usually named early or in \
-the title context).
+RECHECK_MODEL = "claude-sonnet-5"
 
-Respond with exactly these three lines and nothing else:
+RECHECK_SYSTEM_PROMPT = f"""You are given the finished Markdown body of a chess news article. A separate pass already decided this piece has no game worth embedding -- your job is to independently re-check that call against the same criteria, since that first pass has missed real qualifying pieces before. Read the body fresh, as if grading someone else's judgment call, not your own.
+
+{GAME_LOOKUP_CRITERIA}
+
+If the body qualifies under these criteria, respond with exactly these three lines and nothing else:
 event: <tournament/event name>
 player1: <first player's full name>
 player2: <second player's full name>
 
-If you genuinely cannot identify a specific game and both players from the \
-text, respond with exactly NONE and nothing else."""
+If it genuinely does not qualify, respond with exactly NONE and nothing else."""
 
 
-def extract_game_from_body(client, body_markdown: str) -> dict | None:
-    """Deterministic backstop for @@GAME_LOOKUP@@ misses: given a body that
-    SAN_MOVE_RE has already flagged as quoting real moves, asks a plain
-    (non-web-search) extraction call to name the event and both players
-    directly from the text itself -- no web search needed, since the
-    answer is already sitting in the body. Returns the same
-    {"event", "player1", "player2"} shape parse_game_lookup produces, or
-    None."""
+def recheck_game_lookup(client, body_markdown: str) -> dict | None:
+    """Independent second pass over a finished body, run whenever the
+    model's own inline @@GAME_LOOKUP@@ self-report came back empty --
+    unconditionally, not gated on SAN_MOVE_RE or any other heuristic, since
+    the qualifying criteria cover cases (a named clinching-match winner
+    with no moves quoted) that no regex over the text can reliably detect.
+    Splitting "write the piece" and "does this piece qualify" into two
+    separate calls is the actual fix: asking the model to notice its own
+    body qualifies in the same generation that wrote it has missed real
+    cases in practice (Liang's shock loss, Yu Yangyi's forced mate vs.
+    Georgiev, and Poland's title-clinching wins over the Philippines all
+    shipped with no embed despite clearly qualifying) -- a fresh read with
+    no drafting task competing for the model's attention catches what the
+    inline self-report doesn't. Returns the same {"event", "player1",
+    "player2"} shape parse_game_lookup produces, or None."""
     response = client.messages.create(
-        model=EXTRACT_MODEL,
+        model=RECHECK_MODEL,
         max_tokens=256,
-        system=EXTRACT_SYSTEM_PROMPT,
+        system=RECHECK_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": body_markdown}],
     )
     text_blocks = [b.text for b in response.content if b.type == "text"]
