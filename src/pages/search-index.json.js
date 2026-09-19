@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { excerptFrom } from '../lib/excerpt';
+import { sourceNames } from '../lib/sources';
 
 // A small, static search index built at deploy time -- there's no backend
 // to query, so the client fetches this once and filters it locally. Kept
@@ -14,7 +15,7 @@ export async function GET() {
     title: article.data.title,
     slug: article.slug,
     excerpt: excerptFrom(article.body, 140),
-    sourceName: article.data.sourceName,
+    sourceName: sourceNames(article.data).join(', '),
     publishDate: article.data.publishDate.toISOString(),
   }));
 
