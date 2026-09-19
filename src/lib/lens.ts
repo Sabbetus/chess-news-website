@@ -9,7 +9,7 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
   drama: {
     label: 'Controversy',
     className: 'drama',
-    description: 'Scandal, conflict, and the fallout when chess politics gets messy.',
+    description: 'Cheating accusations, disputes, messy politics and the fights that go public.',
   },
   'historical-parallel': {
     label: 'History',
@@ -19,12 +19,12 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
   'money-angle': {
     label: 'Money',
     className: 'money',
-    description: 'Prize funds, sponsorship, and where the money in chess is actually moving.',
+    description: 'Prize money, sponsors, and the deals behind them.',
   },
   results: {
     label: 'Results',
     className: 'results',
-    description: 'Shock results, blunders, and the standings they reshape -- what happened, and what it means going forward.',
+    description: 'The scores that mattered, from shocks and comebacks to who’s on top.',
   },
 };
 
