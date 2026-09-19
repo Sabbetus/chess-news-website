@@ -255,6 +255,19 @@ figure or result if the source has more:
 - Full numeric breakdowns, not just the top line: every prize-money tier given \
 (not only 1st place), all named standings/scores given (not only the winner), \
 every score/streak/count in the piece, not a representative one or two.
+- The named individual result behind a team score, whenever the source gives one: \
+a team-event upset is a scoreline ("Kyrgyzstan beat Brazil 2.5-1.5") standing in \
+for what actually decided it -- a specific player beating a specific opponent, \
+often with a rating gap or title gap the source states outright. Naming that \
+player and result is frequently the entire substance of an upset story; a body \
+that repeats the team scoreline without ever naming who actually delivered it \
+has told the reader nothing the headline didn't already say (caught live: a \
+piece headlined "Kyrgyzstan's 2.5-1.5 Shocker" never named either of the two \
+upsets it was about, even though the source named both -- untitled Timur Daudov \
+beating IM Diego Di Berardino, and GM Jingyao Tin beating GM Johan-Sebastian \
+Christiansen -- and separately called out GM Anish Giri's win as its explicit \
+"Game of the Day" with real detail (a critical opposite-colored-bishops endgame), \
+none of which made it into the piece).
 - Format/structure specifics: bracket or match format, time control, schedule/dates, \
 qualification path -- anything the source says about how the event was actually run.
 - The specific turning point: a notable move, tactic, quote, or moment the source \
