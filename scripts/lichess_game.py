@@ -159,3 +159,75 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
         return None
 
     return {"url": embed_url_from_game_url(game_url)}
+
+
+# Matches a numbered SAN move (e.g. "37.Ng6", "50...Qg7", "38.Bg8+",
+# "22...O-O"), the same shape the model writes into a body's prose whenever
+# it quotes a specific game's moves. Not used to gate the recheck below --
+# it can't catch every qualifying case (a title-clinching paragraph that
+# just names winners by board, with no moves quoted, qualifies just as
+# much -- see GAME_LOOKUP_CRITERIA) -- kept only as a diagnostic signal in
+# draft.py's per-article log line, so a miss where the body plainly quotes
+# moves but still got skipped is easy to spot in CI logs at a glance.
+SAN_MOVE_RE = re.compile(
+    r"\b\d{1,3}\.(?:\.\.)?\s?(?:O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?)[+#!?]*\b"
+)
+
+# Single source of truth for what counts as embed-worthy -- imported into
+# both NEWS_SYSTEM_PROMPT's own @@GAME_LOOKUP@@ field (the model's first,
+# inline self-report while it's writing the piece) and RECHECK_SYSTEM_PROMPT
+# below (an independent second pass over the finished body). Keeping one
+# copy of the criteria means the recheck can't silently drift from what the
+# model was originally told to look for.
+GAME_LOOKUP_CRITERIA = """Fill this in whenever the piece gives ONE specific game real, headline-level treatment -- named players, and either a notable moment (a blunder, a sacrifice, a specific rating/seed gap) or enough of the game's shape to be worth seeing on a real board. This is NOT limited to pieces that are about nothing else: a round-recap piece that covers several results but still singles out one specific game by name, with real detail, qualifies just as much as a piece built entirely around one game -- Erigaisi's blunder-loss to Laohawirapap qualified even though that piece also covered the ceremony and other results, and a round recap that leads with "Liang's Shock Loss" and gives it a real paragraph (the 258-point rating gap, the opening, the result) qualifies on exactly the same basis, even though the same piece also covers Montenegro's draw and other matches. This also covers a title-clinching or decisive-match paragraph that names individual winners and their opponents, even without describing how any single game actually played out move-by-move -- the named result itself (who beat whom, on which board, to seal a title or a match) is the headline-level detail; a real board to show alongside it is worth more than the prose describing it (caught live: "Poland's Rollercoaster Ends in Gold at Samarkand" named three individual winners who clinched the title match against the Philippines by name and board, with no separate move-level description, and shipped with no embed -- any one of those three games qualified). What does NOT qualify: a bare team score with no players named at all ("India beat Thailand 3-1"), or a trend with no specific game attached ("the standings flipped again"). If more than one game in the piece would qualify on its own, pick the one the piece treats as its actual headline (usually whichever is named in the title); for a multi-winner clinching paragraph with no other basis to rank them, pick the highest-rated or highest-titled player among them. When genuinely unsure whether a mention has enough detail to count, err toward filling this in rather than leaving it empty -- a lookup that finds nothing costs little, but skipping a piece that deserved a real embed is the worse failure mode."""
+
+RECHECK_MODEL = "claude-sonnet-5"
+
+RECHECK_SYSTEM_PROMPT = f"""You are given the finished Markdown body of a chess news article. A separate pass already decided this piece has no game worth embedding -- your job is to independently re-check that call against the same criteria, since that first pass has missed real qualifying pieces before. Read the body fresh, as if grading someone else's judgment call, not your own.
+
+{GAME_LOOKUP_CRITERIA}
+
+If the body qualifies under these criteria, respond with exactly these three lines and nothing else:
+event: <tournament/event name>
+player1: <first player's full name>
+player2: <second player's full name>
+
+If it genuinely does not qualify, respond with exactly NONE and nothing else."""
+
+
+def recheck_game_lookup(client, body_markdown: str) -> dict | None:
+    """Independent second pass over a finished body, run whenever the
+    model's own inline @@GAME_LOOKUP@@ self-report came back empty --
+    unconditionally, not gated on SAN_MOVE_RE or any other heuristic, since
+    the qualifying criteria cover cases (a named clinching-match winner
+    with no moves quoted) that no regex over the text can reliably detect.
+    Splitting "write the piece" and "does this piece qualify" into two
+    separate calls is the actual fix: asking the model to notice its own
+    body qualifies in the same generation that wrote it has missed real
+    cases in practice (Liang's shock loss, Yu Yangyi's forced mate vs.
+    Georgiev, and Poland's title-clinching wins over the Philippines all
+    shipped with no embed despite clearly qualifying) -- a fresh read with
+    no drafting task competing for the model's attention catches what the
+    inline self-report doesn't. Returns the same {"event", "player1",
+    "player2"} shape parse_game_lookup produces, or None."""
+    response = client.messages.create(
+        model=RECHECK_MODEL,
+        max_tokens=256,
+        system=RECHECK_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": body_markdown}],
+    )
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        return None
+    text = text_blocks[-1]
+
+    event = re.search(r"^event:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player1 = re.search(r"^player1:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player2 = re.search(r"^player2:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    if not (event and player1 and player2):
+        return None
+    return {
+        "event": event.group(1).strip(),
+        "player1": player1.group(1).strip(),
+        "player2": player2.group(1).strip(),
+    }
