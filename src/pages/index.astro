@@ -5,6 +5,7 @@ import ArticleThumb from '../components/ArticleThumb.astro';
 import TagRow from '../components/TagRow.astro';
 import { estimateReadMinutes } from '../lib/reading';
 import { excerptFrom } from '../lib/excerpt';
+import { sourceLabel } from '../lib/sources';
 // Written by scripts/fetch_popular.py during deploy -- last-7-days GA4
 // pageviews for last-7-days-published articles, ranked. Best-effort: a
 // failed fetch leaves this file (and so this list) exactly as it was
@@ -81,7 +82,7 @@ const jsonLd = [
             <TagRow lens={lead.data.lens} continent={lead.data.continent} />
             <div class="byline">
               <a class="src" href={lead.data.sourceUrl} target="_blank" rel="noopener">
-                Source: {lead.data.sourceName}
+                {sourceLabel(lead.data)}
               </a>
               <span class="dot">&bull;</span>
               <span>{estimateReadMinutes(lead.body)} min read</span>
@@ -127,7 +128,7 @@ const jsonLd = [
             <p>{excerptFrom(a.body, 160)}</p>
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
-              <span class="src">Source: {a.data.sourceName}</span>
+              <span class="src">{sourceLabel(a.data)}</span>
               <span class="dot">&bull;</span>
               <span>{estimateReadMinutes(a.body)} min read</span>
               <span class="dot">&bull;</span>
@@ -197,7 +198,7 @@ const jsonLd = [
             <p>{excerptFrom(a.body, 160)}</p>
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
-              <span class="src">Source: {a.data.sourceName}</span>
+              <span class="src">{sourceLabel(a.data)}</span>
               <span class="dot">&bull;</span>
               <span>{estimateReadMinutes(a.body)} min read</span>
               <span class="dot">&bull;</span>
