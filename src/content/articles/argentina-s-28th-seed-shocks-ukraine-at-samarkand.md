@@ -8,7 +8,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-3/bmI956uk/b2vpTBPX"
 continent: "asia"
 selectionScore: 80
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "28th-seeded Argentina just knocked out Ukraine at the Chess Olympiad, and Iran beat 8th-seeded France too. Round 3 in Samarkand had a lot more than the favorites cruising."
 image:
   src: "./_images/Javokhir_Sindarov_-.webp"
