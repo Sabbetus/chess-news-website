@@ -3,7 +3,7 @@ title: "Cuba's Unbeaten Run Ends as Poland and Czechia Share the Lead"
 publishDate: "2026-09-16"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/two-olympiads-two-new-leaders-poland-and-czech-republic-surge-ahead-in-samarkand/"
-lens: "upsets"
+lens: "results"
 continent: "asia"
 selectionScore: 65
 reviewStatus: "published"

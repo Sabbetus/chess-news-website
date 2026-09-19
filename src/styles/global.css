@@ -233,7 +233,7 @@ button:focus-visible {
   --tint: color-mix(in srgb, var(--brass) 18%, transparent);
   --mark: color-mix(in srgb, var(--brass) 60%, var(--ink) 10%);
 }
-.thumb.upsets {
+.thumb.results {
   --tint: color-mix(in srgb, var(--blue) 16%, transparent);
   --mark: color-mix(in srgb, var(--blue) 55%, var(--ink) 10%);
 }
@@ -334,7 +334,7 @@ button:focus-visible {
   background: var(--brass-tint);
   color: var(--brass);
 }
-.lens-tag.upsets {
+.lens-tag.results {
   background: var(--blue-tint);
   color: var(--blue);
 }

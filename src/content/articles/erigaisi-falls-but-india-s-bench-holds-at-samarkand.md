@@ -3,7 +3,7 @@ title: "Erigaisi Falls, but India's Bench Holds at Samarkand"
 publishDate: "2026-09-17"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/samarkand-olympiad-day-1-favourites-fireworks-and-a-shock/"
-lens: "upsets"
+lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-1/DfnuMSan/9o0BQexh"
 continent: "asia"

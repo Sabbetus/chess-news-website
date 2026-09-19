@@ -3,7 +3,7 @@ title: "El Salvador Stuns Cuba as Gukesh Slips Below 2700"
 publishDate: "2026-09-18"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2"
-lens: "upsets"
+lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-38-62/round-2/OTXouHZ4/DfEoBZrA"
 continent: "asia"

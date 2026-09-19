@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-day-3-strong-starts-and-stunning-surpr
 additionalSources:
   - sourceName: "Chess.com"
     sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-3"
-lens: "upsets"
+lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-3/bmI956uk/b2vpTBPX"
 continent: "asia"

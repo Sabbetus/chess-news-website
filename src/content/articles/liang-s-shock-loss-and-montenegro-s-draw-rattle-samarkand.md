@@ -3,7 +3,7 @@ title: "Liang's Shock Loss and Montenegro's Draw Rattle Samarkand"
 publishDate: "2026-09-18"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-2-big-guns-enter-arena-in-samarkand/"
-lens: "upsets"
+lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-2/HnCuRMmB/BF18NA7x"
 continent: "asia"
