@@ -241,11 +241,30 @@ def _single_names(item: dict) -> set[str]:
 
 
 def _is_same_story(a: dict, b: dict) -> bool:
-    shared_bigrams = len(_name_bigrams(a) & _name_bigrams(b))
-    if shared_bigrams >= MIN_SHARED_BIGRAMS_FOR_SAME_STORY:
+    shared_bigrams = _name_bigrams(a) & _name_bigrams(b)
+    if len(shared_bigrams) >= MIN_SHARED_BIGRAMS_FOR_SAME_STORY:
         return True
-    shared_singles = len(_single_names(a) & _single_names(b))
-    return shared_singles >= MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY
+    shared_singles = _single_names(a) & _single_names(b)
+    if len(shared_singles) >= MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY:
+        return True
+    # A broad roundup piece (many teams/players named) and a narrow
+    # single-match spotlight piece from the same event/day can share very
+    # few names overall even when they're substantially the same story --
+    # the roundup's name pool dilutes any count-based threshold (caught
+    # live: FIDE's round-4 "eight teams still perfect" survey and
+    # Chess.com's round-4 "U.S. sweeps Ukraine" spotlight both centered on
+    # Aronian's win over Ukraine, but shared only one bigram and three
+    # singles total -- under both thresholds above). One matched full name
+    # (a bigram) is on its own too weak a signal by itself, since two
+    # unrelated pieces can easily both mention the same famous player in
+    # passing on the same day -- but a bigram match PLUS at least one
+    # further shared name beyond that bigram's own two words is a much
+    # more specific combination: not just the same person mentioned twice,
+    # but the same person tied to the same additional context (an
+    # opponent, a team, an event detail) in both pieces.
+    bigram_words = {w for bg in shared_bigrams for w in bg}
+    extra_singles = shared_singles - bigram_words
+    return len(shared_bigrams) >= 1 and len(extra_singles) >= 1
 
 
 def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
