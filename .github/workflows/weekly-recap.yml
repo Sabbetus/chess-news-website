@@ -51,7 +51,15 @@ jobs:
             exit 0
           fi
 
-          BRANCH="drafts/weekly-recap-$(date -u +%Y-%m-%d)"
+          # Time included, not just the date -- a date-only branch name
+          # collides (non-fast-forward push rejection) if this workflow
+          # ever runs twice in the same day, e.g. a manual re-trigger
+          # after an earlier run's draft had a bug and never got merged
+          # (caught live: 2026-09-20's scheduled run produced a truncated
+          # recap that sat unmerged, and the manual re-run after the fix
+          # landed failed here for exactly that reason). pipeline.yml and
+          # backfill.yml already do this; this workflow was the odd one out.
+          BRANCH="drafts/weekly-recap-$(date -u +%Y-%m-%d)-$(date -u +%H%M%S)"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
