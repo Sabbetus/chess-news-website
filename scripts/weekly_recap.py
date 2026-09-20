@@ -331,6 +331,23 @@ def build_user_prompt(entries: list[dict]) -> str:
     return "\n".join(parts)
 
 
+_ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
+
+
+def check_recap_links(body_markdown: str, entries: list[dict]) -> list[str]:
+    """Every "/articles/<slug>/" link in the drafted body against the real
+    slugs it was given -- the model is handed the exact slug for each
+    article in build_user_prompt (see the `Link:` line) but can still
+    transcribe it wrong when writing the body (caught live: 2026-09-20's
+    recap linked a slightly-misremembered slug). Returns the full bad
+    links, unmodified -- never auto-fix by fuzzy-matching, since a wrong
+    guess here would silently point at the wrong article."""
+    real_slugs = {e["slug"] for e in entries}
+    found = set(_ARTICLE_LINK_RE.findall(body_markdown))
+    bad = found - real_slugs
+    return sorted(f"/articles/{slug}/" for slug in bad)
+
+
 def main() -> None:
     entries = recent_published_articles(RECAP_WINDOW_DAYS)
     if not entries:
@@ -408,6 +425,8 @@ def main() -> None:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
 
+    bad_links = check_recap_links(body_markdown, entries)
+
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     print(f"Drafted: {out_path.relative_to(ROOT)} (from {len(entries)} article(s))")
 
@@ -415,6 +434,16 @@ def main() -> None:
     if offenders:
         spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
         lines += ["", f"**Paragraph(s) over the style-guide word ceiling:** {spots}"]
+    if bad_links:
+        lines += [
+            "",
+            "**Broken article link(s) -- slug doesn't match any given article, likely a "
+            "model transcription error (caught live: 2026-09-20's recap linked "
+            "`/articles/freedom-holding-as-fide-s-newest-world-title-backer/` when the "
+            "real slug was `freedom-holding-signs-on-as-fide-s-newest-world-title-backer`). "
+            "Fix manually before merging:**",
+        ]
+        lines += [f"- `{link}`" for link in bad_links]
     RUN_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     RUN_REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
