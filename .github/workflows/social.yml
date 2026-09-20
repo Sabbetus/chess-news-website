@@ -1,18 +1,22 @@
 name: Post to social media
 
 on:
-  # 8x/day, every 3 hours, so a newly published article doesn't sit long
+  # 12x/day, every 2 hours, so a newly published article doesn't sit long
   # before it goes out. Times are UTC, offset to :07 rather than the top
   # of the hour -- GitHub queues scheduled runs against global load, and
   # :00 is the most contested minute, so runs land closer to on-time here.
   schedule:
-    - cron: '7 2 * * *'
+    - cron: '7 1 * * *'
+    - cron: '7 3 * * *'
     - cron: '7 5 * * *'
-    - cron: '7 8 * * *'
+    - cron: '7 7 * * *'
+    - cron: '7 9 * * *'
     - cron: '7 11 * * *'
-    - cron: '7 14 * * *'
+    - cron: '7 13 * * *'
+    - cron: '7 15 * * *'
     - cron: '7 17 * * *'
-    - cron: '7 20 * * *'
+    - cron: '7 19 * * *'
+    - cron: '7 21 * * *'
     - cron: '7 23 * * *'
   workflow_dispatch:
 

@@ -35,7 +35,7 @@ ARTICLES_DIR = REPO_ROOT / "src" / "content" / "articles"
 QUEUE_PATH = REPO_ROOT / "data" / "social-queue.json"
 SITE_URL = "https://chessherald.com"
 
-# One per run: at 8 runs/day this still comfortably outpaces the
+# One per run: at 12 runs/day this still comfortably outpaces the
 # ~2-3 articles/day the pipeline produces, while keeping each run's post
 # count low enough that a newly published article doesn't have to wait
 # behind a backlog before going out. The initial catch-up backlog (this
