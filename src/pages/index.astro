@@ -5,7 +5,7 @@ import ArticleThumb from '../components/ArticleThumb.astro';
 import TagRow from '../components/TagRow.astro';
 import { estimateReadMinutes } from '../lib/reading';
 import { excerptFrom } from '../lib/excerpt';
-import { sourceEntries, sourceLabel } from '../lib/sources';
+import { sourceEntries } from '../lib/sources';
 // Written by scripts/fetch_popular.py during deploy -- last-7-days GA4
 // pageviews for last-7-days-published articles, ranked. Best-effort: a
 // failed fetch leaves this file (and so this list) exactly as it was
@@ -131,7 +131,12 @@ const jsonLd = [
             <p>{excerptFrom(a.body, 160)}</p>
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
-              <span class="src">{sourceLabel(a.data)}</span>
+              <span class="src">
+                {sourceEntries(a.data).length === 1 ? 'Source: ' : 'Sources: '}
+                {sourceEntries(a.data).map((s, i) => (
+                  <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
+                ))}
+              </span>
               <span class="dot">&bull;</span>
               <span>{estimateReadMinutes(a.body)} min read</span>
               <span class="dot">&bull;</span>
@@ -201,7 +206,12 @@ const jsonLd = [
             <p>{excerptFrom(a.body, 160)}</p>
             <TagRow lens={a.data.lens} continent={a.data.continent} />
             <div class="byline">
-              <span class="src">{sourceLabel(a.data)}</span>
+              <span class="src">
+                {sourceEntries(a.data).length === 1 ? 'Source: ' : 'Sources: '}
+                {sourceEntries(a.data).map((s, i) => (
+                  <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
+                ))}
+              </span>
               <span class="dot">&bull;</span>
               <span>{estimateReadMinutes(a.body)} min read</span>
               <span class="dot">&bull;</span>
