@@ -39,6 +39,17 @@ RUN_REPORT_PATH = DATA_DIR / "weekly-recap-report.md"
 
 RECAP_WINDOW_DAYS = 7
 
+# A hard ceiling on how old an entry can be, independent of the cutoff-window
+# math above -- a safety net against a "weekly" recap quietly including
+# genuinely stale backlog (caught live: an article published 2026-08-23,
+# actually approved 2026-09-06, missed the very first recap's fallback
+# window by a matter of hours, then sat uncovered for two weeks before
+# surfacing in the 2026-09-20 recap framed as if it were this week's news).
+# Generous on purpose -- this is a last-resort catch for a cutoff-logic gap,
+# not the normal path -- but still short enough that nothing framed as
+# "this week" can be a month old.
+MAX_ARTICLE_AGE_DAYS = 14
+
 
 _IMAGE_BLOCK_RE = re.compile(
     r'^image:\s*\n'
@@ -144,6 +155,7 @@ def recent_published_articles(days: int) -> list[dict]:
         cutoff_dt = datetime.now(timezone.utc) - timedelta(days=days)
         print(f"No prior recap found -- falling back to the {days}-day window from now.", file=sys.stderr)
 
+    max_age_dt = datetime.now(timezone.utc) - timedelta(days=MAX_ARTICLE_AGE_DAYS)
     entries = []
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text(encoding="utf-8")
@@ -161,6 +173,15 @@ def recent_published_articles(days: int) -> list[dict]:
         commit_ts = _file_publish_time(path)
         if commit_ts is not None:
             if commit_ts <= cutoff_dt:
+                continue
+            if commit_ts < max_age_dt:
+                print(
+                    f"  skipping {path.stem}: passed the cutoff but is over "
+                    f"{MAX_ARTICLE_AGE_DAYS} days old (published {commit_ts.isoformat()}) -- "
+                    "likely an orphan that missed an earlier recap's window; add it "
+                    "manually if it's still worth covering.",
+                    file=sys.stderr,
+                )
                 continue
         elif pub_date < cutoff_dt.date():
             continue
