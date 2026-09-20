@@ -21,6 +21,7 @@ guess:
 """
 
 import re
+import sys
 
 import requests
 
@@ -96,10 +97,31 @@ def find_broadcast_round(client, event: str, player1: str, player2: str) -> tupl
 
     text_blocks = [b.text for b in response.content if b.type == "text"]
     if not text_blocks:
+        print(
+            f"    lichess lookup: find_broadcast_round got no text content "
+            f"(stop_reason={response.stop_reason!r}) for event={event!r} "
+            f"player1={player1!r} player2={player2!r}",
+            file=sys.stderr,
+        )
         return None
 
-    match = BROADCAST_URL_RE.search(text_blocks[-1])
-    return (match.group(1), match.group(2), match.group(3)) if match else None
+    reply = text_blocks[-1].strip()
+    match = BROADCAST_URL_RE.search(reply)
+    if match is None:
+        print(
+            f"    lichess lookup: finder model returned no usable URL for "
+            f"event={event!r} player1={player1!r} player2={player2!r} "
+            f"-- reply was {reply[:200]!r}",
+            file=sys.stderr,
+        )
+        return None
+    print(
+        f"    lichess lookup: finder model matched round "
+        f"{match.group(1)}/{match.group(2)} ({match.group(3)}) for "
+        f"event={event!r} player1={player1!r} player2={player2!r}",
+        file=sys.stderr,
+    )
+    return (match.group(1), match.group(2), match.group(3))
 
 
 def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
@@ -112,20 +134,27 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     try:
         response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
-    except requests.RequestException:
+    except requests.RequestException as exc:
+        print(f"    lichess lookup: round PGN fetch failed for round {round_id!r}: {exc}", file=sys.stderr)
         return None
 
     surname1, surname2 = _surname(player1), _surname(player2)
     if not surname1 or not surname2:
+        print(
+            f"    lichess lookup: empty surname from player1={player1!r} player2={player2!r}, skipping match",
+            file=sys.stderr,
+        )
         return None
 
     matches = []
+    games_seen = 0
     for game_pgn in re.split(r"\n\n\n+", response.text.strip()):
         white = re.search(r'\[White\s+"([^"]+)"\]', game_pgn)
         black = re.search(r'\[Black\s+"([^"]+)"\]', game_pgn)
         game_url = re.search(r'\[GameURL\s+"([^"]+)"\]', game_pgn)
         if not (white and black and game_url):
             continue
+        games_seen += 1
         white_tokens, black_tokens = _tag_tokens(white.group(1)), _tag_tokens(black.group(1))
         matched = (surname1 in white_tokens and surname2 in black_tokens) or (
             surname2 in white_tokens and surname1 in black_tokens
@@ -133,7 +162,16 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
         if matched:
             matches.append(game_url.group(1))
 
-    return matches[0] if len(matches) == 1 else None
+    if len(matches) == 1:
+        print(f"    lichess lookup: matched exactly 1 game of {games_seen} in round {round_id!r}", file=sys.stderr)
+        return matches[0]
+    print(
+        f"    lichess lookup: {len(matches)} game(s) matched surnames "
+        f"{surname1!r}/{surname2!r} out of {games_seen} in round {round_id!r} "
+        f"-- need exactly 1 to trust it, giving up",
+        file=sys.stderr,
+    )
+    return None
 
 
 def embed_url_from_game_url(game_url: str) -> str:
@@ -148,7 +186,15 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
     raises for a "just didn't find it" outcome -- only network/programming
     errors propagate, since a missing embed is an expected, normal result
     for most calls (only invoked when draft.py's model named two players
-    for one specific game in the first place)."""
+    for one specific game in the first place).
+
+    Logs the exact event/player1/player2 it was called with, plus each
+    stage's outcome, to stderr -- caught live: draft.py's own per-article
+    log line said only "requested" / "embed not found", with no visibility
+    into which of the two lookup stages actually failed or what values the
+    model's self-report had produced, making a real miss (Wei Yi's game
+    against Indjic, round 4) undiagnosable from the CI log alone."""
+    print(f"    lichess lookup: event={event!r} player1={player1!r} player2={player2!r}", file=sys.stderr)
     round_ref = find_broadcast_round(client, event, player1, player2)
     if round_ref is None:
         return None
