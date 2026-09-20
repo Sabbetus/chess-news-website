@@ -277,14 +277,31 @@ def main() -> None:
 
     response = client.messages.create(
         model=MODEL,
-        max_tokens=4096,
+        # Was 4096 -- too tight for a week with a lot of published articles
+        # to synthesize (caught live: a 19-article week produced a recap
+        # that silently cut off mid-sentence, mid-link, 260 words in,
+        # because the model's own reasoning ate most of the budget before
+        # it got to writing BODY_MARKDOWN -- the exact failure mode
+        # documented in draft.py's paragraph fix-up, just not yet guarded
+        # against here). Scales with entry count instead of a flat number,
+        # same reasoning as that fix.
+        max_tokens=max(4096, 512 * len(entries)),
         system=RECAP_SYSTEM_PROMPT,
         output_config={"effort": "medium"},
         messages=[{"role": "user", "content": user_prompt}],
     )
     text_blocks = [b.text for b in response.content if b.type == "text"]
-    if not text_blocks:
-        print("FAILED to draft this week's recap: no text content returned", file=sys.stderr)
+    if not text_blocks or response.stop_reason == "max_tokens":
+        # A max_tokens stop is the truncation failure itself, even when
+        # some text did come back (still better to fail loudly than
+        # publish a recap that cuts off mid-sentence) -- see the comment
+        # above.
+        block_types = [b.type for b in response.content]
+        print(
+            f"FAILED to draft this week's recap: response truncated or empty "
+            f"(stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     parsed = parse_response(text_blocks[-1])
