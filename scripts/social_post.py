@@ -47,7 +47,21 @@ THREADS_API_VERSION = "v1.0"
 
 
 def _frontmatter_field(text: str, field: str) -> str | None:
-    match = re.search(rf'^{field}:\s*"?([^"\n]+?)"?\s*$', text, re.M)
+    """Values are written with internal quotes backslash-escaped (see
+    draft.py/weekly_recap.py's frontmatter writer), e.g.
+    socialCopy: "a \"windmill\" tactic". A naive [^"\n]+ character class
+    excludes literal " entirely, so it can't match past the first escaped
+    quote and the whole regex fails on any such line -- caught live:
+    three articles with a quoted word in their socialCopy silently had
+    their title posted to social media instead, since the caller falls
+    back to the title when this returns None. Match a proper quoted
+    string (an escaped-char alternation, same idea as parsing a JSON
+    string) first, then fall back to a bare unquoted value for fields
+    like selectionScore that aren't quoted at all."""
+    match = re.search(rf'^{field}:\s*"((?:[^"\\]|\\.)*)"\s*$', text, re.M)
+    if match:
+        return match.group(1).replace('\\"', '"')
+    match = re.search(rf'^{field}:\s*([^"\n]+?)\s*$', text, re.M)
     return match.group(1) if match else None
 
 
