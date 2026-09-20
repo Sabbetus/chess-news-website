@@ -13,6 +13,7 @@ review-PR step, which this script's own workflow mirrors).
 """
 
 import re
+import subprocess
 import sys
 import urllib.parse
 from datetime import datetime, timedelta, timezone
@@ -48,12 +49,71 @@ _IMAGE_BLOCK_RE = re.compile(
 )
 
 
+def _file_last_commit_time(path: Path) -> datetime | None:
+    """UTC timestamp of the most recent commit that touched this file --
+    a proxy for "when did this article actually go live", since an
+    article is committed once as a draft (reviewStatus: draft) and then
+    again when a human approves and merges the PR (reviewStatus:
+    published). That second commit's timestamp is precise to the second,
+    unlike publishDate, which is a display-only calendar date with no
+    time component. Returns None if git history isn't available for this
+    file (a shallow checkout, or any other git failure) -- callers fall
+    back to date-only comparison in that case.
+
+    Caveat, accepted rather than solved: a manual post-publish edit (a
+    typo fix, an image swap) also bumps this timestamp forward, which
+    could sweep an already-recapped article into a later recap a second
+    time. Narrower than that would need tracking "the commit that set
+    reviewStatus to published" specifically, which isn't worth the extra
+    git-log parsing for how rarely published articles get touched again."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "-1", "--format=%cI", "--", str(path)],
+            cwd=ROOT, capture_output=True, text=True, timeout=10, check=True,
+        )
+    except (subprocess.CalledProcessError, OSError, subprocess.TimeoutExpired):
+        return None
+    ts = result.stdout.strip()
+    if not ts:
+        return None
+    try:
+        return datetime.fromisoformat(ts).astimezone(timezone.utc)
+    except ValueError:
+        return None
+
+
+def _last_recap_cutoff() -> datetime | None:
+    """The commit timestamp of the most recently published recap article --
+    articles that went live (by their own last-commit timestamp, see
+    _file_last_commit_time) after this point haven't been covered by any
+    recap yet, at whatever time of day they actually went live. None if
+    there's no prior published recap, or git history isn't available."""
+    latest: datetime | None = None
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'type: "recap"' not in text or 'reviewStatus: "published"' not in text:
+            continue
+        ts = _file_last_commit_time(path)
+        if ts is not None and (latest is None or ts > latest):
+            latest = ts
+    return latest
+
+
 def recent_published_articles(days: int) -> list[dict]:
     """Title, slug, publish date, and a short excerpt for every non-recap
-    article published in the last `days` days, oldest first -- read
-    straight from the files like draft.py's own published_articles(), so a
-    hand-edited or manually-added article is included too."""
-    cutoff = datetime.now(timezone.utc).date() - timedelta(days=days)
+    article published since the last recap actually went out (by commit
+    time, not calendar date -- see _last_recap_cutoff), oldest first --
+    read straight from the files like draft.py's own published_articles(),
+    so a hand-edited or manually-added article is included too. Falls back
+    to a flat `days`-day window from now when there's no prior recap to
+    anchor to, or git history isn't available at all."""
+    cutoff_dt = _last_recap_cutoff()
+    if cutoff_dt is not None:
+        print(f"Using per-article commit time since the last recap ({cutoff_dt.isoformat()}).", file=sys.stderr)
+    else:
+        cutoff_dt = datetime.now(timezone.utc) - timedelta(days=days)
+        print(f"No prior recap found -- falling back to the {days}-day window from now.", file=sys.stderr)
+
     entries = []
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text(encoding="utf-8")
@@ -67,7 +127,12 @@ def recent_published_articles(days: int) -> list[dict]:
             pub_date = datetime.strptime(date.group(1), "%Y-%m-%d").date()
         except ValueError:
             continue
-        if pub_date < cutoff:
+
+        commit_ts = _file_last_commit_time(path)
+        if commit_ts is not None:
+            if commit_ts <= cutoff_dt:
+                continue
+        elif pub_date < cutoff_dt.date():
             continue
 
         body = text.split("---", 2)[-1].strip()
