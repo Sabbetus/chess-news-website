@@ -1,42 +1,30 @@
 ---
-title: "Weekly Recap: Samarkand's Double Olympiad and a New Wave of FIDE Sponsors"
+title: "Weekly Recap: Samarkand's Double Olympiad and FIDE's Newest World Title Backer"
 type: "recap"
 publishDate: "2026-09-20"
 continent: "global"
 selectionScore: 0
 reviewStatus: "published"
-socialCopy: "This week: two Olympiads running through Samarkand, Poland's inclusion gold, a record 400-team field, and FIDE lining up Salesforce and Freedom Holding behind the World Championship."
+socialCopy: "This week: two Olympiads running through Samarkand, Poland's inclusion gold, a record 400-team field, and FIDE lining up Freedom Holding as its newest World Championship backer."
 image:
   src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APraggnanandhaa_in_2025.jpg"
 ---
 
-Samarkand carried most of this week's weight, hosting both the Disability Olympiad and the record-breaking 46th Chess Olympiad back to back. Around that, FIDE lined up new commercial partners for the World Championship, the Global Chess League kept producing drama on and off the scoreboard, and the usual scattering of upsets and calendar data rounded things out.
+Samarkand carried most of this week's weight, hosting both the Disability Olympiad and the record-breaking 46th Chess Olympiad back to back. Around that, FIDE lined up a new commercial partner for the World Championship, and the usual scattering of upsets and calendar data rounded things out.
 
 Estonia's Mai Narva doesn't usually make front pages outside chess circles, but [her double upset in Mozambique became a national story back home](/articles/how-an-estonian-im-s-double-upset-in-mozambique-became-a-national-story/) after national broadcaster ERR picked it up. The world number 40 beating the world number four was rare enough to travel well past the chess press.
 
-Elsewhere on the continent, [South Africa supplied most of the biggest fields on Africa's August calendar](/articles/south-africa-dominates-africa-s-august-chess-rankings/), though the single largest turnout came from a women's championship on the Western Cape coast.
-
 The Grand Chess Tour Finals opened in St. Louis with two fights and zero decisive results. In the headline semifinal, [Vincent Keymer and Praggnanandhaa Rameshbabu traded the advantage before settling for a draw](/articles/the-curse-of-the-draw-follows-the-grand-chess-tour-to-st-louis/). In the Match of the Millennials, Fabiano Caruana survived some anxious moments to hold Wesley So to a draw as well.
-
-Magnus Carlsen made his first Global Chess League appearance in a year, and [his Alpine APL Pipers beat CheQ Mumba Masters 10-8](/articles/carlsen-returns-but-gcl-day-one-belongs-to-sindarov/). The irony wasn't lost on fans in Bengaluru: the Pipers won the league last season without him.
-
-Day 4 in Bengaluru flipped the table again. [FYERS American Gambits reclaimed top spot after beating PBG Alaskan Knights](/articles/a-second-s-difference-gcl-s-prodigy-board-controversy/), helped by Triveni Continental Kings' shock upset of overnight leaders Alpine APL Pipers. But the match everyone was talking about afterward wasn't the one that decided the standings, it came down to a single second on a chess clock.
-
-FIDE opened the call for candidates to its new Athletes Commission, [a body meant to give players a formal seat at the table](/articles/fide-s-new-athletes-commission-echoes-the-ioc-s-playbook/). The commission will have between five and nine members with mandatory gender balance, the exact size decided once FIDE sees who applies.
-
-FIDE also landed a marquee sponsor this week. [Salesforce signed a multi-year deal making it Title Sponsor of the World Championship Matches through 2026 and 2028](/articles/salesforce-s-fide-deal-is-a-software-sale-with-a-chessboard-attached/), plus the 2027 Women's Match and official AI partner for the FIDE Rankings.
 
 Days later, [Freedom Holding Corp. signed on as General Partner of the 2026 World Championship Match](/articles/freedom-holding-signs-on-as-fide-s-newest-world-title-backer/), putting a NASDAQ-listed financial and tech group's name behind chess's biggest fixture.
 
 The match itself now has a home. [The Salesforce FIDE World Championship Match 2026 will run November 22 to December 12 at the Fondation Martin Bodmer in Geneva](/articles/geneva-s-return-to-world-title-chess-22-years-on/), pitting reigning champion Gukesh D against challenger Javokhir Sindarov, the city's first world title match in 22 years.
 
-Away from Samarkand, Veselin Topalov gave Garry Kasparov a taste of his own medicine. On day one of Clutch Chess: The Legends, [Topalov took a 2.5-1.5 lead after Kasparov struggled with his clock and his composure](/articles/topalov-s-clutch-chess-lead-echoes-his-old-kasparov-duels/).
-
 Hikaru Nakamura kept stretching a streak that's stopped looking like news and started looking like a habit. [He won Bullet Brawl for a record 66th time on September 12](/articles/nakamura-s-66th-bullet-brawl-win-extends-an-absurd-streak/), a margin that felt routine for him and staggering for everyone else.
 
-The Disability Olympiad in Samarkand opened with [41 teams beginning play in Round 1](/articles/samarkand-s-disability-olympiad-echoes-belgrade-s-first-steps/), the ceremonial first move made on Board 1 of Poland against Mongolia. Round 2 pushed the field further, with [eight teams reaching a perfect four match points](/articles/samarkand-s-disability-olympiad-hits-a-record-40-teams/) in what organizers called a record 40-team turnout.
+Samarkand's Disability Olympiad kept building on its opening round. [Round 2 pushed the field further, with eight teams reaching a perfect four match points](/articles/samarkand-s-disability-olympiad-hits-a-record-40-teams/) in what organizers called a record 40-team turnout.
 
 By Round 3, only [Cuba, Israel and the Czech Republic remained on 6/6](/articles/samarkand-s-deaf-champion-coached-its-future-star/), with Round 4 pitting Cuba against Israel directly and the Czechs facing Germany. That round produced its result quickly: [Cuba beat Israel 2½-1½ to stay perfect through four matches](/articles/cuba-stays-perfect-as-the-disability-olympiad-nearly-doubles/), stretching its run to eight match points.
 
