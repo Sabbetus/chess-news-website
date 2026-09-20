@@ -3,6 +3,9 @@ title: "Eight Teams Still Perfect After Four Rounds in Samarkand"
 publishDate: "2026-09-20"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-4-the-leaders-begin-to-emerge/"
+additionalSources:
+  - sourceName: "Chess.com"
+    sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-4"
 lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-4/1utZ8Vrx/52JWm2N0"
@@ -36,6 +39,14 @@ Notably, Gukesh is playing board four for India, a reflection of just how deep [
 
 The United States needed a rescue act against Ukraine. Levon Aronian fell into serious early trouble against European champion Roman Dehtiarov, but clawed back with what FIDE described as a remarkable positional queen sacrifice to win the game outright. Hans Niemann drew, Wesley So notched his third straight win, and Fabiano Caruana ground down veteran Vasyl Ivanchuk to seal the match for the Americans.
 
+Chess.com singled out Aronian's turnaround as its own Game of the Day, and the final scoreline undersells how one-sided the match became once he'd escaped trouble: 3.5-0.5, the most lopsided result among the day's unbeaten-vs-unbeaten pairings.
+
+The U.S. matched that scoreline almost exactly in the Women's section, sweeping its own top-board match by the identical 3.5-0.5 margin. Two matching blowout wins in the same round put the Americans among the day's most convincing performers across both sections.
+
 The Netherlands, often overlooked early in team events, moved into the leading pack with a win over Greece, powered by Anish Giri's fourth consecutive victory. Along with Armenia, Germany and Hungary, the Dutch will occupy the top boards in Friday's pairings, four teams that have quietly matched the record fields of China, Uzbekistan, the USA and India without dropping a single match point yet.
+
+Round four's calm at the top is itself notable given how the tournament had played out before it. Earlier rounds had already produced their share of shocks, from [Argentina's win over Ukraine as a 28th seed](/articles/argentina-s-28th-seed-shocks-ukraine-at-samarkand/) to [El Salvador's stunning upset of Cuba](/articles/el-salvador-s-94th-seed-stuns-cuba-at-samarkand/).
+
+[India losing Erigaisi on board one while its bench carried the team through](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/) fit the same pattern. None of that repeated itself this time, but with this many teams still unbeaten, the pairings only get harder from here.
 
 Round five pairings will start pitting these unbeaten sides directly against each other, the first real test of which of the eight perfect Open teams can actually survive contact with one another.
