@@ -50,22 +50,9 @@ _IMAGE_BLOCK_RE = re.compile(
 
 
 def _file_last_commit_time(path: Path) -> datetime | None:
-    """UTC timestamp of the most recent commit that touched this file --
-    a proxy for "when did this article actually go live", since an
-    article is committed once as a draft (reviewStatus: draft) and then
-    again when a human approves and merges the PR (reviewStatus:
-    published). That second commit's timestamp is precise to the second,
-    unlike publishDate, which is a display-only calendar date with no
-    time component. Returns None if git history isn't available for this
-    file (a shallow checkout, or any other git failure) -- callers fall
-    back to date-only comparison in that case.
-
-    Caveat, accepted rather than solved: a manual post-publish edit (a
-    typo fix, an image swap) also bumps this timestamp forward, which
-    could sweep an already-recapped article into a later recap a second
-    time. Narrower than that would need tracking "the commit that set
-    reviewStatus to published" specifically, which isn't worth the extra
-    git-log parsing for how rarely published articles get touched again."""
+    """UTC timestamp of the most recent commit that touched this file.
+    Returns None if git history isn't available for this file (a shallow
+    checkout, or any other git failure)."""
     try:
         result = subprocess.run(
             ["git", "log", "-1", "--format=%cI", "--", str(path)],
@@ -82,18 +69,61 @@ def _file_last_commit_time(path: Path) -> datetime | None:
         return None
 
 
+_PUBLISHED_DIFF_RE = re.compile(r'^\+\s*reviewStatus:\s*"published"\s*$', re.M)
+
+
+def _file_publish_time(path: Path) -> datetime | None:
+    """UTC timestamp of the commit that actually flipped this article's
+    reviewStatus to "published" -- a proxy for "when did this article
+    actually go live" that's immune to later, unrelated edits.
+
+    _file_last_commit_time alone isn't enough: a published article gets
+    touched again more often than assumed (caught live: a lens rename, a
+    source-link fix, and other bulk edits all bumped already-published
+    articles' last-commit timestamp weeks after they actually went live,
+    which swept them past the next recap's cutoff and back into its
+    coverage a second time). Walking each commit's patch for this file and
+    taking the most recent one that actually added a `reviewStatus:
+    "published"` line finds the real publish moment regardless of how many
+    cosmetic edits came after it. Falls back to the file's last commit
+    time when no such diff is found (e.g. a file committed already-
+    published, with no draft->published transition to find), and to None
+    when git history isn't available at all."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "--follow", "-p", "--format=COMMIT %H %cI", "--", str(path)],
+            cwd=ROOT, capture_output=True, text=True, timeout=30, check=True,
+        )
+    except (subprocess.CalledProcessError, OSError, subprocess.TimeoutExpired):
+        return _file_last_commit_time(path)
+
+    for block in result.stdout.split("\nCOMMIT ")[0:]:
+        block = block[len("COMMIT "):] if block.startswith("COMMIT ") else block
+        header, _, patch = block.partition("\n")
+        parts = header.split()
+        if len(parts) < 2:
+            continue
+        ts = parts[1]
+        if _PUBLISHED_DIFF_RE.search(patch):
+            try:
+                return datetime.fromisoformat(ts).astimezone(timezone.utc)
+            except ValueError:
+                continue
+    return _file_last_commit_time(path)
+
+
 def _last_recap_cutoff() -> datetime | None:
-    """The commit timestamp of the most recently published recap article --
-    articles that went live (by their own last-commit timestamp, see
-    _file_last_commit_time) after this point haven't been covered by any
-    recap yet, at whatever time of day they actually went live. None if
-    there's no prior published recap, or git history isn't available."""
+    """The publish timestamp (see _file_publish_time) of the most recently
+    published recap article -- articles that went live after this point
+    haven't been covered by any recap yet, at whatever time of day they
+    actually went live. None if there's no prior published recap, or git
+    history isn't available."""
     latest: datetime | None = None
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text(encoding="utf-8")
         if 'type: "recap"' not in text or 'reviewStatus: "published"' not in text:
             continue
-        ts = _file_last_commit_time(path)
+        ts = _file_publish_time(path)
         if ts is not None and (latest is None or ts > latest):
             latest = ts
     return latest
@@ -128,7 +158,7 @@ def recent_published_articles(days: int) -> list[dict]:
         except ValueError:
             continue
 
-        commit_ts = _file_last_commit_time(path)
+        commit_ts = _file_publish_time(path)
         if commit_ts is not None:
             if commit_ts <= cutoff_dt:
                 continue
