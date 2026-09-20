@@ -9,3 +9,13 @@
   same merge action -- don't wait for a separate explicit "publish" ask.
   (Caught live 2026-09-20: PR #29's weekly recap was merged without this
   step and silently never went live.)
+
+- **Article review means checking every claim/link in the piece, not a
+  sample of them.** Spot-checking one or two paragraphs and generalizing
+  ("looks fine") is not a review -- verify every fact, every date, and
+  every internal `/articles/<slug>/` link against its real source
+  individually, for the whole piece, every time. (Caught live 2026-09-20:
+  reviewing the weekly recap, a stale linked article was found and
+  removed, but the paragraph right after it -- with the exact same
+  problem -- was missed because the rest of the piece wasn't actually
+  checked, just assumed fine after fixing the first spot.)
