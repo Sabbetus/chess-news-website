@@ -6,12 +6,15 @@ on:
   # review, same as the daily pipeline; reviewStatus only flips to
   # "published" on merge.
   #
+  # 03:07 UTC nominal, aiming for both this and the daily pipeline's PR to
+  # be ready by ~11:00 Finnish time (EEST, UTC+3), when the reviewer wakes
+  # up. Like the daily pipeline, this cron has run ~5h late in practice
+  # (GitHub deprioritizing scheduled runs on a low-traffic public repo),
+  # so 03:07 UTC nominal is aimed at landing around 08:00 UTC actual.
   # :07 rather than :00 avoids the single most contested GitHub Actions
-  # scheduling minute -- this cron's one run so far still landed ~5h late
-  # despite that (the daily pipeline sees the same delay pattern; see its
-  # comment), but the offset should shave some of that off going forward.
+  # scheduling minute.
   schedule:
-    - cron: '7 7 * * 0'
+    - cron: '7 3 * * 0'
   workflow_dispatch:
 
 permissions:
