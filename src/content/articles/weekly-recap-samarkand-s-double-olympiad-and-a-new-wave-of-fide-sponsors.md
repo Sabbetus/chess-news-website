@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-09-20"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "This week: two Olympiads running through Samarkand, Poland's inclusion gold, a record 400-team field, and FIDE lining up Salesforce and Freedom Holding behind the World Championship."
 image:
   src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
