@@ -3,7 +3,7 @@ title: "Poland's Rollercoaster Ends in Gold at Samarkand"
 publishDate: "2026-09-18"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/poland-crowned-champions-as-samarkand-olympiad-for-people-with-disabilities-concludes-with-a-celebration-of-chess-and-inclusion/"
-lens: "historical-parallel"
+lens: "results"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/3rd-fide-chess-olympiad-for-people-with-disabilities-2026/round-7/wdxEbFu2/yZWThHZq"
 continent: "asia"

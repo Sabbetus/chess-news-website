@@ -3,7 +3,7 @@ title: "Sindarov's Round-Seven Win Echoes His Candidates Surge as Tan Survives a
 publishDate: "2026-08-17"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-sinquefield-cairns-cup-round-7"
-lens: "historical-parallel"
+lens: "results"
 continent: "north-america"
 selectionScore: 40
 reviewStatus: "published"

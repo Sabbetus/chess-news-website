@@ -3,7 +3,7 @@ title: "Poland's 4-0 Rout Puts It Alone Atop Samarkand"
 publishDate: "2026-09-17"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-for-people-with-disabilities-poland-takes-sole-lead-as-clean-sport-and-fair-play-take-spotlight-on-day-6/"
-lens: "historical-parallel"
+lens: "results"
 continent: "asia"
 selectionScore: 65
 reviewStatus: "published"
