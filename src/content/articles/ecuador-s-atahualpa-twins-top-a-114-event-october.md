@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "October in South America: two Quito youth opens crack 140+ players, a Manaus classical carries real prize money, and 114 tournaments in all across the continent."
 aggregateKind: "calendar-comingup"
 continentName: "South America"

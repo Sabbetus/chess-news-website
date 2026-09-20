@@ -11,7 +11,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-4/1utZ8Vrx/52JWm2N0"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wei Yi's queen-hunting \"windmill\" tactic, Aronian's escape act, and eight teams still unbeaten: Day 4 at the Samarkand Olympiad in full. ♟️"
 image:
   src: "./_images/Levon_Aronian_in_2023.webp"
