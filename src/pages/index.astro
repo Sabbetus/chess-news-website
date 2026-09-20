@@ -18,7 +18,6 @@ const [lead, ...rest] = articles;
 const secondary = rest.slice(0, 8);
 const secondaryFirstHalf = secondary.slice(0, 4);
 const secondarySecondHalf = secondary.slice(4, 8);
-const latest = articles.slice(0, 4);
 
 // Always the most recently published recap, whichever week it's from --
 // this section isn't gated on "was one published this week," it just
@@ -26,6 +25,15 @@ const latest = articles.slice(0, 4);
 // empty before the very first recap ever exists.
 const allRecaps = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type === 'recap');
 const latestRecap = allRecaps.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())[0];
+
+// The Latest Articles sidebar mixes recaps back in -- unlike Most Popular
+// (driven by real pageview data in popular.json, which fetch_popular.py
+// already excludes recaps from), "latest" is genuinely incomplete without
+// them, since a recap is real, freshly-published content too.
+const latestWithRecap = latestRecap
+  ? [...articles, latestRecap].sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  : articles;
+const latest = latestWithRecap.slice(0, 4);
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
