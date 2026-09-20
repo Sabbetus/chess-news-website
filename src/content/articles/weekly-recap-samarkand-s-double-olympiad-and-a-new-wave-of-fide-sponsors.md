@@ -14,8 +14,6 @@ image:
 
 Samarkand carried most of this week's weight, hosting both the Disability Olympiad and the record-breaking 46th Chess Olympiad back to back. Around that, FIDE lined up a new commercial partner for the World Championship, and the usual scattering of upsets and calendar data rounded things out.
 
-Estonia's Mai Narva doesn't usually make front pages outside chess circles, but [her double upset in Mozambique became a national story back home](/articles/how-an-estonian-im-s-double-upset-in-mozambique-became-a-national-story/) after national broadcaster ERR picked it up. The world number 40 beating the world number four was rare enough to travel well past the chess press.
-
 The Grand Chess Tour Finals opened in St. Louis with two fights and zero decisive results. In the headline semifinal, [Vincent Keymer and Praggnanandhaa Rameshbabu traded the advantage before settling for a draw](/articles/the-curse-of-the-draw-follows-the-grand-chess-tour-to-st-louis/). In the Match of the Millennials, Fabiano Caruana survived some anxious moments to hold Wesley So to a draw as well.
 
 Days later, [Freedom Holding Corp. signed on as General Partner of the 2026 World Championship Match](/articles/freedom-holding-signs-on-as-fide-s-newest-world-title-backer/), putting a NASDAQ-listed financial and tech group's name behind chess's biggest fixture.
