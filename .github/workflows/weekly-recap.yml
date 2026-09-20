@@ -1,20 +1,21 @@
 name: Draft weekly recap
 
 on:
-  # Sundays, after that day's daily pipeline run (nominal 02:07 UTC, see
-  # pipeline.yml) has had time to land -- still opens a PR for human
-  # review, same as the daily pipeline; reviewStatus only flips to
-  # "published" on merge.
+  # Sundays, 10 minutes after the daily pipeline's own nominal time (see
+  # pipeline.yml) -- this doesn't need a bigger gap than that: it only
+  # pulls in articles already reviewStatus: "published" (i.e. previously
+  # merged), never that same day's still-unreviewed pipeline PR, so
+  # there's no real ordering dependency to leave room for.
   #
-  # 03:07 UTC nominal, aiming for both this and the daily pipeline's PR to
-  # be ready by ~11:00 Finnish time (EEST, UTC+3), when the reviewer wakes
-  # up. Like the daily pipeline, this cron has run ~5h late in practice
-  # (GitHub deprioritizing scheduled runs on a low-traffic public repo),
-  # so 03:07 UTC nominal is aimed at landing around 08:00 UTC actual.
-  # :07 rather than :00 avoids the single most contested GitHub Actions
-  # scheduling minute.
+  # Aiming for both this and the daily pipeline's PR to be ready by
+  # ~11:00 Finnish time (EEST, UTC+3), when the reviewer wakes up. Like
+  # the daily pipeline, this cron has run ~5h late in practice (GitHub
+  # deprioritizing scheduled runs on a low-traffic public repo), so
+  # 02:17 UTC nominal is aimed at landing around 07:00-08:00 UTC actual.
+  # :07/:17 rather than :00 avoids the single most contested GitHub
+  # Actions scheduling minute.
   schedule:
-    - cron: '7 3 * * 0'
+    - cron: '17 2 * * 0'
   workflow_dispatch:
 
 permissions:
