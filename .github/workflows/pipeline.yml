@@ -5,8 +5,18 @@ on:
   # live -- reviewStatus only flips to "published" on merge, never
   # automatically. workflow_dispatch stays available for manual/backfill
   # runs alongside the schedule.
+  #
+  # Nominal time is 4 hours earlier than it looks like it should be: this
+  # cron has consistently run ~4.5-6h late in practice (GitHub Actions
+  # deprioritizes scheduled runs under load, and a public repo with a
+  # handful of daily cron jobs gets queued behind higher-traffic ones).
+  # 02:07 UTC -> actual delivery has been landing around 10:00 Finnish
+  # time (EEST, UTC+3) rather than the ~14:00 the old 06:00 UTC nominal
+  # time produced. :07 rather than :00 also avoids the single most
+  # contested scheduling minute, same reasoning as social.yml and
+  # weekly-recap.yml.
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '7 2 * * *'
   workflow_dispatch:
 
 permissions:
