@@ -3,7 +3,7 @@ title: "GCL's Lead Swings Back to the Gambits on Day 5"
 publishDate: "2026-09-10"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/gcl-2026-day-5-gambits-beat-kings-pipers-defeat-mumba-masters-as-race-to-the-final-heats-up/"
-lens: "historical-parallel"
+lens: "results"
 continent: "asia"
 selectionScore: 58
 reviewStatus: "published"
