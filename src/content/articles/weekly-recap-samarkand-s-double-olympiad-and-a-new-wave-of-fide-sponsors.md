@@ -28,7 +28,7 @@ FIDE opened the call for candidates to its new Athletes Commission, [a body mean
 
 FIDE also landed a marquee sponsor this week. [Salesforce signed a multi-year deal making it Title Sponsor of the World Championship Matches through 2026 and 2028](/articles/salesforce-s-fide-deal-is-a-software-sale-with-a-chessboard-attached/), plus the 2027 Women's Match and official AI partner for the FIDE Rankings.
 
-Days later, [Freedom Holding Corp. signed on as General Partner of the 2026 World Championship Match](/articles/freedom-holding-as-fide-s-newest-world-title-backer/), putting a NASDAQ-listed financial and tech group's name behind chess's biggest fixture.
+Days later, [Freedom Holding Corp. signed on as General Partner of the 2026 World Championship Match](/articles/freedom-holding-signs-on-as-fide-s-newest-world-title-backer/), putting a NASDAQ-listed financial and tech group's name behind chess's biggest fixture.
 
 The match itself now has a home. [The Salesforce FIDE World Championship Match 2026 will run November 22 to December 12 at the Fondation Martin Bodmer in Geneva](/articles/geneva-s-return-to-world-title-chess-22-years-on/), pitting reigning champion Gukesh D against challenger Javokhir Sindarov, the city's first world title match in 22 years.
 
