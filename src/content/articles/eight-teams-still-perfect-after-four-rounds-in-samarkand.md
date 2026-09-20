@@ -4,6 +4,8 @@ publishDate: "2026-09-20"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/olympiad-day-4-the-leaders-begin-to-emerge/"
 lens: "results"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-4/1utZ8Vrx/52JWm2N0"
 continent: "asia"
 selectionScore: 65
 reviewStatus: "draft"
