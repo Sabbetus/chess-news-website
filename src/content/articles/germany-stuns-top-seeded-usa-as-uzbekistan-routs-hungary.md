@@ -23,7 +23,7 @@ Round 5 in Samarkand, the last before the Olympiad's rest day, delivered exactly
 
 The biggest shock on the Open section's top boards came from Germany, who beat the top-seeded United States 2.5-1.5. The deciding game was Frederik Svane's win over Hans Niemann, a contest with no single obvious blunder. Svane simply had the better-coordinated pieces for most of the game and gradually converted.
 
-[Wesley So very nearly rescued the match for the Americans](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-5), but couldn't crack Mathias Bluebaum's queen-and-two-pawns versus rook-and-two-pawns fortress. White's king simply cannot get past the fourth rank in that structure, and any attempt to trade the queen for the rook and a pawn collapses into a drawn ending. The fortress held, and so did Germany's upset.
+[Wesley So very nearly rescued the match for the Americans](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-5). Facing So's queen, Mathias Bluebaum sacrificed his own queen for a rook to reach a drawn fortress, one So couldn't break down. German captain Jan Gustafsson stopped worrying about the result once Svane's win had already sealed the match. The draw stood, and so did Germany's upset.
 
 Uzbekistan, meanwhile, delivered the day's most emphatic result: a clean 4-0 sweep of Hungary. Richard Rapport blundered a pawn to Nodirbek Abdusattorov on board one, and the Uzbek top board never let go of the advantage. Behind him, Yakubboev out-prepared Gledura with the black pieces, and both Sindarov and Vokhidov ground out wins in rook endings to complete the whitewash.
 
