@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-day-5-home-teams-thrive-along-the-silk
 lens: "results"
 continent: "asia"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Frederik Svane beat Hans Niemann as Germany toppled the top-seeded USA 2.5-1.5, while Uzbekistan crushed Hungary 4-0 in Samarkand Round 5. Poland shocked defending champs India in the Women's section. #ChessOlympiad"
 additionalSources:
   - sourceName: "Chess.com"
