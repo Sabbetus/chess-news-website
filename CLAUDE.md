@@ -19,3 +19,16 @@
   removed, but the paragraph right after it -- with the exact same
   problem -- was missed because the rest of the piece wasn't actually
   checked, just assumed fine after fixing the first spot.)
+
+## Clean-review streak tracker
+
+The user's long-term plan: once a full week of daily batches goes by with
+no edits needed during review, they'll stop reviewing before publishing.
+Any batch that needs even one fix (a broken link, a factual correction,
+anything) resets the streak to zero -- it doesn't matter how minor.
+Update this after every batch review.
+
+- **Current streak: 0 consecutive clean batches.**
+- Last reset: 2026-09-22 (PR #31 -- two broken links from a JSON-escaping
+  bug, a launch-purse figure, a tournament miscount; see commit history
+  around that date for the pipeline fix that was also made).
