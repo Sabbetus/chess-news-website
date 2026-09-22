@@ -591,7 +591,7 @@ def build_user_prompt(item: dict) -> str:
             f"Month: {item['monthLabel']}",
             f"Total tournaments tracked in this continent this month: {item['totalTracked']}",
             f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
-            f"Tournament data (JSON list): {json.dumps(tournament_data)}",
+            f"Tournament data (JSON list): {json.dumps(tournament_data, ensure_ascii=False)}",
         ]
 
         companions = calendar_pieces_for_continent(CONTINENT_SLUGS[item["continentCode"]])
