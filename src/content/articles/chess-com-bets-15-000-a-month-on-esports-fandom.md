@@ -14,9 +14,9 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AParis_-_Playing_chess_at_the_Jardins_du_Luxembourg_-_2966.jpg"
 ---
 
-Chess.com is trying to borrow a page from esports fandom to grow its own player base. The site has [announced a new recurring event called the Chess Club Showdown](https://www.chess.com/news/view/announcing-chess-club-showdown-2026), which lets everyday players sign up to represent an esports organization, play alongside professional chess players attached to that club, and compete for a share of a $15,000 monthly prize fund.
+Chess.com is trying to borrow a page from esports fandom to grow its own player base. The site has [announced a new recurring event called the Chess Club Showdown](https://www.chess.com/news/view/announcing-chess-club-showdown-2026), which lets everyday players sign up to represent an esports organization, play alongside professional chess players attached to that club, and compete for a share of a $15,000 monthly prize fund, run on the last Wednesday of every month.
 
-The pitch is straightforward: pick a favorite esports team, join its roster for the month, rack up points against rival clubs, and try to carry your organization to the top of the standings. The first edition starts September 30.
+The pitch is straightforward: pick a favorite esports team, join its roster for the month, rack up points against rival clubs, and try to carry your organization to the top of the standings. The first edition, on September 30, comes with a bigger launch purse of $25,000, and already has real star power attached: Magnus Carlsen is competing for Team Liquid, and Levy Rozman for BASILISK.
 
 What makes this interesting isn't the chess itself so much as the audience it's aimed at. Esports organizations have spent the last decade building loyal fanbases around games like League of Legends, Valorant, and CS2, and those fans already know how to root for a club roster rather than just an individual. Chess.com is effectively renting that tribal loyalty and pointing it at a chessboard.
 
