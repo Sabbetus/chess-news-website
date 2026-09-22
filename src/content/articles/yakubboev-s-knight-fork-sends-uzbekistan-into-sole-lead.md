@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-
 lens: "results"
 continent: "asia"
 selectionScore: 52
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Nihal Sarin was winning on board and clock. Then 38.Ne6+ forked his king and queen, and Uzbekistan seized sole lead of the Samarkand Olympiad. #ChessOlympiad"
 additionalSources:
   - sourceName: "FIDE"

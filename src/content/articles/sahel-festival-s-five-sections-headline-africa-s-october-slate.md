@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "22 tournaments tracked across Africa in October 2026, with Monastir's Sahel International Chess Festival fielding five separate sections. A look at what's coming up. ♟️"
 aggregateKind: "calendar-comingup"
 continentName: "Africa"
