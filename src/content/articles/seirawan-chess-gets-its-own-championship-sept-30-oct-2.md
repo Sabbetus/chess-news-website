@@ -16,9 +16,9 @@ image:
 
 Chess.com has put a number and a date on its newest variant event. The [Chess.com Seirawan Chess Championship runs from September 30 to October 2, with a $2,500 prize fund attached](https://www.chess.com/news/view/announcing-chesscom-seirawan-chess-championship-2026).
 
-The variant itself is not new. Seirawan chess, sometimes written as S-Chess, was devised by GM Yasser Seirawan, a four-time US Champion and one of the strongest American players of the 1980s and 1990s. His idea was simple on paper: keep the standard 8x8 board and the standard 16 pieces per side, but add two more.
+The variant itself is not new. Seirawan chess, sometimes written as S-Chess, was co-created by GM Yasser Seirawan, a four-time US Champion and one of the strongest American players of the 1980s and 1990s, along with FM Bruce Harper. Their idea was simple on paper: keep the standard 8x8 board and the standard 16 pieces per side, but add two more.
 
-Those additions are the hawk and the elephant, and they don't start on the board. The elephant moves like a combined bishop and knight, the hawk like a combined rook and knight, and each side's extra piece only enters play once a bishop, knight, or rook has vacated its starting square and the player chooses to drop the new piece there instead of making a normal move.
+Those additions are the hawk and the elephant, and they don't start on the board. The hawk moves like a combined bishop and knight, the elephant like a combined rook and knight, and each side's extra piece only enters play once a bishop, knight, or rook has vacated its starting square and the player chooses to drop the new piece there instead of making a normal move.
 
 That entry mechanic is the whole hook of the variant: it adds a layer of timing and calculation that doesn't exist in orthodox chess, where every piece's start square is fixed from move one.
 
