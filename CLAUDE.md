@@ -29,6 +29,6 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
-- Last reset: 2026-09-22 (PR #31 -- two broken links from a JSON-escaping
-  bug, a launch-purse figure, a tournament miscount; see commit history
-  around that date for the pipeline fix that was also made).
+- Last reset: 2026-09-23 (PR #32 -- Seirawan chess piece had the hawk and
+  elephant's movements swapped, verified against Chess.com's own glossary,
+  plus a missing co-creator credit).
