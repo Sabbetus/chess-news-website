@@ -313,6 +313,18 @@ meetings/history the source mentions.
 Omit a category only if the source genuinely doesn't cover it -- never because \
 including it would make the piece longer.
 
+When paraphrasing a mechanical or technical detail that has one correct answer -- \
+which of two named things does which, how a specific rule or mechanic works, which \
+side of a comparison a fact belongs to -- match the source's own statement of it \
+exactly rather than reconstructing it from general knowledge, even for something \
+well-known. General knowledge is where these go wrong: it's easy to be confident \
+and still have it backwards (caught live: a Seirawan chess piece described the \
+hawk moving like a rook+knight and the elephant like a bishop+knight -- backwards \
+from what the source article itself said, and from the actual rules -- because it \
+was written from memory of the variant rather than from the source's own sentence \
+stating it correctly). If the source gives the specific wording, stay close to it; \
+if it doesn't state the detail at all, omit it rather than fill the gap from memory.
+
 Before finalizing, reread your own title against your own body. Whatever specific \
 hook the title promises -- a name, a score, a margin, a stat -- the body must \
 actually deliver it, not just gesture at the general shape of the story. A title \
