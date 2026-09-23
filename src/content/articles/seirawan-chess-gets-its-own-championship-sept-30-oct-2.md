@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/announcing-chesscom-seirawan-chess-c
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 46
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Elephants and hawks join the board: Chess.com's Seirawan Chess Championship runs Sept 30-Oct 2 with a $2,500 prize fund. A look at why the 1980s variant is having a moment."
 image:
   src: "./_images/Yasser_Seirawan.webp"

@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/free-day-in-samarkand-exploring-the-heart-of-th
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 62
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "While round 7 pairings loomed, nearly 300 Olympiad players toured Samarkand's Shah-i-Zinda necropolis, the Amir Temur Mausoleum (mid-blackout!) and Registan Square's light show. Ding Liren was reportedly transfixed. #ChessOlympiad"
 image:
   src: "./_images/Ding_Liren_in_2023.webp"
