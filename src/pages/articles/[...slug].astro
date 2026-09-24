@@ -342,13 +342,15 @@ const jsonLd = [
     text-align: center;
   }
   /* Match Points and Board Points (columns 4 and 5) are numeric -- right
-     aligning them (rather than the default left) lets digits stack for
-     easy scanning down the column, the normal convention for a numeric
-     table column. */
+     aligning the data (rather than the default left) lets digits stack
+     for easy scanning down the column, the normal convention for a
+     numeric table column. The headers stay left-aligned (not right, like
+     their data): "Match Points"/"Board Points" wraps to two lines on
+     mobile, and right-aligning a wrapped header leaves a ragged left
+     edge since "Match" and "Points" are different widths -- left keeps
+     both lines flush on the side a reader's eye actually lands on. */
   .story-body :global(td:nth-child(4)),
-  .story-body :global(th:nth-child(4)),
-  .story-body :global(td:nth-child(5)),
-  .story-body :global(th:nth-child(5)) {
+  .story-body :global(td:nth-child(5)) {
     text-align: right;
   }
   @media (max-width: 480px) {
