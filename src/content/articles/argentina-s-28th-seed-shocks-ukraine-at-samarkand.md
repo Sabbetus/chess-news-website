@@ -61,7 +61,7 @@ Round four brings the first real clashes between the leading teams on both board
 
 **Open standings after Round 3 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Romania | 3–0–0 | 6 | 11.5 |
 | 2 | France | 3–0–0 | 6 | 11 |
@@ -76,7 +76,7 @@ Round four brings the first real clashes between the leading teams on both board
 
 **Women standings after Round 3 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | United States of America | 3–0–0 | 6 | 11.5 |
 | 2 | Romania | 3–0–0 | 6 | 11.5 |
