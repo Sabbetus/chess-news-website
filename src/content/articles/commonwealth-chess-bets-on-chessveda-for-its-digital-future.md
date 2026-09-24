@@ -32,6 +32,6 @@ For Chessveda, which bundles online play, learning, coaching, tournaments and ch
 
 No financial terms, prize structures or launch dates for any specific online event were disclosed. The announcement leans entirely on stated intentions: exploring "suitable tournaments, championships and other chess activities" that benefit players and communities across the Commonwealth, with hybrid and online formats cited as the near-term focus.
 
-The timing lines up with a broader pattern at this Olympiad, where FIDE and its partner bodies have used Samarkand as a venue to formalize new commercial relationships rather than just crown champions, a pattern already visible in [FIDE's own run of new title sponsors announced around the event](/articles/weekly-recap-samarkand-s-double-olympiad-and-fide-s-newest-world-title-backer/).
+The timing lines up with a broader pattern at this Olympiad, where FIDE and its partner bodies have used Samarkand as a venue to formalize new commercial relationships rather than just crown champions, a pattern already visible in [FIDE's own run of new title sponsors announced around the event](/articles/weekly-recap-samarkand-s-double-olympiad-and-a-new-wave-of-fide-sponsors/).
 
 Whether the Commonwealth-Chessveda tie-up produces an actual online Olympiad, and on what scale, is the question that will define whether this signing mattered or was just a photo opportunity in Samarkand.
