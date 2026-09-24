@@ -41,7 +41,7 @@ The round opened with an unusual amount of ceremony. Dignitaries from four diffe
 
 Four rounds remain before medals are decided. [Uzbekistan's lead now looks similar in shape to the one they built through Round 6](/articles/yakubboev-s-knight-fork-sends-uzbekistan-into-sole-lead/), and Round 8 brings two matches that could reshape the Women's race at once: Kazakhstan against India, and China facing Georgia. Germany, [the team that upset the top-seeded USA back in Round 5](/articles/germany-stuns-top-seeded-usa-as-uzbekistan-routs-hungary/), remains part of the group chasing Uzbekistan in the Open section too.
 
-**Open standings**
+**Open standings after Round 7 of 11**
 
 | Rank | Team | W–D–L | Match Pts | Board Pts |
 | --- | --- | --- | --- | --- |
@@ -56,7 +56,7 @@ Four rounds remain before medals are decided. [Uzbekistan's lead now looks simil
 | 9 | Iran | 5–1–1 | 11 | 20.5 |
 | 10 | Serbia | 5–1–1 | 11 | 18.5 |
 
-**Women standings**
+**Women standings after Round 7 of 11**
 
 | Rank | Team | W–D–L | Match Pts | Board Pts |
 | --- | --- | --- | --- | --- |
