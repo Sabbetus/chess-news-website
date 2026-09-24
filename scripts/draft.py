@@ -28,9 +28,15 @@ from pathlib import Path
 
 import anthropic
 
+from chess_results_standings import (
+    KNOWN_TOURNAMENTS,
+    fetch_team_standings,
+    standings_markdown_table,
+)
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
 from lichess_game import GAME_LOOKUP_CRITERIA, SAN_MOVE_RE, find_game_embed, recheck_game_lookup
+from selection import _has_result_signal
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -805,6 +811,57 @@ def check_article_links(body_markdown: str) -> list[str]:
     return sorted(f"/articles/{slug}/" for slug in bad)
 
 
+def attach_standings_table(item: dict, body_markdown: str) -> str:
+    """Append a verified top-10 standings table for a known ongoing major
+    tournament, when this story is actually about its results (not just a
+    passing mention -- reuses selection.py's own result-signal gate so the
+    same precision bar applies here as decides the majorTournament scoring
+    bonus).
+
+    The table is built entirely from parsed chess-results.com HTML (see
+    chess_results_standings.py) -- the model never transcribes or is asked
+    to reconstruct rankings, since a source article rarely states the full
+    order clearly and doing that from memory/inference is exactly the kind
+    of fabrication this pipeline has been burned by before (see CLAUDE.md's
+    standing rules). If chess-results doesn't have the tournament, or the
+    fetch fails for any reason, the article is published without a table --
+    an incomplete article beats a wrong one.
+    """
+    text_lower = f"{item['title']} {item.get('summary', '')}".lower()
+    if not _has_result_signal(text_lower):
+        return body_markdown
+
+    tournament_key = next((key for key in KNOWN_TOURNAMENTS if key in text_lower), None)
+    if not tournament_key:
+        return body_markdown
+
+    # Always the Open section, deliberately not keyword-detected: a daily
+    # recap routinely covers both Open and Women's results in one piece (the
+    # real 2026-09-24 Chess.com recap's own title -- "Uzbekistan Leads With
+    # 7/7 Match Wins; China, Kazakhstan Share Women's Lead" -- names both),
+    # so a naive "women" in text_lower check attached the Women's table to a
+    # story led by the Open section. Open is the tournament's headline
+    # section in essentially every case. Known limitation: a genuinely
+    # Women's-only piece (none seen in practice yet -- FIDE's own Women's
+    # Chess Commission pieces are policy stories with no result signal, so
+    # they're already gated out above) would still get the Open table here;
+    # worth a real per-section detector if that case shows up.
+    section = "open"
+    try:
+        rows = fetch_team_standings(tournament_key, section=section, top_n=10)
+    except Exception as exc:
+        print(f"  Standings fetch failed for '{item['title']}': {exc}", file=sys.stderr)
+        return body_markdown
+
+    if not rows:
+        print(f"  Standings: no table available for '{item['title']}'", file=sys.stderr)
+        return body_markdown
+
+    print(f"  Standings: attached {section} table ({len(rows)} rows) for '{item['title']}'", file=sys.stderr)
+    table = standings_markdown_table(rows, section_label=section.capitalize())
+    return f"{body_markdown.rstrip()}\n\n{table}"
+
+
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     """(paragraph number, word count) for every paragraph over the style
     guide's hard ceiling -- heading lines are skipped since they're not
@@ -1116,6 +1173,12 @@ def draft_one(
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
     bad_links = check_article_links(body_markdown)
+
+    # After the paragraph/link checks (a table has neither prose paragraphs
+    # nor internal links to validate) and only for ordinary news items --
+    # calendar aggregates aren't tournament-results stories.
+    if not is_aggregate:
+        body_markdown = attach_standings_table(item, body_markdown)
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
