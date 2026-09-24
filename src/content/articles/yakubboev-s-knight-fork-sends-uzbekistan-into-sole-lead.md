@@ -25,7 +25,7 @@ Sarin had been the better player for most of the game against GM Nodirbek Yakubb
 
 Yakubboev's follow-up, 37.g3, hid a nasty idea. Sarin's safest path was still 37...Kh6 followed by 38...Kg7, tucking his king away and holding the balance.
 
-Instead he played 37...Nf5 to defend a pawn, and Yakubboev pounced with 38.Ne6+, a knight fork on king and queen.
+Instead he played 37...Nf5 to defend a pawn, and Yakubboev pounced with [38.Ne6+](#game-embed), a knight fork on king and queen.
 
 After 38...Rxe6 39.gxh4+, the point of the whole sequence appeared: the pawn capture opened the h2-c7 diagonal and exposed the queen to the discovered attack all along. Sarin had to give it up outright.
 
@@ -42,3 +42,33 @@ In the Women's section, China kept rolling with a 3.5-0.5 rout of Poland, and Ka
 Round six also carried an unusual subplot that had nothing to do with the board. Both Israeli teams forfeited their matches after requesting a schedule change for Yom Kippur that their opponents, within their rights under the regulations, declined to grant. The Netherlands picked up a 4-0 forfeit win over Israel's men as a result, a quirk of the calendar with real standings consequences heading into the rest day.
 
 Uzbekistan now heads into that rest day alone at the top, with the rest of the contenders, from China to Armenia to England, left to regroup before round seven resumes the chase.
+
+**Open standings after Round 6 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Uzbekistan | 6–0–0 | 12 | 19.5 |
+| 2 | China | 5–1–0 | 11 | 18.5 |
+| 3 | Armenia | 5–1–0 | 11 | 17 |
+| 4 | France | 4–2–0 | 10 | 17.5 |
+| 5 | Netherlands | 5–0–1 | 10 | 16 |
+| 6 | Turkiye | 5–0–1 | 10 | 17.5 |
+| 7 | India | 5–0–1 | 10 | 16 |
+| 8 | Greece | 5–0–1 | 10 | 18 |
+| 9 | Germany | 5–0–1 | 10 | 16 |
+| 10 | England | 4–2–0 | 10 | 16.5 |
+
+**Women standings after Round 6 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | China | 6–0–0 | 12 | 20.5 |
+| 2 | Kazakhstan | 6–0–0 | 12 | 18.5 |
+| 3 | India | 5–0–1 | 10 | 18.5 |
+| 4 | Bulgaria | 5–0–1 | 10 | 19 |
+| 5 | Germany | 5–0–1 | 10 | 16.5 |
+| 6 | Switzerland | 4–2–0 | 10 | 18 |
+| 7 | Armenia | 5–0–1 | 10 | 17.5 |
+| 8 | Poland | 5–0–1 | 10 | 17 |
+| 9 | Azerbaijan | 5–0–1 | 10 | 17.5 |
+| 10 | Georgia | 4–2–0 | 10 | 18 |
