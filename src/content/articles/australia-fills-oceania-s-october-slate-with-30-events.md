@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"
 continent: "oceania"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Oceania's October calendar runs from junior rapids in Melbourne to a five-round classical in Toowoomba. 30 tournaments tracked, nearly all from Australia. #chess"
 aggregateKind: "calendar-comingup"
 continentName: "Oceania"

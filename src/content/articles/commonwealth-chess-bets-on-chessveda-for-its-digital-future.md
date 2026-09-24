@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/commonwealth-chess-association-partners-with-ch
 lens: "money-angle"
 continent: "global"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The Commonwealth Chess Association just signed a digital partner in Chessveda, aiming for online Olympiads and wider grassroots access across member nations. Details from Samarkand:"
 image:
   src: "./_images/Nandan_jha_Facilitating_Shri_M_Venkaiah_Naidu_Vice_President_of_India.webp"
