@@ -40,3 +40,18 @@ Behind the co-leaders, a dozen teams sit within two points of the top. India rou
 The round opened with an unusual amount of ceremony. Dignitaries from four different countries took turns making opening moves on different boards, forcing FIDE's own broadcast team to sprint the length of a 163-meter playing hall to keep up. The last of them, Samarkand deputy governor Husen Tuxtaev, opened Abdusattorov's game with 1.e3 -- prompting commentator Peter Svidler to quip that at least "everything is protected."
 
 Four rounds remain before medals are decided. [Uzbekistan's lead now looks similar in shape to the one they built through Round 6](/articles/yakubboev-s-knight-fork-sends-uzbekistan-into-sole-lead/), and Round 8 brings two matches that could reshape the Women's race at once: Kazakhstan against India, and China facing Georgia. Germany, [the team that upset the top-seeded USA back in Round 5](/articles/germany-stuns-top-seeded-usa-as-uzbekistan-routs-hungary/), remains part of the group chasing Uzbekistan in the Open section too.
+
+**Open standings**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Uzbekistan | 7–0–0 | 14 | 22.5 |
+| 2 | Netherlands | 6–0–1 | 12 | 19.5 |
+| 3 | India | 6–0–1 | 12 | 18.5 |
+| 4 | Germany | 6–0–1 | 12 | 19 |
+| 5 | Azerbaijan | 5–2–0 | 12 | 20 |
+| 6 | Armenia | 5–2–0 | 12 | 19 |
+| 7 | China | 5–1–1 | 11 | 19.5 |
+| 8 | France | 4–3–0 | 11 | 19.5 |
+| 9 | Iran | 5–1–1 | 11 | 20.5 |
+| 10 | Serbia | 5–1–1 | 11 | 18.5 |

@@ -302,6 +302,41 @@ const jsonLd = [
     color: var(--ink-soft);
     font-style: italic;
   }
+  .story-body :global(table) {
+    width: 100%;
+    margin: 1.6em 0;
+    border-collapse: collapse;
+    font-size: 15.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .story-body :global(th),
+  .story-body :global(td) {
+    padding: 7px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .story-body :global(th) {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+  }
+  .story-body :global(td:first-child),
+  .story-body :global(th:first-child) {
+    text-align: center;
+  }
+  .story-body :global(strong:has(+ table)),
+  .story-body :global(p:has(+ table) strong:only-child) {
+    display: inline-block;
+    margin-top: 0.6em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
 
   .source-callout {
     max-width: var(--content-width);
