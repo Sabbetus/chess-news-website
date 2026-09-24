@@ -43,7 +43,7 @@ Four rounds remain before medals are decided. [Uzbekistan's lead now looks simil
 
 **Open standings after Round 7 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Uzbekistan | 7–0–0 | 14 | 22.5 |
 | 2 | Netherlands | 6–0–1 | 12 | 19.5 |
@@ -58,7 +58,7 @@ Four rounds remain before medals are decided. [Uzbekistan's lead now looks simil
 
 **Women standings after Round 7 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | China | 6–1–0 | 13 | 22.5 |
 | 2 | Kazakhstan | 6–1–0 | 13 | 20.5 |

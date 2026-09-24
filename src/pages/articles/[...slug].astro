@@ -302,12 +302,16 @@ const jsonLd = [
     color: var(--ink-soft);
     font-style: italic;
   }
-  /* A standings table's 5 columns (rank, team, W-D-L, MP, BP) don't fit a
-     phone viewport at comfortable padding -- rather than let the table
-     force the whole page to scroll horizontally, the table itself becomes
-     the scroll container (display: block keeps native <table> layout for
-     its children while making the element itself a scrollable box). The
-     wrapping <p>/<strong> heading stays put; only the table scrolls. */
+  /* A standings table's 5 columns (rank, team, W-D-L, Match Points, Board
+     Points) don't all fit a phone viewport at full header text -- Board
+     Points (the least essential column; Match Points is the actual
+     standings sort key) is hidden outright under the mobile breakpoint
+     below rather than abbreviating every viewport's headers to fix one
+     viewport's overflow. overflow-x: auto stays as a fallback for
+     whatever doesn't fit even after that (display: block keeps native
+     <table> layout for its children while making the element itself a
+     scrollable box); the wrapping <p>/<strong> heading stays put, only
+     the table scrolls. */
   .story-body :global(table) {
     display: block;
     overflow-x: auto;
@@ -344,6 +348,22 @@ const jsonLd = [
     .story-body :global(th),
     .story-body :global(td) {
       padding: 6px 7px;
+    }
+    /* Board Points is the 5th column -- dropped on mobile since Match
+       Points is the actual standings sort key and the table doesn't need
+       both to stay useful at this width. */
+    .story-body :global(th:nth-child(5)),
+    .story-body :global(td:nth-child(5)) {
+      display: none;
+    }
+    /* "Match Points" as one nowrap line is still wider than a phone
+       viewport leaves once Team and W-D-L take their share -- letting
+       just the header wrap to two lines (data cells stay nowrap; a
+       number should never wrap) closes that gap without falling back to
+       the horizontal scroll for every reader. */
+    .story-body :global(th) {
+      white-space: normal;
+      line-height: 1.25;
     }
   }
   .story-body :global(strong:has(+ table)),
