@@ -61,7 +61,7 @@ The Netherlands, Azerbaijan, France, Armenia, England, Ukraine, [Poland](/articl
 
 | # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
-| 1 | United States of America | 2–0–0 | 4 | 8 |
+| 1 | USA | 2–0–0 | 4 | 8 |
 | 2 | Ukraine | 2–0–0 | 4 | 8 |
 | 3 | Azerbaijan | 2–0–0 | 4 | 8 |
 | 4 | Netherlands | 2–0–0 | 4 | 8 |

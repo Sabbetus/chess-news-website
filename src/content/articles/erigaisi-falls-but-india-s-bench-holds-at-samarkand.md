@@ -67,7 +67,7 @@ Round 2 pairings will show whether Thailand's giant-killing carries any momentum
 | 2 | Georgia | 1–0–0 | 2 | 4 |
 | 3 | Kazakhstan | 1–0–0 | 2 | 4 |
 | 4 | China | 1–0–0 | 2 | 4 |
-| 5 | United States of America | 1–0–0 | 2 | 4 |
+| 5 | USA | 1–0–0 | 2 | 4 |
 | 6 | Ukraine | 1–0–0 | 2 | 4 |
 | 7 | Azerbaijan | 1–0–0 | 2 | 4 |
 | 8 | France | 1–0–0 | 2 | 4 |

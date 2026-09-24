@@ -78,7 +78,7 @@ Round four brings the first real clashes between the leading teams on both board
 
 | # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
-| 1 | United States of America | 3–0–0 | 6 | 11.5 |
+| 1 | USA | 3–0–0 | 6 | 11.5 |
 | 2 | Romania | 3–0–0 | 6 | 11.5 |
 | 3 | India | 3–0–0 | 6 | 11 |
 | 4 | Poland | 3–0–0 | 6 | 11 |
