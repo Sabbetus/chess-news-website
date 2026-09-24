@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-day-7-two-nodirbeks-one-golden-mission
 lens: "results"
 continent: "asia"
 selectionScore: 85
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Uzbekistan stays perfect at 7/7 and opens a two-match gap in Samarkand, while Praggnanandhaa's 26...Bd3!! set up a mating net against Nikita Vitiugov. #ChessOlympiad"
 additionalSources:
   - sourceName: "Chess.com"
