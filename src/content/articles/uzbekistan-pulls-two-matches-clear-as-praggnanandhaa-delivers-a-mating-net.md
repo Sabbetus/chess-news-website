@@ -55,3 +55,18 @@ Four rounds remain before medals are decided. [Uzbekistan's lead now looks simil
 | 8 | France | 4–3–0 | 11 | 19.5 |
 | 9 | Iran | 5–1–1 | 11 | 20.5 |
 | 10 | Serbia | 5–1–1 | 11 | 18.5 |
+
+**Women standings**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | China | 6–1–0 | 13 | 22.5 |
+| 2 | Kazakhstan | 6–1–0 | 13 | 20.5 |
+| 3 | India | 6–0–1 | 12 | 22 |
+| 4 | Bulgaria | 6–0–1 | 12 | 22 |
+| 5 | Georgia | 5–2–0 | 12 | 20.5 |
+| 6 | Armenia | 6–0–1 | 12 | 20 |
+| 7 | Mongolia | 6–0–1 | 12 | 19 |
+| 8 | United States of America | 5–1–1 | 11 | 21 |
+| 9 | Uzbekistan | 5–1–1 | 11 | 20 |
+| 10 | Netherlands | 4–3–0 | 11 | 20 |

@@ -812,20 +812,25 @@ def check_article_links(body_markdown: str) -> list[str]:
 
 
 def attach_standings_table(item: dict, body_markdown: str) -> str:
-    """Append a verified top-10 standings table for a known ongoing major
+    """Append verified top-10 standings table(s) for a known ongoing major
     tournament, when this story is actually about its results (not just a
     passing mention -- reuses selection.py's own result-signal gate so the
     same precision bar applies here as decides the majorTournament scoring
     bonus).
+
+    Placed at the end of the body, after the narrative and before the game
+    embed (which the article page always renders after the full body
+    content) -- the story sets up who's leading and why first; the table
+    then serves as reference material, not the opening act.
 
     The table is built entirely from parsed chess-results.com HTML (see
     chess_results_standings.py) -- the model never transcribes or is asked
     to reconstruct rankings, since a source article rarely states the full
     order clearly and doing that from memory/inference is exactly the kind
     of fabrication this pipeline has been burned by before (see CLAUDE.md's
-    standing rules). If chess-results doesn't have the tournament, or the
-    fetch fails for any reason, the article is published without a table --
-    an incomplete article beats a wrong one.
+    standing rules). If chess-results doesn't have the tournament, or a
+    fetch fails for any reason, that table is skipped -- an incomplete
+    article beats a wrong one.
     """
     text_lower = f"{item['title']} {item.get('summary', '')}".lower()
     if not _has_result_signal(text_lower):
@@ -835,31 +840,37 @@ def attach_standings_table(item: dict, body_markdown: str) -> str:
     if not tournament_key:
         return body_markdown
 
-    # Always the Open section, deliberately not keyword-detected: a daily
-    # recap routinely covers both Open and Women's results in one piece (the
-    # real 2026-09-24 Chess.com recap's own title -- "Uzbekistan Leads With
-    # 7/7 Match Wins; China, Kazakhstan Share Women's Lead" -- names both),
-    # so a naive "women" in text_lower check attached the Women's table to a
-    # story led by the Open section. Open is the tournament's headline
-    # section in essentially every case. Known limitation: a genuinely
-    # Women's-only piece (none seen in practice yet -- FIDE's own Women's
-    # Chess Commission pieces are policy stories with no result signal, so
-    # they're already gated out above) would still get the Open table here;
-    # worth a real per-section detector if that case shows up.
-    section = "open"
-    try:
-        rows = fetch_team_standings(tournament_key, section=section, top_n=10)
-    except Exception as exc:
-        print(f"  Standings fetch failed for '{item['title']}': {exc}", file=sys.stderr)
+    # Which sections to attach is decided from the actual drafted body, not
+    # the source item's title/summary -- a daily recap routinely covers both
+    # Open and Women's results in one piece regardless of which one its own
+    # headline led with (caught live: the real 2026-09-24 Chess.com recap
+    # was titled around the Open leader but its body covered the Women's
+    # section standings just as fully). Open is always attached, since it's
+    # the tournament's headline section in essentially every case; Women's
+    # is added on top whenever the body itself actually discusses it.
+    sections = ["open"]
+    if re.search(r"\bwomen", body_markdown, re.IGNORECASE):
+        sections.append("women")
+
+    tables = []
+    for section in sections:
+        try:
+            rows = fetch_team_standings(tournament_key, section=section, top_n=10)
+        except Exception as exc:
+            print(f"  Standings fetch failed ({section}) for '{item['title']}': {exc}", file=sys.stderr)
+            continue
+
+        if not rows:
+            print(f"  Standings: no {section} table available for '{item['title']}'", file=sys.stderr)
+            continue
+
+        print(f"  Standings: attached {section} table ({len(rows)} rows) for '{item['title']}'", file=sys.stderr)
+        tables.append(standings_markdown_table(rows, section_label=section.capitalize()))
+
+    if not tables:
         return body_markdown
 
-    if not rows:
-        print(f"  Standings: no table available for '{item['title']}'", file=sys.stderr)
-        return body_markdown
-
-    print(f"  Standings: attached {section} table ({len(rows)} rows) for '{item['title']}'", file=sys.stderr)
-    table = standings_markdown_table(rows, section_label=section.capitalize())
-    return f"{body_markdown.rstrip()}\n\n{table}"
+    return f"{body_markdown.rstrip()}\n\n" + "\n\n".join(tables)
 
 
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
