@@ -866,12 +866,20 @@ def fix_long_paragraphs(
     try:
         response = client.messages.create(
             model=MODEL,
-            # Scales with the number of flagged paragraphs, not a flat
-            # 2048 -- caught live: a 4-paragraph batch silently fell back
-            # to the unfixed original because the model's thinking alone
-            # ate the whole fixed budget before it wrote any @@PARA_N@@
-            # output, leaving response.content with no text block at all.
-            max_tokens=max(4096, 1024 * len(offenders)),
+            # Scales with the number of flagged paragraphs -- caught live
+            # (twice): a 4-paragraph batch silently fell back to the
+            # unfixed original because the model's thinking alone ate the
+            # whole budget before it wrote any @@PARA_N@@ output, leaving
+            # response.content with no text block at all. The first fix
+            # (1024/paragraph) still wasn't enough at exactly 4 paragraphs
+            # (4096, hitting the floor) -- raised the per-paragraph rate
+            # and, more importantly, capped effort explicitly: this is a
+            # narrow, mechanical "find a good place to split this text"
+            # task with no reason to reason hard about it, unlike the main
+            # drafting call it inherited an unset (so unrestricted, worse
+            # than that call's own "medium") thinking budget from.
+            max_tokens=max(4096, 2048 * len(offenders)),
+            output_config={"effort": "low"},
             system=_PARAGRAPH_FIX_PROMPT,
             messages=[{"role": "user", "content": user_prompt}],
         )
