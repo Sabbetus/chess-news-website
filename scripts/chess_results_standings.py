@@ -160,15 +160,15 @@ def standings_markdown_table(standings: Standings, section_label: str = "") -> s
         label += f" after Round {standings.current_round}"
         if standings.total_rounds is not None:
             label += f" of {standings.total_rounds}"
-    # Abbreviated headers (MP/BP, both conventional in chess standings
-    # reporting) rather than "Match Pts"/"Board Pts" -- the full words
-    # forced the table wider than a phone viewport, since a header word
-    # sets its column's minimum width even when the numeric cells
-    # underneath are short.
+    # Full header words -- an earlier version abbreviated these to MP/BP to
+    # fix a mobile overflow, but that reads worse on desktop where there
+    # was never a width problem. Mobile now instead hides the Board Points
+    # column outright (see the article page CSS) rather than shortening
+    # every viewport's headers to fix one viewport's overflow.
     lines = [
         f"**{label}**",
         "",
-        "| # | Team | W–D–L | MP | BP |",
+        "| # | Team | W–D–L | Match Points | Board Points |",
         "| --- | --- | --- | --- | --- |",
     ]
     for row in standings.rows:

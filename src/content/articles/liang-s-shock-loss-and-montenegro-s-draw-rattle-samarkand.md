@@ -44,7 +44,7 @@ The Netherlands, Azerbaijan, France, Armenia, England, Ukraine, [Poland](/articl
 
 **Open standings after Round 2 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Poland | 2–0–0 | 4 | 8 |
 | 2 | Croatia | 2–0–0 | 4 | 8 |
@@ -59,7 +59,7 @@ The Netherlands, Azerbaijan, France, Armenia, England, Ukraine, [Poland](/articl
 
 **Women standings after Round 2 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | United States of America | 2–0–0 | 4 | 8 |
 | 2 | Ukraine | 2–0–0 | 4 | 8 |

@@ -42,7 +42,7 @@ The next rounds will show whether El Salvador's result was a one-off shock or th
 
 **Open standings after Round 2 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Poland | 2–0–0 | 4 | 8 |
 | 2 | Croatia | 2–0–0 | 4 | 8 |
