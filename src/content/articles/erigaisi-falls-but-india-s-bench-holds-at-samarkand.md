@@ -30,7 +30,7 @@ It's the kind of early promotion that's become part of Oro's story this year, an
 
 The day's genuine shock came against India. Botswana, outrated by more than 400 points per board, somehow split 2-2 with Brazil, but the headline upset hit the tournament favorites directly: Thailand's Prin Laohawirapap beat India's Arjun Erigaisi with the black pieces on board one.
 
-Erigaisi had been winning for most of the game. With both players low on time, he needed 50.Qf4! to hold his extra pawn and keep control. He played 50.Qg7?? instead, and Laohawirapap answered 50...Qh1+ 51.Kg4 Re4+ 52.Rf4 Qd1+, trapping the white king in a queen-and-rook crossfire that ended after 53.Kg3 Qg1+ 54.Kh3 Re3+ with Erigaisi's resignation.
+Erigaisi had been winning for most of the game. With both players low on time, he needed 50.Qf4! to hold his extra pawn and keep control. He played [50.Qg7??](#game-embed) instead, and Laohawirapap answered 50...Qh1+ 51.Kg4 Re4+ 52.Rf4 Qd1+, trapping the white king in a queen-and-rook crossfire that ended after 53.Kg3 Qg1+ 54.Kh3 Re3+ with Erigaisi's resignation.
 
 That single blunder is a reminder of what the Olympiad's format actually guarantees: put enough boards and enough hours of classical chess in front of enough players, and someone rated hundreds of points below a world top-ten player will eventually get a shot at the win of their career.
 
@@ -43,3 +43,33 @@ The Women's section produced its own share of routine results, with all five top
 Not every favorite had it easy, though: Uzbekistan's Umida Omonova salvaged a result against Trinidad and Tobago's Zara La Fleur after Trinidad's Zara La Fleur let a clearly winning position slip through missed chances and shaky decisions late in the game.
 
 Round 2 pairings will show whether Thailand's giant-killing carries any momentum, and whether India's board-one setback stays a footnote rather than a pattern.
+
+**Open standings after Round 1 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Uzbekistan | 1–0–0 | 2 | 4 |
+| 2 | China | 1–0–0 | 2 | 4 |
+| 3 | Germany | 1–0–0 | 2 | 4 |
+| 4 | Azerbaijan | 1–0–0 | 2 | 4 |
+| 5 | France | 1–0–0 | 2 | 4 |
+| 6 | Armenia | 1–0–0 | 2 | 4 |
+| 7 | England | 1–0–0 | 2 | 4 |
+| 8 | Turkiye | 1–0–0 | 2 | 4 |
+| 9 | Poland | 1–0–0 | 2 | 4 |
+| 10 | Croatia | 1–0–0 | 2 | 4 |
+
+**Women standings after Round 1 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | India | 1–0–0 | 2 | 4 |
+| 2 | Georgia | 1–0–0 | 2 | 4 |
+| 3 | Kazakhstan | 1–0–0 | 2 | 4 |
+| 4 | China | 1–0–0 | 2 | 4 |
+| 5 | United States of America | 1–0–0 | 2 | 4 |
+| 6 | Ukraine | 1–0–0 | 2 | 4 |
+| 7 | Azerbaijan | 1–0–0 | 2 | 4 |
+| 8 | France | 1–0–0 | 2 | 4 |
+| 9 | Poland | 1–0–0 | 2 | 4 |
+| 10 | Netherlands | 1–0–0 | 2 | 4 |

@@ -39,7 +39,7 @@ India beat Italy 3-1 with two wins and two draws. Nihal Sarin made it three wins
 
 Arjun Erigaisi has had a rougher time of it, missing several tactical chances in his games so far, a slump [The Chess Herald covered in more detail after his round two loss](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/).
 
-China looked sharp too, beating Bulgaria 3.5-0.5 behind a second win from former World Champion Ding Liren. The highlight of the whole round came from board three, where Yu Yangyi finished off Kiril Georgiev in style: 37.Ng6! forced 37...fxg6, and 38.Bg8+! sealed things, with Georgiev resigning rather than face 38...Kh8 39.Bf7+ Kh7 40.fxg6#.
+China looked sharp too, beating Bulgaria 3.5-0.5 behind a second win from former World Champion Ding Liren. The highlight of the whole round came from board three, where Yu Yangyi finished off Kiril Georgiev in style: 37.Ng6! forced 37...fxg6, and [38.Bg8+!](#game-embed) sealed things, with Georgiev resigning rather than face 38...Kh8 39.Bf7+ Kh7 40.fxg6#.
 
 Germany kept up its own streak, following Tuesday's win over Uzbekistan 3 with a 2.5-1.5 win over Uzbekistan 2, Vincent Keymer supplying the decisive point among three draws.
 
@@ -58,3 +58,33 @@ Elsewhere, Azerbaijan beat Switzerland 3-1, France overpowered Kazakhstan 3.5-0.
 The field itself keeps swelling. With Angola's arrival today following the Central African Republic in round two, the Open section now stands at 205 teams and the Women's section at 189, pushing the total for this record-breaking Samarkand edition well past anything held before.
 
 Round four brings the first real clashes between the leading teams on both boards, and after Argentina and Iran's results today, nobody in the field looks safe just because of where they were seeded.
+
+**Open standings after Round 3 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Romania | 3–0–0 | 6 | 11.5 |
+| 2 | France | 3–0–0 | 6 | 11 |
+| 3 | Poland | 3–0–0 | 6 | 11 |
+| 4 | Uzbekistan | 3–0–0 | 6 | 10.5 |
+| 5 | China | 3–0–0 | 6 | 10.5 |
+| 6 | Spain | 3–0–0 | 6 | 10 |
+| 7 | Germany | 3–0–0 | 6 | 10 |
+| 8 | Azerbaijan | 3–0–0 | 6 | 10 |
+| 9 | Armenia | 3–0–0 | 6 | 10 |
+| 10 | Czech Republic | 3–0–0 | 6 | 10 |
+
+**Women standings after Round 3 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | United States of America | 3–0–0 | 6 | 11.5 |
+| 2 | Romania | 3–0–0 | 6 | 11.5 |
+| 3 | India | 3–0–0 | 6 | 11 |
+| 4 | Poland | 3–0–0 | 6 | 11 |
+| 5 | Uzbekistan | 3–0–0 | 6 | 11 |
+| 6 | Vietnam | 3–0–0 | 6 | 11 |
+| 7 | Israel | 3–0–0 | 6 | 11 |
+| 8 | Armenia | 3–0–0 | 6 | 10.5 |
+| 9 | Kazakhstan | 3–0–0 | 6 | 10.5 |
+| 10 | China | 3–0–0 | 6 | 10.5 |

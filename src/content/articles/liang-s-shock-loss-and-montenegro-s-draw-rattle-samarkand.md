@@ -30,7 +30,7 @@ Third seed Kazakhstan had a tougher time, settling for 3-1 over Bosnia and Herze
 
 The day's real showpiece, though, wasn't an upset at all. Uzbekistan's Javokhir Sindarov, the challenger for the upcoming World Championship match and someone [The Chess Herald has tracked since his win over Anand](/articles/the-torch-passes-again-sindarov-s-win-over-anand-echoes-a-familiar-chess-story/), led his team to a 3.5-0.5 win over Peru. He'd played a near-perfect game against Flores Quillas, hitting 98% accuracy, and had a simple winning move available in 31...Qa1.
 
-He didn't take it. Instead he played 31...Kf7!!, sacrificing his queen for the second time in the same game. Flores Quillas accepted with 32.Qxf1, allowing Sindarov to finish the combination with 32...Rh3!!, setting up an unstoppable mate threat with 33...h6.
+He didn't take it. Instead he played [31...Kf7!!](#game-embed), sacrificing his queen for the second time in the same game. Flores Quillas accepted with 32.Qxf1, allowing Sindarov to finish the combination with 32...Rh3!!, setting up an unstoppable mate threat with 33...h6.
 
 Elsewhere among the leading Open teams, results were more mixed than the seedings suggested. Defending champions India were held to three draws by Indonesia, with Gukesh, Vidit and Praggnanandhaa all splitting the point, before Nihal Sarin's lone win rescued the match.
 
@@ -41,3 +41,33 @@ China's Ding Liren, unbeaten after round one, was held by Chile's Rodrigo Vásqu
 Germany's Vincent Keymer made his own debut with a clean win over Uzbekistan 3's Saidakbar Saydaliev, punishing 30...g5 with the crushing 31.Nxe6! and finishing with the quiet 33.Bc7!, a move that left Black unable to save either the trapped knight or bishop.
 
 The Netherlands, Azerbaijan, France, Armenia, England, Ukraine, [Poland](/articles/poland-s-4-0-rout-puts-it-alone-atop-samarkand/) and Spain all won their matches too, though several dropped a point or more along the way. Two ceremonial first moves opened the day's play, with Qatar Chess Federation president Mohamed Al Mudahka playing 1.d4 on the USA-Mongolia board one, and Uzbekistan Chess Federation vice president Komil Sindarov opening the same way for the Finland-India Women's top board.
+
+**Open standings after Round 2 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Poland | 2–0–0 | 4 | 8 |
+| 2 | Croatia | 2–0–0 | 4 | 8 |
+| 3 | Lithuania | 2–0–0 | 4 | 8 |
+| 4 | Belarus | 2–0–0 | 4 | 8 |
+| 5 | Iceland | 2–0–0 | 4 | 8 |
+| 6 | Uzbekistan | 2–0–0 | 4 | 7.5 |
+| 7 | Germany | 2–0–0 | 4 | 7.5 |
+| 8 | France | 2–0–0 | 4 | 7.5 |
+| 9 | Armenia | 2–0–0 | 4 | 7.5 |
+| 10 | Iran | 2–0–0 | 4 | 7.5 |
+
+**Women standings after Round 2 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | United States of America | 2–0–0 | 4 | 8 |
+| 2 | Ukraine | 2–0–0 | 4 | 8 |
+| 3 | Azerbaijan | 2–0–0 | 4 | 8 |
+| 4 | Netherlands | 2–0–0 | 4 | 8 |
+| 5 | Uzbekistan | 2–0–0 | 4 | 8 |
+| 6 | Serbia | 2–0–0 | 4 | 8 |
+| 7 | Switzerland | 2–0–0 | 4 | 8 |
+| 8 | Vietnam | 2–0–0 | 4 | 8 |
+| 9 | Slovenia | 2–0–0 | 4 | 8 |
+| 10 | Canada | 2–0–0 | 4 | 8 |

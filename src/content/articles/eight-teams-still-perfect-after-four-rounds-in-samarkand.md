@@ -27,7 +27,7 @@ It was also a day of scale: the late arrival of the Marshall Islands pushed the 
 
 That record field builds on the tournament's already-historic size, [which had already broken Budapest's previous mark](/articles/samarkand-s-400-teams-break-budapest-s-record-by-20/) before this round even started.
 
-The day's standout tactic came from China's Wei Yi, who improved to 3/3 by beating Aleksandar Indjic in a game FIDE's report called something it had "never seen before." With Black under pressure but not obviously lost, Wei Yi broke through with 32.Nxf7! Rxf7, then 33.Ne6!, forking the queen off its square.
+The day's standout tactic came from China's Wei Yi, who improved to 3/3 by beating Aleksandar Indjic in a game FIDE's report called something it had "never seen before." With Black under pressure but not obviously lost, Wei Yi broke through with [32.Nxf7!](#game-embed) Rxf7, then 33.Ne6!, forking the queen off its square.
 
 What followed was a genuine oddity: after 33...Qb8, Wei Yi played 34.Bg3! Qa8 35.Nc7!, repeating the queen-harassment pattern described as a "windmill" aimed not at a king, but at the queen itself. After 35...Qb8 36.Nxd5 Qa8 37.Nc7 Qb8 38.Bc4, Indjic's position had collapsed, and he resigned six moves later. China beat Serbia 3-1 on the back of it.
 
@@ -50,3 +50,33 @@ Round four's calm at the top is itself notable given how the tournament had play
 [India losing Erigaisi on board one while its bench carried the team through](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/) fit the same pattern. None of that repeated itself this time, but with this many teams still unbeaten, the pairings only get harder from here.
 
 Round five pairings will start pitting these unbeaten sides directly against each other, the first real test of which of the eight perfect Open teams can actually survive contact with one another.
+
+**Open standings after Round 4 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | China | 4–0–0 | 8 | 13.5 |
+| 2 | Uzbekistan | 4–0–0 | 8 | 13 |
+| 3 | Germany | 4–0–0 | 8 | 12.5 |
+| 4 | Armenia | 4–0–0 | 8 | 12.5 |
+| 5 | India | 4–0–0 | 8 | 11.5 |
+| 6 | United States of America | 4–0–0 | 8 | 12 |
+| 7 | Netherlands | 4–0–0 | 8 | 11 |
+| 8 | Hungary | 4–0–0 | 8 | 10 |
+| 9 | France | 3–1–0 | 7 | 13 |
+| 10 | Azerbaijan | 3–1–0 | 7 | 12 |
+
+**Women standings after Round 4 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | United States of America | 4–0–0 | 8 | 15 |
+| 2 | China | 4–0–0 | 8 | 14 |
+| 3 | Poland | 4–0–0 | 8 | 14 |
+| 4 | Uzbekistan | 4–0–0 | 8 | 14 |
+| 5 | Bulgaria | 4–0–0 | 8 | 14 |
+| 6 | Germany | 4–0–0 | 8 | 12.5 |
+| 7 | India | 4–0–0 | 8 | 14 |
+| 8 | Azerbaijan | 4–0–0 | 8 | 13 |
+| 9 | Kazakhstan | 4–0–0 | 8 | 13.5 |
+| 10 | Serbia | 4–0–0 | 8 | 14 |

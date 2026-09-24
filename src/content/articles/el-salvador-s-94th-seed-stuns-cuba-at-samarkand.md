@@ -20,7 +20,7 @@ Round two of the [46th Chess Olympiad in Samarkand](https://www.chess.com/news/v
 
 The upset came down to two individual results on the lower boards. El Salvador's FM Carlos Morales, rated 2244, beat Cuban GM Jorge Roberto Elias Reyes, rated 2505, on board one, and FM Santiago Jose Guevara Ruiz, rated 2160, beat Cuban GM Lelys Stanley Martinez Duany, rated 2440, on board three, both by real margins rather than a stolen draw or a late blunder from an otherwise-winning position.
 
-Cuba salvaged what it could elsewhere. GM Dylan Isidro Berdayes Ason won on board two, and GM Ermes Espinosa Veloz drew on board four, but the two lower-board upsets were enough to hand El Salvador the match 2½-1½.
+Cuba salvaged what it could elsewhere. GM Dylan Isidro Berdayes Ason won on board two, and GM Ermes Espinosa Veloz drew on board four, but the two lower-board upsets were enough to hand El Salvador [the match 2½-1½](#game-embed).
 
 Chess.com's own recap put the gap in team terms: El Salvador fielded an all-FM lineup averaging 2165 against a Cuban team averaging 2467, a roughly 300-point gap by that measure. Beating two GMs from a position like that is a real result, not a fluke.
 
@@ -39,3 +39,18 @@ For El Salvador, the win is a signature result regardless of what happens the re
 For Cuba, the loss doesn't end their tournament, but it does complicate any path back to the top of the standings, and it puts real pressure on the remaining rounds to make up ground against teams they'd normally be expected to beat.
 
 The next rounds will show whether El Salvador's result was a one-off shock or the start of a genuine run, and whether Cuba can regroup before the seeding gaps start working against them in must-win matches instead of for them.
+
+**Open standings after Round 2 of 11**
+
+| Rank | Team | W–D–L | Match Pts | Board Pts |
+| --- | --- | --- | --- | --- |
+| 1 | Poland | 2–0–0 | 4 | 8 |
+| 2 | Croatia | 2–0–0 | 4 | 8 |
+| 3 | Lithuania | 2–0–0 | 4 | 8 |
+| 4 | Belarus | 2–0–0 | 4 | 8 |
+| 5 | Iceland | 2–0–0 | 4 | 8 |
+| 6 | Uzbekistan | 2–0–0 | 4 | 7.5 |
+| 7 | Germany | 2–0–0 | 4 | 7.5 |
+| 8 | France | 2–0–0 | 4 | 7.5 |
+| 9 | Armenia | 2–0–0 | 4 | 7.5 |
+| 10 | Iran | 2–0–0 | 4 | 7.5 |
