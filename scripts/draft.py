@@ -35,7 +35,13 @@ from chess_results_standings import (
 )
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
-from lichess_game import GAME_LOOKUP_CRITERIA, SAN_MOVE_RE, find_game_embed, recheck_game_lookup
+from lichess_game import (
+    GAME_LOOKUP_CRITERIA,
+    SAN_MOVE_RE,
+    add_embed_scroll_link,
+    find_game_embed,
+    recheck_game_lookup,
+)
 from selection import _has_result_signal
 
 ROOT = Path(__file__).parent.parent
@@ -855,17 +861,21 @@ def attach_standings_table(item: dict, body_markdown: str) -> str:
     tables = []
     for section in sections:
         try:
-            rows = fetch_team_standings(tournament_key, section=section, top_n=10)
+            standings = fetch_team_standings(tournament_key, section=section, top_n=10)
         except Exception as exc:
             print(f"  Standings fetch failed ({section}) for '{item['title']}': {exc}", file=sys.stderr)
             continue
 
-        if not rows:
+        if not standings:
             print(f"  Standings: no {section} table available for '{item['title']}'", file=sys.stderr)
             continue
 
-        print(f"  Standings: attached {section} table ({len(rows)} rows) for '{item['title']}'", file=sys.stderr)
-        tables.append(standings_markdown_table(rows, section_label=section.capitalize()))
+        print(
+            f"  Standings: attached {section} table ({len(standings.rows)} rows, "
+            f"round {standings.current_round}) for '{item['title']}'",
+            file=sys.stderr,
+        )
+        tables.append(standings_markdown_table(standings, section_label=section.capitalize()))
 
     if not tables:
         return body_markdown
@@ -1093,6 +1103,7 @@ def draft_one(
         if localized:
             frontmatter["image"] = localized
 
+    embed = None
     if not is_aggregate:
         game_lookup = parse_game_lookup(parsed.get("gameLookup") or "")
         body_for_recheck = parsed.get("bodyMarkdown") or ""
@@ -1184,6 +1195,19 @@ def draft_one(
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
     bad_links = check_article_links(body_markdown)
+
+    # After the paragraph/link checks (an added scroll-link only touches
+    # one short phrase, but run it after paragraph fixing rather than
+    # before so it can't get silently rewritten/dropped by that pass) and
+    # only when an embed actually attached -- a link to "#game-embed" with
+    # no embed on the page would be a dead jump.
+    if embed:
+        try:
+            body_markdown = add_embed_scroll_link(
+                client, body_markdown, game_lookup["player1"], game_lookup["player2"]
+            )
+        except Exception as exc:
+            print(f"  Game embed scroll-link failed for '{item['title']}': {exc}", file=sys.stderr)
 
     # After the paragraph/link checks (a table has neither prose paragraphs
     # nor internal links to validate) and only for ordinary news items --
