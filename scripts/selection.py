@@ -197,16 +197,71 @@ MIN_SHARED_BIGRAMS_FOR_SAME_STORY = 2
 MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY = 4
 
 
+def _enumeration_spans(text: str) -> list[tuple[int, int]]:
+    """Character spans covered by an enumerated list of 3+ proper names --
+    a field/roster announcement packs in far more distinct names than a
+    narrative story does, purely because it's enumerating a list, not
+    because it's substantively about all of them. Names found only inside
+    a span like this are excluded from _name_bigrams/_single_names
+    entirely (caught live: a 24-player Total Chess Tour field announcement
+    false-matched three unrelated Olympiad-adjacent stories as "the same
+    story" purely because a couple of its 24 listed players are also
+    protagonists of real, unrelated Olympiad narratives -- a coincidence
+    any large-enough roster is bound to produce against same-day chess
+    news). Two distinct list shapes, both seen in real source text:
+
+    - Comma-and-"and"-separated prose ("Levon Aronian, Liem Le, Jorden
+      van Foreest, Abhimanyu Mishra, Shakhriyar Mamedyarov and Andrew
+      Hong").
+    - A ranked table flattened to plain text with no commas at all
+      ("Magnus Carlsen (Norway) - World No. 1 Fabiano Caruana (United
+      States) - World No. 3 ..."), where the actual tell is 3+
+      parenthetical annotations recurring close together rather than any
+      particular connecting punctuation."""
+    spans = []
+
+    name = r"[A-Z][a-zA-Z'\-]+(?:\s+[A-Za-z][a-zA-Z'\-]*){0,3}"
+    run_re = re.compile(rf"{name}(?:\s*,\s*{name}){{2,}}(?:\s*,?\s+and\s+{name})?")
+    spans += [m.span() for m in run_re.finditer(text)]
+
+    # A run of 3+ "(...)" annotations within PAREN_CLUSTER_GAP characters
+    # of each other, whatever sits between them -- the recurring
+    # parenthetical is itself the list signature here, not the separator.
+    PAREN_CLUSTER_GAP = 50
+    parens = list(re.finditer(r"\([^)]{1,40}\)", text))
+    i = 0
+    while i < len(parens):
+        j = i
+        while j + 1 < len(parens) and parens[j + 1].start() - parens[j].end() <= PAREN_CLUSTER_GAP:
+            j += 1
+        if j - i + 1 >= 3:
+            # Extend back far enough to also cover the name immediately
+            # before the first parenthetical in the cluster.
+            start = max(0, parens[i].start() - 60)
+            spans.append((start, parens[j].end()))
+        i = j + 1
+
+    return spans
+
+
+def _in_spans(pos: int, spans: list[tuple[int, int]]) -> bool:
+    return any(start <= pos < end for start, end in spans)
+
+
 def _name_bigrams(item: dict) -> set[tuple[str, str]]:
     """Adjacent-word pairs where both words are capitalized and neither is
     generic -- a cheap proxy for "this text names a specific person or
     place", reliable enough to tell "Arjun Erigaisi" apart from ordinary
-    capitalized sentence starts without needing real NER."""
+    capitalized sentence starts without needing real NER. Skips any pair
+    that falls inside an _enumeration_spans() run (see there)."""
     text = f"{item.get('title', '')} {item.get('summary', '')}"
-    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    spans = _enumeration_spans(text)
+    words = [(m.group(), m.start()) for m in re.finditer(r"[A-Za-z']+", text)]
     bigrams = set()
-    for a, b in zip(words, words[1:]):
+    for (a, pos_a), (b, pos_b) in zip(words, words[1:]):
         if not (a[:1].isupper() and b[:1].isupper()):
+            continue
+        if _in_spans(pos_a, spans) or _in_spans(pos_b, spans):
             continue
         la, lb = a.lower().rstrip("'s"), b.lower().rstrip("'s")
         if la in GENERIC_NAME_WORDS or lb in GENERIC_NAME_WORDS:
@@ -225,13 +280,17 @@ def _single_names(item: dict) -> set[str]:
     capitalized word, so two round-3 Olympiad recaps sharing all four of
     those names still scored zero shared bigrams and were drafted as two
     separate articles covering the same round). Filtered the same way as
-    bigrams; only used together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY
-    precisely because a lone word is weaker evidence than a matched pair."""
+    bigrams (including the same enumeration-span exclusion); only used
+    together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY precisely because
+    a lone word is weaker evidence than a matched pair."""
     text = f"{item.get('title', '')} {item.get('summary', '')}"
-    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    spans = _enumeration_spans(text)
     names = set()
-    for w in words:
+    for m in re.finditer(r"[A-Za-z']+", text):
+        w = m.group()
         if not w[:1].isupper():
+            continue
+        if _in_spans(m.start(), spans):
             continue
         lw = w.lower().rstrip("'s")
         if lw in GENERIC_NAME_WORDS or len(lw) < 4:
