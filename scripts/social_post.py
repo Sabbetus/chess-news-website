@@ -2,20 +2,22 @@
 
 Run on a schedule (see .github/workflows/social.yml). Each run:
   1. Scans src/content/articles/ for every reviewStatus: "published" article
-     and adds any not already tracked to data/social-queue.json, ordered by
-     publishDate ascending -- this both seeds the initial backlog and picks
-     up newly merged articles automatically, with no separate "enqueue on
-     merge" step needed.
-  2. Posts the oldest POSTS_PER_RUN still-unposted entries to Facebook and
-     Threads together (same article, same run) -- each article's socialCopy
-     frontmatter (a hook written for sharing, distinct from its page title)
-     plus the article link.
+     and adds any not already tracked to data/social-queue.json -- this both
+     seeds the initial backlog and picks up newly merged articles
+     automatically, with no separate "enqueue on merge" step needed.
+  2. Posts the POSTS_PER_RUN still-unposted entries with the highest
+     selectionScore to Facebook and Threads together (same article, same
+     run) -- each article's socialCopy frontmatter (a hook written for
+     sharing, distinct from its page title) plus the article link.
   3. Marks each as posted (with a timestamp) and writes the queue back.
 
-Oldest-first, not newest-first: new articles just join the back of the
-queue, so a growing backlog of not-yet-announced-on-social articles
-actually drains over time instead of being perpetually skipped in favor
-of whatever published today.
+Highest-score-first, with publishDate ascending as the tiebreak: the day's
+lead story should hit social fastest rather than wait behind older,
+lower-rated backlog entries. The tiebreak still drains ties oldest-first
+so nothing gets stuck behind same-scored newer arrivals. At 12 runs/day
+against ~3-5 articles/day, the backlog empties same-day in practice, so
+this doesn't starve lower-scored older entries the way it would if supply
+regularly outpaced posting slots.
 """
 from __future__ import annotations
 
@@ -74,6 +76,7 @@ def load_published_articles() -> list[dict]:
         title = _frontmatter_field(text, "title")
         publish_date = _frontmatter_field(text, "publishDate")
         social_copy = _frontmatter_field(text, "socialCopy")
+        selection_score = _frontmatter_field(text, "selectionScore")
         if not title or not publish_date:
             continue
         articles.append(
@@ -85,6 +88,7 @@ def load_published_articles() -> list[dict]:
                 # the article title only if a draft is missing the field.
                 "socialCopy": social_copy or title,
                 "publishDate": publish_date,
+                "selectionScore": int(selection_score) if selection_score else 0,
             }
         )
     return articles
@@ -108,6 +112,7 @@ def sync_queue(queue: list[dict], articles: list[dict]) -> list[dict]:
             "title": a["title"],
             "socialCopy": a["socialCopy"],
             "publishDate": a["publishDate"],
+            "selectionScore": a["selectionScore"],
             "postedFacebookAt": None,
             "postedThreadsAt": None,
         }
@@ -179,6 +184,7 @@ def main() -> None:
         save_queue(queue)
         return
 
+    pending.sort(key=lambda e: (-e.get("selectionScore", 0), e["publishDate"]))
     to_post = pending[:POSTS_PER_RUN]
     now = datetime.now(timezone.utc).isoformat()
 
