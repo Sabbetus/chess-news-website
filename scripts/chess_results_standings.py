@@ -60,6 +60,14 @@ _ROW_RE = re.compile(
 
 MIN_PLAUSIBLE_ROWS = 3
 
+# "Rank after Round 7 - Open" -- appears once per standings page as its own
+# heading, independent of whether round_num was passed (chess-results still
+# reports which round the page it served actually reflects).
+_CURRENT_ROUND_RE = re.compile(r"Rank after Round (\d+)", re.IGNORECASE)
+# "Number of rounds</td><td class=\"CR\">11</td>" -- present on every
+# tournament page regardless of section or round queried.
+_TOTAL_ROUNDS_RE = re.compile(r"Number of rounds</td>\s*<td[^>]*>(\d+)</td>", re.IGNORECASE)
+
 
 @dataclass
 class StandingsRow:
@@ -71,6 +79,13 @@ class StandingsRow:
     losses: int
     match_points: float
     board_points: float
+
+
+@dataclass
+class Standings:
+    rows: list[StandingsRow]
+    current_round: int | None
+    total_rounds: int | None
 
 
 def _fetch(url: str) -> str | None:
@@ -87,7 +102,7 @@ def fetch_team_standings(
     section: str = "open",
     round_num: int | None = None,
     top_n: int = 10,
-) -> list[StandingsRow] | None:
+) -> Standings | None:
     """Top-N team standings for a known tournament, or None if unavailable.
 
     round_num omitted fetches the current/latest ranking page.
@@ -129,18 +144,29 @@ def fetch_team_standings(
     if len(rows) < MIN_PLAUSIBLE_ROWS:
         return None
 
-    return rows
+    current_round_match = _CURRENT_ROUND_RE.search(html)
+    total_rounds_match = _TOTAL_ROUNDS_RE.search(html)
+
+    return Standings(
+        rows=rows,
+        current_round=int(current_round_match.group(1)) if current_round_match else None,
+        total_rounds=int(total_rounds_match.group(1)) if total_rounds_match else None,
+    )
 
 
-def standings_markdown_table(rows: list[StandingsRow], section_label: str = "") -> str:
-    heading = f"**{section_label} standings**" if section_label else "**Standings**"
+def standings_markdown_table(standings: Standings, section_label: str = "") -> str:
+    label = f"{section_label} standings" if section_label else "Standings"
+    if standings.current_round is not None:
+        label += f" after Round {standings.current_round}"
+        if standings.total_rounds is not None:
+            label += f" of {standings.total_rounds}"
     lines = [
-        heading,
+        f"**{label}**",
         "",
         "| Rank | Team | W–D–L | Match Pts | Board Pts |",
         "| --- | --- | --- | --- | --- |",
     ]
-    for row in rows:
+    for row in standings.rows:
         lines.append(
             f"| {row.rank} | {row.team} | {row.wins}–{row.draws}–{row.losses} "
             f"| {row.match_points:g} | {row.board_points:g} |"
