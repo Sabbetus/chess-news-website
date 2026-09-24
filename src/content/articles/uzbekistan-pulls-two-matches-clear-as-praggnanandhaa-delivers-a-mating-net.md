@@ -29,7 +29,7 @@ Armenia couldn't quite match Uzbekistan's pace, but their 2-2 draw with the Unit
 
 India kept their own medal hopes alive with a 2.5-1.5 win over England, winning on boards one and four. [Gukesh D continued the tournament he's been quietly having](/articles/india-used-to-have-one-world-class-player-now-it-has-a-bench/), moving to 6/7 and playing at close to a 2800 level since round two.
 
-The round's real highlight came from Praggnanandhaa, who produced what FIDE's own report called the position of the day against Nikita Vitiugov. With both kings castled on opposite sides, he found 26...Bd3!!, and after 27.Nd2?! followed up with 27...Rc3!!, pinning White down and setting a trap of its own.
+The round's real highlight came from Praggnanandhaa, who produced what FIDE's own report called the position of the day against Nikita Vitiugov. With both kings castled on opposite sides, he found [26...Bd3!!](#game-embed), and after 27.Nd2?! followed up with 27...Rc3!!, pinning White down and setting a trap of its own.
 
 Had White grabbed the bishop with 30.cxd3??, the point of the whole sequence would have shown itself: 30...Rc1+ 31.Kxb2 Qb4+ 32.Nb3 a3 is forced mate. Vitiugov avoided that exact line, but Praggnanandhaa's attack had already done irreversible damage -- 30...Bxc2+ forced material losses White couldn't survive, and he resigned soon after.
 
