@@ -277,3 +277,56 @@ def recheck_game_lookup(client, body_markdown: str) -> dict | None:
         "player1": player1.group(1).strip(),
         "player2": player2.group(1).strip(),
     }
+
+
+_EMBED_LINK_SYSTEM_PROMPT = """You are given the finished Markdown body of a chess news article. An interactive board for one specific game -- between {player1} and {player2} -- is embedded on the same page, right after this body's text ends, at the in-page anchor "#game-embed".
+
+Find the single spot in the body that most directly describes this specific game (a quoted move like "26...Bd3!!", a phrase like "resigned soon after", or if no move is quoted, the moment the game was decided) and wrap that short existing phrase in a Markdown link to "#game-embed" -- e.g. turn `26...Bd3!!` into `[26...Bd3!!](#game-embed)` -- so a reader can jump straight to the board.
+
+Rules:
+- Change nothing else in the body -- same words, same punctuation, same paragraph breaks, everywhere except this one added link.
+- Wrap the SHORTEST natural phrase that makes sense as a link -- a few words at most, ideally a quoted move or a short result phrase. Never wrap a whole sentence, and never wrap a phrase that's already inside a different Markdown link.
+- Add exactly one such link, in whichever paragraph most directly describes this specific game.
+- Respond with the ENTIRE body Markdown, verbatim except for that one added link, and nothing else -- no preamble, no explanation, no code fence."""
+
+
+def add_embed_scroll_link(client, body_markdown: str, player1: str, player2: str) -> str:
+    """Wrap one short, already-existing phrase describing the embedded game
+    in a Markdown link to "#game-embed", so a reader can jump straight to
+    the board from the prose that mentions it -- the embed itself always
+    renders well after the body (see the article page layout), so without
+    this a reader has no way to jump to it from wherever the game is
+    actually discussed.
+
+    A small, surgical model call (same pattern as fix_long_paragraphs in
+    draft.py) rather than a regex over quoted moves: the qualifying
+    criteria for an embed explicitly include games described with no
+    moves quoted at all (a named clinching-match winner), which no regex
+    can reliably find an anchor phrase for.
+
+    Falls back to the original body, unmodified, if the response doesn't
+    look like a safe edit (missing the expected link, or a suspiciously
+    different length) -- a missing scroll-link costs nothing; a mangled
+    body would ship a broken article.
+    """
+    response = client.messages.create(
+        model=RECHECK_MODEL,
+        max_tokens=max(4096, len(body_markdown) // 2),
+        system=_EMBED_LINK_SYSTEM_PROMPT.format(player1=player1, player2=player2),
+        output_config={"effort": "low"},
+        messages=[{"role": "user", "content": body_markdown}],
+    )
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        return body_markdown
+    edited = text_blocks[-1].strip()
+
+    if "(#game-embed)" not in edited:
+        return body_markdown
+    # A real edit only adds a few characters ("[", "](#game-embed)") --
+    # anything wildly different in length means the model rewrote or
+    # truncated the body instead of making the one surgical edit asked for.
+    if abs(len(edited) - len(body_markdown)) > 200:
+        return body_markdown
+
+    return edited

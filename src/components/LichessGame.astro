@@ -15,7 +15,7 @@ const { url } = Astro.props;
 const initialSrc = `${url}?bg=system`;
 ---
 
-<div class="lichess-embed">
+<div class="lichess-embed" id="game-embed">
   <iframe
     class="lichess-embed-frame"
     src={initialSrc}
@@ -43,6 +43,10 @@ const initialSrc = `${url}?bg=system`;
   .lichess-embed {
     margin: 1.6em auto;
     max-width: var(--content-width, 680px);
+    /* In-body links jump straight here (see attach_game_embed_link in
+       lichess_game.py) -- without this, the anchor would land flush
+       against the viewport edge with nothing above it. */
+    scroll-margin-top: 20px;
   }
   .lichess-embed-frame {
     width: 100%;
