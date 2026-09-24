@@ -64,7 +64,7 @@ Samarkand now heads into its rest day with three Open teams sharing the lead and
 | 2 | China | 5–0–0 | 10 | 17 |
 | 3 | Kazakhstan | 5–0–0 | 10 | 16 |
 | 4 | Azerbaijan | 5–0–0 | 10 | 16 |
-| 5 | United States of America | 4–1–0 | 9 | 17 |
+| 5 | USA | 4–1–0 | 9 | 17 |
 | 6 | Uzbekistan | 4–1–0 | 9 | 16 |
 | 7 | Bulgaria | 4–0–1 | 8 | 15 |
 | 8 | India | 4–0–1 | 8 | 15.5 |

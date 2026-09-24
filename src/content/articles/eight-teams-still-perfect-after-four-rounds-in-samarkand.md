@@ -60,7 +60,7 @@ Round five pairings will start pitting these unbeaten sides directly against eac
 | 3 | Germany | 4–0–0 | 8 | 12.5 |
 | 4 | Armenia | 4–0–0 | 8 | 12.5 |
 | 5 | India | 4–0–0 | 8 | 11.5 |
-| 6 | United States of America | 4–0–0 | 8 | 12 |
+| 6 | USA | 4–0–0 | 8 | 12 |
 | 7 | Netherlands | 4–0–0 | 8 | 11 |
 | 8 | Hungary | 4–0–0 | 8 | 10 |
 | 9 | France | 3–1–0 | 7 | 13 |
@@ -70,7 +70,7 @@ Round five pairings will start pitting these unbeaten sides directly against eac
 
 | # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
-| 1 | United States of America | 4–0–0 | 8 | 15 |
+| 1 | USA | 4–0–0 | 8 | 15 |
 | 2 | China | 4–0–0 | 8 | 14 |
 | 3 | Poland | 4–0–0 | 8 | 14 |
 | 4 | Uzbekistan | 4–0–0 | 8 | 14 |
