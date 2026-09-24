@@ -43,7 +43,7 @@ Samarkand now heads into its rest day with three Open teams sharing the lead and
 
 **Open standings after Round 5 of 11**
 
-| Rank | Team | W–D–L | Match Pts | Board Pts |
+| # | Team | W–D–L | MP | BP |
 | --- | --- | --- | --- | --- |
 | 1 | Uzbekistan | 5–0–0 | 10 | 17 |
 | 2 | India | 5–0–0 | 10 | 14.5 |
@@ -58,7 +58,7 @@ Samarkand now heads into its rest day with three Open teams sharing the lead and
 
 **Women standings after Round 5 of 11**
 
-| Rank | Team | W–D–L | Match Pts | Board Pts |
+| # | Team | W–D–L | MP | BP |
 | --- | --- | --- | --- | --- |
 | 1 | Poland | 5–0–0 | 10 | 16.5 |
 | 2 | China | 5–0–0 | 10 | 17 |

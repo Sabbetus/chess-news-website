@@ -53,7 +53,7 @@ Round five pairings will start pitting these unbeaten sides directly against eac
 
 **Open standings after Round 4 of 11**
 
-| Rank | Team | W–D–L | Match Pts | Board Pts |
+| # | Team | W–D–L | MP | BP |
 | --- | --- | --- | --- | --- |
 | 1 | China | 4–0–0 | 8 | 13.5 |
 | 2 | Uzbekistan | 4–0–0 | 8 | 13 |
@@ -68,7 +68,7 @@ Round five pairings will start pitting these unbeaten sides directly against eac
 
 **Women standings after Round 4 of 11**
 
-| Rank | Team | W–D–L | Match Pts | Board Pts |
+| # | Team | W–D–L | MP | BP |
 | --- | --- | --- | --- | --- |
 | 1 | United States of America | 4–0–0 | 8 | 15 |
 | 2 | China | 4–0–0 | 8 | 14 |
