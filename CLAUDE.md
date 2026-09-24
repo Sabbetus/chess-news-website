@@ -29,6 +29,7 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
-- Last reset: 2026-09-23 (PR #32 -- Seirawan chess piece had the hawk and
-  elephant's movements swapped, verified against Chess.com's own glossary,
-  plus a missing co-creator credit).
+- Last reset: 2026-09-24 (PR #33 -- a broken internal link, title-guessed
+  instead of using the real given slug, plus 4 over-length paragraphs the
+  automated fixup didn't fully clear; see commit history around that date
+  for the pipeline fix -- check_article_links() -- that was also made).
