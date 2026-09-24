@@ -341,6 +341,16 @@ const jsonLd = [
   .story-body :global(th:first-child) {
     text-align: center;
   }
+  /* Match Points and Board Points (columns 4 and 5) are numeric -- right
+     aligning them (rather than the default left) lets digits stack for
+     easy scanning down the column, the normal convention for a numeric
+     table column. */
+  .story-body :global(td:nth-child(4)),
+  .story-body :global(th:nth-child(4)),
+  .story-body :global(td:nth-child(5)),
+  .story-body :global(th:nth-child(5)) {
+    text-align: right;
+  }
   @media (max-width: 480px) {
     .story-body :global(table) {
       font-size: 14px;
