@@ -28,9 +28,15 @@ from pathlib import Path
 
 import anthropic
 
+from chess_results_standings import (
+    KNOWN_TOURNAMENTS,
+    fetch_team_standings,
+    standings_markdown_table,
+)
 from continents import CONTINENT_SLUGS
 from images import localize_image, pick_image_for_item
 from lichess_game import GAME_LOOKUP_CRITERIA, SAN_MOVE_RE, find_game_embed, recheck_game_lookup
+from selection import _has_result_signal
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -805,6 +811,68 @@ def check_article_links(body_markdown: str) -> list[str]:
     return sorted(f"/articles/{slug}/" for slug in bad)
 
 
+def attach_standings_table(item: dict, body_markdown: str) -> str:
+    """Append verified top-10 standings table(s) for a known ongoing major
+    tournament, when this story is actually about its results (not just a
+    passing mention -- reuses selection.py's own result-signal gate so the
+    same precision bar applies here as decides the majorTournament scoring
+    bonus).
+
+    Placed at the end of the body, after the narrative and before the game
+    embed (which the article page always renders after the full body
+    content) -- the story sets up who's leading and why first; the table
+    then serves as reference material, not the opening act.
+
+    The table is built entirely from parsed chess-results.com HTML (see
+    chess_results_standings.py) -- the model never transcribes or is asked
+    to reconstruct rankings, since a source article rarely states the full
+    order clearly and doing that from memory/inference is exactly the kind
+    of fabrication this pipeline has been burned by before (see CLAUDE.md's
+    standing rules). If chess-results doesn't have the tournament, or a
+    fetch fails for any reason, that table is skipped -- an incomplete
+    article beats a wrong one.
+    """
+    text_lower = f"{item['title']} {item.get('summary', '')}".lower()
+    if not _has_result_signal(text_lower):
+        return body_markdown
+
+    tournament_key = next((key for key in KNOWN_TOURNAMENTS if key in text_lower), None)
+    if not tournament_key:
+        return body_markdown
+
+    # Which sections to attach is decided from the actual drafted body, not
+    # the source item's title/summary -- a daily recap routinely covers both
+    # Open and Women's results in one piece regardless of which one its own
+    # headline led with (caught live: the real 2026-09-24 Chess.com recap
+    # was titled around the Open leader but its body covered the Women's
+    # section standings just as fully). Open is always attached, since it's
+    # the tournament's headline section in essentially every case; Women's
+    # is added on top whenever the body itself actually discusses it.
+    sections = ["open"]
+    if re.search(r"\bwomen", body_markdown, re.IGNORECASE):
+        sections.append("women")
+
+    tables = []
+    for section in sections:
+        try:
+            rows = fetch_team_standings(tournament_key, section=section, top_n=10)
+        except Exception as exc:
+            print(f"  Standings fetch failed ({section}) for '{item['title']}': {exc}", file=sys.stderr)
+            continue
+
+        if not rows:
+            print(f"  Standings: no {section} table available for '{item['title']}'", file=sys.stderr)
+            continue
+
+        print(f"  Standings: attached {section} table ({len(rows)} rows) for '{item['title']}'", file=sys.stderr)
+        tables.append(standings_markdown_table(rows, section_label=section.capitalize()))
+
+    if not tables:
+        return body_markdown
+
+    return f"{body_markdown.rstrip()}\n\n" + "\n\n".join(tables)
+
+
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     """(paragraph number, word count) for every paragraph over the style
     guide's hard ceiling -- heading lines are skipped since they're not
@@ -1116,6 +1184,12 @@ def draft_one(
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
     bad_links = check_article_links(body_markdown)
+
+    # After the paragraph/link checks (a table has neither prose paragraphs
+    # nor internal links to validate) and only for ordinary news items --
+    # calendar aggregates aren't tournament-results stories.
+    if not is_aggregate:
+        body_markdown = attach_standings_table(item, body_markdown)
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
