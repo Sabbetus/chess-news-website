@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/total-chess-world-championship-tour-announces-s
 lens: "money-angle"
 continent: "europe"
 selectionScore: 80
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Aronian, Le, van Foreest, Mishra, Mamedyarov and Hong complete the 24-player field for Total Chess's Budapest pilot. Carlsen, Caruana and a new combined-format world title are on the line. #chess"
 additionalSources:
   - sourceName: "FIDE"
