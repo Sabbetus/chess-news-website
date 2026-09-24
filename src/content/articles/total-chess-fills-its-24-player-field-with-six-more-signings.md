@@ -8,13 +8,6 @@ continent: "europe"
 selectionScore: 80
 reviewStatus: "published"
 socialCopy: "Aronian, Le, van Foreest, Mishra, Mamedyarov and Hong complete the 24-player field for Total Chess's Budapest pilot. Carlsen, Caruana and a new combined-format world title are on the line. #chess"
-additionalSources:
-  - sourceName: "FIDE"
-    sourceUrl: "https://www.fide.com/beyond-the-board-fide-womens-chess-commission-maps-pathways-progress-and-the-future-of-womens-chess/"
-  - sourceName: "Chess.com"
-    sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-7"
-  - sourceName: "FIDE"
-    sourceUrl: "https://www.fide.com/olympiad-day-7-two-nodirbeks-one-golden-mission/"
 image:
   src: "./_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
