@@ -44,7 +44,7 @@ SOURCE_TIER_SCORE = {
 KEYWORD_WEIGHTS = {
     # High-interest storylines readers actually click on.
     "scandal": 20, "cheat": 20, "cheating": 20, "controversy": 15, "banned": 15,
-    "world champion": 15, "world championship": 15, "olympiad": 12,
+    "world champion": 15, "world championship": 15,
     "record": 10, "youngest": 10, "grandmaster": 8, "gm title": 8,
     "prize": 6, "upset": 8, "protest": 10, "investigation": 12,
     "rating list": 18, "fide rating": 14,
@@ -93,6 +93,58 @@ def is_promotional(item: dict) -> bool:
 NORDIC_KEYWORDS = ["norway", "sweden", "denmark", "finland", "iceland", "nordic", "scandinavia"]
 NORDIC_BONUS = 15
 
+# The major recurring/marquee tournaments -- not just the Olympiad -- are
+# the biggest events on the calendar while they're running, and their
+# daily round coverage should reliably outscore other same-day stories,
+# even ones that happen to rack up more of the generic high-value
+# keywords below through unrelated phrase matches. "Olympiad" used to
+# just be one entry in KEYWORD_WEIGHTS worth 12 points, diluted by the
+# same 30-point cap every other story competes for -- pulled out into its
+# own uncapped bonus instead, the same pattern as the Nordic bonus above
+# (caught live: a Total Chess Tour field announcement scored 80 purely
+# from two different "world championship" phrasings, "youngest" and
+# "grandmaster" -- all just describing players in its own roster, nothing
+# about that story's actual newsworthiness -- plus the unrelated Nordic
+# bonus, while the real Olympiad Round 7 recap scored only 52 with
+# "olympiad" contributing a mere 12 of that).
+MAJOR_TOURNAMENT_KEYWORDS = [
+    "olympiad", "candidates tournament", "world championship match",
+    "grand chess tour", "sinquefield cup", "cairns cup", "tata steel",
+    "norway chess", "fide world cup", "world team championship",
+    "european team championship", "world rapid", "world blitz",
+]
+MAJOR_TOURNAMENT_BONUS = 45
+
+# A tournament name alone isn't enough -- a story can mention "the
+# Olympiad" purely as a dateline or backdrop ("signed on the sidelines of
+# the 46th Chess Olympiad") without being about its competition at all
+# (caught live: a Commonwealth-Chessveda partnership announcement and a
+# FIDE Women's Commission meeting recap both mentioned "Olympiad" -- the
+# former four times, more than the genuine round recap's one -- purely as
+# location/context, and both would have wrongly earned the same bonus as
+# actual round coverage on a raw keyword-presence check). Require it to
+# co-occur with an actual result/standings signal: a scoreline, explicit
+# round/day labeling, or a result verb -- the same kind of language any
+# genuine round recap uses and a dateline mention never does.
+_SCORELINE_RE = re.compile(r"\b\d+(?:\.5)?\s*[-–]\s*\d+(?:\.5)?\b")
+_ROUND_LABEL_RE = re.compile(r"\b(?:round|day)\s+\d+\b", re.IGNORECASE)
+# Deliberately narrow to words that are near-exclusively used for an
+# actual competitive result in chess-news prose -- broader verbs like
+# "wins"/"leads"/"drew" look precise but aren't: they're common enough in
+# ordinary English (a commission "leading" outreach efforts, someone who
+# "drew on her experience") that a policy or business story clears them
+# almost by accident (caught live, both from the same Women's Commission
+# meeting recap and a Total Chess Tour announcement that also happened to
+# name "Norway Chess" as the format's inventor rather than as a place
+# where a game was actually played).
+RESULT_SIGNAL_WORDS = ["beat", "beats", "defeat", "defeated", "match point", "standings", "qualifie", "eliminat"]
+
+
+def _has_result_signal(text_lower: str) -> bool:
+    if _SCORELINE_RE.search(text_lower) or _ROUND_LABEL_RE.search(text_lower):
+        return True
+    return any(w in text_lower for w in RESULT_SIGNAL_WORDS)
+
 
 def score_keywords(text: str) -> int:
     text_lower = text.lower()
@@ -106,6 +158,13 @@ def score_keywords(text: str) -> int:
 def score_nordic(text: str) -> int:
     text_lower = text.lower()
     return NORDIC_BONUS if any(kw in text_lower for kw in NORDIC_KEYWORDS) else 0
+
+
+def score_major_tournament(text: str) -> int:
+    text_lower = text.lower()
+    if not any(kw in text_lower for kw in MAJOR_TOURNAMENT_KEYWORDS):
+        return 0
+    return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else 0
 
 
 def score_specificity(item: dict) -> int:
@@ -126,6 +185,7 @@ def score_item(item: dict) -> tuple[int, dict]:
     text = f"{item.get('title', '')} {item.get('summary', '')}"
     breakdown["keywords"] = score_keywords(text)
     breakdown["nordic"] = score_nordic(text)
+    breakdown["majorTournament"] = score_major_tournament(text)
     breakdown["specificity"] = score_specificity(item)
 
     total = sum(breakdown.values())
