@@ -67,6 +67,6 @@ Four rounds remain before medals are decided. [Uzbekistan's lead now looks simil
 | 5 | Georgia | 5–2–0 | 12 | 20.5 |
 | 6 | Armenia | 6–0–1 | 12 | 20 |
 | 7 | Mongolia | 6–0–1 | 12 | 19 |
-| 8 | United States of America | 5–1–1 | 11 | 21 |
+| 8 | USA | 5–1–1 | 11 | 21 |
 | 9 | Uzbekistan | 5–1–1 | 11 | 20 |
 | 10 | Netherlands | 4–3–0 | 11 | 20 |

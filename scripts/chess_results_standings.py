@@ -60,6 +60,30 @@ _ROW_RE = re.compile(
 
 MIN_PLAUSIBLE_ROWS = 3
 
+# chess-results team names come from whatever each federation's own
+# organizer registered, not a consistent short/long convention -- most use
+# a short common name ("Germany", "Uzbekistan"), but a few register the
+# full formal name instead. Normalized here rather than fixed at the
+# source (we don't control chess-results' data), so tables stay visually
+# consistent with the rest of the column. Extend this if another
+# federation's registered name turns out to be similarly long.
+#
+# A substring replace, not an exact-match dict lookup, deliberately: a
+# federation fielding multiple teams (reserve squads) gets a number
+# suffix on the base name ("Uzbekistan 2"), and "United States of
+# America 2" should still shorten to "USA 2" the same way the unnumbered
+# case does.
+_TEAM_NAME_OVERRIDES = {
+    "United States of America": "USA",
+}
+
+
+def _normalize_team_name(name: str) -> str:
+    for long_name, short_name in _TEAM_NAME_OVERRIDES.items():
+        if long_name in name:
+            return name.replace(long_name, short_name)
+    return name
+
 # "Rank after Round 7 - Open" -- appears once per standings page as its own
 # heading, independent of whether round_num was passed (chess-results still
 # reports which round the page it served actually reflects).
@@ -121,11 +145,12 @@ def fetch_team_standings(
 
     rows: list[StandingsRow] = []
     for match in _ROW_RE.finditer(html):
+        team_name = _normalize_team_name(match["name"].strip())
         rows.append(
             StandingsRow(
                 rank=int(match["rank"]),
                 federation=match["fed"],
-                team=match["name"].strip(),
+                team=team_name,
                 wins=int(match["wins"]),
                 draws=int(match["draws"]),
                 losses=int(match["losses"]),
