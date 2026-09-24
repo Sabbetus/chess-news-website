@@ -46,7 +46,7 @@ Round 2 pairings will show whether Thailand's giant-killing carries any momentum
 
 **Open standings after Round 1 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Uzbekistan | 1–0–0 | 2 | 4 |
 | 2 | China | 1–0–0 | 2 | 4 |
@@ -61,7 +61,7 @@ Round 2 pairings will show whether Thailand's giant-killing carries any momentum
 
 **Women standings after Round 1 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | India | 1–0–0 | 2 | 4 |
 | 2 | Georgia | 1–0–0 | 2 | 4 |

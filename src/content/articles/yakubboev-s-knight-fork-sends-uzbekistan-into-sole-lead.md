@@ -45,7 +45,7 @@ Uzbekistan now heads into that rest day alone at the top, with the rest of the c
 
 **Open standings after Round 6 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | Uzbekistan | 6–0–0 | 12 | 19.5 |
 | 2 | China | 5–1–0 | 11 | 18.5 |
@@ -60,7 +60,7 @@ Uzbekistan now heads into that rest day alone at the top, with the rest of the c
 
 **Women standings after Round 6 of 11**
 
-| # | Team | W–D–L | MP | BP |
+| # | Team | W–D–L | Match Points | Board Points |
 | --- | --- | --- | --- | --- |
 | 1 | China | 6–0–0 | 12 | 20.5 |
 | 2 | Kazakhstan | 6–0–0 | 12 | 18.5 |
