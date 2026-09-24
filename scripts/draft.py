@@ -780,6 +780,31 @@ def used_image_source_urls() -> set[str]:
 PARAGRAPH_WORD_CEILING = 70
 
 
+_ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
+
+
+def check_article_links(body_markdown: str) -> list[str]:
+    """Every "/articles/<slug>/" link in a drafted body against the real
+    slugs of published articles on disk. The model is handed the exact
+    slug for each internal-link candidate (see published_articles()) but
+    can still reconstruct a different one from the article's title text
+    when writing the link -- the same failure mode weekly_recap.py's
+    check_recap_links() exists to catch, now also seen in the daily
+    pipeline (caught live: 2026-09-24's Commonwealth/Chessveda piece
+    linked a title-guessed slug for the weekly recap instead of its real
+    file slug, even though the real slug was given). Returns the bad
+    links, unmodified -- never auto-fix by fuzzy-matching, since a wrong
+    guess here would silently point at the wrong article."""
+    real_slugs = {
+        path.stem
+        for path in ARTICLES_DIR.glob("*.md")
+        if 'reviewStatus: "published"' in path.read_text(encoding="utf-8")
+    }
+    found = set(_ARTICLE_LINK_RE.findall(body_markdown))
+    bad = found - real_slugs
+    return sorted(f"/articles/{slug}/" for slug in bad)
+
+
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     """(paragraph number, word count) for every paragraph over the style
     guide's hard ceiling -- heading lines are skipped since they're not
@@ -1082,9 +1107,10 @@ def draft_one(
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
+    bad_links = check_article_links(body_markdown)
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
-    return out_path, offenders
+    return out_path, offenders, bad_links
 
 
 # The SDK already retries 408/409/429 and every 5xx (so 529 overloaded is
@@ -1102,7 +1128,9 @@ BATCH_MAX_RETRIES = 5
 RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
 
 
-def write_run_report(written: list, failed: list, selected_count: int, long_paragraphs: list) -> None:
+def write_run_report(
+    written: list, failed: list, selected_count: int, long_paragraphs: list, bad_link_articles: list
+) -> None:
     lines = [f"Drafted {len(written)} of {selected_count} selected item(s)."]
     if failed:
         lines += ["", f"**{len(failed)} failed and are not in this PR:**", ""]
@@ -1118,6 +1146,16 @@ def write_run_report(written: list, failed: list, selected_count: int, long_para
         for path, offenders in long_paragraphs:
             spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
             lines.append(f"- {path.stem} — paragraph {spots}")
+    if bad_link_articles:
+        lines += [
+            "",
+            "**Broken internal link(s) -- slug doesn't match any published article, likely a "
+            "model transcription error even though the real slug was given (see "
+            "check_article_links()). Fix manually before merging:**",
+            "",
+        ]
+        for path, bad_links in bad_link_articles:
+            lines.append(f"- {path.stem} — {', '.join(f'`{link}`' for link in bad_links)}")
     RUN_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     RUN_REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -1134,20 +1172,23 @@ def main() -> None:
 
     client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
 
-    written, failed, long_paragraphs = [], [], []
+    written, failed, long_paragraphs, bad_link_articles = [], [], [], []
     for item in selected:
         try:
-            path, offenders = draft_one(client, item)
+            path, offenders, bad_links = draft_one(client, item)
             written.append(path)
             print(f"Drafted: {path.relative_to(ROOT)}")
             if offenders:
                 long_paragraphs.append((path, offenders))
                 print(f"  NOTE: {len(offenders)} paragraph(s) over {PARAGRAPH_WORD_CEILING} words", file=sys.stderr)
+            if bad_links:
+                bad_link_articles.append((path, bad_links))
+                print(f"  NOTE: {len(bad_links)} broken internal link(s): {bad_links}", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001 -- one bad draft shouldn't kill the run
             failed.append((item["title"], f"{type(exc).__name__}: {exc}"))
             print(f"FAILED to draft '{item['title']}': {exc}", file=sys.stderr)
 
-    write_run_report(written, failed, len(selected), long_paragraphs)
+    write_run_report(written, failed, len(selected), long_paragraphs, bad_link_articles)
     print(f"Wrote {len(written)}/{len(selected)} draft(s).")
 
 
