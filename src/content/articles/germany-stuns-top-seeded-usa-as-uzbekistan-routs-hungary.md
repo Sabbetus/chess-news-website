@@ -21,7 +21,7 @@ gameEmbed:
 
 Round 5 in Samarkand, the last before the Olympiad's rest day, delivered exactly the kind of chaos organizers probably didn't want on a day that opened with team photo shoots and ceremonial first moves. [Several of the tournament's leading teams strengthened their grip on the top of the standings, while others were blindsided entirely](https://www.fide.com/olympiad-day-5-home-teams-thrive-along-the-silk-road/).
 
-The biggest shock on the Open section's top boards came from Germany, who beat the top-seeded United States 2.5-1.5. The deciding game was Frederik Svane's win over Hans Niemann, a contest with no single obvious blunder. Svane simply had the better-coordinated pieces for most of the game and gradually converted.
+The biggest shock on the Open section's top boards came from Germany, who beat the top-seeded United States 2.5-1.5. The deciding game was [Frederik Svane's win over Hans Niemann](#game-embed), a contest with no single obvious blunder. Svane simply had the better-coordinated pieces for most of the game and gradually converted.
 
 [Wesley So very nearly rescued the match for the Americans](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-5). Facing So's queen, Mathias Bluebaum sacrificed his own queen for a rook to reach a drawn fortress, one So couldn't break down. German captain Jan Gustafsson stopped worrying about the result once Svane's win had already sealed the match. The draw stood, and so did Germany's upset.
 
@@ -40,3 +40,33 @@ Round 5 also carried some unusual scheduling wrinkles. Both Israeli teams, in th
 Vidit and Awonder Liang, whose earlier stumble was covered in [The Chess Herald's look at a rough day for Montenegro and the American reserve](/articles/liang-s-shock-loss-and-montenegro-s-draw-rattle-samarkand/), both remained on the bench for their respective teams once again.
 
 Samarkand now heads into its rest day with three Open teams sharing the lead and a Women's field freshly reshuffled after Poland's win over India. The next round will show how much of Round 5's chaos was a blip and how much of it sticks.
+
+**Open standings after Round 5 of 11**
+
+| # | Team | W–D–L | MP | BP |
+| --- | --- | --- | --- | --- |
+| 1 | Uzbekistan | 5–0–0 | 10 | 17 |
+| 2 | India | 5–0–0 | 10 | 14.5 |
+| 3 | Germany | 5–0–0 | 10 | 15 |
+| 4 | China | 4–1–0 | 9 | 15.5 |
+| 5 | France | 4–1–0 | 9 | 15.5 |
+| 6 | Iran | 4–1–0 | 9 | 16.5 |
+| 7 | Armenia | 4–1–0 | 9 | 14.5 |
+| 8 | England | 4–1–0 | 9 | 14.5 |
+| 9 | Romania | 3–2–0 | 8 | 15.5 |
+| 10 | Spain | 4–0–1 | 8 | 14.5 |
+
+**Women standings after Round 5 of 11**
+
+| # | Team | W–D–L | MP | BP |
+| --- | --- | --- | --- | --- |
+| 1 | Poland | 5–0–0 | 10 | 16.5 |
+| 2 | China | 5–0–0 | 10 | 17 |
+| 3 | Kazakhstan | 5–0–0 | 10 | 16 |
+| 4 | Azerbaijan | 5–0–0 | 10 | 16 |
+| 5 | United States of America | 4–1–0 | 9 | 17 |
+| 6 | Uzbekistan | 4–1–0 | 9 | 16 |
+| 7 | Bulgaria | 4–0–1 | 8 | 15 |
+| 8 | India | 4–0–1 | 8 | 15.5 |
+| 9 | Germany | 4–0–1 | 8 | 14 |
+| 10 | Serbia | 4–0–1 | 8 | 15 |
