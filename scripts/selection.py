@@ -44,7 +44,7 @@ SOURCE_TIER_SCORE = {
 KEYWORD_WEIGHTS = {
     # High-interest storylines readers actually click on.
     "scandal": 20, "cheat": 20, "cheating": 20, "controversy": 15, "banned": 15,
-    "world champion": 15, "world championship": 15, "olympiad": 12,
+    "world champion": 15, "world championship": 15,
     "record": 10, "youngest": 10, "grandmaster": 8, "gm title": 8,
     "prize": 6, "upset": 8, "protest": 10, "investigation": 12,
     "rating list": 18, "fide rating": 14,
@@ -93,6 +93,58 @@ def is_promotional(item: dict) -> bool:
 NORDIC_KEYWORDS = ["norway", "sweden", "denmark", "finland", "iceland", "nordic", "scandinavia"]
 NORDIC_BONUS = 15
 
+# The major recurring/marquee tournaments -- not just the Olympiad -- are
+# the biggest events on the calendar while they're running, and their
+# daily round coverage should reliably outscore other same-day stories,
+# even ones that happen to rack up more of the generic high-value
+# keywords below through unrelated phrase matches. "Olympiad" used to
+# just be one entry in KEYWORD_WEIGHTS worth 12 points, diluted by the
+# same 30-point cap every other story competes for -- pulled out into its
+# own uncapped bonus instead, the same pattern as the Nordic bonus above
+# (caught live: a Total Chess Tour field announcement scored 80 purely
+# from two different "world championship" phrasings, "youngest" and
+# "grandmaster" -- all just describing players in its own roster, nothing
+# about that story's actual newsworthiness -- plus the unrelated Nordic
+# bonus, while the real Olympiad Round 7 recap scored only 52 with
+# "olympiad" contributing a mere 12 of that).
+MAJOR_TOURNAMENT_KEYWORDS = [
+    "olympiad", "candidates tournament", "world championship match",
+    "grand chess tour", "sinquefield cup", "cairns cup", "tata steel",
+    "norway chess", "fide world cup", "world team championship",
+    "european team championship", "world rapid", "world blitz",
+]
+MAJOR_TOURNAMENT_BONUS = 45
+
+# A tournament name alone isn't enough -- a story can mention "the
+# Olympiad" purely as a dateline or backdrop ("signed on the sidelines of
+# the 46th Chess Olympiad") without being about its competition at all
+# (caught live: a Commonwealth-Chessveda partnership announcement and a
+# FIDE Women's Commission meeting recap both mentioned "Olympiad" -- the
+# former four times, more than the genuine round recap's one -- purely as
+# location/context, and both would have wrongly earned the same bonus as
+# actual round coverage on a raw keyword-presence check). Require it to
+# co-occur with an actual result/standings signal: a scoreline, explicit
+# round/day labeling, or a result verb -- the same kind of language any
+# genuine round recap uses and a dateline mention never does.
+_SCORELINE_RE = re.compile(r"\b\d+(?:\.5)?\s*[-–]\s*\d+(?:\.5)?\b")
+_ROUND_LABEL_RE = re.compile(r"\b(?:round|day)\s+\d+\b", re.IGNORECASE)
+# Deliberately narrow to words that are near-exclusively used for an
+# actual competitive result in chess-news prose -- broader verbs like
+# "wins"/"leads"/"drew" look precise but aren't: they're common enough in
+# ordinary English (a commission "leading" outreach efforts, someone who
+# "drew on her experience") that a policy or business story clears them
+# almost by accident (caught live, both from the same Women's Commission
+# meeting recap and a Total Chess Tour announcement that also happened to
+# name "Norway Chess" as the format's inventor rather than as a place
+# where a game was actually played).
+RESULT_SIGNAL_WORDS = ["beat", "beats", "defeat", "defeated", "match point", "standings", "qualifie", "eliminat"]
+
+
+def _has_result_signal(text_lower: str) -> bool:
+    if _SCORELINE_RE.search(text_lower) or _ROUND_LABEL_RE.search(text_lower):
+        return True
+    return any(w in text_lower for w in RESULT_SIGNAL_WORDS)
+
 
 def score_keywords(text: str) -> int:
     text_lower = text.lower()
@@ -106,6 +158,13 @@ def score_keywords(text: str) -> int:
 def score_nordic(text: str) -> int:
     text_lower = text.lower()
     return NORDIC_BONUS if any(kw in text_lower for kw in NORDIC_KEYWORDS) else 0
+
+
+def score_major_tournament(text: str) -> int:
+    text_lower = text.lower()
+    if not any(kw in text_lower for kw in MAJOR_TOURNAMENT_KEYWORDS):
+        return 0
+    return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else 0
 
 
 def score_specificity(item: dict) -> int:
@@ -126,6 +185,7 @@ def score_item(item: dict) -> tuple[int, dict]:
     text = f"{item.get('title', '')} {item.get('summary', '')}"
     breakdown["keywords"] = score_keywords(text)
     breakdown["nordic"] = score_nordic(text)
+    breakdown["majorTournament"] = score_major_tournament(text)
     breakdown["specificity"] = score_specificity(item)
 
     total = sum(breakdown.values())
@@ -197,16 +257,71 @@ MIN_SHARED_BIGRAMS_FOR_SAME_STORY = 2
 MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY = 4
 
 
+def _enumeration_spans(text: str) -> list[tuple[int, int]]:
+    """Character spans covered by an enumerated list of 3+ proper names --
+    a field/roster announcement packs in far more distinct names than a
+    narrative story does, purely because it's enumerating a list, not
+    because it's substantively about all of them. Names found only inside
+    a span like this are excluded from _name_bigrams/_single_names
+    entirely (caught live: a 24-player Total Chess Tour field announcement
+    false-matched three unrelated Olympiad-adjacent stories as "the same
+    story" purely because a couple of its 24 listed players are also
+    protagonists of real, unrelated Olympiad narratives -- a coincidence
+    any large-enough roster is bound to produce against same-day chess
+    news). Two distinct list shapes, both seen in real source text:
+
+    - Comma-and-"and"-separated prose ("Levon Aronian, Liem Le, Jorden
+      van Foreest, Abhimanyu Mishra, Shakhriyar Mamedyarov and Andrew
+      Hong").
+    - A ranked table flattened to plain text with no commas at all
+      ("Magnus Carlsen (Norway) - World No. 1 Fabiano Caruana (United
+      States) - World No. 3 ..."), where the actual tell is 3+
+      parenthetical annotations recurring close together rather than any
+      particular connecting punctuation."""
+    spans = []
+
+    name = r"[A-Z][a-zA-Z'\-]+(?:\s+[A-Za-z][a-zA-Z'\-]*){0,3}"
+    run_re = re.compile(rf"{name}(?:\s*,\s*{name}){{2,}}(?:\s*,?\s+and\s+{name})?")
+    spans += [m.span() for m in run_re.finditer(text)]
+
+    # A run of 3+ "(...)" annotations within PAREN_CLUSTER_GAP characters
+    # of each other, whatever sits between them -- the recurring
+    # parenthetical is itself the list signature here, not the separator.
+    PAREN_CLUSTER_GAP = 50
+    parens = list(re.finditer(r"\([^)]{1,40}\)", text))
+    i = 0
+    while i < len(parens):
+        j = i
+        while j + 1 < len(parens) and parens[j + 1].start() - parens[j].end() <= PAREN_CLUSTER_GAP:
+            j += 1
+        if j - i + 1 >= 3:
+            # Extend back far enough to also cover the name immediately
+            # before the first parenthetical in the cluster.
+            start = max(0, parens[i].start() - 60)
+            spans.append((start, parens[j].end()))
+        i = j + 1
+
+    return spans
+
+
+def _in_spans(pos: int, spans: list[tuple[int, int]]) -> bool:
+    return any(start <= pos < end for start, end in spans)
+
+
 def _name_bigrams(item: dict) -> set[tuple[str, str]]:
     """Adjacent-word pairs where both words are capitalized and neither is
     generic -- a cheap proxy for "this text names a specific person or
     place", reliable enough to tell "Arjun Erigaisi" apart from ordinary
-    capitalized sentence starts without needing real NER."""
+    capitalized sentence starts without needing real NER. Skips any pair
+    that falls inside an _enumeration_spans() run (see there)."""
     text = f"{item.get('title', '')} {item.get('summary', '')}"
-    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    spans = _enumeration_spans(text)
+    words = [(m.group(), m.start()) for m in re.finditer(r"[A-Za-z']+", text)]
     bigrams = set()
-    for a, b in zip(words, words[1:]):
+    for (a, pos_a), (b, pos_b) in zip(words, words[1:]):
         if not (a[:1].isupper() and b[:1].isupper()):
+            continue
+        if _in_spans(pos_a, spans) or _in_spans(pos_b, spans):
             continue
         la, lb = a.lower().rstrip("'s"), b.lower().rstrip("'s")
         if la in GENERIC_NAME_WORDS or lb in GENERIC_NAME_WORDS:
@@ -225,13 +340,17 @@ def _single_names(item: dict) -> set[str]:
     capitalized word, so two round-3 Olympiad recaps sharing all four of
     those names still scored zero shared bigrams and were drafted as two
     separate articles covering the same round). Filtered the same way as
-    bigrams; only used together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY
-    precisely because a lone word is weaker evidence than a matched pair."""
+    bigrams (including the same enumeration-span exclusion); only used
+    together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY precisely because
+    a lone word is weaker evidence than a matched pair."""
     text = f"{item.get('title', '')} {item.get('summary', '')}"
-    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    spans = _enumeration_spans(text)
     names = set()
-    for w in words:
+    for m in re.finditer(r"[A-Za-z']+", text):
+        w = m.group()
         if not w[:1].isupper():
+            continue
+        if _in_spans(m.start(), spans):
             continue
         lw = w.lower().rstrip("'s")
         if lw in GENERIC_NAME_WORDS or len(lw) < 4:
