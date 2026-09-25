@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/jose-antonio-carrillo-receives-broad-support-to
 lens: "results"
 continent: "north-america"
 selectionScore: 35
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "José Antonio Carrillo retains the FIDE Americas presidency 29-12 in a vote held on the sidelines of the Samarkand Olympiad. Here's the new Executive Board."
 image:
   src: "./_images/Leo_Carillo_with_portrait_of_Antonio_Carrillo.webp"
