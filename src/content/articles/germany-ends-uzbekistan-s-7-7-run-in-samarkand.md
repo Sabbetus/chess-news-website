@@ -39,9 +39,9 @@ India, meanwhile, dropped more ground with a 2-2 draw against Azerbaijan, all fo
 
 That follows [India's earlier bench troubles at this Olympiad](/articles/erigaisi-falls-but-india-s-bench-holds-at-samarkand/), and another shared match keeps the pressure on with three rounds to go.
 
-The Netherlands and Armenia also split points 2-2. Jorden van Foreest beat Robert Hovhannisyan for Armenia's first defeat of the tournament, before Shant Sargsyan leveled the match by defeating Loek van Wely.
+The Netherlands and Armenia also split points 2-2. Jorden van Foreest beat Robert Hovhannisyan, before Shant Sargsyan leveled the match by defeating Loek van Wely.
 
-In the Women's section, China moved into the sole lead after Kazakhstan and India drew 2-2 in the day's marquee matchup, with Savitha extending her strong individual run for India. Armenia, Mongolia and Uzbekistan all remain firmly in contention as the women's race tightens alongside the open section with three rounds still to play.
+In the Women's section, China took the sole lead with a 2.5-1.5 win over Georgia, helped by Kazakhstan and India settling for a 2-2 draw in the day's marquee matchup, where Savitha extended her strong individual run for India. Armenia, Mongolia and Uzbekistan all remain firmly in contention as the women's race tightens alongside the open section with three rounds still to play.
 
 **Open standings after Round 8 of 11**
 
