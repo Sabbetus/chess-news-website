@@ -883,6 +883,135 @@ def attach_standings_table(item: dict, body_markdown: str) -> str:
     return f"{body_markdown.rstrip()}\n\n" + "\n\n".join(tables)
 
 
+_CLAIM_VERIFICATION_PROMPT = """You are given the source material a chess news article was \
+written from, and the finished article body itself. Your job is an independent fact-check \
+pass, not a rewrite: read every sentence in the body and check whether the specific claim it \
+makes is actually supported by the source material -- particularly:
+
+- Any "first", "record", "never before", "biggest", "youngest", "only time", or similar \
+superlative/milestone claim.
+- Any specific number, score, date, or named attribution (who said or did what).
+- Any claim that contradicts another statement made elsewhere in the same body (e.g. calling \
+a match that the body itself says was drawn a "defeat").
+- Any quote presented as a direct quotation.
+
+For each claim you find that is NOT supported by the source material, or that contradicts the \
+body itself, fix it with the smallest possible edit -- reword it to what the source actually \
+supports, or remove the unsupported clause/sentence if it can't be salvaged that way. Do not \
+remove or soften anything that IS supported by the source, even if it sounds like a strong \
+claim -- your job is accuracy, not caution, and the source material is often more detailed \
+than it first appears (check the full text, not just the parts a quick skim would catch).
+
+Leave everything else completely untouched: same words, same paragraph breaks, same Markdown \
+links and formatting, everywhere except the specific claims you're correcting.
+
+Respond with the ENTIRE corrected body Markdown and nothing else -- no preamble, no \
+explanation, no list of what you changed, no code fence."""
+
+
+def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -> str:
+    """Independent second pass: re-checks every non-trivial factual claim in the finished
+    body against the actual source text the drafting call was given, fixing or removing
+    anything unsupported.
+
+    Exists because generation has repeatedly produced claims -- a superlative, a "first
+    defeat of the tournament" style framing, a detail that reads plausibly but either isn't
+    in the source or contradicts another line in the same piece -- that the same pass that
+    wrote the body didn't catch about its own writing. Same idea as fix_long_paragraphs and
+    the game-lookup recheck (a fresh read with no drafting task competing for attention
+    catches what writing-while-checking misses), applied to accuracy instead of style or
+    completeness.
+
+    Only ever called with the real source material available (see draft_one's is_aggregate
+    and item.get("summary") guards) -- a calendar aggregate has no comparable free-text
+    source to check against.
+
+    Falls back to the original body untouched on any failure (no text returned, or a
+    response different enough in length to look like more than a claims-level edit) -- an
+    unflagged article for human review beats a silently mangled one."""
+    source_parts = [f"PRIMARY SOURCE ({item['sourceName']}):\n{item.get('summary', '')}"]
+    for extra in item.get("additionalSources", []):
+        if extra.get("summary"):
+            source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
+    source_text = "\n\n".join(source_parts)
+
+    user_prompt = f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE BODY TO FACT-CHECK:\n\n{body_markdown}"
+
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            # This is the exact failure mode fix_long_paragraphs already hit
+            # once this session: a max_tokens floor sized for the output text
+            # alone, combined with a non-"low" effort level, let thinking eat
+            # the whole budget before any text was written (that bug's floor
+            # was also 4096, and its cause was thinking with no effort cap at
+            # all -- "medium" here is more bounded than "unset", but "more
+            # bounded than unbounded" is not the same guarantee as "small
+            # enough to fit in this floor"). This call is riskier than that
+            # one on both axes that mattered there: it reasons over the full
+            # source material (thousands of characters, not a handful of
+            # paragraphs) before writing anything, and it always echoes back
+            # the ENTIRE body rather than just the paragraphs that changed.
+            # len(body_markdown) as a token count (not // 2, // 3, or any
+            # other shrinking factor) already overestimates the output alone
+            # several times over (a token is ~4 characters), leaving that
+            # multiple as real headroom for "medium" effort's thinking on
+            # top of it -- the 8192 floor exists for short articles, where
+            # len(body_markdown) alone could still land under a safe number.
+            max_tokens=max(8192, len(body_markdown)),
+            output_config={"effort": "medium"},
+            system=_CLAIM_VERIFICATION_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+        )
+    except Exception as exc:
+        print(f"  Claim verification failed for '{item['title']}': {exc}", file=sys.stderr)
+        return body_markdown
+
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        block_types = [b.type for b in response.content]
+        print(
+            f"  Claim verification: no text content in response, falling back for "
+            f"'{item['title']}' (stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+            file=sys.stderr,
+        )
+        return body_markdown
+
+    if response.stop_reason == "max_tokens":
+        # A max_tokens stop is a truncation failure even when some text did
+        # come back -- weekly_recap.py caught this live once already (a
+        # recap that silently cut off mid-sentence, mid-link, with
+        # non-empty text_blocks that a bare "did we get text" check would
+        # have accepted). The length-diff guard below would likely also
+        # catch a truncated body as "too different", but that's incidental
+        # coverage, not a guarantee -- check the actual signal directly.
+        print(
+            f"  Claim verification: response hit max_tokens (truncated), falling back for '{item['title']}'",
+            file=sys.stderr,
+        )
+        return body_markdown
+
+    corrected = text_blocks[-1].strip()
+
+    # A real fix only touches a handful of claims -- a response wildly different
+    # in length from the original suggests the model rewrote, truncated, or
+    # otherwise did more than the targeted correction asked for.
+    if abs(len(corrected) - len(body_markdown)) > max(300, len(body_markdown) // 4):
+        print(
+            f"  Claim verification: response length too different from original "
+            f"({len(corrected)} vs {len(body_markdown)} chars), falling back for '{item['title']}'",
+            file=sys.stderr,
+        )
+        return body_markdown
+
+    if corrected != body_markdown:
+        print(f"  Claim verification: body corrected for '{item['title']}'", file=sys.stderr)
+    else:
+        print(f"  Claim verification: no changes needed for '{item['title']}'", file=sys.stderr)
+
+    return corrected
+
+
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     """(paragraph number, word count) for every paragraph over the style
     guide's hard ceiling -- heading lines are skipped since they're not
@@ -1190,6 +1319,8 @@ def draft_one(
     fm_lines.append("---")
 
     body_markdown = parsed["bodyMarkdown"]
+    if not is_aggregate and item.get("summary"):
+        body_markdown = verify_claims(client, body_markdown, item)
     offenders = check_paragraph_lengths(body_markdown)
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)

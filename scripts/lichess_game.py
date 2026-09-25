@@ -311,13 +311,26 @@ def add_embed_scroll_link(client, body_markdown: str, player1: str, player2: str
     """
     response = client.messages.create(
         model=RECHECK_MODEL,
-        max_tokens=max(4096, len(body_markdown) // 2),
+        # len(body_markdown) as a token count, not len // 2 -- this call
+        # always echoes back the ENTIRE body (one added link aside), so
+        # shrinking the floor to half the body's character count already
+        # leaves a real gap even before accounting for any thinking tokens
+        # "low" effort still uses. See verify_claims in draft.py for the
+        # concrete failure mode this shape of bug caused once already this
+        # session (fix_long_paragraphs, a floor sized the same way).
+        max_tokens=max(8192, len(body_markdown)),
         system=_EMBED_LINK_SYSTEM_PROMPT.format(player1=player1, player2=player2),
         output_config={"effort": "low"},
         messages=[{"role": "user", "content": body_markdown}],
     )
     text_blocks = [b.text for b in response.content if b.type == "text"]
     if not text_blocks:
+        return body_markdown
+    # A max_tokens stop is a truncation failure even when some text came
+    # back -- see verify_claims in draft.py for why this needs its own
+    # explicit check rather than relying on the length-diff guard below to
+    # catch it incidentally.
+    if response.stop_reason == "max_tokens":
         return body_markdown
     edited = text_blocks[-1].strip()
 
