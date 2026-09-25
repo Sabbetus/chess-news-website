@@ -212,7 +212,15 @@ LENS_OPTIONS = {
         "seeding, a psychological edge for a rematch, what's now at stake -- "
         "rather than ending at 'and that was surprising.' Only pick this "
         "lens when the story is centrally about a result or the standings, "
-        "not one that merely mentions a score in passing."
+        "not one that merely mentions a score in passing. This lens is for "
+        "the competition on the board specifically -- a federation election "
+        "or committee vote is NOT a 'result' in this sense even though its "
+        "tally (e.g. '29 to 12') is formatted like a scoreline; that's "
+        "governance, not competition, and belongs in money-angle (if the "
+        "story is really about what the vote means for funding, sponsorship, "
+        "or where money in chess is heading), drama (if there's a real "
+        "dispute or grievance behind it), or historical-parallel (the "
+        "fallback otherwise) instead."
     ),
     "historical-parallel": (
         "Historical parallel -- the fallback lens: pick this only when the "
