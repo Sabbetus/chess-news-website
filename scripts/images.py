@@ -127,6 +127,33 @@ def _photo_date(meta: dict) -> str:
     return match.group(0) if match else "0000-00-00"
 
 
+# A hard floor, not just a sort preference: recency sorting only helps when
+# there's more than one surviving candidate to sort, and a wrong-but-
+# plausible-looking match can be the ONLY candidate a query produces (caught
+# live: "José Antonio Carrillo" -- a FIDE Americas president elected in
+# 2026 -- matched a 1955 photo of an unrelated actor posing with a portrait
+# of a different, unrelated "Antonio Carrillo"; nothing else survived that
+# query's title filter to outrank it on recency). No article on this site
+# has a legitimate reason to illustrate a current person or current event
+# with a photo this old -- even a historical-parallel piece discusses its
+# past echo in prose, it doesn't need a period photo to do it -- so a known
+# date (not "0000-00-00" unknown, which is a separate, already-handled
+# case) older than this is disqualifying, not just deprioritized.
+MIN_ACCEPTABLE_PHOTO_YEAR = 1990
+
+
+def _is_too_old(date: str) -> bool:
+    # "0000-00-00" is _photo_date's own sentinel for "no DateTimeOriginal
+    # at all" (most logos, graphics, and plenty of real photos have none),
+    # not a real date -- treating it as year 0 would silently reject every
+    # undated file as "too old" rather than "unknown", which is a far
+    # bigger regression than the one case this floor exists to catch.
+    if date == "0000-00-00":
+        return False
+    year = date[:4]
+    return year.isdigit() and int(year) < MIN_ACCEPTABLE_PHOTO_YEAR
+
+
 def _search_titles(query: str, limit: int = 5) -> list:
     data = _get(
         {
@@ -274,9 +301,24 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     if not significant_words:
         return False
     title_lower = title.lower()
+
+    # Word-boundary match, not plain substring containment -- a short word
+    # can hide inside an unrelated longer one ("fide" inside "confident"/
+    # "fidelity"). Deliberately NOT Python's \b, which treats underscore as
+    # a word character: Commons titles join every word with underscores in
+    # place of spaces ("Jose_Antonio_Carrillo_chess.jpg"), so \b would find
+    # no boundary at any of those joins and silently fail to match almost
+    # every real, legitimate title -- caught while testing this exact fix.
+    # Bounding on "not a letter" instead (digits, underscores, punctuation,
+    # and string start/end all count as separators) treats underscore-
+    # joined titles the way Commons actually means them: as separate words.
+    def _word_present(word: str) -> bool:
+        pattern = rf"(?<![a-z]){re.escape(word.lower())}(?![a-z])"
+        return re.search(pattern, title_lower) is not None
+
     if strict:
-        return all(word.lower() in title_lower for word in significant_words)
-    return any(word.lower() in title_lower for word in significant_words)
+        return all(_word_present(word) for word in significant_words)
+    return any(_word_present(word) for word in significant_words)
 
 
 # Commons photosets from a single shoot are near-universally batch-uploaded
@@ -378,9 +420,12 @@ def _fetch_first_licensed_file(
         if excluded_photoset_stems and _photoset_stem(title) in excluded_photoset_stems:
             continue
 
+        date = _photo_date(meta)
+        if _is_too_old(date):
+            continue
+
         artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
         url = info.get("thumburl") or info.get("url")
-        date = _photo_date(meta)
 
         # Every on-site slot this image can land in is a wide landscape box
         # (1.91:1 lead, 16:9 card) rendered with object-fit: cover -- a
@@ -528,7 +573,53 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
     else:
         for subject in image_subjects or []:
             if subject:
-                queries.append((subject, False))
+                # A person's full name is not guaranteed unique on Commons --
+                # caught live: "José Antonio Carrillo" (a FIDE Americas
+                # president) lenient-matched a completely unrelated
+                # Commons photo, "Leo Carillo with portrait of Antonio
+                # Carrillo" (an actor posing next to a portrait of a
+                # different, unrelated Antonio Carrillo), because both
+                # significant words genuinely appear in that title -- a
+                # real name collision, not a matching-strictness bug (even
+                # strict all-words matching would have passed it). Every
+                # other tier in this cascade already qualifies its query
+                # with "chess" for exactly this kind of disambiguation
+                # (see the tournament-name/country/continent queries
+                # below); a bare person name had no such qualifier at all.
+                # Try the qualified version first -- it can only be more
+                # specific -- and keep the bare name as a fallback for
+                # subjects a "{subject} chess" query doesn't find anything
+                # for (a real risk, accepted only once the safer query has
+                # already failed, same as the rest of this cascade).
+                #
+                # Must be strict (all words including "chess"), not
+                # lenient: lenient mode passes on ANY significant word
+                # matching, so a lenient "{subject} chess" query is no
+                # safer than the bare name at all -- "chess" being merely
+                # one of several words that could satisfy an any-word
+                # match means a title with zero mention of chess still
+                # passes as long as the person's name matches (confirmed
+                # live: the Carrillo collision above still matched with
+                # this qualifier appended, lenient, because "Carrillo"
+                # alone was enough). Strict forces "chess" to actually be
+                # present.
+                queries.append((f"{subject} chess", True))
+                # Strict here too, not lenient: a full name is not
+                # guaranteed unique even among real, notable people on
+                # Commons -- the Carrillo collision above wasn't a one-off
+                # ("Leo Carillo with portrait of Antonio Carrillo," an
+                # actor's photo, blocked separately by the photo-age floor
+                # since it's from 1955); the very next candidate this same
+                # bare query matched was a *different* unrelated person,
+                # a Spanish mathematician named "Carrillo de la Plata,"
+                # whose Commons file has nothing to do with either the
+                # actor or the FIDE Americas president. Requiring every
+                # significant word of the name (not just one) costs
+                # nothing for a genuine match -- Frederik Svane's real
+                # photo, for example, contains both "Frederik" and "Svane"
+                # even though its title has no mention of chess at all --
+                # and rejects a same-surname-only collision like this one.
+                queries.append((subject, True))
                 loosened = _loosened_event_query(subject)
                 if loosened:
                     queries.append((loosened, False))
@@ -543,7 +634,18 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
         # below is safer than guessing from the headline text.
         source_name = item.get("sourceName", "")
         if source_name:
-            queries.append((f"{source_name} logo", False))
+            # Strict, not lenient: caught live immediately after the
+            # Carrillo photo above was correctly disqualified by the new
+            # photo-age floor -- the cascade fell through to this query
+            # ("FIDE logo"), and lenient any-word matching let a cruise-
+            # ship photo through on "FIDE" alone, since its title genuinely
+            # contains the standalone words "BONA FIDE" (an unrelated
+            # Latin phrase, underscore-joined the way Commons titles always
+            # are). "FIDE" is short and common enough on its own to match
+            # things with nothing to do with the chess federation; "logo"
+            # actually being present too is what makes this query mean
+            # what it's supposed to.
+            queries.append((f"{source_name} logo", True))
         if continent_name:
             queries.append((f"{continent_name} chess", False))
 

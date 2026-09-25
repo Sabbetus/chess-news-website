@@ -73,32 +73,40 @@ def _tag_tokens(tag_value: str) -> set[str]:
 def find_broadcast_round(client, event: str, player1: str, player2: str) -> tuple[str, str, str] | None:
     """Returns (tournamentSlug, roundSlug, roundId) or None."""
     user_prompt = f"Event: {event}\nPlayer 1: {player1}\nPlayer 2: {player2}"
-    response = client.messages.create(
+    # 1024 with no effort cap and no explicit budget for tool-result content
+    # feeding back into later turns is the exact failure mode caught live
+    # in production (2026-09-25's Wei Yi/Gumularz lookup: stop_reason
+    # "max_tokens" with zero text content) -- the same shape of bug as
+    # verify_claims/add_embed_scroll_link/fix_long_paragraphs, just not yet
+    # caught here since this call had never been stress-tested. "low"
+    # effort is enough for "read search results, pick a URL" -- it's a
+    # lookup task, not one that benefits from deep reasoning -- but the
+    # budget still needs real room for the web_search tool's own result
+    # content flowing back into context across up to 4 total turns.
+    create_kwargs = dict(
         model=FINDER_MODEL,
-        max_tokens=1024,
+        max_tokens=4096,
+        output_config={"effort": "low"},
         system=FINDER_SYSTEM_PROMPT,
         tools=[WEB_SEARCH_TOOL],
-        messages=[{"role": "user", "content": user_prompt}],
     )
+    response = client.messages.create(messages=[{"role": "user", "content": user_prompt}], **create_kwargs)
 
     for _ in range(3):
         if response.stop_reason != "pause_turn":
             break
         response = client.messages.create(
-            model=FINDER_MODEL,
-            max_tokens=1024,
-            system=FINDER_SYSTEM_PROMPT,
-            tools=[WEB_SEARCH_TOOL],
             messages=[
                 {"role": "user", "content": user_prompt},
                 {"role": "assistant", "content": response.content},
             ],
+            **create_kwargs,
         )
 
     text_blocks = [b.text for b in response.content if b.type == "text"]
-    if not text_blocks:
+    if not text_blocks or response.stop_reason == "max_tokens":
         print(
-            f"    lichess lookup: find_broadcast_round got no text content "
+            f"    lichess lookup: find_broadcast_round got no usable text content "
             f"(stop_reason={response.stop_reason!r}) for event={event!r} "
             f"player1={player1!r} player2={player2!r}",
             file=sys.stderr,
@@ -258,12 +266,20 @@ def recheck_game_lookup(client, body_markdown: str) -> dict | None:
     "player2"} shape parse_game_lookup produces, or None."""
     response = client.messages.create(
         model=RECHECK_MODEL,
-        max_tokens=256,
+        # Same audit as find_broadcast_round just above: no effort cap and
+        # a floor (256) sized for the 3-line output alone left no room for
+        # any thinking at all before hitting max_tokens. This one runs
+        # unconditionally on every non-aggregate article, so an unnoticed
+        # failure here silently loses the embed for pieces that would have
+        # qualified -- exactly the failure mode this recheck exists to
+        # catch in the first place, just one level removed.
+        max_tokens=1024,
+        output_config={"effort": "low"},
         system=RECHECK_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": body_markdown}],
     )
     text_blocks = [b.text for b in response.content if b.type == "text"]
-    if not text_blocks:
+    if not text_blocks or response.stop_reason == "max_tokens":
         return None
     text = text_blocks[-1]
 

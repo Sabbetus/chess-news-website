@@ -11,12 +11,12 @@ socialCopy: "Uzbekistan's 7/7 start ends in Samarkand: Germany's Svane brothers 
 additionalSources:
   - sourceName: "Chess.com"
     sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-8"
-  - sourceName: "FIDE"
-    sourceUrl: "https://www.fide.com/every-lesson-counts-fide-summit-in-samarkand-puts-chess-education-at-the-heart-of-global-development/"
 image:
   src: "./_images/Frederik_Svane_in_2025.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFrederik_Svane_in_2025.jpg"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-8/e1YOXXb1/8pC8qu9D"
 ---
 
 Uzbekistan had won every match so far at the 46th Chess Olympiad, and it took a full family effort to stop them. Germany [beat the tournament leaders 2.5-1.5](https://www.fide.com/olympiad-day-8-germany-shake-up-the-race-at-the-top/) in round eight, with brothers Frederik and Rasmus Svane delivering the decisive wins on boards three and four against Nodirbek Yakubboev and Shamsiddin Vokhidov.
@@ -31,7 +31,7 @@ Elsewhere at the top, the United States capitalized immediately. Fabiano Caruana
 
 China needed a response after a defeat the previous round and got a mixed one against Poland. Ding Liren drew quickly with Jan-Krzysztof Duda, and the third and fourth boards were also drawn, but Wei Yi delivered the only decisive result of the match.
 
-Facing Szymon Gumularz, Wei Yi was already an exchange up with two dangerous connected passed pawns near promotion, and rather than take a safe route he played 32...Qxf3, sacrificing his queen to clear the path for the h-pawn.
+Facing Szymon Gumularz, Wei Yi was already an exchange up with two dangerous connected passed pawns near promotion, and rather than take a safe route he played [32...Qxf3](#game-embed), sacrificing his queen to clear the path for the h-pawn.
 
 After 33.Bxf3 Bxf3 34.Kf2 Rf8, White had no defense, and Gumularz resigned following 35.e4 Bd1+ with mate on h1 unavoidable. Wei Yi remains undefeated on 5.5/7.
 
