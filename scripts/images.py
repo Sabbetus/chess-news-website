@@ -344,13 +344,28 @@ def _photoset_stem(title_or_url: str) -> str:
 
 
 def _fetch_first_licensed_file(
-    titles: list, query: str, strict: bool, exclude_source_urls: set | None = None
+    titles: list,
+    query: str,
+    strict: bool,
+    exclude_source_urls: set | None = None,
+    prefer_relevance: bool = False,
+    require_known_date: bool = False,
 ) -> dict | None:
     """Among the given candidate titles, return the most recently-taken
     acceptably-licensed file -- not just the first one Commons' text search
     happened to rank highest. Search relevance has no relationship to photo
     age, and an old photo of a young player (or a much-changed player) reads
     as wrong even when it's the "right" person and properly licensed.
+
+    `prefer_relevance` flips that for queries where recency isn't a
+    meaningful signal at all -- a static organization logo doesn't change
+    over time the way a person's face does, so re-sorting by upload date
+    can bury the actually-correct, most-relevant match under an
+    irrelevant-but-newer file that only coincidentally passed the title
+    filter (caught live: "FIDE logo" re-sorted by date picked an unrelated
+    Mexican organization's identically-named logo over the real FIDE's,
+    which Commons' own search already correctly ranked first). When set,
+    candidates keep Commons' own search-result order instead.
 
     `exclude_source_urls` skips files already used as another article's
     image -- the query cascade is deterministic, so two articles that both
@@ -389,7 +404,7 @@ def _fetch_first_licensed_file(
     pages_by_title = {p.get("title"): p for p in pages.values() if p.get("title")}
 
     candidates = []
-    for title in titles:
+    for rank, title in enumerate(titles):
         if not _is_photo_file(title):
             continue
         if _is_place_named_after_subject(title):
@@ -423,6 +438,18 @@ def _fetch_first_licensed_file(
         date = _photo_date(meta)
         if _is_too_old(date):
             continue
+        # A bare person-name query has no "chess"/topic qualifier at all, so
+        # an unknown-date file (which the age floor above explicitly lets
+        # through) is the one case that can still be a same-name collision
+        # with a completely unrelated person -- caught live: an undated
+        # 19th-century portrait of an unrelated José Antonio Carrillo (a
+        # former LA mayor) beat the real FIDE Americas president's photo
+        # because it had no date to be rejected by. Requiring a known date
+        # for these queries costs nothing for genuine matches (real modern
+        # photos of chess people have upload/capture dates) and closes this
+        # gap without weakening the age floor itself for other queries.
+        if require_known_date and date == "0000-00-00":
+            continue
 
         artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
         url = info.get("thumburl") or info.get("url")
@@ -448,6 +475,7 @@ def _fetch_first_licensed_file(
         candidates.append(
             (
                 is_portrait,
+                rank,
                 date,
                 {
                     "url": url,
@@ -460,22 +488,39 @@ def _fetch_first_licensed_file(
     if not candidates:
         return None
 
+    if prefer_relevance:
+        # Keep Commons' own search-result order (already stored as each
+        # candidate's rank) instead of re-sorting by date -- see the
+        # docstring for why recency isn't a meaningful signal here.
+        # Orientation stays a light preference on top of that.
+        candidates.sort(key=lambda c: c[1])
+        candidates.sort(key=lambda c: c[0])
+        return candidates[0][3]
+
     # Two stable passes, least-significant key first: sort by recency, then
     # re-sort by orientation -- the recency order survives within each
     # orientation tier, so this is "most recent landscape/square photo, or
     # if none exists, most recent portrait photo" rather than a pure date
     # sort or a pure orientation sort.
-    candidates.sort(key=lambda c: c[1], reverse=True)
+    candidates.sort(key=lambda c: c[2], reverse=True)
     candidates.sort(key=lambda c: c[0])
-    return candidates[0][2]
+    return candidates[0][3]
 
 
-def search_image(query: str, strict: bool = False, exclude_source_urls: set | None = None) -> dict | None:
+def search_image(
+    query: str,
+    strict: bool = False,
+    exclude_source_urls: set | None = None,
+    prefer_relevance: bool = False,
+    require_known_date: bool = False,
+) -> dict | None:
     """Search Commons for one query, return the first acceptably-licensed
     file, or None if nothing usable was found."""
     try:
         titles = _search_titles(query, limit=8)
-        return _fetch_first_licensed_file(titles, query, strict, exclude_source_urls)
+        return _fetch_first_licensed_file(
+            titles, query, strict, exclude_source_urls, prefer_relevance, require_known_date
+        )
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
 
@@ -555,7 +600,7 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
                     # "International". A genuine photo of this exact tournament
                     # would still match every word easily; requiring that is a
                     # much safer bar than "any one word in common".
-                    queries.append((name, True))
+                    queries.append((name, True, False, False))
 
             country = (tournaments[0].get("country") or "").strip()
             if country:
@@ -564,12 +609,12 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
                 # search against unrelated scanned documents (a 1967 school
                 # yearbook that happened to mention both words somewhere in
                 # its OCR'd text) rather than actual tournament photography.
-                queries.append((f"{country} chess", False))
+                queries.append((f"{country} chess", False, False, False))
 
         name = item.get("continentName") or continent_name
         if name:
-            queries.append((f"{name} chess tournament", False))
-            queries.append((f"{name} chess", False))
+            queries.append((f"{name} chess tournament", False, False, False))
+            queries.append((f"{name} chess", False, False, False))
     else:
         for subject in image_subjects or []:
             if subject:
@@ -603,7 +648,7 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
                 # this qualifier appended, lenient, because "Carrillo"
                 # alone was enough). Strict forces "chess" to actually be
                 # present.
-                queries.append((f"{subject} chess", True))
+                queries.append((f"{subject} chess", True, False, True))
                 # Strict here too, not lenient: a full name is not
                 # guaranteed unique even among real, notable people on
                 # Commons -- the Carrillo collision above wasn't a one-off
@@ -619,10 +664,10 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
                 # photo, for example, contains both "Frederik" and "Svane"
                 # even though its title has no mention of chess at all --
                 # and rejects a same-surname-only collision like this one.
-                queries.append((subject, True))
+                queries.append((subject, True, False, True))
                 loosened = _loosened_event_query(subject)
                 if loosened:
-                    queries.append((loosened, False))
+                    queries.append((loosened, False, False, False))
         # No auto-extracted headline-fragment fallback here: tried and
         # dropped in testing. Even requiring every word to match, generic
         # capitalized fragments like "Thursday Record" (from a headline,
@@ -634,30 +679,40 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
         # below is safer than guessing from the headline text.
         source_name = item.get("sourceName", "")
         if source_name:
-            # Strict, not lenient: caught live immediately after the
-            # Carrillo photo above was correctly disqualified by the new
-            # photo-age floor -- the cascade fell through to this query
-            # ("FIDE logo"), and lenient any-word matching let a cruise-
-            # ship photo through on "FIDE" alone, since its title genuinely
-            # contains the standalone words "BONA FIDE" (an unrelated
-            # Latin phrase, underscore-joined the way Commons titles always
-            # are). "FIDE" is short and common enough on its own to match
-            # things with nothing to do with the chess federation; "logo"
-            # actually being present too is what makes this query mean
-            # what it's supposed to.
-            queries.append((f"{source_name} logo", True))
+            # Lenient, not strict, and prefer_relevance=True -- an earlier
+            # version of this made the query strict (require "logo" too,
+            # not just "FIDE") after a cruise-ship photo matched on "FIDE"
+            # alone (its title genuinely contains "BONA FIDE," an unrelated
+            # Latin phrase). That fix backfired: the real, correct FIDE
+            # logo file on Commons is titled "FIDE text on white.svg" --
+            # no word "logo" in it at all -- so requiring "logo" literally
+            # excluded the right answer and fell through to a WRONG one,
+            # "Fide logo.png," which is a Mexican organization's unrelated
+            # logo that just happens to also be called FIDE (caught live,
+            # published: 2026-09-25's Carrillo article). The ship photo
+            # itself turned out not to be reachable through this specific
+            # query anyway (it isn't in Commons' own top search results for
+            # "FIDE logo" at all -- it surfaced through a different,
+            # looser query tier, now blocked separately by that query's own
+            # strict subject matching above). prefer_relevance keeps
+            # Commons' own search ranking as the deciding order instead of
+            # re-sorting by recency: relevance correctly puts the real FIDE
+            # logo first for this query, and "most recently uploaded" is
+            # meaningless for a static organization logo the way it's
+            # meaningful for a person's face changing over time.
+            queries.append((f"{source_name} logo", False, True, False))
         if continent_name:
-            queries.append((f"{continent_name} chess", False))
+            queries.append((f"{continent_name} chess", False, False, False))
 
-    queries.append(("chess tournament", False))
+    queries.append(("chess tournament", False, False, False))
     return queries
 
 
 def pick_image_for_item(
     item: dict, drafted_title: str, image_subjects: list | None = None, exclude_source_urls: set | None = None
 ) -> dict | None:
-    for query, strict in build_query_cascade(item, drafted_title, image_subjects):
-        result = search_image(query, strict, exclude_source_urls)
+    for query, strict, prefer_relevance, require_known_date in build_query_cascade(item, drafted_title, image_subjects):
+        result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date)
         if result:
             return result
     return None

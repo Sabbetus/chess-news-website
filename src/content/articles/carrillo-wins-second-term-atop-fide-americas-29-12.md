@@ -9,9 +9,9 @@ selectionScore: 35
 reviewStatus: "published"
 socialCopy: "José Antonio Carrillo retains the FIDE Americas presidency 29-12 in a vote held on the sidelines of the Samarkand Olympiad. Here's the new Executive Board."
 image:
-  src: "./_images/Fide_logo.webp"
-  credit: "FIDE, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFide_logo.png"
+  src: "./_images/FIDE_text_on_white.webp"
+  credit: "M5, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_text_on_white.svg"
 ---
 
 Continental elections rarely make headlines outside the federations that vote in them, but this one carried a clear margin. On September 24, during the 46th World Chess Olympiad, national federations across the Americas [re-elected José Antonio Carrillo](https://www.fide.com/jose-antonio-carrillo-receives-broad-support-to-continue-at-the-helm-of-fide-americas/) as President of FIDE Americas by a vote of 29 to 12.

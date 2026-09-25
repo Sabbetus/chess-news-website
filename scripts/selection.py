@@ -394,14 +394,39 @@ def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
     the group is folded into its "additionalSources" list instead of
     appearing as its own separate candidate. Calendar aggregates are
     exempt: they're built from our own tournament data, not outlet
-    reporting, so "two outlets covered the same event" doesn't apply."""
+    reporting, so "two outlets covered the same event" doesn't apply.
+
+    At most one member per distinct sourceName: merging exists to combine
+    independent outlets' coverage of the same event (a FIDE recap + a
+    Chess.com recap of the same round), not to accumulate everything one
+    outlet's own _is_same_story() heuristic happens to flag. Caught live
+    (2026-09-25): a genuine FIDE+Chess.com merge of the real Round 8
+    recap also absorbed a second, completely unrelated FIDE article (an
+    education summit piece) purely on shared name-overlap -- the word-
+    count heuristic couldn't reliably tell that pairing apart from a
+    real match (confirmed: both scored the same 8 shared "single name"
+    words). A second item from a source already represented in the group
+    is exactly the shape of case where that heuristic is least trustworthy
+    (a single outlet's own multiple same-day stories share bylines,
+    datelines, and recurring names for reasons that have nothing to do
+    with being the same story), and correctly excluding it costs nothing
+    real: it still gets scored and considered as its own standalone
+    candidate, exactly like any other story that didn't merge with
+    anything."""
     result: list[dict] = []
     for item in scored:
         if item["kind"] in CALENDAR_KINDS:
             result.append(item)
             continue
         match = next(
-            (existing for existing in result if existing["kind"] not in CALENDAR_KINDS and _is_same_story(item, existing)),
+            (
+                existing
+                for existing in result
+                if existing["kind"] not in CALENDAR_KINDS
+                and _is_same_story(item, existing)
+                and item["sourceName"] != existing["sourceName"]
+                and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
+            ),
             None,
         )
         if match is None:
