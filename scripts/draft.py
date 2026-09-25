@@ -940,7 +940,25 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
     try:
         response = client.messages.create(
             model=MODEL,
-            max_tokens=max(4096, len(body_markdown) // 2),
+            # This is the exact failure mode fix_long_paragraphs already hit
+            # once this session: a max_tokens floor sized for the output text
+            # alone, combined with a non-"low" effort level, let thinking eat
+            # the whole budget before any text was written (that bug's floor
+            # was also 4096, and its cause was thinking with no effort cap at
+            # all -- "medium" here is more bounded than "unset", but "more
+            # bounded than unbounded" is not the same guarantee as "small
+            # enough to fit in this floor"). This call is riskier than that
+            # one on both axes that mattered there: it reasons over the full
+            # source material (thousands of characters, not a handful of
+            # paragraphs) before writing anything, and it always echoes back
+            # the ENTIRE body rather than just the paragraphs that changed.
+            # len(body_markdown) as a token count (not // 2, // 3, or any
+            # other shrinking factor) already overestimates the output alone
+            # several times over (a token is ~4 characters), leaving that
+            # multiple as real headroom for "medium" effort's thinking on
+            # top of it -- the 8192 floor exists for short articles, where
+            # len(body_markdown) alone could still land under a safe number.
+            max_tokens=max(8192, len(body_markdown)),
             output_config={"effort": "medium"},
             system=_CLAIM_VERIFICATION_PROMPT,
             messages=[{"role": "user", "content": user_prompt}],
@@ -955,6 +973,20 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
         print(
             f"  Claim verification: no text content in response, falling back for "
             f"'{item['title']}' (stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+            file=sys.stderr,
+        )
+        return body_markdown
+
+    if response.stop_reason == "max_tokens":
+        # A max_tokens stop is a truncation failure even when some text did
+        # come back -- weekly_recap.py caught this live once already (a
+        # recap that silently cut off mid-sentence, mid-link, with
+        # non-empty text_blocks that a bare "did we get text" check would
+        # have accepted). The length-diff guard below would likely also
+        # catch a truncated body as "too different", but that's incidental
+        # coverage, not a guarantee -- check the actual signal directly.
+        print(
+            f"  Claim verification: response hit max_tokens (truncated), falling back for '{item['title']}'",
             file=sys.stderr,
         )
         return body_markdown
