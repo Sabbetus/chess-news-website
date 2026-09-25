@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-day-8-germany-shake-up-the-race-at-the
 lens: "results"
 continent: "asia"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Uzbekistan's 7/7 start ends in Samarkand: Germany's Svane brothers strike on boards 3 and 4 to beat the Olympiad leaders 2.5-1.5. USA and China close in with three rounds left."
 additionalSources:
   - sourceName: "Chess.com"
