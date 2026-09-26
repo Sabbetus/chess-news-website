@@ -35,33 +35,3 @@ Other players described the program in more practical terms. WIM Zenia Corrales 
 There's a personal footnote inside the group too. WIM Elisabeth Hapala of Austria is married to GM Fernando Peralta, who is representing Argentina at the same Olympiad, meaning both parents are competing at the event.
 
 None of this changes the results on the boards in Samarkand. But the ChessMom Project's growth from a single-Olympiad experiment to a fixture with 12 beneficiaries is its own kind of progress marker, one measured in caregivers funded and age limits extended rather than points scored.
-
-**Open standings after Round 9 of 11**
-
-| # | Team | W–D–L | Match Points | Board Points |
-| --- | --- | --- | --- | --- |
-| 1 | Uzbekistan | 8–0–1 | 16 | 26.5 |
-| 2 | India | 7–1–1 | 15 | 23 |
-| 3 | Uzbekistan 2 | 7–1–1 | 15 | 24 |
-| 4 | Armenia | 6–3–0 | 15 | 23.5 |
-| 5 | China | 6–2–1 | 14 | 24 |
-| 6 | Germany | 7–0–2 | 14 | 23 |
-| 7 | France | 5–4–0 | 14 | 24 |
-| 8 | Spain | 7–0–2 | 14 | 24.5 |
-| 9 | Ukraine | 7–0–2 | 14 | 23.5 |
-| 10 | Hungary | 6–2–1 | 14 | 19.5 |
-
-**Women standings after Round 9 of 11**
-
-| # | Team | W–D–L | Match Points | Board Points |
-| --- | --- | --- | --- | --- |
-| 1 | China | 8–1–0 | 17 | 28 |
-| 2 | India | 7–1–1 | 15 | 27 |
-| 3 | Kazakhstan | 6–3–0 | 15 | 24.5 |
-| 4 | Mongolia | 7–1–1 | 15 | 23.5 |
-| 5 | France | 7–0–2 | 14 | 26.5 |
-| 6 | Armenia | 7–0–2 | 14 | 23.5 |
-| 7 | Poland | 7–0–2 | 14 | 23.5 |
-| 8 | Vietnam | 7–0–2 | 14 | 25 |
-| 9 | Indonesia | 7–0–2 | 14 | 24.5 |
-| 10 | Greece | 6–2–1 | 14 | 23 |
