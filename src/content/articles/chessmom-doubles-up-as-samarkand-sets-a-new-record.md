@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/chessmom-returns-in-samarkand-supporting-mother
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 98
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE's ChessMom Project has grown from a Budapest pilot to 12 players in Samarkand, funding travel for mothers and their caregivers at the biggest Olympiad ever held. #ChessOlympiad"
 image:
   src: "./_images/Sebag_marie_20081120_olympiade_dresden.webp"
@@ -20,7 +20,9 @@ The ChessMom Project has [doubled in size since it launched at the 2024 Budapest
 
 That's not a cosmetic tweak. It's an acknowledgment that the practical strain of combining elite competition with childcare doesn't vanish once a baby turns one, and that a pilot program built for a first Olympiad needed to flex if it was going to survive a second.
 
-The list of participants spans a wide range of titles and federations: GM Marie Sebag of France, GM Elisabeth Pähtz of Germany, WIM Elisabeth Hapala of Austria, WIM Bayarmaa Bayarjargal of Mongolia, WGM Beatriz Irene Franco Valencia of Colombia, WIM Zenia Corrales Jiménez of Mexico, WFM Razan Alshaeby of Jordan, WFM Patricia Evarista Castillo Peña of the Dominican Republic, Robyn Julian Klaasen of South Africa, WCM Karen Julissa Figueroa Figueroa of Barbados, WFM Luzia Fernandes Pires of Angola, and WIM Onkemetse Linda Francis of Botswana.
+The list of participants spans a wide range of titles and federations: GM Marie Sebag of France, GM Elisabeth Pähtz of Germany, WIM Elisabeth Hapala of Austria, WIM Bayarmaa Bayarjargal of Mongolia, WGM Beatriz Irene Franco Valencia of Colombia, and WIM Zenia Corrales Jiménez of Mexico.
+
+Rounding out the group: WFM Razan Alshaeby of Jordan, WFM Patricia Evarista Castillo Peña of the Dominican Republic, Robyn Julian Klaasen of South Africa, WCM Karen Julissa Figueroa Figueroa of Barbados, WFM Luzia Fernandes Pires of Angola, and WIM Onkemetse Linda Francis of Botswana.
 
 The clearest historical marker in this story comes from Sebag herself, who pointed to an Olympiad she simply couldn't play. "Ten years ago, I couldn't play the Baku Olympiad because my first baby was only three months old," she said, adding that motherhood has reshaped how she handles losses over the board.
 

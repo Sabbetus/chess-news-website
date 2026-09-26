@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-
 lens: "results"
 continent: "asia"
 selectionScore: 115
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wesley So hands Javokhir Sindarov his first loss of the Olympiad, but it's Nodirbek Yakubboev who seals Uzbekistan's 2.5-1.5 win over the US and sole lead with two rounds left."
 additionalSources:
   - sourceName: "FIDE"
@@ -29,7 +29,7 @@ Board three settled the match. Nodirbek Yakubboev faced Hans Niemann in a diffic
 
 It's the same player who has already delivered a decisive [knight fork to send Uzbekistan into sole lead](/articles/yakubboev-s-knight-fork-sends-uzbekistan-into-sole-lead/) earlier in the event, and once again it was the "two Nodirbeks," Abdusattorov and Yakubboev, doing the heavy lifting.
 
-Board four between Levon Aronian and Nodirbek Madaminov was a level draw throughout.
+Board four between Levon Aronian and Mukhiddin Madaminov was a level draw throughout.
 
 India stayed alive for gold with a win over Germany that actually came down to one board. Three games were drawn on solid, accurate play, but Gukesh D found himself under real pressure against Alexander Donchenko on board four.
 
