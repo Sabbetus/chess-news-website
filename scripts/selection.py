@@ -127,7 +127,20 @@ MAJOR_TOURNAMENT_BONUS = 45
 # round/day labeling, or a result verb -- the same kind of language any
 # genuine round recap uses and a dateline mention never does.
 _SCORELINE_RE = re.compile(r"\b\d+(?:\.5)?\s*[-–]\s*\d+(?:\.5)?\b")
-_ROUND_LABEL_RE = re.compile(r"\b(?:round|day)\s+\d+\b", re.IGNORECASE)
+# Digit form ("Round 9", "Day 8") AND spelled-out form ("round two", "round
+# nine", "after six rounds") -- Chess.com's own round recaps consistently
+# spell round numbers out in prose (caught live: real stored summaries for
+# rounds 2, 6, and 9 read "round two", "after six rounds", "round nine" --
+# every one of them would have silently failed a digit-only check, which
+# would have broken tournament_has_round_context's same-sentence proximity
+# test for genuine Olympiad recaps, not just excluded false positives).
+_NUMBER_WORDS = (
+    r"one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen"
+)
+_ROUND_LABEL_RE = re.compile(
+    rf"\b(?:round|day)\s+(?:\d+|{_NUMBER_WORDS})\b|\b(?:{_NUMBER_WORDS})\s+rounds?\b",
+    re.IGNORECASE,
+)
 # Deliberately narrow to words that are near-exclusively used for an
 # actual competitive result in chess-news prose -- broader verbs like
 # "wins"/"leads"/"drew" look precise but aren't: they're common enough in
@@ -157,6 +170,55 @@ def _has_result_signal(text_lower: str) -> bool:
     if _SCORELINE_RE.search(text_lower) or _ROUND_LABEL_RE.search(text_lower):
         return True
     return bool(_RESULT_SIGNAL_RE.search(text_lower))
+
+
+_TOURNAMENT_PROXIMITY_WINDOW = 60
+
+
+def tournament_has_round_context(text_lower: str, tournament_key: str) -> bool:
+    """True only if `tournament_key` sits within `_TOURNAMENT_PROXIMITY_WINDOW`
+    characters of an actual round/day label or scoreline -- not just
+    somewhere in the same article.
+
+    A raw "tournament name anywhere + result signal anywhere" check (what
+    attach_standings_table used to do) is too coarse: a story can mention a
+    tournament purely as a backdrop/contrast ("They aren't playing in the
+    Olympiad...") while having its own, unrelated result language elsewhere
+    in the piece (caught live: a Chess.com bullet-event recap said "They
+    aren't playing in the Olympiad, but... joined a tie atop the
+    standings" -- "olympiad" and "standings" both genuinely present, neither
+    a substring collision, yet the story has nothing to do with the
+    Olympiad's own results).
+
+    A same-SENTENCE check (an earlier version of this function) is the
+    obvious next idea, but chess journalism is full of periods that aren't
+    sentence-ends -- "U.S." above all, but also "GM.", "IM." -- and a naive
+    splitter treats every one as a hard break (caught live: the real stored
+    summary for Round 9, "...regained sole lead of the 46th Chess Olympiad
+    2026 after beating top seed U.S. in round nine," got its own tournament
+    name and round label split into two different "sentences" by the
+    U.S./round-nine period, which would have wrongly excluded a genuine
+    round recap). A character-distance window sidesteps sentence-boundary
+    detection entirely. The window size is calibrated against every
+    genuine round recap's actual archived source text (data/selected.json
+    history) checked so far: the tournament name and its round/day label or
+    scoreline never sit more than 37 characters apart in any of them, while
+    both known false positives (the "3+0 Thursday" bullet recap and a
+    Disability Olympiad recap) have no round-label/scoreline match in the
+    entire text at all, at any distance -- so this isn't a close call tuned
+    to one example, there's a wide margin on both sides.
+    """
+    tournament_spans = [m.span() for m in re.finditer(re.escape(tournament_key), text_lower)]
+    if not tournament_spans:
+        return False
+    label_spans = [m.span() for m in _ROUND_LABEL_RE.finditer(text_lower)]
+    label_spans += [m.span() for m in _SCORELINE_RE.finditer(text_lower)]
+    for t_start, t_end in tournament_spans:
+        for l_start, l_end in label_spans:
+            gap = max(l_start - t_end, t_start - l_end, 0)
+            if gap <= _TOURNAMENT_PROXIMITY_WINDOW:
+                return True
+    return False
 
 
 def score_keywords(text: str) -> int:

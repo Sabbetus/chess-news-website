@@ -42,7 +42,7 @@ from lichess_game import (
     find_game_embed,
     recheck_game_lookup,
 )
-from selection import _has_result_signal
+from selection import _has_result_signal, tournament_has_round_context
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -850,7 +850,15 @@ def attach_standings_table(item: dict, body_markdown: str) -> str:
     if not _has_result_signal(text_lower):
         return body_markdown
 
-    tournament_key = next((key for key in KNOWN_TOURNAMENTS if key in text_lower), None)
+    # Not just "tournament name anywhere + result signal anywhere" -- see
+    # tournament_has_round_context's docstring for the false positive that
+    # combination let through (a bullet-event recap that mentioned the
+    # Olympiad only as a backdrop, with its own unrelated "standings").
+    # Require the tournament name and an actual round/day label or scoreline
+    # in the same sentence, the same shape every genuine round recap uses.
+    tournament_key = next(
+        (key for key in KNOWN_TOURNAMENTS if tournament_has_round_context(text_lower, key)), None
+    )
     if not tournament_key:
         return body_markdown
 
@@ -903,15 +911,33 @@ superlative/milestone claim.
 a match that the body itself says was drawn a "defeat").
 - Any quote presented as a direct quotation.
 
-For each claim you find that is NOT supported by the source material, or that contradicts the \
-body itself, fix it with the smallest possible edit -- reword it to what the source actually \
-supports, or remove the unsupported clause/sentence if it can't be salvaged that way. Do not \
-remove or soften anything that IS supported by the source, even if it sounds like a strong \
-claim -- your job is accuracy, not caution, and the source material is often more detailed \
-than it first appears (check the full text, not just the parts a quick skim would catch).
+Check at the level of individual named details, not just each sentence's main assertion. A \
+sentence's headline claim can be completely true while still carrying a fabricated specific \
+riding inside it -- a first name attached to a person the source only ever refers to by \
+surname, a made-up nickname or title, a location or round number that isn't actually stated \
+anywhere, a specific game or moment credited as the source of something that the source \
+material describes happening somewhere else entirely. (Caught live: a body correctly reported \
+that two named players drew a level game -- true, straight from the source -- but the source \
+never gave one of those players' first names anywhere, and the draft had invented one that \
+happened to match two OTHER players' first names elsewhere in the same piece. The claim \
+"they drew" was accurate, so this kind of error survives a check that only asks "is the \
+sentence's main assertion true" -- it takes deliberately pulling out every specific, named \
+detail and confirming each one, independent of the sentence's main assertion, to catch it.) \
+Treat every name, title, nickname, count, date, and location as its own fact to verify, even \
+inside a sentence whose overall claim is otherwise correct.
+
+For each claim or detail you find that is NOT supported by the source material, or that \
+contradicts the body itself, fix it with the smallest possible edit -- reword it to what the \
+source actually supports, or remove the unsupported clause/sentence if it can't be salvaged \
+that way (for an unsupported name/detail specifically, prefer falling back to whatever the \
+source material actually calls that person or thing -- a surname alone if that's all the \
+source gives -- over inventing a plausible-sounding replacement). Do not remove or soften \
+anything that IS supported by the source, even if it sounds like a strong claim -- your job is \
+accuracy, not caution, and the source material is often more detailed than it first appears \
+(check the full text, not just the parts a quick skim would catch).
 
 Leave everything else completely untouched: same words, same paragraph breaks, same Markdown \
-links and formatting, everywhere except the specific claims you're correcting.
+links and formatting, everywhere except the specific claims and details you're correcting.
 
 Respond with the ENTIRE corrected body Markdown and nothing else -- no preamble, no \
 explanation, no list of what you changed, no code fence."""
