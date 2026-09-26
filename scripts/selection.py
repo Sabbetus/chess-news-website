@@ -138,12 +138,25 @@ _ROUND_LABEL_RE = re.compile(r"\b(?:round|day)\s+\d+\b", re.IGNORECASE)
 # name "Norway Chess" as the format's inventor rather than as a place
 # where a game was actually played).
 RESULT_SIGNAL_WORDS = ["beat", "beats", "defeat", "defeated", "match point", "standings", "qualifie", "eliminat"]
+# Word-boundary, not substring: a plain `w in text_lower` check matches "beat"
+# inside a name like "Beatriz" -- and a leading-\b-only fix doesn't actually
+# close that gap, since "beat" also starts at a genuine word boundary in
+# "Beatriz" (caught live: WGM Beatriz Irene Franco Valencia, named in a
+# ChessMom Project human-interest piece with zero actual results content,
+# wrongly satisfied this gate and pulled in an unrelated Olympiad standings
+# table). Every complete word in the list gets both boundaries; only
+# "qualifie"/"eliminat" are deliberate truncated stems (qualifie[d/r],
+# eliminat[ed/ion]) and keep a trailing-open match.
+_RESULT_SIGNAL_RE = re.compile(
+    r"\bbeats?\b|\bdefeat(?:ed)?\b|\bmatch point\b|\bstandings\b|\bqualifie|\beliminat",
+    re.IGNORECASE,
+)
 
 
 def _has_result_signal(text_lower: str) -> bool:
     if _SCORELINE_RE.search(text_lower) or _ROUND_LABEL_RE.search(text_lower):
         return True
-    return any(w in text_lower for w in RESULT_SIGNAL_WORDS)
+    return bool(_RESULT_SIGNAL_RE.search(text_lower))
 
 
 def score_keywords(text: str) -> int:
