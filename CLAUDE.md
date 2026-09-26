@@ -29,7 +29,11 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
-- Last reset: 2026-09-24 (PR #33 -- a broken internal link, title-guessed
-  instead of using the real given slug, plus 4 over-length paragraphs the
-  automated fixup didn't fully clear; see commit history around that date
-  for the pipeline fix -- check_article_links() -- that was also made).
+- Last reset: 2026-09-26 (PR #46 -- the drafting model conflated three
+  separate Chess.com "3+0 Thursday" brackets into a single event and
+  misattributed a mouse slip from an unrelated round-10 game as deciding
+  the Carlsen-Nakamura tiebreak; that article also had an Olympiad
+  team-standings table wrongly attached to it, unrelated to the event it
+  covered. Also fixed a wrong player first name (Mukhiddin Madaminov,
+  not Nodirbek) in a separate article, plus one over-length paragraph
+  the automated fixup didn't clear.)
