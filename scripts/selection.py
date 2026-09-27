@@ -115,6 +115,39 @@ MAJOR_TOURNAMENT_KEYWORDS = [
 ]
 MAJOR_TOURNAMENT_BONUS = 45
 
+# A new FIDE president is a once-every-few-years governance story, not a
+# routine federation announcement -- worth guaranteeing a slot the way the
+# major-tournament and rating-list stories already are, but it should
+# still lose to that day's actual tournament-results coverage when both
+# land the same day (caught live: 2026-09-26's Turlov-elected-president
+# story scored 45 and 33 under the plain keyword/specificity scoring,
+# both well under SCORE_THRESHOLD_FOR_EXTRA -- so it never ran at all,
+# even though it's arguably the single biggest governance story of the
+# whole Olympiad). GOVERNANCE_ELECTION_BONUS is deliberately smaller than
+# MAJOR_TOURNAMENT_BONUS so an Olympiad round recap (or similar) always
+# outscores it when both are candidates the same day, but large enough to
+# clear SCORE_THRESHOLD_FOR_EXTRA on its own.
+#
+# Narrow and proximity-based on purpose, same reasoning as
+# tournament_has_round_context below: "fide" and "president" both
+# appearing somewhere in a long piece (an awards gala thanking dignitaries
+# who happen to hold the word "president" in an unrelated title, say)
+# isn't the same as the piece actually being about a FIDE presidential
+# election -- require one of a small set of phrases that only a genuine
+# election story would use.
+GOVERNANCE_ELECTION_RE = re.compile(
+    r"elected\s+(?:as\s+)?(?:the\s+)?(?:new\s+)?president\s+of\s+fide"
+    r"|elected\s+(?:new\s+)?fide\s+president"
+    r"|new\s+fide\s+president"
+    r"|fide\s+presidential\s+election",
+    re.IGNORECASE,
+)
+GOVERNANCE_ELECTION_BONUS = 35
+
+
+def score_governance_election(text: str) -> int:
+    return GOVERNANCE_ELECTION_BONUS if GOVERNANCE_ELECTION_RE.search(text) else 0
+
 # A tournament name alone isn't enough -- a story can mention "the
 # Olympiad" purely as a dateline or backdrop ("signed on the sidelines of
 # the 46th Chess Olympiad") without being about its competition at all
@@ -267,6 +300,7 @@ def score_item(item: dict) -> tuple[int, dict]:
     breakdown["keywords"] = score_keywords(text)
     breakdown["nordic"] = score_nordic(text)
     breakdown["majorTournament"] = score_major_tournament(text)
+    breakdown["governanceElection"] = score_governance_election(text)
     breakdown["specificity"] = score_specificity(item)
 
     total = sum(breakdown.values())
