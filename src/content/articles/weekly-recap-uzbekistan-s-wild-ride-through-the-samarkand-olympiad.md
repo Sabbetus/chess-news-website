@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-09-27"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Uzbekistan led, lost the lead, and took it back again in Samarkand this week. Plus new events, a re-election, and a Carlsen bullet debut. #chess"
 image:
   src: "./_images/3rd_disability_chess_olympiad_Germany_team.webp"
