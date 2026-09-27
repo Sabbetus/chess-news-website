@@ -5,7 +5,7 @@ sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/inaugural-fide-excellence-awards-celebrate-the-people-and-achievements-shaping-chess-worldwide/"
 lens: "historical-parallel"
 continent: "asia"
-selectionScore: 109
+selectionScore: 64
 reviewStatus: "published"
 socialCopy: "FIDE's first-ever Excellence Awards honored Erdoğmuş, Aronian, India's teams and more in Samarkand, plus a new creator award named for Daniel Naroditsky. #chess"
 image:
