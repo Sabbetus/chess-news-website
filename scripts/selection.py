@@ -126,7 +126,13 @@ MAJOR_TOURNAMENT_BONUS = 45
 # co-occur with an actual result/standings signal: a scoreline, explicit
 # round/day labeling, or a result verb -- the same kind of language any
 # genuine round recap uses and a dateline mention never does.
-_SCORELINE_RE = re.compile(r"\b\d+(?:\.5)?\s*[-–]\s*\d+(?:\.5)?\b")
+# \d{1,2}, not \d+ -- an unbounded digit count also matches a year range like
+# "2024-2026" (caught live: an awards-ceremony article said "the 2024-2026
+# Olympiad cycle," an en-dash year range sitting right next to the word
+# "Olympiad," and the unbounded version read it as a match score, wrongly
+# attaching a round-results standings table to a piece with zero actual
+# round-by-round results). No real chess team-match score reaches 3 digits.
+_SCORELINE_RE = re.compile(r"\b\d{1,2}(?:\.5)?\s*[-–]\s*\d{1,2}(?:\.5)?\b")
 # Digit form ("Round 9", "Day 8") AND spelled-out form ("round two", "round
 # nine", "after six rounds") -- Chess.com's own round recaps consistently
 # spell round numbers out in prose (caught live: real stored summaries for
