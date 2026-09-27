@@ -33,6 +33,38 @@ const DIMS = {
   card: { width: 500, height: 375 },
 }[size];
 
+// Astro/Sharp's fit="cover" clamps the requested WIDTH to the source
+// photo's native width when asked to upscale, but does not recompute the
+// HEIGHT to match -- it keeps the full unclamped target height for that
+// density, breaking the crop's aspect ratio entirely. Caught live: a
+// 853px-wide portrait source photo served as the "2x" density variant of
+// a 960x640 lead box came back as a completely uncropped 853x1280 image
+// -- the full original photo, not a crop at all -- because 960*2=1920
+// exceeds 853 so width got clamped, but height's own 640*2=1280 request
+// didn't get clamped to match, and 1280 happened to equal the source's
+// actual height exactly. A phone with devicePixelRatio 2+ then loads
+// that broken variant from the srcset and gets a completely different,
+// CSS center-cropped framing than desktop's correctly top-anchored crop
+// -- density descriptors are supposed to mean "same image, more pixels,"
+// not "a different crop entirely."
+//
+// Fix: only ever request a density whose target width the source can
+// actually satisfy without upscaling. If even the 1x target can't be
+// satisfied (a source narrower than the box itself), fall back to a
+// single width/height pair clamped to the source's own resolution --
+// still at the box's exact aspect ratio, just smaller, never a different
+// crop and never upscaled.
+const boxRatio = DIMS.width / DIMS.height;
+const nativeWidth = image?.src.width;
+const supportedDensities = nativeWidth
+  ? [1, 1.5, 2].filter((d) => DIMS.width * d <= nativeWidth)
+  : [1, 1.5, 2];
+const renderWidth =
+  nativeWidth && supportedDensities.length === 0 ? Math.min(DIMS.width, nativeWidth) : DIMS.width;
+const renderHeight =
+  nativeWidth && supportedDensities.length === 0 ? Math.round(renderWidth / boxRatio) : DIMS.height;
+const renderDensities = supportedDensities.length > 0 ? supportedDensities : undefined;
+
 // The lead image is always the single largest above-the-fold image on
 // whichever page it appears on (homepage lead story, or an article's own
 // hero) -- likely the LCP element -- so it should never be lazy-loaded,
@@ -57,11 +89,11 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
           <Image
             class="thumb-photo"
             src={image.src}
-            width={DIMS.width}
-            height={DIMS.height}
+            width={renderWidth}
+            height={renderHeight}
             fit="cover"
             position="top"
-            densities={[1, 1.5, 2]}
+            densities={renderDensities}
             alt={alt}
             loading={loading}
             fetchpriority={fetchpriority}
@@ -75,11 +107,11 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
           <Image
             class="thumb-photo"
             src={image.src}
-            width={DIMS.width}
-            height={DIMS.height}
+            width={renderWidth}
+            height={renderHeight}
             fit="cover"
             position="top"
-            densities={[1, 1.5, 2]}
+            densities={renderDensities}
             alt={alt}
             loading={loading}
             fetchpriority={fetchpriority}
