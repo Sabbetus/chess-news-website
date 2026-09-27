@@ -162,6 +162,9 @@ const jsonLd = [
             <h2>
               <a href={`/articles/${latestRecap.slug}/`}>{latestRecap.data.title}</a>
             </h2>
+            <div class="byline">
+              <span>{dateFmt(latestRecap.data.publishDate)}</span>
+            </div>
             <p>{excerptFrom(latestRecap.body, 340)}</p>
             <a class="recap-link" href={`/articles/${latestRecap.slug}/`}>Read the full recap &rarr;</a>
           </>
