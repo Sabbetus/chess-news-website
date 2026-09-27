@@ -28,7 +28,11 @@ Any batch that needs even one fix (a broken link, a factual correction,
 anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-09-27: PR #48, the weekly recap, reviewed clean -- all 15 internal
+  links resolved to real published articles and every claim checked out
+  sentence-by-sentence against its linked article's own body. No fixes
+  needed.
 - Last reset: 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
