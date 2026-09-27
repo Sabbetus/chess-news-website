@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-day-10-uzbekistan-in-command-as-medal-
 lens: "results"
 continent: "asia"
 selectionScore: 110
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Ding Liren drops the exchange to 44...Re6?? and China's medal hopes take a hit, while Uzbekistan and India both crush 3.5-0.5 heading into the Samarkand final round. #ChessOlympiad"
 additionalSources:
   - sourceName: "Chess.com"

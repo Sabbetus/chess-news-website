@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/inaugural-fide-excellence-awards-celebrate-the-
 lens: "historical-parallel"
 continent: "asia"
 selectionScore: 109
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE's first-ever Excellence Awards honored Erdoğmuş, Aronian, India's teams and more in Samarkand, plus a new creator award named for Daniel Naroditsky. #chess"
 image:
   src: "./_images/Viswanathan_Anand__2016.webp"
@@ -43,33 +43,3 @@ Best Federation went to the Uzbekistan Chess Federation, with the Kazakhstan Che
 The Bundesliga received special recognition as one of the world's most established national leagues, and the FIDE America Social Initiatives Program 2025 was singled out for delivering 14 completed initiatives across 11 countries through the CCA Diversity Commission.
 
 Best Chess Player awards for both the female and male categories were held back deliberately, to be presented separately at the Closing Ceremony of the Olympiad, saving the sport's two biggest individual honors for last.
-
-**Open standings after Round 10 of 11**
-
-| # | Team | W–D–L | Match Points | Board Points |
-| --- | --- | --- | --- | --- |
-| 1 | Uzbekistan | 9–0–1 | 18 | 30 |
-| 2 | India | 8–1–1 | 17 | 26.5 |
-| 3 | Germany | 8–0–2 | 16 | 26 |
-| 4 | Ukraine | 8–0–2 | 16 | 26.5 |
-| 5 | Hungary | 7–2–1 | 16 | 22.5 |
-| 6 | USA | 7–1–2 | 15 | 26 |
-| 7 | Azerbaijan | 6–3–1 | 15 | 26 |
-| 8 | Turkiye | 7–1–2 | 15 | 26.5 |
-| 9 | Croatia | 7–1–2 | 15 | 28 |
-| 10 | Uzbekistan 2 | 7–1–2 | 15 | 24.5 |
-
-**Women standings after Round 10 of 11**
-
-| # | Team | W–D–L | Match Points | Board Points |
-| --- | --- | --- | --- | --- |
-| 1 | China | 8–2–0 | 18 | 30 |
-| 2 | Kazakhstan | 7–3–0 | 17 | 27 |
-| 3 | India | 7–2–1 | 16 | 29 |
-| 4 | Poland | 8–0–2 | 16 | 26.5 |
-| 5 | Vietnam | 8–0–2 | 16 | 27.5 |
-| 6 | USA | 7–1–2 | 15 | 29.5 |
-| 7 | Uzbekistan | 7–1–2 | 15 | 27.5 |
-| 8 | Georgia | 6–3–1 | 15 | 26.5 |
-| 9 | Armenia | 7–1–2 | 15 | 25.5 |
-| 10 | Romania | 7–1–2 | 15 | 28.5 |
