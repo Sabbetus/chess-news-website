@@ -16,9 +16,12 @@ const lensMeta = LENS_META[lens];
 const piece = pieceForLens(lens, seed);
 
 // Fixed pixel dimensions matching each slot's CSS aspect-ratio exactly
-// (.thumb--lead: 1.5/1, .thumb--card: 4/3 -- see global.css) so Astro's
-// fit="cover" crop lands on the same box the CSS already draws, with no
-// mismatch between the requested crop and the rendered one.
+// (.thumb--lead and .thumb--card are both 4/3 -- see global.css) so
+// Astro's fit="cover" crop lands on the same box the CSS already draws,
+// with no mismatch between the requested crop and the rendered one, and
+// no mismatch between an article's own hero and its card thumbnail
+// elsewhere on the site either (same top-anchored crop, just a bigger
+// box for the hero).
 //
 // position="attention" (Sharp's saliency-based smart crop) was tried
 // first and reverted -- on real site photos it repeatedly cropped out
@@ -29,7 +32,7 @@ const piece = pieceForLens(lens, seed);
 // third of the frame far more reliably than any saliency heuristic
 // picked it out correctly in practice.
 const DIMS = {
-  lead: { width: 960, height: 640 },
+  lead: { width: 960, height: 720 },
   card: { width: 500, height: 375 },
 }[size];
 

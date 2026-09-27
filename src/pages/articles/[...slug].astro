@@ -85,8 +85,21 @@ const activeSection = article.data.lens ?? 'recaps';
 // same way whether seen on the site or shared. jpg for broadest crawler
 // compatibility (Facebook/Threads/X all handle it natively; no AVIF/WebP
 // guessing needed on their end).
+//
+// Same clamping as ArticleThumb.astro, and for the same reason: Sharp
+// clamps width to the source's native width when asked to upscale past
+// it, but doesn't recompute height to match, so a source narrower than
+// 1200px (caught live: an 853px-wide portrait photo) silently produces
+// an off-ratio crop instead of the specified 1.91:1 -- not as broken as
+// ArticleThumb's uncropped-fallback case, but still not what Meta/X's
+// card spec calls for, and platforms handle a wrong-ratio image
+// unpredictably (their own further crop/letterbox) rather than erroring.
+const OG_RATIO = 1200 / 630;
+const ogNativeWidth = article.data.image?.src.width;
+const ogWidth = ogNativeWidth ? Math.min(1200, ogNativeWidth) : 1200;
+const ogHeight = Math.round(ogWidth / OG_RATIO);
 const ogImage = article.data.image
-  ? await getImage({ src: article.data.image.src, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpg' })
+  ? await getImage({ src: article.data.image.src, width: ogWidth, height: ogHeight, fit: 'cover', position: 'top', format: 'jpg' })
   : null;
 // JSON-LD's `image` has no crop requirement -- Google just wants a
 // reasonably large, accessible copy (1280 clears its 1200px-wide
