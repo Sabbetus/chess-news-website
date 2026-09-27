@@ -29,7 +29,14 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
-- Last reset: 2026-09-26 (PR #46 -- the drafting model conflated three
+- Last reset: 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+  an "Olympiad" mention was misread as a match score, wrongly attaching a
+  round-10 team-standings table to the FIDE Excellence Awards ceremony
+  piece, an article with zero actual round results. Fixed the underlying
+  scoreline regex -- see scripts/selection.py, _SCORELINE_RE -- rather than
+  just editing the article. No article-content errors found this batch;
+  both pieces checked out fact-for-fact against their real sources.)
+- Previous reset: 2026-09-26 (PR #46 -- the drafting model conflated three
   separate Chess.com "3+0 Thursday" brackets into a single event and
   misattributed a mouse slip from an unrelated round-10 game as deciding
   the Carlsen-Nakamura tiebreak; that article also had an Olympiad
