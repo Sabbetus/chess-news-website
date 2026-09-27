@@ -8,14 +8,15 @@ on:
   # there's no real ordering dependency to leave room for.
   #
   # Aiming for both this and the daily pipeline's PR to be ready by
-  # ~11:00 Finnish time (EEST, UTC+3), when the reviewer wakes up. Like
-  # the daily pipeline, this cron has run ~5h late in practice (GitHub
+  # ~10:00 Finnish time (EEST, UTC+3), when the reviewer wakes up -- an
+  # hour earlier than the previous ~11:00 EEST target. Like the daily
+  # pipeline, this cron has run ~5h late in practice (GitHub
   # deprioritizing scheduled runs on a low-traffic public repo), so
-  # 02:17 UTC nominal is aimed at landing around 07:00-08:00 UTC actual.
+  # 01:17 UTC nominal is aimed at landing around 06:00-07:00 UTC actual.
   # :07/:17 rather than :00 avoids the single most contested GitHub
   # Actions scheduling minute.
   schedule:
-    - cron: '17 2 * * 0'
+    - cron: '17 1 * * 0'
   workflow_dispatch:
 
 permissions:

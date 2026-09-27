@@ -10,13 +10,14 @@ on:
   # cron has consistently run ~4.5-6h late in practice (GitHub Actions
   # deprioritizes scheduled runs under load, and a public repo with a
   # handful of daily cron jobs gets queued behind higher-traffic ones).
-  # 02:07 UTC -> actual delivery has been landing around 10:00 Finnish
-  # time (EEST, UTC+3) rather than the ~14:00 the old 06:00 UTC nominal
-  # time produced. :07 rather than :00 also avoids the single most
-  # contested scheduling minute, same reasoning as social.yml and
-  # weekly-recap.yml.
+  # 01:03 UTC -> actual delivery lands around 09:00 Finnish time (EEST,
+  # UTC+3), moved an hour earlier than the previous 02:07 UTC / ~10:00
+  # EEST nominal-to-actual pairing (same 4h actual-vs-nominal gap, just
+  # shifted). :03 rather than :00 or :07 avoids both the single most
+  # contested scheduling minute AND a direct collision with social.yml,
+  # which already has a run at 1:07 UTC.
   schedule:
-    - cron: '7 2 * * *'
+    - cron: '3 1 * * *'
   workflow_dispatch:
 
 permissions:
