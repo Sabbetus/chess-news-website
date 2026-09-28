@@ -79,28 +79,23 @@ const activeSection = article.data.lens ?? 'recaps';
 
 // The social-card crop: fixed 1200x630 (1.91:1), the size Meta's own docs
 // recommend for Facebook/Threads link previews and the same ratio X's
-// summary_large_image card uses -- one crop serves all three. position=
-// "top" matches the on-site thumb crop (see ArticleThumb.astro, and its
-// comment on why "attention" was reverted) so the same photo reads the
-// same way whether seen on the site or shared. jpg for broadest crawler
-// compatibility (Facebook/Threads/X all handle it natively; no AVIF/WebP
-// guessing needed on their end).
+// summary_large_image card uses -- one crop serves all three.
 //
-// Same clamping as ArticleThumb.astro, and for the same reason: Sharp
-// clamps width to the source's native width when asked to upscale past
-// it, but doesn't recompute height to match, so a source narrower than
-// 1200px (caught live: an 853px-wide portrait photo) silently produces
-// an off-ratio crop instead of the specified 1.91:1 -- not as broken as
-// ArticleThumb's uncropped-fallback case, but still not what Meta/X's
-// card spec calls for, and platforms handle a wrong-ratio image
-// unpredictably (their own further crop/letterbox) rather than erroring.
-const OG_RATIO = 1200 / 630;
-const ogNativeWidth = article.data.image?.src.width;
-const ogWidth = ogNativeWidth ? Math.min(1200, ogNativeWidth) : 1200;
-const ogHeight = Math.round(ogWidth / OG_RATIO);
-const ogImage = article.data.image
-  ? await getImage({ src: article.data.image.src, width: ogWidth, height: ogHeight, fit: 'cover', position: 'top', format: 'jpg' })
-  : null;
+// This isn't generated with getImage() like the rest of the images on this
+// page (jsonLdImage below, ArticleThumb.astro's on-site crops) -- Astro's
+// built-in Sharp service only exposes Sharp's `position` as a fixed named
+// gravity, with no percentage-offset option, so a naive position="top" crop
+// here cut portrait photos off at the hairline (caught live, unusable on
+// X). ArticleThumb.astro works around the same limitation with a
+// server-crop + CSS object-position two-stage trick, but that only works
+// because a browser renders the second stage; a shared social card is just
+// the raw file we hand the platform, with no second stage available. See
+// scripts/generate-social-images.mjs (run as an astro:build:done hook in
+// astro.config.mjs, writing dist/social/<slug>.jpg) for the actual crop,
+// which uses Sharp's `.extract()` directly to bias the window down through
+// the photo's spare vertical room the same way ArticleThumb.astro's CSS
+// does, instead of landing right at the top edge.
+const ogImageUrl = article.data.image ? new URL(`/social/${article.slug}.jpg`, Astro.site).toString() : null;
 // JSON-LD's `image` has no crop requirement -- Google just wants a
 // reasonably large, accessible copy (1280 clears its 1200px-wide
 // preference) -- so this reuses the same source with a plain resize, no
@@ -180,7 +175,7 @@ const jsonLd = [
     publishedTime: article.data.publishDate.toISOString(),
     source: article.data.sourceName,
   }}
-  image={ogImage && new URL(ogImage.src, Astro.site).toString()}
+  image={ogImageUrl}
   jsonLd={jsonLd}
 >
   <article class="story">
