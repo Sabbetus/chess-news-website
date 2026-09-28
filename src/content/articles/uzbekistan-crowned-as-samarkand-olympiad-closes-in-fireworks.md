@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fireworks-drones-and-champions-samarkands-grand
 lens: "results"
 continent: "asia"
 selectionScore: 41
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Uzbekistan takes gold on home soil, China tops the women's section, and India walks away with two silvers plus the Gaprindashvili Cup. Samarkand's closing ceremony had it all."
 image:
   src: "./_images/Nodirbek_Abdusattorov_chess_player__cropped.webp"

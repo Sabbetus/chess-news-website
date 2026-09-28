@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/uzbekistans-dream-finish-olympiad-gold-in-samar
 lens: "results"
 continent: "asia"
 selectionScore: 110
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Reserve board Mukhiddin Madaminov delivered the decisive win over Ukraine as Uzbekistan won Olympiad gold on home soil in Samarkand. China's youth movement took the Women's title too."
 additionalSources:
   - sourceName: "Chess.com"
