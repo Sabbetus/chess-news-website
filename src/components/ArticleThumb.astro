@@ -51,22 +51,61 @@ const DIMS = {
 // -- density descriptors are supposed to mean "same image, more pixels,"
 // not "a different crop entirely."
 //
-// Fix: only ever request a density whose target width the source can
-// actually satisfy without upscaling. If even the 1x target can't be
-// satisfied (a source narrower than the box itself), fall back to a
-// single width/height pair clamped to the source's own resolution --
-// still at the box's exact aspect ratio, just smaller, never a different
-// crop and never upscaled.
+// Fix: only ever request a density whose target width AND height (see
+// OVERSAMPLE_FACTOR below -- the requested height isn't just the box's
+// own height any more) the source can actually satisfy without upscaling.
+// If even the 1x target can't be satisfied (a source narrower than the
+// box itself), fall back to a single width/height pair clamped to the
+// source's own resolution -- still at the box's exact aspect ratio, just
+// smaller, never a different crop and never upscaled.
 const boxRatio = DIMS.width / DIMS.height;
 const nativeWidth = image?.src.width;
+const nativeHeight = image?.src.height;
+
+// Astro/Sharp's position="top" (used below) has no "nearly top" or "top,
+// with a bit of headroom" option -- fit="cover" position only takes named
+// gravities (top/center/etc.), never a percentage offset. Landing exactly
+// on "top" reads fine for a landscape source, but for a portrait source
+// (most headshots) it crops in tight to just the face -- found live
+// across several articles, worst on a photo whose subject had visible
+// headroom in the original that a literal top-edge crop threw away
+// entirely.
+//
+// Fix: bake a server-side crop OVERSAMPLE_FACTOR taller than the box
+// actually needs, still top-anchored (so it never risks losing the top of
+// the subject's head the way center framing could), then let CSS
+// object-position (see global.css) pick a window starting partway down
+// through that extra slack instead of at its very top edge -- a real,
+// tunable "nearly top," not a Sharp gravity keyword. The density/upscale
+// check above now has to account for this too, not just the box's own
+// height, or the oversampled crop could silently hit the exact same
+// upscale-clamping bug in the height dimension that the width fix above
+// was written for.
+const OVERSAMPLE_FACTOR = 1.3;
+
 const supportedDensities = nativeWidth
-  ? [1, 1.5, 2].filter((d) => DIMS.width * d <= nativeWidth)
+  ? [1, 1.5, 2].filter(
+      (d) => DIMS.width * d <= nativeWidth && Math.round(DIMS.height * d * OVERSAMPLE_FACTOR) <= (nativeHeight ?? 0),
+    )
   : [1, 1.5, 2];
 const renderWidth =
   nativeWidth && supportedDensities.length === 0 ? Math.min(DIMS.width, nativeWidth) : DIMS.width;
-const renderHeight =
-  nativeWidth && supportedDensities.length === 0 ? Math.round(renderWidth / boxRatio) : DIMS.height;
+const boxHeight = nativeWidth && supportedDensities.length === 0 ? Math.round(renderWidth / boxRatio) : DIMS.height;
 const renderDensities = supportedDensities.length > 0 ? supportedDensities : undefined;
+
+// When the fallback above already had to clamp width (a source too
+// narrow even for 1x), there's normally no spare height budget left to
+// oversample with either -- but still worth trying, clamped to whatever
+// the source can actually provide, rather than skipping the "nearly top"
+// treatment entirely for exactly the photos most likely to need it
+// (a narrow source is very often a tall portrait crop).
+const desiredOversampledHeight = Math.round(boxHeight * OVERSAMPLE_FACTOR);
+const maxAvailableHeight =
+  nativeWidth && nativeHeight ? Math.floor((nativeHeight * renderWidth) / nativeWidth) : desiredOversampledHeight;
+const renderHeight =
+  supportedDensities.length > 0
+    ? Math.round(DIMS.height * OVERSAMPLE_FACTOR)
+    : Math.max(boxHeight, Math.min(desiredOversampledHeight, maxAvailableHeight));
 
 // The lead image is always the single largest above-the-fold image on
 // whichever page it appears on (homepage lead story, or an article's own

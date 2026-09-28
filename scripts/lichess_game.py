@@ -69,7 +69,17 @@ KNOWN_BROADCAST_TOURNAMENTS: dict[str, list[str]] = {
     ],
 }
 
-WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 3}
+# 3 (the original value) wasn't enough -- caught live: a real lookup for a
+# non-registry event found the right tournament within its budget but ran
+# out of searches before it could narrow down to the specific round
+# ("Given the tool limit for web searches has been exhausted for this
+# session, I'm unable to verify the specific round slug/URL with certainty
+# beyond the tournament-level broadcast page I found"). This fallback is
+# still the only path for any event not in KNOWN_BROADCAST_TOURNAMENTS
+# above, so it needs enough room for a realistic multi-step search
+# (tournament, then round, then a confirming query) without hitting the
+# same wall.
+WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 6}
 
 FINDER_MODEL = "claude-sonnet-5"
 
