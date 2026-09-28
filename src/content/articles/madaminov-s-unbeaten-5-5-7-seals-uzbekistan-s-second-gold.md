@@ -11,6 +11,8 @@ socialCopy: "Reserve board Mukhiddin Madaminov delivered the decisive win over U
 additionalSources:
   - sourceName: "Chess.com"
     sourceUrl: "https://www.chess.com/news/view/uzbekistan-china-win-2026-samarkand-chess-olympiad"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-11/QJSVWmNu/SiCh3QO9"
 image:
   src: "./_images/Mukhiddin_Madaminov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
@@ -21,7 +23,7 @@ Uzbekistan won the Open section of the 2026 Chess Olympiad on home soil in Samar
 
 The gold didn't need a full match win. A 2-2 draw would probably have been enough given the tiebreak situation, but Uzbekistan got more than that anyway.
 
-Reserve board Mukhiddin Madaminov supplied the decisive point on board four, closing the tournament with an unbeaten 5.5/7 that [Chess.com described as coming in a sharp clash with GM Roman Dehtiarov](https://www.chess.com/news/view/uzbekistan-china-win-2026-samarkand-chess-olympiad). For a reserve-board player to end up as the hero of a title-clinching match is exactly the kind of depth national federations spend years trying to build.
+Reserve board Mukhiddin Madaminov [supplied the decisive point](#game-embed) on board four, closing the tournament with an unbeaten 5.5/7 that [Chess.com described as coming in a sharp clash with GM Roman Dehtiarov](https://www.chess.com/news/view/uzbekistan-china-win-2026-samarkand-chess-olympiad). For a reserve-board player to end up as the hero of a title-clinching match is exactly the kind of depth national federations spend years trying to build.
 
 The other three boards on the top match all drew. Nodirbek Abdusattorov pressed hard in a bishop ending with an extra pawn against Ukraine but let the win slip at the very end, a small blemish on an otherwise outstanding week. He still walked away with the individual gold medal on board one, posting a 2869 performance rating for the event.
 
