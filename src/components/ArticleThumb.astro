@@ -81,7 +81,20 @@ const nativeHeight = image?.src.height;
 // height, or the oversampled crop could silently hit the exact same
 // upscale-clamping bug in the height dimension that the width fix above
 // was written for.
-const OVERSAMPLE_FACTOR = 1.3;
+//
+// But this whole problem is specific to sources NARROWER (relatively
+// taller) than the box: those are the ones where a width-matched
+// top-anchored crop eats deep into the vertical frame. A source at or
+// wider than the box's own ratio never had that failure mode -- cover-fit
+// crops those from the sides with the full height intact, so a literal
+// top position was already correct. Applying the same oversample+shift
+// there doesn't add headroom, it just throws away real height off the
+// bottom for no reason -- caught live: several front-page wide photos
+// that were already perfectly framed lost their previously-fine top crop
+// once this landed. Gate the whole oversample treatment on the source
+// actually being narrower than the box ratio.
+const needsHeadroomFix = !nativeWidth || !nativeHeight || nativeWidth / nativeHeight < boxRatio;
+const OVERSAMPLE_FACTOR = needsHeadroomFix ? 1.3 : 1;
 
 const supportedDensities = nativeWidth
   ? [1, 1.5, 2].filter(
@@ -129,7 +142,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
       <a href={href} class="thumb-link">
         {image && (
           <Image
-            class="thumb-photo"
+            class={`thumb-photo ${needsHeadroomFix ? 'thumb-photo--headroom' : ''}`}
             src={image.src}
             width={renderWidth}
             height={renderHeight}
@@ -147,7 +160,7 @@ const fetchpriority = size === 'lead' ? 'high' : undefined;
       <>
         {image && (
           <Image
-            class="thumb-photo"
+            class={`thumb-photo ${needsHeadroomFix ? 'thumb-photo--headroom' : ''}`}
             src={image.src}
             width={renderWidth}
             height={renderHeight}

@@ -250,20 +250,23 @@ button:focus-visible {
   inset: 0;
   width: 100%;
   height: 100%;
-  /* The build-time crop (Astro's Sharp pipeline, fit="cover" +
-     position="top" -- see ArticleThumb.astro) now deliberately bakes in
-     some extra height beyond this box's own ratio (OVERSAMPLE_FACTOR),
-     rather than matching it exactly. object-fit here does real work as a
-     result: it crops that taller image down to this box, and
-     object-position chooses where -- 30% down rather than 0% (dead top)
-     or 50% (true center). Sharp's own fit="cover" position has no
-     in-between "nearly top" option (only named gravities), so this two-
-     stage crop (server-side top-anchored oversample, then a client-side
-     percentage offset into the resulting slack) is what actually
-     implements it. Tune by adjusting this percentage and/or
-     OVERSAMPLE_FACTOR together -- a bigger factor gives more slack for
-     the same percentage to work with. */
+  /* The actual crop happens at build time (Astro's Sharp pipeline,
+     fit="cover" + position="top" -- see ArticleThumb.astro), baked into
+     the file at exactly this box's pixel dimensions by default.
+     object-fit here is a defensive fallback for that default case. */
   object-fit: cover;
+  object-position: top;
+}
+/* Only sources narrower (relatively taller) than the box get the extra
+   server-side height (ArticleThumb.astro's needsHeadroomFix/
+   OVERSAMPLE_FACTOR) -- those are the ones a literal top crop cuts too
+   tight for. This picks a window partway into that slack -- 30% down
+   rather than 0% (dead top) or 50% (true center). Wide sources never
+   render with this class, so their already-correct top crop (no slack to
+   pick a window into) is untouched. Tune by adjusting this percentage
+   and/or ArticleThumb.astro's OVERSAMPLE_FACTOR together -- a bigger
+   factor gives more slack for the same percentage to work with. */
+.thumb-photo--headroom {
   object-position: center 30%;
 }
 .thumb-credit {
