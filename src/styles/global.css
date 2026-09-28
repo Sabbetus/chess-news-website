@@ -250,13 +250,21 @@ button:focus-visible {
   inset: 0;
   width: 100%;
   height: 100%;
-  /* The actual crop now happens once, at build time (Astro's Sharp
-     pipeline, fit="cover" + position="top" -- see ArticleThumb.astro)
-     baked into the file at exactly this box's pixel dimensions. object-fit
-     here is just a defensive fallback in case a stored file's dimensions
-     ever drift from the box's aspect-ratio (e.g. a manually-edited image),
-     not the primary cropping mechanism it used to be. */
+  /* The build-time crop (Astro's Sharp pipeline, fit="cover" +
+     position="top" -- see ArticleThumb.astro) now deliberately bakes in
+     some extra height beyond this box's own ratio (OVERSAMPLE_FACTOR),
+     rather than matching it exactly. object-fit here does real work as a
+     result: it crops that taller image down to this box, and
+     object-position chooses where -- 30% down rather than 0% (dead top)
+     or 50% (true center). Sharp's own fit="cover" position has no
+     in-between "nearly top" option (only named gravities), so this two-
+     stage crop (server-side top-anchored oversample, then a client-side
+     percentage offset into the resulting slack) is what actually
+     implements it. Tune by adjusting this percentage and/or
+     OVERSAMPLE_FACTOR together -- a bigger factor gives more slack for
+     the same percentage to work with. */
   object-fit: cover;
+  object-position: center 30%;
 }
 .thumb-credit {
   position: absolute;
