@@ -49,7 +49,7 @@ DATA_DIR = ROOT / "data"
 SELECTED_PATH = DATA_DIR / "selected.json"
 ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 
-MODEL = "claude-sonnet-5"
+MODEL = "claude-sonnet-5-5"
 
 CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 
