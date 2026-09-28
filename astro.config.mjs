@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
+import generateSocialImages from './scripts/generate-social-images.mjs';
 
 // Every link in an article body (whether hand-written or AI-drafted) points
 // off-site -- a source article, a tournament page, a Wikimedia Commons file.
@@ -72,6 +73,16 @@ export default defineConfig({
         return item;
       },
     }),
+    {
+      name: 'social-images',
+      hooks: {
+        // Runs after Astro's own build, writing dist/social/<slug>.jpg for
+        // every published article with a photo -- see
+        // scripts/generate-social-images.mjs for why this can't just be
+        // another getImage() call like the rest of the image pipeline.
+        'astro:build:done': ({ dir }) => generateSocialImages(dir),
+      },
+    },
   ],
   markdown: {
     rehypePlugins: [externalLinksNewTab],
