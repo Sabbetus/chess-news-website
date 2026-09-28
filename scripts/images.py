@@ -332,6 +332,18 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
 # comparing stems catches every frame from the same batch upload, not just
 # an exact repeat.
 _PHOTOSET_INDEX_RE = re.compile(r"[\s_]*-[\s_]*\d+(\.\w+)$")
+# The other common Commons derivative pattern this same mechanism missed:
+# an explicit crop of an existing file, uploaded separately with a
+# "(cropped)" suffix rather than a numeric index (caught live: an article
+# picked "Nodirbek_Abdusattorov_chess_player_(cropped).jpg" two days after
+# a different article already used "Nodirbek_Abdusattorov_chess_player.jpg"
+# -- confirmed via the file's own Commons page, under "Other versions", to
+# be a literal crop of that exact file -- but the numeric-only regex above
+# left the two filenames' stems different, so the reuse-cooldown never saw
+# them as the same underlying photo). Stripped before the numeric-index
+# regex runs, so a photoset frame that also happens to be a labeled crop
+# (e.g. "..._-_13_(cropped).jpg") still normalizes down to one shared stem.
+_CROPPED_SUFFIX_RE = re.compile(r"[\s_]*\(cropped\)(\.\w+)$", re.IGNORECASE)
 
 
 def _photoset_stem(title_or_url: str) -> str:
@@ -340,6 +352,7 @@ def _photoset_stem(title_or_url: str) -> str:
     if name.lower().startswith("file:"):
         name = name[5:]
     name = name.replace("_", " ").strip().lower()
+    name = _CROPPED_SUFFIX_RE.sub(r"\1", name)
     return _PHOTOSET_INDEX_RE.sub(r"\1", name)
 
 

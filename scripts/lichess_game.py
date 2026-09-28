@@ -6,18 +6,33 @@ most articles don't name one and this is never invoked for them, since a
 web_search call costs real money and most stories -- calendar aggregates,
 team-score pieces, multi-game trend pieces -- have no single game to show.
 
-Two-step process, deliberately split so the risky step (is this really the
-right game) is a plain string comparison against real data, not a model
-guess:
-  1. Ask Claude (with the web_search tool) to find the Lichess broadcast
-     round covering this game. Search is genuinely reliable for this --
-     FIDE-relayed events are near-universally broadcast on Lichess, and a
-     plain "<event> <player1> <player2> lichess" query finds them.
-  2. Fetch that round's PGN from Lichess's own broadcast API (structured,
-     official data, not scraped) and look for the one game whose
-     White/Black tags match both players by surname. Only an unambiguous
-     single match gets embedded -- zero or multiple matches means no
-     embed, not a guess.
+Two paths, tried in order:
+  0. KNOWN_BROADCAST_TOURNAMENTS fast path (find_round_via_known_tournament,
+     below) -- for an event this pipeline already covers regularly, query
+     Lichess's own broadcast API directly by tournament id and check each
+     round's real PGN for the named players. Deterministic, free, and
+     doesn't depend on a web search having indexed the right page recently.
+     Added after a real miss: the Women's Olympiad section's Koneru-
+     Dzagnidze game was never embedded because the web-search finder below
+     ran out of its search budget before confirming a URL -- even though
+     the exact same game was trivially findable via this API in under a
+     minute by hand (Lichess's own round list for a known tournament id is
+     a single deterministic HTTP call, not a search-engine guess). The
+     wrong-game-picked bug fixed elsewhere in this file was a real,
+     separate issue, but fixing it alone wouldn't have helped here: the
+     "correct" game would have hit the exact same search-budget wall.
+  1. If the event isn't in the registry (a one-off tournament this
+     pipeline doesn't track by id), fall back to the original two-step
+     process, deliberately split so the risky step (is this really the
+     right game) is a plain string comparison against real data, not a
+     model guess:
+       a. Ask Claude (with the web_search tool) to find the Lichess
+          broadcast round covering this game.
+       b. Fetch that round's PGN from Lichess's own broadcast API
+          (structured, official data, not scraped) and look for the one
+          game whose White/Black tags match both players by surname. Only
+          an unambiguous single match gets embedded -- zero or multiple
+          matches means no embed, not a guess.
 """
 
 import re
@@ -27,6 +42,32 @@ import requests
 
 USER_AGENT = "Chess-Herald-GameFinder/1.0 (https://chessherald.com; contact: sabbe.the.technomage@gmail.com)"
 REQUEST_TIMEOUT = 15
+
+# Lichess broadcast tournament ids for events this pipeline covers on a
+# recurring, ongoing basis -- update by hand as new majors start, the same
+# maintenance model as chess_results_standings.py's KNOWN_TOURNAMENTS.
+# Matched against the drafted event string via plain substring containment
+# (see find_round_via_known_tournament), so "46th Chess Olympiad" and "the
+# Olympiad" both hit the "olympiad" entry.
+#
+# A single event can map to several tournament ids because large events
+# split into parallel broadcasts by match-number range (top boards get
+# their own dedicated broadcast; everything else is split into further
+# brackets) -- which bracket a specific team/player falls into isn't
+# knowable in advance, so every candidate for the event gets tried. This
+# list is deliberately not exhaustive (lower-board brackets beyond what's
+# listed here exist too) -- it only needs to cover the boards a "headline
+# game" article is realistically going to name, and the web-search finder
+# remains the fallback for anything this list doesn't catch.
+KNOWN_BROADCAST_TOURNAMENTS: dict[str, list[str]] = {
+    "olympiad": [
+        "n1pPI5Q0",  # 46th FIDE Chess Olympiad Samarkand 2026 | Open | Matches 1-12
+        "MSQXIzkK",  # 46th FIDE Chess Olympiad Samarkand 2026 | Open | Matches 13-37
+        "HtMn014k",  # 46th FIDE Chess Olympiad Samarkand 2026 | Women | Matches 1-25
+        "UjEVXNHv",  # 46th FIDE Chess Olympiad Samarkand 2026 | Women | Matches 26-50
+        "oQuU2arG",  # 46th FIDE Chess Olympiad Samarkand 2026 | Women | Matches 76+
+    ],
+}
 
 WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 3}
 
@@ -182,6 +223,56 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     return None
 
 
+# How many of a candidate tournament's most recent finished rounds to
+# check before moving on to the next candidate. A "headline game" article
+# is realistically about recent news, not an early round from weeks ago,
+# so this bounds the worst case (an event with several irrelevant
+# candidate tournaments, e.g. a Women's player checked against the Open
+# brackets first) to a handful of fetches per candidate instead of
+# exhaustively walking all 11 rounds of each one before moving on --
+# caught live: without this cap, a real lookup for a Women's-section game
+# spent over two minutes walking all 22 rounds across both Open brackets,
+# which will never match a Women's player, before it ever reached the
+# Women's brackets where the real match was.
+_RECENT_ROUNDS_TO_CHECK = 3
+
+
+def find_round_via_known_tournament(event: str, player1: str, player2: str) -> str | None:
+    """Fast path for KNOWN_BROADCAST_TOURNAMENTS: returns a matched game's
+    GameURL, or None if the event doesn't match a known entry (not an
+    error -- most events aren't in the registry, and the caller falls back
+    to the web-search finder for those)."""
+    event_key = event.strip().lower()
+    tour_ids = next((ids for key, ids in KNOWN_BROADCAST_TOURNAMENTS.items() if key in event_key), None)
+    if not tour_ids:
+        return None
+
+    for tour_id in tour_ids:
+        try:
+            response = requests.get(
+                f"https://lichess.org/api/broadcast/{tour_id}",
+                headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+                timeout=REQUEST_TIMEOUT,
+            )
+            response.raise_for_status()
+            rounds = response.json().get("rounds", [])
+        except (requests.RequestException, ValueError) as exc:
+            print(f"    lichess lookup: known-tournament fetch failed for {tour_id!r}: {exc}", file=sys.stderr)
+            continue
+
+        finished = [r for r in reversed(rounds) if r.get("finished")][:_RECENT_ROUNDS_TO_CHECK]
+        for round_ in finished:
+            game_url = find_game_in_round(round_["id"], player1, player2)
+            if game_url:
+                print(
+                    f"    lichess lookup: known-tournament fast path matched "
+                    f"{round_['name']!r} in {tour_id!r} for player1={player1!r} player2={player2!r}",
+                    file=sys.stderr,
+                )
+                return game_url
+    return None
+
+
 def embed_url_from_game_url(game_url: str) -> str:
     """https://lichess.org/broadcast/<ts>/<rs>/<roundId>/<gameId> ->
     https://lichess.org/embed/broadcast/<ts>/<rs>/<roundId>/<gameId>, the
@@ -201,8 +292,17 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
     log line said only "requested" / "embed not found", with no visibility
     into which of the two lookup stages actually failed or what values the
     model's self-report had produced, making a real miss (Wei Yi's game
-    against Indjic, round 4) undiagnosable from the CI log alone."""
+    against Indjic, round 4) undiagnosable from the CI log alone.
+
+    Tries the free, deterministic KNOWN_BROADCAST_TOURNAMENTS path first --
+    see its own docstring for why the web-search finder alone isn't
+    reliable enough on its own for events this pipeline tracks regularly."""
     print(f"    lichess lookup: event={event!r} player1={player1!r} player2={player2!r}", file=sys.stderr)
+
+    game_url = find_round_via_known_tournament(event, player1, player2)
+    if game_url:
+        return {"url": embed_url_from_game_url(game_url)}
+
     round_ref = find_broadcast_round(client, event, player1, player2)
     if round_ref is None:
         return None
@@ -233,7 +333,7 @@ SAN_MOVE_RE = re.compile(
 # below (an independent second pass over the finished body). Keeping one
 # copy of the criteria means the recheck can't silently drift from what the
 # model was originally told to look for.
-GAME_LOOKUP_CRITERIA = """Fill this in whenever the piece gives ONE specific game real, headline-level treatment -- named players, and either a notable moment (a blunder, a sacrifice, a specific rating/seed gap) or enough of the game's shape to be worth seeing on a real board. This is NOT limited to pieces that are about nothing else: a round-recap piece that covers several results but still singles out one specific game by name, with real detail, qualifies just as much as a piece built entirely around one game -- Erigaisi's blunder-loss to Laohawirapap qualified even though that piece also covered the ceremony and other results, and a round recap that leads with "Liang's Shock Loss" and gives it a real paragraph (the 258-point rating gap, the opening, the result) qualifies on exactly the same basis, even though the same piece also covers Montenegro's draw and other matches. This also covers a title-clinching or decisive-match paragraph that names individual winners and their opponents, even without describing how any single game actually played out move-by-move -- the named result itself (who beat whom, on which board, to seal a title or a match) is the headline-level detail; a real board to show alongside it is worth more than the prose describing it (caught live: "Poland's Rollercoaster Ends in Gold at Samarkand" named three individual winners who clinched the title match against the Philippines by name and board, with no separate move-level description, and shipped with no embed -- any one of those three games qualified). What does NOT qualify: a bare team score with no players named at all ("India beat Thailand 3-1"), or a trend with no specific game attached ("the standings flipped again"). If more than one game in the piece would qualify on its own, pick the one the piece treats as its actual headline (usually whichever is named in the title); for a multi-winner clinching paragraph with no other basis to rank them, pick the highest-rated or highest-titled player among them. When genuinely unsure whether a mention has enough detail to count, err toward filling this in rather than leaving it empty -- a lookup that finds nothing costs little, but skipping a piece that deserved a real embed is the worse failure mode."""
+GAME_LOOKUP_CRITERIA = """Fill this in whenever the piece gives ONE specific game real, headline-level treatment -- named players, and either a notable moment (a blunder, a sacrifice, a specific rating/seed gap) or enough of the game's shape to be worth seeing on a real board. This is NOT limited to pieces that are about nothing else: a round-recap piece that covers several results but still singles out one specific game by name, with real detail, qualifies just as much as a piece built entirely around one game -- Erigaisi's blunder-loss to Laohawirapap qualified even though that piece also covered the ceremony and other results, and a round recap that leads with "Liang's Shock Loss" and gives it a real paragraph (the 258-point rating gap, the opening, the result) qualifies on exactly the same basis, even though the same piece also covers Montenegro's draw and other matches. This also covers a title-clinching or decisive-match paragraph that names individual winners and their opponents, even without describing how any single game actually played out move-by-move -- the named result itself (who beat whom, on which board, to seal a title or a match) is the headline-level detail; a real board to show alongside it is worth more than the prose describing it (caught live: "Poland's Rollercoaster Ends in Gold at Samarkand" named three individual winners who clinched the title match against the Philippines by name and board, with no separate move-level description, and shipped with no embed -- any one of those three games qualified). What does NOT qualify: a bare team score with no players named at all ("India beat Thailand 3-1"), or a trend with no specific game attached ("the standings flipped again"). If more than one game in the piece would qualify on its own, pick the one the piece treats as its actual headline (usually whichever is named in the title) -- not whichever game happens to have the flashiest tactics or the most vivid description, if that game is a secondary mention rather than the result the title itself is about (caught live: "Madaminov's Unbeaten 5.5/7 Seals Uzbekistan's Second Gold" named Madaminov's game as the actual title-clinching result, but the self-report instead picked a sharper-sounding tactical game from deep in the Women's section -- Humpy Koneru's queen sacrifice against Dzagnidze -- which wasn't even the game the headline was about). Check the title first, then confirm the named player(s) in it actually have a game described in the body before picking anything else. For a multi-winner clinching paragraph with no other basis to rank them, pick the highest-rated or highest-titled player among them. When genuinely unsure whether a mention has enough detail to count, err toward filling this in rather than leaving it empty -- a lookup that finds nothing costs little, but skipping a piece that deserved a real embed is the worse failure mode."""
 
 RECHECK_MODEL = "claude-sonnet-5"
 

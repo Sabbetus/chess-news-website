@@ -9,9 +9,9 @@ selectionScore: 41
 reviewStatus: "published"
 socialCopy: "Uzbekistan takes gold on home soil, China tops the women's section, and India walks away with two silvers plus the Gaprindashvili Cup. Samarkand's closing ceremony had it all."
 image:
-  src: "./_images/Nodirbek_Abdusattorov_chess_player__cropped.webp"
-  credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Abdusattorov_chess_player_%28cropped%29.jpg"
+  src: "./_images/Timur_Turlov_in_2016.webp"
+  credit: "Dikhan, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov_in_2016.jpg"
 ---
 
 Two weeks of chess in Samarkand ended the way only a Central Asian host nation could close it: with medals, national anthems, opera, and finally fireworks and a drone show lighting up the sky over the city's Eternal City amphitheater. [FIDE's own account of the closing ceremony](https://www.fide.com/fireworks-drones-and-champions-samarkands-grand-olympiad-finale/) described it as one of the best send-offs in the reporter's experience of covering Olympiads, and the medal table backs up the theatrics.
