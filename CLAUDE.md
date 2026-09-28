@@ -28,7 +28,13 @@ Any batch that needs even one fix (a broken link, a factual correction,
 anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 2 consecutive clean batches.**
+- 2026-09-28: PR #49, the Olympiad gold/closing-ceremony batch, reviewed
+  clean -- every medal, performance rating, trophy, and category prize
+  checked against FIDE's and Chess.com's real coverage, including one
+  name flagged for extra scrutiny (Ihor Samunenkov, board-four gold)
+  confirmed genuine straight from FIDE's own article. All 5 internal
+  links resolved. No fixes needed.
 - 2026-09-27: PR #48, the weekly recap, reviewed clean -- all 15 internal
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
