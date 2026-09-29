@@ -463,6 +463,81 @@ nav.sections a:hover {
   color: var(--ink);
 }
 
+/* Results sub-menu. Desktop: a dropdown on hover or keyboard focus. Every
+   viewport also gets a second row (.sub-sections) while you're inside the
+   Results group, which is the only way in on touch screens, where the
+   top row is a horizontal scroller that would clip a dropdown. */
+nav.sections .has-sub {
+  position: relative;
+  display: inline-flex;
+}
+nav.sections .caret {
+  margin-left: 4px;
+  font-size: 10px;
+}
+nav.sections .sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  min-width: 210px;
+  padding: 8px 0;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+  flex-direction: column;
+}
+nav.sections .sub-menu a {
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+nav.sections .sub-menu a.on {
+  border-bottom: none;
+}
+@media (hover: hover) and (min-width: 641px) {
+  nav.sections .has-sub:hover .sub-menu,
+  nav.sections .has-sub:focus-within .sub-menu {
+    display: flex;
+  }
+}
+nav.sub-sections {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 0 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+nav.sub-sections a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 3px 2px;
+}
+nav.sub-sections a.on {
+  color: var(--blue);
+  font-weight: 500;
+  border-bottom: 1px solid var(--blue);
+}
+@media (max-width: 640px) {
+  nav.sections .caret {
+    display: none;
+  }
+  nav.sub-sections {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.sub-sections a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
 .eyebrow-short {
   display: none;
 }

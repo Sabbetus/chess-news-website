@@ -76,6 +76,17 @@ jobs:
           git commit -m "chore: update most-popular data"
           git push
 
+      # A no-op on all but about one deploy a month: only downloads when FIDE
+      # has published a newer list than data/fide-top100.json holds.
+      - name: Refresh FIDE top 100
+        continue-on-error: true
+        run: |
+          python scripts/fide_ratings.py
+          if git diff --quiet -- data/fide-top100.json; then exit 0; fi
+          git add data/fide-top100.json
+          git commit -m "chore: update FIDE top 100"
+          git push
+
       - name: Build Astro site
         run: npm run build
 
