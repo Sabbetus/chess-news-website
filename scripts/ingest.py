@@ -19,7 +19,6 @@ tracks what's been ingested before so re-runs don't reprocess the same
 period twice.
 """
 
-import html
 import json
 import re
 from datetime import date, datetime, timedelta, timezone
@@ -28,6 +27,7 @@ from pathlib import Path
 import feedparser
 import requests
 
+from article_text import fetch_full_article_text
 from continents import CONTINENT_CODES, CONTINENT_NAMES, continent_code_for, continent_url
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -36,6 +36,11 @@ SEEN_PATH = DATA_DIR / "seen.json"
 
 CHESS_COM_RSS = "https://www.chess.com/rss/news"
 FIDE_RSS = "https://www.fide.com/feed/"
+CHESSBASE_RSS = "https://en.chessbase.com/feed"
+# ChessBase's feed holds ~100 items spanning over a year (Chess.com and FIDE
+# hold the last few weeks), so without an age cap the first run would treat
+# every old article as fresh news.
+CHESSBASE_MAX_AGE_DAYS = 4
 CALENDAR_DATA_URL = "https://chesstournamentcalendar.com/data/tournaments.json"
 # archive.json carries concluded tournaments (tournaments.json is upcoming-only),
 # needed for the "biggest tournaments of last month" retrospective aggregate.
@@ -56,7 +61,7 @@ def save_seen(seen: set[str]) -> None:
     SEEN_PATH.write_text(json.dumps(sorted(seen), indent=2))
 
 
-def fetch_rss(url: str, source_name: str, source_tier: str) -> list[dict]:
+def fetch_rss(url: str, source_name: str, source_tier: str, max_age_days: int | None = None) -> list[dict]:
     resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
     resp.raise_for_status()
     parsed = feedparser.parse(resp.content)
@@ -73,6 +78,10 @@ def fetch_rss(url: str, source_name: str, source_tier: str) -> list[dict]:
             if published
             else None
         )
+        if max_age_days is not None and (
+            published is None or datetime.now(timezone.utc) - datetime(*published[:6], tzinfo=timezone.utc) > timedelta(days=max_age_days)
+        ):
+            continue
         summary = re.sub("<[^>]+>", "", entry.get("summary", "")).strip()
         items.append(
             {
@@ -88,57 +97,48 @@ def fetch_rss(url: str, source_name: str, source_tier: str) -> list[dict]:
     return items
 
 
-# Chess.com's RSS <description> is a ~250-character teaser cut off mid-word
-# with a trailing "...", not the article. Drafting from it produced pieces
-# that wrote around the gap and even claimed details were "not in the
-# excerpt" that the full article states outright (caught live, 2026-09-29:
-# a roster announcement cut off at "GMs Jorden v...", and a Bullet Brawl
-# result cut off at "GM Oleksa..." that shipped into the draft verbatim).
-# FIDE's feed carries full text, so only truncated items need this.
+# Sources whose feed carries only a teaser. Chess.com's is cut off mid-word
+# with "...", so a truncated tail is the tell; ChessBase's is the lede
+# paragraph with no marker at all, so every ChessBase item needs the full
+# page (see article_text.py for why drafting from a teaser went wrong).
+ALWAYS_FETCH_FULL_TEXT = {"ChessBase"}
 TRUNCATION_MARKERS = ("...", "\u2026")
-MAX_ARTICLE_TEXT_CHARS = 8000
-_POST_BODY_RE = re.compile(r'class="post-view-content">(.*?)</div>', re.DOTALL)
+# Under this, a ChessBase page has no article worth writing about -- most
+# often a video-only post (an interview that lives on their YouTube channel
+# and is just an embed and a headline on the site; caught in testing: the
+# Keymer "interview" page is 141 characters).
+MIN_FULL_TEXT_CHARS = 800
 
 
 def summary_is_truncated(summary: str) -> bool:
     return summary.rstrip().endswith(TRUNCATION_MARKERS)
 
 
-def fetch_full_article_text(url: str) -> str | None:
-    """The article body text from a Chess.com news page, or None if the page
-    couldn't be fetched or the body wasn't where it's expected -- callers
-    must treat None as "couldn't get the real text", never as "empty"."""
-    try:
-        resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
-        resp.raise_for_status()
-    except requests.RequestException as exc:
-        print(f"  Could not fetch full text for {url}: {exc}")
-        return None
-    match = _POST_BODY_RE.search(resp.text)
-    if not match:
-        print(f"  No article body found in {url}")
-        return None
-    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", match.group(1), re.DOTALL)
-    text = " ".join(html.unescape(re.sub(r"<[^>]+>", "", p)).replace("\xa0", " ").strip() for p in paragraphs)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text[:MAX_ARTICLE_TEXT_CHARS] if text else None
+def needs_full_text(item: dict) -> bool:
+    return item["kind"] == "news" and (
+        item["sourceName"] in ALWAYS_FETCH_FULL_TEXT or summary_is_truncated(item.get("summary", ""))
+    )
 
 
-def restore_truncated_summaries(items: list[dict]) -> tuple[list[dict], list[dict]]:
-    """Replaces a truncated teaser with the article's real text. Returns
-    (usable, unrecoverable): an item whose text couldn't be fetched is
-    unrecoverable and must not be drafted from the cut-off teaser."""
-    usable, unrecoverable = [], []
+def restore_full_text(items: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+    """Replaces a teaser with the article's real text. Returns
+    (usable, retry_later, no_substance): an item whose page couldn't be
+    fetched is retry_later (a transient failure shouldn't cost us the
+    story), one whose page has too little text is no_substance (it never
+    will have more), and neither may be drafted from the teaser."""
+    usable, retry_later, no_substance = [], [], []
     for item in items:
-        if item["kind"] != "news" or not summary_is_truncated(item.get("summary", "")):
+        if not needs_full_text(item):
             usable.append(item)
             continue
         full = fetch_full_article_text(item["sourceUrl"])
         if full is None:
-            unrecoverable.append(item)
-            continue
-        usable.append({**item, "summary": full})
-    return usable, unrecoverable
+            retry_later.append(item)
+        elif item["sourceName"] in ALWAYS_FETCH_FULL_TEXT and len(full) < MIN_FULL_TEXT_CHARS:
+            no_substance.append(item)
+        else:
+            usable.append({**item, "summary": full})
+    return usable, retry_later, no_substance
 
 
 NOTABLE_NAME_KEYWORDS = [
@@ -357,22 +357,33 @@ def main() -> None:
     raw_items: list[dict] = []
     raw_items += fetch_rss(CHESS_COM_RSS, "Chess.com", "drama")
     raw_items += fetch_rss(FIDE_RSS, "FIDE", "serious")
+    # The newest source is the only one allowed to fail without stopping the
+    # run: losing a day of ChessBase is fine, losing the whole day is not.
+    try:
+        raw_items += fetch_rss(CHESSBASE_RSS, "ChessBase", "features", max_age_days=CHESSBASE_MAX_AGE_DAYS)
+    except requests.RequestException as exc:
+        print(f"ChessBase feed unavailable ({type(exc).__name__}: {exc}) -- continuing without it.")
     raw_items += fetch_calendar_aggregates()
 
     new_items = [item for item in raw_items if dedupe_key(item) not in seen]
-    new_items, unrecoverable = restore_truncated_summaries(new_items)
-    # Deliberately left out of `seen`: a transient fetch failure shouldn't
-    # permanently cost us the story, so the next run retries it for as long
-    # as it stays in the feed.
-    if unrecoverable:
-        print(f"Skipping {len(unrecoverable)} item(s) with a truncated teaser and no fetchable full text (will retry next run):")
-        for item in unrecoverable:
+    new_items, retry_later, no_substance = restore_full_text(new_items)
+    # retry_later is deliberately left out of `seen`: a transient fetch
+    # failure shouldn't permanently cost us the story, so the next run
+    # retries it for as long as it stays in the feed. no_substance goes
+    # into `seen` -- refetching a video-only page every day gets nothing.
+    if retry_later:
+        print(f"Skipping {len(retry_later)} item(s) whose full text couldn't be fetched (will retry next run):")
+        for item in retry_later:
+            print(f"  {item['title']}")
+    if no_substance:
+        print(f"Skipping {len(no_substance)} item(s) with under {MIN_FULL_TEXT_CHARS} characters of article text (video-only or stub posts):")
+        for item in no_substance:
             print(f"  {item['title']}")
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     CANDIDATES_PATH.write_text(json.dumps(new_items, indent=2))
 
-    seen.update(dedupe_key(item) for item in new_items)
+    seen.update(dedupe_key(item) for item in new_items + no_substance)
     save_seen(seen)
 
     print(f"Ingested {len(new_items)} new candidate(s) out of {len(raw_items)} fetched.")
