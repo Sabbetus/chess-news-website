@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/1510045"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aryan_Tari"
+image:
+  src: "../articles/_images/Aryan_Tari_World_Rapid_Chess_Championship_2015.webp"
+  credit: "Regani, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAryan_Tari_World_Rapid_Chess_Championship_2015.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

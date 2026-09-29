@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/2285525"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/David_Ant%C3%B3n_Guijarro"
+image:
+  src: "../articles/_images/DavidAnton23a.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADavidAnton23a.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

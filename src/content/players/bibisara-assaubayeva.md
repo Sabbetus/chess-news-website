@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13708694"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Bibisara_Assaubayeva"
+image:
+  src: "../articles/_images/Bibisara_Assaubayeva.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABibisara_Assaubayeva.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

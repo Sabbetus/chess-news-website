@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/14111330"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Anna_Muzychuk"
+image:
+  src: "../articles/_images/Anna_Muzychuk_at_Gibraltar.webp"
+  credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnna_Muzychuk_at_Gibraltar.png"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
