@@ -43,6 +43,7 @@ from lichess_game import (
     recheck_game_lookup,
 )
 from selection import _has_result_signal, tournament_has_round_context
+from tweets import tweet_quotes_for_item
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -1359,6 +1360,18 @@ def draft_one(
             )
             if embed:
                 frontmatter["gameEmbed"] = embed
+
+    # Posts on X that the source page itself embeds, as static text (see
+    # tweets.py) -- best-effort like the game embed: none found is normal.
+    if not is_aggregate:
+        try:
+            quotes = tweet_quotes_for_item(item)
+        except Exception as exc:  # noqa: BLE001 -- never fail a draft over a quote
+            print(f"  Tweet quote lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            quotes = []
+        if quotes:
+            frontmatter["tweetEmbeds"] = quotes
+            print(f"  tweet quotes: attached {len(quotes)} for '{item['title']}'", file=sys.stderr)
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():
