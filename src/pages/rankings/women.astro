@@ -34,7 +34,8 @@ const jsonLd = [
 <BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="rankings" jsonLd={jsonLd}>
   <div class="hub">
     <header class="hub-head">
-      <h1>FIDE Women's Top 25: {month}</h1>
+      <h1>FIDE Women's Top 25</h1>
+      <p class="list-month">{month} rating list</p>
       <p class="hub-lede">
         The 25 highest-rated active women in classical chess, from FIDE's official standard rating list. It updates
         each month when FIDE publishes a new list.
@@ -58,6 +59,14 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  .list-month {
+    margin: -4px 0 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
   .rank-switch {
     max-width: var(--content-width);
     margin: 0 auto 8px;
