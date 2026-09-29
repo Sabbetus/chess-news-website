@@ -34,7 +34,7 @@ from chess_results_standings import (
     standings_markdown_table,
 )
 from continents import CONTINENT_SLUGS
-from images import localize_image, pick_image_for_item
+from images import fallback_image, localize_image, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
     SAN_MOVE_RE,
@@ -1302,7 +1302,13 @@ def draft_one(
         ]
 
     image = pick_image_for_item(
-        item, parsed["title"], parsed.get("imageSubjects", []), exclude_source_urls=used_image_source_urls()
+        item,
+        parsed["title"],
+        parsed.get("imageSubjects", []),
+        exclude_source_urls=used_image_source_urls(),
+        # A person's story gets an object-only photo rather than some other
+        # player's face when the person themselves has none.
+        prefer_neutral=(lens == "people"),
     )
     if image:
         # Mark the Commons source as used regardless of what localize_image
@@ -1310,9 +1316,16 @@ def draft_one(
         # then failed to decode/save) shouldn't be offered to the very next
         # sibling article in this same run.
         _session_used_urls.add(image["sourceUrl"])
-        localized = localize_image(image)
+        # A fallback-pool photo is already a committed master ("src" set).
+        localized = image if image.get("src") else localize_image(image)
         if localized:
             frontmatter["image"] = localized
+    # Every article has a photo: a search hit whose download failed falls
+    # back to the committed pool too, not to the site's SVG placeholder.
+    if "image" not in frontmatter:
+        fallback = fallback_image(parsed["title"])
+        if fallback:
+            frontmatter["image"] = fallback
 
     embed = None
     if not is_aggregate:

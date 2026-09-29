@@ -11,8 +11,10 @@ governance/money-angle ones, won't have a specific real photo available, and
 fall back to the site's SVG placeholder thumbnail instead.
 """
 
+import hashlib
 import html
 import io
+import json
 import re
 import time
 import urllib.error
@@ -566,7 +568,9 @@ def _loosened_event_query(subject: str) -> str | None:
     return " ".join(kept)
 
 
-def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | None = None) -> list:
+def build_query_cascade(
+    item: dict, drafted_title: str, image_subjects: list | None = None, prefer_neutral: bool = False
+) -> list:
     """Ordered list of (query, strict) tuples to try, most specific first,
     for a drafted article. `item` is the original candidate dict (from
     selected.json); `drafted_title` is the headline Claude wrote;
@@ -576,7 +580,14 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
     usable photo wins, so this order determines whose photo the article
     gets, not just which query happens to run first. `strict` marks auto-extracted headline-fragment
     queries, which need a stronger title-match bar than the
-    deliberately-constructed ones (see _title_matches_query)."""
+    deliberately-constructed ones (see _title_matches_query).
+
+    `prefer_neutral` is for stories about a person (the People lens): when
+    the subject itself has no photo, a photo of some other identifiable
+    player next to their story would read as if it were them, and next to a
+    story like a harassment case that's worse than unhelpful. So the
+    cascade stops after the subject queries and the caller falls back to an
+    object-only photo (pick_image_for_item, below)."""
     queries = []
     continent_code = item.get("continentCode")
     continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
@@ -691,7 +702,13 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
         # to find, falling straight to the org/continent/generic queries
         # below is safer than guessing from the headline text.
         source_name = item.get("sourceName", "")
-        if source_name:
+        # The outlet's own logo stands in for a photo only when the outlet
+        # is what the story is about (a FIDE-sourced piece on a FIDE vote).
+        # Otherwise it's just whoever happened to publish the story --
+        # caught live: a ChessBase-sourced piece about a streamer got
+        # "ChessBase India Logo" as its photo, which says nothing about her.
+        subject_text = " ".join([drafted_title, *(image_subjects or [])]).lower()
+        if source_name and source_name.lower() in subject_text and not prefer_neutral:
             # Lenient, not strict, and prefer_relevance=True -- an earlier
             # version of this made the query strict (require "logo" too,
             # not just "FIDE") after a cruise-ship photo matched on "FIDE"
@@ -714,21 +731,54 @@ def build_query_cascade(item: dict, drafted_title: str, image_subjects: list | N
             # meaningless for a static organization logo the way it's
             # meaningful for a person's face changing over time.
             queries.append((f"{source_name} logo", False, True, False))
-        if continent_name:
+        if continent_name and not prefer_neutral:
             queries.append((f"{continent_name} chess", False, False, False))
 
-    queries.append(("chess tournament", False, False, False))
+    if not prefer_neutral:
+        queries.append(("chess tournament", False, False, False))
     return queries
 
 
+# Local, already-committed masters of object-only chess photos (pieces, a
+# board, a set) with no identifiable people in them -- the last resort that
+# guarantees every article has a real, license-clean photo whatever Commons
+# search does. Kept as a small pool so consecutive fallbacks don't all look
+# the same; picked by a stable hash of the headline.
+FALLBACK_PHOTOS_PATH = Path(__file__).parent / "fallback_photos.json"
+
+
+def fallback_image(seed_text: str) -> dict | None:
+    try:
+        pool = json.loads(FALLBACK_PHOTOS_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not pool:
+        return None
+    index = int(hashlib.sha256(seed_text.encode("utf-8")).hexdigest(), 16) % len(pool)
+    photo = pool[index]
+    return {"src": photo["src"], "credit": photo["credit"], "sourceUrl": photo["sourceUrl"]}
+
+
 def pick_image_for_item(
-    item: dict, drafted_title: str, image_subjects: list | None = None, exclude_source_urls: set | None = None
+    item: dict,
+    drafted_title: str,
+    image_subjects: list | None = None,
+    exclude_source_urls: set | None = None,
+    prefer_neutral: bool = False,
 ) -> dict | None:
-    for query, strict, prefer_relevance, require_known_date in build_query_cascade(item, drafted_title, image_subjects):
+    """A photo for the article: the cascade's specific-to-generic Commons
+    search first, and if that finds nothing (for a person story, nothing of
+    the person) the committed fallback pool -- so every article gets one
+    (None only if the pool file itself is missing). A result with a local
+    "src" is already stored in _images; one with a "url" still has to go
+    through localize_image."""
+    for query, strict, prefer_relevance, require_known_date in build_query_cascade(
+        item, drafted_title, image_subjects, prefer_neutral
+    ):
         result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date)
         if result:
             return result
-    return None
+    return fallback_image(drafted_title) or fallback_image(item.get("title", ""))
 
 
 # The only local master ever stored -- every on-site display size (lead,
