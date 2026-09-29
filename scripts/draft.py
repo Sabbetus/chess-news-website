@@ -290,8 +290,26 @@ NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. E
 piece is a companion analysis to a linked source article -- never a reworded \
 summary of the source. Add genuine analysis and context a casual reader wouldn't \
 get from the source alone. Be accurate: never invent facts, quotes, or statistics \
-not present in the source material given to you. If you are not confident about a \
-detail, omit it rather than guess.
+about the event itself that the source material doesn't give you. If you are not \
+confident about a detail, omit it rather than guess.
+
+Original material is the point of these pieces, not a risk to be minimized. The \
+facts about THIS event -- results, scores, standings, names, titles, dates, quotes, \
+how a specific rule or mechanic works -- come from the source and must match it. \
+Everything around those facts is yours to add and encouraged: analysis, comparison, \
+what a result suggests, a player's well-known style or reputation, real background \
+about the venue, the format or the history, and a point of view. Well-established \
+general knowledge belongs in the piece when it sharpens the story (for example, \
+what a player is known for at the board, or that a city hosted a past Olympiad); do \
+not leave it out just because the source didn't say it. Only steer clear of \
+background you are not sure is true.
+
+Write as a publication addressing its readers, never about your own inputs. Do not \
+mention "the excerpt", "the source material", "the text we had", what you were or \
+weren't given, or that anything was cut off or unavailable, and never write a \
+sentence whose job is to say what you can't say ("we can't say more about..."). If \
+a detail isn't in the source, leave it out silently and write about what you do \
+know.
 
 Do not trade away the source's own concrete details to make room for your added \
 context -- include the specific facts the source gives alongside your analysis, \
@@ -935,6 +953,19 @@ source gives -- over inventing a plausible-sounding replacement). Do not remove 
 anything that IS supported by the source, even if it sounds like a strong claim -- your job is \
 accuracy, not caution, and the source material is often more detailed than it first appears \
 (check the full text, not just the parts a quick skim would catch).
+
+This is a check on the facts about the event itself, not on the writer's own contribution. \
+Leave analysis, opinion, comparison, a player's well-known style or reputation, and \
+well-established general or historical background completely alone even when the source \
+never mentions them -- those are meant to be there. Only fix a claim about this specific \
+event that the source doesn't support or that contradicts the source or the body itself, or \
+background that is plainly false.
+
+Also remove any sentence or clause where the article talks about its own source material \
+instead of chess -- "the excerpt we had", "the text available to us", "cut off in the \
+source", "we can't say more about..." -- and any truncated fragment such as a name ending in \
+"...". Cut it cleanly so the surrounding text still reads naturally; never replace it with \
+a guess at what the missing text said.
 
 Leave everything else completely untouched: same words, same paragraph breaks, same Markdown \
 links and formatting, everywhere except the specific claims and details you're correcting.
