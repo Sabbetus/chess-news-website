@@ -95,6 +95,13 @@ const articles = defineCollection({
         })
       )
       .optional(),
+  }).refine((data) => data.reviewStatus !== 'published' || data.image, {
+    // Every article has a photo. The drafting pipeline guarantees one (a
+    // committed fallback pool, see scripts/images.py), so this only trips on
+    // a hand-written or hand-edited article -- caught here, at build time,
+    // rather than shipping the SVG placeholder.
+    message: 'A published article must have an image (see scripts/images.py fallback_image)',
+    path: ['image'],
   }),
 });
 
