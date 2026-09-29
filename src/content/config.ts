@@ -53,6 +53,9 @@ const articles = defineCollection({
     selectionScore: z.number(),
     reviewStatus: z.enum(['draft', 'approved', 'published']),
     socialCopy: z.string().optional(),
+    // Search-result summary (<=155 chars). Optional: older articles fall
+    // back to an excerpt of the body.
+    metaDescription: z.string().max(170).optional(),
     // A real photo/logo sourced from Wikimedia Commons and downloaded once
     // at draft time (see scripts/images.py), used only when a
     // license-clean, reasonably-relevant match was found -- absent

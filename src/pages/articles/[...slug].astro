@@ -34,7 +34,9 @@ const shortDateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric'
 // so the tail of a longer one is cut mid-sentence in results. Feeds the
 // JSON-LD description and og:description too, which have no such limit but
 // read better consistent with what search actually shows.
-const description = excerptFrom(article.body, 155);
+// A drafted, search-facing summary when the article has one (the pipeline
+// writes it since 2026-09-29); older pieces fall back to the body excerpt.
+const description = article.data.metaDescription ?? excerptFrom(article.body, 155);
 const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
 const correctionHref = `/contact/?${new URLSearchParams({
   topic: 'Article correction',
@@ -212,7 +214,7 @@ const jsonLd = [
     {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
 
     <p class="source-callout">
-      <span class="byline-credit">By Claude Henry</span><br />
+      <span class="byline-credit">By <a href="/about/#ai-and-people">Claude Henry</a></span><br />
       {allSources.length > 0 && (
         <>
           {allSources.length === 1 ? 'Original source: ' : 'Original sources: '}
