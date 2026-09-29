@@ -36,7 +36,7 @@ const description =
                 <p class="event-summary">{e.data.summary}</p>
                 <p class="note">
                   {e.data.nextEdition && <>Next: {dateRange(e.data.nextEdition.start, e.data.nextEdition.end)}</>}
-                  {latest && <> · Champion: {latest.names.join(', ')} ({latest.year})</>}
+                  {latest && <>{e.data.nextEdition && ' · '}Champion: {latest.names.join(', ')} ({latest.year})</>}
                 </p>
               </li>
             );
