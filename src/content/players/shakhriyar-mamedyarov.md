@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/13401319"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Shakhriyar_Mamedyarov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

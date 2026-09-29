@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/8603006"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ju_Wenjun"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/13306553"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Haik_M._Martirosyan"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

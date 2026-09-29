@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Wesley_So_Tata_2023_-_63.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_Tata_2023_-_63.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

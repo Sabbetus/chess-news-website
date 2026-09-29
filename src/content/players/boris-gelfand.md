@@ -25,7 +25,7 @@ image:
   src: "../articles/_images/20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Gelfand_Boris.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3A20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Gelfand_Boris.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/8602980"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Hou_Yifan"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

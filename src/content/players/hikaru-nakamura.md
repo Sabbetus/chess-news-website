@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Hikaru_Nakamura_Waits_at_the_2026_Naroditsky_Memorial_Rapid_and_Blitz.webp"
   credit: "ChessKelly, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHikaru_Nakamura_Waits_at_the_2026_Naroditsky_Memorial_Rapid_and_Blitz.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

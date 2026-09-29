@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Javoxir_Sindarov.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavoxir_Sindarov.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

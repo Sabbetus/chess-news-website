@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/4152956"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nikita_Vitiugov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

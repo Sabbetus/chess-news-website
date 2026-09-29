@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/13302507"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Robert_Hovhannisyan"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

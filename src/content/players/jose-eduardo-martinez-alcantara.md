@@ -24,7 +24,7 @@ links:
     url: "https://ratings.fide.com/profile/3805662"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Jos%C3%A9_Mart%C3%ADnez_Alc%C3%A1ntara"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

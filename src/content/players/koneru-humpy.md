@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/5008123"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Koneru_Humpy"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -33,7 +33,7 @@ image:
   src: "../articles/_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp"
   credit: "Bin im Garten, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_board_with_chess_set_in_opening_position_2012_PD_04.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

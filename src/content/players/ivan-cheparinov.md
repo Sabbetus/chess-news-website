@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/2905540"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ivan_Cheparinov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/4162722"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ernesto_Inarkiev"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

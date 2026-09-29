@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/24171760"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Polina_Shuvalova"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

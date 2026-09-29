@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/8602883"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Wang_Hao_%28chess_player%29"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

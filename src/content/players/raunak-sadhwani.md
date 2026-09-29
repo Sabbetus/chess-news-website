@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/35093487"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Raunak_Sadhwani"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/13602993"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nino_Batsiashvili"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

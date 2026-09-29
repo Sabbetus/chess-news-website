@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/5007003"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pentala_Harikrishna"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

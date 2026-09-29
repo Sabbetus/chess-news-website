@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/14101025"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alexander_Onischuk"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

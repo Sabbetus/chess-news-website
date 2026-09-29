@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/13409301"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Mahammad_Muradli"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

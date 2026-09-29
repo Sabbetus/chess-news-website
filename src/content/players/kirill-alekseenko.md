@@ -19,7 +19,7 @@ links:
     url: "https://ratings.fide.com/profile/4135539"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Kirill_Alekseenko"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

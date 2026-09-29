@@ -28,7 +28,7 @@ image:
   src: "../articles/_images/Arjun_Erigaisi.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AArjun_Erigaisi.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

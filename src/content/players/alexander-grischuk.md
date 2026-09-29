@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Grischuk_Alexander_makes_his_move__30754960216.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGrischuk_Alexander_makes_his_move_%2830754960216%29.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

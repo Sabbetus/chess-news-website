@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/13729390"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alua_Nurman"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

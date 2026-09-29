@@ -61,7 +61,7 @@ image:
   src: "../articles/_images/Ding_Liren_46th_fide_chess_olympiad.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADing_Liren_46th_fide_chess_olympiad.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

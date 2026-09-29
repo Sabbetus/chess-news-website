@@ -25,7 +25,7 @@ links:
     url: "https://ratings.fide.com/profile/46616543"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Gukesh_Dommaraju"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

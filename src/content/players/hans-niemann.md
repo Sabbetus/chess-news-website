@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Hans_Moke_Niemann_uzchess_cup_3.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHans_Moke_Niemann_uzchess_cup_3.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/1039784"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Jorden_van_Foreest"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/14102951"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pavel_Eljanov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

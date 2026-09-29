@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/358878"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Thai_Dai_Van_Nguyen"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

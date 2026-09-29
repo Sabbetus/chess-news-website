@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/24125890"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Grigoriy_Oparin"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -24,7 +24,7 @@ links:
     url: "https://ratings.fide.com/profile/5029465"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vidit_Gujrathi"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

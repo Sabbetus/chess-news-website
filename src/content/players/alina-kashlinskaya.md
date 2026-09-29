@@ -24,7 +24,7 @@ image:
   src: "../articles/_images/2022-Alina-Kashlinskaya.webp"
   credit: "Krzysztof Szeląg, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2022-Alina-Kashlinskaya.JPG"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

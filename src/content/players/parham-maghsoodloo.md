@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/12539929"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Parham_Maghsoodloo"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/8605114"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Lei_Tingjie"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

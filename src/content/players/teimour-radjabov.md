@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/13400924"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Teimour_Radjabov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

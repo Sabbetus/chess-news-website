@@ -25,7 +25,7 @@ image:
   src: "../articles/_images/Bibisara_Assaubayeva.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABibisara_Assaubayeva.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 
