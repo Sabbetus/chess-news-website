@@ -74,7 +74,7 @@ const thisYear = new Date().getUTCFullYear();
                     <td class={`move ${move.cls}`} title={move.title}>{move.label}</td>
                     <td>
                       <span class="title">{p.title}</span>{' '}
-                      {page ? <a href={`/players/${page.slug}/`}>{p.name}</a> : <span>{p.name}</span>}
+                      {page ? <a href={`/players/${page.slug}/`}>{page.data.name}</a> : <span>{p.name}</span>}
                       <span class="fed-mobile">{p.federation}</span>
                     </td>
                     <td class="hide-mobile">{federationName(p.federation)}</td>
