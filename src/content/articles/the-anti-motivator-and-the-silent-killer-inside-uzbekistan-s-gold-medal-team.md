@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/uzbekistan-winners-interview-olympiad-
 lens: "people"
 continent: "asia"
 selectionScore: 89
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Uzbekistan's gold medalists on each other: an \"anti-motivator,\" a \"silent killer,\" and a queen sacrifice played \"for some content.\" The team behind the Olympiad title, in their own words."
 image:
   src: "./_images/Javokhir_Sindarov_chess_player.webp"

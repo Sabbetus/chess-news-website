@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/hanna-sayce-story-online-world"
 lens: "people"
 continent: "oceania"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Chess streamer Hanna Sayce was detained twice after a stalker falsely told border officials she was smuggling drugs. She has now spoken about the case, which returns to court in October."
 image:
   src: "./_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp"
