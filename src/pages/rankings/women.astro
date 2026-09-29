@@ -10,7 +10,8 @@ const month = periodLabel(TOP100.period);
 const leader = TOP100.women[0];
 const title = `FIDE Women's Top 25 Chess Players, ${month}`;
 const description = `The world's top 25 active women chess players on FIDE's ${month} standard rating list, with each player's rating, monthly change and federation. ${leader.name} leads on ${leader.rating}.`;
-const siteURL = new URL('/players/women/', Astro.site).toString();
+const SWITCH = 'women';
+const siteURL = new URL('/rankings/women/', Astro.site).toString();
 
 const jsonLd = [
   {
@@ -30,16 +31,21 @@ const jsonLd = [
 
 ---
 
-<BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="women" jsonLd={jsonLd}>
+<BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="rankings" jsonLd={jsonLd}>
   <div class="hub">
     <header class="hub-head">
-      <p class="hub-kicker"><a href="/players/">Players</a> / Women</p>
+      <p class="hub-kicker"><a href="/lens/results/">Results</a> / Rankings</p>
       <h1>FIDE Women's Top 25: {month}</h1>
       <p class="hub-lede">
         The 25 highest-rated active women in classical chess, from FIDE's official standard rating list. It updates
-        each month when FIDE publishes a new list. See also the <a href="/players/">open top 100</a>.
+        each month when FIDE publishes a new list.
       </p>
     </header>
+
+      <nav class="rank-switch" aria-label="Ranking">
+        <a href="/rankings/" class={SWITCH === 'open' ? 'on' : ''}>Open</a>
+        <a href="/rankings/women/" class={SWITCH === 'women' ? 'on' : ''}>Women</a>
+      </nav>
 
     <section class="hub-section top100">
       <RankingTable rows={TOP100.women} pageById={pageById} />
@@ -51,3 +57,28 @@ const jsonLd = [
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .rank-switch {
+    max-width: var(--content-width);
+    margin: 0 auto 8px;
+    display: flex;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .rank-switch a {
+    padding: 7px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .rank-switch a.on {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--paper);
+  }
+</style>
