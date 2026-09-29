@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/5015197"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Harika_Dronavalli"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

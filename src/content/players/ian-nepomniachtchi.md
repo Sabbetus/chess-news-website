@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/4168119"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ian_Nepomniachtchi"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

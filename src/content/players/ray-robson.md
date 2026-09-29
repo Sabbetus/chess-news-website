@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/2023970"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ray_Robson"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

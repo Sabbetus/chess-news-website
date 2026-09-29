@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/2047640"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Jeffery_Xiong"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Fabiano_Caruana_at_2025_Tata_Steel_CT.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_at_2025_Tata_Steel_CT.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

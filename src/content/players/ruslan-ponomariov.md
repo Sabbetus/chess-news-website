@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/14103320"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ruslan_Ponomariov"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

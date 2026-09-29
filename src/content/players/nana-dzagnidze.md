@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/13601903"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nana_Dzagnidze"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

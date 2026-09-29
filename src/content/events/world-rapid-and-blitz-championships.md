@@ -32,7 +32,7 @@ image:
   src: "../articles/_images/Opening_chess_position_from_black_side.webp"
   credit: "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

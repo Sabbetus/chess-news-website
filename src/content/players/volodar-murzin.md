@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/44155573"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Volodar_Murzin"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

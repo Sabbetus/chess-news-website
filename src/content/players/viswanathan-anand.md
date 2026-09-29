@@ -27,7 +27,7 @@ image:
   src: "../articles/_images/TataSteelChess2023-30.webp"
   credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2023-30.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

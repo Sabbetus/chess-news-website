@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Anna_Muzychuk_at_Gibraltar.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnna_Muzychuk_at_Gibraltar.png"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

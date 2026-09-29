@@ -25,7 +25,7 @@ image:
   src: "../articles/_images/Aydin_Suleymanli_2023.webp"
   credit: "Vladimir Barskij, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAydin_Suleymanli_2023.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/5084423"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aryan_Chopra"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

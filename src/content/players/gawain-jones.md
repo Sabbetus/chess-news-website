@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/409561"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Gawain_Maroroa_Jones"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

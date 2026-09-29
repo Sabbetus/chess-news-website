@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Aleksandra_Goryachkina_Russian_Superfinal_2024_01.webp"
   credit: "Eteri Kublashvili, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAleksandra_Goryachkina_Russian_Superfinal_2024_01.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

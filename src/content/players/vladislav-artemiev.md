@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/24101605"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vladislav_Artemiev"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/24130737"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vladimir_Fedoseev"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

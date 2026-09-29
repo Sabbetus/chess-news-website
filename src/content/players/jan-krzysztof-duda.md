@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Jan-Krzysztof_Duda_2021.webp"
   credit: "Danuta Matloch / Ministerstwo Kultury, Dziedzictwa Narodowego i Sportu, CC BY 3.0 pl, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJan-Krzysztof_Duda_2021.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

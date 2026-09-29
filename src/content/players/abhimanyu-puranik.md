@@ -24,7 +24,7 @@ image:
   src: "../articles/_images/Abhimanyu_Puranik__2020.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAbhimanyu_Puranik_%282020%29.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/14114550"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Mariya_Muzychuk"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

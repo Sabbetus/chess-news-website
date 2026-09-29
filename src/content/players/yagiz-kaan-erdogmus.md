@@ -23,7 +23,7 @@ links:
     url: "https://ratings.fide.com/profile/44599790"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ya%C4%9F%C4%B1z_Kaan_Erdo%C4%9Fmu%C5%9F"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

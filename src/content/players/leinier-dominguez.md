@@ -28,7 +28,7 @@ image:
   src: "../articles/_images/Dominguez_Perez_Leinier_receives_his_medal__29859654901.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADominguez_Perez_Leinier_receives_his_medal_%2829859654901%29.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

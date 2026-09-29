@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/4108116"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Maksim_Chigaev"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

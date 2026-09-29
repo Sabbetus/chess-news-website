@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/2004887"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Sam_Shankland"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

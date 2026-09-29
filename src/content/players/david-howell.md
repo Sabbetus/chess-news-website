@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/410608"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/David_Howell_%28chess_player%29"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

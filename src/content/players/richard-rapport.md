@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Richard_Rapport_WTRBCC2026_R9.webp"
   credit: "Yunfan Zhao / Lichess, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARichard_Rapport_WTRBCC2026_R9.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

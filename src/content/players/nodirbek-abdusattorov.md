@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Nodirbek_Abdusattorov_smile.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Abdusattorov_smile.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

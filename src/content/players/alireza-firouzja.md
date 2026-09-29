@@ -25,7 +25,7 @@ image:
   src: "../articles/_images/Alireza_Firouzja_2026_Norway_Chess.webp"
   credit: "Ahmed0112, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_2026_Norway_Chess.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -11,7 +11,7 @@ highlights:
 links:
   - label: "FIDE profile"
     url: "https://ratings.fide.com/profile/33389454"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

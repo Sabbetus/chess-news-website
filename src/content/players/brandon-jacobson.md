@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/30901561"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Brandon_Jacobson"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

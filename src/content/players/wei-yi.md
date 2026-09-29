@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Wei_Yi_in_2024.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWei_Yi_in_2024.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

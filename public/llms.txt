@@ -27,6 +27,10 @@
 - [All articles](https://chessherald.com/archive/): every article, newest first.
 - [Weekly recaps](https://chessherald.com/recaps/): the week's biggest stories.
 - [Results](https://chessherald.com/lens/results/)
+- [FIDE rankings, open top 100](https://chessherald.com/rankings/): updated monthly from FIDE's official standard rating list.
+- [FIDE rankings, women's top 25](https://chessherald.com/rankings/women/)
+- [Players](https://chessherald.com/players/): profiles of every ranked player, with career highlights and our coverage of each.
+- [Events](https://chessherald.com/events/): the major events of the chess year, with history, past winners and upcoming dates.
 - [People](https://chessherald.com/lens/people/)
 - [History](https://chessherald.com/lens/history/)
 - [Money](https://chessherald.com/lens/money/)

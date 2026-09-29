@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/4262875"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nikolas_Theodorou"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

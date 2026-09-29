@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Levon_Aronian_in_2023__52637615092.webp"
   credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALevon_Aronian_in_2023_%2852637615092%29.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

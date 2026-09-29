@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/1000268"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Loek_van_Wely"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

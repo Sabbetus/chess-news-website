@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/25092340"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nihal_Sarin"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/35006916"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Divya_Deshmukh"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

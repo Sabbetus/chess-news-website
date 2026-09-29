@@ -36,7 +36,7 @@ image:
   src: "../articles/_images/Chess_set_2014.webp"
   credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

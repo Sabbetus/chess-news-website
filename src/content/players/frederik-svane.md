@@ -20,7 +20,7 @@ links:
     url: "https://ratings.fide.com/profile/12923044"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Frederik_Svane"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

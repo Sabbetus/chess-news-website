@@ -21,7 +21,7 @@ links:
     url: "https://ratings.fide.com/profile/8608288"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Xu_Xiangyu"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

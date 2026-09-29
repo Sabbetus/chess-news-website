@@ -26,7 +26,7 @@ image:
   src: "../articles/_images/Le_Quang_Liem_in_HDBank_2017.webp"
   credit: "Phùng Đức Anh, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALe_Quang_Liem_in_HDBank_2017.jpg"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 

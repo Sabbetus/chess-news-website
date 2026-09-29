@@ -22,7 +22,7 @@ links:
     url: "https://ratings.fide.com/profile/44507356"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ediz_G%C3%BCrel"
-reviewStatus: "draft"
+reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
 
