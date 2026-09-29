@@ -28,7 +28,18 @@ Any batch that needs even one fix (a broken link, a factual correction,
 anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
-- **Current streak: 2 consecutive clean batches.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-09-29: PR #50 needed fixes (streak reset). Chess.com's RSS
+  teaser is cut to 250 characters, and the drafts were written from it:
+  a Bullet Brawl piece shipped a cut-off name ("GM Oleksa...") plus
+  reader-facing talk about "the excerpt we had", and a Total Chess piece
+  duplicated FIDE's article from four days earlier while wrongly claiming
+  the format was unknown. First batch on Sonnet 5.5. Fixed at the
+  source: ingest.py now fetches full text for truncated teasers, and
+  coverage.py drops stories already covered in the last week. Dropped
+  the duplicate, rewrote the Bullet Brawl piece from the full article.
+  (Adding the 68-career-wins figure, and keeping the premove line as
+  original color, were not counted against the streak.)
 - 2026-09-28: PR #49, the Olympiad gold/closing-ceremony batch, reviewed
   clean -- every medal, performance rating, trophy, and category prize
   checked against FIDE's and Chess.com's real coverage, including one
@@ -39,18 +50,11 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-09-29 (PR #50, see above).
+- Previous reset: 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
   scoreline regex -- see scripts/selection.py, _SCORELINE_RE -- rather than
   just editing the article. No article-content errors found this batch;
   both pieces checked out fact-for-fact against their real sources.)
-- Previous reset: 2026-09-26 (PR #46 -- the drafting model conflated three
-  separate Chess.com "3+0 Thursday" brackets into a single event and
-  misattributed a mouse slip from an unrelated round-10 game as deciding
-  the Carlsen-Nakamura tiebreak; that article also had an Olympiad
-  team-standings table wrongly attached to it, unrelated to the event it
-  covered. Also fixed a wrong player first name (Mukhiddin Madaminov,
-  not Nodirbek) in a separate article, plus one over-length paragraph
-  the automated fixup didn't clear.)
