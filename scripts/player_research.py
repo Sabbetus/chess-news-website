@@ -8,7 +8,7 @@ the player's FIDE ID, or the page is rejected (names collide; FIDE IDs don't).
 Photos go through images.py's licence check and localize_image, so they land
 in the same committed master store as article photos.
 
-    python scripts/player_research.py 1-20 > research.json
+    python scripts/player_research.py 1-20 research.jsonl
 """
 
 import json
@@ -129,13 +129,22 @@ def research(player: dict) -> dict:
 
 
 def main() -> None:
+    """Appends one JSON line per player to the output file as it goes, and
+    skips players already in it, so a slow or interrupted run resumes."""
     lo, hi = (int(x) for x in sys.argv[1].split("-"))
-    players = [p for i, p in enumerate(TOP100["players"], start=1) if lo <= i <= hi]
-    results = []
+    out_path = sys.argv[2]
+    done = set()
+    try:
+        with open(out_path) as f:
+            done = {json.loads(line)["fideId"] for line in f if line.strip()}
+    except FileNotFoundError:
+        pass
+    players = [p for i, p in enumerate(TOP100["players"], start=1) if lo <= i <= hi and p["fideId"] not in done]
     for p in players:
-        results.append(research(p))
-        print(f"{p['name']}: {'ok' if results[-1].get('wikipedia') else 'NO PAGE'}", file=sys.stderr)
-    print(json.dumps(results, ensure_ascii=False, indent=1))
+        result = research(p)
+        with open(out_path, "a") as f:
+            f.write(json.dumps(result, ensure_ascii=False) + "\n")
+        print(f"{p['name']}: {'ok' if result.get('wikipedia') else 'NO PAGE'}", file=sys.stderr)
 
 
 if __name__ == "__main__":
