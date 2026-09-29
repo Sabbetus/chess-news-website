@@ -8,6 +8,10 @@ continent: "oceania"
 selectionScore: 86
 reviewStatus: "draft"
 socialCopy: "Chess streamer Hanna Sayce was detained twice after a stalker falsely told border officials she was smuggling drugs. She has now spoken about the case, which returns to court in October."
+image:
+  src: "./_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp"
+  credit: "Bin im Garten, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_board_with_chess_set_in_opening_position_2012_PD_04.jpg"
 ---
 
 Melbourne chess streamer Hanna Sayce has spoken about a stalking case that led to her being detained in Qatar, and again when she tried to enter Iceland, after false claims that she was smuggling drugs. The case, [as ChessBase reports it](https://en.chessbase.com/post/hanna-sayce-story-online-world), began in April 2024. The man accused has been charged with 35 offences and remains in custody ahead of a hearing in October.
