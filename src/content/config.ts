@@ -170,6 +170,8 @@ const events = defineCollection({
         .array(z.object({ year: z.number(), names: z.array(z.string()), note: z.string().optional() }))
         .default([]),
       winnersHeading: z.string().optional(),
+      // Off where a plain count misleads (e.g. the 1993-2006 split title).
+      showMostTitles: z.boolean().default(true),
       winnersSource: z.object({ label: z.string(), url: z.string().url() }).optional(),
       aliases: z.array(z.string()).default([]),
       image: z.object({ src: image(), credit: z.string(), sourceUrl: z.string().url() }).optional(),

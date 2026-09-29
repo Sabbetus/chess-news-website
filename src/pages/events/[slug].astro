@@ -97,7 +97,7 @@ const jsonLd = [
       <dt>Where</dt><dd>{d.location}</dd>
       <dt>Format</dt><dd>{d.format}</dd>
       {latest && (<><dt>Champion</dt><dd>{latest.names.join(', ')} ({latest.year})</dd></>)}
-      {record.length > 0 && (<><dt>Most titles</dt><dd>{record.slice(0, 3).map(([n, c]) => `${n} (${c})`).join(', ')}</dd></>)}
+      {d.showMostTitles && record.length > 0 && (<><dt>Most titles</dt><dd>{record.slice(0, 3).map(([n, c]) => `${n} (${c})`).join(', ')}</dd></>)}
       {d.officialUrl && (<><dt>Official site</dt><dd><a href={d.officialUrl} target="_blank" rel="noopener">{new URL(d.officialUrl).hostname}</a></dd></>)}
     </dl></div>
 

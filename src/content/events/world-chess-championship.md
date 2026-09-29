@@ -17,6 +17,7 @@ aliases:
   - "World Chess Championship"
   - "World Championship match"
 winnersHeading: "Champions"
+showMostTitles: false
 winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/List_of_World_Chess_Championships"
