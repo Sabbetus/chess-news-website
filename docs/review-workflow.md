@@ -48,6 +48,17 @@ aggregates are always `lens: tournament-db` with a known `continent` from
 ingestion; news articles get both inferred by the model at drafting time
 (see `scripts/draft.py`).
 
+**Photos.** Every article has one, and the build fails a published article that
+doesn't (a content-schema check in `src/content/config.ts`). The drafting
+pipeline searches Wikimedia Commons from the most specific subject down; if
+that finds nothing it falls back to `scripts/fallback_photos.json`, a small
+committed pool of object-only chess photos (boards and pieces, no
+identifiable people), so there is always a license-clean photo. A story about
+a person (the People lens) whose subject has no photo goes straight to that
+pool rather than showing some other player's face, and an outlet's logo is
+used as a photo only when the outlet is the subject of the story. Reviewers
+can swap any photo by editing the article's `image` block.
+
 **ChessBase and the People lens.** ChessBase (`en.chessbase.com/feed`) is the
 third news source, added for interviews, profiles and columns the other two
 rarely run. Its feed only carries a lede paragraph, so ingestion fetches each
