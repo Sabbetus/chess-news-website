@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/13306677"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aram_Hakobyan_%28chess_player%29"
+image:
+  src: "../articles/_images/20260215_3rd_Al-Beruniy_Tashkent_2026_Hakobyan_Aram__cropped.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A20260215_3rd_Al-Beruniy_Tashkent_2026_Hakobyan_Aram_%28cropped%29.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

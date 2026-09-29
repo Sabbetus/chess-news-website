@@ -19,6 +19,10 @@ links:
     url: "https://ratings.fide.com/profile/2090732"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Carissa_Yip"
+image:
+  src: "../articles/_images/CarissaYip2026.webp"
+  credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ACarissaYip2026.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

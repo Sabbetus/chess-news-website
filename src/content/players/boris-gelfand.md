@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/2805677"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Boris_Gelfand"
+image:
+  src: "../articles/_images/20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Gelfand_Boris.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Gelfand_Boris.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/24175439"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Andrey_Esipenko"
+image:
+  src: "../articles/_images/AndreyEsipenko23a.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAndreyEsipenko23a.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

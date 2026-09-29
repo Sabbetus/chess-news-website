@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/24126055"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Daniil_Dubov"
+image:
+  src: "../articles/_images/DaniilDubov19a.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADaniilDubov19a.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

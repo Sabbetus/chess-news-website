@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/2056437"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Awonder_Liang"
+image:
+  src: "../articles/_images/Awonder_Liang.webp"
+  credit: "Chessherocanada, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAwonder_Liang.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

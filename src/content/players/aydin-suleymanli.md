@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13413937"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aydin_Suleymanli"
+image:
+  src: "../articles/_images/Aydin_Suleymanli_2023.webp"
+  credit: "Vladimir Barskij, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAydin_Suleymanli_2023.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
