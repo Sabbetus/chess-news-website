@@ -25,7 +25,7 @@ const description =
 
     {groups.map((g) => (
       <section class="hub-section">
-        <h2>{g.label}</h2>
+        <h2 class="group-label">{g.label}</h2>
         <ul class="event-list">
           {g.events.map((e) => {
             const latest = e.data.winners.find((w) => w.names.length > 0);
@@ -47,6 +47,19 @@ const description =
 </BaseLayout>
 
 <style>
+  /* Group headings are section labels, not titles: small caps in the mono
+     face, so they don't compete with the serif event names below them. */
+  .hub-section .group-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 4px;
+    padding-top: 12px;
+    border-top: 2px solid var(--ink);
+  }
   .event-list {
     list-style: none;
     margin: 0;
