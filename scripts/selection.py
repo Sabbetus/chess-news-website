@@ -19,8 +19,11 @@ frontmatter downstream, so a reviewer can see *why* something got picked).
 """
 
 import json
+import os
 import re
 from pathlib import Path
+
+from coverage import drop_already_covered
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 CANDIDATES_PATH = DATA_DIR / "candidates.json"
@@ -577,6 +580,15 @@ def main() -> None:
     scored.sort(key=lambda x: x["selectionScore"], reverse=True)
     scored = dedupe_by_topic(scored)
     scored = merge_duplicate_stories(scored)
+
+    # Needs ANTHROPIC_API_KEY (set on the pipeline's select step); without
+    # one -- a local run -- the check is skipped rather than failing.
+    client = None
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        import anthropic
+
+        client = anthropic.Anthropic()
+    scored = drop_already_covered(client, scored)
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
