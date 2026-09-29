@@ -71,15 +71,15 @@ const jsonLd = [
 >
   <article class="hub player">
     <header class="hub-head">
-      <p class="hub-kicker"><a href={ranked || !rankedWomen ? '/players/' : '/players/women/'}>Players</a> / {federationName(d.federation)}</p>
+      <p class="hub-kicker"><a href="/players/">Players</a> / {federationName(d.federation)}</p>
       <h1>{d.name}</h1>
     </header>
 
     <div class="player-top">
       <Portrait name={d.name} image={d.image} />
       <dl class="facts">
-        {ranked && (<><dt>World rank</dt><dd><strong>No. {ranked.rank}</strong> ({month})</dd></>)}
-        {rankedWomen && (<><dt>Women's rank</dt><dd><strong>No. {rankedWomen.rank}</strong> ({month})</dd></>)}
+        {ranked && (<><dt>World rank</dt><dd><a href="/rankings/"><strong>No. {ranked.rank}</strong></a> ({month})</dd></>)}
+        {rankedWomen && (<><dt>Women's rank</dt><dd><a href="/rankings/women/"><strong>No. {rankedWomen.rank}</strong></a> ({month})</dd></>)}
         {rated && (
           <>
             <dt>Rating</dt>
