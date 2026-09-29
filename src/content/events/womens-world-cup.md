@@ -1,7 +1,7 @@
 ---
 name: "FIDE Women's World Cup"
 summary: "A knockout tournament for the world's leading women players, with places in the Women's Candidates at stake."
-category: "world-title"
+category: "cycle"
 frequency: "Every two years"
 founded: 2021
 location: "Varies"

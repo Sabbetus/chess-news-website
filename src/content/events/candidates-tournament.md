@@ -1,7 +1,7 @@
 ---
 name: "Candidates Tournament"
 summary: "The eight-player tournament that decides who challenges the world champion."
-category: "world-title"
+category: "cycle"
 frequency: "Every two years"
 founded: 1950
 location: "Varies"

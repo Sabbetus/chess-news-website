@@ -143,7 +143,7 @@ const events = defineCollection({
     z.object({
       name: z.string(),
       summary: z.string(),
-      category: z.enum(['world-title', 'elite', 'open', 'team', 'online']),
+      category: z.enum(['cycle', 'rapid-blitz', 'elite', 'open', 'team', 'online']),
       frequency: z.string(),
       founded: z.number(),
       location: z.string(),

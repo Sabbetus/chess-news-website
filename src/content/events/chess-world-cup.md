@@ -1,7 +1,7 @@
 ---
 name: "FIDE World Cup"
 summary: "A giant knockout tournament, with more than 200 players, that sends its top finishers to the Candidates."
-category: "world-title"
+category: "cycle"
 frequency: "Every two years"
 founded: 2005
 location: "Varies"

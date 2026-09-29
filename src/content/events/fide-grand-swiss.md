@@ -1,7 +1,7 @@
 ---
 name: "FIDE Grand Swiss"
 summary: "An 11-round Swiss tournament of the world’s strongest players, with two Candidates places at stake."
-category: "world-title"
+category: "cycle"
 frequency: "Every two years"
 founded: 2019
 location: "Varies"
