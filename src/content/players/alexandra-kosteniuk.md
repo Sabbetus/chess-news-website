@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/4128125"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alexandra_Kosteniuk"
+image:
+  src: "../articles/_images/Alexandra_Kosteniuk__MGK20109.webp"
+  credit: "Markus G. Klötzer, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlexandra_Kosteniuk_%28MGK20109%29.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

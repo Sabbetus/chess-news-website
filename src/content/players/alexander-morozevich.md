@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/4116992"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alexander_Morozevich"
+image:
+  src: "../articles/_images/Alexander_Morozevic.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlexander_Morozevic.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
