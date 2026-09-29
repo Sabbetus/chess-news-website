@@ -12,7 +12,9 @@ peakRating:
 aliases:
   - "Vincent Keymer"
 highlights:
-  - "Germany's highest-rated player"
+  - "Won the 2026 Super Chess Classic Romania"
+  - "Won the 2026 Grenke Freestyle Open"
+  - "Fourth at the 2026 Freestyle World Championship"
   - "World No. 1 junior in January 2024"
   - "Peak rating 2776 (December 2025)"
 links:
@@ -28,6 +30,8 @@ reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
 
-Germany's top player and a regular in the world top ten. Keymer, born in Mainz in 2004, was the world's highest-rated junior in January 2024.
+Germany's highest-rated player and a regular in the world top ten. Keymer was the world's top junior in January 2024 and reached a peak of 2776 in December 2025.
 
-He has climbed steadily since, reaching a peak of 2776 in December 2025.
+2026 brought his biggest wins yet. He took the Grand Chess Tour's Super Chess Classic Romania with 6/9, ahead of Fabiano Caruana, and the Grenke Freestyle Open, which qualified him for the 2027 Freestyle World Championship. He also finished fourth at the 2026 Freestyle World Championship.
+
+At Norway Chess he beat world champion Gukesh Dommaraju in classical, and he qualified for the Grand Chess Tour Finals, finishing fourth after losing his semi-final to Rameshbabu Praggnanandhaa.

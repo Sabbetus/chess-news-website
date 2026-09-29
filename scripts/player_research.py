@@ -93,11 +93,15 @@ def lead(text: str) -> str:
     return clean(body)[:2500]
 
 
-_VERSUS = re.compile(r"\b(vs\.?|v\.?|versus|against)\s", re.I)
+# Game shots, group shots and selfies: a profile needs the player on their own.
+_NOT_SOLO = re.compile(r"\b(vs|v|versus|against|derby|selfie|team|with|playing|plays|meets)\b", re.I)
 MIN_PHOTO_WIDTH = 600
+# A name match alone isn't enough (caught live: "Wei Yi" matched a bronze
+# spoon and a hotpot restaurant). The file must be about chess.
+_CHESS_CONTEXT = re.compile(r"chess|olympiad|tata steel|candidates|grand chess|grand swiss|world cup|masters|blitz|rapid|fide|sinquefield|norway|grenke|superbet|championship|tournament", re.I)
 
 
-def photo(name: str, infobox_file: str, surname: str) -> dict | None:
+def photo_candidates(name: str, infobox_file: str) -> list[tuple]:
     """The newest usable solo photo of the player on Commons -- the same
     "most recent photo wins" rule the article picker uses (images.py), over a
     wider candidate set: searches for the name alone and with this year and
@@ -128,16 +132,25 @@ def photo(name: str, infobox_file: str, surname: str) -> dict | None:
             if (
                 not images._license_ok(licence)
                 or not images._is_photo_file(title)
-                or surname.lower() not in (title + " " + description).lower()
-                or _VERSUS.search(title) or _VERSUS.search(description)
+                or not all(part.lower() in (title + " " + description).lower() for part in name.split() if len(part) > 1)
+                or _NOT_SOLO.search(title) or _NOT_SOLO.search(description)
+                or not _CHESS_CONTEXT.search(title + " " + description)
                 or info.get("width", 0) < MIN_PHOTO_WIDTH
             ):
                 continue
             candidates.append((images._photo_date(meta) or "", info["width"] * info["height"], title, info, meta, licence))
-    if not candidates:
-        return {"rejected": "no usable solo photo"}
     candidates.sort(key=lambda c: (c[0], c[1]), reverse=True)
-    date, _, title, info, meta, licence = candidates[0]
+    return candidates
+
+
+def photo(name: str, infobox_file: str, surname: str = "", pick: int = 0) -> dict | None:
+    """Localizes candidate number `pick` (newest first). The default is the
+    newest; a reviewer looking at the contact sheet (see contact_sheet) can
+    choose another when the newest is a poor shot."""
+    candidates = photo_candidates(name, infobox_file)
+    if pick >= len(candidates):
+        return {"rejected": "no usable solo photo"}
+    date, _, title, info, meta, licence = candidates[pick]
     artist = images._extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Unknown author"
     local = images.localize_image({
         "url": info.get("thumburl") or info["url"],
@@ -145,12 +158,6 @@ def photo(name: str, infobox_file: str, surname: str) -> dict | None:
         "sourceUrl": "https://commons.wikimedia.org/wiki/" + urllib.parse.quote(title.replace(" ", "_")),
     })
     return (local | {"date": date, "width": info["width"], "height": info["height"]}) if local else {"rejected": "download failed"}
-
-
-def surname(name: str, federation: str) -> str:
-    parts = name.split()
-    # Family name first for these federations (see fide_ratings.FAMILY_NAME_FIRST).
-    return parts[0] if federation in {"CHN", "VIE", "KOR"} else max(parts, key=len) if len(parts) > 2 else parts[-1]
 
 
 def research(player: dict) -> dict:
@@ -171,7 +178,11 @@ def research(player: dict) -> dict:
         "website": field(text, "website"),
         "lead": lead(text),
         "recent": recent_career(text),
-        "photo": photo(player["name"], image_name, surname(player["name"], player["federation"])),
+        "photoCandidates": [
+            {"title": c[2], "date": c[0], "thumb": c[3].get("thumburl"), "width": c[3]["width"], "height": c[3]["height"]}
+            for c in photo_candidates(player["name"], image_name)[:5]
+        ],
+        "infoboxImage": image_name,
     }
 
 

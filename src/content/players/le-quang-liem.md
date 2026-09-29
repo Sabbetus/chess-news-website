@@ -14,6 +14,7 @@ aliases:
   - "Lê Quang Liêm"
 highlights:
   - "2013 World Blitz Champion"
+  - "Won the Aeroflot Open in 2010 and 2011"
   - "2019 Asian Champion"
   - "Vietnam's top player"
 links:
@@ -21,10 +22,16 @@ links:
     url: "https://ratings.fide.com/profile/12401137"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/L%C3%AA_Quang_Li%C3%AAm"
+image:
+  src: "../articles/_images/Le_Quang_Liem_in_HDBank_2017.webp"
+  credit: "Phùng Đức Anh, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALe_Quang_Liem_in_HDBank_2017.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
 
-Vietnam's top player and the 2013 World Blitz Champion. Le has played every Olympiad for Vietnam since 2006 and won the Asian Championship in 2019.
+Vietnam's top player and the 2013 World Blitz Champion. Le became a grandmaster in 2006 and broke through with back-to-back wins at the Aeroflot Open in 2010 and 2011.
 
-He has lived in St. Louis since 2021 and coached Webster University's team until the program closed in 2026.
+He has played for Vietnam at the Olympiad since 2006. His best came in 2012, when he scored 8/10 on board one and led the team to seventh place, Vietnam's best-ever finish. He won the Asian Championship in 2019.
+
+He has lived in St. Louis since 2021, where he was head coach of Webster University's chess team until the program ended in 2026.
