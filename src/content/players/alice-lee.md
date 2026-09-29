@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/30941822"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alice_Lee_%28chess_player%29"
+image:
+  src: "../articles/_images/AliceLee23.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAliceLee23.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---

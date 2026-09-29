@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/30920019"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Abhimanyu_Mishra"
+image:
+  src: "../articles/_images/TataSteelMishra2023.webp"
+  credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelMishra2023.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
