@@ -1,6 +1,7 @@
 ---
 name: "Loek van Wely"
 fideId: "1000268"
+sortName: "Van Wely, Loek"
 born: "1972-10-07"
 birthplace: "Heesch, Netherlands"
 federation: "NED"

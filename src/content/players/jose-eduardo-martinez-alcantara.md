@@ -1,6 +1,7 @@
 ---
 name: "José Eduardo Martínez Alcántara"
 fideId: "3805662"
+sortName: "Martínez Alcántara, José Eduardo"
 born: "1999-01-31"
 birthplace: "Lima, Peru"
 federation: "MEX"

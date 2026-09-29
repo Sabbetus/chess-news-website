@@ -1,6 +1,7 @@
 ---
 name: "David Antón Guijarro"
 fideId: "2285525"
+sortName: "Antón Guijarro, David"
 born: "1995-06-23"
 birthplace: "Murcia, Spain"
 federation: "ESP"

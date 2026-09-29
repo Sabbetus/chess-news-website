@@ -1,6 +1,7 @@
 ---
 name: "Koneru Humpy"
 fideId: "5008123"
+sortName: "Koneru, Humpy"
 born: "1987-03-31"
 birthplace: "Gudivada, India"
 federation: "IND"

@@ -11,15 +11,21 @@ const pages = await playerPages();
 const openRank = new Map(TOP100.players.map((p) => [p.fideId, p.rank]));
 const womenRank = new Map(TOP100.women.map((p) => [p.fideId, p.rank]));
 
-// Family name first for these federations ("Wei Yi", "Ding Liren"), so the
-// sort key is the first word there and the last word elsewhere.
+// "Surname, Given", which is what the list is sorted by. Family name comes
+// first already for these federations ("Ding Liren" -> "Ding, Liren");
+// anything the rule gets wrong (van Foreest, Martínez Alcántara) sets
+// sortName in its frontmatter.
 const FAMILY_FIRST = new Set(['CHN', 'VIE', 'KOR']);
-const sortKey = (p: (typeof pages)[number]) => {
+const listName = (p: (typeof pages)[number]) => {
+  if (p.data.sortName) return p.data.sortName;
   const words = p.data.name.split(' ');
-  return (FAMILY_FIRST.has(p.data.federation) ? words[0] : words[words.length - 1])
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
+  if (words.length < 2) return p.data.name;
+  return FAMILY_FIRST.has(p.data.federation)
+    ? `${words[0]}, ${words.slice(1).join(' ')}`
+    : `${words[words.length - 1]}, ${words.slice(0, -1).join(' ')}`;
 };
+const sortKey = (p: (typeof pages)[number]) =>
+  listName(p).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const sorted = pages.sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
 const groups = new Map<string, typeof sorted>();
 for (const p of sorted) {
@@ -33,7 +39,6 @@ const description = `Profiles of ${pages.length} of the world's leading chess pl
 <BaseLayout title="Chess Players: Profiles and Rankings | The Chess Herald" description={description} activeSection="players">
   <div class="hub">
     <header class="hub-head">
-      <p class="hub-kicker"><a href="/lens/results/">Results</a> / Players</p>
       <h1>Players</h1>
       <p class="hub-lede">
         Profiles of the world's leading players, open and women, A–Z by surname. For the current order, see the
@@ -54,7 +59,7 @@ const description = `Profiles of ${pages.length} of the world's leading chess pl
                 <a href={`/players/${p.slug}/`}>
                   <Portrait name={p.data.name} image={p.data.image} size="small" />
                   <span class="who">
-                    <span class="name">{p.data.name}</span>
+                    <span class="name">{listName(p)}</span>
                     <span class="meta">
                       {federationName(p.data.federation)}
                       {openRank.has(p.data.fideId) && <> · World No. {openRank.get(p.data.fideId)}</>}

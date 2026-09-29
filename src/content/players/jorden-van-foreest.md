@@ -1,6 +1,7 @@
 ---
 name: "Jorden van Foreest"
 fideId: "1039784"
+sortName: "Van Foreest, Jorden"
 born: "1999-04-30"
 birthplace: "Utrecht, Netherlands"
 federation: "NED"

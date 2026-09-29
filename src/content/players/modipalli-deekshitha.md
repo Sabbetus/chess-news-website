@@ -1,6 +1,7 @@
 ---
 name: "Modipalli Deekshitha"
 fideId: "33389454"
+sortName: "Modipalli, Deekshitha"
 federation: "IND"
 title: "WCM"
 aliases:

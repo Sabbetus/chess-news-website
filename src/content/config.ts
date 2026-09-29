@@ -119,6 +119,10 @@ const players = defineCollection({
       name: z.string(),
       // The permanent key: joins this page to the monthly FIDE top 100 table.
       fideId: z.string().regex(/^\d+$/),
+      // "Surname, Given" for the A–Z directory, when the default (last word,
+      // or first word for family-name-first federations) is wrong:
+      // "Van Foreest, Jorden", "Martínez Alcántara, José Eduardo".
+      sortName: z.string().optional(),
       born: z.coerce.date().optional(),
       birthplace: z.string().optional(),
       federation: z.string(),

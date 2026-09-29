@@ -24,7 +24,7 @@ const thisYear = new Date().getUTCFullYear();
           <thead>
             <tr>
               <th class="num">#</th>
-              <th></th>
+              <th class="hide-mobile"></th>
               <th>Player</th>
               <th class="hide-mobile">Federation</th>
               <th class="num">Rating</th>
@@ -39,12 +39,15 @@ const thisYear = new Date().getUTCFullYear();
                 const move = movement(p.rank, p.previousRank);
                 return (
                   <tr>
-                    <td class="num rank">{p.rank}</td>
-                    <td class={`move ${move.cls}`} title={move.title}>{move.label}</td>
-                    <td>
+                    <td class="num rank">
+                      {p.rank}
+                      <span class={`move-mobile ${move.cls}`} title={move.title}>{move.label}</span>
+                    </td>
+                    <td class={`move hide-mobile ${move.cls}`} title={move.title}>{move.label}</td>
+                    <td class="player">
                       <span class="title">{p.title}</span>{' '}
                       {page ? <a href={`/players/${page.slug}/`}>{page.data.name}</a> : <span>{p.name}</span>}
-                      <span class="fed-mobile">{p.federation}</span>
+                      <span class="meta-mobile">{[p.title, p.federation].filter(Boolean).join(' · ')}</span>
                     </td>
                     <td class="hide-mobile">{federationName(p.federation)}</td>
                     <td class="num rating">{p.rating}</td>
@@ -96,13 +99,47 @@ const thisYear = new Date().getUTCFullYear();
   td a {
     font-weight: 600;
   }
-  .fed-mobile {
+  .move-mobile,
+  .meta-mobile {
     display: none;
   }
+  td {
+    vertical-align: middle;
+  }
+  /* Phones: two tidy lines per player (name, then title and federation)
+     and the rank movement tucked under the rank, instead of extra columns
+     that make names wrap unevenly. */
   @media (max-width: 640px) {
-    .fed-mobile {
-      display: inline;
-      margin-left: 6px;
+    .rank {
+      width: 2.6em;
+      line-height: 1.2;
+    }
+    .move-mobile {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+    }
+    .move-mobile.up {
+      color: var(--green);
+    }
+    .move-mobile.down {
+      color: var(--terracotta);
+    }
+    .move-mobile.new {
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+    .player .title {
+      display: none;
+    }
+    .player a {
+      display: block;
+      line-height: 1.25;
+    }
+    .meta-mobile {
+      display: block;
+      margin-top: 2px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       color: var(--ink-soft);
