@@ -7,10 +7,10 @@ import { TOP100, periodLabel, playerPages, longDate } from '../../lib/hubs';
 const pages = await playerPages();
 const pageById = new Map(pages.map((p) => [p.data.fideId, p]));
 const month = periodLabel(TOP100.period);
-const leader = TOP100.players[0];
-const title = `FIDE Top 100 Chess Players, ${month}`;
-const description = `The world's top 100 active chess players on FIDE's ${month} standard rating list, with each player's rating, monthly change and federation. ${leader.name} leads on ${leader.rating}.`;
-const siteURL = new URL('/players/', Astro.site).toString();
+const leader = TOP100.women[0];
+const title = `FIDE Women's Top 25 Chess Players, ${month}`;
+const description = `The world's top 25 active women chess players on FIDE's ${month} standard rating list, with each player's rating, monthly change and federation. ${leader.name} leads on ${leader.rating}.`;
+const siteURL = new URL('/players/women/', Astro.site).toString();
 
 const jsonLd = [
   {
@@ -18,8 +18,8 @@ const jsonLd = [
     '@type': 'ItemList',
     name: title,
     url: siteURL,
-    numberOfItems: TOP100.players.length,
-    itemListElement: TOP100.players.map((p, i) => ({
+    numberOfItems: TOP100.women.length,
+    itemListElement: TOP100.women.map((p, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       name: p.name,
@@ -30,19 +30,19 @@ const jsonLd = [
 
 ---
 
-<BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="players" jsonLd={jsonLd}>
+<BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="women" jsonLd={jsonLd}>
   <div class="hub">
     <header class="hub-head">
-      <p class="hub-kicker"><a href="/lens/results/">Results</a> / Players</p>
-      <h1>FIDE Top 100: {month}</h1>
+      <p class="hub-kicker"><a href="/players/">Players</a> / Women</p>
+      <h1>FIDE Women's Top 25: {month}</h1>
       <p class="hub-lede">
-        The world's 100 highest-rated active players in classical chess, from FIDE's official standard rating list. It
-        updates each month when FIDE publishes a new list. See also the <a href="/players/women/">women's top 25</a>.
+        The 25 highest-rated active women in classical chess, from FIDE's official standard rating list. It updates
+        each month when FIDE publishes a new list. See also the <a href="/players/">open top 100</a>.
       </p>
     </header>
 
     <section class="hub-section top100">
-      <RankingTable rows={TOP100.players} pageById={pageById} />
+      <RankingTable rows={TOP100.women} pageById={pageById} />
       <p class="note">
         Source: <a href={TOP100.sourceUrl} target="_blank" rel="noopener">FIDE standard rating list</a>, {month}. Active
         players only. +/− is the change from the previous month's list; age is approximate (birth year only). Updated

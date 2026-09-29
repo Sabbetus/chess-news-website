@@ -1,0 +1,111 @@
+---
+// One ranking table: the open top 100 and the women's top 25 share it.
+import type { CollectionEntry } from 'astro:content';
+import { federationName, type RankedPlayer } from '../lib/hubs';
+
+interface Props {
+  rows: RankedPlayer[];
+  pageById: Map<string, CollectionEntry<'players'>>;
+}
+const { rows, pageById } = Astro.props;
+const change = (c: number | null) => (c === null ? '' : c > 0 ? `+${c}` : c < 0 ? `−${-c}` : '0');
+const movement = (rank: number, prev: number | null) => {
+  if (prev === null) return { label: 'new', cls: 'new', title: 'New in this list this month' };
+  if (prev === rank) return { label: '', cls: '', title: '' };
+  return prev > rank
+    ? { label: `▲${prev - rank}`, cls: 'up', title: `Up from ${prev}` }
+    : { label: `▼${rank - prev}`, cls: 'down', title: `Down from ${prev}` };
+};
+const thisYear = new Date().getUTCFullYear();
+---
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="num">#</th>
+              <th></th>
+              <th>Player</th>
+              <th class="hide-mobile">Federation</th>
+              <th class="num">Rating</th>
+              <th class="num">+/−</th>
+              <th class="num hide-mobile">Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rows.map((p) => {
+                const page = pageById.get(p.fideId);
+                const move = movement(p.rank, p.previousRank);
+                return (
+                  <tr>
+                    <td class="num rank">{p.rank}</td>
+                    <td class={`move ${move.cls}`} title={move.title}>{move.label}</td>
+                    <td>
+                      <span class="title">{p.title}</span>{' '}
+                      {page ? <a href={`/players/${page.slug}/`}>{page.data.name}</a> : <span>{p.name}</span>}
+                      <span class="fed-mobile">{p.federation}</span>
+                    </td>
+                    <td class="hide-mobile">{federationName(p.federation)}</td>
+                    <td class="num rating">{p.rating}</td>
+                    <td class={`num delta ${p.change && p.change > 0 ? 'up' : p.change && p.change < 0 ? 'down' : ''}`}>{change(p.change)}</td>
+                    <td class="num hide-mobile">{p.birthYear ? thisYear - p.birthYear : ''}</td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+
+<style>
+  .top100 {
+    --content-width: 860px;
+  }
+  .rank {
+    font-weight: 600;
+    width: 2.5em;
+  }
+  .move {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    white-space: nowrap;
+    width: 3em;
+    padding-left: 0;
+  }
+  .move.up,
+  .delta.up {
+    color: var(--green);
+  }
+  .move.down,
+  .delta.down {
+    color: var(--terracotta);
+  }
+  .move.new {
+    color: var(--blue);
+    text-transform: uppercase;
+  }
+  .title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .rating {
+    font-weight: 600;
+  }
+  td a {
+    font-weight: 600;
+  }
+  .fed-mobile {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .fed-mobile {
+      display: inline;
+      margin-left: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+    }
+  }
+</style>
