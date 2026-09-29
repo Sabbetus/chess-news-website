@@ -81,7 +81,8 @@ export const dateRange = (start?: Date, end?: Date) => {
 };
 
 export const EVENT_CATEGORIES: { id: CollectionEntry<'events'>['data']['category']; label: string }[] = [
-  { id: 'world-title', label: 'World titles' },
+  { id: 'cycle', label: 'World Championship cycle' },
+  { id: 'rapid-blitz', label: 'Rapid & blitz world titles' },
   { id: 'elite', label: 'Elite invitationals' },
   { id: 'open', label: 'Major opens' },
   { id: 'team', label: 'Team events and leagues' },

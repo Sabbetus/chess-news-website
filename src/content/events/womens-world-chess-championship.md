@@ -1,7 +1,7 @@
 ---
 name: "Women's World Chess Championship"
 summary: "The match for the women's world title, between the reigning champion and the winner of the Women's Candidates."
-category: "world-title"
+category: "cycle"
 frequency: "Usually every two years"
 founded: 1927
 location: "Varies"

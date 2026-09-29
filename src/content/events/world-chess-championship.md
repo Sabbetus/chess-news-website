@@ -1,7 +1,7 @@
 ---
 name: "World Chess Championship"
 summary: "The match for the world title: the reigning champion against the winner of the Candidates, held about every two years."
-category: "world-title"
+category: "cycle"
 frequency: "Usually every two years"
 founded: 1886
 location: "Varies"

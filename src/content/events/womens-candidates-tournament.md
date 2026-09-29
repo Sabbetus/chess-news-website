@@ -1,7 +1,7 @@
 ---
 name: "Women's Candidates Tournament"
 summary: "The tournament that decides who challenges the women's world champion."
-category: "world-title"
+category: "cycle"
 frequency: "About every two years"
 founded: 1967
 location: "Varies"

@@ -1,7 +1,7 @@
 ---
 name: "World Rapid and Blitz Championships"
 summary: "FIDE’s annual world championships in rapid and blitz chess, played together over the last days of December."
-category: "world-title"
+category: "rapid-blitz"
 frequency: "Annual, late December"
 founded: 2012
 location: "Varies"
