@@ -491,6 +491,8 @@ Vary the actual construction, not just the words. Before settling on a title, ch
 A headline built as a direct statement ("Cuba Stays Perfect as the Field Nearly Doubles"), a plain declarative sentence naming who did what, or one anchored on a single concrete number, is often the more natural choice -- don't reach for a possessive-noun-plus-colon or a comparison-verb template purely out of habit. If you notice yourself writing "X's Y [verb]s Z" or "X: Y" for the second title in a row, deliberately write this one a different way.
 @@SOCIAL_COPY@@
 a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
+@@META_DESCRIPTION@@
+a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
 @@GAME_LOOKUP@@
@@ -559,6 +561,8 @@ a clear, specific headline for this piece (not a generic restatement). Aim for 4
 Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
 @@SOCIAL_COPY@@
 a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag
+@@META_DESCRIPTION@@
+a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@BODY_MARKDOWN@@
 the full article body in Markdown, 300-600 words"""
 
@@ -716,6 +720,7 @@ _FIELD_MARKERS = {
     "CONTINENT": "continent",
     "TITLE": "title",
     "SOCIAL_COPY": "socialCopy",
+    "META_DESCRIPTION": "metaDescription",
     "IMAGE_SUBJECTS": "imageSubjects",
     # Only emitted by weekly_recap.py's prompt, not draft.py's own -- shared
     # here so both scripts can reuse this same parser. Singular, unlike
@@ -1230,12 +1235,38 @@ def fix_long_paragraphs(
         return body_markdown
 
 
+# At most one historical-parallel piece a day. It's the fallback lens and a
+# parallel can be found for almost anything, so without a cap it took over
+# (34 of the first 93 lensed pieces), often as a thin retelling of the source.
+HISTORY_LENS_DAILY_CAP = 1
+HISTORY_CAP_NOTE = (
+    "\n\nLENS LIMIT: today's historical-parallel piece has already been written, "
+    "so do not pick historical-parallel for this story. Choose whichever of the "
+    "other lenses fits best."
+)
+
+
+def history_lens_used_on(day: str) -> bool:
+    """True once the day's historical-parallel quota is filled. Reads the
+    article files themselves, so it counts drafts written earlier in this
+    same run (and backfill days) as well as published pieces."""
+    count = 0
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if f'publishDate: "{day}"' in text and 'lens: "historical-parallel"' in text:
+            count += 1
+    return count >= HISTORY_LENS_DAILY_CAP
+
+
 def draft_one(
     client: anthropic.Anthropic, item: dict, publish_date: str | None = None
 ) -> tuple[Path, list[tuple[int, int]]]:
     is_aggregate = item["kind"] in CALENDAR_KINDS
     system_prompt = build_aggregate_system_prompt(item["continentCode"]) if is_aggregate else NEWS_SYSTEM_PROMPT
     user_prompt = build_user_prompt(item)
+    day = publish_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if not is_aggregate and history_lens_used_on(day):
+        user_prompt += HISTORY_CAP_NOTE
 
     create_kwargs = dict(
         model=MODEL,
@@ -1260,6 +1291,8 @@ def draft_one(
         lens = parsed["lens"]
         if lens not in LENS_OPTIONS:
             raise ValueError(f"Model returned unknown lens {lens!r} for: {item['title']}")
+        if lens == "historical-parallel" and HISTORY_CAP_NOTE in user_prompt:
+            print(f"  NOTE: historical-parallel picked despite the daily cap: {item['title']}", file=sys.stderr)
         continent = parsed["continent"]
         if continent not in CONTINENT_SLUGS.values() and continent != "global":
             raise ValueError(f"Model returned unknown continent {continent!r} for: {item['title']}")
@@ -1283,6 +1316,11 @@ def draft_one(
         # teaser is a worse failure mode than a slightly generic one.
         "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
     }
+    # Optional: the article page falls back to a body excerpt, so a missing
+    # or over-long answer is dropped rather than failing the draft.
+    meta_description = " ".join((parsed.get("metaDescription") or "").split())
+    if 50 <= len(meta_description) <= 170:
+        frontmatter["metaDescription"] = meta_description
     if is_aggregate:
         # Extra context for reviewers -- not part of the content schema (unknown
         # frontmatter keys are stripped at build time), but visible in the raw
