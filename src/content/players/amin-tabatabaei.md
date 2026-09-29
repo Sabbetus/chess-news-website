@@ -14,22 +14,25 @@ aliases:
   - "M. Amin Tabatabaei"
   - "Mohammad Amin Tabatabaei"
 highlights:
-  - "Iran's top-ranked player"
+  - "Won the 2026 Reykjavik Open"
+  - "Won the 2024 Aeroflot Open"
+  - "World Cup quarter-finalist in 2021, from 86th seed"
   - "Career-best rating of 2737 in September 2026"
-  - "Played three Olympiads for Iran (2018, 2022, 2024)"
 links:
   - label: "FIDE profile"
     url: "https://ratings.fide.com/profile/12521213"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Amin_Tabatabaei"
 image:
-  src: "../articles/_images/AminTabatabaei23.webp"
-  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAminTabatabaei23.jpg"
+  src: "../articles/_images/Amin_Tabatabaei_Tata_2023_-_67.webp"
+  credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAmin_Tabatabaei_Tata_2023_-_67.jpg"
 reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
 
-Iran's highest-rated player, born in Tehran in 2001. Tabatabaei became a grandmaster in 2018 and has played three Olympiads for Iran.
+Iran's highest-rated player, born in Tehran in 2001. Tabatabaei became a grandmaster in 2018 and made his name with wins at the 2019 Biel Masters and a run to the 2021 World Cup quarter-finals as the 86th seed, knocking out Yu Yangyi and Pentala Harikrishna.
 
-He reached his career-best rating of 2737 on the September 2026 list.
+That result earned him a place in the 2022 FIDE Grand Prix, where he reached the semi-finals of the third leg.
+
+He won the Aeroflot Open in 2024 and the Reykjavik Open in 2026, and reached his career-best rating of 2737 on the September 2026 list.
