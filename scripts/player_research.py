@@ -120,13 +120,14 @@ def photo_candidates(name: str, infobox_file: str) -> list[tuple]:
     candidates = []
     for i in range(0, len(titles), 20):
         data = images._get({"action": "query", "titles": "|".join(titles[i:i + 20]), "prop": "imageinfo",
-                            "iiprop": "url|extmetadata|size", "iiurlwidth": 1600})
+                            "iiprop": "url|extmetadata|size", "iiurlwidth": 1280})
         for page in data.get("query", {}).get("pages", {}).values():
             info = (page.get("imageinfo") or [None])[0]
             if not info:
                 continue
             meta = info.get("extmetadata", {})
             title = page["title"]
+            is_infobox = bool(infobox_file) and title.replace("File:", "").replace("_", " ") == infobox_file.replace("File:", "").replace("_", " ").strip()
             description = images._strip_html(meta.get("ImageDescription", {}).get("value", ""))
             licence = meta.get("LicenseShortName", {}).get("value", "")
             if (
@@ -134,7 +135,9 @@ def photo_candidates(name: str, infobox_file: str) -> list[tuple]:
                 or not images._is_photo_file(title)
                 or not all(part.lower() in (title + " " + description).lower() for part in name.split() if len(part) > 1)
                 or _NOT_SOLO.search(title) or _NOT_SOLO.search(description)
-                or not _CHESS_CONTEXT.search(title + " " + description)
+                # Short names collide with everyday words and other people
+                # (Wei Yi); longer full names don't need the extra check.
+                or (len(name) < 12 and not is_infobox and not _CHESS_CONTEXT.search(title + " " + description))
                 or info.get("width", 0) < MIN_PHOTO_WIDTH
             ):
                 continue
