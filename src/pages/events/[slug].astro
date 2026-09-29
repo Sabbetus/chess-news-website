@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Portrait from '../../components/Portrait.astro';
+import CoverageList from '../../components/CoverageList.astro';
 import '../../styles/hubs.css';
 import { eventPages, playerPages, articlesMentioning, dateRange, longDate, shortDate } from '../../lib/hubs';
 
@@ -105,19 +106,7 @@ const jsonLd = [
       <Content />
     </div>
 
-    {coverage.length > 0 && (
-      <section class="hub-section">
-        <h2>{d.name} in The Chess Herald</h2>
-        <ul class="coverage">
-          {coverage.map((a) => (
-            <li>
-              <time datetime={a.data.publishDate.toISOString()}>{shortDate(a.data.publishDate)}</time>
-              <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    <CoverageList name={d.name} articles={coverage} />
 
     {d.winners.length > 0 && (
       <section class="hub-section">

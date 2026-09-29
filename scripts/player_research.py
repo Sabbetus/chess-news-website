@@ -82,29 +82,64 @@ def lead(text: str) -> str:
     return clean(body)[:2500]
 
 
-def photo(filename: str) -> dict | None:
-    if not filename:
-        return None
-    title = "File:" + filename.replace("File:", "").strip()
-    try:
-        data = images._get({"action": "query", "titles": title, "prop": "imageinfo",
+_VERSUS = re.compile(r"\b(vs\.?|v\.?|versus|against)\s", re.I)
+MIN_PHOTO_WIDTH = 600
+
+
+def photo(name: str, infobox_file: str, surname: str) -> dict | None:
+    """The newest usable solo photo of the player on Commons -- the same
+    "most recent photo wins" rule the article picker uses (images.py), over a
+    wider candidate set: searches for the name alone and with this year and
+    last year (Commons' search ranks by text relevance, so a plain name search
+    alone misses most recent event photos), plus the Wikipedia infobox photo.
+    Game shots naming an opponent ("X vs Y") are skipped: a profile needs the
+    player on their own."""
+    year = time.gmtime().tm_year
+    titles = []
+    for query in (f"{name} {year}", f"{name} {year - 1}", name):
+        for title in images._search_titles(query, limit=12):
+            if title not in titles:
+                titles.append(title)
+    if infobox_file:
+        titles.append("File:" + infobox_file.replace("File:", "").strip())
+    candidates = []
+    for i in range(0, len(titles), 20):
+        data = images._get({"action": "query", "titles": "|".join(titles[i:i + 20]), "prop": "imageinfo",
                             "iiprop": "url|extmetadata|size", "iiurlwidth": 1600})
-        page = next(iter(data["query"]["pages"].values()))
-        info = page["imageinfo"][0]
-        meta = info.get("extmetadata", {})
-        licence = meta.get("LicenseShortName", {}).get("value", "")
-        if not images._license_ok(licence):
-            return {"rejected": f"licence {licence!r}"}
-        artist = images._extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Unknown author"
-        source_url = "https://commons.wikimedia.org/wiki/" + urllib.parse.quote(title.replace(" ", "_"))
-        local = images.localize_image({
-            "url": info.get("thumburl") or info["url"],
-            "credit": f"{artist}, {licence}, via Wikimedia Commons",
-            "sourceUrl": source_url,
-        })
-        return local | {"width": info["width"], "height": info["height"]} if local else {"rejected": "download failed"}
-    except Exception as exc:  # noqa: BLE001 -- research helper, keep going
-        return {"rejected": f"{type(exc).__name__}: {exc}"}
+        for page in data.get("query", {}).get("pages", {}).values():
+            info = (page.get("imageinfo") or [None])[0]
+            if not info:
+                continue
+            meta = info.get("extmetadata", {})
+            title = page["title"]
+            description = images._strip_html(meta.get("ImageDescription", {}).get("value", ""))
+            licence = meta.get("LicenseShortName", {}).get("value", "")
+            if (
+                not images._license_ok(licence)
+                or not images._is_photo_file(title)
+                or surname.lower() not in (title + " " + description).lower()
+                or _VERSUS.search(title) or _VERSUS.search(description)
+                or info.get("width", 0) < MIN_PHOTO_WIDTH
+            ):
+                continue
+            candidates.append((images._photo_date(meta) or "", info["width"] * info["height"], title, info, meta, licence))
+    if not candidates:
+        return {"rejected": "no usable solo photo"}
+    candidates.sort(key=lambda c: (c[0], c[1]), reverse=True)
+    date, _, title, info, meta, licence = candidates[0]
+    artist = images._extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Unknown author"
+    local = images.localize_image({
+        "url": info.get("thumburl") or info["url"],
+        "credit": f"{artist}, {licence}, via Wikimedia Commons",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/" + urllib.parse.quote(title.replace(" ", "_")),
+    })
+    return (local | {"date": date, "width": info["width"], "height": info["height"]}) if local else {"rejected": "download failed"}
+
+
+def surname(name: str, federation: str) -> str:
+    parts = name.split()
+    # Family name first for these federations (see fide_ratings.FAMILY_NAME_FIRST).
+    return parts[0] if federation in {"CHN", "VIE", "KOR"} else max(parts, key=len) if len(parts) > 2 else parts[-1]
 
 
 def research(player: dict) -> dict:
@@ -124,7 +159,7 @@ def research(player: dict) -> dict:
         "peak": field(text, "peak_rating"),
         "website": field(text, "website"),
         "lead": lead(text),
-        "photo": photo(image_name),
+        "photo": photo(player["name"], image_name, surname(player["name"], player["federation"])),
     }
 
 

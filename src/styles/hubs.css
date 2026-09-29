@@ -169,3 +169,12 @@
     display: none;
   }
 }
+.show-all summary {
+  cursor: pointer;
+  margin: 14px 0 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
