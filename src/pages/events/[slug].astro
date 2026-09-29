@@ -25,6 +25,7 @@ const tally = new Map<string, number>();
 for (const w of d.winners) for (const n of w.names) tally.set(n, (tally.get(n) ?? 0) + 1);
 const record = [...tally.entries()].filter(([, c]) => c >= 3).sort((a, b) => b[1] - a[1]);
 const WINNERS_SHOWN = 20;
+const heading = d.winnersHeading ?? 'Winners';
 const latest = d.winners.find((w) => w.names.length > 0);
 
 const ogImage = d.image
@@ -109,7 +110,7 @@ const jsonLd = [
 
     {d.winners.length > 0 && (
       <section class="hub-section">
-        <h2>Winners</h2>
+        <h2>{heading}</h2>
         <div class="table-wrap">
           <table class="data-table winners">
             <thead><tr><th class="num">Year</th><th>Winner</th></tr></thead>
@@ -131,7 +132,7 @@ const jsonLd = [
         </div>
         {d.winners.length > WINNERS_SHOWN && (
           <details class="more-winners">
-            <summary>Show all winners since {d.winners[d.winners.length - 1].year}</summary>
+            <summary>Show all {heading.toLowerCase()} since {d.winners[d.winners.length - 1].year}</summary>
             <div class="table-wrap">
               <table class="data-table winners">
                 <tbody>
