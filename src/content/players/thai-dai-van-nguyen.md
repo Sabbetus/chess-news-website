@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/358878"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Thai_Dai_Van_Nguyen"
+image:
+  src: "../articles/_images/Thai_Dai_Van_Nguyen_in_2025.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AThai_Dai_Van_Nguyen_in_2025.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

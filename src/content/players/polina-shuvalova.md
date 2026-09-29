@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/24171760"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Polina_Shuvalova"
+image:
+  src: "../articles/_images/Polina_Shuvalova_Russian_Championship_Superfinal_2024.webp"
+  credit: "Eteri Kublashvili, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APolina_Shuvalova_Russian_Championship_Superfinal_2024.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/14117908"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Igor_Kovalenko"
+image:
+  src: "../articles/_images/Kovalenko__Igor_IMG_2426.webp"
+  credit: "Ave Maria Mõistlik, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKovalenko%2C_Igor.IMG_2426.JPG"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

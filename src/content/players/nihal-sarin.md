@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/25092340"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nihal_Sarin"
+image:
+  src: "../articles/_images/NihalSarin19b.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANihalSarin19b.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

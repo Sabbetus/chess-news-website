@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/623539"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Maxime_Vachier-Lagrave"
+image:
+  src: "../articles/_images/Maxime_Vachier-Lagrave_au_tournoi_des_candidats__cropped.webp"
+  credit: "Lennart Ootes, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMaxime_Vachier-Lagrave_au_tournoi_des_candidats_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

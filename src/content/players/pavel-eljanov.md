@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/14102951"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pavel_Eljanov"
+image:
+  src: "../articles/_images/Pavel_Eljanov_2017.webp"
+  credit: "Etery Kublashvili, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APavel_Eljanov_2017.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

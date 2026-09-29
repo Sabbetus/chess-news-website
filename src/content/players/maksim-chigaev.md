@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/4108116"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Maksim_Chigaev"
+image:
+  src: "../articles/_images/MaksimChigaev16.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMaksimChigaev16.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/14103320"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ruslan_Ponomariov"
+image:
+  src: "../articles/_images/Ponomariov_Ruslan_2016_Dortmund.webp"
+  credit: "GFHund, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APonomariov%2CRuslan_2016_Dortmund.jpeg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

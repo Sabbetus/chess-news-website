@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/12539929"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Parham_Maghsoodloo"
+image:
+  src: "../articles/_images/Parham_Maghsoodloo_Tata_2023_-_52.webp"
+  credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AParham_Maghsoodloo_Tata_2023_-_52.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

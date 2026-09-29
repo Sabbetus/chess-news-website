@@ -19,6 +19,10 @@ links:
     url: "https://ratings.fide.com/profile/13306766"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Shant_Sargsyan"
+image:
+  src: "../articles/_images/ShantSargsyan23.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AShantSargsyan23.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13409301"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Mahammad_Muradli"
+image:
+  src: "../articles/_images/Mahammad_Muradli_2023.webp"
+  credit: "Vladimir Barskij, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMahammad_Muradli_2023.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/8603332"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Lu_Shanglei"
+image:
+  src: "../articles/_images/TataSteelChess2017-10.webp"
+  credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2017-10.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

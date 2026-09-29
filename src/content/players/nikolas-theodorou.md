@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/4262875"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nikolas_Theodorou"
+image:
+  src: "../articles/_images/Nikolas_Theodorou_Uzchess_cup_3_masters.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANikolas_Theodorou_Uzchess_cup_3_masters.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

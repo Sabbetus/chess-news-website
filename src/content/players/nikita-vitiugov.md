@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/4152956"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nikita_Vitiugov"
+image:
+  src: "../articles/_images/Nikita_Vitiugov__Gibraltar__2019.webp"
+  credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANikita_Vitiugov%2C_Gibraltar_%282019%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

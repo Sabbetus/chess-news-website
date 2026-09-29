@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13601903"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nana_Dzagnidze"
+image:
+  src: "../articles/_images/Nana_Dzagnidze_in_2019_-_01.webp"
+  credit: "Министерство спорта Республики Татарстан, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANana_Dzagnidze_in_2019_-_01.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

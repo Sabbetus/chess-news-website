@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/1000268"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Loek_van_Wely"
+image:
+  src: "../articles/_images/Loek_van_Wely_2022__52157330168.webp"
+  credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALoek_van_Wely_2022_%2852157330168%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

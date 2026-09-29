@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/703303"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Peter_Leko"
+image:
+  src: "../articles/_images/Peter_Leko_2025__cropped.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APeter_Leko_2025_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

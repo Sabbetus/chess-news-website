@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/24651516"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Matthias_Bl%C3%BCbaum"
+image:
+  src: "../articles/_images/Bluebaum_Matthias_2012.webp"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABluebaum_Matthias_2012.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

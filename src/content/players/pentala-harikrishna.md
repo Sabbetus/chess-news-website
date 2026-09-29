@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/5007003"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pentala_Harikrishna"
+image:
+  src: "../articles/_images/Harikrishna_Pentala__29754542074.webp"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHarikrishna_Pentala_%2829754542074%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

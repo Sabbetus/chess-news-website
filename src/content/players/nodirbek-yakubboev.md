@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/14203987"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nodirbek_Yakubboev"
+image:
+  src: "../articles/_images/Nodirbek_Yakubboev_at_the_46th_FIDE_Chess_Olympiad.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Yakubboev_at_the_46th_FIDE_Chess_Olympiad.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/2040506"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Samuel_Sevian"
+image:
+  src: "../articles/_images/SamSevian23.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASamSevian23.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

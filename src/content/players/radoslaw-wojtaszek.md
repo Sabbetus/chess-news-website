@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/1118358"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Rados%C5%82aw_Wojtaszek"
+image:
+  src: "../articles/_images/2022-Radoslaw-Wojtaszek.webp"
+  credit: "Krzysztof Szeląg, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2022-Radoslaw-Wojtaszek.JPG"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/8605114"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Lei_Tingjie"
+image:
+  src: "../articles/_images/LeiTingjie17a.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALeiTingjie17a.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

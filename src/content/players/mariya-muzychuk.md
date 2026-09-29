@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/14114550"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Mariya_Muzychuk"
+image:
+  src: "../articles/_images/2022-Mariya-Muzychuk__cropped.webp"
+  credit: "Krzysztof Szeląg, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2022-Mariya-Muzychuk_%28cropped%29.JPG"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

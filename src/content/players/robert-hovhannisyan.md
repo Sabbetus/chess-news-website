@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13302507"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Robert_Hovhannisyan"
+image:
+  src: "../articles/_images/London_Chess_Classic_2016_Day9-2__31726047982___cropped.webp"
+  credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALondon_Chess_Classic_2016_Day9-2_%2831726047982%29_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/25060783"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pranav_V"
+image:
+  src: "../articles/_images/PranavVenkatesh_2022.webp"
+  credit: "Kreymer, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APranavVenkatesh_2022.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

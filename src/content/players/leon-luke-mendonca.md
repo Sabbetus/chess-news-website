@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/35028561"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Leon_Luke_Mendonca"
+image:
+  src: "../articles/_images/Leon_Luke_Mendonca_in_2025.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALeon_Luke_Mendonca_in_2025.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

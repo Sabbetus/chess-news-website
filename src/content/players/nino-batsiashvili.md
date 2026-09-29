@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/13602993"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Nino_Batsiashvili"
+image:
+  src: "../articles/_images/NinoBatsiashvili17.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANinoBatsiashvili17.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

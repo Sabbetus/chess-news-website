@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/13401319"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Shakhriyar_Mamedyarov"
+image:
+  src: "../articles/_images/Shakhriyar_Mamedyarov_at_UzChess_Cup_2026.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AShakhriyar_Mamedyarov_at_UzChess_Cup_2026.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/14200244"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Rustam_Kasimdzhanov"
+image:
+  src: "../articles/_images/Rustam_Kasimdzhanov_at_the_46th_FIDE_Chess_Olympiad.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARustam_Kasimdzhanov_at_the_46th_FIDE_Chess_Olympiad.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
