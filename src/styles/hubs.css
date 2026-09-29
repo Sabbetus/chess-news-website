@@ -27,12 +27,12 @@
 .hub-head h1 {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 540;
-  font-size: clamp(30px, 4.8vw, 46px);
+  font-size: clamp(30px, 4.5vw, 44px);
   line-height: 1.08;
   margin: 0 0 12px;
 }
 .hub-lede {
-  font-size: 19px;
+  font-size: 15.5px;
   line-height: 1.55;
   color: var(--ink-soft);
   margin: 0;
@@ -53,7 +53,7 @@
 .hub-section h2 {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 540;
-  font-size: 26px;
+  font-size: 22px;
   margin: 0 0 14px;
   padding-top: 14px;
   border-top: 1px solid var(--rule);
@@ -94,7 +94,7 @@
 .highlights {
   margin: 0;
   padding-left: 1.2em;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
 }
 .highlights li {
@@ -121,7 +121,7 @@
 }
 .coverage a {
   font-family: 'Fraunces', Georgia, serif;
-  font-size: 18px;
+  font-size: 17px;
   text-decoration: none;
   color: var(--ink);
 }
