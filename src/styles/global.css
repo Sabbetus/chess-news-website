@@ -42,6 +42,10 @@
      separable in both themes. */
   --plum: #6b3a63;
   --plum-tint: #f2e6ee;
+  /* People lens (interviews, profiles, personal columns): a rose, the one
+     hue left between the plum, terracotta and brass lenses. */
+  --rose: #a23a63;
+  --rose-tint: #f5e2ea;
   --rule: #c7c2b4;
   --rule-soft: #dbd7ca;
   --rule-faint: #e2dfd2;
@@ -74,6 +78,8 @@
     --teal-tint: #16261f;
     --plum: #d191c7;
     --plum-tint: #2c1f2b;
+    --rose: #e58aa9;
+    --rose-tint: #341e29;
     --rule: #38362f;
     --rule-soft: #28271f;
     --rule-faint: #211f1a;
@@ -103,6 +109,8 @@
   --teal-tint: #16261f;
   --plum: #d191c7;
   --plum-tint: #2c1f2b;
+  --rose: #e58aa9;
+  --rose-tint: #341e29;
   --rule: #38362f;
   --rule-soft: #28271f;
   --rule-faint: #211f1a;
@@ -245,6 +253,10 @@ button:focus-visible {
   --tint: color-mix(in srgb, var(--teal) 16%, transparent);
   --mark: color-mix(in srgb, var(--teal) 55%, var(--ink) 10%);
 }
+.thumb.people {
+  --tint: color-mix(in srgb, var(--rose) 16%, transparent);
+  --mark: color-mix(in srgb, var(--rose) 55%, var(--ink) 10%);
+}
 .thumb-photo {
   position: absolute;
   inset: 0;
@@ -357,6 +369,10 @@ button:focus-visible {
 .lens-tag.money {
   background: var(--teal-tint);
   color: var(--teal);
+}
+.lens-tag.people {
+  background: var(--rose-tint);
+  color: var(--rose);
 }
 
 /* ---- masthead ---- */

@@ -41,10 +41,10 @@ const articles = defineCollection({
     // The analytical angle the piece is written through -- shapes the
     // drafting prompt, shown as a secondary label (not the site's primary
     // category, that's `continent`). tournament-db is reserved for the
-    // calendar aggregate pieces; the other four are picked by the AI per
+    // calendar aggregate pieces; the other five are picked by the AI per
     // news story, whichever fits best. Absent on a recap, which isn't
     // written through any one analytical lens.
-    lens: z.enum(['tournament-db', 'drama', 'historical-parallel', 'money-angle', 'results']).optional(),
+    lens: z.enum(['tournament-db', 'drama', 'historical-parallel', 'money-angle', 'results', 'people']).optional(),
     // The site's primary browsing category. Calendar aggregates already
     // know their continent from ingestion; news stories get it inferred by
     // the AI at drafting time, falling back to "global" when no single

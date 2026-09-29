@@ -1,4 +1,4 @@
-export type Lens = 'tournament-db' | 'drama' | 'historical-parallel' | 'money-angle' | 'results';
+export type Lens = 'tournament-db' | 'drama' | 'historical-parallel' | 'money-angle' | 'results' | 'people';
 
 export const LENS_META: Record<Lens, { label: string; className: string; description: string }> = {
   'tournament-db': {
@@ -26,10 +26,15 @@ export const LENS_META: Record<Lens, { label: string; className: string; descrip
     className: 'results',
     description: 'The scores that mattered, from shocks and comebacks to who’s on top.',
   },
+  people: {
+    label: 'People',
+    className: 'people',
+    description: 'Interviews, profiles and the person behind the player: their views, their habits, and their lives away from the board.',
+  },
 };
 
 // Nav/listing order.
-export const LENS_ORDER: Lens[] = ['results', 'historical-parallel', 'money-angle', 'drama', 'tournament-db'];
+export const LENS_ORDER: Lens[] = ['results', 'people', 'historical-parallel', 'money-angle', 'drama', 'tournament-db'];
 
 // URL slugs, kept separate from the Lens type itself -- the type value is
 // also the content-schema key stored in every article's frontmatter, which
@@ -41,6 +46,7 @@ export const LENS_SLUGS: Record<Lens, string> = {
   'historical-parallel': 'history',
   'money-angle': 'money',
   results: 'results',
+  people: 'people',
   'tournament-db': 'otb-tournaments',
 };
 
@@ -56,6 +62,7 @@ const LENS_PIECES: Record<Lens, string[]> = {
   'historical-parallel': ['♔', '♚'],
   'money-angle': ['♘', '♞'],
   results: ['♖', '♜'],
+  people: ['♗', '♝'],
 };
 
 export function pieceForLens(lens: Lens, seed: number): string {
