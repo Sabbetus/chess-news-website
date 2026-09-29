@@ -123,6 +123,7 @@ const jsonLd = [
                       <>{i > 0 && ', '}{playerSlug.has(n) ? <a href={`/players/${playerSlug.get(n)}/`}>{n}</a> : n}</>
                     ))}
                     {w.names.length > 1 && <span class="note"> (shared)</span>}
+                    {w.names.length > 0 && w.note && <span class="note"> · {w.note}</span>}
                   </td>
                 </tr>
               ))}
@@ -143,6 +144,7 @@ const jsonLd = [
                       <>{i > 0 && ', '}{playerSlug.has(n) ? <a href={`/players/${playerSlug.get(n)}/`}>{n}</a> : n}</>
                     ))}
                     {w.names.length > 1 && <span class="note"> (shared)</span>}
+                    {w.names.length > 0 && w.note && <span class="note"> · {w.note}</span>}
                   </td>
                 </tr>
                   ))}
