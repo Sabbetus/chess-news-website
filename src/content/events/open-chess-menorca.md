@@ -11,9 +11,14 @@ aliases:
   - "Open Chess Menorca"
   - "Menorca Open"
   - "Menorca Masters"
+winnersSource:
+  label: "FIDE, ChessBase and ChessBase India reports"
+  url: "https://www.fide.com/arjun-erigaisi-wins-iii-open-chess-menorca/"
 winners:
   - { year: 2026, names: ["Abhimanyu Mishra"], note: "unbeaten on 7½/9; Masters: Nihal Sarin" }
   - { year: 2025, names: ["Vasyl Ivanchuk"] }
+  - { year: 2024, names: ["Arjun Erigaisi"], note: "on tiebreak, 7½/9" }
+  - { year: 2023, names: ["Gukesh Dommaraju"], note: "won a blitz playoff with Pranav Venkatesh" }
   - { year: 2022, names: ["Gukesh Dommaraju"], note: "first edition" }
 image:
   src: "../articles/_images/Atypical_chess_pieces__3.webp"
@@ -23,6 +28,6 @@ reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
 
-Open Chess Menorca was first held in 2022, when a 15-year-old Gukesh Dommaraju won it, two years before he became world champion. It is played every April in Ciutadella, on the island of Menorca.
+Open Chess Menorca was first held in 2022, when a 15-year-old Gukesh Dommaraju won it. He defended the title in 2023, and Indian players won each of the first three editions, with Arjun Erigaisi taking the third in 2024. It is played every April in Ciutadella, on the island of Menorca.
 
 The 2026 edition drew over 200 players, including 38 grandmasters, and added an invitational Masters. Abhimanyu Mishra won the open unbeaten, and Nihal Sarin won the Masters, beating world champion Gukesh twice.
