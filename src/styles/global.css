@@ -42,10 +42,10 @@
      separable in both themes. */
   --plum: #6b3a63;
   --plum-tint: #f2e6ee;
-  /* People lens (interviews, profiles, personal columns): a rose, the one
-     hue left between the plum, terracotta and brass lenses. */
-  --rose: #a23a63;
-  --rose-tint: #f5e2ea;
+  /* People lens: a true crimson -- bluer and more saturated than the
+     terracotta (Controversy), and well clear of the plum (OTB). */
+  --crimson: #c2213f;
+  --crimson-tint: #fbe1e5;
   --rule: #c7c2b4;
   --rule-soft: #dbd7ca;
   --rule-faint: #e2dfd2;
@@ -78,8 +78,8 @@
     --teal-tint: #16261f;
     --plum: #d191c7;
     --plum-tint: #2c1f2b;
-    --rose: #e58aa9;
-    --rose-tint: #341e29;
+    --crimson: #f0768a;
+    --crimson-tint: #3a1a20;
     --rule: #38362f;
     --rule-soft: #28271f;
     --rule-faint: #211f1a;
@@ -109,8 +109,8 @@
   --teal-tint: #16261f;
   --plum: #d191c7;
   --plum-tint: #2c1f2b;
-  --rose: #e58aa9;
-  --rose-tint: #341e29;
+  --crimson: #f0768a;
+  --crimson-tint: #3a1a20;
   --rule: #38362f;
   --rule-soft: #28271f;
   --rule-faint: #211f1a;
@@ -254,8 +254,8 @@ button:focus-visible {
   --mark: color-mix(in srgb, var(--teal) 55%, var(--ink) 10%);
 }
 .thumb.people {
-  --tint: color-mix(in srgb, var(--rose) 16%, transparent);
-  --mark: color-mix(in srgb, var(--rose) 55%, var(--ink) 10%);
+  --tint: color-mix(in srgb, var(--crimson) 16%, transparent);
+  --mark: color-mix(in srgb, var(--crimson) 55%, var(--ink) 10%);
 }
 .thumb-photo {
   position: absolute;
@@ -371,8 +371,8 @@ button:focus-visible {
   color: var(--teal);
 }
 .lens-tag.people {
-  background: var(--rose-tint);
-  color: var(--rose);
+  background: var(--crimson-tint);
+  color: var(--crimson);
 }
 
 /* ---- masthead ---- */
