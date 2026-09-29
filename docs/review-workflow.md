@@ -13,7 +13,7 @@ where frontmatter `reviewStatus: "published"` (see
 ```yaml
 title: string
 publishDate: date
-sourceName: string       # e.g. "Chess.com", "FIDE", "Chess Tournament Calendar"
+sourceName: string       # e.g. "Chess.com", "FIDE", "ChessBase", "Chess Tournament Calendar"
 sourceUrl: string         # always linked prominently in the article
 additionalSources:        # only present when scripts/selection.py detected another
   - sourceName: string    # outlet covering the same event and merged it into one
@@ -47,6 +47,19 @@ itself -- it shapes the drafting prompt but isn't a nav category. Calendar
 aggregates are always `lens: tournament-db` with a known `continent` from
 ingestion; news articles get both inferred by the model at drafting time
 (see `scripts/draft.py`).
+
+**ChessBase and the People lens.** ChessBase (`en.chessbase.com/feed`) is the
+third news source, added for interviews, profiles and columns the other two
+rarely run. Its feed only carries a lede paragraph, so ingestion fetches each
+article's full text (`scripts/article_text.py`); a page with under 800
+characters of text (typically a video-only interview, which is just a YouTube
+embed) is skipped, and ChessBase's own product marketing, puzzle columns and
+"-- Live!" stubs are vetoed in selection. Interviews and profiles are drafted
+through the `people` lens. Selection orders three story types on purpose:
+major tournament results (score at or above 90), then those features (80-89),
+then governance elections (79 or below), each clamped into its band
+(`scoreBreakdown.bandAdjustment` shows the clamp). Features and election
+stories never merge with a different kind of story.
 
 **Reviewing `tweetEmbeds`.** These are picked automatically (scripts/tweets.py):
 every post the story's own source page embedded, minus institutional accounts

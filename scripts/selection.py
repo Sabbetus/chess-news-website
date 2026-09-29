@@ -42,6 +42,8 @@ CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
 SOURCE_TIER_SCORE = {
     "drama": 25,    # Chess.com -- high engagement potential
     "serious": 20,  # FIDE -- official/authoritative
+    "features": 22, # ChessBase -- interviews, portraits, columns; the source we
+                    # add for people-centered stories the other two rarely run
     "own-data": 15, # calendar aggregates -- always relevant to us, but not breaking news
 }
 
@@ -53,6 +55,11 @@ KEYWORD_WEIGHTS = {
     "record": 10, "youngest": 10, "grandmaster": 8, "gm title": 8,
     "prize": 6, "upset": 8, "protest": 10, "investigation": 12,
     "rating list": 18, "fide rating": 14,
+    # People-centered stories (ChessBase's interviews and portraits, and
+    # the occasional one from the other two sources). Small weights: a round
+    # report mentions a "post-game interview" in passing.
+    "interview": 8, "opens up": 10, "childhood": 6, "grew up": 6, "in his own words": 8,
+    "in her own words": 8, "his story": 6, "her story": 6, "retire": 6,
 }
 MAX_KEYWORD_SCORE = 30
 
@@ -87,9 +94,75 @@ PROMO_TITLE_PATTERNS = [
 ]
 
 
+# ChessBase is also a software company: a large share of its feed is its own
+# product marketing ("ChessBase\u00b426 -- Tips for Beginners, part 32"), DVD and
+# book announcements ("Evans & Friends Vol.1 & 2"), puzzle columns, and
+# "-- Live!" stubs that are just a link to a live board. None of that is news,
+# and unlike Chess.com's promos it isn't phrased as an imperative, so it gets
+# its own list, applied to ChessBase items only.
+CHESSBASE_PROMO_TITLE_PATTERNS = [
+    r"chessbase.{0,3}\d{2}\b", r"^chessbase\b", r"tips for beginners", r"players? guide",
+    r"problem challenge", r"endgame challenge", r"upcoming tournaments", r"help us build",
+    r"cloud power", r"\bvol\.?\s*\d", r"\blive!?\s*$", r"\d+ years ago",
+    r"\bfritz\b", r"\bmega database\b", r"\bplaychess\b",
+]
+
+
 def is_promotional(item: dict) -> bool:
     title = (item.get("title") or "").strip().lower()
-    return any(re.search(pattern, title) for pattern in PROMO_TITLE_PATTERNS)
+    if any(re.search(pattern, title) for pattern in PROMO_TITLE_PATTERNS):
+        return True
+    return item.get("sourceName") == "ChessBase" and any(
+        re.search(pattern, title) for pattern in CHESSBASE_PROMO_TITLE_PATTERNS
+    )
+
+
+# A governance story (an election, a congress, a council decision), by its
+# headline. Used to keep such stories out of the results bonus below and out
+# of merges with results reports.
+GOVERNANCE_TITLE_RE = re.compile(
+    r"\belect(?:ed|s|ion|ions)\b|\bfide congress\b|\bpresidential\b|\bvice[- ]president\b"
+    r"|\bgeneral assembly\b|\bcouncil\b",
+    re.IGNORECASE,
+)
+
+
+# People-centered stories (an interview, a portrait, a personal column) --
+# ChessBase's specialty -- are ranked by score like everything else, in a
+# deliberate order of priority: major tournament results, then these, then
+# governance elections (see the three bonuses below). Not a guaranteed slot:
+# a slot would let an interview displace a major-results report on exactly
+# the days results should come first. Instead a feature gets FEATURE_BONUS,
+# sized to land between the two, and none of the results/governance bonuses
+# (an interview about the Olympiad mentions its results and would otherwise
+# earn the results bonus, outscoring the actual round reports -- caught in
+# testing: the Olympic winners' interview scored 127 against round reports'
+# 112-121).
+FEATURE_BONUS = 40
+# Keyword hits in a feature's full text (thousands of characters, so nearly
+# every generic keyword lands) are capped lower so they can't lift it into
+# the results band.
+FEATURE_MAX_KEYWORD_SCORE = 15
+FEATURE_KEYWORD_RE = re.compile(
+    r"\binterview\b|\bportrait\b|\bin conversation\b|\bopens? up\b|\bremembering\b|\bstory\b",
+    re.IGNORECASE,
+)
+# "Firstname Lastname: ..." -- ChessBase's profile headline shape. Case-
+# sensitive on purpose (it's detecting capitalized names), and a weaker
+# signal than the keywords above: it also fits a plain news item about a
+# person ("Bodhana Sivanandan: Youngest-Ever WGM at 11"), so a keyword match
+# outranks it for the slot.
+FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+){1,2}: ")
+FEATURE_EXCLUDE_TITLE_RE = re.compile(r"\bR\d{1,2}\b|\bround \d+|\bday \d+", re.IGNORECASE)
+
+
+def is_feature_story(item: dict) -> bool:
+    if item.get("sourceName") != "ChessBase":
+        return False
+    title = item.get("title") or ""
+    if FEATURE_EXCLUDE_TITLE_RE.search(title):
+        return False
+    return bool(FEATURE_KEYWORD_RE.search(title) or FEATURE_PROFILE_RE.search(title))
 
 
 # Nordic/regional relevance -- boosts stories that matter for the site's
@@ -376,19 +449,60 @@ def score_fan_buzz(item: dict, trend_titles: list[str] | None) -> int:
     return min(FAN_BUZZ_MAX, FAN_BUZZ_PER_POST * matching_posts)
 
 
+# Priority bands for the three story types whose relative order is a policy,
+# not an accident of keyword counts: major tournament results first, then
+# people-centered features, then governance elections. Summing bonuses alone
+# left the ranges overlapping (results down to 85, features up to 107,
+# elections up to 86), so each type is clamped into its own band -- results
+# at or above the floor, features inside theirs, elections at or below the
+# ceiling -- and the clamp shows up as scoreBreakdown.bandAdjustment. Every
+# other kind of story is untouched and competes by score as before.
+RESULTS_SCORE_FLOOR = 90
+FEATURE_SCORE_FLOOR = 80
+FEATURE_SCORE_CEILING = 89
+ELECTION_SCORE_CEILING = 79
+# Raw feature scores (tier + capped keywords + specificity + FEATURE_BONUS) run
+# about 65-105; that range maps onto the feature band.
+FEATURE_RAW_LOW = 65
+FEATURE_RAW_HIGH = 105
+
+
+def _apply_priority_band(total: int, breakdown: dict, governance: bool) -> int:
+    if breakdown.get("feature"):
+        # Spread over the band by raw score rather than clamping, so a
+        # stronger feature still outranks a weaker one.
+        spread = FEATURE_SCORE_CEILING - FEATURE_SCORE_FLOOR
+        return FEATURE_SCORE_FLOOR + min(spread, max(0, (total - FEATURE_RAW_LOW) * spread // (FEATURE_RAW_HIGH - FEATURE_RAW_LOW)))
+    if breakdown.get("majorTournament"):
+        return max(total, RESULTS_SCORE_FLOOR)
+    if governance:
+        return min(total, ELECTION_SCORE_CEILING)
+    return total
+
+
 def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, dict]:
     breakdown = {}
     breakdown["sourceTier"] = SOURCE_TIER_SCORE.get(item.get("sourceTier"), 0)
 
     text = f"{item.get('title', '')} {item.get('summary', '')}"
-    breakdown["keywords"] = score_keywords(text)
+    feature = is_feature_story(item)
+    # An election tally ("110-85") reads like a scoreline and a congress is
+    # held during the Olympiad, so a governance story matches the results
+    # bonus's own test -- caught in testing: the Turlov election piece scored
+    # 150 against the round report's 153. Not a result; no bonus.
+    governance = not feature and bool(GOVERNANCE_TITLE_RE.search(item.get("title") or ""))
+    breakdown["keywords"] = min(score_keywords(text), FEATURE_MAX_KEYWORD_SCORE) if feature else score_keywords(text)
     breakdown["nordic"] = score_nordic(text)
-    breakdown["majorTournament"] = score_major_tournament(text)
-    breakdown["governanceElection"] = score_governance_election(text)
+    breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text)
+    breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
+    breakdown["feature"] = FEATURE_BONUS if feature else 0
     breakdown["specificity"] = score_specificity(item)
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
 
-    total = sum(breakdown.values())
+    raw_total = sum(breakdown.values())
+    total = _apply_priority_band(raw_total, breakdown, governance)
+    if total != raw_total:
+        breakdown["bandAdjustment"] = total - raw_total
     return total, breakdown
 
 
@@ -587,6 +701,30 @@ def _is_same_story(a: dict, b: dict) -> bool:
     return len(shared_bigrams) >= 1 and len(extra_singles) >= 1
 
 
+# --- Merge guards ---
+#
+# _is_same_story only asks "do these two texts share enough names", which
+# can't tell an election story, or an interview, from the round report it
+# happens to share names with (caught in testing with ChessBase added: the
+# Turlov election piece was folded into the Olympiad "Day 10" results piece,
+# and the Olympic winners' interview into the round report -- which would
+# have erased the interview as a piece of its own). Different kinds of story
+# never merge, and a feature never merges with anything.
+
+
+def _story_kind(item: dict) -> str:
+    if is_feature_story(item):
+        return "feature"
+    if GOVERNANCE_TITLE_RE.search(item.get("title") or ""):
+        return "governance"
+    return "other"
+
+
+def _compatible_for_merge(a: dict, b: dict) -> bool:
+    kind_a, kind_b = _story_kind(a), _story_kind(b)
+    return "feature" not in (kind_a, kind_b) and kind_a == kind_b
+
+
 def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
     """scored is sorted by selectionScore descending, so the first member
     of any same-story group encountered is already the highest-scoring
@@ -623,6 +761,7 @@ def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
                 existing
                 for existing in result
                 if existing["kind"] not in CALENDAR_KINDS
+                and _compatible_for_merge(item, existing)
                 and _is_same_story(item, existing)
                 and item["sourceName"] != existing["sourceName"]
                 and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
