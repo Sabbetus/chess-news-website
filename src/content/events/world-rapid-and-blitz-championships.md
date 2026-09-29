@@ -7,10 +7,10 @@ founded: 2012
 location: "Varies"
 format: "Rapid: a 13-round Swiss. Blitz: a Swiss stage followed by a knockout. Separate open and women’s events"
 aliases:
-  - "World Rapid"
-  - "World Blitz"
   - "World Rapid and Blitz"
   - "World Rapid & Blitz"
+  - "World Rapid Championship"
+  - "World Blitz Championship"
 winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/World_Rapid_Chess_Championship"

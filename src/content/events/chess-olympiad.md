@@ -15,7 +15,6 @@ nextEdition:
   checked: "2026-09-29"
 aliases:
   - "Chess Olympiad"
-  - "Olympiad"
 winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/Chess_Olympiad"

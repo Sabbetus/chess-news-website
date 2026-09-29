@@ -8,6 +8,8 @@ location: "Varies"
 format: "Knockout of just over 100 players; from 2027, Swiss qualifying pools followed by a knockout"
 aliases:
   - "Women's World Cup"
+  - "Women's Chess World Cup"
+  - "FIDE Women's World Cup"
 winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/Women%27s_Chess_World_Cup"

@@ -7,7 +7,6 @@ founded: 2005
 location: "Varies"
 format: "Knockout: two-game mini-matches with rapid and blitz tiebreaks; from 2027, Swiss qualifying pools followed by a 16-player knockout"
 aliases:
-  - "World Cup"
   - "FIDE World Cup"
   - "Chess World Cup"
 winnersSource:
