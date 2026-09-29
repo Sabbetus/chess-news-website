@@ -1,0 +1,194 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Portrait from '../../components/Portrait.astro';
+import '../../styles/hubs.css';
+import { eventPages, playerPages, articlesMentioning, dateRange, longDate, shortDate } from '../../lib/hubs';
+
+export async function getStaticPaths() {
+  return (await eventPages()).map((event) => ({ params: { slug: event.slug }, props: { event } }));
+}
+
+const { event } = Astro.props;
+const d = event.data;
+const { Content } = await event.render();
+const coverage = await articlesMentioning([d.name, ...d.aliases]);
+const pageURL = new URL(`/events/${event.slug}/`, Astro.site).toString();
+
+// Winner names that have a player page become links.
+const playerSlug = new Map<string, string>();
+for (const p of await playerPages()) for (const n of [p.data.name, ...p.data.aliases]) playerSlug.set(n, p.slug);
+
+// Most titles, counting shared wins.
+const tally = new Map<string, number>();
+for (const w of d.winners) for (const n of w.names) tally.set(n, (tally.get(n) ?? 0) + 1);
+const record = [...tally.entries()].filter(([, c]) => c >= 3).sort((a, b) => b[1] - a[1]);
+const latest = d.winners.find((w) => w.names.length > 0);
+
+const ogImage = d.image
+  ? new URL((await getImage({ src: d.image.src, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).toString()
+  : undefined;
+const next = d.nextEdition;
+const description = `${d.summary}${next?.start ? ` Next edition: ${dateRange(next.start, next.end)}.` : ''}`;
+
+const jsonLd = [
+  ...(next?.start
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'SportsEvent',
+          name: `${d.name} ${next.start.getUTCFullYear()}`,
+          sport: 'Chess',
+          startDate: next.start.toISOString().slice(0, 10),
+          ...(next.end ? { endDate: next.end.toISOString().slice(0, 10) } : {}),
+          eventStatus: 'https://schema.org/EventScheduled',
+          location: { '@type': 'Place', name: next.location ?? d.location, address: next.location ?? d.location },
+          ...(ogImage ? { image: ogImage } : {}),
+          description: d.summary,
+          url: pageURL,
+        },
+      ]
+    : []),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'The Chess Herald', item: new URL('/', Astro.site).toString() },
+      { '@type': 'ListItem', position: 2, name: 'Events', item: new URL('/events/', Astro.site).toString() },
+      { '@type': 'ListItem', position: 3, name: d.name, item: pageURL },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${d.name}: History, Winners and ${next?.start ? next.start.getUTCFullYear() + ' Dates' : 'Next Edition'} | The Chess Herald`}
+  description={description}
+  activeSection="events"
+  image={ogImage}
+  jsonLd={jsonLd}
+>
+  <article class="hub event">
+    <header class="hub-head">
+      <p class="hub-kicker"><a href="/events/">Events</a> / {d.location}</p>
+      <h1>{d.name}</h1>
+      <p class="hub-lede">{d.summary}</p>
+    </header>
+
+    <div class="hub-body"><Portrait name={d.name} image={d.image} alt={`${d.name}`} /></div>
+
+    {next && (
+      <aside class="hub-section next">
+        <p class="next-label">Next: {next.label}</p>
+        <p class="next-dates">{dateRange(next.start, next.end)}</p>
+        {next.location && <p class="next-where">{next.location}</p>}
+        <p class="note">
+          Dates from the <a href={next.sourceUrl} target="_blank" rel="noopener">organiser's site</a>, last checked
+          {longDate(next.checked)}.
+        </p>
+      </aside>
+    )}
+
+    <div class="hub-section"><dl class="facts">
+      <dt>Founded</dt><dd>{d.founded}</dd>
+      <dt>Held</dt><dd>{d.frequency}</dd>
+      <dt>Where</dt><dd>{d.location}</dd>
+      <dt>Format</dt><dd>{d.format}</dd>
+      {latest && (<><dt>Champion</dt><dd>{latest.names.join(', ')} ({latest.year})</dd></>)}
+      {record.length > 0 && (<><dt>Most titles</dt><dd>{record.slice(0, 3).map(([n, c]) => `${n} (${c})`).join(', ')}</dd></>)}
+      {d.officialUrl && (<><dt>Official site</dt><dd><a href={d.officialUrl} target="_blank" rel="noopener">{new URL(d.officialUrl).hostname}</a></dd></>)}
+    </dl></div>
+
+    <div class="hub-body">
+      <h2 class="body-h2">History</h2>
+      <Content />
+    </div>
+
+    {coverage.length > 0 && (
+      <section class="hub-section">
+        <h2>{d.name} in The Chess Herald</h2>
+        <ul class="coverage">
+          {coverage.map((a) => (
+            <li>
+              <time datetime={a.data.publishDate.toISOString()}>{shortDate(a.data.publishDate)}</time>
+              <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {d.winners.length > 0 && (
+      <section class="hub-section">
+        <h2>All winners</h2>
+        <div class="table-wrap">
+          <table class="data-table winners">
+            <thead><tr><th class="num">Year</th><th>Winner</th></tr></thead>
+            <tbody>
+              {d.winners.map((w) => (
+                <tr>
+                  <td class="num">{w.year}</td>
+                  <td>
+                    {w.names.length === 0 ? <em>{w.note}</em> : w.names.map((n, i) => (
+                      <>{i > 0 && ', '}{playerSlug.has(n) ? <a href={`/players/${playerSlug.get(n)}/`}>{n}</a> : n}</>
+                    ))}
+                    {w.names.length > 1 && <span class="note"> (shared)</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {d.winnersSource && (
+          <p class="note">Source: <a href={d.winnersSource.url} target="_blank" rel="noopener">{d.winnersSource.label}</a>.</p>
+        )}
+      </section>
+    )}
+
+    <section class="hub-section">
+      <p class="note">Page last reviewed {longDate(d.updatedDate)}.</p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .next {
+    padding: 18px 20px;
+    border-left: 4px solid var(--blue);
+    background: var(--blue-tint);
+    border-radius: 3px;
+  }
+  .next p {
+    margin: 0;
+  }
+  .next-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .next-dates {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 28px;
+    font-weight: 540;
+    margin: 4px 0 !important;
+  }
+  .next-where {
+    margin-bottom: 8px !important;
+  }
+  .body-h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: 26px;
+    margin: 10px 0 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+  }
+  .winners {
+    max-width: 560px;
+  }
+  .winners td:first-child {
+    width: 4em;
+  }
+</style>
