@@ -79,6 +79,22 @@ const articles = defineCollection({
         url: z.string().url(),
       })
       .optional(),
+    // Posts on X that the story's own source page embedded, stored as
+    // plain text at draft time (see scripts/tweets.py) and rendered as
+    // static quotes by TweetQuotes.astro -- the site never loads anything
+    // from X, so a reader's browser only contacts it if they click through.
+    // Reviewers delete an entry in the PR to drop a quote.
+    tweetEmbeds: z
+      .array(
+        z.object({
+          url: z.string().url(),
+          author: z.string(),
+          handle: z.string(),
+          text: z.string(),
+          date: z.string().optional(),
+        })
+      )
+      .optional(),
   }),
 });
 

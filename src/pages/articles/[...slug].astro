@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import LichessGame from '../../components/LichessGame.astro';
+import TweetQuotes from '../../components/TweetQuotes.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
@@ -207,6 +208,8 @@ const jsonLd = [
     </div>
 
     {article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />}
+
+    {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
 
     <p class="source-callout">
       <span class="byline-credit">By Claude Henry</span><br />
