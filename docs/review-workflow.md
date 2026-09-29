@@ -27,6 +27,11 @@ socialCopy: string        # suggested post text for Phase 2 social automation
 gameEmbed:                 # only present when the piece centers on one specific
   url: string              # game AND scripts/lichess_game.py found a confident
                             # match on Lichess -- absent on most articles
+tweetEmbeds:               # only present when the source page(s) embedded posts
+  - url, author, handle,   # on X from a person (not an institution) -- stored as
+    text, date             # plain text and rendered as static quotes under the
+                            # story; the site never loads anything from X.
+                            # Delete an entry in the PR to drop a quote.
 
 # Calendar aggregate articles (see below) also carry, for reviewer context
 # only -- stripped from the built site's data, visible only in the raw file:
@@ -42,6 +47,19 @@ itself -- it shapes the drafting prompt but isn't a nav category. Calendar
 aggregates are always `lens: tournament-db` with a known `continent` from
 ingestion; news articles get both inferred by the model at drafting time
 (see `scripts/draft.py`).
+
+**Reviewing `tweetEmbeds`.** These are picked automatically (scripts/tweets.py):
+every post the story's own source page embedded, minus institutional accounts
+(federations, events, outlets), at most three. Check that each quote is
+actually about this story and is a person you're comfortable quoting; delete
+anything else. The text is reproduced verbatim from X's public oEmbed, so a
+reader can click through to verify it.
+
+**Fan buzz.** `scoreBreakdown.fanBuzz` in `data/selected.json` (0, 5 or 10) is
+a small scoring nudge for candidates whose headline names someone that
+r/chess's top posts of the day are also about (scripts/trends.py). It only
+nudges ranking -- nothing from Reddit is published -- and is 0 whenever the
+Reddit fetch failed or `data/trends.json` is older than 36 hours.
 
 `reviewStatus` is deliberately kept as article-level data, not something
 implied only by "which PR is open" -- this is what lets an admin UI be

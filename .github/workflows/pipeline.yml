@@ -44,6 +44,10 @@ jobs:
       - name: Ingest candidate stories
         run: python scripts/ingest.py
 
+      - name: Fetch r/chess trends (best effort)
+        continue-on-error: true
+        run: python scripts/trends.py
+
       - name: Select today's stories
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

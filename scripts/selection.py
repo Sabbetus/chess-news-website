@@ -21,6 +21,7 @@ frontmatter downstream, so a reviewer can see *why* something got picked).
 import json
 import os
 import re
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from coverage import drop_already_covered
@@ -28,6 +29,7 @@ from coverage import drop_already_covered
 DATA_DIR = Path(__file__).parent.parent / "data"
 CANDIDATES_PATH = DATA_DIR / "candidates.json"
 SELECTED_PATH = DATA_DIR / "selected.json"
+TRENDS_PATH = DATA_DIR / "trends.json"
 
 MIN_EXTERNAL_ARTICLES = 2
 MAX_EXTERNAL_ARTICLES = 4
@@ -295,7 +297,86 @@ def score_specificity(item: dict) -> int:
     return 0
 
 
-def score_item(item: dict) -> tuple[int, dict]:
+# --- Fan buzz (r/chess) ---
+#
+# trends.py saves the titles of r/chess's top posts of the day. A candidate
+# whose headline names someone those posts are also about gets a small
+# capped bump: a story the community is already talking about is more likely
+# to land with readers than an equally scored quiet one. Deliberately a
+# nudge, not a driver -- capped well below the source-tier and keyword scores
+# -- and only the candidate's own headline is matched (its summary names too
+# many people to be a fair test).
+#
+# Precision matters more than recall for a nudge, so a match needs the word
+# to look like a proper noun on BOTH sides: capitalized in the headline and
+# capitalized in the Reddit title. That drops lowercase chatter ("pragg",
+# "total meltdown") on purpose. Caught live while testing: matching on any
+# capitalized headline word let "Total Chess Pilot" collect a bump from an
+# unrelated post about a "total meltdown", because Chess.com headlines are
+# Title Case and every word in them counts as capitalized -- hence the
+# stoplist of ordinary headline vocabulary below. Not selection's
+# _single_names, which skips names inside roster lists on purpose (right for
+# telling two stories apart, wrong here: the players in a roster
+# announcement are exactly who fans are talking about).
+FAN_BUZZ_PER_POST = 5
+FAN_BUZZ_MAX = 10
+TRENDS_MAX_AGE_HOURS = 36
+
+HEADLINE_COMMON_WORDS = {
+    "complete", "completes", "completed", "player", "players", "field", "fields", "total",
+    "pilot", "wins", "winner", "winners", "beats", "beat", "defeats", "defeat", "takes",
+    "take", "leads", "lead", "leader", "leaders", "clinch", "clinches", "claims", "claim",
+    "secures", "secure", "sole", "first", "second", "third", "final", "finals", "round",
+    "rounds", "match", "matches", "game", "games", "title", "titles", "champion", "champions",
+    "championship", "championships", "tournament", "event", "events", "news", "update",
+    "updates", "announced", "announces", "announce", "named", "after", "again", "still",
+    "more", "most", "best", "top", "record", "says", "said", "gets", "gives", "hits", "drops",
+    "falls", "rises", "returns", "return", "continues", "extends", "seals", "sweeps", "stuns",
+    "upsets", "upset", "favorites", "favourites", "favorite", "favourite", "women", "womens",
+    "open", "team", "teams", "play", "plays", "playing", "week", "today", "tonight", "live",
+    "report", "reports", "review", "interview", "preview", "recap", "grandmaster", "master",
+    "president", "federation", "council", "committee", "election", "elected", "world", "cup",
+    "league", "series", "rapid", "blitz", "bullet", "classical", "online", "chess", "with",
+    "from", "into", "over", "under", "this", "that", "their", "while", "amid", "about",
+    "against", "before", "between", "during", "through", "without", "will", "have", "been",
+}
+
+
+def _headline_names(title: str) -> set[str]:
+    """Capitalized words in a headline that could be people or places."""
+    names = set()
+    for word in re.findall(r"[A-Z][a-z']+", title):
+        lowered = word.lower().rstrip("'s")
+        if len(lowered) >= 4 and lowered not in GENERIC_NAME_WORDS and lowered not in HEADLINE_COMMON_WORDS:
+            names.add(lowered)
+    return names
+
+
+def load_trend_titles(now: datetime | None = None) -> list[str]:
+    """Titles from trends.json, or [] when it's missing, unreadable, or too
+    old to mean "today" (a stale file must not keep boosting yesterday's
+    stories)."""
+    try:
+        data = json.loads(TRENDS_PATH.read_text(encoding="utf-8"))
+        fetched = datetime.fromisoformat(data["fetchedAt"])
+        if (now or datetime.now(timezone.utc)) - fetched > timedelta(hours=TRENDS_MAX_AGE_HOURS):
+            return []
+        return [t for t in data["titles"] if isinstance(t, str)]
+    except (OSError, ValueError, KeyError, TypeError):
+        return []
+
+
+def score_fan_buzz(item: dict, trend_titles: list[str] | None) -> int:
+    if not trend_titles or item.get("kind") in CALENDAR_KINDS:
+        return 0
+    names = _headline_names(item.get("title", ""))
+    if not names:
+        return 0
+    matching_posts = sum(1 for title in trend_titles if names & _headline_names(title))
+    return min(FAN_BUZZ_MAX, FAN_BUZZ_PER_POST * matching_posts)
+
+
+def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, dict]:
     breakdown = {}
     breakdown["sourceTier"] = SOURCE_TIER_SCORE.get(item.get("sourceTier"), 0)
 
@@ -305,6 +386,7 @@ def score_item(item: dict) -> tuple[int, dict]:
     breakdown["majorTournament"] = score_major_tournament(text)
     breakdown["governanceElection"] = score_governance_election(text)
     breakdown["specificity"] = score_specificity(item)
+    breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
 
     total = sum(breakdown.values())
     return total, breakdown
@@ -568,11 +650,14 @@ def main() -> None:
 
     candidates = json.loads(CANDIDATES_PATH.read_text())
 
+    trend_titles = load_trend_titles()
+    print(f"Fan buzz: {len(trend_titles)} r/chess post title(s) loaded" + ("" if trend_titles else " (no bonus today)"))
+
     scored = []
     for item in candidates:
         if is_promotional(item):
             continue
-        total, breakdown = score_item(item)
+        total, breakdown = score_item(item, trend_titles)
         if total <= 0:
             continue
         scored.append({**item, "selectionScore": total, "scoreBreakdown": breakdown})
@@ -607,7 +692,8 @@ def main() -> None:
 
     print(f"Selected {len(selected)} item(s) from {len(candidates)} candidate(s):")
     for item in selected:
-        print(f"  [{item['selectionScore']:>3}] {item['sourceName']}: {item['title']}")
+        buzz = item["scoreBreakdown"].get("fanBuzz", 0)
+        print(f"  [{item['selectionScore']:>3}] {item['sourceName']}: {item['title']}" + (f"  (+{buzz} fan buzz)" if buzz else ""))
         for extra in item.get("additionalSources", []):
             print(f"        + merged with {extra['sourceName']}: {extra['title']}")
 
