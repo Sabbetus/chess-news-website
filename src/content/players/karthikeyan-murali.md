@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/5074452"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Karthikeyan_Murali"
+image:
+  src: "../articles/_images/London_Chess_Classic_2016_Day3-8__31236727680.webp"
+  credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALondon_Chess_Classic_2016_Day3-8_%2831236727680%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

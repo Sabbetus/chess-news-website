@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/2905540"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ivan_Cheparinov"
+image:
+  src: "../articles/_images/Ivan_Cheparinov_2011.webp"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIvan_Cheparinov_2011.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

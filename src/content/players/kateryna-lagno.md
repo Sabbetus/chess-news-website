@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/14109336"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Kateryna_Lagno"
+image:
+  src: "../articles/_images/Kateryna_Lagno_in_2019_-_02.webp"
+  credit: "Министерство спорта Республики Татарстан, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKateryna_Lagno_in_2019_-_02.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
