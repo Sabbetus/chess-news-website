@@ -8,7 +8,7 @@ the player's FIDE ID, or the page is rejected (names collide; FIDE IDs don't).
 Photos go through images.py's licence check and localize_image, so they land
 in the same committed master store as article photos.
 
-    python scripts/player_research.py 1-20 research.jsonl
+    python scripts/player_research.py 1-20 research.jsonl [--women]
 """
 
 import json
@@ -197,7 +197,8 @@ def main() -> None:
             done = {json.loads(line)["fideId"] for line in f if line.strip()}
     except FileNotFoundError:
         pass
-    players = [p for i, p in enumerate(TOP100["players"], start=1) if lo <= i <= hi and p["fideId"] not in done]
+    ranking = TOP100["women" if "--women" in sys.argv else "players"]
+    players = [p for i, p in enumerate(ranking, start=1) if lo <= i <= hi and p["fideId"] not in done]
     for p in players:
         result = research(p)
         with open(out_path, "a") as f:

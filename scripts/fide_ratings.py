@@ -32,6 +32,7 @@ CURRENT_URL = "https://ratings.fide.com/download/standard_rating_list.zip"
 ARCHIVE_URL = "https://ratings.fide.com/download/standard_{mon}{yy}frl.zip"
 USER_AGENT = "ChessHeraldBot/1.0 (+https://chessherald.com/about/)"
 TOP_N = 100
+WOMEN_TOP_N = 25
 MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 
 # Federations whose players FIDE lists family name first and English-language
@@ -78,6 +79,7 @@ def parse_list(text: str) -> tuple[str, list[dict]]:
                 "fideId": line[: col["Name"]].strip(),
                 "name": display_name(line[col["Name"] : col["Fed"]], federation),
                 "federation": federation,
+                "sex": line[col["Sex"] : col["Tit"]].strip(),
                 "title": line[col["Tit"] : col["WTit"]].strip(),
                 "birthYear": int(birth) if birth.isdigit() and birth != "0" else None,
                 "rating": int(rating),
@@ -98,11 +100,11 @@ def previous_period(period: str) -> str:
     return f"{MONTHS[month - 1]}{year % 100:02d}"
 
 
-def build_table(period: str, current: list[dict], previous: list[dict]) -> dict:
+def ranked(current: list[dict], previous: list[dict], top_n: int) -> list[dict]:
     prev_rating = {p["fideId"]: p["rating"] for p in previous}
-    prev_rank = {p["fideId"]: i for i, p in enumerate(previous[:TOP_N], start=1)}
+    prev_rank = {p["fideId"]: i for i, p in enumerate(previous[:top_n], start=1)}
     rows, rank, last_rating = [], 0, None
-    for i, p in enumerate(current[:TOP_N], start=1):
+    for i, p in enumerate(current[:top_n], start=1):
         # Tied ratings share a rank, the way FIDE's own list shows them.
         if p["rating"] != last_rating:
             rank, last_rating = i, p["rating"]
@@ -114,12 +116,21 @@ def build_table(period: str, current: list[dict], previous: list[dict]) -> dict:
                 "previousRank": prev_rank.get(p["fideId"]),
             }
         )
+    return rows
+
+
+def build_table(period: str, current: list[dict], previous: list[dict]) -> dict:
+    """The open top 100, plus the women's top 25 (FIDE's women's list is the
+    same rating list filtered to female players)."""
+    women_now = [p for p in current if p["sex"] == "F"]
+    women_prev = [p for p in previous if p["sex"] == "F"]
     return {
         "period": period_to_date(period).strftime("%Y-%m"),
         "source": "FIDE standard rating list",
         "sourceUrl": "https://ratings.fide.com/",
         "fetchedAt": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "players": rows,
+        "players": ranked(current, previous, TOP_N),
+        "women": ranked(women_now, women_prev, WOMEN_TOP_N),
     }
 
 
@@ -141,7 +152,7 @@ def main() -> None:
         print(f"FIDE top 100 refresh skipped ({type(exc).__name__}: {exc}).", file=sys.stderr)
         return
     OUT_PATH.write_text(json.dumps(table, ensure_ascii=False, indent=1) + "\n")
-    print(f"Wrote FIDE top 100 for {table['period']} ({len(table['players'])} players).")
+    print(f"Wrote FIDE top 100 and women's top 25 for {table['period']}.")
 
 
 if __name__ == "__main__":

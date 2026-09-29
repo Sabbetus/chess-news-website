@@ -16,6 +16,8 @@ const { player } = Astro.props;
 const d = player.data;
 const { Content } = await player.render();
 const ranked = TOP100.players.find((p) => p.fideId === d.fideId);
+const rankedWomen = TOP100.women.find((p) => p.fideId === d.fideId);
+const rated = ranked ?? rankedWomen;
 const coverage = await articlesMentioning([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
 const pageURL = new URL(`/players/${player.slug}/`, Astro.site).toString();
@@ -24,7 +26,12 @@ const ogImage = d.image
   ? new URL((await getImage({ src: d.image.src, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).toString()
   : undefined;
 
-const description = `${d.name}: ${d.title} from ${federationName(d.federation)}${ranked ? `, world No. ${ranked.rank} on ${ranked.rating}` : ''}. Profile, key results and The Chess Herald's coverage.`;
+const rankText = ranked
+  ? `, world No. ${ranked.rank} on ${ranked.rating}`
+  : rankedWomen
+    ? `, women's world No. ${rankedWomen.rank} on ${rankedWomen.rating}`
+    : '';
+const description = `${d.name}: ${d.title} from ${federationName(d.federation)}${rankText}. Profile, key results and The Chess Herald's coverage.`;
 
 const jsonLd = [
   {
@@ -64,21 +71,21 @@ const jsonLd = [
 >
   <article class="hub player">
     <header class="hub-head">
-      <p class="hub-kicker"><a href="/players/">Players</a> / {federationName(d.federation)}</p>
+      <p class="hub-kicker"><a href={ranked || !rankedWomen ? '/players/' : '/players/women/'}>Players</a> / {federationName(d.federation)}</p>
       <h1>{d.name}</h1>
     </header>
 
     <div class="player-top">
       <Portrait name={d.name} image={d.image} />
       <dl class="facts">
-        {ranked && (
+        {ranked && (<><dt>World rank</dt><dd><strong>No. {ranked.rank}</strong> ({month})</dd></>)}
+        {rankedWomen && (<><dt>Women's rank</dt><dd><strong>No. {rankedWomen.rank}</strong> ({month})</dd></>)}
+        {rated && (
           <>
-            <dt>World rank</dt>
-            <dd><strong>No. {ranked.rank}</strong> ({month})</dd>
             <dt>Rating</dt>
             <dd>
-              <strong>{ranked.rating}</strong>
-              {ranked.change ? ` (${ranked.change > 0 ? '+' : '−'}${Math.abs(ranked.change)} this month)` : ''}
+              <strong>{rated.rating}</strong>
+              {rated.change ? ` (${rated.change > 0 ? '+' : '−'}${Math.abs(rated.change)} this month)` : ''}
             </dd>
           </>
         )}

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/hubs.css';
-import { TOP100, federationName, periodLabel, playerPages, longDate } from '../../lib/hubs';
+import RankingTable from '../../components/RankingTable.astro';
+import { TOP100, periodLabel, playerPages, longDate } from '../../lib/hubs';
 
 const pages = await playerPages();
 const pageById = new Map(pages.map((p) => [p.data.fideId, p]));
@@ -27,15 +28,6 @@ const jsonLd = [
   },
 ];
 
-const change = (c: number | null) => (c === null ? '' : c > 0 ? `+${c}` : c < 0 ? `−${-c}` : '0');
-const movement = (rank: number, prev: number | null) => {
-  if (prev === null) return { label: 'new', cls: 'new', title: 'New in the top 100 this month' };
-  if (prev === rank) return { label: '', cls: '', title: '' };
-  return prev > rank
-    ? { label: `▲${prev - rank}`, cls: 'up', title: `Up from ${prev}` }
-    : { label: `▼${rank - prev}`, cls: 'down', title: `Down from ${prev}` };
-};
-const thisYear = new Date().getUTCFullYear();
 ---
 
 <BaseLayout title={`${title} | The Chess Herald`} description={description} activeSection="players" jsonLd={jsonLd}>
@@ -45,49 +37,12 @@ const thisYear = new Date().getUTCFullYear();
       <h1>FIDE Top 100: {month}</h1>
       <p class="hub-lede">
         The world's 100 highest-rated active players in classical chess, from FIDE's official standard rating list. It
-        updates each month when FIDE publishes a new list.
+        updates each month when FIDE publishes a new list. See also the <a href="/players/women/">women's top 25</a>.
       </p>
     </header>
 
     <section class="hub-section top100">
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th class="num">#</th>
-              <th></th>
-              <th>Player</th>
-              <th class="hide-mobile">Federation</th>
-              <th class="num">Rating</th>
-              <th class="num">+/−</th>
-              <th class="num hide-mobile">Age</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              TOP100.players.map((p) => {
-                const page = pageById.get(p.fideId);
-                const move = movement(p.rank, p.previousRank);
-                return (
-                  <tr>
-                    <td class="num rank">{p.rank}</td>
-                    <td class={`move ${move.cls}`} title={move.title}>{move.label}</td>
-                    <td>
-                      <span class="title">{p.title}</span>{' '}
-                      {page ? <a href={`/players/${page.slug}/`}>{page.data.name}</a> : <span>{p.name}</span>}
-                      <span class="fed-mobile">{p.federation}</span>
-                    </td>
-                    <td class="hide-mobile">{federationName(p.federation)}</td>
-                    <td class="num rating">{p.rating}</td>
-                    <td class={`num delta ${p.change && p.change > 0 ? 'up' : p.change && p.change < 0 ? 'down' : ''}`}>{change(p.change)}</td>
-                    <td class="num hide-mobile">{p.birthYear ? thisYear - p.birthYear : ''}</td>
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        </table>
-      </div>
+      <RankingTable rows={TOP100.players} pageById={pageById} />
       <p class="note">
         Source: <a href={TOP100.sourceUrl} target="_blank" rel="noopener">FIDE standard rating list</a>, {month}. Active
         players only. +/− is the change from the previous month's list; age is approximate (birth year only). Updated
@@ -96,55 +51,3 @@ const thisYear = new Date().getUTCFullYear();
     </section>
   </div>
 </BaseLayout>
-
-<style>
-  .top100 {
-    --content-width: 860px;
-  }
-  .rank {
-    font-weight: 600;
-    width: 2.5em;
-  }
-  .move {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    white-space: nowrap;
-    width: 3em;
-    padding-left: 0;
-  }
-  .move.up,
-  .delta.up {
-    color: var(--green);
-  }
-  .move.down,
-  .delta.down {
-    color: var(--terracotta);
-  }
-  .move.new {
-    color: var(--blue);
-    text-transform: uppercase;
-  }
-  .title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-soft);
-  }
-  .rating {
-    font-weight: 600;
-  }
-  td a {
-    font-weight: 600;
-  }
-  .fed-mobile {
-    display: none;
-  }
-  @media (max-width: 640px) {
-    .fed-mobile {
-      display: inline;
-      margin-left: 6px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--ink-soft);
-    }
-  }
-</style>
