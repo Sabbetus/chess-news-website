@@ -14,10 +14,10 @@ Every article carries two independent pieces of metadata:
   - lens: the analytical angle the piece is written through -- shapes the
     prompt, shown on-site as a secondary label, not the primary category.
     "tournament-db" is reserved for calendar aggregates (forced, not
-    chosen); news items get one of four lenses (drama, money-angle, results,
-    historical-parallel), picked by the model as whichever best fits that
-    specific story -- checked roughly in that order, with historical-parallel
-    as the fallback (see LENS_OPTIONS below).
+    chosen); news items get one of five lenses (people, drama, money-angle,
+    results, historical-parallel), picked by the model as whichever best fits
+    that specific story -- checked roughly in that order, with
+    historical-parallel as the fallback (see LENS_OPTIONS below).
 """
 
 import json
@@ -132,11 +132,11 @@ AGGREGATE_INSTRUCTIONS = {
     ),
 }
 
-# The four lenses a news item can be drafted through -- the model picks
+# The five lenses a news item can be drafted through -- the model picks
 # whichever fits the specific story best (see NEWS_SYSTEM_PROMPT). Checked
 # in this order: drama and money-angle first (a real scandal or financial
 # angle is unambiguous when it exists), then results, and historical-parallel
-# only as the fallback when none of the other three genuinely fit -- chess
+# only as the fallback when none of the other four genuinely fit -- chess
 # has enough documented history that *a* parallel can be found for nearly
 # any story, which is exactly why that ease can't be the deciding factor.
 #
@@ -150,6 +150,21 @@ AGGREGATE_INSTRUCTIONS = {
 # into one lens that covers both, since a piece can lean on either or both
 # depending on what the story actually is.
 LENS_OPTIONS = {
+    "people": (
+        "People: for a story that is centrally about a person -- an interview, "
+        "a profile, a personal column, a tribute, or someone's own account of "
+        "their life, habits, views or career -- rather than about a result or "
+        "an event. Tell the reader what the piece reveals about the person: "
+        "what they think, how they work, what they care about, what surprised "
+        "you. Lean on the person's own words for the substance, but quote "
+        "sparingly -- a few short, exact, attributed lines (a sentence, not a "
+        "paragraph), never a long stretch of the source's text and never a "
+        "reconstruction of the whole interview; the piece adds the reading "
+        "and the context, and the reader can go to the source for the full "
+        "conversation. Pick this lens only when the person is the story: "
+        "a match report that quotes a player afterwards is results, not "
+        "this."
+    ),
     "drama": (
         "Drama angle: lean into any scandal, controversy, or genuine "
         "interpersonal conflict in the story -- add color and reasonable "
@@ -437,11 +452,12 @@ Sindarov," a federation vice president, was linked to an unrelated article about
 "Javokhir Sindarov," a grandmaster -- same surname, different, unrelated people).
 
 First, pick the single best-fitting lens for THIS story from these options, checked \
-in the order listed -- drama and money-angle are unambiguous when they genuinely \
-apply, results covers a story that's centrally about a result or the standings it \
-shifted, and historical-parallel is the fallback: only reach for it when none of \
-the other three genuinely fit, even though a historical parallel can usually be \
-found for almost any story:
+in the order listed -- people is clear-cut when the source is an interview, \
+profile or personal column, drama and money-angle are unambiguous when they \
+genuinely apply, results covers a story that's centrally about a result or the \
+standings it shifted, and historical-parallel is the fallback: only reach for it \
+when none of the other four genuinely fit, even though a historical parallel can \
+usually be found for almost any story:
 {chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
 
 Then pick the single most relevant continent for this story from: {CONTINENT_OPTIONS}. \
