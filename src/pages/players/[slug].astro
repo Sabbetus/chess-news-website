@@ -1,0 +1,142 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Portrait from '../../components/Portrait.astro';
+import CoverageList from '../../components/CoverageList.astro';
+import '../../styles/hubs.css';
+import {
+  TOP100, playerPages, articlesMentioning, federationName, periodLabel, ageOn, longDate, shortDate,
+} from '../../lib/hubs';
+
+export async function getStaticPaths() {
+  return (await playerPages()).map((player) => ({ params: { slug: player.slug }, props: { player } }));
+}
+
+const { player } = Astro.props;
+const d = player.data;
+const { Content } = await player.render();
+const ranked = TOP100.players.find((p) => p.fideId === d.fideId);
+const rankedWomen = TOP100.women.find((p) => p.fideId === d.fideId);
+const rated = ranked ?? rankedWomen;
+const coverage = await articlesMentioning([d.name, ...d.aliases]);
+const month = periodLabel(TOP100.period);
+const pageURL = new URL(`/players/${player.slug}/`, Astro.site).toString();
+
+const ogImage = d.image
+  ? new URL((await getImage({ src: d.image.src, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).toString()
+  : undefined;
+
+const rankText = ranked
+  ? `, world No. ${ranked.rank} on ${ranked.rating}`
+  : rankedWomen
+    ? `, women's world No. ${rankedWomen.rank} on ${rankedWomen.rating}`
+    : '';
+const description = `${d.name}: ${d.title} from ${federationName(d.federation)}${rankText}. Profile, key results and The Chess Herald's coverage.`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: pageURL,
+    dateModified: d.updatedDate.toISOString(),
+    mainEntity: {
+      '@type': 'Person',
+      name: d.name,
+      ...(d.born ? { birthDate: d.born.toISOString().slice(0, 10) } : {}),
+      ...(d.birthplace ? { birthPlace: d.birthplace } : {}),
+      nationality: federationName(d.federation),
+      jobTitle: 'Chess player',
+      ...(ogImage ? { image: ogImage } : {}),
+      sameAs: d.links.map((l) => l.url),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'The Chess Herald', item: new URL('/', Astro.site).toString() },
+      { '@type': 'ListItem', position: 2, name: 'Players', item: new URL('/players/', Astro.site).toString() },
+      { '@type': 'ListItem', position: 3, name: d.name, item: pageURL },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${d.name}: Profile, Rating and News | The Chess Herald`}
+  description={description}
+  activeSection="players"
+  image={ogImage}
+  jsonLd={jsonLd}
+>
+  <article class="hub player">
+    <header class="hub-head">
+      <p class="hub-kicker"><a href="/players/">Players</a> / {federationName(d.federation)}</p>
+      <h1>{d.name}</h1>
+    </header>
+
+    <div class="player-top">
+      <Portrait name={d.name} image={d.image} />
+      <dl class="facts">
+        {ranked && (<><dt>World rank</dt><dd><a href="/rankings/"><strong>No. {ranked.rank}</strong></a> ({month})</dd></>)}
+        {rankedWomen && (<><dt>Women's rank</dt><dd><a href="/rankings/women/"><strong>No. {rankedWomen.rank}</strong></a> ({month})</dd></>)}
+        {rated && (
+          <>
+            <dt>Rating</dt>
+            <dd>
+              <strong>{rated.rating}</strong>
+              {rated.change ? ` (${rated.change > 0 ? '+' : '−'}${Math.abs(rated.change)} this month)` : ''}
+            </dd>
+          </>
+        )}
+        {d.peakRating && (<><dt>Peak rating</dt><dd>{d.peakRating.rating} ({d.peakRating.month})</dd></>)}
+        <dt>Title</dt>
+        <dd>{d.title === 'GM' ? 'Grandmaster' : d.title}{d.titleYear ? ` (${d.titleYear})` : ''}</dd>
+        <dt>Federation</dt>
+        <dd>{federationName(d.federation)}</dd>
+        {d.born && (<><dt>Born</dt><dd>{longDate(d.born)}{d.birthplace ? `, ${d.birthplace}` : ''} (age {ageOn(d.born)})</dd></>)}
+        <dt>FIDE ID</dt>
+        <dd><a href={`https://ratings.fide.com/profile/${d.fideId}`} target="_blank" rel="noopener">{d.fideId}</a></dd>
+      </dl>
+    </div>
+
+    <div class="hub-body">
+      <Content />
+    </div>
+
+    {d.highlights.length > 0 && (
+      <section class="hub-section">
+        <h2>Career highlights</h2>
+        <ul class="highlights">{d.highlights.map((h) => <li>{h}</li>)}</ul>
+      </section>
+    )}
+
+    <CoverageList name={d.name} articles={coverage} />
+
+    <section class="hub-section">
+      <p class="note">
+        {d.links.map((l, i) => (<>{i > 0 && ' · '}<a href={l.url} target="_blank" rel="noopener">{l.label}</a></>))}
+        <br />Profile last reviewed {longDate(d.updatedDate)}. Ratings update monthly from FIDE.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .player-top {
+    max-width: var(--content-width);
+    margin: 0 auto 28px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .player-top .facts {
+    margin: 0;
+  }
+  @media (max-width: 720px) {
+    .player-top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

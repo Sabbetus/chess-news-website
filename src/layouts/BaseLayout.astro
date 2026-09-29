@@ -22,7 +22,7 @@ interface Props {
   // URLs -- linked from TagRow's continent tag -- just not from the top
   // nav) so they still get the correct non-front-page BrandTag treatment
   // below without wrongly lighting up an unrelated nav item.
-  activeSection?: Lens | 'front-page' | 'archive' | 'recaps' | 'continent' | 'contact' | 'privacy' | 'about' | 'not-found';
+  activeSection?: Lens | 'events' | 'rankings' | 'players' | 'front-page' | 'archive' | 'recaps' | 'continent' | 'contact' | 'privacy' | 'about' | 'not-found';
   // Keeps a page out of search results. Only the 404 uses this -- it has no
   // stable URL of its own (GitHub Pages serves it for every unmatched path),
   // so an indexed copy would compete with real pages for no benefit.
@@ -67,6 +67,17 @@ const sections = [
   ...LENS_ORDER.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
   { id: 'archive' as const, label: 'All Articles', href: '/archive/' },
 ];
+// Results carries a sub-menu for the reference pages (events, rankings,
+// player profiles). They
+// aren't news lists like every other nav item, so they sit one level down
+// rather than changing what the top row means.
+const RESULTS_CHILDREN = [
+  { id: 'results', label: 'Latest results', href: `/lens/${LENS_SLUGS.results}/` },
+  { id: 'events', label: 'Events', href: '/events/' },
+  { id: 'rankings', label: 'Rankings', href: '/rankings/' },
+  { id: 'players', label: 'Players', href: '/players/' },
+];
+const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
 ---
 
 <!doctype html>
@@ -241,13 +252,35 @@ const sections = [
 
       <nav class="sections">
         {
-          sections.map((s) => (
-            <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
-              {s.label}
-            </a>
-          ))
+          sections.map((s) =>
+            s.id === 'results' ? (
+              <span class="has-sub">
+                <a href={s.href} class={inResults ? 'on' : ''} aria-haspopup="true">
+                  {s.label}<span class="caret" aria-hidden="true">▾</span>
+                </a>
+                <span class="sub-menu">
+                  {RESULTS_CHILDREN.map((c) => (
+                    <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+                  ))}
+                </span>
+              </span>
+            ) : (
+              <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
+                {s.label}
+              </a>
+            )
+          )
         }
       </nav>
+      {
+        inResults && (
+          <nav class="sub-sections" aria-label="Results">
+            {RESULTS_CHILDREN.map((c) => (
+              <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+            ))}
+          </nav>
+        )
+      }
 
       <!-- tabindex="-1" so the skip link can actually move focus here.
            Without it browsers scroll to the anchor but leave focus in the

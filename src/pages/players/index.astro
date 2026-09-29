@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Portrait from '../../components/Portrait.astro';
+import '../../styles/hubs.css';
+import { TOP100, playerPages, federationName } from '../../lib/hubs';
+
+// Every player with a profile page, A–Z by surname. Rankings live at
+// /rankings/; this is the directory of people, including anyone who has
+// since dropped out of the ranked lists.
+const pages = await playerPages();
+const openRank = new Map(TOP100.players.map((p) => [p.fideId, p.rank]));
+const womenRank = new Map(TOP100.women.map((p) => [p.fideId, p.rank]));
+
+// Family name first for these federations ("Wei Yi", "Ding Liren"), so the
+// sort key is the first word there and the last word elsewhere.
+const FAMILY_FIRST = new Set(['CHN', 'VIE', 'KOR']);
+const sortKey = (p: (typeof pages)[number]) => {
+  const words = p.data.name.split(' ');
+  return (FAMILY_FIRST.has(p.data.federation) ? words[0] : words[words.length - 1])
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+};
+const sorted = pages.sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+const groups = new Map<string, typeof sorted>();
+for (const p of sorted) {
+  const letter = sortKey(p)[0].toUpperCase();
+  groups.set(letter, [...(groups.get(letter) ?? []), p]);
+}
+
+const description = `Profiles of ${pages.length} of the world's leading chess players: career highlights, current FIDE ranking, and The Chess Herald's coverage of each.`;
+---
+
+<BaseLayout title="Chess Players: Profiles and Rankings | The Chess Herald" description={description} activeSection="players">
+  <div class="hub">
+    <header class="hub-head">
+      <p class="hub-kicker"><a href="/lens/results/">Results</a> / Players</p>
+      <h1>Players</h1>
+      <p class="hub-lede">
+        Profiles of the world's leading players, open and women, A–Z by surname. For the current order, see the
+        <a href="/rankings/">FIDE rankings</a>.
+      </p>
+      <p class="letters">
+        {[...groups.keys()].map((l) => <a href={`#letter-${l}`}>{l}</a>)}
+      </p>
+    </header>
+
+    {
+      [...groups.entries()].map(([letter, players]) => (
+        <section class="hub-section" id={`letter-${letter}`}>
+          <h2>{letter}</h2>
+          <ul class="directory">
+            {players.map((p) => (
+              <li>
+                <a href={`/players/${p.slug}/`}>
+                  <Portrait name={p.data.name} image={p.data.image} size="small" />
+                  <span class="who">
+                    <span class="name">{p.data.name}</span>
+                    <span class="meta">
+                      {federationName(p.data.federation)}
+                      {openRank.has(p.data.fideId) && <> · World No. {openRank.get(p.data.fideId)}</>}
+                      {womenRank.has(p.data.fideId) && <> · Women No. {womenRank.get(p.data.fideId)}</>}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .letters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    margin: 16px 0 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+  .letters a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .directory {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px 18px;
+  }
+  .directory a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .directory :global(.portrait) {
+    flex: 0 0 52px;
+    width: 52px;
+  }
+  .who {
+    display: flex;
+    flex-direction: column;
+  }
+  .name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  .directory a:hover .name {
+    text-decoration: underline;
+  }
+  .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+</style>

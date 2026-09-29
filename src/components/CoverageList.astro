@@ -1,0 +1,45 @@
+---
+// "<Name> in The Chess Herald": the newest COVERAGE_SHOWN articles, the rest
+// behind a native <details> toggle (no JavaScript, and the links stay in the
+// HTML for search engines).
+import type { CollectionEntry } from 'astro:content';
+import { shortDate } from '../lib/hubs';
+
+interface Props {
+  name: string;
+  articles: CollectionEntry<'articles'>[];
+}
+const { name, articles } = Astro.props;
+const COVERAGE_SHOWN = 10;
+const first = articles.slice(0, COVERAGE_SHOWN);
+const rest = articles.slice(COVERAGE_SHOWN);
+---
+
+{
+  articles.length > 0 && (
+    <section class="hub-section">
+      <h2>{name} in The Chess Herald</h2>
+      <ul class="coverage">
+        {first.map((a) => (
+          <li>
+            <time datetime={a.data.publishDate.toISOString()}>{shortDate(a.data.publishDate)}</time>
+            <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+          </li>
+        ))}
+      </ul>
+      {rest.length > 0 && (
+        <details class="show-all">
+          <summary>Show all {articles.length} articles</summary>
+          <ul class="coverage">
+            {rest.map((a) => (
+              <li>
+                <time datetime={a.data.publishDate.toISOString()}>{shortDate(a.data.publishDate)}</time>
+                <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </section>
+  )
+}

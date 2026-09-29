@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/hubs.css';
+import { eventPages, EVENT_CATEGORIES, dateRange } from '../../lib/hubs';
+
+const events = await eventPages();
+const upcoming = (e: (typeof events)[number]) => e.data.nextEdition?.start?.valueOf() ?? Infinity;
+const groups = EVENT_CATEGORIES.map((c) => ({
+  ...c,
+  events: events.filter((e) => e.data.category === c.id).sort((a, b) => upcoming(a) - upcoming(b)),
+})).filter((g) => g.events.length > 0);
+
+const description =
+  "The major events on chess's annual calendar: world championship cycles, elite invitationals, big opens and team events. History, past winners, and when each is played next.";
+---
+
+<BaseLayout title="Major Chess Tournaments: Dates, History and Winners | The Chess Herald" description={description} activeSection="events">
+  <div class="hub">
+    <header class="hub-head">
+      <p class="hub-kicker"><a href="/lens/results/">Results</a> / Events</p>
+      <h1>Major chess events</h1>
+      <p class="hub-lede">
+        The tournaments that shape each chess year, with their history, past winners, and when each one is played next.
+      </p>
+    </header>
+
+    {groups.map((g) => (
+      <section class="hub-section">
+        <h2>{g.label}</h2>
+        <ul class="event-list">
+          {g.events.map((e) => {
+            const latest = e.data.winners.find((w) => w.names.length > 0);
+            return (
+              <li>
+                <a class="event-name" href={`/events/${e.slug}/`}>{e.data.name}</a>
+                <p class="event-summary">{e.data.summary}</p>
+                <p class="note">
+                  {e.data.nextEdition && <>Next: {dateRange(e.data.nextEdition.start, e.data.nextEdition.end)}</>}
+                  {latest && <>{e.data.nextEdition && ' · '}Champion: {latest.names.join(', ')} ({latest.year})</>}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .event-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .event-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .event-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 540;
+    color: var(--ink) !important;
+    text-decoration: none;
+  }
+  .event-name:hover {
+    text-decoration: underline;
+  }
+  .event-summary {
+    margin: 4px 0 6px;
+    color: var(--ink-soft);
+  }
+  .note {
+    margin: 0;
+  }
+</style>

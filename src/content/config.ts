@@ -108,4 +108,69 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { articles };
+// Reference pages (players, events) are hand-curated and human-reviewed like
+// articles, but they're evergreen: no source article, no lens. Facts in the
+// frontmatter come from structured sources (FIDE, Wikipedia infoboxes, the
+// organiser's own site); the body is the reviewed prose intro.
+const players = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      // The permanent key: joins this page to the monthly FIDE top 100 table.
+      fideId: z.string().regex(/^\d+$/),
+      born: z.coerce.date().optional(),
+      birthplace: z.string().optional(),
+      federation: z.string(),
+      title: z.string(),
+      titleYear: z.number().optional(),
+      peakRating: z.object({ rating: z.number(), month: z.string() }).optional(),
+      // Full names (and common spellings) that mark an article as being about
+      // this player. Full names only: surnames alone collide (Javokhir vs
+      // Komil Sindarov).
+      aliases: z.array(z.string()).default([]),
+      highlights: z.array(z.string()).default([]),
+      links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
+      image: z.object({ src: image(), credit: z.string(), sourceUrl: z.string().url() }).optional(),
+      reviewStatus: z.enum(['draft', 'published']),
+      updatedDate: z.coerce.date(),
+    }),
+});
+
+const events = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      summary: z.string(),
+      category: z.enum(['cycle', 'rapid-blitz', 'elite', 'open', 'team', 'online']),
+      frequency: z.string(),
+      founded: z.number(),
+      location: z.string(),
+      format: z.string(),
+      organizer: z.string().optional(),
+      officialUrl: z.string().url().optional(),
+      nextEdition: z
+        .object({
+          label: z.string(),
+          start: z.coerce.date().optional(),
+          end: z.coerce.date().optional(),
+          location: z.string().optional(),
+          // Every date shown needs a source and a last-checked day: dates get
+          // announced late and moved.
+          sourceUrl: z.string().url(),
+          checked: z.coerce.date(),
+        })
+        .optional(),
+      winners: z
+        .array(z.object({ year: z.number(), names: z.array(z.string()), note: z.string().optional() }))
+        .default([]),
+      winnersSource: z.object({ label: z.string(), url: z.string().url() }).optional(),
+      aliases: z.array(z.string()).default([]),
+      image: z.object({ src: image(), credit: z.string(), sourceUrl: z.string().url() }).optional(),
+      reviewStatus: z.enum(['draft', 'published']),
+      updatedDate: z.coerce.date(),
+    }),
+});
+
+export const collections = { articles, players, events };

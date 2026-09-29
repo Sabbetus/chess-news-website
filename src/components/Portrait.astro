@@ -1,0 +1,80 @@
+---
+// A reference page's lead picture: the real photo when there is one,
+// otherwise a plain initials card. Never the generic chessboard fallback
+// that articles use -- a board photo on a named person's page reads as a
+// mistake, a monogram reads as deliberate.
+import { Image } from 'astro:assets';
+import { initials } from '../lib/hubs';
+
+interface Props {
+  name: string;
+  image?: { src: ImageMetadata; credit: string; sourceUrl: string };
+  size?: 'hero' | 'small';
+  alt?: string;
+}
+const { name, image, size = 'hero', alt } = Astro.props;
+const width = size === 'hero' ? 960 : 160;
+---
+
+<figure class={`portrait ${size}`}>
+  {
+    image ? (
+      <Image src={image.src} alt={alt ?? name} width={width} loading={size === 'hero' ? 'eager' : 'lazy'} />
+    ) : (
+      <div class="monogram" role="img" aria-label={name}>
+        <span>{initials(name)}</span>
+      </div>
+    )
+  }
+  {
+    image && size === 'hero' && (
+      <figcaption>
+        Photo: <a href={image.sourceUrl} target="_blank" rel="noopener">{image.credit}</a>
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .portrait {
+    margin: 0;
+  }
+  .portrait img,
+  .monogram {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center 30%;
+    border-radius: 3px;
+    background: var(--surface);
+  }
+  .small img,
+  .small .monogram {
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+  .monogram {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--blue-tint), var(--surface));
+    color: var(--blue);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(56px, 12vw, 120px);
+    letter-spacing: 0.02em;
+  }
+  .small .monogram {
+    font-size: 22px;
+  }
+  figcaption {
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  figcaption a {
+    color: inherit;
+  }
+</style>
