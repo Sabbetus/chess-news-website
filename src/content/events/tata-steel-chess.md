@@ -23,7 +23,7 @@ winnersSource:
   url: "https://tatasteelchess.com/en/former-champions"
 winners:
   - { year: 2026, names: ["Nodirbek Abdusattorov"] }
-  - { year: 2025, names: ["R Praggnanandhaa"] }
+  - { year: 2025, names: ["Rameshbabu Praggnanandhaa"] }
   - { year: 2024, names: ["Wei Yi"] }
   - { year: 2023, names: ["Anish Giri"] }
   - { year: 2022, names: ["Magnus Carlsen"] }
