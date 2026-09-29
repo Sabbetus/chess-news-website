@@ -119,12 +119,6 @@ reviewStatus: "draft"
 updatedDate: "2026-09-29"
 ---
 
-Every January, a few weeks into the new year, the world's best players gather in Wijk aan Zee, a small seaside village on the Dutch coast, for the longest-running elite tournament in chess. The Masters group is a single round-robin of 14 players, and winning it has been one of the sport's most prestigious results for more than half a century.
+Started in 1938 as a four-player Dutch event in Beverwijk, it went international in 1946 and moved to Wijk aan Zee in 1968. It has been named after its steel sponsor ever since: Hoogovens, then Corus, and Tata Steel from 2011.
 
-It began in 1938 as a four-player event for Dutch players, sponsored by the Hoogovens steel company and held in nearby Beverwijk. After the war it went international: the 1946 edition invited Alberic O'Kelly de Galway of Belgium and Gösta Stoltz of Sweden, and was one of the first international tournaments in post-war Europe. Food was still scarce, so the closing banquet served pea soup, a tradition the tournament keeps to this day.
-
-By the mid-1960s it had become the strongest international tournament in the world. It moved to Wijk aan Zee in 1968 and has been there ever since, changing its name with its sponsor: Hoogovens until 1999, Corus from 2000, and Tata Steel from 2011. Alongside the Masters runs the Challengers group, whose winner is traditionally invited to the next year's Masters.
-
-Its winners list reads like a history of chess itself: world champions from Max Euwe and Mikhail Botvinnik to Garry Kasparov and Magnus Carlsen, who holds the record with eight titles. Viswanathan Anand is the only other player with five or more. "Normal people have to see Naples before they die, but a chess grandmaster has to win the Wijk aan Zee tournament first of all," Bent Larsen is often quoted as saying. He won it twice.
-
-Recent editions have been a showcase for the new generation. R Praggnanandhaa won in 2025, and Nodirbek Abdusattorov in 2026.
+Nearly every world champion since Max Euwe has won it. Magnus Carlsen holds the record with eight titles. The closing banquet still serves pea soup, a tradition from the lean post-war years.

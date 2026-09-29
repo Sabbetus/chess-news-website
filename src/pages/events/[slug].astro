@@ -23,6 +23,7 @@ for (const p of await playerPages()) for (const n of [p.data.name, ...p.data.ali
 const tally = new Map<string, number>();
 for (const w of d.winners) for (const n of w.names) tally.set(n, (tally.get(n) ?? 0) + 1);
 const record = [...tally.entries()].filter(([, c]) => c >= 3).sort((a, b) => b[1] - a[1]);
+const WINNERS_SHOWN = 20;
 const latest = d.winners.find((w) => w.names.length > 0);
 
 const ogImage = d.image
@@ -120,12 +121,12 @@ const jsonLd = [
 
     {d.winners.length > 0 && (
       <section class="hub-section">
-        <h2>All winners</h2>
+        <h2>Winners</h2>
         <div class="table-wrap">
           <table class="data-table winners">
             <thead><tr><th class="num">Year</th><th>Winner</th></tr></thead>
             <tbody>
-              {d.winners.map((w) => (
+              {d.winners.slice(0, WINNERS_SHOWN).map((w) => (
                 <tr>
                   <td class="num">{w.year}</td>
                   <td>
@@ -139,6 +140,28 @@ const jsonLd = [
             </tbody>
           </table>
         </div>
+        {d.winners.length > WINNERS_SHOWN && (
+          <details class="more-winners">
+            <summary>Show all winners since {d.winners[d.winners.length - 1].year}</summary>
+            <div class="table-wrap">
+              <table class="data-table winners">
+                <tbody>
+                  {d.winners.slice(WINNERS_SHOWN).map((w) => (
+                    <tr>
+                  <td class="num">{w.year}</td>
+                  <td>
+                    {w.names.length === 0 ? <em>{w.note}</em> : w.names.map((n, i) => (
+                      <>{i > 0 && ', '}{playerSlug.has(n) ? <a href={`/players/${playerSlug.get(n)}/`}>{n}</a> : n}</>
+                    ))}
+                    {w.names.length > 1 && <span class="note"> (shared)</span>}
+                  </td>
+                </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        )}
         {d.winnersSource && (
           <p class="note">Source: <a href={d.winnersSource.url} target="_blank" rel="noopener">{d.winnersSource.label}</a>.</p>
         )}
@@ -187,6 +210,15 @@ const jsonLd = [
   }
   .winners {
     max-width: 560px;
+  }
+  .more-winners summary {
+    cursor: pointer;
+    margin: 12px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
   .winners td:first-child {
     width: 4em;
