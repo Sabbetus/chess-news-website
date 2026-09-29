@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/5015197"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Harika_Dronavalli"
+image:
+  src: "../articles/_images/Harika_Dronavalli_in_2024.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHarika_Dronavalli_in_2024.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

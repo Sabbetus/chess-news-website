@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/4158814"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Dmitry_Andreikin"
+image:
+  src: "../articles/_images/Andreikin_Dmitry_2018_Karlsruhe.webp"
+  credit: "GFHund, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAndreikin%2CDmitry_2018_Karlsruhe.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

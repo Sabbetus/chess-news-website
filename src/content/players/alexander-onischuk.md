@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/14101025"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alexander_Onischuk"
+image:
+  src: "../articles/_images/Onischuk_alexander_20081119_olympiade_dresden.webp"
+  credit: "Frank Hoppe, Public domain, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOnischuk_alexander_20081119_olympiade_dresden.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

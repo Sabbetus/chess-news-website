@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/12923044"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Frederik_Svane"
+image:
+  src: "../articles/_images/Frederik_Svane_in_2025.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFrederik_Svane_in_2025.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

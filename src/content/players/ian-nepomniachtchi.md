@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/4168119"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ian_Nepomniachtchi"
+image:
+  src: "../articles/_images/Ian_Nepomniachtchi_in_June_2026__3.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIan_Nepomniachtchi_in_June_2026_%283%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

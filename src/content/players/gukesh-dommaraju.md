@@ -25,6 +25,10 @@ links:
     url: "https://ratings.fide.com/profile/46616543"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Gukesh_Dommaraju"
+image:
+  src: "../articles/_images/NZ9_0632_t_02.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANZ9_0632_t_02.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

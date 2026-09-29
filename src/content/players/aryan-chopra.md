@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/5084423"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aryan_Chopra"
+image:
+  src: "../articles/_images/Aryan_Chopra_2025_French_League.webp"
+  credit: "Ic98, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAryan_Chopra_2025_French_League.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/8602980"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Hou_Yifan"
+image:
+  src: "../articles/_images/Hou_Yifan__29762728494___cropped.webp"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHou_Yifan_%2829762728494%29_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

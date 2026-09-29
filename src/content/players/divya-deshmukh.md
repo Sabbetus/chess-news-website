@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/35006916"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Divya_Deshmukh"
+image:
+  src: "../articles/_images/Divya_Deshmukh_in_2025.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADivya_Deshmukh_in_2025.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
