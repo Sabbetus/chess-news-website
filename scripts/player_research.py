@@ -76,6 +76,17 @@ def clean(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
+def recent_career(text: str, limit: int = 6000) -> str:
+    """The end of the article's career narrative, where the latest results
+    are: Wikipedia's lead summary lags behind (caught live: Praggnanandhaa's
+    lead had nothing on his 2026 Norway Chess and Grand Chess Tour wins)."""
+    body = re.sub(r"\{\{[^{}]*\}\}", "", re.sub(r"\{\{[^{}]*\}\}", "", text))
+    body = re.split(r"\n==\s*(?:Playing style|Personal life|Notable games|See also|References|Notes|External links|Awards|Books)", body)[0]
+    parts = body.split("\n==", 1)
+    career = clean(re.sub(r"\[\[(?:File|Image):[^\]]*\]\]", "", parts[1])) if len(parts) > 1 else ""
+    return career[-limit:]
+
+
 def lead(text: str) -> str:
     body = re.sub(r"\{\{[^{}]*\}\}", "", re.sub(r"\{\{[^{}]*\}\}", "", text))
     body = body.split("\n==", 1)[0]
@@ -159,6 +170,7 @@ def research(player: dict) -> dict:
         "peak": field(text, "peak_rating"),
         "website": field(text, "website"),
         "lead": lead(text),
+        "recent": recent_career(text),
         "photo": photo(player["name"], image_name, surname(player["name"], player["federation"])),
     }
 
