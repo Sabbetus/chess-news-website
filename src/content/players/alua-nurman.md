@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/13729390"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Alua_Nurman"
+image:
+  src: "../articles/_images/FIDE_Youth_Olympiad_2023_Board_4_Medallists__cropped__2.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_Youth_Olympiad_2023_Board_4_Medallists_%28cropped%29_2.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

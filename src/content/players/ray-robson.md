@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/2023970"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ray_Robson"
+image:
+  src: "../articles/_images/Ray_Robson.webp"
+  credit: "Knight Tour, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARay_Robson.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
