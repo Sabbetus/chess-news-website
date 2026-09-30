@@ -31,8 +31,12 @@ jobs:
           # body edits) the same way.
           changed_files=$(git diff --name-only --diff-filter=ACMR "${{ github.event.before }}" "${{ github.event.after }}" -- 'src/content/articles/*.md' || true)
 
-          if [ -z "$changed_files" ]; then
-            echo "No article files changed in this push -- nothing to submit."
+          # Player and event hub pages (src/content/players|events/*.md):
+          # the page itself plus its index listing.
+          changed_hubs=$(git diff --name-only --diff-filter=ACMR "${{ github.event.before }}" "${{ github.event.after }}" -- 'src/content/players/*.md' 'src/content/events/*.md' || true)
+
+          if [ -z "$changed_files" ] && [ -z "$changed_hubs" ]; then
+            echo "No article, player or event files changed in this push -- nothing to submit."
             exit 0
           fi
 
@@ -45,8 +49,19 @@ jobs:
           add_url() {
             urls=$(echo "$urls" | jq --arg u "$1" '. + [$u] | unique')
           }
-          add_url "https://chessherald.com/"
-          add_url "https://chessherald.com/archive/"
+          if [ -n "$changed_files" ]; then
+            add_url "https://chessherald.com/"
+            add_url "https://chessherald.com/archive/"
+          fi
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            section=$(basename "$(dirname "$file")")
+            slug=$(basename "$file" .md)
+            add_url "https://chessherald.com/${section}/${slug}/"
+            add_url "https://chessherald.com/${section}/"
+            echo "Queued ${section%s}: $slug"
+          done <<< "$changed_hubs"
 
           while IFS= read -r file; do
             [ -z "$file" ] && continue

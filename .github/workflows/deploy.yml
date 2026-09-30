@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      ratings_refreshed: ${{ steps.ratings.outputs.refreshed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -79,6 +81,7 @@ jobs:
       # A no-op on all but about one deploy a month: only downloads when FIDE
       # has published a newer list than data/fide-top100.json holds.
       - name: Refresh FIDE top 100
+        id: ratings
         continue-on-error: true
         run: |
           python scripts/fide_ratings.py
@@ -86,6 +89,7 @@ jobs:
           git add data/fide-top100.json
           git commit -m "chore: update FIDE top 100"
           git push
+          echo "refreshed=true" >> "$GITHUB_OUTPUT"
 
       - name: Build Astro site
         run: npm run build
@@ -105,3 +109,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # A new monthly rating list changes the rankings pages and every
+      # player page (rank, rating). This commit is pushed with the workflow
+      # token, which never triggers indexnow.yml, so submit here -- after
+      # the deploy, so the new pages are already live.
+      - name: Submit rankings and player pages to IndexNow
+        if: needs.build.outputs.ratings_refreshed == 'true'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          urls=$(curl -sS https://chessherald.com/sitemap-0.xml \
+            | grep -oP '(?<=<loc>)https://chessherald.com/(players|rankings)/[^<]*' \
+            | jq -R . | jq -s .)
+          payload=$(jq -n \
+            --arg host "chessherald.com" \
+            --arg key "7081e549d516e07f4b446ccbaa83905b" \
+            --arg keyLocation "https://chessherald.com/7081e549d516e07f4b446ccbaa83905b.txt" \
+            --argjson urlList "$urls" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+          echo "Submitting $(echo "$urls" | jq length) URL(s) to IndexNow..."
+          curl -sS -X POST 'https://api.indexnow.org/indexnow' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "$payload" \
+            -w '\nIndexNow responded: %{http_code}\n'
