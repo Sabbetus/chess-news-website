@@ -1,5 +1,6 @@
 ---
 name: "Rameshbabu Praggnanandhaa"
+sortName: "Rameshbabu, Praggnanandhaa"
 fideId: "25059530"
 born: "2005-08-10"
 birthplace: "Chennai, India"
