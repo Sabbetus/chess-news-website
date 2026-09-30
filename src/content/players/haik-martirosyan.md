@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/13306553"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Haik_M._Martirosyan"
+image:
+  src: "../articles/_images/HaikMartirosyan23.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHaikMartirosyan23.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

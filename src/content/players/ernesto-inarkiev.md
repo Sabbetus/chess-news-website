@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/4162722"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ernesto_Inarkiev"
+image:
+  src: "../articles/_images/Ernesto_Inarkiev_Satka_2018.webp"
+  credit: "Etery Kublashvili, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AErnesto_Inarkiev_Satka_2018.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

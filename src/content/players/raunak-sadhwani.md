@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/35093487"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Raunak_Sadhwani"
+image:
+  src: "../articles/_images/Raunak_Saadwani__Chess_Grand-master.webp"
+  credit: "Druhin Mukherjee, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARaunak_Saadwani%2C_Chess_Grand-master.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

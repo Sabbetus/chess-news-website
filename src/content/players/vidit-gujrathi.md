@@ -24,6 +24,10 @@ links:
     url: "https://ratings.fide.com/profile/5029465"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vidit_Gujrathi"
+image:
+  src: "../articles/_images/Vidit_Gujrathi_in_2024__cropped.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVidit_Gujrathi_in_2024_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

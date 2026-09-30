@@ -25,6 +25,10 @@ links:
     url: "https://ratings.fide.com/profile/5072786"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Aravindh_Chithambaram"
+image:
+  src: "../articles/_images/Aravindh_Chithambaram_26-4-26.webp"
+  credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAravindh_Chithambaram_26-4-26.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

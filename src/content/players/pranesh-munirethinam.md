@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/35028600"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Pranesh_M"
+image:
+  src: "../articles/_images/Pranesh_M_in_June_2026.webp"
+  credit: "Yunfan Zhao / Lichess, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APranesh_M_in_June_2026.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

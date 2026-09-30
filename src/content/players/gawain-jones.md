@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/409561"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Gawain_Maroroa_Jones"
+image:
+  src: "../articles/_images/Jones_Gawain__30251269071.webp"
+  credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJones_Gawain_%2830251269071%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

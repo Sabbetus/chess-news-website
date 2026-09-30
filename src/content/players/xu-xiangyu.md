@@ -21,6 +21,10 @@ links:
     url: "https://ratings.fide.com/profile/8608288"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Xu_Xiangyu"
+image:
+  src: "../articles/_images/Xu_Xiangyu_WTRBCC2026_R11__cropped.webp"
+  credit: "Yunfan Zhao / Lichess, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AXu_Xiangyu_WTRBCC2026_R11_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
