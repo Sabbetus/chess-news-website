@@ -9,9 +9,6 @@ selectionScore: 68
 reviewStatus: "draft"
 socialCopy: "Wesley So opened with seven straight wins and took Titled Tuesday on 9.5 points after the top three boards drew in the last round. It is his fifth title in 75 attempts. Denis Lazavik took second on tiebreaks."
 metaDescription: "GM Wesley So won Titled Tuesday on September 29 with 9.5 points after a 7/7 start, his fifth win in 75 tries. GM Denis Lazavik was second on tiebreaks."
-additionalSources:
-  - sourceName: "ChessBase"
-    sourceUrl: "https://en.chessbase.com/post/xtx-london-chess-classic-returns"
 image:
   src: "./_images/Wesley_So_Tata_2023_-_63.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
@@ -38,6 +35,6 @@ Last week's winner, GM Alireza Firouzja, was not on it either. He did, however, 
 
 Hess spotted the position after 21 moves and said: "I've never been more confused ever looking at a chess game... Can I resign for both players?" Moroni went for broke in the wild position, but there was no mate to be found. Firouzja picked up a second queen and the win.
 
-So's timing is notable. He is one of the key figures of the upcoming Grandmasters documentary, and the win lands as that project approaches. Chess.com's own line was that the Olympiad proved a useful warm-up for the real event.
+So's timing is notable. He is one of the key figures of the upcoming Grandmasters documentary, and the win lands as that project approaches. So's own line, posted after the win, was that the Olympiad had proved a useful warm-up for the real event.
 
 For Titled Tuesday regulars, the takeaway is practical. A 7/7 start banks so many points that even three final-round draws at the top cannot undo it. The chasing group of seven on nine had to hope for a slip, and none came.
