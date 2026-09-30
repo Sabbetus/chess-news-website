@@ -10,9 +10,9 @@ reviewStatus: "published"
 socialCopy: "Eleven years old, top board for England, 8/11 in Samarkand, and a WGM title that no one has earned this young. Bodhana Sivanandan's Olympiad was a norm, a title and a string of big scalps."
 metaDescription: "Eleven-year-old Bodhana Sivanandan scored 8/11 on top board for England in Samarkand, earning her third WGM norm and the youngest-ever WGM title."
 image:
-  src: "./_images/Nana_Dzagnidze_in_2019_-_01.webp"
-  credit: "Министерство спорта Республики Татарстан, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANana_Dzagnidze_in_2019_-_01.jpg"
+  src: "./_images/Atypical_chess_pieces__3.webp"
+  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-women-matches-1-25/round-10/BQmH5Kuj/xsIGHtIv"
 ---

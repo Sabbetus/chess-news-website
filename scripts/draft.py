@@ -1004,6 +1004,15 @@ Respond with the ENTIRE corrected body Markdown and nothing else -- no preamble,
 explanation, no list of what you changed, no code fence."""
 
 
+def _headline_names_lead_subject(title: str, subjects: list) -> bool:
+    """True when the headline carries the first imageSubject's surname,
+    i.e. the piece is about that one subject."""
+    if not subjects:
+        return False
+    words = str(subjects[0]).split()
+    return bool(words) and words[-1].lower() in title.lower()
+
+
 def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -> str:
     """Independent second pass: re-checks every non-trivial factual claim in the finished
     body against the actual source text the drafting call was given, fixing or removing
@@ -1354,7 +1363,11 @@ def draft_one(
         exclude_source_urls=used_image_source_urls(),
         # A person's story gets an object-only photo rather than some other
         # player's face when the person themselves has none.
-        prefer_neutral=(lens == "people"),
+        # Same when the headline is about the lead subject, whatever the
+        # lens (caught live 2026-09-30: "Bodhana Sivanandan, 11, Becomes
+        # Youngest WGM" is a results piece, she has no Commons photo, and
+        # the cascade moved on to her round-10 opponent Nana Dzagnidze).
+        prefer_neutral=(lens == "people") or _headline_names_lead_subject(parsed["title"], parsed.get("imageSubjects", [])),
     )
     if image:
         # Mark the Commons source as used regardless of what localize_image
