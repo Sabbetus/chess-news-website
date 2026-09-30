@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/so-wins-titled-tuesday-september-29-
 lens: "results"
 continent: "global"
 selectionScore: 68
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wesley So opened with seven straight wins and took Titled Tuesday on 9.5 points after the top three boards drew in the last round. It is his fifth title in 75 attempts. Denis Lazavik took second on tiebreaks."
 metaDescription: "GM Wesley So won Titled Tuesday on September 29 with 9.5 points after a 7/7 start, his fifth win in 75 tries. GM Denis Lazavik was second on tiebreaks."
 image:

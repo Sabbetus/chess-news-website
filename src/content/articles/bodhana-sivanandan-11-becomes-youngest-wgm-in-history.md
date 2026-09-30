@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/bodhana-sivanandan-youngest-ever-wgm-a
 lens: "results"
 continent: "europe"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Eleven years old, top board for England, 8/11 in Samarkand, and a WGM title that no one has earned this young. Bodhana Sivanandan's Olympiad was a norm, a title and a string of big scalps."
 metaDescription: "Eleven-year-old Bodhana Sivanandan scored 8/11 on top board for England in Samarkand, earning her third WGM norm and the youngest-ever WGM title."
 image:
