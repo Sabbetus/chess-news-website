@@ -29,6 +29,17 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-09-30: PR #51 needed fixes (streak stays at 0). Two of four
+  drafts dropped: a ChessBase round-10 Olympiad report that went stale
+  once the event ended (we'd already published the gold result), and the
+  Uzbekistan winners' interview, published the day before from the same
+  URL under a headline the title-based duplicate check couldn't match.
+  The Wesley So Titled Tuesday piece carried an unrelated merged source
+  (London Classic) and credited So's own tweet to Chess.com; fixed. The
+  Bodhana Sivanandan piece checked out in full. Fixed at the source:
+  coverage.py now drops any candidate whose URL is already a source of a
+  published article, before the model check. Still open: no rule yet for
+  stale round reports of an event we've already closed out.
 - 2026-09-29: PR #50 needed fixes (streak reset). Chess.com's RSS
   teaser is cut to 250 characters, and the drafts were written from it:
   a Bullet Brawl piece shipped a cut-off name ("GM Oleksa...") plus
@@ -50,8 +61,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-09-29 (PR #50, see above).
-- Previous reset: 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-09-30 (PR #51, see above).
+- Earlier resets: 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
