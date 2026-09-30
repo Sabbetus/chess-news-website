@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/14100010"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vasyl_Ivanchuk"
+image:
+  src: "../articles/_images/Vasyl_Ivanchuk__January_2018.webp"
+  credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVasyl_Ivanchuk%2C_January_2018.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

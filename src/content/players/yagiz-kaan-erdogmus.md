@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/44599790"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Ya%C4%9F%C4%B1z_Kaan_Erdo%C4%9Fmu%C5%9F"
+image:
+  src: "../articles/_images/Yagiz_Kaan_Erdogmus_in_August_2026__2.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AYagiz_Kaan_Erdogmus_in_August_2026_%282%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

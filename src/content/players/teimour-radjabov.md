@@ -23,6 +23,10 @@ links:
     url: "https://ratings.fide.com/profile/13400924"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Teimour_Radjabov"
+image:
+  src: "../articles/_images/Teimour_Radjabov_at_the_46th_FIDE_Chess_Olympiad.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATeimour_Radjabov_at_the_46th_FIDE_Chess_Olympiad.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

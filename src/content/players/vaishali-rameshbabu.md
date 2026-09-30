@@ -24,6 +24,10 @@ links:
     url: "https://ratings.fide.com/profile/5091756"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vaishali_Rameshbabu"
+image:
+  src: "../articles/_images/Vaishali_Rameshbabu_at_the_46th_FIDE_Chess_Olympiad__cropped_v2.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVaishali_Rameshbabu_at_the_46th_FIDE_Chess_Olympiad_%28cropped_v2%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

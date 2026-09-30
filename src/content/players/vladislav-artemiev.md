@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/24101605"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Vladislav_Artemiev"
+image:
+  src: "../articles/_images/Vladislav_Artemiev_in_August_2026.webp"
+  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVladislav_Artemiev_in_August_2026.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

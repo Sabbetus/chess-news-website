@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/8608059"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Zhu_Jiner"
+image:
+  src: "../articles/_images/Zhu_Jiner_2026_Norway_Chess__cropped.webp"
+  credit: "Ahmed0112, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AZhu_Jiner_2026_Norway_Chess_%28cropped%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

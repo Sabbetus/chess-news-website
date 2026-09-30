@@ -22,6 +22,11 @@ links:
     url: "https://ratings.fide.com/profile/2900084"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Veselin_Topalov"
+image:
+  src: "../articles/_images/Veselin_Topalov-2.webp"
+  credit: "Veselin_Topalov.jpg: Georgios Souleidis
+derivative work: Joyborg (talk), CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVeselin_Topalov-2.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

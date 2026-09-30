@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/8602883"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Wang_Hao_%28chess_player%29"
+image:
+  src: "../articles/_images/Hao_Wang_2018_Karlsruhe.webp"
+  credit: "GFHund, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHao%2CWang_2018_Karlsruhe.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

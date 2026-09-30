@@ -20,6 +20,10 @@ links:
     url: "https://ratings.fide.com/profile/44155573"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Volodar_Murzin"
+image:
+  src: "../articles/_images/20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Murzin_Volodar.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A20250213_3rd_Al-Beruniy_Tashkent_2026_Masters_Murzin_Volodar.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

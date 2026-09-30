@@ -18,6 +18,10 @@ links:
     url: "https://ratings.fide.com/profile/8603642"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Tan_Zhongyi"
+image:
+  src: "../articles/_images/Tan_Zhongyi_wins_Women_s_Prize_GibChess__cropped.webp"
+  credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATan_Zhongyi_wins_Women%27s_Prize_GibChess_%28cropped%29.png"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

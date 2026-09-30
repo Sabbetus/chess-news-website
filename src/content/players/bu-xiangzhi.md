@@ -22,6 +22,10 @@ links:
     url: "https://ratings.fide.com/profile/8601445"
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Bu_Xiangzhi"
+image:
+  src: "../articles/_images/Xiangzhi_Bu.webp"
+  credit: "Georgios Souleidis, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AXiangzhi_Bu.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
