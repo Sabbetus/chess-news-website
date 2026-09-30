@@ -556,6 +556,11 @@ GENERIC_NAME_WORDS = {
     "international", "national", "federation", "committee", "council",
     "president", "interim", "vice", "chief", "arbiter", "commission",
     "congress", "games", "game", "presidential", "samarkand",
+    # Titles written out in full ("grandmaster", unlike "gm", is 4+ letters
+    # so the length floor doesn't catch it). Caught live 2026-09-30: a Titled
+    # Tuesday report and the London Classic announcement merged on
+    # Firouzja's name plus "Grandmaster"/"Grandmasters" alone.
+    "grandmaster", "grandmasters", "master", "masters",
     "monday", "tuesday", "wednesday",
     "thursday", "friday", "saturday", "sunday", "january", "february",
     "march", "april", "may", "june", "july", "august", "september",

@@ -56,7 +56,14 @@ Do NOT flag a candidate for merely sharing a topic, a player, a tournament, \
 or a recurring event with a published article. A new round of the same \
 tournament, a new week of a weekly event (a new Bullet Brawl winner), a \
 follow-up development, or a different angle on a shared subject is a \
-different story. When unsure, do not flag it -- a missed duplicate is \
+different story.
+
+One exception to that: a round or mid-event report is also covered if a \
+published article already reports that same event's FINAL result (the \
+tournament is over and we have covered how it ended) -- the round report \
+has gone stale. Caught live 2026-09-30: a round-10 "Uzbekistan lead going \
+into the last round" report arrived after we had published the gold medal. \
+When unsure, do not flag it -- a missed duplicate is \
 cheap, a wrongly dropped story is not.
 
 Answer with only a JSON object: {"already_covered": [{"candidate": <number>, \

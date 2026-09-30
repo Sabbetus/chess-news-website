@@ -950,6 +950,14 @@ superlative/milestone claim.
 - Any claim that contradicts another statement made elsewhere in the same body (e.g. calling \
 a match that the body itself says was drawn a "defeat").
 - Any quote presented as a direct quotation.
+- Who a quote or line belongs to. A social-media post embedded in the source (it ends \
+with "-- Name (@handle) date") belongs to that post's author, not to the outlet whose \
+article it sits in; a line one interviewee said must not be credited to another. (Caught \
+live: a player's own tweet, embedded in a Chess.com report, was written up as "Chess.com's \
+own line".)
+- Move notation: a move written with "..." (38...Ne6+) is Black's; without it (38.Ne6+) \
+White's. When the body credits a move to a player, the notation must match that player's \
+colour, even if the source itself slips.
 
 Check at the level of individual named details, not just each sentence's main assertion. A \
 sentence's headline claim can be completely true while still carrying a fabricated specific \
