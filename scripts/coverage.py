@@ -16,6 +16,13 @@ the last. Telling "same announcement, reported late" from "same event
 series, new result" takes actually reading the two, so this asks a model,
 once per run, over titles + short summaries only.
 
+Before any of that, a candidate whose URL is already the source (main or
+additional) of a recently published article is dropped outright -- no model
+needed. Caught live, 2026-09-30: ChessBase's Uzbekistan winners' interview
+came back a day after we'd published it under a headline ("The
+Anti-Motivator and the Silent Killer") that gave the title comparison
+nothing to match on.
+
 Fails open everywhere: a missing API key, an API error, or an unparseable
 answer keeps every candidate. A duplicate slipping through costs one
 reviewable draft; a wrongly dropped story costs a story nobody sees.
@@ -72,11 +79,32 @@ def recent_published(today: datetime | None = None) -> list[dict]:
         if datetime.strptime(date.group(1), "%Y-%m-%d").date() < cutoff:
             continue
         social = re.search(r'^socialCopy:\s*"(.*)"\s*$', text, re.M)
+        urls = {_norm_url(u) for u in re.findall(r'^\s*(?:-\s*)?sourceUrl:\s*"(.*?)"\s*$', text, re.M)}
         entries.append(
-            {"title": title.group(1), "date": date.group(1), "summary": social.group(1) if social else ""}
+            {"title": title.group(1), "date": date.group(1), "summary": social.group(1) if social else "", "urls": urls}
         )
     entries.sort(key=lambda e: e["date"], reverse=True)
     return entries
+
+
+def _norm_url(url: str) -> str:
+    return url.strip().split("#")[0].split("?")[0].rstrip("/").lower().replace("http://", "https://")
+
+
+def drop_same_url(scored: list[dict], published: list[dict]) -> list[dict]:
+    """Drop any news candidate whose own URL is already a source of a
+    published article. Exact matching only, so it can never catch a
+    different story by mistake."""
+    by_url = {u: entry["title"] for entry in published for u in entry.get("urls", ())}
+    kept = []
+    for item in scored:
+        title = by_url.get(_norm_url(item.get("sourceUrl", ""))) if item["kind"] == "news" else None
+        if title:
+            print(f"  Dropping already-covered story: {item['sourceName']}: {item['title']}")
+            print(f"      already published as '{title}': same source URL")
+            continue
+        kept.append(item)
+    return kept
 
 
 def _build_prompt(candidates: list[dict], published: list[dict]) -> str:
@@ -109,6 +137,7 @@ def drop_already_covered(client, scored: list[dict], published: list[dict] | Non
     anything ranked lower is never reached); calendar aggregates are our
     own data, not outlet reporting, and are never checked."""
     published = recent_published() if published is None else published
+    scored = drop_same_url(scored, published)
     checked = [item for item in scored if item["kind"] == "news"][:MAX_CANDIDATES_CHECKED]
     if client is None or not checked or not published:
         return scored
