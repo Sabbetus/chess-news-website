@@ -495,6 +495,8 @@ a single short social post (under 260 characters) teasing the piece, no hashtags
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
+@@IMAGE_SUBJECT_ONLY@@
+yes or no. Answer yes only when the piece is about the first subject's own personal milestone -- a title earned, a record set, an award, a "youngest-ever" -- so that a photo of anyone else next to it would read as if it were them. For everything else (results, matches, events, news that merely features the person) answer no: another named person's photo is fine there.
 @@GAME_LOOKUP@@
 {GAME_LOOKUP_CRITERIA}
 When it does apply, write exactly these three lines and nothing else, with the real values filled in:
@@ -722,6 +724,7 @@ _FIELD_MARKERS = {
     "SOCIAL_COPY": "socialCopy",
     "META_DESCRIPTION": "metaDescription",
     "IMAGE_SUBJECTS": "imageSubjects",
+    "IMAGE_SUBJECT_ONLY": "imageSubjectOnly",
     # Only emitted by weekly_recap.py's prompt, not draft.py's own -- shared
     # here so both scripts can reuse this same parser. Singular, unlike
     # IMAGE_SUBJECTS above: the recap names the one person/subject its own
@@ -1002,15 +1005,6 @@ links and formatting, everywhere except the specific claims and details you're c
 
 Respond with the ENTIRE corrected body Markdown and nothing else -- no preamble, no \
 explanation, no list of what you changed, no code fence."""
-
-
-def _headline_names_lead_subject(title: str, subjects: list) -> bool:
-    """True when the headline carries the first imageSubject's surname,
-    i.e. the piece is about that one subject."""
-    if not subjects:
-        return False
-    words = str(subjects[0]).split()
-    return bool(words) and words[-1].lower() in title.lower()
 
 
 def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -> str:
@@ -1363,11 +1357,12 @@ def draft_one(
         exclude_source_urls=used_image_source_urls(),
         # A person's story gets an object-only photo rather than some other
         # player's face when the person themselves has none.
-        # Same when the headline is about the lead subject, whatever the
-        # lens (caught live 2026-09-30: "Bodhana Sivanandan, 11, Becomes
-        # Youngest WGM" is a results piece, she has no Commons photo, and
-        # the cascade moved on to her round-10 opponent Nana Dzagnidze).
-        prefer_neutral=(lens == "people") or _headline_names_lead_subject(parsed["title"], parsed.get("imageSubjects", [])),
+        # Same, whatever the lens, when the drafter flags the piece as one
+        # person's own milestone (IMAGE_SUBJECT_ONLY). Rare on purpose: any
+        # named person's photo is fine for everything else. Caught live
+        # 2026-09-30: "Bodhana Sivanandan, 11, Becomes Youngest WGM" had no
+        # photo of her, and the cascade moved on to her opponent.
+        prefer_neutral=(lens == "people") or parsed.get("imageSubjectOnly", "").strip().lower().startswith("y"),
     )
     if image:
         # Mark the Commons source as used regardless of what localize_image
