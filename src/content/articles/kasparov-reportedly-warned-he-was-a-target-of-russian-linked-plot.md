@@ -1,12 +1,12 @@
 ---
-title: "Kasparov Named in Reported Russian Plot Against Putin Critics"
+title: "Kasparov Reportedly Warned He Was a Target of Russian-Linked Plot"
 publishDate: "2026-10-01"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/kasparov-warned-alleged-russian-assassination-plot-usa"
 lens: "drama"
 continent: "global"
 selectionScore: 66
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Spanish daily El Mundo reports US authorities told Garry Kasparov this summer that he was a target of a Russian-linked plot, and placed him under special protection. Prosecutors have not named him publicly."
 metaDescription: "El Mundo reports that Garry Kasparov was warned by US authorities of a Russian-linked plot to kill him, though prosecutors have not named him publicly."
 image:
@@ -36,8 +36,6 @@ All five defendants remain at large, and the charges have yet to be proven in co
 **The wider network**
 
 El Mundo reports that a network linked to Russian intelligence had been planning attacks on Kasparov and other exiled opponents of Vladimir Putin. It says two targets were to be killed in the United States, while another potential victim was targeted in Vilnius, Lithuania. The plans against Ponomarev were reportedly further advanced than those involving Kasparov.
-
-Lithuania is a notable location. Kasparov co-founded the Free Russia Forum, a gathering of Russian opposition figures held there, so a plot reaching Vilnius would fall squarely within the exile community he helps organize.
 
 **A long-running target**
 

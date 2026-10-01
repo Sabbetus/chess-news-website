@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/judit-polgar-global-chess-festival-2
 lens: "results"
 continent: "europe"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Judit Polgar finished 3.5-1.5 in her community simul in Budapest, a year after a 6-0 sweep. Pietro Chess's community handed her the only loss, helped by the pawn sacrifice 15...0-0!"
 metaDescription: "Judit Polgar scored 3.5-1.5 against five communities at her 12th Global Chess Festival in Budapest, losing once to the Pietro Chess community."
 image:
@@ -28,7 +28,7 @@ tweetEmbeds:
 
 Judit Polgar's annual festival in Budapest has a habit of being comfortable for the host, so this year's result stands out. At the 12th Global Chess Festival, held September 26 in the Hungarian National Gallery, she [scored 3.5-1.5 against five communities](https://www.chess.com/news/view/judit-polgar-global-chess-festival-2026): three wins, a draw and a loss.
 
-Twelve months earlier she had swept the same format 6-0. The extra resistance this time came from opponents who had the world watching over their shoulders.
+Twelve months earlier she had swept the same format 6-0. Perhaps the communities, with supporters around the world chipping in, are simply getting better at this.
 
 **How the simul worked**
 
@@ -44,7 +44,7 @@ Her only defeat came against the "Pietro Chess" community, which belongs to Piet
 
 The idea was a second pawn sacrifice. Black gave up the material to catch Polgar's king in the center, a plan where the extra pawns matter less than the lead in development and the open lines.
 
-That is the kind of move a crowd finds more easily than a lone player, and it is a good illustration of why community simuls bite harder than the old format.
+It took a voice from outside the board to find it, which is a good illustration of why community simuls can bite harder than the old format.
 
 **The rest of the day**
 
