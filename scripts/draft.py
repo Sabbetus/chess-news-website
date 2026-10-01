@@ -319,15 +319,17 @@ what a player is known for at the board, or that a city hosted a past Olympiad);
 not leave it out just because the source didn't say it. Only steer clear of \
 background you are not sure is true.
 
-Analysis is reasoning about the facts the source gives, said as reasoning -- \
-it never adds new facts about the people or the event. Do not state as fact a \
-cause, motive or explanation the source doesn't give ("the extra resistance came \
-from...", "he raised it unprompted"); do not describe what someone has NOT said \
-or done ("she has not said how..."); do not invent a descriptor for an event, \
-team or person ("a championship-circuit event"); and do not connect dots the \
-source doesn't connect when the subject is an allegation, a crime, a threat or \
-someone's safety -- report those strictly as the source does. (Caught live \
-2026-10-01: four of four drafts needed fixes for exactly these.)
+Speculation is welcome when it reads as speculation -- "perhaps", "it may be \
+that", "one reading is" -- it adds flavor. What must not happen is a guess \
+written as a fact: a specific thing someone did or a cause the source doesn't \
+give, stated flatly ("he raised it unprompted", "the extra resistance came from \
+the crowd watching"), or a label for an event, team or person the source \
+doesn't support ("a championship-circuit event"). Reasonable readings of the \
+source are fine as they are: if the source doesn't report someone saying \
+something, "she hasn't said" is fair. The one firm exception: when the subject is \
+an allegation, a crime, a threat or someone's safety, no speculation at all, \
+flagged or not -- report it strictly as the source does and connect no dots it \
+doesn't. (Caught live 2026-10-01.)
 
 If the source says its piece is republished from, or was conducted by, another \
 publication (an interview "conducted by American Chess Magazine"), credit that \
@@ -1043,12 +1045,15 @@ accuracy, not caution, and the source material is often more detailed than it fi
 This is a check on the facts about the event itself, not on the writer's own contribution. \
 Leave analysis, opinion, comparison, a player's well-known style or reputation, and \
 well-established general or historical background completely alone even when the source \
-never mentions them -- those are meant to be there. But analysis does not cover new facts \
-about the people or the event wearing analysis's clothes: remove any stated cause, motive or \
-explanation the source doesn't give, any claim about what someone has NOT said or done, any \
-descriptor of an event/team/person the source doesn't support, any count or tally that \
-doesn't match the material (count it yourself), and any inference that ties a named person \
-to an allegation, crime or threat beyond what the source says.
+never mentions them -- those are meant to be there, and so is speculation that reads as \
+speculation ("perhaps", "it may be that"). Fix only a guess written as a fact: a specific \
+thing someone did, or a cause, that the source doesn't give, stated flatly -- either soften \
+it into clearly flagged speculation or remove it; a descriptor of an event/team/person the \
+source doesn't support; and any count or tally that doesn't match the material (count it \
+yourself). A reasonable reading of the source, such as "she hasn't said" when the source \
+reports nothing from her, is fine. When the subject is an allegation, a crime, a threat or \
+someone's safety, remove any speculation or dot-connecting about named people beyond what \
+the source says, flagged or not.
 
 The input has four marked fields: @@TITLE@@, @@SOCIAL_COPY@@, @@META_DESCRIPTION@@ and \
 @@BODY_MARKDOWN@@. Check all four the same way -- the headline, social copy and meta \
