@@ -93,9 +93,8 @@ def aggregate_data_gap_note(continent_code: str) -> str:
         "Most countries on this continent report reliably through chess-results, the main "
         "source for this data, so do NOT add a general caveat suggesting player counts are "
         "widely missing or that the ranking might be unrepresentative -- that would be "
-        "inaccurate here. If a specific tournament or country in the data you were given is "
-        "genuinely missing a player count, it's fine to note that one specific gap, but don't "
-        "generalize it into a claim about the continent's data coverage as a whole."
+        "inaccurate here. If a specific tournament is missing a field (a player count, a city), "
+        "leave that detail out silently rather than telling the reader it is missing."
     )
 
 AGGREGATE_INSTRUCTIONS = {
@@ -319,6 +318,31 @@ general knowledge belongs in the piece when it sharpens the story (for example, 
 what a player is known for at the board, or that a city hosted a past Olympiad); do \
 not leave it out just because the source didn't say it. Only steer clear of \
 background you are not sure is true.
+
+Speculation is welcome when it reads as speculation -- "perhaps", "it may be \
+that", "one reading is" -- it adds flavor. What must not happen is a guess \
+written as a fact: a specific thing someone did or a cause the source doesn't \
+give, stated flatly ("he raised it unprompted", "the extra resistance came from \
+the crowd watching"), or a label for an event, team or person the source \
+doesn't support ("a championship-circuit event"). Reasonable readings of the \
+source are fine as they are: if the source doesn't report someone saying \
+something, "she hasn't said" is fair. The one firm exception: when the subject is \
+an allegation, a crime, a threat or someone's safety, no speculation at all, \
+flagged or not -- report it strictly as the source does and connect no dots it \
+doesn't. (Caught live 2026-10-01.)
+
+If the source says its piece is republished from, or was conducted by, another \
+publication (an interview "conducted by American Chess Magazine"), credit that \
+publication as the interviewer, not the site that republished it.
+
+An "additional source" is only there because an automatic matcher thought it \
+covers the same story, and it can be wrong. If an additional source is about a \
+different event or subject, ignore it completely -- do not mention it or write \
+a section about it.
+
+The headline, social copy and meta description must not claim more than the body \
+supports: no "named in" when the source says he was reportedly warned, no outlet \
+credited for an interview it only republished.
 
 Write as a publication addressing its readers, never about your own inputs. Do not \
 mention "the excerpt", "the source material", "the text we had", what you were or \
@@ -647,6 +671,35 @@ def calendar_pieces_for_continent(continent_slug: str) -> list[dict]:
     ]
 
 
+def aggregate_facts(tournaments: list) -> str:
+    """Counts the model would otherwise do in its head, and got wrong
+    (caught live 2026-10-01: "only three of the 18 entries... plus Naples,
+    making four" for a 20-entry list with four classical events)."""
+    from collections import Counter
+
+    formats = Counter((t.get("timeControl") or "unknown").lower() for t in tournaments)
+    names = Counter(t.get("name") for t in tournaments)
+    repeated = [n for n, c in names.items() if c > 1]
+    lines = [
+        "Precomputed facts (use these numbers; do not count again yourself):",
+        f"- Entries in this list: {len(tournaments)}",
+        "- By format: " + ", ".join(f"{fmt} {n}" for fmt, n in formats.most_common()),
+    ]
+    if repeated:
+        lines.append(
+            "- These names appear more than once as separate chess-results tournaments "
+            "(different sections or listings; do not claim they are the same event or a "
+            "duplicate): " + "; ".join(repeated)
+        )
+    lines.append(
+        "- Describe each tournament only with what its fields say. Do not add a description "
+        "of what kind of event it is (a circuit, a championship series, a youth event) unless "
+        "its name or fields say so, and never tell the reader a field is missing from the data "
+        "for a single tournament -- just leave that detail out."
+    )
+    return "\n".join(lines)
+
+
 def build_user_prompt(item: dict) -> str:
     if item["kind"] in CALENDAR_KINDS:
         # Each tournament gets its own chesstournamentcalendar.com page at
@@ -665,6 +718,8 @@ def build_user_prompt(item: dict) -> str:
             f"Total tournaments tracked in this continent this month: {item['totalTracked']}",
             f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
             f"Tournament data (JSON list): {json.dumps(tournament_data, ensure_ascii=False)}",
+            "",
+            aggregate_facts(item["tournamentData"]),
         ]
 
         companions = calendar_pieces_for_continent(CONTINENT_SLUGS[item["continentCode"]])
@@ -990,7 +1045,21 @@ accuracy, not caution, and the source material is often more detailed than it fi
 This is a check on the facts about the event itself, not on the writer's own contribution. \
 Leave analysis, opinion, comparison, a player's well-known style or reputation, and \
 well-established general or historical background completely alone even when the source \
-never mentions them -- those are meant to be there. Only fix a claim about this specific \
+never mentions them -- those are meant to be there, and so is speculation that reads as \
+speculation ("perhaps", "it may be that"). Fix only a guess written as a fact: a specific \
+thing someone did, or a cause, that the source doesn't give, stated flatly -- either soften \
+it into clearly flagged speculation or remove it; a descriptor of an event/team/person the \
+source doesn't support; and any count or tally that doesn't match the material (count it \
+yourself). A reasonable reading of the source, such as "she hasn't said" when the source \
+reports nothing from her, is fine. When the subject is an allegation, a crime, a threat or \
+someone's safety, remove any speculation or dot-connecting about named people beyond what \
+the source says, flagged or not.
+
+The input has four marked fields: @@TITLE@@, @@SOCIAL_COPY@@, @@META_DESCRIPTION@@ and \
+@@BODY_MARKDOWN@@. Check all four the same way -- the headline, social copy and meta \
+description must not claim more than the source supports either (a headline saying someone \
+was "named" in a case when the source says the opposite; an interview credited to the outlet \
+that only republished it). Only fix a claim about this specific \
 event that the source doesn't support or that contradicts the source or the body itself, or \
 background that is plainly false.
 
@@ -1003,11 +1072,12 @@ a guess at what the missing text said.
 Leave everything else completely untouched: same words, same paragraph breaks, same Markdown \
 links and formatting, everywhere except the specific claims and details you're correcting.
 
-Respond with the ENTIRE corrected body Markdown and nothing else -- no preamble, no \
-explanation, no list of what you changed, no code fence."""
+Respond with all four fields in the same marked format (@@TITLE@@ on its own line, then \
+its text, and so on, ending with @@BODY_MARKDOWN@@ and the ENTIRE corrected body), and \
+nothing else -- no preamble, no explanation, no list of what you changed, no code fence."""
 
 
-def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -> str:
+def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict:
     """Independent second pass: re-checks every non-trivial factual claim in the finished
     body against the actual source text the drafting call was given, fixing or removing
     anything unsupported.
@@ -1020,20 +1090,31 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
     catches what writing-while-checking misses), applied to accuracy instead of style or
     completeness.
 
-    Only ever called with the real source material available (see draft_one's is_aggregate
-    and item.get("summary") guards) -- a calendar aggregate has no comparable free-text
-    source to check against.
+    Checks the headline, social copy and meta description along with the body, and runs
+    for calendar aggregates too, against the tournament data they were written from
+    (caught live 2026-10-01: an aggregate shipped a wrong entry count, invented event
+    descriptors and talk about missing data, and a news headline said "named" where the
+    source said the opposite -- none of it was ever fact-checked).
 
     Falls back to the original body untouched on any failure (no text returned, or a
     response different enough in length to look like more than a claims-level edit) -- an
     unflagged article for human review beats a silently mangled one."""
-    source_parts = [f"PRIMARY SOURCE ({item['sourceName']}):\n{item.get('summary', '')}"]
-    for extra in item.get("additionalSources", []):
-        if extra.get("summary"):
-            source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
-    source_text = "\n\n".join(source_parts)
+    body_markdown = parsed["bodyMarkdown"]
+    if item["kind"] in CALENDAR_KINDS:
+        source_text = "TOURNAMENT DATA (the piece's only source):\n" + build_user_prompt(item)
+    else:
+        source_parts = [f"PRIMARY SOURCE ({item['sourceName']}):\n{item.get('summary', '')}"]
+        for extra in item.get("additionalSources", []):
+            if extra.get("summary"):
+                source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
+        source_text = "\n\n".join(source_parts)
 
-    user_prompt = f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE BODY TO FACT-CHECK:\n\n{body_markdown}"
+    fields = "\n".join(
+        f"@@{marker}@@\n{parsed.get(key) or ''}"
+        for marker, key in (("TITLE", "title"), ("SOCIAL_COPY", "socialCopy"), ("META_DESCRIPTION", "metaDescription"))
+    )
+    article_text = f"{fields}\n@@BODY_MARKDOWN@@\n{body_markdown}"
+    user_prompt = f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE TO FACT-CHECK:\n\n{article_text}"
 
     try:
         response = client.messages.create(
@@ -1063,7 +1144,7 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
         )
     except Exception as exc:
         print(f"  Claim verification failed for '{item['title']}': {exc}", file=sys.stderr)
-        return body_markdown
+        return parsed
 
     text_blocks = [b.text for b in response.content if b.type == "text"]
     if not text_blocks:
@@ -1073,7 +1154,7 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
             f"'{item['title']}' (stop_reason={response.stop_reason!r}, content block types={block_types!r})",
             file=sys.stderr,
         )
-        return body_markdown
+        return parsed
 
     if response.stop_reason == "max_tokens":
         # A max_tokens stop is a truncation failure even when some text did
@@ -1087,9 +1168,14 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
             f"  Claim verification: response hit max_tokens (truncated), falling back for '{item['title']}'",
             file=sys.stderr,
         )
-        return body_markdown
+        return parsed
 
-    corrected = text_blocks[-1].strip()
+    try:
+        checked = parse_response(text_blocks[-1])
+    except ValueError as exc:
+        print(f"  Claim verification: unparseable response ({exc}), falling back for '{item['title']}'", file=sys.stderr)
+        return parsed
+    corrected = checked["bodyMarkdown"].strip()
 
     # A real fix only touches a handful of claims -- a response wildly different
     # in length from the original suggests the model rewrote, truncated, or
@@ -1100,14 +1186,20 @@ def verify_claims(client: anthropic.Anthropic, body_markdown: str, item: dict) -
             f"({len(corrected)} vs {len(body_markdown)} chars), falling back for '{item['title']}'",
             file=sys.stderr,
         )
-        return body_markdown
+        return parsed
 
+    result = {**parsed, "bodyMarkdown": corrected}
+    for key in ("title", "socialCopy", "metaDescription"):
+        value = (checked.get(key) or "").strip()
+        if value and parsed.get(key) and value != parsed[key].strip():
+            print(f"  Claim verification: {key} corrected for '{item['title']}': {parsed[key]!r} -> {value!r}", file=sys.stderr)
+            result[key] = value
     if corrected != body_markdown:
         print(f"  Claim verification: body corrected for '{item['title']}'", file=sys.stderr)
-    else:
+    elif result == parsed:
         print(f"  Claim verification: no changes needed for '{item['title']}'", file=sys.stderr)
 
-    return corrected
+    return result
 
 
 def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
@@ -1294,6 +1386,8 @@ def draft_one(
         raise RuntimeError(f"No text content returned for: {item['title']}")
 
     parsed = parse_response(text_blocks[-1])
+    if item["kind"] in CALENDAR_KINDS or item.get("summary"):
+        parsed = verify_claims(client, parsed, item)
 
     if is_aggregate:
         lens = "tournament-db"
@@ -1480,8 +1574,6 @@ def draft_one(
     fm_lines.append("---")
 
     body_markdown = parsed["bodyMarkdown"]
-    if not is_aggregate and item.get("summary"):
-        body_markdown = verify_claims(client, body_markdown, item)
     offenders = check_paragraph_lengths(body_markdown)
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)

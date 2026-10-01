@@ -626,19 +626,13 @@ def build_query_cascade(
                     # much safer bar than "any one word in common".
                     queries.append((name, True, False, False))
 
-            country = (tournaments[0].get("country") or "").strip()
-            if country:
-                # Deliberately just "{country} chess", not "... chess
-                # tournament": the 3-word version matched Commons' full-text
-                # search against unrelated scanned documents (a 1967 school
-                # yearbook that happened to mention both words somewhere in
-                # its OCR'd text) rather than actual tournament photography.
-                queries.append((f"{country} chess", False, False, False))
-
-        name = item.get("continentName") or continent_name
-        if name:
-            queries.append((f"{name} chess tournament", False, False, False))
-            queries.append((f"{name} chess", False, False, False))
+        # Only an exact tournament-name match, then the neutral object-photo
+        # pool. The broader "{country} chess" / "{continent} chess
+        # tournament" queries mostly return portraits of whoever is tagged
+        # with that country -- caught live 2026-10-01: Europe's September
+        # piece got a portrait of a Romanian arbiter with no link to any
+        # tournament in it.
+        return queries
     else:
         for subject in image_subjects or []:
             if subject:
