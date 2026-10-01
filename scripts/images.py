@@ -741,7 +741,7 @@ def build_query_cascade(
 FALLBACK_PHOTOS_PATH = Path(__file__).parent / "fallback_photos.json"
 
 
-def fallback_image(seed_text: str) -> dict | None:
+def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> dict | None:
     try:
         pool = json.loads(FALLBACK_PHOTOS_PATH.read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -749,7 +749,16 @@ def fallback_image(seed_text: str) -> dict | None:
     if not pool:
         return None
     index = int(hashlib.sha256(seed_text.encode("utf-8")).hexdigest(), 16) % len(pool)
-    photo = pool[index]
+    # Step past photos recent articles already use -- caught live
+    # 2026-10-01: two neighbouring articles on the front page both got
+    # the same chess-pieces photo.
+    exclude = {urllib.parse.unquote(u) for u in (exclude_source_urls or set())}
+    for offset in range(len(pool)):
+        photo = pool[(index + offset) % len(pool)]
+        if urllib.parse.unquote(photo["sourceUrl"]) not in exclude:
+            break
+    else:
+        photo = pool[index]
     return {"src": photo["src"], "credit": photo["credit"], "sourceUrl": photo["sourceUrl"]}
 
 
@@ -772,7 +781,7 @@ def pick_image_for_item(
         result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date)
         if result:
             return result
-    return fallback_image(drafted_title) or fallback_image(item.get("title", ""))
+    return fallback_image(drafted_title, exclude_source_urls) or fallback_image(item.get("title", ""), exclude_source_urls)
 
 
 # The only local master ever stored -- every on-site display size (lead,

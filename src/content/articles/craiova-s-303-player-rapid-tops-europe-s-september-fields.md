@@ -14,9 +14,9 @@ continentName: "Europe"
 monthLabel: "September 2026"
 totalTracked: 770
 image:
-  src: "./_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "./_images/Opening_chess_position_from_black_side.webp"
+  credit: "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
 ---
 
 Of the 770 tournaments tracked across Europe in September, the largest was the [Craiova Grand Prix Rapid 2026](https://chesstournamentcalendar.com/tournament/craiova-grand-prix-rapid-2026-1284099/), with 303 players registered. It ran September 12 and 13 at the Hotel Ramada in Craiova, Romania, and was organized by the Romanian Chess Federation.
