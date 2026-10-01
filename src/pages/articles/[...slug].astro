@@ -10,6 +10,7 @@ import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
 import { CONTINENT_META } from '../../lib/continent';
+import { similarArticles } from '../../lib/similar';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -43,21 +44,9 @@ const correctionHref = `/contact/?${new URLSearchParams({
   title: article.data.title,
 }).toString()}`;
 
-// Similar articles: same continent or same lens, most recent first,
-// excluding this one. Falls back to just "most recent overall" if there
-// aren't enough matches, so the section is never empty once other
-// articles exist.
-const allArticles = await getCollection(
-  'articles',
-  ({ data, slug }) => data.reviewStatus === 'published' && data.type !== 'recap' && slug !== article.slug
-);
-const related = allArticles
-  .filter((a) => a.data.continent === article.data.continent || a.data.lens === article.data.lens)
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const fallback = allArticles
-  .filter((a) => !related.includes(a))
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const similar = [...related, ...fallback].slice(0, 3);
+// Similar articles: same people/events/organizations first (see
+// lib/similar.ts), then same lens/continent, then most recent.
+const similar = await similarArticles(article);
 
 const continentMeta = CONTINENT_META[article.data.continent];
 
