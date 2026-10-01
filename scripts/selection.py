@@ -650,6 +650,22 @@ def _name_bigrams(item: dict) -> set[tuple[str, str]]:
     return bigrams
 
 
+# Ordinary words that are only capitalized because they open a sentence --
+# a real name opening a sentence ("Argentina, seeded 28th, ...") must still
+# count, so this is a word list rather than a blanket sentence-start rule.
+SENTENCE_START_WORDS = set("""
+what when where which while who whom whose why how they them their there these those
+this that then than thus this here have having been being were will would could should
+must might shall also after before during since until unless although though because
+some many most more much each every both either neither other another such only even
+just still already never always often sometimes once twice first last next later
+early earlier today yesterday tomorrow tonight however meanwhile instead perhaps
+indeed asked speaking according despite following given including like unlike with
+without within into onto from about above below between among against along across
+over under again further while once
+""".split())
+
+
 def _single_names(item: dict) -> set[str]:
     """Standalone capitalized, non-generic words -- catches the same-event
     case _name_bigrams misses: two outlets covering the same team-event
@@ -671,6 +687,12 @@ def _single_names(item: dict) -> set[str]:
         if not w[:1].isupper():
             continue
         if _in_spans(m.start(), spans):
+            continue
+        # A capital that only marks the start of a sentence says nothing
+        # about the word being a name. Caught live 2026-10-01: the Turlov
+        # interview merged with a schools-tournament report on "What",
+        # "They", "School" and "European" alone.
+        if w.lower() in SENTENCE_START_WORDS and re.search(r'(^|[.!?:]["\u201c\u2018\']?)\s*$', text[: m.start()]):
             continue
         lw = w.lower().rstrip("'s")
         if lw in GENERIC_NAME_WORDS or len(lw) < 4:
