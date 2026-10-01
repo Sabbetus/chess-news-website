@@ -428,6 +428,12 @@ def _fetch_first_licensed_file(
             continue
         if _is_signature_file(title):
             continue
+        # "(cropped)" re-uploads are tight face crops that our wide card
+        # and hero slots zoom into badly; the uncropped original is almost
+        # always on Commons too. User's call, 2026-10-01 (the Turlov
+        # interview got "Timur Turlov in 2023 (cropped)").
+        if re.search(r"\bcrop(ped)?\b", title, re.I):
+            continue
         if not _title_matches_query(title, query, strict):
             continue
         page = pages_by_title.get(title)

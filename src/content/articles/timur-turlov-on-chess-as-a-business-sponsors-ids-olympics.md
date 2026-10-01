@@ -10,9 +10,9 @@ reviewStatus: "published"
 socialCopy: "Before his election as FIDE president, Timur Turlov told American Chess Magazine that chess is \"massively undervalued.\" His plan: chess IDs, biometric rating checks, an Olympic push and a financial backstop for FIDE's calendar."
 metaDescription: "In an American Chess Magazine interview before his FIDE election, Timur Turlov laid out plans for chess IDs, biometric checks, Olympic bids and sponsor-led growth."
 image:
-  src: "./_images/Timur_Turlov_in_2023__cropped.webp"
+  src: "./_images/Timur_Turlov.webp"
   credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov_in_2023_%28cropped%29.jpg"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
 ---
 
 In an interview with American Chess Magazine, conducted by video link in early August before the vote and republished by ChessBase, Timur Turlov [described chess as "massively undervalued"](https://en.chessbase.com/post/turlov-chess-is-massively-undervalued). He has since been [elected FIDE president](/articles/timur-turlov-elected-fide-president-ending-a-30-year-russian-run/), so the conversation now reads as a statement of intent from the man in charge.

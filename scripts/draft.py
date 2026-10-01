@@ -824,13 +824,17 @@ def parse_response(text: str) -> dict:
 
 
 # How many of the most recently published articles count as "recently
-# used" for image-reuse purposes -- covers the homepage's lead + featured
-# grid (see index.astro) so the same photo can't appear twice on the front
-# page at once, without banning a photo outright forever. The Commons pool
+# used" for image-reuse purposes, so the same photo can't appear twice on
+# the front page at once, without banning a photo outright forever. The
+# homepage shows 9 (lead + 8, see index.astro), but by the time today's
+# batch publishes, it pushes ~4 of those off -- so only the newest 5 are
+# still sharing the page with it. Was 10 until 2026-10-01, which kept the
+# better Turlov photo (last used five days earlier, by then off the front
+# page) out of his next article. The Commons pool
 # for a lot of chess subjects is small enough that a permanent ban would
 # eventually starve the picker of any real photo at all; a cooldown lets a
 # photo come back into rotation once enough new articles have gone out.
-RECENT_IMAGE_COOLDOWN = 10
+RECENT_IMAGE_COOLDOWN = 5
 
 
 # Same-run siblings (e.g. two backfill items drafted a few seconds apart)
