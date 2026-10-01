@@ -29,6 +29,22 @@ anything) resets the streak to zero -- it doesn't matter how minor.
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-01: PR #52 needed fixes in all four drafts (streak stays at 0).
+  Turlov interview: an unrelated FIDE schools-tournament report was merged
+  in (matched on sentence-start words "What", "They") and got its own
+  section; the American Chess Magazine interview was credited to ChessBase,
+  which only republished it. Kasparov: headline said "Named" where the
+  source says prosecutors haven't named him, plus our own dot-connecting
+  on the alleged plot. Polgar: a guess stated as fact. Calendar piece:
+  wrong entry/format counts, invented event descriptors, "no city is given
+  in the data", and a portrait of an unrelated arbiter as its photo.
+  Fixed at the source: the fact-check pass now covers headline, social
+  copy and meta, and calendar pieces (against their data, with counts
+  precomputed); guesses stated as fact get flagged or removed, while
+  flagged speculation and reasonable readings stay (user's call); no
+  speculation on allegations; extra sources about a different story are
+  ignored; sentence-start words no longer count as names when merging;
+  calendar photos only match tournament names, else a neutral image.
 - 2026-09-30: PR #51 needed fixes (streak stays at 0). Two of four
   drafts dropped: a ChessBase round-10 Olympiad report that went stale
   once the event ended (we'd already published the gold result), and the
@@ -61,8 +77,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-09-30 (PR #51, see above).
-- Earlier resets: 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-01 (PR #52, see above).
+- Earlier resets: 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
