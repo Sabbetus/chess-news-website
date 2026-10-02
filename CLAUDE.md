@@ -20,15 +20,41 @@
   problem -- was missed because the rest of the piece wasn't actually
   checked, just assumed fine after fixing the first spot.)
 
+- **Every review includes looking at every article photo**, not just its
+  file name: right person (or a neutral image where that's the rule),
+  not the same photo as another article on the front page, not a tight
+  "(cropped)" face crop. (Added 2026-10-02 after a repeated Turlov photo
+  slipped through a review that only read file names.)
+
 ## Clean-review streak tracker
 
 The user's long-term plan: once a full week of daily batches goes by with
 no edits needed during review, they'll stop reviewing before publishing.
-Any batch that needs even one fix (a broken link, a factual correction,
-anything) resets the streak to zero -- it doesn't matter how minor.
+Only serious problems reset the streak (user's rule, 2026-10-02):
+
+- **Resets:** a wrong fact a reader would be misled by (wrong result,
+  score, ranking, person, attribution, date), a duplicate or stale story,
+  an unrelated source or section, a wrong-person or front-page-duplicate
+  photo, or any pipeline bug that produces these.
+- **Minor (log it, no reset):** wording, tone, small imprecision that
+  doesn't mislead, clarifications, lens choice, lines that talk about the
+  source. Flag anything borderline in the review and let the user decide.
+
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-02: PR #53 reset (streak stays at 0). Resets: story merging
+  attached Freestyle Friday and the Hanna Sayce stalking case to the U.S.
+  Championship piece, and FIDE's schools report to ChessBase's rating
+  piece -- which also left FIDE's own rating-list story to be drafted as
+  a second, duplicate rating piece (dropped); and the FIDE Assembly piece
+  reused the Turlov photo still on the front page. Minor (no reset): So
+  "stays sixth" (fifth to sixth), "within 50 points" (70), "only player
+  who qualified as champion", US Chess vs FIDE ratings not stated,
+  Erdogmus's age line, two lines talking about the source. Fixed at the
+  source: merges now need a model's yes on top of name overlap;
+  "FIDE Ratings - <month>" counts toward the one-rating-list-a-day cap;
+  the photo reuse window counts published articles only.
 - 2026-10-01: PR #52 needed fixes in all four drafts (streak stays at 0).
   Turlov interview: an unrelated FIDE schools-tournament report was merged
   in (matched on sentence-start words "What", "They") and got its own
@@ -77,8 +103,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-01 (PR #52, see above).
-- Earlier resets: 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-02 (PR #53, see above).
+- Earlier resets: 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
