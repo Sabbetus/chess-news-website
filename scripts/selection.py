@@ -20,6 +20,7 @@ frontmatter downstream, so a reviewer can see *why* something got picked).
 
 import json
 import os
+import sys
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -69,7 +70,13 @@ MAX_KEYWORD_SCORE = 30
 # score can lose to that day's scandal/drama pieces -- but unlike those,
 # it only exists once a month, so losing the slot means it's just gone.
 # Guarantee it a spot the same way calendar items get one.
-RATING_LIST_PATTERN = re.compile(r"\brating list\b", re.IGNORECASE)
+# "FIDE Ratings - October 2026" (ChessBase's monthly headline) has no
+# "rating list" in it -- caught live 2026-10-02 when it and FIDE's own
+# list story were both drafted.
+RATING_LIST_PATTERN = re.compile(
+    r"\brating list\b|\bFIDE ratings?\b.{0,12}\b(?:january|february|march|april|may|june|july|august|september|october|november|december)\b",
+    re.IGNORECASE,
+)
 MAX_RATING_LIST_ARTICLES_PER_DAY = 1
 
 
@@ -752,7 +759,51 @@ def _compatible_for_merge(a: dict, b: dict) -> bool:
     return "feature" not in (kind_a, kind_b) and kind_a == kind_b
 
 
-def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
+MERGE_CHECK_MODEL = "claude-sonnet-5-5"
+_merge_verdicts: dict = {}
+
+
+def confirm_same_story(client, a: dict, b: dict) -> bool:
+    """The name-overlap test above only proposes a merge; a short model
+    check decides. Name overlap stopped being a usable signal once ingest
+    started pulling full article text -- long pieces share plenty of common
+    names (caught live 2026-10-02: the U.S. Championship announcement merged
+    with Freestyle Friday and a stalking case on "Anna", "Women",
+    "YouTube"). Without a client (local runs) nothing merges: a missed
+    merge costs a near-duplicate draft a reviewer drops, a wrong merge
+    publishes another story's facts."""
+    if client is None:
+        return False
+    key = (a.get("sourceUrl"), b.get("sourceUrl"))
+    if key in _merge_verdicts:
+        return _merge_verdicts[key]
+    prompt = (
+        "Do these two chess news items report the SAME specific news event "
+        "(the same announcement, result, list or incident), so one article "
+        "could cover both? Sharing a tournament, a player or a topic is not "
+        "enough. Answer only YES or NO.\n\n"
+        f"A: {a.get('title')}\n{(a.get('summary') or '')[:800]}\n\n"
+        f"B: {b.get('title')}\n{(b.get('summary') or '')[:800]}"
+    )
+    try:
+        response = client.messages.create(
+            model=MERGE_CHECK_MODEL,
+            max_tokens=2048,
+            output_config={"effort": "low"},
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = "".join(b_.text for b_ in response.content if b_.type == "text").strip().upper()
+        verdict = text.startswith("YES")
+    except Exception as exc:  # noqa: BLE001 -- fail closed: no merge
+        print(f"  Merge check failed ({type(exc).__name__}: {exc}) -- not merging.", file=sys.stderr)
+        verdict = False
+    if not verdict:
+        print(f"  Not merging (model says different stories): {a['title']} / {b['title']}")
+    _merge_verdicts[key] = verdict
+    return verdict
+
+
+def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
     """scored is sorted by selectionScore descending, so the first member
     of any same-story group encountered is already the highest-scoring
     one -- it stays as the item's own fields, and every later match in
@@ -792,6 +843,7 @@ def merge_duplicate_stories(scored: list[dict]) -> list[dict]:
                 and _is_same_story(item, existing)
                 and item["sourceName"] != existing["sourceName"]
                 and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
+                and confirm_same_story(client, existing, item)
             ),
             None,
         )
@@ -830,15 +882,14 @@ def main() -> None:
 
     scored.sort(key=lambda x: x["selectionScore"], reverse=True)
     scored = dedupe_by_topic(scored)
-    scored = merge_duplicate_stories(scored)
-
     # Needs ANTHROPIC_API_KEY (set on the pipeline's select step); without
-    # one -- a local run -- the check is skipped rather than failing.
+    # one -- a local run -- the model checks are skipped rather than failing.
     client = None
     if os.environ.get("ANTHROPIC_API_KEY"):
         import anthropic
 
         client = anthropic.Anthropic()
+    scored = merge_duplicate_stories(scored, client)
     scored = drop_already_covered(client, scored)
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
