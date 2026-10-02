@@ -881,6 +881,13 @@ def used_image_source_urls() -> set[str]:
     dated_urls: list[tuple[str, str]] = []
     for path in ARTICLES_DIR.glob("*.md"):
         text = path.read_text()
+        # Published only: this run's own drafts are already in
+        # _session_used_urls, and counting them here too let them fill the
+        # window and push real front-page photos out of it (caught live
+        # 2026-10-02: the FIDE Assembly piece reused the Turlov photo from
+        # the day before because three same-run drafts took its slots).
+        if 'reviewStatus: "published"' not in text:
+            continue
         date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
         image_match = re.search(r'^  sourceUrl:\s*"(.*?)"\s*$', text, re.MULTILINE)
         if date_match and image_match:
