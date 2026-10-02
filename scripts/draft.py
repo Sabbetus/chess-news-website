@@ -42,7 +42,7 @@ from lichess_game import (
     find_game_embed,
     recheck_game_lookup,
 )
-from selection import _has_result_signal, tournament_has_round_context
+from selection import _has_result_signal, is_rating_list_story, tournament_has_round_context
 from tweets import tweet_quotes_for_item
 
 ROOT = Path(__file__).parent.parent
@@ -735,7 +735,15 @@ def build_user_prompt(item: dict) -> str:
                 parts.append(f"- \"{entry['title']}\" ({entry['date']}, {kind_label}) -> /articles/{entry['slug']}/")
         return "\n".join(parts)
 
-    parts = [
+    parts = []
+    if is_rating_list_story(item):
+        parts += [
+            "This is a FIDE rating-list story. Link The Chess Herald's own tables in the "
+            "text, where they fit naturally: [FIDE Top 100](/rankings/) for the open list "
+            "and [FIDE Women's Top 25](/rankings/women/) for the women's list.",
+            "",
+        ]
+    parts += [
         f"Source title: {item['title']}",
         f"Source URL: {item['sourceUrl']}",
         f"Source name: {item['sourceName']}",
@@ -910,6 +918,12 @@ PARAGRAPH_WORD_CEILING = 70
 
 
 _ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
+
+
+RANKINGS_LINE = (
+    "The new numbers are already in our [FIDE Top 100](/rankings/) and "
+    "[Women's Top 25](/rankings/women/) tables."
+)
 
 
 def check_article_links(body_markdown: str) -> list[str]:
@@ -1589,6 +1603,11 @@ def draft_one(
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
+    # A rating-list story always points readers at our own tables (user's
+    # rule, 2026-10-02). The prompt asks for it in the text; this backstop
+    # adds a closing line if the draft still left it out.
+    if not is_aggregate and is_rating_list_story(item) and "/rankings/" not in body_markdown:
+        body_markdown = body_markdown.rstrip() + "\n\n" + RANKINGS_LINE
     bad_links = check_article_links(body_markdown)
 
     # After the paragraph/link checks (an added scroll-link only touches

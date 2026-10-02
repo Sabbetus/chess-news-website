@@ -22,7 +22,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-11/QJSVWmNu/gMpc4emo"
 ---
 
-The first FIDE list since the Samarkand Olympiad, [reviewed by ChessBase](https://en.chessbase.com/post/fide-ratings-october-2026), reshuffles the middle of the top ten while leaving the very top untouched. Magnus Carlsen (2823) and Hikaru Nakamura (2792) skipped the Olympiad and stay first and second. Alireza Firouzja did not play either and remains tenth at 2757.
+The first [FIDE list](/rankings/) since the Samarkand Olympiad, [reviewed by ChessBase](https://en.chessbase.com/post/fide-ratings-october-2026), reshuffles the middle of the top ten while leaving the very top untouched. Magnus Carlsen (2823) and Hikaru Nakamura (2792) skipped the Olympiad and stay first and second. Alireza Firouzja did not play either and remains tenth at 2757.
 
 Fabiano Caruana is third on 2784, but the more interesting number is right behind him. Javokhir Sindarov, the current World Championship challenger, gained four points to reach 2782, cutting the gap to just two. Caruana, the 2018 runner-up, lost five.
 
@@ -52,7 +52,7 @@ Yagiz Kaan Erdogmus, 15 and the world's strongest junior, gained 15 points and j
 
 ## Women's list
 
-Zhu Jiner won team and individual gold on board one for China, gained nine points and regained second place on 2559, behind Hou Yifan (2596). China won with what was effectively a second team, since only Zhu came from its very best group. Chinese players still hold the top five places.
+On the [women's list](/rankings/women/), Zhu Jiner won team and individual gold on board one for China, gained nine points and regained second place on 2559, behind Hou Yifan (2596). China won with what was effectively a second team, since only Zhu came from its very best group. Chinese players still hold the top five places.
 
 Russia's Aleksandra Goryachkina, Kateryna Lagno and Polina Shuvalova did not play because the Russian federation remains suspended. Ukraine also left out its best players, though Anna Muzychuk stays eighth.
 
