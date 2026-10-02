@@ -6,14 +6,9 @@ sourceUrl: "https://en.chessbase.com/post/us-championships-2026-announcement"
 lens: "results"
 continent: "north-america"
 selectionScore: 111
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The 2026 U.S. Championship and U.S. Women's Championship open Oct. 9 in Saint Louis, with Caruana defending and Niemann, So and Aronian in the field. Who is in, and how they got there."
 metaDescription: "The 2026 U.S. Championship and Women's Championship run Oct. 8-23 in Saint Louis, with 12 players each, led by Fabiano Caruana and Carissa Yip."
-additionalSources:
-  - sourceName: "FIDE"
-    sourceUrl: "https://www.fide.com/road-to-weissenhaus-2027-freestyle-friday-is-back/"
-  - sourceName: "Chess.com"
-    sourceUrl: "https://www.chess.com/news/view/man-charged-with-stalking-hannah-sayce-false-drug-reports"
 image:
   src: "./_images/Fabiano_Caruana_at_the_Candidates_Tournament_2024_03.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
@@ -26,13 +21,13 @@ Both events are 11-round, classical round-robin tournaments. Games are streamed 
 
 **The open field**
 
-Fabiano Caruana is the top seed at 2831 and the defending champion, a five-time winner. He is the only player who qualified as champion. Wesley So (2796) is next, followed by Hans Niemann (2770) and Levon Aronian (2768).
+Seedings use the US Chess July invitational ratings, not FIDE ratings. Fabiano Caruana is the top seed at 2831 and the defending champion, a five-time winner, and the only player who qualified as defending champion. Wesley So (2796) is next, followed by Hans Niemann (2770) and Levon Aronian (2768).
 
-Awonder Liang (2753), Sam Sevian (2736), Ray Robson (2701), Jeffery Xiong (2693) and Sam Shankland (2692) all qualified on rating. Caruana's 35-point margin over So is the widest gap between neighbors in the list. Everyone else is bunched within about 50 points of each other from fifth to twelfth.
+Awonder Liang (2753), Sam Sevian (2736), Ray Robson (2701), Jeffery Xiong (2693) and Sam Shankland (2692) all qualified on rating. Caruana's 35-point margin over So is the widest gap between neighbors in the list. From fifth to twelfth, the field is bunched within 70 points.
 
 Three players got in by other routes. Abhimanyu Mishra (2686) is the wildcard. Andy Woodward (2685) comes in as 2026 US Junior Champion, and Grigoriy Oparin (2683) as 2026 US Open Champion.
 
-That makes the bottom of the table a tight pack, and it is where a round-robin tends to get interesting. With only 11 rounds and no tiebreak cushion mentioned in the announcement, a single loss to a lower seed can reshape the race. So, a three-time champion, and Caruana are the obvious favorites on paper. Niemann, third on the list, is the name likely to draw the most attention.
+That makes the bottom of the table a tight pack, and it is where a round-robin tends to get interesting. With only 11 rounds, a single loss to a lower seed can reshape the race. So, a three-time champion, and Caruana are the obvious favorites on paper. Niemann, third on the list, is the name likely to draw the most attention.
 
 The club also notes the championship has been held in Saint Louis every year since 2009. The event dates to 1845, and its past winners include Bobby Fischer, Seirawan and Hikaru Nakamura.
 

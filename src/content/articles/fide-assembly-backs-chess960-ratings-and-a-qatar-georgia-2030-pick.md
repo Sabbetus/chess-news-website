@@ -6,13 +6,13 @@ sourceUrl: "https://www.fide.com/main-decisions-of-the-fide-general-assembly-202
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 79
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE's General Assembly in Samarkand approved an official Chess960 rating by 1 June 2027, added a French name to the FIDE brand, and set up a Qatar-first, Georgia-fallback route for the 2030 Olympiad."
 metaDescription: "FIDE's Samarkand General Assembly approved a Chess960 rating system by June 2027, a bilingual name, and Qatar with Georgia as backup for the 2030 Olympiad."
 image:
-  src: "./_images/Timur_Turlov.webp"
-  credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
+  src: "./_images/Timur_Turlov_in_2016.webp"
+  credit: "Dikhan, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov_in_2016.jpg"
 ---
 
 The FIDE General Assembly met on 26-27 September in Samarkand, alongside the 46th Olympiad and the FIDE Congress. FIDE's [summary of the main decisions](https://www.fide.com/main-decisions-of-the-fide-general-assembly-2026/) covers a leadership slate, a charter change, a new rating list and a hosting plan for 2030. Most of the lasting business sits outside the elections.
@@ -51,7 +51,7 @@ Francois Strydom (RSA) joins the Constitutional Commission. The Assembly also ba
 
 The Assembly approved up to five Honorary Vice-Presidents who can take part in the Council's work with every right except voting. Four nominees were put forward for Council approval: Rustam Kasimdzhanov (UZB), Javier Ochoa De Echaguen (ESP), Fouad Fahmi Darwish (UAE) and Michael Stoettinger (AUT).
 
-One reading is that the post gives the new president a way to keep experienced figures in the room without altering the voting balance. The source does not say that was the intent.
+One reading is that the post gives the new president a way to keep experienced figures in the room without altering the voting balance.
 
 **What comes next**
 

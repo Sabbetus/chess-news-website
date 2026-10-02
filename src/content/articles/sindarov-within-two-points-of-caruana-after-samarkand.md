@@ -6,12 +6,12 @@ sourceUrl: "https://en.chessbase.com/post/fide-ratings-october-2026"
 lens: "results"
 continent: "asia"
 selectionScore: 112
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The October FIDE list is out. Sindarov sits two points behind Caruana, Abdusattorov is up to fifth, Erdogmus lands at 17th, and Carlsen, Nakamura and Firouzja stood still."
 metaDescription: "The October 2026 FIDE list after the Samarkand Olympiad: Sindarov trails Caruana by two points, Abdusattorov climbs to fifth, Erdogmus reaches 17th."
 additionalSources:
   - sourceName: "FIDE"
-    sourceUrl: "https://www.fide.com/wstc-europe-day-3-competitions-tactical-masterclasses-and-high-altitude-adventures-in-tsaghkadzor/"
+    sourceUrl: "https://www.fide.com/fide-october-2026-rating-list-published/"
   - sourceName: "Chess.com"
     sourceUrl: "https://www.chess.com/news/view/october-2026-fide-rating-list"
 image:
@@ -38,7 +38,7 @@ Between them, three Uzbek players now occupy fourth, fifth and 26th, a spread th
 
 ## Movement elsewhere in the top ten
 
-Wesley So slipped a few points but stays sixth on 2770. Praggnanandhaa gained a few and is seventh at 2763.
+Wesley So slipped four points and dropped from fifth to sixth on 2770. Praggnanandhaa gained a few and is seventh at 2763.
 
 Vincent Keymer lost only three points playing top board for bronze-medallist Germany. Even so, he fell two places to eighth on 2761, because Abdusattorov and Praggnanandhaa passed him. Small losses cost places when the field is this tightly packed.
 
@@ -48,7 +48,7 @@ Erigaisi's Olympiad began with a first-round defeat against the little-known Tha
 
 ## The youngsters
 
-Yagiz Kaan Erdogmus, the world's strongest junior at 16 by ChessBase's count, gained 15 points and jumped to 17th with 2731. Chess.com describes him as the highest-rated 15-year-old ever and credits him with individual silver. The two outlets differ on his age; ChessBase gives it as sixteen.
+Yagiz Kaan Erdogmus, 15 and the world's strongest junior, gained 15 points and jumped to 17th with 2731. Chess.com describes him as the highest-rated 15-year-old ever and credits him with individual silver.
 
 ## Women's list
 
