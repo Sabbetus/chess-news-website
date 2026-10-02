@@ -6,6 +6,7 @@ frequency: "Annual, August"
 founded: 2013
 location: "St. Louis, Missouri, United States"
 format: "Classical round-robin, part of the Grand Chess Tour"
+organizer: { name: "Saint Louis Chess Club", url: "https://saintlouischessclub.org/" }
 aliases:
   - "Sinquefield Cup"
 winnersSource:

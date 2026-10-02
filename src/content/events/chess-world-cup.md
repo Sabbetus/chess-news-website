@@ -6,6 +6,7 @@ frequency: "Every two years"
 founded: 2005
 location: "Varies"
 format: "Knockout: two-game mini-matches with rapid and blitz tiebreaks; from 2027, Swiss qualifying pools followed by a 16-player knockout"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "FIDE World Cup"
   - "Chess World Cup"

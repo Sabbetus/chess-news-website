@@ -7,6 +7,7 @@ founded: 2013
 location: "Oslo, Norway (Stavanger until 2025)"
 format: "Classical double round-robin; a drawn game goes to an armageddon playoff for extra points. A women's event runs alongside since 2024"
 officialUrl: "https://norwaychess.no/en/"
+organizer: { name: "Norway Chess", url: "https://norwaychess.no/en/" }
 aliases:
   - "Norway Chess"
 winnersSource:

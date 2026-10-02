@@ -6,6 +6,7 @@ frequency: "Annual, April"
 founded: 2001
 location: "Thailand (Bangkok, Pattaya or Hua Hin)"
 format: "Nine-round Swiss open, with a Challengers section"
+organizer: { name: "Bangkok Chess Club" }
 aliases:
   - "Bangkok Chess Club Open"
   - "BCC Open"

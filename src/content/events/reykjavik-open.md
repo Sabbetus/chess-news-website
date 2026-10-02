@@ -6,6 +6,7 @@ frequency: "Annual, spring"
 founded: 1964
 location: "Harpa, Reykjavík, Iceland"
 format: "Nine-round Swiss open (a round-robin until 1980)"
+organizer: { name: "Icelandic Chess Federation" }
 aliases:
   - "Reykjavik Open"
   - "Reykjavík Open"

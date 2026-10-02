@@ -6,6 +6,7 @@ frequency: "Every two years"
 founded: 2019
 location: "Varies"
 format: "11-round Swiss, with a separate women’s event; the top finishers qualify for the Candidates"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Grand Swiss"
   - "FIDE Grand Swiss"

@@ -6,6 +6,7 @@ frequency: "Annual, late December"
 founded: 2012
 location: "Varies"
 format: "Rapid: a 13-round Swiss. Blitz: a Swiss stage followed by a knockout. Separate open and women’s events"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "World Rapid and Blitz"
   - "World Rapid & Blitz"

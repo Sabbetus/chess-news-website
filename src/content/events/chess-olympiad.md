@@ -13,6 +13,7 @@ nextEdition:
   location: "Abu Dhabi, United Arab Emirates"
   sourceUrl: "https://www.fide.com/abu-dhabi-wins-bid-to-host-47th-chess-olympiad-in-2028/"
   checked: "2026-09-29"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Chess Olympiad"
 winnersSource:

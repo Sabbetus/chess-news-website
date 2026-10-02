@@ -154,12 +154,17 @@ const events = defineCollection({
       format: z.string(),
       organizer: z.string().optional(),
       officialUrl: z.string().url().optional(),
+      // Who runs the event (SportsEvent "organizer"). Only where certain.
+      organizer: z.object({ name: z.string(), url: z.string().url().optional() }).optional(),
       nextEdition: z
         .object({
           label: z.string(),
           start: z.coerce.date().optional(),
           end: z.coerce.date().optional(),
           location: z.string().optional(),
+          // Confirmed players only (a set match); feeds the SportsEvent
+          // "performer" field. Leave out until the field is actually known.
+          players: z.array(z.string()).optional(),
           // Every date shown needs a source and a last-checked day: dates get
           // announced late and moved.
           sourceUrl: z.string().url(),

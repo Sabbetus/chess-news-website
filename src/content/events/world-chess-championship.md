@@ -8,11 +8,13 @@ location: "Varies"
 format: "A match between the champion and the Candidates winner: 14 classical games, then rapid and blitz tiebreaks if level"
 nextEdition:
   label: "2026 match: Gukesh Dommaraju vs Javokhir Sindarov"
+  players: ["Gukesh Dommaraju", "Javokhir Sindarov"]
   start: "2026-11-24"
   end: "2026-12-12"
   location: "Cologny, Switzerland"
   sourceUrl: "https://en.wikipedia.org/wiki/World_Chess_Championship_2026"
   checked: "2026-09-29"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "World Chess Championship"
   - "World Championship match"

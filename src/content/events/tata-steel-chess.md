@@ -14,6 +14,7 @@ nextEdition:
   location: "Wijk aan Zee, Netherlands"
   sourceUrl: "https://tatasteelchess.com/en"
   checked: "2026-09-29"
+organizer: { name: "Tata Steel Chess Tournament", url: "https://tatasteelchess.com/en" }
 aliases:
   - "Tata Steel Chess"
   - "Tata Steel Masters"

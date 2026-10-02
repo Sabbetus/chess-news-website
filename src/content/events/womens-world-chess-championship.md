@@ -8,8 +8,10 @@ location: "Varies"
 format: "A match between the champion and the Women's Candidates winner"
 nextEdition:
   label: "2027 match: Ju Wenjun vs Vaishali Rameshbabu"
+  players: ["Ju Wenjun", "Vaishali Rameshbabu"]
   sourceUrl: "https://en.wikipedia.org/wiki/Women%27s_World_Chess_Championship"
   checked: "2026-09-29"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Women's World Championship"
   - "Women's World Chess Championship"

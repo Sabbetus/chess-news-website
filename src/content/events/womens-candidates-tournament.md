@@ -6,6 +6,7 @@ frequency: "About every two years"
 founded: 1967
 location: "Varies"
 format: "Eight players, double round-robin (14 rounds)"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Women's Candidates"
   - "Women's Candidates Tournament"

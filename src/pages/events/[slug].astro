@@ -49,6 +49,10 @@ const jsonLd = [
           ...(ogImage ? { image: ogImage } : {}),
           description: d.summary,
           url: pageURL,
+          ...(d.organizer
+            ? { organizer: { '@type': 'Organization', name: d.organizer.name, ...(d.organizer.url ? { url: d.organizer.url } : {}) } }
+            : {}),
+          ...(next.players?.length ? { performer: next.players.map((name) => ({ '@type': 'Person', name })) } : {}),
         },
       ]
     : []),

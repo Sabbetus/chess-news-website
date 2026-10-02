@@ -6,6 +6,7 @@ frequency: "Every two years"
 founded: 1950
 location: "Varies"
 format: "Eight players, double round-robin (14 rounds); the winner plays the world champion"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Candidates Tournament"
   - "the Candidates"

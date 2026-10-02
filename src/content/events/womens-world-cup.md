@@ -6,6 +6,7 @@ frequency: "Every two years"
 founded: 2021
 location: "Varies"
 format: "Knockout of just over 100 players; from 2027, Swiss qualifying pools followed by a knockout"
+organizer: { name: "FIDE", url: "https://www.fide.com/" }
 aliases:
   - "Women's World Cup"
   - "Women's Chess World Cup"

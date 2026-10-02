@@ -6,6 +6,7 @@ frequency: "Annual season"
 founded: 2015
 location: "Various, including Bucharest, Warsaw, Zagreb and St. Louis"
 format: "A series of classical and rapid-and-blitz events; the top players on tour points meet in the finals in St. Louis"
+organizer: { name: "Grand Chess Tour", url: "https://grandchesstour.org/" }
 aliases:
   - "Grand Chess Tour"
   - "GCT"
