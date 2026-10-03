@@ -686,7 +686,9 @@ def _single_names(item: dict) -> set[str]:
     bigrams (including the same enumeration-span exclusion); only used
     together with MIN_SHARED_SINGLE_NAMES_FOR_SAME_STORY precisely because
     a lone word is weaker evidence than a matched pair."""
-    text = f"{item.get('title', '')} {item.get('summary', '')}"
+    # Newline, not a space, between headline and summary: the summary's
+    # first word starts a sentence too.
+    text = f"{item.get('title', '')}\n{item.get('summary', '')}"
     spans = _enumeration_spans(text)
     names = set()
     for m in re.finditer(r"[A-Za-z']+", text):
@@ -699,7 +701,7 @@ def _single_names(item: dict) -> set[str]:
         # about the word being a name. Caught live 2026-10-01: the Turlov
         # interview merged with a schools-tournament report on "What",
         # "They", "School" and "European" alone.
-        if w.lower() in SENTENCE_START_WORDS and re.search(r'(^|[.!?:]["\u201c\u2018\']?)\s*$', text[: m.start()]):
+        if w.lower() in SENTENCE_START_WORDS and re.search(r'(^|\n|[.!?:]["\u201c\u2018\']?)\s*$', text[: m.start()]):
             continue
         lw = w.lower().rstrip("'s")
         if lw in GENERIC_NAME_WORDS or len(lw) < 4:
