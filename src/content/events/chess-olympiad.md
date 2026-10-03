@@ -77,4 +77,4 @@ The Soviet Union won almost every open title from 1952 to 1990. Since then the g
 
 **What is at stake.** Teams are ranked by match points: 2 for a match win, 1 for a draw. Ties are broken by Sonneborn-Berger, which rewards results against stronger teams. Players also win individual medals on each board, by performance rating.
 
-*Last checked 3 October 2026 against the 2024 Olympiad's regulations.*
+*Last checked 3 October 2026 against the 2026 Olympiad in Samarkand.*

@@ -39,7 +39,7 @@ Its knockout format makes upsets common, and the event has launched several care
 
 ## How it works
 
-**Who plays.** 206 players in 2025, qualifying through continental championships, rating, and a few titles such as the reigning world champion's. The top 50 seeds skip the first round.
+**Who plays.** 206 players in 2025, qualifying mainly through continental and zonal events and national federation places, plus the top-rated players and a few titles such as the reigning world champion.s. The top 50 seeds skip the first round.
 
 **The format.** A straight knockout. Each round is a two-game classical match; if it ends level, the players go to rapid games, then blitz, then a single sudden-death game. From 2027, FIDE switches to Swiss qualifying pools followed by a 16-player knockout.
 

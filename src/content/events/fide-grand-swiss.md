@@ -32,10 +32,10 @@ Every open winner so far has gone on to play the Candidates, and Vaishali Ramesh
 
 ## How it works
 
-**Who plays.** 116 players in the 2025 open section, mostly invited by rating, with a separate women's event alongside it.
+**Who plays.** 116 players in the 2025 open section, 100 of them invited by rating, with a separate women's event alongside it.
 
 **The format.** An 11-round Swiss: players are paired each round against others on a similar score, so nobody plays everyone. Classical time control, 100 minutes for 40 moves plus extra time after. Ties are broken by tiebreak scores, starting with the average rating of opponents.
 
-**What is at stake.** The top two qualify for the [Candidates](/events/candidates-tournament/), and the women's event sends its top finishers to the [Women's Candidates](/events/womens-candidates-tournament/). The 2025 open prize fund was $625,000.
+**What is at stake.** The top two qualify for the [Candidates](/events/candidates-tournament/), and the women's event sends its top two to the [Women's Candidates](/events/womens-candidates-tournament/). The 2025 open prize fund was $625,000.
 
 *Part of the World Championship cycle: [World Cup](/events/chess-world-cup/) → Grand Swiss → [Candidates](/events/candidates-tournament/) → [World Championship](/events/world-chess-championship/). Last checked 3 October 2026 against the 2025 edition.*
