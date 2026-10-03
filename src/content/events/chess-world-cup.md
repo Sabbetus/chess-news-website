@@ -30,9 +30,19 @@ image:
   credit: "Wilfredor, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
 reviewStatus: "published"
-updatedDate: "2026-09-29"
+updatedDate: "2026-10-03"
 ---
 
 The World Cup is chess's biggest knockout: over 200 players, drawn from continental championships and rating, play short matches over about three and a half weeks until one is left. Its top finishers qualify for the Candidates, which makes every late round a high-stakes affair.
 
 Its knockout format makes upsets common, and the event has launched several careers: Javokhir Sindarov won in 2025 as the 16th seed. From 2027 FIDE is changing the format to Swiss qualifying pools followed by a 16-player knockout, with the field growing to 224.
+
+## How it works
+
+**Who plays.** 206 players in 2025, qualifying through continental championships, rating, and a few titles such as the reigning world champion's. The top 50 seeds skip the first round.
+
+**The format.** A straight knockout. Each round is a two-game classical match; if it ends level, the players go to rapid games, then blitz, then a single sudden-death game. From 2027, FIDE switches to Swiss qualifying pools followed by a 16-player knockout.
+
+**What is at stake.** The top three qualify for the [Candidates](/events/candidates-tournament/). The 2025 prize fund was $2 million, with $120,000 for the winner.
+
+*Part of the World Championship cycle: World Cup → [Grand Swiss](/events/fide-grand-swiss/) → [Candidates](/events/candidates-tournament/) → [World Championship](/events/world-chess-championship/). Last checked 3 October 2026 against the 2025 edition.*

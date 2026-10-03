@@ -86,9 +86,19 @@ image:
   credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
 reviewStatus: "published"
-updatedDate: "2026-09-29"
+updatedDate: "2026-10-03"
 ---
 
 The world title has been decided since 1886, when Wilhelm Steinitz beat Johannes Zukertort in the first official match. FIDE took charge after Alexander Alekhine died as champion in 1946, and has run the championship ever since, apart from a split between 1993 and 2006 when Garry Kasparov and his successors played outside FIDE.
 
 Only 18 players have held the undisputed title. Magnus Carlsen held it for a decade from 2013, before declining to defend it in 2023. Gukesh Dommaraju became the youngest undisputed champion in 2024, and defends the title against Javokhir Sindarov in Switzerland in November 2026.
+
+## How it works
+
+**Who plays.** Two players: the reigning champion and the winner of the [Candidates](/events/candidates-tournament/).
+
+**The format.** A match of up to 14 classical games, 120 minutes per player plus extra time after move 40. No draws by agreement before move 40. The first to 7.5 points wins. At 7-7, rapid games follow, then blitz, then sudden-death blitz games until someone wins.
+
+**What is at stake.** The world title. The 2026 match, Gukesh Dommaraju against Javokhir Sindarov, has a $2.5 million prize fund, with $200,000 going to the winner of each decisive game.
+
+*Part of the World Championship cycle: [World Cup](/events/chess-world-cup/) → [Grand Swiss](/events/fide-grand-swiss/) → [Candidates](/events/candidates-tournament/) → World Championship. Last checked 3 October 2026 against FIDE's 2026 match regulations.*

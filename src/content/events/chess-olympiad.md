@@ -62,9 +62,19 @@ image:
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADing_Liren_46th_fide_chess_olympiad.jpg"
 reviewStatus: "published"
-updatedDate: "2026-09-29"
+updatedDate: "2026-10-03"
 ---
 
 The first official Olympiad was held in London in 1927, and it has been held every two years since 1950. Teams of four boards plus a reserve play eleven rounds in open and women's sections, and it is the one event where nearly every chess nation competes.
 
 The Soviet Union won almost every open title from 1952 to 1990. Since then the gold has spread: Russia, Ukraine, Armenia, China, the United States, and more recently India and Uzbekistan, who won at home in Samarkand in 2026.
+
+## How it works
+
+**Who plays.** National teams of four players plus a reserve, in an open section and a women's section. Nearly every FIDE member country sends a team.
+
+**The format.** An 11-round Swiss between teams. All four boards play at once, and the team that scores more game points wins the match. Classical time control, 90 minutes for 40 moves plus extra time after.
+
+**What is at stake.** Teams are ranked by match points: 2 for a match win, 1 for a draw. Ties are broken by Sonneborn-Berger, which rewards results against stronger teams. Players also win individual medals on each board, by performance rating.
+
+*Last checked 3 October 2026 against the 2024 Olympiad's regulations.*
