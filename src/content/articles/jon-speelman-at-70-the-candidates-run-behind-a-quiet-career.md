@@ -6,13 +6,13 @@ sourceUrl: "https://en.chessbase.com/post/jon-speelman-70th-birthday"
 lens: "people"
 continent: "europe"
 selectionScore: 117
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Jon Speelman turns 70 on 2 October. Three British titles, two Candidates runs, a joint fourth place in the world rankings, and a column that has now passed 240 instalments."
 metaDescription: "Grandmaster Jon Speelman turns 70 on 2 October 2026. A look at his Candidates run, England's Olympiad silvers and his work as an endgame author."
 image:
-  src: "./_images/Nigel_Short__2018.webp"
-  credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
+  src: "./_images/JonSpeelman24.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJonSpeelman24.jpg"
 ---
 
 Grandmaster Jonathan Speelman turns 70 on 2 October 2026. ChessBase [marks the birthday with a career review](https://en.chessbase.com/post/jon-speelman-70th-birthday) of a player who reached the Candidates semifinals, climbed as high as joint fourth in the world and then became one of chess's more readable analysts.
@@ -33,7 +33,7 @@ Speelman shared first at Dortmund in 1981 and at Hastings in 1983/84. He shared 
 
 Then came the 1987 Subotica Interzonal, where he tied for first with Gyula Sax and Nigel Short. That earned him a Candidates place. In January 1988 in Saint John, Canada, he beat Yasser Seirawan 4-1.
 
-The quarterfinal in London that August was an all-English affair against Short, and Speelman won 3½-1½. It was, by the source's account, one of the best individual achievements of his career.
+The quarterfinal in London that August was an all-English affair against Short, and Speelman won 3½-1½. It ranks among the best individual achievements of his career.
 
 The semifinal against Jan Timman, in London in October 1989, was far tighter. Timman prevailed 4½-3½, one point of margin deciding a match between two of the era's sharpest endgame thinkers. Speelman later wrote a column on their battles after Timman's death, recalling him as "one of the very nicest" of the generation slightly older than his own.
 

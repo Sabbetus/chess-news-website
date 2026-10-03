@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/bluebaum-wins-freestyle-friday-octob
 lens: "results"
 continent: "global"
 selectionScore: 75
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GM Matthias Bluebaum took the season-opening Freestyle Friday outright on 9 points, with Bortnyk, Pranav Venkatesh and SL Narayanan a half point back on 8.5/11. Qualifying spots for next year's Freestyle World Championship are now in play."
 metaDescription: "GM Matthias Bluebaum won the first Freestyle Friday of the new season outright with 9 points, ahead of Bortnyk, Pranav and Narayanan on 8.5/11."
 image:
@@ -23,7 +23,7 @@ A half-point margin over three rivals is thin, and it means Bluebaum's lead rest
 
 The October-December season feeds a knockout tournament that determines some of the qualifiers for next year's Freestyle World Championship. Pranav had already clinched his own appearance earlier in the year, so for him the finish was a bonus rather than a necessity.
 
-For Bortnyk and Narayanan the picture is different. Neither is described as already qualified, so a strong first event gives them a head start as they jockey for position in that knockout. Bluebaum is in the same race, and a win in week one is the best possible opening for him.
+For Bortnyk and Narayanan the picture is different. Neither has qualified yet, so a strong first event gives them a head start as they jockey for position in that knockout. Bluebaum is in the same race, and a win in week one is the best possible opening for him.
 
 **An early shake-up**
 
