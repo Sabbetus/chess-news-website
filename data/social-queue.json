@@ -877,8 +877,8 @@
     "socialCopy": "1,935 players registered for the CHENNAI District CM Trophy school boys event on Sept. 15, the largest Asian tournament of September 2026. Tirupattur followed with 1,361. All 20 of the biggest fields were in India.",
     "publishDate": "2026-10-03",
     "selectionScore": 15,
-    "postedFacebookAt": null,
-    "postedThreadsAt": null
+    "postedFacebookAt": "2026-10-03T12:26:33.283432+00:00",
+    "postedThreadsAt": "2026-10-03T12:26:33.283432+00:00"
   },
   {
     "slug": "jon-speelman-at-70-the-candidates-run-behind-a-quiet-career",
@@ -888,5 +888,14 @@
     "selectionScore": 117,
     "postedFacebookAt": "2026-10-03T09:04:00.922555+00:00",
     "postedThreadsAt": "2026-10-03T09:04:00.922555+00:00"
+  },
+  {
+    "slug": "world-championship-cycle",
+    "title": "How a Player Earns a Shot at the World Chess Title",
+    "socialCopy": "Nobody gets a world title match by invitation. Here's the two-year road from the World Cup to the Candidates to the title match itself.",
+    "publishDate": "2026-10-03",
+    "selectionScore": 0,
+    "postedFacebookAt": null,
+    "postedThreadsAt": null
   }
 ]
