@@ -26,6 +26,9 @@ permissions:
 jobs:
   weekly-recap:
     runs-on: ubuntu-latest
+    env:
+      # Per-run token log for the PR description (scripts/api_usage.py).
+      API_USAGE_LOG: /tmp/api-usage.jsonl
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -82,6 +85,10 @@ jobs:
           BODY="Automated Weekly Recap draft, synthesized from this week's published articles. Review the body and merge to publish -- see docs/review-workflow.md."
           if [ -s data/weekly-recap-report.md ]; then
             BODY="$BODY"$'\n\n---\n\n'"$(cat data/weekly-recap-report.md)"
+          fi
+          USAGE="$(python scripts/api_usage.py)"
+          if [ -n "$USAGE" ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$USAGE"
           fi
 
           gh pr create \

@@ -21,6 +21,8 @@ from pathlib import Path
 
 import anthropic
 
+from api_usage import track
+
 from draft import (
     ARTICLES_DIR,
     BATCH_MAX_RETRIES,
@@ -405,7 +407,7 @@ def main() -> None:
         print(f"No articles published in the last {RECAP_WINDOW_DAYS} days -- skipping this week's recap.")
         return
 
-    client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
+    client = track(anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES))
     user_prompt = build_user_prompt(entries)
 
     response = client.messages.create(

@@ -27,6 +27,9 @@ permissions:
 jobs:
   pipeline:
     runs-on: ubuntu-latest
+    env:
+      # Per-run token log for the PR description (scripts/api_usage.py).
+      API_USAGE_LOG: /tmp/api-usage.jsonl
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -92,6 +95,10 @@ jobs:
           BODY="Automated draft batch from the ingestion/selection/drafting pipeline. Review each article's frontmatter (source, lens, selectionScore) and body before merging. Merging sets these live once reviewStatus is flipped to \`approved\`/\`published\` -- see docs/review-workflow.md."
           if [ -s data/draft-report.md ]; then
             BODY="$BODY"$'\n\n---\n\n'"$(cat data/draft-report.md)"
+          fi
+          USAGE="$(python scripts/api_usage.py)"
+          if [ -n "$USAGE" ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$USAGE"
           fi
 
           gh pr create \

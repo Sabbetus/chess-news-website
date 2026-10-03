@@ -890,7 +890,9 @@ def main() -> None:
     if os.environ.get("ANTHROPIC_API_KEY"):
         import anthropic
 
-        client = anthropic.Anthropic()
+        from api_usage import track
+
+        client = track(anthropic.Anthropic())
     scored = merge_duplicate_stories(scored, client)
     scored = drop_already_covered(client, scored)
     scored = drop_superseded_previews(client, scored)

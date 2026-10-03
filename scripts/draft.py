@@ -28,6 +28,8 @@ from pathlib import Path
 
 import anthropic
 
+from api_usage import track
+
 from chess_results_standings import (
     KNOWN_TOURNAMENTS,
     fetch_team_standings,
@@ -1703,7 +1705,7 @@ def main() -> None:
         print("No items selected -- nothing to draft.")
         return
 
-    client = anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES)
+    client = track(anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES))
 
     written, failed, long_paragraphs, bad_link_articles = [], [], [], []
     for item in selected:
