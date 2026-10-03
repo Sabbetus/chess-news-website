@@ -1,12 +1,12 @@
 ---
 title: "How a Player Earns a Shot at the World Chess Title"
-publishDate: "TBD"
+publishDate: "2026-10-03"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/?p=30919"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "The road to a World Chess Championship match: the World Cup, Grand Swiss, FIDE Circuit and Candidates, and how each one feeds the next."
 socialCopy: "Nobody gets a world title match by invitation. Here's the two-year road from the World Cup to the Candidates to the title match itself."
 image:
