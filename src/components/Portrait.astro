@@ -10,13 +10,16 @@ interface Props {
   name: string;
   image?: { src: ImageMetadata; credit: string; sourceUrl: string };
   size?: 'hero' | 'small';
+  // Player headshots are nearly all taller than wide; a portrait box shows
+  // the whole head and face instead of a wide slice of a tall photo.
+  shape?: 'landscape' | 'portrait';
   alt?: string;
 }
-const { name, image, size = 'hero', alt } = Astro.props;
+const { name, image, size = 'hero', shape = 'landscape', alt } = Astro.props;
 const width = size === 'hero' ? 960 : 160;
 ---
 
-<figure class={`portrait ${size}`}>
+<figure class={`portrait ${size} ${shape === "portrait" ? "tall" : ""}`}>
   {
     image ? (
       <Image src={image.src} alt={alt ?? name} width={width} loading={size === 'hero' ? 'eager' : 'lazy'} />
@@ -49,6 +52,11 @@ const width = size === 'hero' ? 960 : 160;
     object-position: center 30%;
     border-radius: 3px;
     background: var(--surface);
+  }
+  .portrait.hero.tall img,
+  .portrait.hero.tall .monogram {
+    aspect-ratio: 4 / 5;
+    object-position: center 20%;
   }
   .small img,
   .small .monogram {

@@ -75,7 +75,7 @@ const jsonLd = [
     </header>
 
     <div class="player-top">
-      <Portrait name={d.name} image={d.image} />
+      <Portrait name={d.name} image={d.image} shape="portrait" />
       <dl class="facts">
         {ranked && (<><dt>World rank</dt><dd><a href="/rankings/"><strong>No. {ranked.rank}</strong></a> ({month})</dd></>)}
         {rankedWomen && (<><dt>Women's rank</dt><dd><a href="/rankings/women/"><strong>No. {rankedWomen.rank}</strong></a> ({month})</dd></>)}
@@ -126,7 +126,7 @@ const jsonLd = [
     max-width: var(--content-width);
     margin: 0 auto 28px;
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: minmax(0, 0.8fr) 1fr;
     gap: 24px;
     align-items: start;
   }
@@ -136,6 +136,9 @@ const jsonLd = [
   @media (max-width: 720px) {
     .player-top {
       grid-template-columns: 1fr;
+    }
+    .player-top :global(.portrait) {
+      max-width: 360px;
     }
   }
 </style>
