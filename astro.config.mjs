@@ -64,6 +64,9 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      // Listed in the index too, so submitting sitemap-index.xml in Search
+      // Console covers the news sitemap without a separate submission.
+      customSitemaps: ['https://chessherald.com/news-sitemap.xml'],
       serialize(item) {
         const slug = item.url.match(/\/articles\/([^/]+)\/$/)?.[1];
         const date = slug && ARTICLE_LASTMOD.get(slug);
