@@ -88,3 +88,33 @@ export const EVENT_CATEGORIES: { id: CollectionEntry<'events'>['data']['category
   { id: 'team', label: 'Team events and leagues' },
   { id: 'online', label: 'Online series' },
 ];
+
+// schema.org about/mentions for an article: the player and event pages it
+// names (full names/aliases only, same rule as articlesMentioning). Whoever
+// the headline names is what the piece is "about"; the rest are "mentions".
+export async function articleEntities(article: CollectionEntry<'articles'>, site: URL) {
+  const [players, events] = await Promise.all([playerPages(), eventPages()]);
+  const hubs = [
+    ...players.map((p) => ({ type: 'Person', name: p.data.name, aliases: [p.data.name, ...(p.data.aliases ?? [])], path: `/players/${p.slug}/` })),
+    ...events.map((e) => ({ type: 'SportsEvent', name: e.data.name, aliases: [e.data.name, ...(e.data.aliases ?? [])], path: `/events/${e.slug}/` })),
+  ];
+  const about: object[] = [];
+  const mentions: { pos: number; node: object }[] = [];
+  const title = article.data.title;
+  for (const h of hubs) {
+    const escaped = h.aliases.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const re = new RegExp(`(?<![\\p{L}])(?:${escaped.join('|')})(?![\\p{L}])`, 'u');
+    const node = { '@type': h.type, name: h.name, url: new URL(h.path, site).toString() };
+    const bodyHit = article.body.search(re);
+    // Headlines use surnames ("Sindarov Within Two Points of Caruana"), so a
+    // player whose full name is in the body and surname in the headline is
+    // what the piece is about too.
+    const surname = h.type === 'Person' ? h.name.split(' ').pop()! : '';
+    const surnameInTitle =
+      surname.length >= 3 && new RegExp(`(?<![\\p{L}])${surname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}])`, 'u').test(title);
+    if (re.test(title) || (bodyHit >= 0 && surnameInTitle)) about.push(node);
+    else if (bodyHit >= 0) mentions.push({ pos: bodyHit, node });
+  }
+  mentions.sort((a, b) => a.pos - b.pos);
+  return { about, mentions: mentions.slice(0, 10).map((m) => m.node) };
+}

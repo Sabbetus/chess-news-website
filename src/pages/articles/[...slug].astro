@@ -11,6 +11,7 @@ import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
 import { CONTINENT_META } from '../../lib/continent';
 import { similarArticles } from '../../lib/similar';
+import { articleEntities } from '../../lib/hubs';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -47,6 +48,7 @@ const correctionHref = `/contact/?${new URLSearchParams({
 // Similar articles: same people/events/organizations first (see
 // lib/similar.ts), then same lens/continent, then most recent.
 const similar = await similarArticles(article);
+const entities = await articleEntities(article, Astro.site!);
 
 const continentMeta = CONTINENT_META[article.data.continent];
 
@@ -99,6 +101,8 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: article.data.title,
+    ...(entities.about.length ? { about: entities.about } : {}),
+    ...(entities.mentions.length ? { mentions: entities.mentions } : {}),
     description,
     datePublished: article.data.publishDate.toISOString(),
     // Falls back to the publish date rather than being omitted: for a piece
