@@ -22,7 +22,9 @@ const width = size === 'hero' ? 960 : 160;
 <figure class={`portrait ${size} ${shape === "portrait" ? "tall" : ""}`}>
   {
     image ? (
-      <Image src={image.src} alt={alt ?? name} width={width} loading={size === 'hero' ? 'eager' : 'lazy'} />
+      <div class="frame">
+        <Image src={image.src} alt={alt ?? name} width={width} loading={size === 'hero' ? 'eager' : 'lazy'} />
+      </div>
     ) : (
       <div class="monogram" role="img" aria-label={name}>
         <span>{initials(name)}</span>
@@ -53,10 +55,21 @@ const width = size === 'hero' ? 960 : 160;
     border-radius: 3px;
     background: var(--surface);
   }
-  .portrait.hero.tall img,
+  /* The photo keeps its 4:5 framing (same top edge) and the square frame
+     trims only the bottom. Changing the img's own aspect ratio instead
+     would move the top too, since object-position works on the hidden
+     slack, which shrinks with the box. */
+  .portrait.hero.tall .frame {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+  .portrait.hero.tall img {
+    aspect-ratio: 4 / 5;
+    object-position: center 20%;
+  }
   .portrait.hero.tall .monogram {
     aspect-ratio: 1 / 1;
-    object-position: center 20%;
   }
   .small img,
   .small .monogram {
