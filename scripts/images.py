@@ -319,7 +319,18 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
         return re.search(pattern, title_lower) is not None
 
     if strict:
-        return all(_word_present(word) for word in significant_words)
+        # Three-letter first names count here ("Jon", "Wei"): leaving them
+        # out let "Speelman en Speelman" (a Dutch music duo) match "Jon
+        # Speelman".
+        significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 3]
+        if all(_word_present(word) for word in significant_words):
+            return True
+        # Names run together in the filename ("JonSpeelman24.jpg") -- caught
+        # live 2026-10-03: Speelman's own 2024 photo was skipped this way and
+        # the piece got Nigel Short instead. All the words, in order, with
+        # nothing between them, is as specific as the spaced version.
+        compact_title = re.sub(r"[^a-z]", "", title_lower)
+        return "".join(w.lower() for w in significant_words) in compact_title
     return any(_word_present(word) for word in significant_words)
 
 
@@ -640,7 +651,12 @@ def build_query_cascade(
         # tournament in it.
         return queries
     else:
-        for subject in image_subjects or []:
+        # A person-centred piece (prefer_neutral) tries only its own subject:
+        # anyone else named in it would read as if they were that person.
+        # Caught live 2026-10-03: a Jon Speelman 70th-birthday profile got a
+        # photo of Nigel Short, his main rival in the story.
+        subjects = (image_subjects or [])[:1] if prefer_neutral else (image_subjects or [])
+        for subject in subjects:
             if subject:
                 # A person's full name is not guaranteed unique on Commons --
                 # caught live: "José Antonio Carrillo" (a FIDE Americas

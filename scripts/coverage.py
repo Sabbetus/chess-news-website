@@ -175,3 +175,54 @@ def drop_already_covered(client, scored: list[dict], published: list[dict] | Non
         print(f"      already published as '{entry.get('published_title', '?')}': {entry.get('reason', '')}")
         drop_ids.add(id(item))
     return [item for item in scored if id(item) not in drop_ids]
+
+
+SUPERSEDED_PROMPT = """\
+You are given today's candidate chess news stories. Find any story that is a \
+PREVIEW or announcement of an event (looking ahead: "returns on", "starts \
+tomorrow", "who is playing") when ANOTHER story in the same list already \
+reports that same event's RESULT. That preview is stale and should be dropped. \
+A preview of a different edition, round or event does not count. When unsure, \
+do not flag it.
+
+Answer with only a JSON object: {"stale_previews": [{"candidate": <number>, \
+"result_candidate": <number>, "reason": "<one short sentence>"}]}. Use an \
+empty list when nothing matches."""
+
+
+def drop_superseded_previews(client, scored: list[dict]) -> list[dict]:
+    """Same-batch counterpart to drop_already_covered: a preview and its own
+    result can arrive together (caught live 2026-10-03: "Freestyle Friday
+    Returns October 2" was drafted alongside the October 2 result). They are
+    different stories, so neither the merge check nor the published-article
+    check catches it. Fails open like the rest of this module."""
+    checked = [item for item in scored if item["kind"] == "news"][:MAX_CANDIDATES_CHECKED]
+    if client is None or len(checked) < 2:
+        return scored
+    lines = []
+    for i, item in enumerate(checked, start=1):
+        summary = (item.get("summary") or "")[:CANDIDATE_SUMMARY_CHARS]
+        lines.append(f"{i}. [{item['sourceName']}, {item.get('publishedAt') or 'undated'}] {item['title']} -- {summary}")
+    try:
+        response = client.messages.create(
+            model=COVERAGE_MODEL,
+            max_tokens=4096,
+            output_config={"effort": "low"},
+            system=SUPERSEDED_PROMPT,
+            messages=[{"role": "user", "content": "\n".join(lines)}],
+        )
+        text = "".join(b.text for b in response.content if b.type == "text")
+        start, end = text.find("{"), text.rfind("}")
+        flagged = json.loads(text[start : end + 1]).get("stale_previews", []) if start != -1 else []
+    except Exception as exc:  # noqa: BLE001 -- fail open
+        print(f"Stale-preview check skipped ({type(exc).__name__}: {exc}) -- keeping all candidates.", file=sys.stderr)
+        return scored
+    drop_ids = set()
+    for entry in flagged:
+        n, r = entry.get("candidate"), entry.get("result_candidate")
+        if isinstance(n, int) and 1 <= n <= len(checked) and n != r:
+            item = checked[n - 1]
+            print(f"  Dropping stale preview: {item['sourceName']}: {item['title']}")
+            print(f"      result already in today's batch: {entry.get('reason', '')}")
+            drop_ids.add(id(item))
+    return [item for item in scored if id(item) not in drop_ids]

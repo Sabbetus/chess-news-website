@@ -25,7 +25,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from coverage import drop_already_covered
+from coverage import drop_already_covered, drop_superseded_previews
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 CANDIDATES_PATH = DATA_DIR / "candidates.json"
@@ -891,6 +891,7 @@ def main() -> None:
         client = anthropic.Anthropic()
     scored = merge_duplicate_stories(scored, client)
     scored = drop_already_covered(client, scored)
+    scored = drop_superseded_previews(client, scored)
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]

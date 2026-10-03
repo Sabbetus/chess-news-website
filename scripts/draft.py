@@ -671,6 +671,19 @@ def calendar_pieces_for_continent(continent_slug: str) -> list[dict]:
     ]
 
 
+# chess-results cuts tournament names at 50 characters, mid-word
+# ("...School Boys Ca", "...Chess Tourname"). Trim a name that hit the
+# limit back to its last whole word so readers never see a cut-off word.
+TOURNAMENT_NAME_LIMIT = 50
+
+
+def clean_tournament_name(name: str) -> str:
+    name = name.strip()
+    if len(name) >= TOURNAMENT_NAME_LIMIT and " " in name:
+        name = name.rsplit(" ", 1)[0]
+    return name.rstrip(" -&,(/:").strip()
+
+
 def aggregate_facts(tournaments: list) -> str:
     """Counts the model would otherwise do in its head, and got wrong
     (caught live 2026-10-01: "only three of the 18 entries... plus Naples,
@@ -707,7 +720,7 @@ def build_user_prompt(item: dict) -> str:
         # link each tournament's name directly to its own page rather than
         # just the continent-level overview.
         tournament_data = [
-            {**t, "url": f"https://chesstournamentcalendar.com/tournament/{t['slug']}/"}
+            {**t, "name": clean_tournament_name(t.get("name") or ""), "url": f"https://chesstournamentcalendar.com/tournament/{t['slug']}/"}
             for t in item["tournamentData"]
         ]
         parts = [
