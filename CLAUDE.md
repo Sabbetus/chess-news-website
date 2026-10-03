@@ -43,6 +43,17 @@ Only serious problems reset the streak (user's rule, 2026-10-02):
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-03: PR #54 reset (streak stays at 0). Resets: a stale
+  Freestyle Friday preview ("returns October 2") drafted in the same batch
+  as that event's result (dropped); and the Jon Speelman 70th-birthday
+  profile showed Nigel Short, his rival in the story -- Speelman's own
+  photo ("JonSpeelman24.jpg") was skipped because the name is run
+  together. Minor (no reset): two lines talking about the source, and
+  cut-off tournament names in the Asia calendar piece. Fixed at the
+  source: People pieces only try their subject's photo; run-together
+  names match and 3-letter first names count in strict photo matching;
+  a same-batch check drops a preview when its result is also in;
+  calendar names cut at 50 characters are trimmed to the last word.
 - 2026-10-02: PR #53 reset (streak stays at 0). Resets: story merging
   attached Freestyle Friday and the Hanna Sayce stalking case to the U.S.
   Championship piece, and FIDE's schools report to ChessBase's rating
@@ -103,8 +114,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-02 (PR #53, see above).
-- Earlier resets: 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-03 (PR #54, see above).
+- Earlier resets: 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
