@@ -21,7 +21,7 @@ Chess.com framed it as a fitting capstone to a week in which Nakamura also pushe
 
 That detail matters for how these arenas are won. Over two hours, a player can sit mid-table early and still take the title if he strings together streaks late, since the scoring favors sustained momentum over a fast start. Nakamura's long record in online bullet and blitz makes him the obvious candidate for that kind of finish.
 
-## The rest of the prize list
+**The rest of the prize list**
 
 GM Jose Martinez finished second and earned $250. GM Tuan Minh Le took third for $150, and GM Pranav Venkatesh was fourth for $100.
 
@@ -29,7 +29,7 @@ Two International Masters just missed the money. IMs Renato Terry and Havard Hau
 
 IM Rose Atwell won the $100 best women's prize.
 
-## A run that keeps stretching
+**A run that keeps stretching**
 
 This is not a new pattern. The Chess Herald recently covered [Nakamura winning Bullet Brawl by 25 points](/articles/nakamura-wins-bullet-brawl-again-this-time-by-25-points/), and the fourth straight title extends a streak that has now run for a month. The headline score of 155 is the latest entry in that sequence, and the record for a single year is now his regardless of what happens next.
 

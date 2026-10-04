@@ -28,7 +28,7 @@ Fabiano Caruana is third on 2784, but the more interesting number is right behin
 
 Sindarov's rise fits the story of the event itself, which Uzbekistan won. The host nation's strength is visible further down the list too, and [our recap of the closing ceremony](/articles/uzbekistan-crowned-as-samarkand-olympiad-closes-in-fireworks/) covers how the gold came together.
 
-## Uzbekistan's gains
+**Uzbekistan's gains**
 
 Nodirbek Abdusattorov added 18 points to reach 2780 and climbs two places to fifth, just behind Sindarov. Chess.com notes he also took individual gold on board one.
 
@@ -36,7 +36,7 @@ Nodirbek Yakubboev gained 27, one of the biggest jumps among the top 100, and no
 
 Between them, three Uzbek players now occupy fourth, fifth and 26th, a spread that explains why the team was so hard to beat.
 
-## Movement elsewhere in the top ten
+**Movement elsewhere in the top ten**
 
 Wesley So slipped four points and dropped from fifth to sixth on 2770. Praggnanandhaa gained a few and is seventh at 2763.
 
@@ -46,11 +46,11 @@ Wei Yi jumped from 12th to ninth on 2758. Arjun Erigaisi dropped out of the top 
 
 Erigaisi's Olympiad began with a first-round defeat against the little-known Thai player Laohawirapap Prin, followed by mostly drawn games. He did finish with [a last-round win over Peter Leko](#game-embed).
 
-## The youngsters
+**The youngsters**
 
 Yagiz Kaan Erdogmus, 15 and the world's strongest junior, gained 15 points and jumped to 17th with 2731. Chess.com describes him as the highest-rated 15-year-old ever and credits him with individual silver.
 
-## Women's list
+**Women's list**
 
 On the [women's list](/rankings/women/), Zhu Jiner won team and individual gold on board one for China, gained nine points and regained second place on 2559, behind Hou Yifan (2596). China won with what was effectively a second team, since only Zhu came from its very best group. Chinese players still hold the top five places.
 

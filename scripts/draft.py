@@ -530,7 +530,7 @@ event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
 player1: first player's full name
 player2: second player's full name
 @@BODY_MARKDOWN@@
-the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density."""
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style."""
 
 def build_aggregate_system_prompt(continent_code: str) -> str:
     return f"""You are writing for a small, curated chess news site. \
@@ -592,7 +592,7 @@ a single short social post (under 260 characters) teasing the piece, no hashtags
 @@META_DESCRIPTION@@
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@BODY_MARKDOWN@@
-the full article body in Markdown, 300-600 words"""
+the full article body in Markdown, 300-600 words If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style."""
 
 
 def slugify(title: str) -> str:
@@ -812,6 +812,15 @@ _FIELD_MARKERS = {
     "BODY_MARKDOWN": "bodyMarkdown",
 }
 _FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
+
+
+# House style: section subheads are bold lines, not Markdown headings (which
+# render at h2 size). The prompts ask for this; this enforces it.
+_HEADING_LINE_RE = re.compile(r"^#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$", re.MULTILINE)
+
+
+def bold_subheads(body: str) -> str:
+    return _HEADING_LINE_RE.sub(lambda m: f"**{m.group(1).strip('* ')}**", body)
 
 
 def parse_response(text: str) -> dict:
@@ -1139,7 +1148,7 @@ def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict
     Falls back to the original body untouched on any failure (no text returned, or a
     response different enough in length to look like more than a claims-level edit) -- an
     unflagged article for human review beats a silently mangled one."""
-    body_markdown = parsed["bodyMarkdown"]
+    body_markdown = bold_subheads(parsed["bodyMarkdown"])
     if item["kind"] in CALENDAR_KINDS:
         source_text = "TOURNAMENT DATA (the piece's only source):\n" + build_user_prompt(item)
     else:
@@ -1613,7 +1622,7 @@ def draft_one(
             fm_lines.append(f"{key}: {value}")
     fm_lines.append("---")
 
-    body_markdown = parsed["bodyMarkdown"]
+    body_markdown = bold_subheads(parsed["bodyMarkdown"])
     offenders = check_paragraph_lengths(body_markdown)
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)

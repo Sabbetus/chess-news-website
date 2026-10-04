@@ -24,6 +24,7 @@ import anthropic
 from api_usage import track
 
 from draft import (
+    bold_subheads,
     ARTICLES_DIR,
     BATCH_MAX_RETRIES,
     MODEL,
@@ -370,7 +371,7 @@ not a made-up description. A separate step searches the site's own photo library
 exact name, so it must be a specific full name, not a theme or paraphrase. Leave this \
 field completely empty only if the headline genuinely has no single central figure.
 @@BODY_MARKDOWN@@
-the full recap body in Markdown"""
+the full recap body in Markdown. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style."""
 
 
 def build_user_prompt(entries: list[dict]) -> str:
@@ -472,7 +473,7 @@ def main() -> None:
             fm_lines.append(f"{key}: {value}")
     fm_lines.append("---")
 
-    body_markdown = parsed["bodyMarkdown"]
+    body_markdown = bold_subheads(parsed["bodyMarkdown"])
     offenders = check_paragraph_lengths(body_markdown)
     if offenders:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
