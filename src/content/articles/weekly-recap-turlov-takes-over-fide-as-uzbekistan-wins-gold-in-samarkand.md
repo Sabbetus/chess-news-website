@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-10-04"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Samarkand wrapped up with a new FIDE president, an Uzbek Olympiad gold, an 11-year-old WGM and a U.S. Championship field set for Saint Louis. Our weekly recap covers all 19 stories."
 image:
   src: "./_images/Timur_Turlov.webp"
@@ -16,11 +16,11 @@ Samarkand dominated the week. The Olympiad ended, FIDE elected a new president a
 
 ## Turlov and the FIDE Assembly
 
-[Timur Turlov was elected the eighth President of FIDE](/articles/timur-turlov-elected-fide-president-ending-a-30-year-russian-run/) on September 26 at the General Assembly in Samarkand. The vote took two rounds, though it was not close in the end.
+[Timur Turlov was elected the eighth President of FIDE](/articles/timur-turlov-elected-fide-president-ending-a-30-year-russian-run/) on September 26 at the General Assembly in Samarkand. He won a second-round runoff, 110-85.
 
 Turlov had given an interview to American Chess Magazine in early August, before the vote. In it he [described chess as "massively undervalued"](/articles/timur-turlov-on-chess-as-a-business-sponsors-ids-olympics/), and it now reads as a statement of intent from the man in charge.
 
-The Assembly also made decisions beyond the election. FIDE's [summary covers a leadership slate, a charter change, a new rating list and a hosting plan for 2030](/articles/fide-assembly-backs-chess960-ratings-and-a-qatar-georgia-2030-pick/). Most of the lasting business, as our piece notes, sits outside the elections.
+The Assembly also made decisions beyond the election. FIDE's [summary covers a leadership slate, a charter change, a new rating list and a hosting plan for 2030](/articles/fide-assembly-backs-chess960-ratings-and-a-qatar-georgia-2030-pick/). Most of the lasting business sits outside the elections.
 
 ## Uzbekistan's Olympiad
 
@@ -34,7 +34,7 @@ At the Women's Olympiad, England put 11-year-old Bodhana Sivanandan on top board
 
 ## Ratings and the U.S. Championship
 
-The first FIDE list since the Olympiad [leaves the very top untouched](/articles/sindarov-within-two-points-of-caruana-after-samarkand/) while reshuffling the middle of the top ten. Magnus Carlsen (2823) and Hikaru Nakamura (2792) skipped the Olympiad and stay first and second. Alireza Firouzja also sat it out and remains tenth at 2757.
+The first FIDE list since the Olympiad [puts Javokhir Sindarov within two points of Fabiano Caruana](/articles/sindarov-within-two-points-of-caruana-after-samarkand/) and reshuffles the middle of the top ten. Magnus Carlsen (2823) and Hikaru Nakamura (2792) skipped the Olympiad and stay first and second. Alireza Firouzja also sat it out and remains tenth at 2757.
 
 Next up is Saint Louis. The club has [announced 12-player fields for the U.S. Championship and U.S. Women's Championship](/articles/caruana-heads-a-12-player-u-s-championship-field-in-saint-louis/), played over the board from Oct. 8 to 23. Round 1 is Oct. 9, and the total prize fund tops $400,000.
 
