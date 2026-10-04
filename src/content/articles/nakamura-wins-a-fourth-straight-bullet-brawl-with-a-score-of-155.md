@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/hikaru-nakamura-wins-bullet-brawl-oc
 lens: "results"
 continent: "north-america"
 selectionScore: 56
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Hikaru Nakamura took his fourth consecutive Bullet Brawl, scoring 155 for the $400 first prize and setting a single-year record for wins with three months still to play."
 metaDescription: "Hikaru Nakamura won Chess.com's Bullet Brawl for the fourth week running with 155 points, setting a single-year record for victories with three months left."
 image:

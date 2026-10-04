@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/new-fide-rating-and-title-regulations-come-into
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "How FIDE ratings work: the Elo system, what a rating gap predicts, why ratings move faster for juniors, and the 2024 change to the rating floor."
 socialCopy: "A 200-point rating gap means the stronger player is expected to score about 76%. Here's how chess ratings work, and what changed in 2024."
 image:
