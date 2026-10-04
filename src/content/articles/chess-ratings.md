@@ -1,6 +1,6 @@
 ---
 title: "What a Chess Rating Actually Measures"
-publishDate: "TBD"
+publishDate: "2026-10-04"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/new-fide-rating-and-title-regulations-come-into-effect/"
 lens: "historical-parallel"
