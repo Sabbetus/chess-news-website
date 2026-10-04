@@ -1,0 +1,35 @@
+name: Clean up draft branches
+
+# The daily pipeline and weekly recap each push a drafts/* branch for their
+# review PR. Once that PR is merged or closed the branch is dead weight;
+# this deletes every drafts/* branch that has no open PR. Only drafts/*
+# is touched -- main and any hand-made branches are left alone.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1" # Mondays, 03:17 UTC
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete drafts/* branches without an open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          open=$(gh api "repos/$REPO/pulls?state=open&per_page=100" --jq '.[].head.ref')
+          deleted=0
+          for branch in $(gh api --paginate "repos/$REPO/git/matching-refs/heads/drafts/" --jq '.[].ref | sub("^refs/heads/"; "")'); do
+            if printf '%s\n' "$open" | grep -qxF "$branch"; then
+              echo "Keeping $branch (open PR)"
+              continue
+            fi
+            gh api -X DELETE "repos/$REPO/git/refs/heads/$branch" && deleted=$((deleted + 1))
+            echo "Deleted $branch"
+          done
+          echo "Deleted $deleted branch(es)."
