@@ -96,7 +96,11 @@ export async function articleEntities(article: CollectionEntry<'articles'>, site
   const [players, events] = await Promise.all([playerPages(), eventPages()]);
   const hubs = [
     ...players.map((p) => ({ type: 'Person', name: p.data.name, aliases: [p.data.name, ...(p.data.aliases ?? [])], path: `/players/${p.slug}/` })),
-    ...events.map((e) => ({ type: 'SportsEvent', name: e.data.name, aliases: [e.data.name, ...(e.data.aliases ?? [])], path: `/events/${e.slug}/` })),
+    // Thing, not SportsEvent: Google validates every SportsEvent node as an
+    // event listing and flags these name-and-link references for missing
+    // startDate/location (Search Console, 2026-10-04). The event page itself
+    // carries the full SportsEvent markup.
+    ...events.map((e) => ({ type: 'Thing', name: e.data.name, aliases: [e.data.name, ...(e.data.aliases ?? [])], path: `/events/${e.slug}/` })),
   ];
   const about: object[] = [];
   const mentions: { pos: number; node: object }[] = [];
