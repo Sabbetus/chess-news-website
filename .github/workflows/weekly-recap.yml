@@ -95,5 +95,12 @@ jobs:
             --base main \
             --head "$BRANCH" \
             --title "Weekly recap: $(date -u +%Y-%m-%d)" \
-            --body "$BODY" \
-            --reviewer Sabbetus
+            --body "$BODY"
+
+          # Separate from pr create so a GitHub API hiccup on the reviewer
+          # request can't fail the run after the PR already exists (caught
+          # live 2026-10-04: a GraphQL error here marked the recap run failed).
+          for attempt in 1 2; do
+            gh pr edit "$BRANCH" --add-reviewer Sabbetus && break
+            [ "$attempt" = 2 ] && echo "::warning::Could not request review from Sabbetus" || sleep 10
+          done

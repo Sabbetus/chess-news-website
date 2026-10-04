@@ -63,6 +63,13 @@ published article already reports that same event's FINAL result (the \
 tournament is over and we have covered how it ended) -- the round report \
 has gone stale. Caught live 2026-09-30: a round-10 "Uzbekistan lead going \
 into the last round" report arrived after we had published the gold medal. \
+A second exception: a fuller or later write-up of the SAME single event we \
+already covered (same edition, same day -- e.g. a full festival report \
+after we published that festival's headline result) is covered too, even \
+when it adds side details, unless it reports a new result or development. \
+Caught live 2026-10-04: ChessBase's full Judit Polgar festival report \
+arrived three days after we had covered the same festival's simul result \
+from Chess.com. \
 When unsure, do not flag it -- a missed duplicate is \
 cheap, a wrongly dropped story is not.
 

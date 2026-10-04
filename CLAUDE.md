@@ -43,6 +43,18 @@ Only serious problems reset the streak (user's rule, 2026-10-02):
 Update this after every batch review.
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-04: PR #55 reset (streak stays at 0). Reset: ChessBase's full
+  Judit Polgar festival report was drafted three days after we had
+  published the same festival's simul result from Chess.com (dropped).
+  The Nakamura Bullet Brawl piece and the ratings explainer checked out.
+  Fixed at the source: the coverage check now treats a fuller write-up of
+  the same single event as already covered unless it reports something
+  new. PR #56 (weekly recap) reviewed clean: all 19 links and every claim
+  checked; three minor wording edits (runoff margin, a line about our own
+  piece, ratings paragraph now leads with Sindarov). Also: the recap
+  workflow "failed" on a GitHub API error while requesting review after
+  the PR was created; the reviewer request is now a separate, retried,
+  non-fatal step in both workflows.
 - 2026-10-03: PR #54 reset (streak stays at 0). Resets: a stale
   Freestyle Friday preview ("returns October 2") drafted in the same batch
   as that event's result (dropped); and the Jon Speelman 70th-birthday
@@ -114,8 +126,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-03 (PR #54, see above).
-- Earlier resets: 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-04 (PR #55, see above).
+- Earlier resets: 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
