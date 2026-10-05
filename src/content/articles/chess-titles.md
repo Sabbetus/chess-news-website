@@ -1,6 +1,6 @@
 ---
 title: "How a Chess Player Becomes a Grandmaster"
-publishDate: "TBD"
+publishDate: "2026-10-05"
 sourceName: "Wikipedia"
 sourceUrl: "https://en.wikipedia.org/wiki/FIDE_titles"
 lens: "historical-parallel"
