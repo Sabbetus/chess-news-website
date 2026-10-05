@@ -141,16 +141,28 @@ def restore_full_text(items: list[dict]) -> tuple[list[dict], list[dict], list[d
     return usable, retry_later, no_substance
 
 
+# Both calendar pieces list the month's most NOTABLE tournaments, not just
+# the biggest fields (user's call, 2026-10-05): a multi-day classical open
+# matters more than a one-day school rapid with more players, and countries
+# that don't report player counts (the US, Australia) must still rank.
 NOTABLE_NAME_KEYWORDS = [
     "championship", "invitational", "national", "international", "cup",
-    "festival", "open", "grand prix", "masters", "classic",
+    "festival", "open", "grand prix", "masters", "classic", "norm",
+    "memorial", "premier", "elite",
 ]
+# Sections and events that are by nature minor: rating-capped sections of a
+# bigger event, and school/youth/club-night events.
+MINOR_NAME_PATTERNS = re.compile(
+    r"\bu\s?-?\d{2,4}\b|\bunder\s?(?:\d{2,4}|section)\b|sub[\s-]?\d{1,2}\b|\b\d{3,4}\s?-\s?\d{3,4}\b"
+    r"|scholastic|school|escolar|colegio|kids|junior|juvenil|infantil|primary|secundaria"
+    r"|quads?\b|action\b|club night|weekly|ladder|simul",
+    re.IGNORECASE,
+)
 MAX_TOURNAMENTS_PER_AGGREGATE = 20
-# Floor of "coming up" slots reserved for notable tournaments that lack a
-# reliable playersRegistered figure, so countries that don't report counts
-# (the US, Australia) can't be fully crowded out by smaller counted entries
-# from elsewhere in the same continent. See _build_comingup.
-MIN_UNCOUNTED_SLOTS = 6
+# No single country may fill the list while others have entries left --
+# caught live 2026-10-05: 12 of North America's top 20 were Mexican school
+# and club events.
+MAX_PER_COUNTRY = 6
 
 # Fields actually useful for drafting -- archive.json entries carry bulky
 # extras (playerHistory, consecutiveMisses, lastSeen, ...) that only add
@@ -177,23 +189,54 @@ def _shift_month(d: date, months: int) -> date:
     return date(total // 12, total % 12 + 1, 1)
 
 
-def _notability_score(t: dict) -> int:
-    """Heuristic for ranking tournaments that lack a reliable playersRegistered
-    figure (e.g. most US entries) -- used only for the 'coming up' aggregate,
-    where the goal is to surface highlights, not a strict ranking."""
-    score = 0
+def _duration_days(t: dict) -> int:
+    try:
+        start = datetime.fromisoformat(t["startDate"]).date()
+        end = datetime.fromisoformat(t.get("endDate") or t["startDate"]).date()
+    except (KeyError, ValueError, TypeError):
+        return 1
+    return max(1, (end - start).days + 1)
+
+
+def _notability_score(t: dict) -> float:
+    """How notable a tournament is, from the fields the calendar has for
+    every source (FIDE-listed US/Australian events have no player counts)."""
     name = (t.get("name") or "").lower()
-    score += sum(3 for kw in NOTABLE_NAME_KEYWORDS if kw in name)
+    tc = (t.get("timeControl") or "").lower()
+    score = {"classical": 10, "standard": 10, "rapid": 4, "blitz": 1}.get(tc, 3)
+    days = _duration_days(t)
+    score += 6 if days >= 4 else 4 if days >= 2 else 0
+    score += min(9, sum(3 for kw in NOTABLE_NAME_KEYWORDS if kw in name))
+    if MINOR_NAME_PATTERNS.search(name):
+        score -= 8
+    players = t.get("playersRegistered")
+    if isinstance(players, (int, float)) and players > 0:
+        score += min(8, players / 25)
     if t.get("ratingRequirement"):
-        score += 3
+        score += 2
     if t.get("prizePool"):
         score += 3
     rounds = t.get("rounds")
     if isinstance(rounds, (int, float)) and rounds >= 7:
         score += 2
-    if t.get("registrationUrl") or t.get("websiteUrl"):
-        score += 1
     return score
+
+
+def _rank_notable(pool: list[dict]) -> list[dict]:
+    """Top MAX_TOURNAMENTS_PER_AGGREGATE by notability, at most
+    MAX_PER_COUNTRY per country unless nothing else is left."""
+    ranked = sorted(pool, key=lambda t: (_notability_score(t), t.get("playersRegistered") or 0), reverse=True)
+    picked, per_country, overflow = [], {}, []
+    for t in ranked:
+        country = t.get("countryCode")
+        if per_country.get(country, 0) < MAX_PER_COUNTRY:
+            picked.append(t)
+            per_country[country] = per_country.get(country, 0) + 1
+        else:
+            overflow.append(t)
+        if len(picked) == MAX_TOURNAMENTS_PER_AGGREGATE:
+            return picked
+    return (picked + overflow)[:MAX_TOURNAMENTS_PER_AGGREGATE]
 
 
 # Publishing schedule within the month, per user decision: "biggest tournaments"
@@ -227,10 +270,9 @@ def in_range(t: dict, start: date, end: date) -> bool:
 
 
 def _build_biggest(code: str, today: date) -> dict | None:
-    """'Biggest tournaments' aggregate: last month's concluded tournaments in
-    this continent, ranked by playersRegistered (unreliable/missing for some
-    countries, e.g. most US entries -- those just won't rank, which is an
-    honest reflection of the data)."""
+    """Look-back aggregate: last month's most notable concluded tournaments
+    in this continent (see _notability_score). The kind keeps its original
+    "calendar-biggest" name so dedupe keys and frontmatter stay stable."""
     archive_resp = requests.get(CALENDAR_ARCHIVE_URL, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
     archive_resp.raise_for_status()
     concluded = [t for t in archive_resp.json() if t.get("status") == "concluded"]
@@ -243,13 +285,9 @@ def _build_biggest(code: str, today: date) -> dict | None:
         t for t in concluded
         if continent_code_for(t.get("countryCode")) == code and in_range(t, last_month_start, last_month_end)
     ]
-    ranked = sorted(
-        (t for t in pool if isinstance(t.get("playersRegistered"), (int, float)) and t["playersRegistered"] > 0),
-        key=lambda t: t["playersRegistered"],
-        reverse=True,
-    )[:MAX_TOURNAMENTS_PER_AGGREGATE]
+    ranked = _rank_notable(pool)
     if not ranked:
-        return None  # nothing rankable this continent this month -- skip rather than publish an empty piece
+        return None  # nothing tracked this continent this month -- skip rather than publish an empty piece
 
     return {
         "kind": "calendar-biggest",
@@ -257,10 +295,10 @@ def _build_biggest(code: str, today: date) -> dict | None:
         "sourceTier": "own-data",
         "sourceUrl": continent_url(code),
         "dedupeKey": f"calendar-biggest:{code}:{last_month_start.isoformat()}",
-        "title": f"Biggest {CONTINENT_NAMES[code]} tournaments of {month_label}",
+        "title": f"Most notable {CONTINENT_NAMES[code]} tournaments of {month_label}",
         "summary": (
-            f"{len(pool)} tracked tournaments in {CONTINENT_NAMES[code]} during {month_label}, "
-            f"{len(ranked)} with a known player count, ranked by players registered."
+            f"{len(pool)} tracked tournaments in {CONTINENT_NAMES[code]} during {month_label}; "
+            f"the {len(ranked)} most notable, ranked by format, length, event type and field size."
         ),
         "publishedAt": None,
         "continentCode": code,
@@ -273,9 +311,8 @@ def _build_biggest(code: str, today: date) -> dict | None:
 
 def _build_comingup(code: str, today: date) -> dict | None:
     """'What's coming up' aggregate: next month's scheduled tournaments in this
-    continent. Ranked by playersRegistered where available, falling back to a
-    notability heuristic for countries without reliable player counts (e.g.
-    North America) so those aren't just left empty."""
+    continent, ranked by notability (see _notability_score), which works the
+    same for countries with and without reported player counts."""
     upcoming_resp = requests.get(CALENDAR_DATA_URL, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
     upcoming_resp.raise_for_status()
     upcoming = upcoming_resp.json()
@@ -292,27 +329,7 @@ def _build_comingup(code: str, today: date) -> dict | None:
         return None
 
     with_players = [t for t in pool if isinstance(t.get("playersRegistered"), (int, float)) and t["playersRegistered"] > 0]
-    without_players = [t for t in pool if t not in with_players]
-    with_players.sort(key=lambda t: t["playersRegistered"], reverse=True)
-    without_players.sort(key=_notability_score, reverse=True)
-
-    # Some countries (notably the US, and Australia in Oceania) rarely report
-    # playersRegistered at all, so a plain "biggest counts first" merge can let
-    # numerous smaller *counted* entries from other countries in the same
-    # continent fill every slot before any uncounted-but-notable tournament is
-    # ever considered -- silently erasing those countries from "coming up"
-    # pieces regardless of how notable their events are. Reserve a floor of
-    # slots for the uncounted pool so that can't happen, then fill the rest
-    # by count.
-    uncounted_floor = min(len(without_players), MIN_UNCOUNTED_SLOTS)
-    counted_slots = MAX_TOURNAMENTS_PER_AGGREGATE - uncounted_floor
-    highlights = with_players[:counted_slots] + without_players[:uncounted_floor]
-    # Backfill any leftover capacity (e.g. too few counted entries to need
-    # the full budget) from whichever pool still has more to offer.
-    remaining = MAX_TOURNAMENTS_PER_AGGREGATE - len(highlights)
-    if remaining > 0:
-        leftover = with_players[counted_slots:] + without_players[uncounted_floor:]
-        highlights += leftover[:remaining]
+    highlights = _rank_notable(pool)
 
     return {
         "kind": "calendar-comingup",

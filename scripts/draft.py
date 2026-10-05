@@ -101,27 +101,32 @@ def aggregate_data_gap_note(continent_code: str) -> str:
 
 AGGREGATE_INSTRUCTIONS = {
     "calendar-biggest": (
-        "Write an original retrospective piece ranking the biggest tournaments "
+        "Write an original retrospective piece on the most notable tournaments "
         "in this continent last month, grounded entirely in the tournament data "
-        "provided (a JSON list, already sorted by players registered, largest "
-        "first). This is original reporting, not commentary on someone else's "
-        "article. Cover the top entries by name, player count, location, and "
-        "anything else notable (format, rating requirement) given in the data "
-        "-- do not invent details not present in the data. Every tournament you "
+        "provided (a JSON list, already sorted by notability: classical and "
+        "multi-day events, opens, championships and invitationals rank above "
+        "one-day rapids and school or rating-capped sections, with field size "
+        "as one factor among several). Lead with the most notable events, not "
+        "simply the largest field, and give the reader a sense of what each "
+        "event was (format, length, place). Mention player counts where the "
+        "data has them, but only call an event the biggest or largest field "
+        "when its playersRegistered figure is the highest in the list. This "
+        "is original reporting, not commentary on someone else's article. Do "
+        "not invent details not present in the data. Every tournament you "
         "mention by name MUST be a Markdown link using its \"url\" field from "
         "the data -- link the tournament's own name text, not generic text like "
-        "\"here\". Whether to caveat the gap between the total tracked count "
-        "and the number actually ranked is entirely covered by the data-gap "
-        "guidance below -- don't add your own version of that caveat on top of "
-        "it, and don't reach for one at all on a continent that guidance says "
-        "not to."
+        "\"here\". Whether to caveat missing player counts is entirely covered "
+        "by the data-gap guidance below -- don't add your own version of that "
+        "caveat on top of it, and don't reach for one at all on a continent "
+        "that guidance says not to."
     ),
     "calendar-comingup": (
         "Write an original preview piece highlighting notable tournaments "
         "coming up next month in this continent, grounded entirely in the "
-        "tournament data provided (a JSON list of highlights, some ranked by "
-        "player count, others -- where player counts aren't reliably reported "
-        "-- selected as notable by name/format/rating requirement). This is "
+        "tournament data provided (a JSON list already sorted by notability: "
+        "classical and multi-day events, opens, championships and invitationals "
+        "rank above one-day rapids and school or rating-capped sections, with "
+        "field size as one factor). Lead with the most notable events. This is "
         "original reporting, not commentary on someone else's article. Cover a "
         "handful of the most interesting entries by name, date, location, and "
         "any other notable detail given in the data -- do not invent details "
@@ -700,6 +705,13 @@ def aggregate_facts(tournaments: list) -> str:
         f"- Entries in this list: {len(tournaments)}",
         "- By format: " + ", ".join(f"{fmt} {n}" for fmt, n in formats.most_common()),
     ]
+    counted = [t for t in tournaments if isinstance(t.get("playersRegistered"), (int, float)) and t["playersRegistered"] > 0]
+    if counted:
+        top = max(counted, key=lambda t: t["playersRegistered"])
+        lines.append(
+            f"- Largest field with a known player count: {top.get('name')} ({top['playersRegistered']}). "
+            "The list is ordered by notability, not size, so only this event may be called the biggest."
+        )
     if repeated:
         lines.append(
             "- These names appear more than once as separate chess-results tournaments "

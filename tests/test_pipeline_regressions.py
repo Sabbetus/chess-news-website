@@ -192,3 +192,24 @@ def test_verifier_round_trips_headline_and_body():
 def test_rating_list_prompt_asks_for_rankings_links():
     prompt = draft.build_user_prompt({"kind": "news", "title": "FIDE Ratings - October 2026", "sourceUrl": "x", "sourceName": "ChessBase", "summary": "s"})
     assert "/rankings/" in prompt and "/rankings/women/" in prompt
+
+
+def test_calendar_ranking_prefers_notable_over_big():
+    """2026-10-05: calendar pieces rank by notability, not field size, and no
+    country fills the list."""
+    import ingest
+
+    open_ = {"name": "Toronto Open", "countryCode": "CA", "timeControl": "Classical",
+             "startDate": "2026-09-05", "endDate": "2026-09-07", "playersRegistered": 40}
+    school = {"name": "Encuentro Escolar Rapid", "countryCode": "DO", "timeControl": "Rapid",
+              "startDate": "2026-09-29", "endDate": "2026-09-29", "playersRegistered": 160}
+    us = {"name": "61st American Open Chess Championship", "countryCode": "US",
+          "timeControl": "Classical", "startDate": "2026-11-25", "endDate": "2026-11-30"}
+    capped = {"name": "Labour Day Open 2026 Under Section", "countryCode": "CA",
+              "timeControl": "Classical", "startDate": "2026-09-05", "endDate": "2026-09-07"}
+    assert ingest._notability_score(open_) > ingest._notability_score(school)
+    assert ingest._notability_score(us) > ingest._notability_score(school)
+    assert ingest._notability_score(capped) < ingest._notability_score(open_)
+    many_mx = [dict(open_, name=f"Copa {i}", countryCode="MX") for i in range(15)]
+    ranked = ingest._rank_notable(many_mx + [school])
+    assert sum(t["countryCode"] == "MX" for t in ranked[: ingest.MAX_PER_COUNTRY + 1]) == ingest.MAX_PER_COUNTRY
