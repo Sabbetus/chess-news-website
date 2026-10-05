@@ -42,9 +42,11 @@ CHESSBASE_RSS = "https://en.chessbase.com/feed"
 # every old article as fresh news.
 CHESSBASE_MAX_AGE_DAYS = 4
 CALENDAR_DATA_URL = "https://chesstournamentcalendar.com/data/tournaments.json"
-# archive.json carries concluded tournaments (tournaments.json is upcoming-only),
-# needed for the "biggest tournaments of last month" retrospective aggregate.
-CALENDAR_ARCHIVE_URL = "https://chesstournamentcalendar.com/data/archive.json"
+# archive-all.json carries concluded tournaments from every source
+# (tournaments.json is upcoming-only), for the look-back aggregate. The older
+# archive.json only kept chess-results events, so FIDE-listed US and
+# Australian tournaments vanished once finished (switched 2026-10-05).
+CALENDAR_ARCHIVE_URL = "https://chesstournamentcalendar.com/data/archive-all.json"
 
 REQUEST_TIMEOUT = 20
 USER_AGENT = "chess-herald-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
@@ -154,7 +156,7 @@ NOTABLE_NAME_KEYWORDS = [
 # bigger event, and school/youth/club-night events.
 MINOR_NAME_PATTERNS = re.compile(
     r"\bu\s?-?\d{2,4}\b|\bunder\s?(?:\d{2,4}|section)\b|sub[\s-]?\d{1,2}\b|\b\d{3,4}\s?-\s?\d{3,4}\b"
-    r"|scholastic|school|escolar|colegio|kids|junior|juvenil|infantil|primary|secundaria"
+    r"|\breserves?\b|\bminor\b|\bamateur|\bnovice|scholastic|school|escolar|colegio|kids|junior|juvenil|infantil|primary|secundaria"
     r"|quads?\b|action\b|club night|weekly|ladder|simul",
     re.IGNORECASE,
 )
@@ -164,7 +166,7 @@ MAX_TOURNAMENTS_PER_AGGREGATE = 20
 # and club events.
 MAX_PER_COUNTRY = 6
 
-# Fields actually useful for drafting -- archive.json entries carry bulky
+# Fields actually useful for drafting -- archive-all.json entries carry bulky
 # extras (playerHistory, consecutiveMisses, lastSeen, ...) that only add
 # prompt noise/cost with no drafting value.
 TOURNAMENT_FIELDS_FOR_PROMPT = [
