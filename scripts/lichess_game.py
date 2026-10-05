@@ -257,6 +257,12 @@ def find_round_via_known_tournament(event: str, player1: str, player2: str) -> s
     if not tour_ids:
         return None
 
+    # Two passes: the most recent rounds of every bracket first (fast, and
+    # where news reports usually are), then the older rounds. A recap or
+    # column can single out a game from round 1 or 3 -- caught live
+    # 2026-10-05: Speelman's Samarkand miniatures column (Rapport-Demchenko,
+    # round 3) got no embed because only the last 3 rounds were ever checked.
+    rounds_by_tour: dict[str, list[dict]] = {}
     for tour_id in tour_ids:
         try:
             response = requests.get(
@@ -269,17 +275,20 @@ def find_round_via_known_tournament(event: str, player1: str, player2: str) -> s
         except (requests.RequestException, ValueError) as exc:
             print(f"    lichess lookup: known-tournament fetch failed for {tour_id!r}: {exc}", file=sys.stderr)
             continue
+        rounds_by_tour[tour_id] = [r for r in reversed(rounds) if r.get("finished")]
 
-        finished = [r for r in reversed(rounds) if r.get("finished")][:_RECENT_ROUNDS_TO_CHECK]
-        for round_ in finished:
-            game_url = find_game_in_round(round_["id"], player1, player2)
-            if game_url:
-                print(
-                    f"    lichess lookup: known-tournament fast path matched "
-                    f"{round_['name']!r} in {tour_id!r} for player1={player1!r} player2={player2!r}",
-                    file=sys.stderr,
-                )
-                return game_url
+    passes = (slice(0, _RECENT_ROUNDS_TO_CHECK), slice(_RECENT_ROUNDS_TO_CHECK, None))
+    for window in passes:
+        for tour_id, finished in rounds_by_tour.items():
+            for round_ in finished[window]:
+                game_url = find_game_in_round(round_["id"], player1, player2)
+                if game_url:
+                    print(
+                        f"    lichess lookup: known-tournament fast path matched "
+                        f"{round_['name']!r} in {tour_id!r} for player1={player1!r} player2={player2!r}",
+                        file=sys.stderr,
+                    )
+                    return game_url
     return None
 
 

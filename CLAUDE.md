@@ -42,7 +42,17 @@ Only serious problems reset the streak (user's rule, 2026-10-02):
 
 Update this after every batch review.
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-05: PR #57 clean (streak 0 -> 1). Every claim and link in all
+  five pieces checked against the three ChessBase sources and the calendar
+  data; no resets. Minor fixes only: Speelman piece invented "the name is
+  borrowed from Bruegel" (cut to the column's own image caption) and got
+  the Kovalenko-Mwadzura 15.Nb1! embed; Ucok piece now notes the author
+  helps run the programme, and drops a "crossed 2700 at 14" the source
+  itself contradicts; Sahel headline reworded ("Sousse 1967 Next" read as
+  a date). Pipeline: the Olympiad game lookup only checked each bracket's
+  last 3 rounds, so round-1/3 games were never found; it now checks the
+  rest in a second pass.
 - 2026-10-04: PR #55 reset (streak stays at 0). Reset: ChessBase's full
   Judit Polgar festival report was drafted three days after we had
   published the same festival's simul result from Chess.com (dropped).
