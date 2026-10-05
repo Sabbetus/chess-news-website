@@ -6,16 +6,18 @@ sourceUrl: "https://en.chessbase.com/post/speelman-agony-244"
 lens: "people"
 continent: "asia"
 selectionScore: 84
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Jon Speelman combed the Samarkand Olympiad for decisive games of 25 moves or fewer and found 40, about half from the first-round \"massacre of the innocents.\" His ChessBase column and a birthday video are the result."
 metaDescription: "Jon Speelman's ChessBase column picks the best miniatures from the Samarkand Olympiad: 40 short decisive games, about half from round one, plus a video."
 image:
   src: "./_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp"
   credit: "Bin im Garten, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_board_with_chess_set_in_opening_position_2012_PD_04.jpg"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-1/DfnuMSan/7YF7pT83"
 ---
 
-Every Olympiad produces a few thousand games, and the ones that get remembered are usually the long, grinding fights. In his latest Agony column for ChessBase, Jon Speelman went the other way. He [searched the Samarkand Olympiad for miniatures](https://en.chessbase.com/post/speelman-agony-244), meaning decisive games of 25 moves or fewer.
+Every Olympiad produces a few thousand games, and the ones that get remembered are usually the long, grinding fights. In his latest Agony column for ChessBase, Jon Speelman went the other way. He [searched the Samarkand Olympiad for miniatures](https://en.chessbase.com/post/speelman-agony-244), meaning decisive games of 25 moves or fewer. The column leads with Igor Kovalenko's [15.Nb1!](#game-embed), which trapped his opponent's queen in round one.
 
 The scale of the event explains why the hunt needed rules. Samarkand was the largest Olympiad ever, with over 200 teams in the open section and only a few dozen fewer in the parallel Women's Olympiad. That meant about 800 games a day and getting on for 9,000 overall.
 
@@ -25,7 +27,7 @@ Speelman set two filters. He looked only at decisive games in the open section, 
 
 About half of those came from round one. Speelman calls it the "massacre of the innocents," since the first-round pairings put the top half of the field against the bottom half. Favourites with the white pieces and a big rating edge will sometimes close the game quickly, and an Olympiad this size had plenty of such pairings.
 
-The name is borrowed from Bruegel. Pieter Bruegel the Elder and his son Pieter Brueghel the Younger painted several oil-on-oak-panel versions of the scene around 1565 to 1567, setting the Biblical story in the Southern Netherlands during the run-up to the Dutch Revolt against Spanish rule. It is a grim label for a pairing system, and a characteristically literate Speelman touch.
+The column illustrates the phrase with "The Massacre of the Innocents", the Biblical scene as painted by Pieter Bruegel the Elder and his son around 1565 to 1567.
 
 **The selection**
 

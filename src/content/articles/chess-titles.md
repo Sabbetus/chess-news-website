@@ -6,7 +6,7 @@ sourceUrl: "https://en.wikipedia.org/wiki/FIDE_titles"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "What GM, IM, FM and the women's titles mean, the rating each requires, and how grandmaster norms work."
 socialCopy: "There are about 2,000 grandmasters in the world. Getting there takes a 2500 rating and three norms. Here's what the chess titles mean."
 image:

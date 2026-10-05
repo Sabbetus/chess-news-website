@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"
 continent: "north-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "A 165-player rapid in Toronto was the biggest tournament we tracked in North America in September 2026. Mexico supplied most of the rest of the top 20, with Guatemala, Panama, Costa Rica and the Dominican Republic also on the list."
 metaDescription: "A 165-player rapid at Toronto Chess Centre was North America's largest September 2026 tournament in our data, ahead of Mexico's Copa Independencia events."
 aggregateKind: "calendar-biggest"

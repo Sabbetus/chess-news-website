@@ -1,12 +1,12 @@
 ---
-title: "Monastir Hosts Africa's Rare Open, With Sousse 1967 Next"
+title: "Titled Field Heads to Monastir as the Sahel Festival Eyes Sousse 2027"
 publishDate: "2026-10-05"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/sahel-chess-festival-2026-preview-2"
 lens: "historical-parallel"
 continent: "africa"
 selectionScore: 139
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "After the Olympiad, a Lithuanian board one, a Russian GM and a 12-year-old from India head to Tunisia's Sahel Chess Festival, Oct 24-Nov 1. The 2027 edition moves to Sousse, 60 years after the Interzonal."
 metaDescription: "The Sahel Chess Festival runs Oct 24-Nov 1 in Monastir, Tunisia, with Stremavicius, Ponkratov and Marin confirmed. Next year it moves to Sousse."
 image:

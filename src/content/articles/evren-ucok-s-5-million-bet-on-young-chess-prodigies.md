@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/evren-ucok-syoung-minds"
 lens: "money-angle"
 continent: "europe"
 selectionScore: 112
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Entrepreneur Evren Ucok says he has spent over $5 million on chess in three years. His prodigies now include a 2700+ 15-year-old, the youngest British Women's Champion and a 10-year-old past 2200."
 metaDescription: "Entrepreneur Evren Ucok says he has put over $5 million into chess in three years, backing prodigies such as Yagiz Kaan Erdogmus and Bodhana Sivanandan."
 image:
@@ -15,7 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AYagiz_Kaan_Erdogmus_GM.jpg"
 ---
 
-Chess patrons usually fund a tournament or a federation. Turkish entrepreneur Evren Ucok has taken a different route. According to a ChessBase feature by FM Selim Gurcan, [he has spent over $5 million on chess causes in three years](https://en.chessbase.com/post/evren-ucok-syoung-minds), and most of it goes into a handful of very young players.
+Chess patrons usually fund a tournament or a federation. Turkish entrepreneur Evren Ucok has taken a different route. According to a ChessBase feature by FM Selim Gurcan, [he has spent over $5 million on chess causes in three years](https://en.chessbase.com/post/evren-ucok-syoung-minds), and most of it goes into a handful of very young players. Gurcan is not a neutral observer: a friend of Ucok's since their teens, he helps run the programme.
 
 Ucok's stated motive is that chess counters the attention crisis among children raised on 15-second reels. He estimates that 50 to 100 hours of competitive chess improves concentration, humility and logical reasoning, and that the effect is permanent. That is his own estimate, not a research finding.
 
@@ -29,7 +29,7 @@ Technology is part of it too: strong engines and a professional platform meant t
 
 It began in August 2023 with GM Yagiz Kaan Erdogmus, a Turkish prodigy close to quitting for lack of support. Ucok committed to at least five years of backing. With GM Mert Erdogdu coaching, Yagiz went from zero GM norms to three in three consecutive tournaments, and the title came in April 2024.
 
-Shakhriyar Mamedyarov later took over as coach, and three "Clash of Generations" matches against super-GMs followed. Yagiz scored 12.5 from 18 and crossed 2700 at 14, the youngest ever. He is now 15 and the world's top junior.
+Shakhriyar Mamedyarov later took over as coach, and three "Clash of Generations" matches against super-GMs followed. Yagiz scored 12.5 from 18 and became the youngest player ever rated above 2700. He is now 15 and the world's top junior.
 
 At the Olympiad he played board one for Turkiye, scoring 8/10 (six wins, four draws) with a 2839 performance and a board-one silver. His live rating rose by 15 to 2731, No. 17 globally. Readers can check where that sits in our [FIDE Top 100](/rankings/).
 
