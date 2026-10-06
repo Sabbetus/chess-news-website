@@ -166,7 +166,8 @@ const data = JSON.stringify(positions);
       root.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    render(positions.length - 1);
+    // Start from the initial position, like a game being replayed.
+    render(0);
   }
 
   document.querySelectorAll<HTMLElement>('.gv').forEach(setup);

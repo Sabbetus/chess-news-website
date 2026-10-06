@@ -1674,16 +1674,17 @@ def draft_one(
     if not is_aggregate:
         body_markdown = attach_standings_table(item, body_markdown)
 
-    # Our own board (GameViewer) whenever we can get the game's PGN: from
-    # the Lichess broadcast game found above, or from a PGN file the source
-    # page itself loads (ChessBase). Quoted moves then link to their
-    # positions; quoted moves that aren't in the game are listed in the PR.
-    if not is_aggregate:
+    # Our own board (GameViewer) for games that aren't on Lichess, from a
+    # PGN file the source page itself loads (ChessBase). A Lichess game
+    # keeps the Lichess embed (user's call, 2026-10-06: it lets readers
+    # switch to other games from the same event). Quoted moves link to
+    # their positions; quoted moves that aren't in the game go in the PR.
+    if not is_aggregate and not embed:
         try:
             players = game_lookup or {}
             pgn = find_game_pgn(
                 item.get("sourceUrl", ""),
-                (embed or {}).get("url", ""),
+                "",
                 body_markdown,
                 players.get("player1", ""),
                 players.get("player2", ""),
@@ -1694,7 +1695,7 @@ def draft_one(
         if pgn:
             linked_body, unmatched = link_moves(body_markdown, pgn)
             linked = linked_body.count("](#ply-")
-            if linked or embed:
+            if linked:
                 GAMES_DIR.mkdir(parents=True, exist_ok=True)
                 (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
                 fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')

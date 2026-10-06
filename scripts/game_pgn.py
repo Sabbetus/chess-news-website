@@ -1,11 +1,11 @@
 """Find the PGN of the game an article is about, for our own GameViewer.
 
-Two sources, tried in this order by draft.py:
+Used only when the game is NOT on Lichess -- a Lichess game keeps the
+Lichess embed, which lets readers switch to other games from the same
+event (user's call, 2026-10-06). pgn_from_lichess_embed is kept for other
+uses but draft.py doesn't call it for the board.
 
-- The Lichess broadcast game already found for the article (gameEmbed):
-  every broadcast round is a Lichess study, so the game's PGN is one API
-  call away.
-- The source page itself: ChessBase articles load their board from a PGN
+Source: the page itself. ChessBase articles load their board from a PGN
   file named in a data-url attribute. One file can hold several games, so
   a game is only used when it can be picked unambiguously (the players the
   draft named, or the only game whose two players both appear in the body).
