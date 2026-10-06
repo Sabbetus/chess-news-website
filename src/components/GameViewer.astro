@@ -201,7 +201,9 @@ const data = JSON.stringify(positions);
   .gv-sq.dark { background: #b58863; }
   .gv-sq.last.light { background: #cdd26a; }
   .gv-sq.last.dark { background: #aaa23a; }
-  .gv-sq img {
+  /* :global -- the pieces are added by the script, so Astro's scoped
+     class never reaches them. */
+  .gv-sq :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
