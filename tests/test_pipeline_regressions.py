@@ -213,3 +213,19 @@ def test_calendar_ranking_prefers_notable_over_big():
     many_mx = [dict(open_, name=f"Copa {i}", countryCode="MX") for i in range(15)]
     ranked = ingest._rank_notable(many_mx + [school])
     assert sum(t["countryCode"] == "MX" for t in ranked[: ingest.MAX_PER_COUNTRY + 1]) == ingest.MAX_PER_COUNTRY
+
+
+def test_game_links_only_link_mainline_moves():
+    """2026-10-06: quoted moves link to the board only when they match the
+    game's main line at that number and side."""
+    import game_links
+
+    pgn = '[White "A"]\n[Black "B"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1-0\n'
+    body = "After 2.Nf3 Nc6 and 3.Bb5! Black chose 3...a6, not 3...Nf6. A typo: 2...Nf3."
+    out, unmatched = game_links.link_moves(body, pgn)
+    assert "[2.Nf3](#ply-3)" in out
+    assert "[3.Bb5!](#ply-5)" in out
+    assert "[3...a6](#ply-6)" in out
+    assert unmatched == ["3...Nf6", "2...Nf3"]
+    again, _ = game_links.link_moves(out, pgn)
+    assert again == out  # already-linked moves are left alone

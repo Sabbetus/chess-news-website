@@ -1,0 +1,302 @@
+---
+// Our own game viewer, styled after Lichess's board (brown squares,
+// cburnett pieces) so it sits comfortably next to the Lichess broadcast
+// embeds used elsewhere. Every position is computed at build time with
+// chess.js; the browser only swaps pieces between precomputed positions.
+//
+// In-body links like [23.h4!](#ply-45) jump the board to that position
+// (ply = half-moves played: 1.e4 is ply 1, 1...e5 is ply 2). See
+// plyFor() below, which the article page uses to turn quoted moves into
+// those links.
+import { Chess } from 'chess.js';
+
+interface Props {
+  pgn: string;
+}
+const { pgn } = Astro.props;
+
+const chess = new Chess();
+chess.loadPgn(pgn);
+const headers = chess.getHeaders();
+const history = chess.history({ verbose: true });
+
+const replay = new Chess();
+const positions: { fen: string; from?: string; to?: string; san?: string }[] = [{ fen: replay.fen() }];
+for (const move of history) {
+  replay.move(move.san);
+  positions.push({ fen: replay.fen(), from: move.from, to: move.to, san: move.san });
+}
+
+const name = (raw = '') => {
+  const [last, first] = raw.split(',').map((s) => s.trim());
+  return first ? `${first} ${last}` : last;
+};
+const white = name(headers.White);
+const black = name(headers.Black);
+const year = (headers.Date || '').slice(0, 4);
+const event = [headers.Site, year].filter(Boolean).join(' ');
+const result = headers.Result && headers.Result !== '*' ? headers.Result : '';
+
+// Move list rows: [number, white ply, black ply]
+const rows: [number, number, number | null][] = [];
+for (let ply = 1; ply < positions.length; ply += 2) {
+  rows.push([(ply + 1) / 2, ply, ply + 1 < positions.length ? ply + 1 : null]);
+}
+
+const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+const data = JSON.stringify(positions);
+---
+
+<figure class="gv" id="game-board" data-positions={data} tabindex="0" aria-label={`Game viewer: ${white} vs ${black}`}>
+  <div class="gv-main">
+    <div class="gv-board-wrap">
+      <div class="gv-board" role="img" aria-live="polite">
+        {
+          Array.from({ length: 64 }, (_, i) => {
+            const rank = 8 - Math.floor(i / 8);
+            const file = files[i % 8];
+            const dark = (i + Math.floor(i / 8)) % 2 === 1;
+            return (
+              <div class={`gv-sq ${dark ? 'dark' : 'light'}`} data-sq={`${file}${rank}`}>
+                {i % 8 === 0 && <span class="gv-coord gv-rank">{rank}</span>}
+                {i >= 56 && <span class="gv-coord gv-file">{file}</span>}
+              </div>
+            );
+          })
+        }
+      </div>
+      <div class="gv-controls">
+        <button type="button" data-go="first" aria-label="First move">&#x23EE;</button>
+        <button type="button" data-go="prev" aria-label="Previous move">&#x25C0;</button>
+        <button type="button" data-go="next" aria-label="Next move">&#x25B6;</button>
+        <button type="button" data-go="last" aria-label="Last move">&#x23ED;</button>
+      </div>
+    </div>
+    <div class="gv-side">
+      <div class="gv-players">
+        <div><span class="gv-dot white"></span>{white}</div>
+        <div><span class="gv-dot black"></span>{black}</div>
+        <div class="gv-event">{event}{result && <span class="gv-result">{result}</span>}</div>
+      </div>
+      <ol class="gv-moves">
+        {
+          rows.map(([n, w, b]) => (
+            <li>
+              <span class="gv-num">{n}.</span>
+              <button type="button" class="gv-move" data-ply={w}>{positions[w].san}</button>
+              {b !== null && <button type="button" class="gv-move" data-ply={b}>{positions[b].san}</button>}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+  <figcaption class="gv-credit">Pieces: <a href="https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces" target="_blank" rel="noopener">Cburnett</a>, CC BY-SA 3.0, via Wikimedia Commons</figcaption>
+</figure>
+
+<script>
+  const PIECES: Record<string, string> = {
+    K: 'wK', Q: 'wQ', R: 'wR', B: 'wB', N: 'wN', P: 'wP',
+    k: 'bK', q: 'bQ', r: 'bR', b: 'bB', n: 'bN', p: 'bP',
+  };
+
+  function setup(root: HTMLElement) {
+    const positions: { fen: string; from?: string; to?: string }[] = JSON.parse(root.dataset.positions || '[]');
+    const squares = new Map<string, HTMLElement>();
+    root.querySelectorAll<HTMLElement>('.gv-sq').forEach((el) => squares.set(el.dataset.sq!, el));
+    const moveButtons = root.querySelectorAll<HTMLButtonElement>('.gv-move');
+    const list = root.querySelector<HTMLElement>('.gv-moves')!;
+    let current = 0;
+
+    function render(ply: number) {
+      current = Math.max(0, Math.min(ply, positions.length - 1));
+      const { fen, from, to } = positions[current];
+      const placement = fen.split(' ')[0].split('/');
+      squares.forEach((el) => {
+        el.classList.remove('last');
+        el.querySelector('img')?.remove();
+      });
+      placement.forEach((row, r) => {
+        let f = 0;
+        for (const ch of row) {
+          if (/\d/.test(ch)) { f += Number(ch); continue; }
+          const sq = 'abcdefgh'[f] + (8 - r);
+          const img = document.createElement('img');
+          img.src = `/pieces/cburnett/${PIECES[ch]}.svg`;
+          img.alt = '';
+          img.draggable = false;
+          squares.get(sq)!.appendChild(img);
+          f += 1;
+        }
+      });
+      if (from && to) {
+        squares.get(from)?.classList.add('last');
+        squares.get(to)?.classList.add('last');
+      }
+      moveButtons.forEach((b) => {
+        const active = Number(b.dataset.ply) === current;
+        b.classList.toggle('active', active);
+        if (active) {
+          // Scroll inside the move list only, never the page.
+          list.scrollTop = b.offsetTop - list.clientHeight / 2;
+        }
+      });
+    }
+
+    root.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement).closest<HTMLElement>('[data-ply],[data-go]');
+      if (!t) return;
+      if (t.dataset.ply) return render(Number(t.dataset.ply));
+      const go = t.dataset.go;
+      render(go === 'first' ? 0 : go === 'last' ? positions.length - 1 : go === 'prev' ? current - 1 : current + 1);
+    });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { render(current - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { render(current + 1); e.preventDefault(); }
+    });
+
+    // In-article move links: href="#ply-45".
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#ply-"]');
+      if (!a) return;
+      e.preventDefault();
+      render(Number(a.getAttribute('href')!.slice(5)));
+      root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    render(positions.length - 1);
+  }
+
+  document.querySelectorAll<HTMLElement>('.gv').forEach(setup);
+</script>
+
+<style>
+  .gv {
+    margin: 1.6em auto;
+    max-width: var(--content-width, 680px);
+    scroll-margin-top: 20px;
+    outline: none;
+  }
+  .gv-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 0;
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .gv-board {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    aspect-ratio: 1;
+    user-select: none;
+  }
+  /* Lichess "brown" board. */
+  .gv-sq {
+    position: relative;
+  }
+  .gv-sq.light { background: #f0d9b5; }
+  .gv-sq.dark { background: #b58863; }
+  .gv-sq.last.light { background: #cdd26a; }
+  .gv-sq.last.dark { background: #aaa23a; }
+  .gv-sq img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .gv-coord {
+    position: absolute;
+    font: 600 10px/1 system-ui, sans-serif;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gv-sq.light .gv-coord { color: #b58863; }
+  .gv-sq.dark .gv-coord { color: #f0d9b5; }
+  .gv-rank { top: 2px; left: 3px; }
+  .gv-file { bottom: 2px; right: 3px; }
+  .gv-controls {
+    display: flex;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .gv-controls button {
+    flex: 1;
+    padding: 8px 0;
+    background: none;
+    border: 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .gv-controls button:hover { background: var(--rule-soft); color: var(--ink); }
+  /* Height 0 + min-height 100%: the side panel fills the row the board
+     sets, but never makes it taller -- the move list scrolls instead. */
+  .gv-side {
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    min-height: 100%;
+    border-left: 1px solid var(--rule-soft);
+  }
+  .gv-players {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule-soft);
+    font: 13px/1.6 system-ui, sans-serif;
+    color: var(--ink);
+  }
+  .gv-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    border: 1px solid #888;
+  }
+  .gv-dot.white { background: #fff; }
+  .gv-dot.black { background: #222; }
+  .gv-event { color: var(--ink-soft); font-size: 12px; }
+  .gv-result { margin-left: 8px; font-weight: 600; color: var(--ink); }
+  .gv-moves {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    font: 13px/1.2 system-ui, sans-serif;
+  }
+  .gv-moves li {
+    display: grid;
+    grid-template-columns: 34px 1fr 1fr;
+    align-items: center;
+  }
+  .gv-num {
+    color: var(--ink-soft);
+    text-align: right;
+    padding-right: 8px;
+  }
+  .gv-move {
+    text-align: left;
+    padding: 4px 6px;
+    background: none;
+    border: 0;
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+  .gv-move:hover { background: var(--rule-soft); }
+  .gv-move.active { background: #bfcfdd; color: #111; font-weight: 600; }
+  .gv-credit a { color: inherit; }
+  .gv-credit {
+    margin-top: 6px;
+    font: 11px 'IBM Plex Mono', monospace;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px) {
+    .gv-main { grid-template-columns: 1fr; }
+    .gv-side { border-left: 0; border-top: 1px solid var(--rule-soft); height: auto; min-height: 0; }
+    .gv-moves { max-height: 180px; }
+  }
+</style>

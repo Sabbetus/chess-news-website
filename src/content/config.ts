@@ -77,6 +77,11 @@ const articles = defineCollection({
     // scripts/lichess_game.py) -- absent on every article that isn't
     // built around one specific game (the vast majority), and absent even
     // on ones that are when no confident match was found on Lichess.
+    // A PGN file in src/content/articles/_games/ (moves and headers only,
+    // no source annotations), shown in our own GameViewer. Takes the place
+    // of gameEmbed when we have the game ourselves; in-body links to
+    // #ply-<n> jump the board to that position.
+    gamePgn: z.string().optional(),
     gameEmbed: z
       .object({
         url: z.string().url(),

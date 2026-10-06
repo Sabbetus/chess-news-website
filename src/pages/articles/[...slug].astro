@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
 import LichessGame from '../../components/LichessGame.astro';
+import GameViewer from '../../components/GameViewer.astro';
 import TweetQuotes from '../../components/TweetQuotes.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
@@ -12,6 +13,13 @@ import { seoTitle } from '../../lib/seoTitle';
 import { CONTINENT_META } from '../../lib/continent';
 import { similarArticles } from '../../lib/similar';
 import { articleEntities } from '../../lib/hubs';
+
+// Our own PGN files for GameViewer, keyed by file name (see gamePgn in config.ts).
+const GAMES: Record<string, string> = Object.fromEntries(
+  Object.entries(import.meta.glob('../../content/articles/_games/*.pgn', { query: '?raw', import: 'default', eager: true })).map(
+    ([path, text]) => [path.split('/').pop()!, text as string]
+  )
+);
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
@@ -202,7 +210,11 @@ const jsonLd = [
       <Content />
     </div>
 
-    {article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />}
+    {article.data.gamePgn && GAMES[article.data.gamePgn] ? (
+      <GameViewer pgn={GAMES[article.data.gamePgn]} />
+    ) : (
+      article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />
+    )}
 
     {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
 
