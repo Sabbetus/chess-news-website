@@ -48,8 +48,15 @@ def link_moves(body: str, pgn: str) -> tuple[str, list[str]]:
         unmatched.append(m.group(0))
         return m.group(0)
 
-    # Leave frontmatter and existing links alone: only the body text after
-    # the closing "---" is rewritten, and link text is skipped by the regex.
+    # A move already linked to the old Lichess embed anchor
+    # ("[15.Nb1!](#game-embed)") becomes a plain move first, so it gets its
+    # own position link below.
+    def unwrap(m: re.Match) -> str:
+        return m.group(1) if MOVE_RE.fullmatch(m.group(1)) else m.group(0)
+
+    body = re.sub(r"\[([^\]]+)\]\(#game-embed\)", unwrap, body)
+
+    # Existing links are left alone: link text is skipped below.
     out_lines = []
     for line in body.split("\n"):
         # Skip text already inside [..](..) by splitting around links.

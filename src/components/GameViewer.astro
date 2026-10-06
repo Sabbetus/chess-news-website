@@ -34,7 +34,9 @@ const name = (raw = '') => {
 const white = name(headers.White);
 const black = name(headers.Black);
 const year = (headers.Date || '').slice(0, 4);
-const event = [headers.Site, year].filter(Boolean).join(' ');
+// Lichess broadcasts put a URL in Site; fall back to the event name then.
+const place = headers.Site && !/^https?:/.test(headers.Site) ? headers.Site : headers.Event;
+const event = [place, year].filter(Boolean).join(' ');
 const result = headers.Result && headers.Result !== '*' ? headers.Result : '';
 
 // Move list rows: [number, white ply, black ply]
@@ -47,7 +49,7 @@ const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const data = JSON.stringify(positions);
 ---
 
-<figure class="gv" id="game-board" data-positions={data} tabindex="0" aria-label={`Game viewer: ${white} vs ${black}`}>
+<figure class="gv" id="game-embed" data-positions={data} tabindex="0" aria-label={`Game viewer: ${white} vs ${black}`}>
   <div class="gv-main">
     <div class="gv-board-wrap">
       <div class="gv-board" role="img" aria-live="polite">

@@ -229,3 +229,25 @@ def test_game_links_only_link_mainline_moves():
     assert unmatched == ["3...Nf6", "2...Nf3"]
     again, _ = game_links.link_moves(out, pgn)
     assert again == out  # already-linked moves are left alone
+
+
+def test_game_pgn_picks_and_cleans_the_right_game():
+    """2026-10-06: a source PGN with several games is only used when the
+    game can be picked unambiguously; annotations never survive."""
+    import game_pgn
+
+    two = (
+        '[Event "Olympiad"]\n[White "Rapport, Richard"]\n[Black "Demchenko, Anton"]\n[Result "0-1"]\n\n'
+        "1. c4 {note} e5 (1... c5) 2. d3 $1 Nf6 0-1\n\n"
+        '[Event "Olympiad"]\n[White "Kovalenko, Igor"]\n[Black "Mwadzura, Roy"]\n[Result "1-0"]\n\n'
+        "1. c4 e6 2. g3?! Nf6 1-0\n"
+    )
+    games = game_pgn.split_games(two)
+    assert len(games) == 2
+    picked = game_pgn.pick_game(games, "", "Igor Kovalenko", "Roy Mwadzura")
+    assert "Kovalenko" in picked
+    assert game_pgn.pick_game(games, "Nothing about either game.") is None
+    assert game_pgn.pick_game(games, "Rapport beat... no, Demchenko won.") == games[0]
+    cleaned = game_pgn.clean_game(games[0])
+    assert cleaned.endswith("1. c4 e5 2. d3 Nf6 0-1\n")
+    assert "{" not in cleaned and "(" not in cleaned

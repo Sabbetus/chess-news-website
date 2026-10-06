@@ -36,6 +36,8 @@ from chess_results_standings import (
     standings_markdown_table,
 )
 from continents import CONTINENT_SLUGS
+from game_links import link_moves
+from game_pgn import find_game_pgn
 from images import fallback_image, localize_image, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
@@ -1672,6 +1674,39 @@ def draft_one(
     if not is_aggregate:
         body_markdown = attach_standings_table(item, body_markdown)
 
+    # Our own board (GameViewer) whenever we can get the game's PGN: from
+    # the Lichess broadcast game found above, or from a PGN file the source
+    # page itself loads (ChessBase). Quoted moves then link to their
+    # positions; quoted moves that aren't in the game are listed in the PR.
+    if not is_aggregate:
+        try:
+            players = game_lookup or {}
+            pgn = find_game_pgn(
+                item.get("sourceUrl", ""),
+                (embed or {}).get("url", ""),
+                body_markdown,
+                players.get("player1", ""),
+                players.get("player2", ""),
+            )
+        except Exception as exc:  # noqa: BLE001 -- never fail a draft over a board
+            print(f"  Game PGN lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            pgn = None
+        if pgn:
+            linked_body, unmatched = link_moves(body_markdown, pgn)
+            linked = linked_body.count("](#ply-")
+            if linked or embed:
+                GAMES_DIR.mkdir(parents=True, exist_ok=True)
+                (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
+                fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
+                body_markdown = linked_body
+                if unmatched:
+                    GAME_LINK_NOTES.append((out_path.stem, unmatched))
+            print(
+                f"  game board: PGN found, {linked} move link(s), {len(unmatched)} quoted move(s) not in the game "
+                f"for '{item['title']}'",
+                file=sys.stderr,
+            )
+
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
 
@@ -1689,6 +1724,11 @@ BATCH_MAX_RETRIES = 5
 # remaining drafts still look fine, and the piece that never got written
 # leaves no trace in front of the person deciding what to merge.
 RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
+
+# Our own game files for GameViewer (gamePgn), and quoted moves that didn't
+# match the game, collected per article for the run report.
+GAMES_DIR = ARTICLES_DIR / "_games"
+GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
 
 
 def write_run_report(
@@ -1709,6 +1749,9 @@ def write_run_report(
         for path, offenders in long_paragraphs:
             spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
             lines.append(f"- {path.stem} — paragraph {spots}")
+    if GAME_LINK_NOTES:
+        lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
+        lines += [f"- {slug} — {', '.join(moves)}" for slug, moves in GAME_LINK_NOTES]
     if bad_link_articles:
         lines += [
             "",
