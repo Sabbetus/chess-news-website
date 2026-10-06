@@ -36,7 +36,9 @@ Two paths, tried in order:
 """
 
 import re
+from datetime import datetime, timedelta, timezone
 import sys
+import time
 
 import requests
 
@@ -292,6 +294,112 @@ def find_round_via_known_tournament(event: str, player1: str, player2: str) -> s
     return None
 
 
+# Words that make Lichess's broadcast search (which needs every word to
+# match) miss: generic event words and ordinals the model adds ("46th",
+# "Tournament") but organizers often leave out of the broadcast name.
+_SEARCH_STOPWORDS = {
+    "the", "of", "and", "chess", "tournament", "tournaments", "round", "rounds",
+    "section", "group", "event", "festival", "championship", "championships",
+}
+_ORDINAL_RE = re.compile(r"^\d+(st|nd|rd|th)$|^[ivxlc]+$", re.IGNORECASE)
+_MAX_SEARCH_TOURS = 3
+_MAX_ROUNDS_PER_TOUR = 12
+_SEARCH_TIME_BUDGET = 120  # seconds, across all round fetches
+
+
+def _search_queries(event: str) -> list[str]:
+    """Progressively looser queries: the cleaned name, then shorter
+    prefixes of it, then its distinctive words alone."""
+    words = [w for w in re.findall(r"[\w'-]+", event) if w.lower() not in _SEARCH_STOPWORDS and not _ORDINAL_RE.match(w)]
+    queries: list[str] = []
+    for n in range(len(words), 0, -1):
+        q = " ".join(words[:n])
+        if q not in queries:
+            queries.append(q)
+    year = next((w for w in words if re.fullmatch(r"(19|20)\d\d", w)), None)
+    names = [w for w in words if not re.fullmatch(r"\d+", w)]
+    if year and names:
+        queries.insert(1, f"{names[0]} {year}")
+    return queries[:6]
+
+
+def _tour_matches_date(tour: dict, around: datetime) -> bool:
+    dates = tour.get("dates") or []
+    if not dates:
+        return True
+    start = datetime.fromtimestamp(dates[0] / 1000, tz=timezone.utc)
+    end = datetime.fromtimestamp(dates[-1] / 1000, tz=timezone.utc)
+    return start - timedelta(days=3) <= around <= end + timedelta(days=45)
+
+
+def find_round_via_search(event: str, player1: str, player2: str, around: datetime | None = None) -> str | None:
+    """Lichess's own broadcast search, for events not in the known registry
+    and never covered before -- caught live 2026-10-06: the Fagernes Autumn
+    GM group was on Lichess, but the web-search finder answered NONE.
+    Returns a matched game's GameURL, or None."""
+    around = around or datetime.now(timezone.utc)
+    tours: list[dict] = []
+    seen: set[str] = set()
+    for query in _search_queries(event):
+        try:
+            response = requests.get(
+                "https://lichess.org/api/broadcast/search",
+                params={"q": query},
+                headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+                timeout=REQUEST_TIMEOUT,
+            )
+            response.raise_for_status()
+            results = response.json().get("currentPageResults", [])
+        except (requests.RequestException, ValueError) as exc:
+            print(f"    lichess lookup: broadcast search failed for {query!r}: {exc}", file=sys.stderr)
+            continue
+        for result in results:
+            tour = result.get("tour") or {}
+            if tour.get("id") and tour["id"] not in seen and _tour_matches_date(tour, around):
+                seen.add(tour["id"])
+                tours.append(tour)
+        if tours:
+            break
+    # A year in the event name must be in the broadcast's name too (a 1968
+    # game must not scan this year's event of the same name), and the
+    # broadcasts sharing the most words with the event are tried first.
+    year = next((w for w in re.findall(r"\d{4}", event) if w.startswith(("19", "20"))), None)
+    if year:
+        tours = [t for t in tours if year in (t.get("name", "") + t.get("slug", ""))]
+    wanted = {w.lower() for w in re.findall(r"[a-zA-Z]{4,}", event)} - _SEARCH_STOPWORDS
+    tours.sort(key=lambda t: -len(wanted & set(re.findall(r"[a-z]{4,}", (t.get("slug") or "").lower()))))
+    if not tours:
+        print(f"    lichess lookup: broadcast search found no tournament for event={event!r}", file=sys.stderr)
+        return None
+    deadline = time.monotonic() + _SEARCH_TIME_BUDGET
+
+    for tour in tours[:_MAX_SEARCH_TOURS]:
+        try:
+            response = requests.get(
+                f"https://lichess.org/api/broadcast/{tour['id']}",
+                headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+                timeout=REQUEST_TIMEOUT,
+            )
+            response.raise_for_status()
+            rounds = response.json().get("rounds", [])
+        except (requests.RequestException, ValueError) as exc:
+            print(f"    lichess lookup: tournament fetch failed for {tour.get('slug')!r}: {exc}", file=sys.stderr)
+            continue
+        played = [r for r in reversed(rounds) if r.get("finished") or r.get("ongoing")][:_MAX_ROUNDS_PER_TOUR]
+        for round_ in played:
+            if time.monotonic() > deadline:
+                print(f"    lichess lookup: broadcast search time budget used up for event={event!r}", file=sys.stderr)
+                return None
+            game_url = find_game_in_round(round_["id"], player1, player2)
+            if game_url:
+                print(
+                    f"    lichess lookup: broadcast search matched {tour.get('slug')!r} {round_.get('name')!r}",
+                    file=sys.stderr,
+                )
+                return game_url
+    return None
+
+
 def embed_url_from_game_url(game_url: str) -> str:
     """https://lichess.org/broadcast/<ts>/<rs>/<roundId>/<gameId> ->
     https://lichess.org/embed/broadcast/<ts>/<rs>/<roundId>/<gameId>, the
@@ -319,6 +427,10 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
     print(f"    lichess lookup: event={event!r} player1={player1!r} player2={player2!r}", file=sys.stderr)
 
     game_url = find_round_via_known_tournament(event, player1, player2)
+    if game_url:
+        return {"url": embed_url_from_game_url(game_url)}
+
+    game_url = find_round_via_search(event, player1, player2)
     if game_url:
         return {"url": embed_url_from_game_url(game_url)}
 

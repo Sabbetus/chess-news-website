@@ -251,3 +251,15 @@ def test_game_pgn_picks_and_cleans_the_right_game():
     cleaned = game_pgn.clean_game(games[0])
     assert cleaned.endswith("1. c4 e5 2. d3 Nf6 0-1\n")
     assert "{" not in cleaned and "(" not in cleaned
+
+
+def test_lichess_search_queries_drop_words_the_search_cannot_match():
+    """2026-10-06: Lichess's broadcast search needs every word to match, so
+    'Fagernes International Autumn Tournament 2026' found nothing."""
+    import lichess_game
+
+    q = lichess_game._search_queries("Fagernes International Autumn Tournament 2026")
+    assert q[0] == "Fagernes International Autumn 2026"
+    assert "Fagernes 2026" in q and "Fagernes" in q
+    q = lichess_game._search_queries("46th Chess Olympiad Samarkand 2026")
+    assert q[0] == "Olympiad Samarkand 2026" and "Olympiad 2026" in q

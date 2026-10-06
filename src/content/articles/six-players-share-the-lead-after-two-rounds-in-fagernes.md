@@ -7,6 +7,8 @@ lens: "results"
 continent: "europe"
 selectionScore: 66
 reviewStatus: "published"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/fagernes-international-autumn-2026-gm/round-1/OXXd2D8A/SD2EUe7x"
 socialCopy: "Six players are perfect after two rounds at the Fagernes Autumn GM Swiss, including three Norwegians and Harika Dronavalli. Top seed Elham Amar is not among them. Ten rounds, nine days, €3,000 for first."
 metaDescription: "Six players lead on 2/2 at the Fagernes Autumn GM Swiss in Norway, among them three Norwegians and Harika Dronavalli. Ten rounds run to 11 October."
 image:
@@ -27,7 +29,7 @@ Second seed Rinat Jumabayev of Kazakhstan (2564) is not among the leaders either
 
 **A quick finish in an all-Norwegian game**
 
-One round-one game ended abruptly. Lars Haugen, with White against Evsuld Myagmarsuren, played 24.Rf1?, which looks natural because it covers the weak f2-square. ChessBase's note says White first had to dislodge the black queen on g5, with 24.Rg3 or 24.Qd2.
+One round-one game ended abruptly. Lars Haugen, with White against Evsuld Myagmarsuren, played [24.Rf1?](#game-embed), which looks natural because it covers the weak f2-square. ChessBase's note says White first had to dislodge the black queen on g5, with 24.Rg3 or 24.Qd2.
 
 Black punished it at once: 24...fxe4 25.Rg3 Rxf2! White resigned after 26.Rxf2 Qc1+ 27.Qf1 Bxf2 28.Kxf2 Rf8+. The pawn on e4 stops the white rook from defending on f3, and Black's second rook joins in for the finish.
 
