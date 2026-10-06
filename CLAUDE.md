@@ -42,7 +42,16 @@ Only serious problems reset the streak (user's rule, 2026-10-02):
 
 Update this after every batch review.
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-06: PR #58 reset (streak 1 -> 0). Reset: the Fagernes round-2
+  piece said top seed Elham Amar "had Black against Krishnan Ritvik and
+  lost"; the source caption gave the result as (0-1), i.e. Amar won. Body,
+  social copy and meta rewritten; photo moved from Amar to leader Harika
+  Dronavalli. Minor: the Larsen-Gheorghiu piece checked out move for move,
+  but its photo was a craft board of a Botvinnik-Tal 1960 position (alt
+  text named them); swapped to Bent Larsen in 1970. Fixed at the source:
+  drafting and fact-check prompts now spell out 1-0 / 0-1 / draw and
+  require checking the player's colour before saying who won.
 - 2026-10-05: PR #57 clean (streak 0 -> 1). Every claim and link in all
   five pieces checked against the three ChessBase sources and the calendar
   data; no resets. Minor fixes only: Speelman piece invented "the name is
@@ -136,8 +145,8 @@ Update this after every batch review.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-04 (PR #55, see above).
-- Earlier resets: 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-06 (PR #58, see above).
+- Earlier resets: 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

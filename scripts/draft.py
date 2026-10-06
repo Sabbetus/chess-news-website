@@ -535,7 +535,10 @@ event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
 player1: first player's full name
 player2: second player's full name
 @@BODY_MARKDOWN@@
-the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style."""
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
+
+Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
+writing that a player won or lost, check which colour they had against the result."""
 
 def build_aggregate_system_prompt(continent_code: str) -> str:
     return f"""You are writing for a small, curated chess news site. \
@@ -1077,6 +1080,10 @@ own line".)
 - Move notation: a move written with "..." (38...Ne6+) is Black's; without it (38.Ne6+) \
 White's. When the body credits a move to a player, the notation must match that player's \
 colour, even if the source itself slips.
+- Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" (or "½-½") is a \
+draw. When the body says who won or lost a game, check which colour that player had and \
+that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \
+(0-1)" was written up as X losing, when 0-1 means X won.)
 
 Check at the level of individual named details, not just each sentence's main assertion. A \
 sentence's headline claim can be completely true while still carrying a fabricated specific \
