@@ -6,7 +6,7 @@ sourceUrl: "https://en.wikipedia.org/wiki/Time_control"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "What separates classical, rapid and blitz chess, how notation like 90+30 works, and why an armageddon game can't end in a draw."
 socialCopy: "\"90+30\", \"15+10\", \"3+2\": what chess time controls mean, where classical ends and rapid begins, and how armageddon guarantees a winner."
 image:

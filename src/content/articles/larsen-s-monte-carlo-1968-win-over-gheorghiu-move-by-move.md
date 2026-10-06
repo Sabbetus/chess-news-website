@@ -6,13 +6,13 @@ sourceUrl: "https://en.chessbase.com/post/learning-strategy-from-bent-larsen"
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 127
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Bent Larsen traded a pawn for structure and piece activity against Florin Gheorghiu at Monte Carlo 1968, then broke through with 23.h4! A look at a lesson from the ChessBase Master Class on the Dane."
 metaDescription: "How Bent Larsen beat Florin Gheorghiu at Monte Carlo 1968 by trusting structure over a pawn, from the ChessBase Master Class volume on the Danish GM."
 image:
-  src: "./_images/Mikhail_Botvinnik_-_Mikhail_Tal_-_World_Championship_23th_Moscovo__6__1960-03-26_-_wood_handicraft_chess_board.webp"
-  credit: "Eugenio Hansen, OFS, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMikhail_Botvinnik_-_Mikhail_Tal_-_World_Championship_23th_Moscovo_%286%29%2C_1960-03-26_-_wood_handicraft_chess_board.JPG"
+  src: "./_images/Bent_Larsen_in_1970.webp"
+  credit: "Anefo, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABent_Larsen_in_1970.jpg"
 ---
 
 Bent Larsen is remembered for 1.b3 and for opening ideas his contemporaries thought odd. A [ChessBase Master Class lesson on his strategy](https://en.chessbase.com/post/learning-strategy-from-bent-larsen) argues that this is only half the picture. His real strength lay in imbalanced positions, where he accepted structural concessions in return for squares, active pieces and attacking chances.
