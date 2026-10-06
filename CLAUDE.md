@@ -42,6 +42,17 @@ Only serious problems reset the streak (user's rule, 2026-10-02):
 
 Update this after every batch review.
 
+### Review-acceptance streak (separate, user's rule 2026-10-06)
+
+Tracks whether the user accepted Claude's review as proposed (fix list,
+verdicts, reset calls) without needing to correct or overrule it. Any
+correction from the user (a missed problem, a wrong call, a fix they
+reject) resets it to 0. Update after each batch review, once the user has
+responded.
+
+- **Current review-acceptance streak: 1.**
+- 2026-10-06: PR #58 review accepted as proposed (1).
+
 - **Current streak: 0 consecutive clean batches.**
 - 2026-10-06: PR #58 reset (streak 1 -> 0). Reset: the Fagernes round-2
   piece said top seed Elham Amar "had Black against Krishnan Ritvik and
