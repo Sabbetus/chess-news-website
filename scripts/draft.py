@@ -540,7 +540,11 @@ player2: second player's full name
 the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
 
 Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
-writing that a player won or lost, check which colour they had against the result."""
+writing that a player won or lost, check which colour they had against the result.
+
+Commentary on a game: when you quote moves with a remark about the position, keep the \
+remark at the same move the source attaches it to -- put it right after that move, before \
+the moves that follow, never after the end of the game."""
 
 def build_aggregate_system_prompt(continent_code: str) -> str:
     return f"""You are writing for a small, curated chess news site. \
@@ -1082,6 +1086,11 @@ own line".)
 - Move notation: a move written with "..." (38...Ne6+) is Black's; without it (38.Ne6+) \
 White's. When the body credits a move to a player, the notation must match that player's \
 colour, even if the source itself slips.
+- Move commentary placement: a remark about a position ("with the queen on the open \
+e-file...", "White is winning here") belongs to the move it follows in the source. Check \
+it sits after that same move in the body, not after later moves or the result, where it \
+would describe a different position. (Caught live 2026-10-06: a note made after 33...Kf7 \
+was placed after 38.Re1+ and the resignation, describing pieces that had already moved.)
 - Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" (or "½-½") is a \
 draw. When the body says who won or lost a game, check which colour that player had and \
 that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \

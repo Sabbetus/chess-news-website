@@ -50,7 +50,11 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-06: PR #58 review missed a misplaced note in the Larsen piece
+  (the remark made after 33...Kf7 sat after 38.Re1+ and the resignation);
+  user caught it (1 -> 0). Fixed; drafting and fact-check prompts now keep
+  move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
