@@ -35,8 +35,9 @@ jobs:
         uses: actions/setup-python@v5.6.0
         with:
           python-version: '3.12'
-          cache: 'pip'
-          cache-dependency-path: scripts/requirements.txt
+          # No pip cache: this job installs nothing, so the cache step had
+          # nothing to save and failed the run once the runner's Python
+          # version changed and no older cache was restored (2026-10-06).
 
       - name: Post pending articles
         env:
