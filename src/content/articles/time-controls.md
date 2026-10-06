@@ -1,6 +1,6 @@
 ---
 title: "Classical, Rapid, Blitz: How Chess Time Controls Work"
-publishDate: "TBD"
+publishDate: "2026-10-06"
 sourceName: "Wikipedia"
 sourceUrl: "https://en.wikipedia.org/wiki/Time_control"
 lens: "historical-parallel"
