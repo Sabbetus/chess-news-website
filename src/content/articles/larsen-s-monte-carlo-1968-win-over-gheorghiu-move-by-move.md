@@ -42,7 +42,7 @@ Larsen punished it at once: [28.Rxa5](#ply-55) a6 [29.Ra4!](#ply-57), gaining a 
 
 After [30...Qf8](#ply-60), Larsen played [31.Qe3?!](#ply-61), which kept a clear edge. The lesson points out a faster kill: 31.Rxg6+ hxg6 32.Qxg6+ Kh8 33.Qxc2, and Black is doomed.
 
-The game went [31...Rbc6](#ply-62) [32.hxg6](#ply-63) hxg6 [33.Rxg6](#ply-65) Kf7. With the queen on the open e-file and the rook on f1 ready to join the attack, the rest was simple: [34.Rg4](#ply-67) R2c5 [35.Qd3](#ply-69) Re5 [36.f4](#ply-71) Re8 [37.Qd5+](#ply-73) Ke7 [38.Re1+](#ply-75), and Black resigned.
+The game went [31...Rbc6](#ply-62) [32.hxg6](#ply-63) hxg6 [33.Rxg6](#ply-65) Kf7. With the queen on the open e-file and the rook on f1 ready to join the attack, the rest was simple: [34.Rg4](#ply-67) R2c5 [35.Qd3](#ply-69) Re5 [36.f4](#ply-71) Re8 [37.Qd5+](#ply-73) Ke7 [38.Re1+](#ply-75), and Black resigned. The only move, 38...Kd8, runs into 39.Rxe8+ and 40.Rg8, and the queen is lost either way.
 
 **Why it fits Larsen**
 
