@@ -530,7 +530,7 @@ a one- or two-sentence summary for search results, 120-155 characters: say plain
 @@IMAGE_SUBJECTS@@
 up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
 @@IMAGE_SUBJECT_ONLY@@
-yes or no. Answer yes only when the piece is about the first subject's own personal milestone -- a title earned, a record set, an award, a "youngest-ever" -- so that a photo of anyone else next to it would read as if it were them. For everything else (results, matches, events, news that merely features the person) answer no: another named person's photo is fine there.
+yes or no. Answer yes only when the piece is about the first subject's own personal milestone -- a title earned, a record set, an award, a "youngest-ever" -- so that a photo of anyone else next to it would read as if it were them. Also answer yes for a piece that is a portrait of one person -- a profile, birthday, obituary, interview, or a personal case such as harassment or a dispute -- where a rival or anyone else named would read as if it were them. For everything else (results, matches, events, a team or programme story, news that merely features the person) answer no: another named person's photo is fine there, and for a team or programme story list its best-known players in IMAGE_SUBJECTS after the main subject so one of them can supply the photo.
 @@GAME_LOOKUP@@
 {GAME_LOOKUP_CRITERIA}
 When it does apply, write exactly these three lines and nothing else, with the real values filled in:
@@ -1557,7 +1557,12 @@ def draft_one(
         # named person's photo is fine for everything else. Caught live
         # 2026-09-30: "Bodhana Sivanandan, 11, Becomes Youngest WGM" had no
         # photo of her, and the cascade moved on to her opponent.
-        prefer_neutral=(lens == "people") or parsed.get("imageSubjectOnly", "").strip().lower().startswith("y"),
+        # Not forced by the People lens alone any more: caught live
+        # 2026-10-07, a People piece on coach Bernd Vokler's programme got a
+        # generic photo though the bronze-medal players it produced are the
+        # story's other protagonists. The drafter's IMAGE_SUBJECT_ONLY call
+        # (yes for a profile of one person) decides instead.
+        prefer_neutral=parsed.get("imageSubjectOnly", "").strip().lower().startswith("y"),
     )
     if image:
         # Mark the Commons source as used regardless of what localize_image

@@ -10,9 +10,9 @@ reviewStatus: "published"
 socialCopy: "Germany's first Olympiad men's medal in 26 years has roots in a 2009 youth programme in Thuringia. Bernd Vökler's \"Chess Princes\" are now bronze medallists in Samarkand."
 metaDescription: "Germany's Samarkand bronze, its first men's Olympiad medal in 26 years, grew from coach Bernd Vökler's Thuringia youth programme begun in 2009."
 image:
-  src: "./_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "./_images/Rasmus_Svane_Dortmunder_Schachtage.webp"
+  credit: "Paul Meyer-Dunker, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARasmus_Svane_Dortmunder_Schachtage.jpg"
 ---
 
 Germany's [bronze medal at the Samarkand Olympiad](https://en.chessbase.com/post/princes-of-samarkand-german-team) is its first for a men's team in 26 years. A feature in the Thüringer Allgemeine, republished by ChessBase, argues that the roots of the result lie in Thuringia and in one man's long-running youth project.
