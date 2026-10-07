@@ -263,3 +263,34 @@ def test_lichess_search_queries_drop_words_the_search_cannot_match():
     assert "Fagernes 2026" in q and "Fagernes" in q
     q = lichess_game._search_queries("46th Chess Olympiad Samarkand 2026")
     assert q[0] == "Olympiad Samarkand 2026" and "Olympiad 2026" in q
+
+
+def test_calendar_small_field_penalty_only_for_known_counts():
+    from ingest import _notability_score
+
+    base = {"name": "Open X", "timeControl": "classical", "startDate": "2026-09-01", "endDate": "2026-09-05"}
+    assert _notability_score({**base, "playersRegistered": 6}) < _notability_score(base)
+    assert _notability_score({**base, "playersRegistered": 0}) == _notability_score(base)
+
+
+def test_calendar_sections_merge_and_youth_words():
+    from ingest import MINOR_NAME_PATTERNS, _merge_sections
+
+    assert MINOR_NAME_PATTERNS.search("Campeonato Intercolegiado 2026")
+    common = {"countryCode": "AR", "city": "Rosario", "startDate": "2026-09-11"}
+    pool = [
+        {**common, "name": "Abierto Rosario - Grupo A", "playersRegistered": 40},
+        {**common, "name": "Abierto Rosario - Grupo B", "playersRegistered": 30},
+    ]
+    merged = _merge_sections(pool)
+    assert len(merged) == 1 and merged[0]["playersRegistered"] == 70
+
+
+def test_aggregate_facts_lists_event_lengths():
+    from draft import aggregate_facts
+
+    facts = aggregate_facts([
+        {"name": "Tigre", "startDate": "2026-09-04", "endDate": "2026-09-12"},
+        {"name": "Rosario", "startDate": "2026-09-11", "endDate": "2026-09-20"},
+    ])
+    assert "Longest event: 10 days (Rosario)" in facts

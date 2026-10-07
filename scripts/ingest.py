@@ -156,7 +156,7 @@ NOTABLE_NAME_KEYWORDS = [
 # bigger event, and school/youth/club-night events.
 MINOR_NAME_PATTERNS = re.compile(
     r"\bu\s?-?\d{2,4}\b|\bunder\s?(?:\d{2,4}|section)\b|sub[\s-]?\d{1,2}\b|\b\d{3,4}\s?-\s?\d{3,4}\b"
-    r"|\breserves?\b|\bminor\b|\bamateur|\bnovice|scholastic|school|escolar|colegio|kids|junior|juvenil|infantil|primary|secundaria"
+    r"|\breserves?\b|\bminor\b|\bamateur|\bnovice|scholastic|school|escolar|colegio|kids|junior|juvenil|infantil|primary|secundaria|menores|juventud|intercolegiad"
     r"|quads?\b|action\b|club night|weekly|ladder|simul",
     re.IGNORECASE,
 )
@@ -214,6 +214,10 @@ def _notability_score(t: dict) -> float:
     players = t.get("playersRegistered")
     if isinstance(players, (int, float)) and players > 0:
         score += min(8, players / 25)
+        # Only a known count can show a small field: FIDE-listed US and
+        # Australian events have no count at all and must not be penalised.
+        if players < 10:
+            score -= 6
     if t.get("ratingRequirement"):
         score += 2
     if t.get("prizePool"):
@@ -224,9 +228,39 @@ def _notability_score(t: dict) -> float:
     return score
 
 
+_SECTION_SUFFIX_RE = re.compile(
+    r"\s*[-\u2013:|(]\s*(?:group|grupo|section|secci[oó]n|open|abierto|torneo|[a-e]\b|u\d+|sub\s?\d+|\d{3,4}\s?-\s?\d{3,4}).*$",
+    re.IGNORECASE,
+)
+
+
+def _event_key(t: dict) -> tuple:
+    base = _SECTION_SUFFIX_RE.sub("", (t.get("name") or "").strip()).lower()
+    return (base, t.get("countryCode"), t.get("city"), t.get("startDate"))
+
+
+def _merge_sections(pool: list[dict]) -> list[dict]:
+    """Sections of one event (same base name, place and start date) count
+    once: the best-scoring section stands in for the event, with the
+    sections' player counts summed when all are known."""
+    groups: dict[tuple, list[dict]] = {}
+    for t in pool:
+        groups.setdefault(_event_key(t), []).append(t)
+    merged = []
+    for group in groups.values():
+        best = max(group, key=_notability_score)
+        if len(group) > 1:
+            counts = [g.get("playersRegistered") for g in group]
+            if all(isinstance(c, (int, float)) and c > 0 for c in counts):
+                best = {**best, "playersRegistered": sum(counts)}
+        merged.append(best)
+    return merged
+
+
 def _rank_notable(pool: list[dict]) -> list[dict]:
     """Top MAX_TOURNAMENTS_PER_AGGREGATE by notability, at most
     MAX_PER_COUNTRY per country unless nothing else is left."""
+    pool = _merge_sections(pool)
     ranked = sorted(pool, key=lambda t: (_notability_score(t), t.get("playersRegistered") or 0), reverse=True)
     picked, per_country, overflow = [], {}, []
     for t in ranked:

@@ -721,6 +721,17 @@ def aggregate_facts(tournaments: list) -> str:
             f"- Largest field with a known player count: {top.get('name')} ({top['playersRegistered']}). "
             "The list is ordered by notability, not size, so only this event may be called the biggest."
         )
+    dated = [t for t in tournaments if t.get("startDate")]
+    if dated:
+        from ingest import _duration_days
+
+        lengths = sorted(((_duration_days(t), t.get("name")) for t in dated), reverse=True)
+        longest = [n for d, n in lengths if d == lengths[0][0]]
+        lines.append(
+            f"- Longest event: {lengths[0][0]} days ({'; '.join(longest)}). Any 'longest' or "
+            "'shortest' claim must match these lengths: "
+            + "; ".join(f"{n} {d} days" for d, n in lengths)
+        )
     if repeated:
         lines.append(
             "- These names appear more than once as separate chess-results tournaments "
