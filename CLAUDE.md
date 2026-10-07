@@ -50,14 +50,23 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-10-07: PR #59 review accepted (0 -> 1); user noted the "longest
+  event" flag wasn't explained (Tigre 9 days vs Rosario 10).
 - 2026-10-06: PR #58 review missed a misplaced note in the Larsen piece
   (the remark made after 33...Kf7 sat after 38.Re1+ and the resignation);
   user caught it (1 -> 0). Fixed; drafting and fact-check prompts now keep
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-07: PR #59 clean (streak 0 -> 1). Minor only: Germany piece
+  "same Olympiad board order" -> "same Olympiad team"; Titled Tuesday piece
+  gained Artemiev's 9.5/11 tiebreak win (first since 2021, Nakamura 9th)
+  and lost an unsourced "reputation for quick play" line; calendar piece
+  called Tigre (9 days) the longest when Rosario ran 10. Pipeline: small
+  fields (<10, known counts only) penalised, more youth words, sections of
+  one event merged, event lengths precomputed for the drafting model.
 - 2026-10-06: PR #58 reset (streak 1 -> 0). Reset: the Fagernes round-2
   piece said top seed Elham Amar "had Black against Krishnan Ritvik and
   lost"; the source caption gave the result as (0-1), i.e. Amar won. Body,
