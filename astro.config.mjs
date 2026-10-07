@@ -61,6 +61,10 @@ export default defineConfig({
   redirects: {
     '/lens/community': '/lens/results/',
     '/lens/upsets': '/lens/results/',
+    // The parent of every article URL, never a page of its own. Search
+    // Console reported it as a 404 (2026-10-07); the archive is the
+    // all-articles list.
+    '/articles': '/archive/',
   },
   integrations: [
     sitemap({
