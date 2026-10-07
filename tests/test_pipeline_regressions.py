@@ -294,3 +294,10 @@ def test_aggregate_facts_lists_event_lengths():
         {"name": "Rosario", "startDate": "2026-09-11", "endDate": "2026-09-20"},
     ])
     assert "Longest event: 10 days (Rosario)" in facts
+
+
+def test_aggregate_facts_gives_whole_month_formats():
+    from draft import aggregate_facts
+
+    facts = aggregate_facts([{"name": "A", "timeControl": "classical"}], {"rapid": 514, "classical": 123}, 640)
+    assert "All 640 tracked events this month, by format: rapid 514, classical 123" in facts

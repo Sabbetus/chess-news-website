@@ -700,7 +700,7 @@ def clean_tournament_name(name: str) -> str:
     return name.rstrip(" -&,(/:").strip()
 
 
-def aggregate_facts(tournaments: list) -> str:
+def aggregate_facts(tournaments: list, month_formats: dict | None = None, total: int | None = None) -> str:
     """Counts the model would otherwise do in its head, and got wrong
     (caught live 2026-10-01: "only three of the 18 entries... plus Naples,
     making four" for a 20-entry list with four classical events)."""
@@ -714,6 +714,16 @@ def aggregate_facts(tournaments: list) -> str:
         f"- Entries in this list: {len(tournaments)}",
         "- By format: " + ", ".join(f"{fmt} {n}" for fmt, n in formats.most_common()),
     ]
+    if month_formats:
+        # Caught live 2026-10-07: a list ranked toward classical events was
+        # written up as "every event this month was classical" when 514 of
+        # the month's 640 South American events were rapid.
+        lines.append(
+            f"- All {total or sum(month_formats.values())} tracked events this month, by format: "
+            + ", ".join(f"{k} {v}" for k, v in sorted(month_formats.items(), key=lambda kv: -kv[1]))
+            + ". The list above is a notability selection that favours classical events; never "
+            "describe the month's chess as a whole from the list's format mix."
+        )
     counted = [t for t in tournaments if isinstance(t.get("playersRegistered"), (int, float)) and t["playersRegistered"] > 0]
     if counted:
         top = max(counted, key=lambda t: t["playersRegistered"])
@@ -766,7 +776,7 @@ def build_user_prompt(item: dict) -> str:
             f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
             f"Tournament data (JSON list): {json.dumps(tournament_data, ensure_ascii=False)}",
             "",
-            aggregate_facts(item["tournamentData"]),
+            aggregate_facts(item["tournamentData"], item.get("formatCounts"), item.get("totalTracked")),
         ]
 
         companions = calendar_pieces_for_continent(CONTINENT_SLUGS[item["continentCode"]])

@@ -50,7 +50,12 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-07: PR #59 review missed that the calendar piece opened with
+  "every event on this month's list was played at classical time
+  controls" (social copy: "September in South America ran on classical
+  chess"); the month had 514 rapid vs 123 classical events. User caught
+  it after publishing (1 -> 0).
 - 2026-10-07: PR #59 review accepted (0 -> 1); user noted the "longest
   event" flag wasn't explained (Tigre 9 days vs Rosario 10).
 - 2026-10-06: PR #58 review missed a misplaced note in the Larsen piece
@@ -59,8 +64,14 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
-- 2026-10-07: PR #59 clean (streak 0 -> 1). Minor only: Germany piece
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-07: PR #59 reset after publishing (streak 1 -> 0). The calendar
+  piece presented our classical-weighted shortlist as the whole month
+  ("ran on classical chess"); South America's September was 514 rapid, 123
+  classical. Opening and social copy fixed live. Fixed at the source: the
+  month's full format counts now go to the drafting model with a rule not
+  to describe the month from the list's format mix.
+- 2026-10-07: PR #59 first logged as clean (streak 0 -> 1). Minor only: Germany piece
   "same Olympiad board order" -> "same Olympiad team"; Titled Tuesday piece
   gained Artemiev's 9.5/11 tiebreak win (first since 2021, Nakamura 9th)
   and lost an unsourced "reputation for quick play" line; calendar piece
@@ -169,8 +180,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-06 (PR #58, see above).
-- Earlier resets: 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-07 (PR #59, see above).
+- Earlier resets: 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

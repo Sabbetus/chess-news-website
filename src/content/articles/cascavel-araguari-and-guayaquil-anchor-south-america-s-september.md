@@ -7,7 +7,7 @@ lens: "tournament-db"
 continent: "south-america"
 selectionScore: 23
 reviewStatus: "published"
-socialCopy: "September in South America ran on classical chess: Brazilian opens in Cascavel and Araguari, a 145-player national games event in Guayaquil, and a nine-day Masters in Tigre, Argentina."
+socialCopy: "The biggest classical events of South America's September: Brazilian opens in Cascavel and Araguari, a 145-player national games event in Guayaquil, and a nine-day Masters in Tigre, Argentina."
 metaDescription: "A look back at September's top South American classical events, from Brazilian opens in Cascavel and Araguari to a 145-player event in Guayaquil, Ecuador."
 aggregateKind: "calendar-biggest"
 continentName: "South America"
@@ -19,7 +19,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
 ---
 
-Every event on this month's list was played at classical time controls, and Brazil supplied most of the larger opens. The biggest field, though, was in Ecuador.
+Most of South America's 640 tracked events in September were rapid (514, against 123 classical). This look back covers the bigger classical events, and Brazil supplied most of the larger opens. The biggest field, though, was in Ecuador.
 
 **Guayaquil draws the largest field**
 

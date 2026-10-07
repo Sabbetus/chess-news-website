@@ -21,6 +21,7 @@ period twice.
 
 import json
 import re
+from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -341,6 +342,7 @@ def _build_biggest(code: str, today: date) -> dict | None:
         "continentName": CONTINENT_NAMES[code],
         "monthLabel": month_label,
         "totalTracked": len(pool),
+        "formatCounts": dict(Counter((t.get("timeControl") or "unknown").lower() for t in pool)),
         "tournamentData": [_trim_tournament(t) for t in ranked],
     }
 
@@ -383,6 +385,7 @@ def _build_comingup(code: str, today: date) -> dict | None:
         "continentName": CONTINENT_NAMES[code],
         "monthLabel": month_label,
         "totalTracked": len(pool),
+        "formatCounts": dict(Counter((t.get("timeControl") or "unknown").lower() for t in pool)),
         "tournamentData": [_trim_tournament(t) for t in highlights],
     }
 
