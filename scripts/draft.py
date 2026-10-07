@@ -25,6 +25,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from social_text import delink  # noqa: E402
 
 import anthropic
 
@@ -1519,7 +1520,7 @@ def draft_one(
         # string despite the prompt -- happened once in practice (a
         # calendar aggregate with a blank socialCopy), and a blank social
         # teaser is a worse failure mode than a slightly generic one.
-        "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
+        "socialCopy": delink((parsed.get("socialCopy") or "").strip() or parsed["title"]),
     }
     # Optional: the article page falls back to a body excerpt, so a missing
     # or over-long answer is dropped rather than failing the draft.

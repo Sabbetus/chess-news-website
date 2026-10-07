@@ -7,7 +7,7 @@ lens: "results"
 continent: "europe"
 selectionScore: 55
 reviewStatus: "published"
-socialCopy: "Nakamura streamed Titled Tuesday from Greece and pushed his Chess.com blitz rating to 3503, but Vladislav Artemiev beat him in the final round and took the title."
+socialCopy: "Nakamura streamed Titled Tuesday from Greece and pushed his Chesscom blitz rating to 3503, but Vladislav Artemiev beat him in the final round and took the title."
 metaDescription: "Hikaru Nakamura raised his blitz rating record to 3503 in Greece, but Vladislav Artemiev beat him in the last round to win Titled Tuesday on October 6."
 image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"

@@ -7,7 +7,7 @@ lens: "historical-parallel"
 continent: "global"
 selectionScore: 46
 reviewStatus: "published"
-socialCopy: "Elephants and hawks join the board: Chess.com's Seirawan Chess Championship runs Sept 30-Oct 2 with a $2,500 prize fund. A look at why the 1980s variant is having a moment."
+socialCopy: "Elephants and hawks join the board: Chesscom's Seirawan Chess Championship runs Sept 30-Oct 2 with a $2,500 prize fund. A look at why the 1980s variant is having a moment."
 image:
   src: "./_images/Yasser_Seirawan.webp"
   credit: "Georgios Souleidis, CC BY 2.0, via Wikimedia Commons"

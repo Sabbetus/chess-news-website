@@ -7,7 +7,7 @@ lens: "drama"
 continent: "global"
 selectionScore: 40
 reviewStatus: "published"
-socialCopy: "Hans Niemann's return to the Chess.com broadcast wasn't quiet: he snatched Titled Tuesday from a 10/10 Duda at the last second. The scandal history makes the timing impossible to ignore."
+socialCopy: "Hans Niemann's return to the Chesscom broadcast wasn't quiet: he snatched Titled Tuesday from a 10/10 Duda at the last second. The scandal history makes the timing impossible to ignore."
 image:
   src: "./_images/hans-niemann-s-return-to-the-chess-com-broadcast-comes-with-a-trophy-attached.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"

@@ -7,7 +7,7 @@ lens: "money-angle"
 continent: "global"
 selectionScore: 46
 reviewStatus: "published"
-socialCopy: "Chess.com is putting up $15,000 a month for fans to play for their favorite esports orgs. The Chess Club Showdown kicks off September 30. ♟️"
+socialCopy: "Chesscom is putting up $15,000 a month for fans to play for their favorite esports orgs. The Chess Club Showdown kicks off September 30. ♟️"
 image:
   src: "./_images/Paris_-_Playing_chess_at_the_Jardins_du_Luxembourg_-_2966.webp"
   credit: "Jorge Royan, CC BY-SA 3.0, via Wikimedia Commons"

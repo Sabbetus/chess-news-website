@@ -7,7 +7,7 @@ lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 56
 reviewStatus: "published"
-socialCopy: "IM Renato Terry just hit 18 titles in Chess.com's 3+0 Thursday arena. How his bullet dominance compares to Nakamura's old Titled Tuesday reign."
+socialCopy: "IM Renato Terry just hit 18 titles in Chesscom's 3+0 Thursday arena. How his bullet dominance compares to Nakamura's old Titled Tuesday reign."
 image:
   src: "./_images/renato-terry-s-bullet-arena-dominance-echoes-titled-tuesday-s-nakamura-era.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"

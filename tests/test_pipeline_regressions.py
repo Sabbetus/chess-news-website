@@ -301,3 +301,9 @@ def test_aggregate_facts_gives_whole_month_formats():
 
     facts = aggregate_facts([{"name": "A", "timeControl": "classical"}], {"rapid": 514, "classical": 123}, 640)
     assert "All 640 tracked events this month, by format: rapid 514, classical 123" in facts
+
+
+def test_social_copy_never_contains_chess_com_domain():
+    from social_text import delink
+
+    assert delink("Chess.com's Titled Tuesday on chess.com") == "Chesscom's Titled Tuesday on chesscom"

@@ -18,6 +18,7 @@ import sys
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from social_text import delink  # noqa: E402
 
 import anthropic
 
@@ -453,7 +454,7 @@ def main() -> None:
         "continent": "global",
         "selectionScore": 0,
         "reviewStatus": "draft",
-        "socialCopy": (parsed.get("socialCopy") or "").strip() or parsed["title"],
+        "socialCopy": delink((parsed.get("socialCopy") or "").strip() or parsed["title"]),
     }
     image = pick_recap_image((parsed.get("imageSubject") or "").strip())
     if image:
