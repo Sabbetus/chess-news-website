@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/princes-of-samarkand-german-team"
 lens: "people"
 continent: "europe"
 selectionScore: 105
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Germany's first Olympiad men's medal in 26 years has roots in a 2009 youth programme in Thuringia. Bernd Vökler's \"Chess Princes\" are now bronze medallists in Samarkand."
 metaDescription: "Germany's Samarkand bronze, its first men's Olympiad medal in 26 years, grew from coach Bernd Vökler's Thuringia youth programme begun in 2009."
 image:
@@ -29,7 +29,7 @@ A year later he went further. Intensive support in Germany normally began at 14 
 
 Matthias Blübaum, Alexander Donchenko and Rasmus Svane were all in that first group. Seventeen years later, all three played in Samarkand for the bronze-medal team.
 
-They were joined by Vincent Keymer and Frederik Svane, who are six years younger than the original trio. It is a neat illustration of a pipeline: the programme's older graduates and a following cohort ended up at the same Olympiad board order.
+They were joined by Vincent Keymer and Frederik Svane, who are six years younger than the original trio. It is a neat illustration of a pipeline: the programme's older graduates and a following cohort ended up in the same Olympiad team.
 
 One example of the team in action was the round-ten match against France, a 3-1 win with the Svane brothers winning on the bottom boards.
 

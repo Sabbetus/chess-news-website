@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/artemiev-wins-titled-tuesday-october
 lens: "results"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Nakamura streamed Titled Tuesday from Greece and pushed his Chess.com blitz rating to 3503, but Vladislav Artemiev beat him in the final round and took the title."
 metaDescription: "Hikaru Nakamura raised his blitz rating record to 3503 in Greece, but Vladislav Artemiev beat him in the last round to win Titled Tuesday on October 6."
 image:
@@ -35,8 +35,8 @@ One round later the perfect list was down to a single name. Nakamura helped get 
 
 **The deciding game**
 
-Artemiev recovered from his round-five loss and was in position to face Nakamura in the last round. He won that game, which settled first place at the expense of the player the broadcast was built around.
+Artemiev recovered from his round-five loss and was in position to face Nakamura in the last round. He won that game to finish on 9.5/11, ahead of GMs Alexander Grischuk and Alexey Sarana on tiebreak. It was his first Titled Tuesday win since 2021. Nakamura, the player the broadcast was built around, finished ninth.
 
-Artemiev is a sharp, fast player with a reputation for quick play, and he has the kind of pedigree that makes beating a 3500-rated opponent less of a surprise than it sounds. Even so, a loss in the last round is a costly way for Nakamura to finish after he had worked himself back into contention.
+A loss in the last round is a costly way for Nakamura to finish after he had worked himself back into contention.
 
 Nakamura's record now stands at 3503. The next test of his view that it can't be maintained comes on Thursday, when 3 0 Thursday offers another chance to protect it or give some back.

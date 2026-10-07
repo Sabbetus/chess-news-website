@@ -6,7 +6,7 @@ sourceUrl: "https://en.wikipedia.org/wiki/Swiss-system_tournament"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "How the Swiss system pairs players by score, why it suits big fields like the Olympiad and Grand Swiss, and how Buchholz and Sonneborn-Berger break ties."
 socialCopy: "Hundreds of players, 11 rounds, no repeat opponents. How the Swiss system works, and why the tiebreak can matter as much as the score."
 image:

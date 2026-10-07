@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "September in South America ran on classical chess: Brazilian opens in Cascavel and Araguari, a 145-player national games event in Guayaquil, and a nine-day Masters in Tigre, Argentina."
 metaDescription: "A look back at September's top South American classical events, from Brazilian opens in Cascavel and Araguari to a 145-player event in Guayaquil, Ecuador."
 aggregateKind: "calendar-biggest"
@@ -37,7 +37,7 @@ Smaller Brazilian classical events filled out the month. The [2º Chess Open Xad
 
 **Argentina and the longer schedules**
 
-The longest event on the list was the [III Abierto Internacional Masters Ciudad](https://chesstournamentcalendar.com/tournament/iii-abierto-internacional-masters-ciudad-1473824/), played September 4 to 12 at the Honorable Concejo Deliberante in Tigre. Fifty players entered. The Escuela Municipal de Ajedrez Tigre organized it.
+One of the two longest events on the list was the [III Abierto Internacional Masters Ciudad](https://chesstournamentcalendar.com/tournament/iii-abierto-internacional-masters-ciudad-1473824/), played September 4 to 12 at the Honorable Concejo Deliberante in Tigre. Fifty players entered. The Escuela Municipal de Ajedrez Tigre organized it.
 
 In Santa Fe, the [Torneo Selección de Rosario 2026](https://chesstournamentcalendar.com/tournament/torneo-selección-de-rosario-2026válido-al-elo-fide-1478983/) ran September 11 to 20 with 29 players. Its title carries the note that it counts toward FIDE Elo.
 
