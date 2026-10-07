@@ -1,3 +1,3 @@
-Drafted 2 of 2 selected item(s).
+Drafted 3 of 3 selected item(s).
 
-Explainer released from the queue: `time-controls.md` (3 left). Written ahead of time, not from a news source.
+Explainer released from the queue: `swiss-system-tiebreaks.md` (2 left). Written ahead of time, not from a news source.

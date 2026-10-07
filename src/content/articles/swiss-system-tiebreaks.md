@@ -1,6 +1,6 @@
 ---
 title: "How Swiss Tournaments Pair Players and Break Ties"
-publishDate: "TBD"
+publishDate: "2026-10-07"
 sourceName: "Wikipedia"
 sourceUrl: "https://en.wikipedia.org/wiki/Swiss-system_tournament"
 lens: "historical-parallel"
