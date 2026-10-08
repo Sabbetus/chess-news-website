@@ -1032,5 +1032,32 @@
     "selectionScore": 23,
     "postedFacebookAt": "2026-10-07T14:25:27.663743+00:00",
     "postedThreadsAt": "2026-10-07T14:25:27.663743+00:00"
+  },
+  {
+    "slug": "chess960-freestyle",
+    "title": "Chess960 Explained: Why Freestyle Shuffles the Pieces",
+    "socialCopy": "960 possible starting positions, and no opening preparation that survives move one. How Chess960, now branded Freestyle, works.",
+    "publishDate": "2026-10-08",
+    "selectionScore": 0,
+    "postedFacebookAt": null,
+    "postedThreadsAt": null
+  },
+  {
+    "slug": "tokayev-receives-turlov-and-kazakhstan-becomes-the-model",
+    "title": "Tokayev Receives Turlov, Who Pitches Kazakh Chess as a Model",
+    "socialCopy": "Kazakhstan's president received new FIDE chief Timur Turlov, who also heads the country's federation and says its growth to 278,000 active players could be an example for others.",
+    "publishDate": "2026-10-08",
+    "selectionScore": 102,
+    "postedFacebookAt": "2026-10-08T10:27:06.537624+00:00",
+    "postedThreadsAt": "2026-10-08T10:27:06.537624+00:00"
+  },
+  {
+    "slug": "svane-s-second-olympiad-gold-and-germany-s-board-prize-history",
+    "title": "Svane's Second Olympiad Gold and Germany's Board-Prize History",
+    "socialCopy": "Frederik Svane, 22, joins Robert H\u00fcbner as a two-time Olympiad gold medallist for Germany. How the board-prize rules changed, and who still holds the national record.",
+    "publishDate": "2026-10-08",
+    "selectionScore": 86,
+    "postedFacebookAt": null,
+    "postedThreadsAt": null
   }
 ]
