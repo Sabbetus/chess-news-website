@@ -1,13 +1,13 @@
 ---
-title: "Tokayev Receives Turlov, and Kazakhstan Becomes the Model"
+title: "Tokayev Receives Turlov, Who Pitches Kazakh Chess as a Model"
 publishDate: "2026-10-08"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/meeting-tokayev-turlov-2026"
 lens: "people"
 continent: "asia"
 selectionScore: 102
-reviewStatus: "draft"
-socialCopy: "Kazakhstan's president received new FIDE chief Timur Turlov, who also runs the country's chess federation, and held up Kazakh chess as a template for other federations. 278,000 players, school programmes, and an Olympiad silver."
+reviewStatus: "published"
+socialCopy: "Kazakhstan's president received new FIDE chief Timur Turlov, who also heads the country's federation and says its growth to 278,000 active players could be an example for others."
 metaDescription: "Kazakhstan's President Tokayev met new FIDE President Timur Turlov, who also heads the national federation, to discuss chess growth and cooperation with FIDE."
 image:
   src: "./_images/Timur_Turlov.webp"
@@ -35,7 +35,7 @@ He said that over the past three years Kazakhstan has made significant progress.
 
 The key claim is about method. Turlov said a systematic approach and close cooperation among federation, government, schools and the private sector can accelerate growth. As FIDE president, he intends to help other federations build stronger systems adapted to their own circumstances, and to share Kazakhstan's practices globally.
 
-**Reading it**
+**A model for export?**
 
 The private-sector point deserves attention. Turlov comes from finance, and he has [talked about chess as a business](/articles/timur-turlov-on-chess-as-a-business-sponsors-ids-olympics/) built on sponsors. His Kazakhstan template mixes state backing with corporate money, and that is presumably the blueprint he would carry to FIDE.
 
@@ -43,4 +43,4 @@ There is a caution worth stating. Not every federation has a government eager to
 
 Turlov also briefed Tokayev on FIDE's priorities for the coming years: expanding chess in education, strengthening support for national federations, improving training for coaches and arbiters, developing youth chess, and creating more opportunities for international cooperation. Much of that list overlaps with what Tokayev wanted from Kazakhstan's own partnership with FIDE.
 
-The meeting ended with Tokayev wishing Turlov every success in his new role. The release does not mention a specific Kazakh event, so any bid to host a major tournament remains a prospect rather than an announcement.
+The meeting ended with Tokayev wishing Turlov every success in his new role.

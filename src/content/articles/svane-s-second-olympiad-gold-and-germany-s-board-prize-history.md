@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/frederik-svane-understated-olympic-rec
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Frederik Svane, 22, joins Robert Hübner as a two-time Olympiad gold medallist for Germany. How the board-prize rules changed, and who still holds the national record."
 metaDescription: "Frederik Svane became only the second German with two Olympiad golds after Robert Hübner. A look at how the individual medal rules evolved over the decades."
 image:
@@ -17,7 +17,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-7/9l2TSddv/QKK9CuEU"
 ---
 
-Frederik Svane's second Olympiad gold [puts him alongside a single predecessor](https://en.chessbase.com/post/frederik-svane-understated-olympic-record): before him, only Dr Robert Hübner had won two individual golds for Germany. Svane is 22, which leaves a lot of room for the count to grow.
+Frederik Svane's second Olympiad gold [puts him alongside a single predecessor](https://en.chessbase.com/post/frederik-svane-understated-olympic-record): before him, only Dr Robert Hübner had won two individual golds for Germany. His 2026 gold came [on board three](/articles/uzbekistan-crowned-as-samarkand-olympiad-closes-in-fireworks/), and across his two Olympiads he is unbeaten: thirteen wins and seven draws. Svane is 22, which leaves a lot of room for the count to grow.
 
 The comparison is instructive because the two golds were won in different ways, and the medal rules themselves have been rewritten many times.
 
