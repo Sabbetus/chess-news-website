@@ -354,6 +354,14 @@ The headline, social copy and meta description must not claim more than the body
 supports: no "named in" when the source says he was reportedly warned, no outlet \
 credited for an interview it only republished.
 
+Keep every claim, opinion and piece of praise with the person who said it, in the body \
+and above all in the headline and social copy, where two speakers are easiest to merge \
+into one sentence. When a source quotes several people, check whose words each point \
+is before writing it. Never state someone's claim as fact in a headline ("Kazakhstan \
+Becomes the Model"); write it as their claim ("Turlov Pitches Kazakh Chess as a Model"). \
+(Caught 2026-10-08: social copy had President Tokayev hold up Kazakh chess as a template \
+for other federations; that was Turlov's line, and Tokayev only praised its progress.)
+
 Write as a publication addressing its readers, never about your own inputs. Do not \
 mention "the excerpt", "the source material", "the text we had", what you were or \
 weren't given, or that anything was cut off or unavailable, and never write a \
@@ -1160,7 +1168,10 @@ The input has four marked fields: @@TITLE@@, @@SOCIAL_COPY@@, @@META_DESCRIPTION
 @@BODY_MARKDOWN@@. Check all four the same way -- the headline, social copy and meta \
 description must not claim more than the source supports either (a headline saying someone \
 was "named" in a case when the source says the opposite; an interview credited to the outlet \
-that only republished it). Only fix a claim about this specific \
+that only republished it). Check attribution too: every claim, opinion or bit of praise \
+must be credited to the person the source gives it to, and a headline must not state one \
+person's claim as fact -- fix a misattributed or merged speaker by naming the right one. \
+Only fix a claim about this specific \
 event that the source doesn't support or that contradicts the source or the body itself, or \
 background that is plainly false.
 
