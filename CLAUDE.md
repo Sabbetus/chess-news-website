@@ -50,7 +50,9 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-10-08: PR #60 review's reset call on the Tokayev social copy
+  stood (user first called it minor, then agreed it resets) (0 -> 1).
 - 2026-10-07: PR #59 review missed that the calendar piece opened with
   "every event on this month's list was played at classical time
   controls" (social copy: "September in South America ran on classical
@@ -65,6 +67,16 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-08: PR #60 reset (streak stays at 0). Reset (user's call: "we
+  can't make up arrogant quotes for country presidents"): the
+  Tokayev-Turlov social copy had President Tokayev hold up Kazakh chess as
+  a model for other federations -- Turlov's line -- and the headline
+  stated it as fact ("Kazakhstan Becomes the Model"); both reworded as
+  Turlov's pitch, and a line about the release cut. Minor: Svane piece
+  gained his board-three gold and unbeaten 13W/7D Olympiad record.
+  Chess960 explainer checked clean. Fixed at the source: drafting and
+  fact-check prompts now keep every claim with its speaker and never state
+  one person's claim as fact in a headline.
 - 2026-10-07: PR #59 reset after publishing (streak 1 -> 0). The calendar
   piece presented our classical-weighted shortlist as the whole month
   ("ran on classical chess"); South America's September was 514 rapid, 123
@@ -180,8 +192,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-07 (PR #59, see above).
-- Earlier resets: 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-08 (PR #60, see above).
+- Earlier resets: 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
