@@ -1,6 +1,6 @@
 ---
 title: "Chess960 Explained: Why Freestyle Shuffles the Pieces"
-publishDate: "TBD"
+publishDate: "2026-10-08"
 sourceName: "Wikipedia"
 sourceUrl: "https://en.wikipedia.org/wiki/Chess960"
 lens: "historical-parallel"
