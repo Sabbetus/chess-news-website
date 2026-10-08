@@ -1,12 +1,12 @@
 ---
 title: "Chess960 Explained: Why Freestyle Shuffles the Pieces"
-publishDate: "TBD"
+publishDate: "2026-10-08"
 sourceName: "Wikipedia"
 sourceUrl: "https://en.wikipedia.org/wiki/Chess960"
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "Chess960, or Freestyle chess: Bobby Fischer's 1996 idea, how the starting position is set up, how castling works, and why top players have taken to it."
 socialCopy: "960 possible starting positions, and no opening preparation that survives move one. How Chess960, now branded Freestyle, works."
 image:
