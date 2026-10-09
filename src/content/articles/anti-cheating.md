@@ -9,7 +9,7 @@ additionalSources:
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 metaDescription: "How Chess.com and FIDE try to catch cheaters, online and over the board, and why no method stops cheating completely."
 socialCopy: "Engines are stronger than any human, and fit in a pocket. How chess tries to keep games fair online and over the board, and why it's still a work in progress."
 image:

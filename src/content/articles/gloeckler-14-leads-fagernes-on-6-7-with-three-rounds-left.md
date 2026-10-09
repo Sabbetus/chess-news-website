@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/fagernes-autumn-2026-r7"
 lens: "results"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "14-year-old IM Christian Gloeckler beat Lukas Dotzer to reach 6/7 and keep sole first at Fagernes, half a point clear of Rinat Jumabayev. Three rounds remain, and the two leaders won't meet again."
 metaDescription: "German IM Christian Gloeckler, 14, moved to 6/7 at the Fagernes GM Swiss, half a point ahead of Jumabayev, with three rounds left and a second GM norm in view."
 image:

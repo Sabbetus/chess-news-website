@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "September in Africa: 381 players in a Cairo rapid, 372 at the KwaZulu Natal Closed II in Durban, and a nine-day classical in Tunisia. Our look back at the month's most notable events."
 metaDescription: "A review of September 2026 chess in Africa: Cairo's 381-player Adly Power Play rapid, big South African classicals, and a nine-day Tunisian memorial."
 aggregateKind: "calendar-biggest"
@@ -37,9 +37,9 @@ Further north in the country, the [Emalahleni Spring Open 2026](https://chesstou
 
 **East Africa**
 
-The [Jumuiya Ya Afrika Mashariki Grand Prix - Open](https://chesstournamentcalendar.com/tournament/jumuiya-ya-afrika-mashariki-grand-prix-open-sect-1498298/) was a two-day classical at SABIS International School in Runda, Kenya, on September 19 and 20. It had 190 players, and a [Ladies section](https://chesstournamentcalendar.com/tournament/jumuiya-ya-afrika-mashariki-grand-prix-ladies-se-1498300/) ran alongside with 35. The Gift Of Chess organized both.
+The [Jumuiya Ya Afrika Mashariki Grand Prix - Open](https://chesstournamentcalendar.com/tournament/jumuiya-ya-afrika-mashariki-grand-prix-open-sect-1498298/) was a two-day classical at SABIS International School in Runda, Kenya, on September 19 and 20. It had 84 players, and a [Ladies section](https://chesstournamentcalendar.com/tournament/jumuiya-ya-afrika-mashariki-grand-prix-ladies-se-1498300/) ran alongside with 35. The Gift Of Chess organized both.
 
-In Uganda, the [ABACUS Chess Championship 2026 - Open](https://chesstournamentcalendar.com/tournament/abacus-chess-championship-2026-open-1473642/) was played at Sports View Hotel Kireka on September 5 and 6, with 124 players. Its [Ladies section](https://chesstournamentcalendar.com/tournament/abacus-chess-championship-2026-ladies-1473643/) had 10.
+In Uganda, the [ABACUS Chess Championship 2026 - Open](https://chesstournamentcalendar.com/tournament/abacus-chess-championship-2026-open-1473642/) was played at Sports View Hotel Kireka on September 5 and 6, with 49 players. Its [Ladies section](https://chesstournamentcalendar.com/tournament/abacus-chess-championship-2026-ladies-1473643/) had 10.
 
 Kenya also hosted the one-day [4th TUM Open Championship 2026](https://chesstournamentcalendar.com/tournament/4th-tum-open-championship-2026-open-section-1493578/), a rapid at the Technical University of Mombasa with 73 players.
 
@@ -50,5 +50,3 @@ The longest event in the list was the [Mémorial Khemais Cherif: Tournoi Classiq
 In Nigeria, [South East Chess Classics](https://chesstournamentcalendar.com/tournament/south-south-zonal-chess-championship-2026-1483442/) ran four days in Umuahia, Abia State, from September 23 with 68 players.
 
 Egypt's [Assiut International Rapid Chess Tournament](https://chesstournamentcalendar.com/tournament/assiut-international-rapid-chess-tournament-11-9-1491951/) was a one-day rapid on September 11 with 106 players. Addis Ababa hosted the two-day [Ethio-Diaspora Rapid Individual Championship](https://chesstournamentcalendar.com/tournament/ethio-diaspora-rapid-individual-championship-1488782/), which had 66.
-
-Meru in Kenya held a one-day classical, the [Swiss Manager Training Recap](https://chesstournamentcalendar.com/tournament/swiss-manager-training-recap-1504168/), with 104 players.
