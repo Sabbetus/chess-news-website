@@ -55,7 +55,10 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-09: PR #61 review overruled twice (1 -> 0): user called the
+  calendar count error minor, not a reset; and two Adams lines I wanted
+  cut as "not in the source" were sound additions (kept, one softened).
 - 2026-10-08: PR #60 review's reset call on the Tokayev social copy
   stood (user first called it minor, then agreed it resets) (0 -> 1).
 - 2026-10-07: PR #59 review missed that the calendar piece opened with
@@ -71,7 +74,16 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-09: PR #61 clean (streak 0 -> 1, user's call: borderline, the
+  pipeline did what it was told). Africa calendar piece gave two "Open"
+  sections their events' summed counts (Jumuiya 190 vs 84, ABACUS 124 vs
+  49) -- the 2026-10-07 section merge summed youth sections in under the
+  Open's name; it now keeps the section's own count. A one-day "Swiss
+  Manager Training Recap" was cut. Adams 3.Bc4 piece: "never challenges
+  the centre" softened, "later rounds" dropped (the Olympiad is over).
+  Fagernes round 7 and the anti-cheating explainer checked clean (the
+  explainer's arbiters photo kept, user's call).
 - 2026-10-08: PR #60 reset (streak stays at 0). Reset (user's call: "we
   can't make up arrogant quotes for country presidents"): the
   Tokayev-Turlov social copy had President Tokayev hold up Kazakh chess as
