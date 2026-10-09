@@ -12,6 +12,7 @@ image:
   src: "./_images/the-curse-of-the-draw-follows-the-grand-chess-tour-to-st-louis.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVincent_Keymer_in_2025.jpg"
+  caption: "Vincent Keymer"
 ---
 
 [Day one of the 2026 Grand Chess Tour Finals](https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-1) gave St. Louis exactly the kind of chess that makes commentators tear their hair out: two fights, two full points on offer, zero decisive results. In the headline semifinal, a Gen Z clash between GMs Vincent Keymer and Praggnanandhaa Rameshbabu saw both players hold a big advantage at different points before the game fizzled to a draw. In the other bracket, dubbed the Match of the Millennials, GM Fabiano Caruana survived some anxious moments to hold GM Wesley So to a draw as well.

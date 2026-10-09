@@ -12,6 +12,7 @@ image:
   src: "./_images/eastern-asia-s-youngest-players-just-wrote-another-chapter-in-the-region-s-chess.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJu_Wenjun_in_2024_%28cropped%29.jpg"
+  caption: "Ju Wenjun"
 ---
 
 The rapid portion of the Eastern Asia Youth Chess Championship 2026 has wrapped up, with new champions crowned across six separate age categories. According to [FIDE's report on the event](https://www.fide.com/rapid-champions-crowned-at-eastern-asia-youth-chess-championship-2026/), the championship ran Boys and Girls sections from Under-8 through Under-18, with young players representing federations from across the region competing for titles in each bracket.

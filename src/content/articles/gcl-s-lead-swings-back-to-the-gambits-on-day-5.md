@@ -12,6 +12,7 @@ image:
   src: "./_images/Javokhir_Sindarov.webp"
   credit: "MiroJP, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov.jpg"
+  caption: "Javokhir Sindarov"
 ---
 
 The Global Chess League table has a habit of flipping on its head every couple of days, and Wednesday in Bengaluru was no exception. FYERS American Gambits [added to the misery of Triveni Continental Kings by inflicting yet another defeat on the two-time champions](https://www.fide.com/gcl-2026-day-5-gambits-beat-kings-pipers-defeat-mumba-masters-as-race-to-the-final-heats-up/), beating them 8-5 to reclaim top spot from Alpine APL Pipers, who had briefly led after their own win earlier in the day.

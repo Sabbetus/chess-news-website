@@ -13,6 +13,7 @@ image:
   src: "./_images/Timur_Turlov_in_2016.webp"
   credit: "Dikhan, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov_in_2016.jpg"
+  caption: "Timur Turlov"
 ---
 
 The FIDE General Assembly met on 26-27 September in Samarkand, alongside the 46th Olympiad and the FIDE Congress. FIDE's [summary of the main decisions](https://www.fide.com/main-decisions-of-the-fide-general-assembly-2026/) covers a leadership slate, a charter change, a new rating list and a hosting plan for 2030. Most of the lasting business sits outside the elections.

@@ -15,6 +15,7 @@ image:
   src: "./_images/Nodirbek_Yakubboev_and_Nodirbek_Abdusattorov.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Yakubboev_and_Nodirbek_Abdusattorov.jpg"
+  caption: "Nodirbek Yakubboev and Nodirbek Abdusattorov"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-6/QPxrBgKF/XaYBqN3u"
 ---

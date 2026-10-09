@@ -12,6 +12,7 @@ image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANakamura_Hikaru_with_blue_t-shirt_%2830094046333%29.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 GM Hikaru Nakamura [won Bullet Brawl for the third consecutive week on September 26](https://www.chess.com/news/view/hikaru-nakamura-wins-bullet-brawl-09-26-2026), finishing with 172 points, 25 clear of the field. It was his 68th Bullet Brawl title and his 19th of 2026.

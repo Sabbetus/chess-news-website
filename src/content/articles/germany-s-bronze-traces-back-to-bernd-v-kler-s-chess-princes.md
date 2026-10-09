@@ -13,6 +13,7 @@ image:
   src: "./_images/Rasmus_Svane_Dortmunder_Schachtage.webp"
   credit: "Paul Meyer-Dunker, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARasmus_Svane_Dortmunder_Schachtage.jpg"
+  caption: "Rasmus Svane"
 ---
 
 Germany's [bronze medal at the Samarkand Olympiad](https://en.chessbase.com/post/princes-of-samarkand-german-team) is its first for a men's team in 26 years. A feature in the Thüringer Allgemeine, republished by ChessBase, argues that the roots of the result lie in Thuringia and in one man's long-running youth project.

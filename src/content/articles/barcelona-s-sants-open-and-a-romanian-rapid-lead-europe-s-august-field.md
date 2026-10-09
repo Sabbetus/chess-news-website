@@ -16,6 +16,7 @@ image:
   src: "./_images/barcelona-s-sants-open-and-a-romanian-rapid-lead-europe-s-august-field.webp"
   credit: "Picapedres, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARobert_Aloma_Sants_2015.jpg"
+  caption: "Robert Aloma"
 ---
 
 August's tournament calendar in Europe was topped, by registration numbers at least, by a rapid event in Transylvania rather than one of the continent's classical institutions. The [Alba Grand Prix Rapid 2026](https://chesstournamentcalendar.com/tournament/alba-grand-prix-rapid-2026-1303046/) in Alba Iulia, Romania drew 402 players over a single weekend (August 1-2), the biggest field recorded on the continent this month among tournaments with known player counts.

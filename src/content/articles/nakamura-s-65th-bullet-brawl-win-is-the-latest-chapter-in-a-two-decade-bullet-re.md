@@ -13,6 +13,7 @@ image:
   credit: "Andreas Kontokanis from Piraeus, Greece - photo
 DS28 - crop., CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHikaru_Nakamura_%282016%29_crop.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 Hikaru Nakamura [picked up his 65th career Bullet Brawl title](https://www.chess.com/news/view/hikaru-nakamura-wins-bullet-brawl-aug-29-2026) on Saturday, his 16th of 2026 alone, scoring 51/65 for 170 points and finishing 23 points clear of the field even after visibly coasting late in the arena. He put together a 19-game winning streak along the way. It's the kind of result that barely registers as news anymore, and that's precisely the point worth dwelling on.

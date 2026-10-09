@@ -12,6 +12,7 @@ image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANakamura_Hikaru_with_blue_t-shirt_%2830094046333%29.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 Hikaru Nakamura [won Bullet Brawl for a record 66th time](https://www.chess.com/news/view/nakamura-wins-bullet-brawl-sept-12) on Saturday, September 12, and the margin made the result feel almost routine for him and staggering for everyone else.

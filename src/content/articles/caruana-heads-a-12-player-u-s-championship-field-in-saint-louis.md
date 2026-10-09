@@ -13,6 +13,7 @@ image:
   src: "./_images/Fabiano_Caruana_at_the_Candidates_Tournament_2024_03.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_at_the_Candidates_Tournament_2024_03.jpg"
+  caption: "Fabiano Caruana"
 ---
 
 The Saint Louis Chess Club has [announced the fields for the 2026 U.S. Championship and U.S. Women's Chess Championship](https://en.chessbase.com/post/us-championships-2026-announcement). Each event has 12 players, competing over the board from Oct. 8 to 23, with Round 1 on Oct. 9. The total prize fund is more than $400,000.

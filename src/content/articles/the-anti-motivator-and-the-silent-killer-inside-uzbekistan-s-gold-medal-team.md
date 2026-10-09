@@ -12,6 +12,7 @@ image:
   src: "./_images/Javokhir_Sindarov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_chess_player.jpg"
+  caption: "Javokhir Sindarov"
 ---
 
 After the closing ceremony in Samarkand, Uzbekistan's five gold medalists sat down with ChessBase India's Sagar Shah, and [the resulting interview](https://en.chessbase.com/post/uzbekistan-winners-interview-olympiad-2026) is less a victory lap than a portrait of how this team actually works. The results are in [our final-round report](/articles/madaminov-s-unbeaten-5-5-7-seals-uzbekistan-s-second-gold/). This is about the personalities behind a 10-0-1 record, and they are considerably funnier than that record suggests.

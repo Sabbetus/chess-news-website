@@ -18,6 +18,7 @@ image:
   src: "./_images/Javokhir_Sindarov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_chess_player.jpg"
+  caption: "Javokhir Sindarov"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-11/QJSVWmNu/gMpc4emo"
 ---

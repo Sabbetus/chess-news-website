@@ -13,6 +13,7 @@ image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANakamura_Hikaru_with_blue_t-shirt_%2830094046333%29.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 GM Hikaru Nakamura [claimed the $400 first prize at Bullet Brawl for the fourth week in a row](https://www.chess.com/news/view/hikaru-nakamura-wins-bullet-brawl-oct-3-2026), finishing the two-hour arena on 155 points. The win also gives him the record for most Bullet Brawl victories in a single calendar year, and he got there with three months of 2026 still to play.

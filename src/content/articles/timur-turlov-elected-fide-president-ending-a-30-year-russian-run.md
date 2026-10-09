@@ -15,6 +15,7 @@ image:
   src: "./_images/Timur_Turlov.webp"
   credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
+  caption: "Timur Turlov"
 ---
 
 Chess has a new president, and the vote wasn't close in the end even though it took two rounds to get there. [Timur Turlov was elected the eighth President of FIDE](https://www.fide.com/timur-turlov-elected-president-of-fide/) on September 26 at the FIDE General Assembly in Samarkand, held alongside the 46th Chess Olympiad.

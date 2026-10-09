@@ -13,6 +13,7 @@ image:
   src: "./_images/Nakamura_Hikaru_with_blue_t-shirt__30094046333.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANakamura_Hikaru_with_blue_t-shirt_%2830094046333%29.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 Hikaru Nakamura came to Titled Tuesday on October 6 as the first player to reach 3500 in Chess.com blitz, and [he left it with a record of 3503 but without the trophy](https://www.chess.com/news/view/artemiev-wins-titled-tuesday-october-6-2026). GM Vladislav Artemiev beat him in the final round and took the title. Nakamura was streaming live from Sithonia, Greece, with spectators watching in person.

@@ -12,6 +12,7 @@ image:
   src: "./_images/SrinathChess.webp"
   credit: "22Anshika, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASrinathChess.jpg"
+  caption: "Srinath Narayanan"
 ---
 
 Every two years the Olympiad tries to top itself, and Samarkand has managed it by a wide margin. The 46th FIDE Chess Olympiad, running from September 16 through 27, will field [208 teams in the Open section and 192 in the Women's event](https://www.fide.com/samarkand-ready-for-a-record-breaking-chess-olympiad/), a combined 400 that smashes the previous mark of 380 teams set in Budapest in 2024.

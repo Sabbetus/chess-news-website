@@ -12,6 +12,7 @@ image:
   src: "./_images/Nigel_Short__2018.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
+  caption: "Nigel Short"
 ---
 
 Poland no longer has to share the top of the table. Going into the penultimate round of the 3rd FIDE Chess Olympiad for People with Disabilities in Samarkand, [Poland had been tied at the summit with the Czech Republic](/articles/cuba-s-unbeaten-run-ends-as-poland-and-czechia-share-the-lead/).

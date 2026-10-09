@@ -12,6 +12,7 @@ image:
   src: "./_images/Yasser_Seirawan.webp"
   credit: "Georgios Souleidis, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AYasser_Seirawan.jpg"
+  caption: "Yasser Seirawan"
 ---
 
 Chess.com has put a number and a date on its newest variant event. The [Chess.com Seirawan Chess Championship runs from September 30 to October 2, with a $2,500 prize fund attached](https://www.chess.com/news/view/announcing-chesscom-seirawan-chess-championship-2026).

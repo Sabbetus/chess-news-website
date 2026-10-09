@@ -13,6 +13,7 @@ image:
   src: "./_images/Garry_Kasparov__37097592314.webp"
   credit: "Gage Skidmore from Peoria, AZ, United States of America, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGarry_Kasparov_%2837097592314%29.jpg"
+  caption: "Garry Kasparov"
 tweetEmbeds:
   - url: "https://x.com/elmundoes/status/2105177480487158218"
     author: "EL MUNDO"

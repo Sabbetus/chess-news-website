@@ -13,6 +13,7 @@ image:
   src: "./_images/Timur_Turlov.webp"
   credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
+  caption: "Timur Turlov"
 ---
 
 Kazakhstan's head of state has formally welcomed the new head of world chess. According to a FIDE press release carried by ChessBase, President Kassym-Jomart Tokayev [received newly elected FIDE President Timur Turlov](https://en.chessbase.com/post/meeting-tokayev-turlov-2026) and congratulated him on his election.

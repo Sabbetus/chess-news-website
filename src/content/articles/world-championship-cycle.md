@@ -13,6 +13,7 @@ image:
   src: "./_images/Fabiano_Caruana_-_R_Praggnanandhaa__Candidates_Tournament_2024.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_-_R_Praggnanandhaa%2C_Candidates_Tournament_2024.jpg"
+  caption: "Fabiano Caruana and R Praggnanandhaa"
 ---
 
 The world champion doesn't pick a challenger. The challenger has to come through a two-year qualifying cycle run by FIDE, ending at the [Candidates Tournament](/events/candidates-tournament/), where eight players compete for one place in the title match.

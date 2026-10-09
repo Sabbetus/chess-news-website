@@ -13,6 +13,7 @@ image:
   src: "./_images/Wesley_So_Tata_2023_-_63.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_Tata_2023_-_63.jpg"
+  caption: "Wesley So"
 tweetEmbeds:
   - url: "https://x.com/WesleySo_/status/2104985014354239921"
     author: "Wesley So"

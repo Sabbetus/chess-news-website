@@ -17,6 +17,7 @@ image:
   src: "./_images/Javokhir_Sindarov_-.webp"
   credit: "Bunyod Rustamov, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_-_%D0%96%D0%B0%D0%B2%D0%BE%D1%85%D0%B8%D1%80_%D0%A1%D0%B8%D0%BD%D0%B4%D0%B0%D1%80%D0%BE%D0%B2.jpg"
+  caption: "Javokhir Sindarov"
 ---
 
 Round three of the Chess Olympiad in Samarkand was supposed to be about the favorites stretching their legs. Instead, the Women's section produced two results nobody saw coming: [28th-seeded Argentina knocked out Ukraine, and Iran beat eighth-seeded France 3-1](https://www.fide.com/olympiad-day-3-strong-starts-and-stunning-surprises-in-samarkand/). Both wins landed hard enough that FIDE itself flagged them as the biggest surprises of the day.

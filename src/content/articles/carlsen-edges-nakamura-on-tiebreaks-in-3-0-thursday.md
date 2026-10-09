@@ -12,6 +12,7 @@ image:
   src: "./_images/FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.webp"
   credit: "Lennart Ootes, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 They aren't playing in the ongoing Chess Olympiad in Samarkand, but that didn't stop GM Magnus Carlsen and GM Hikaru Nakamura from showing up for [the debut edition of 3+0 Thursday on September 24](https://www.chess.com/news/view/carlsen-maghsoodloo-ashraf-3-0-thursday-09-24-2026), Chess.com's new weekly bullet series. The debut split into three separate 11-round Swiss brackets.

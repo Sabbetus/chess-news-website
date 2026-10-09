@@ -12,6 +12,7 @@ image:
   src: "./_images/carlsen-s-escape-extends-old-nepomniachtchi-pattern.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIan_Nepomniachtchi_vs_Nodirbek_Abdusattorov.jpg"
+  caption: "Ian Nepomniachtchi and Nodirbek Abdusattorov"
 ---
 
 Magnus Carlsen needed an escape act to keep his Global Chess League team perfect, and the man on the other side of the board was the opponent who has given him more trouble than almost anyone else in the last five years.

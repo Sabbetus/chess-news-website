@@ -12,6 +12,7 @@ image:
   src: "./_images/Viswanathan_Anand__2016.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_%282016%29.jpeg"
+  caption: "Viswanathan Anand"
 ---
 
 Chess has always ranked its players down to the decimal point, but it has never had a proper night out to thank everyone else who keeps the sport running. That changed in Samarkand, where FIDE staged the [inaugural FIDE Excellence Awards](https://www.fide.com/inaugural-fide-excellence-awards-celebrate-the-people-and-achievements-shaping-chess-worldwide/) alongside the 46th Chess Olympiad, a ceremony built specifically to reward federations, organizers, creators and initiatives that ratings and Elo numbers were never designed to capture.

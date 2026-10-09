@@ -13,6 +13,7 @@ image:
   src: "./_images/Yagiz_Kaan_Erdogmus_GM.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AYagiz_Kaan_Erdogmus_GM.jpg"
+  caption: "Yagiz Kaan Erdogmus"
 ---
 
 Chess patrons usually fund a tournament or a federation. Turkish entrepreneur Evren Ucok has taken a different route. According to a ChessBase feature by FM Selim Gurcan, [he has spent over $5 million on chess causes in three years](https://en.chessbase.com/post/evren-ucok-syoung-minds), and most of it goes into a handful of very young players. Gurcan is not a neutral observer: a friend of Ucok's since their teens, he helps run the programme.

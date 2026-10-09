@@ -12,6 +12,7 @@ image:
   src: "./_images/Ashutosh_Kumar_Singh.webp"
   credit: "AIXOSQuiz, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAshutosh_Kumar_Singh.webp"
+  caption: "Ashutosh Kumar Singh"
 ---
 
 Cuba is the only team left with a perfect record at the 3rd FIDE Chess Olympiad for People with Disabilities, and it got there the hard way. On Monday in Samarkand, [Cuba beat Israel 2½–1½ in a direct clash between two of the tournament's three unbeaten teams](https://www.fide.com/cuba-takes-sole-lead-as-the-olympiad-for-people-with-disabilities-crosses-its-halfway-mark/), stretching its run to four wins from four matches and eight match points overall.

@@ -12,6 +12,7 @@ image:
   src: "./_images/carlsen-returns-but-gcl-day-one-belongs-to-sindarov.webp"
   credit: "Miroslav.vajdic, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_-_Zagreb.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 Magnus Carlsen walked back into the Global Chess League on Saturday for the first time in a year, and by the end of the night his team, the Alpine APL Pipers, had a [10-8 win over CheQ Mumba Masters](https://www.fide.com/gcl-2026-fyers-american-gambits-make-a-perfect-start/) to show for it. That result is loaded with irony that fans in Bengaluru and online have already started chewing over: the Pipers won the whole thing last season without him.

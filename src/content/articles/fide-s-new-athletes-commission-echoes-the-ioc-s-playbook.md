@@ -12,6 +12,7 @@ image:
   src: "./_images/fide-s-new-athletes-commission-echoes-the-ioc-s-playbook.webp"
   credit: "Ygrek, Public domain, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_08_19_2007.jpg"
+  caption: "Viswanathan Anand"
 ---
 
 FIDE has [opened the call for candidates for the upcoming elections to its Athletes Commission](https://www.fide.com/fide-announces-call-for-candidates-for-athletes-commission-elections/), a body meant to give players a formal seat at the table when the federation makes decisions that affect them. The commission will have between five and nine members, with mandatory representation of both genders, and the Council will settle on the exact number based on how many candidates apply and how ready they are to actually do the work.

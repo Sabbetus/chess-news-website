@@ -70,6 +70,10 @@ const articles = defineCollection({
         src: image(),
         credit: z.string(),
         sourceUrl: z.string().url(),
+        // The pictured person's name, shown under the photo on the
+        // article page. Set only for photos of a person (see
+        // person_caption in scripts/images.py); boards and logos have none.
+        caption: z.string().optional(),
       })
       .optional(),
     // A real, embeddable Lichess board for the one specific game a piece

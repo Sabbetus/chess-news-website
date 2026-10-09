@@ -12,6 +12,7 @@ image:
   src: "./_images/a-second-s-difference-gcl-s-prodigy-board-controversy.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AIan_Nepomniachtchi_at_the_Candidates_Tournament_2024_02.jpg"
+  caption: "Ian Nepomniachtchi"
 ---
 
 The Global Chess League table flipped again on Day 4 in Bengaluru, but the number everyone was talking about afterward was a single second on a chess clock. [FYERS American Gambits reclaimed the top spot in the league with a win over PBG Alaskan Knights](https://www.fide.com/gcl-2026-day-4-fyers-american-gambits-go-on-top-with-win-over-pbg-alaskan-knights-triveni-continental-kings-upset-overnight-leaders-alpine-apl-pipers/), helped along by Triveni Continental Kings' shock upset of overnight leaders Alpine APL Pipers. But the match that will be remembered from this round wasn't the one that decided the standings.

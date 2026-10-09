@@ -308,3 +308,13 @@ def test_social_copy_never_contains_chess_com_domain():
     from social_text import delink
 
     assert delink("Chess.com's Titled Tuesday on chess.com") == "Chesscom's Titled Tuesday on chesscom"
+
+
+def test_person_caption_only_for_people():
+    from images import person_caption
+
+    url = "https://commons.wikimedia.org/wiki/File%3A"
+    assert person_caption(url + "Rinat_Jumabayev_3rd_Uzchess_cup.jpg", ["Christian Gloeckler", "Rinat Jumabayev"]) == "Rinat Jumabayev"
+    assert person_caption(url + "2021-Matthias-Bluebaum.JPG", ["Matthias Blübaum"]) == "Matthias Blübaum"
+    assert person_caption(url + "FIDE_text_on_white.svg", ["FIDE"]) is None
+    assert person_caption(url + "Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg", ["World Youth"]) is None

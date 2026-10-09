@@ -12,6 +12,7 @@ image:
   src: "./_images/renato-terry-s-bullet-arena-dominance-echoes-titled-tuesday-s-nakamura-era.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Hikaru_Nakamura_(2016)_crop.jpg"
+  caption: "Hikaru Nakamura"
 ---
 
 Eighteen. That's how many 3+0 Thursday titles IM Renato Terry has now collected after his [9.5/11 performance in the day's final event](https://www.chess.com/news/view/lazavik-maghsoodloo-terry-3-0-thursday-09-03-2026), a number that starts to look less like a hot streak and more like a monopoly.

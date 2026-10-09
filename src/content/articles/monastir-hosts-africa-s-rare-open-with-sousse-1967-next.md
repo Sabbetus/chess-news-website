@@ -13,6 +13,7 @@ image:
   src: "./_images/Mihail_Marin_plays_a_move__29475971165.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMihail_Marin_plays_a_move_%2829475971165%29.jpg"
+  caption: "Mihail Marin"
 ---
 
 Fresh from the Olympiad, a group of titled players is [heading to Tunisia for the Sahel Chess Festival](https://en.chessbase.com/post/sahel-chess-festival-2026-preview-2), which runs October 24 to November 1, 2026 in the resort town of Monastir. About 300 international competitors are expected at the four-star Hotel El Habib on the central coast.

@@ -12,6 +12,7 @@ image:
   src: "./_images/caruana-s-italian-job-an-old-opening-finds-new-teeth-in-the-grand-chess-tour-fin.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_in_2025.jpg"
+  caption: "Fabiano Caruana"
 ---
 
 Fabiano Caruana didn't need a novelty from the computer age to [take the first game of his 2026 Grand Chess Tour Finals title match](https://www.chess.com/news/view/2026-grand-chess-tour-finals-day-4) against Praggnanandhaa Rameshbabu. He needed the Italian Game, chess's oldest documented opening, dressed up in a shape modern engines still haven't fully tamed.

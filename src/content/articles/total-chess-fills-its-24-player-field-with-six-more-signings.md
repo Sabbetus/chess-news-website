@@ -12,6 +12,7 @@ image:
   src: "./_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 The Total Chess World Championship Tour has [completed its 24-player field](https://www.fide.com/total-chess-world-championship-tour-announces-six-more-stars-for-budapest-pilot/) for its Budapest pilot event, adding Levon Aronian, Liem Le, Jorden van Foreest, Abhimanyu Mishra, Shakhriyar Mamedyarov and Andrew Hong to a lineup already headlined by World No. 1 Magnus Carlsen and World No. 3 Fabiano Caruana. The pilot runs November 10 to 20, 2026, at the Anantara New York Palace Budapest Hotel in Hungary.

@@ -39,7 +39,7 @@ from chess_results_standings import (
 from continents import CONTINENT_SLUGS
 from game_links import link_moves
 from game_pgn import find_game_pgn
-from images import fallback_image, localize_image, pick_image_for_item
+from images import fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
     SAN_MOVE_RE,
@@ -1585,6 +1585,11 @@ def draft_one(
         localized = image if image.get("src") else localize_image(image)
         if localized:
             frontmatter["image"] = localized
+            # A person's photo gets their name under it on the article page
+            # (lesser-known players read as anyone without one).
+            caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
+            if caption:
+                frontmatter["image"] = {**localized, "caption": caption}
     # Every article has a photo: a search hit whose download failed falls
     # back to the committed pool too, not to the site's SVG placeholder.
     if "image" not in frontmatter:

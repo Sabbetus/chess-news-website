@@ -12,6 +12,7 @@ image:
   src: "./_images/Viswanathan_Anand__2016.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_%282016%29.jpeg"
+  caption: "Viswanathan Anand"
 ---
 
 FIDE just landed the kind of sponsor that most sports federations spend years chasing, and the announcement is worth reading past the press-release enthusiasm. Salesforce has [signed a multi-year partnership with FIDE](https://www.fide.com/salesforces-agentforce-360-powers-the-future-of-chess-with-fide/) that makes it Title Sponsor of the World Championship Matches through 2026 and 2028, plus the 2027 Women's Match, and the official AI partner behind the FIDE Rankings.

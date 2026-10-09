@@ -15,6 +15,7 @@ image:
   src: "./_images/Hans_Niemann_Uzchess_cup_3_masters.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHans_Niemann_Uzchess_cup_3_masters.jpg"
+  caption: "Hans Niemann"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-5/6XsrFkyQ/k4sUWWvY"
 ---

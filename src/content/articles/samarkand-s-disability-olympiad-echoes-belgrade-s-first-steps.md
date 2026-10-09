@@ -12,6 +12,7 @@ image:
   src: "./_images/Kimsanboyev_Axadxon.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKimsanboyev_Axadxon.jpg"
+  caption: "Axadxon Kimsanboyev"
 ---
 
 The third FIDE Chess Olympiad for People with Disabilities opened in Samarkand with [41 teams beginning play in Round 1](https://www.fide.com/a-universal-language-chess-inclusion-and-friendship-take-center-stage-in-samarkand/), and the ceremonial first move fell to Akaki Iashvili, FIDE's Special Tasks Director, and Komil Sindarov, Vice President of the Uzbekistan Chess Federation, on Board 1 of Poland against Mongolia.

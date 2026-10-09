@@ -13,6 +13,7 @@ image:
   src: "./_images/Rinat_Jumabayev_3rd_Uzchess_cup.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARinat_Jumabayev_3rd_Uzchess_cup.jpg"
+  caption: "Rinat Jumabayev"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/fagernes-international-autumn-2026-gm/round-7/tWSzFmNu/YGEQ4V73"
 ---

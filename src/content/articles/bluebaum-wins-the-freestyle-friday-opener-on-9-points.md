@@ -13,6 +13,7 @@ image:
   src: "./_images/2021-Matthias-Bluebaum.webp"
   credit: "Krzysztof Szeląg, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2021-Matthias-Bluebaum.JPG"
+  caption: "Matthias Bluebaum"
 ---
 
 GM Matthias Bluebaum opened the new Freestyle Friday season on October 2 by [winning the tournament outright with nine points](https://www.chess.com/news/view/bluebaum-wins-freestyle-friday-october-2-2026). Three players followed on 8.5/11: GMs Oleksandr Bortnyk, Pranav Venkatesh and SL Narayanan.

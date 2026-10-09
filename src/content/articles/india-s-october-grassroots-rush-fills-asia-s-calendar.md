@@ -16,6 +16,7 @@ image:
   src: "./_images/WGM_NANDHIDHAA_P_V_WINNING_NATIONAL_CHESS_TITLE-_2024.webp"
   credit: "NOVKILOSIERRA, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWGM_NANDHIDHAA.P.V_WINNING_NATIONAL_CHESS_TITLE-_2024.jpg"
+  caption: "Nandhidhaa P.V."
 ---
 
 Asia's October slate runs to 181 tracked tournaments, and once again India supplies most of the volume and nearly all of the biggest fields. The month opens with a mix of national opens, school championships, and rapid weekenders spread from Kerala to Kolkata, with a few regional entries from Indonesia, Malaysia, and Bangladesh breaking up the pattern.

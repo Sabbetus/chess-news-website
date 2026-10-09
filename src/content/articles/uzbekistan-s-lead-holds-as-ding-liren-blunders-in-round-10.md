@@ -15,6 +15,7 @@ image:
   src: "./_images/Nodirbek_Abdusattorov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Abdusattorov_chess_player.jpg"
+  caption: "Nodirbek Abdusattorov"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-10/WCYaLfnP/mu9rS3Qe"
 ---

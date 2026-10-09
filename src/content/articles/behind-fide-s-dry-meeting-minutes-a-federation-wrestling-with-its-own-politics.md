@@ -12,6 +12,7 @@ image:
   src: "./_images/behind-fide-s-dry-meeting-minutes-a-federation-wrestling-with-its-own-politics.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
+  caption: "Nigel Short"
 ---
 
 Most FIDE Council meeting reports read like tax filings: a list of numbered resolutions, terse and bloodless. But the [minutes from the 2nd FIDE Council Meeting on August 23, 2026](https://www.fide.com/2nd-fide-council-meeting-august-23-2026-list-of-decisions/) are worth a second look, because buried inside the bureaucratic language is a federation quietly managing several political fires at once.

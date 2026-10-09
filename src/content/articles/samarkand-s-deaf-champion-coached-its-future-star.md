@@ -12,6 +12,7 @@ image:
   src: "./_images/Zaynidinov_Sirojiddin.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AZaynidinov_Sirojiddin.jpg"
+  caption: "Sirojiddin Zaynidinov"
 ---
 
 Three teams now sit alone at the top of the 3rd FIDE Chess Olympiad for People with Disabilities in Samarkand, but the standings are only half the story coming out of Uzbekistan this week. [Cuba, Israel and the Czech Republic emerged from Round 3 on 6/6](https://www.fide.com/from-inclusion-to-inspiration-three-teams-lead-after-day-3-in-samarkand/), after eight teams had entered the day with perfect scores. Round 4 now pits Cuba against Israel directly, while the Czech Republic faces Germany.

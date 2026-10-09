@@ -16,6 +16,7 @@ image:
   src: "./_images/The_legend_of_chess_Garry_Kasparov_playing_with_young_Tunisian_players___13308676395.webp"
   credit: "khaled  abdelmoumen from bizerte, tunisia, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AThe_legend_of_chess_Garry_Kasparov_playing_with_young_Tunisian_players%21_%2813308676395%29.jpg"
+  caption: "Garry Kasparov with young Tunisian players"
 ---
 
 Africa's October 2026 calendar carries 22 tracked tournaments, spread from Morocco to Uganda, and the entry that stands out most for sheer scale is in Tunisia.

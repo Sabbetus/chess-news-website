@@ -12,6 +12,7 @@ image:
   src: "./_images/gcl-s-wild-day-3-gambits-fall-pipers-seize-the-lead.webp"
   credit: "Lennart Ootes, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:FIDE_World_FR_Chess_Championship_2019_-_Magnus_Carlsen.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 Three days into Global Chess League Season 4, the top of the table has already been turned upside down. Monday's round produced the kind of results that make franchise chess format genuinely unpredictable: a team can lose a match and still end the day in first place, while last week's unbeaten leaders can lose twice in a row and drop to second. That's exactly what happened as [Alpine APL Pipers seized the lead](https://www.fide.com/gcl-2026-day-3-alpine-apl-pipers-seize-the-lead/) despite dropping one of their two matches.

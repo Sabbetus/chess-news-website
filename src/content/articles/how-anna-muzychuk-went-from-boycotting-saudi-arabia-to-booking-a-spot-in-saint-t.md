@@ -12,6 +12,7 @@ image:
   src: "./_images/how-anna-muzychuk-went-from-boycotting-saudi-arabia-to-booking-a-spot-in-saint-t.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnna_Muzychuk_at_Gibraltar.png"
+  caption: "Anna Muzychuk"
 ---
 
 Bibisara Assaubayeva and Anna Muzychuk have punched their tickets to the 2026 WR Women's Chess Tour Grand Final by [winning the tour's European leg in Saint-Tropez](https://www.chess.com/news/view/assaubayeva-anna-muzychuk-2026-wr-womens-chess-tour-europe), a result that closes the qualifying field for the year. Assaubayeva needed two rounds of armageddon to get there, which is its own kind of drama, but it's Muzychuk's presence in the field that carries the longer story.

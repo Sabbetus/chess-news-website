@@ -13,6 +13,7 @@ image:
   src: "./_images/MagnusCarlsen24.webp"
   credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnusCarlsen24.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 A chess rating is a prediction, not a score. It estimates how a player will do against another rated player, and it moves after every rated game depending on whether they did better or worse than expected.

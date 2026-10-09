@@ -12,6 +12,7 @@ image:
   src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APraggnanandhaa_in_2025.jpg"
+  caption: "R Praggnanandhaa"
 ---
 
 For most of the last three decades, Indian chess meant one name. Viswanathan Anand carried the country's ambitions almost single-handedly from the early 1990s through his world championship reign, and for a long time there was no obvious successor waiting behind him. That gap is the reason this moment feels different.

@@ -12,6 +12,7 @@ image:
   src: "./_images/the-business-case-for-gcl-season-4-why-bengaluru-twice-makes-financial-sense.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADivya_Deshmukh_in_2025.jpg"
+  caption: "Divya Deshmukh"
 ---
 
 Global Chess League returning to India for a second straight season, this time in Bengaluru, is not really a chess decision. It is a market decision, and the numbers behind it tell you why franchise investors keep signing on.

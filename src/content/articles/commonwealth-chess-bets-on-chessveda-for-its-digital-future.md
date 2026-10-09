@@ -12,6 +12,7 @@ image:
   src: "./_images/Nandan_jha_Facilitating_Shri_M_Venkaiah_Naidu_Vice_President_of_India.webp"
   credit: "Delhi1241, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANandan_jha_Facilitating_Shri_M.Venkaiah_Naidu_Vice_President_of_India.jpg"
+  caption: "Nandan Jha with M. Venkaiah Naidu"
 ---
 
 The Commonwealth Chess Association has found itself a digital partner, and it picked the moment carefully. On the sidelines of the 46th Chess Olympiad in Samarkand, [the CCA signed a partnership agreement with Chessveda](https://www.fide.com/commonwealth-chess-association-partners-with-chessveda-to-expand-digital-chess-across-commonwealth-nations/), an integrated online chess platform, to jointly build out digital chess activity across Commonwealth member nations.

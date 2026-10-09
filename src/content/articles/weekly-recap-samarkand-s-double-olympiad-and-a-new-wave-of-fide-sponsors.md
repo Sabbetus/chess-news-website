@@ -10,6 +10,7 @@ image:
   src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APraggnanandhaa_in_2025.jpg"
+  caption: "R Praggnanandhaa"
 ---
 
 Samarkand carried most of this week's weight, hosting both the Disability Olympiad and the record-breaking 46th Chess Olympiad back to back. Around that, FIDE lined up a new commercial partner for the World Championship, and the usual scattering of upsets and calendar data rounded things out.

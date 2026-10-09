@@ -12,6 +12,7 @@ image:
   src: "./_images/carlsen-s-perfect-paris-run-shows-where-chess-money-is-actually-growing.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 Magnus Carlsen didn't just [win the Chess Esports World Cup in Paris](https://www.chess.com/news/view/magnus-carlsen-wins-2026-esports-world-cup) again, he did it without dropping a single game across the entire event. In the final, he beat Denis Lazavik by identical 3-1 scorelines in both sets, sweeping two decisive wins in each. Lazavik, a rising Belarusian grandmaster still building his reputation on the fast-time-control circuit, never found a way back into either set.

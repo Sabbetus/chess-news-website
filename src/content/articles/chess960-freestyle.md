@@ -13,6 +13,7 @@ image:
   src: "./_images/Bobby_Fischer_1960_in_Leipzig_in_color.webp"
   credit: "Ulrich Kohls (Bundesarchiv), colourised by Karpouzi, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABobby_Fischer_1960_in_Leipzig_in_color.jpg"
+  caption: "Bobby Fischer"
 ---
 
 Chess960 keeps every rule of chess except the starting position. The pieces on the back rank are shuffled before each game, and the pawns stay where they are. Black's pieces mirror White's.

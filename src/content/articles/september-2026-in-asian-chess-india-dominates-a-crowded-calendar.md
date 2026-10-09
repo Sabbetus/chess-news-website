@@ -16,6 +16,7 @@ image:
   src: "./_images/september-2026-in-asian-chess-india-dominates-a-crowded-calendar.webp"
   credit: "NOVKILOSIERRA, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWGM_NANDHIDHAA.P.V_WINNING_NATIONAL_CHESS_TITLE-_2024.jpg"
+  caption: "Nandhidhaa P.V."
 ---
 
 Asia's tournament calendar for September 2026 runs to 263 tracked events, and the numbers we do have point to India as the continent's clear engine room this month, with school halls, banquet venues and academies hosting fields well into the hundreds.

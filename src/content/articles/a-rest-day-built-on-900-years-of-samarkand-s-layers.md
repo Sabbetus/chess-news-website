@@ -12,6 +12,7 @@ image:
   src: "./_images/Ding_Liren_in_2023.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADing_Liren_in_2023.jpg"
+  caption: "Ding Liren"
 ---
 
 Chess Olympiads are built around thousands of games played across two long weeks, but organizers always carve out one day for players to put the pieces down. In Samarkand, that free day sent [nearly 300 players, captains and accompanying persons on a Cultural Program Tour](https://www.fide.com/free-day-in-samarkand-exploring-the-heart-of-the-silk-road/) through some of the city's oldest and newest landmarks, eight buses deep, leaving the Expo around 2 p.m.

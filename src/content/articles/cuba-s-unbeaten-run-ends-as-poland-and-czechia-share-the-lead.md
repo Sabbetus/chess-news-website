@@ -12,6 +12,7 @@ image:
   src: "./_images/Gukesh_D_at_the_Candidates_2024_tournament_02.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGukesh_D_at_the_Candidates_2024_tournament_02.jpg"
+  caption: "Gukesh Dommaraju"
 ---
 
 Cuba's run at the top of the 3rd FIDE Chess Olympiad for People with Disabilities is over. Round 5 in Samarkand [handed Cuba its first match defeat of the tournament](https://www.fide.com/two-olympiads-two-new-leaders-poland-and-czech-republic-surge-ahead-in-samarkand/), a result that reshapes the standings just as the main 46th Chess Olympiad opens in the same city.

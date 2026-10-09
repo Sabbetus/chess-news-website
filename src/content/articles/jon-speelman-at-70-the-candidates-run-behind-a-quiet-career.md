@@ -13,6 +13,7 @@ image:
   src: "./_images/JonSpeelman24.webp"
   credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJonSpeelman24.jpg"
+  caption: "Jon Speelman"
 ---
 
 Grandmaster Jonathan Speelman turns 70 on 2 October 2026. ChessBase [marks the birthday with a career review](https://en.chessbase.com/post/jon-speelman-70th-birthday) of a player who reached the Candidates semifinals, climbed as high as joint fourth in the world and then became one of chess's more readable analysts.

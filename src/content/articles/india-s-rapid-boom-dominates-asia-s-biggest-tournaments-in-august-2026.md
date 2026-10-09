@@ -16,6 +16,7 @@ image:
   src: "./_images/india-s-rapid-boom-dominates-asia-s-biggest-tournaments-in-august-2026.webp"
   credit: "Jess M. Escaros for the Philippine News Agency, Public domain, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Lye_v._Maghsoodloo_R6_17th_Asian_Continental_Chess_Championships.jpg"
+  caption: "Lye Lik Zang and Parham Maghsoodloo"
 ---
 
 August 2026 was a big month for grassroots chess across Asia. Ranking tournaments by registered players tells a clear story: India's district- and state-level rapid events are pulling in crowds that rival major international opens.

@@ -15,6 +15,7 @@ image:
   src: "./_images/india-used-to-have-one-world-class-player-now-it-has-a-bench.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APraggnanandhaa_in_2025.jpg"
+  caption: "R Praggnanandhaa"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-7/9l2TSddv/D2nDHoW2"
 ---

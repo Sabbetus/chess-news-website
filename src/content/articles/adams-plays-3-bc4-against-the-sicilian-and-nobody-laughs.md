@@ -13,6 +13,7 @@ image:
   src: "./_images/Michael_Adams_Dortmunder_Schachtage_2023.webp"
   credit: "Paul Meyer-Dunker, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMichael_Adams_Dortmunder_Schachtage_2023.jpg"
+  caption: "Michael Adams"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-6/QPxrBgKF/xTUDsVG0"
 ---

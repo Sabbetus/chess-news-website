@@ -12,6 +12,7 @@ image:
   src: "./_images/hans-niemann-s-return-to-the-chess-com-broadcast-comes-with-a-trophy-attached.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHans_Niemann_Uzchess_cup_3_masters_%28cropped%29.jpg"
+  caption: "Hans Niemann"
 ---
 
 Hans Niemann has never done anything the easy way, and his latest Titled Tuesday win fits the pattern perfectly. On September 1, he [snatched the title away from Jan-Krzysztof Duda](https://www.chess.com/news/view/niemann-wins-titled-tuesday-september-1-2026) in the final moments of the event, denying a player who had started the day a perfect 10/10 and was chasing back-to-back Titled Tuesday wins. That alone would be a good story. The fact that it happened on Niemann's return to Chess.com's broadcast makes it something else entirely.

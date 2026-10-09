@@ -15,6 +15,7 @@ image:
   src: "./_images/Frederik_Svane_in_2025.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFrederik_Svane_in_2025.jpg"
+  caption: "Frederik Svane"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-8/e1YOXXb1/8pC8qu9D"
 ---

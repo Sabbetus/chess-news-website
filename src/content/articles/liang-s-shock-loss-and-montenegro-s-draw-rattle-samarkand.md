@@ -14,6 +14,7 @@ image:
   src: "./_images/Javokhir_Sindarov.webp"
   credit: "MiroJP, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov.jpg"
+  caption: "Javokhir Sindarov"
 ---
 
 Round two of the Chess Olympiad in Samarkand was supposed to be a settling-in day, with the top seeds simply protecting the points they'd banked in round one. Instead, [FIDE's own recap of the day](https://www.fide.com/olympiad-day-2-big-guns-enter-arena-in-samarkand/) shows a round full of upsets, brilliancies, and near-disasters for teams that were supposed to be cruising.

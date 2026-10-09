@@ -14,6 +14,7 @@ image:
   src: "./_images/Arjun_Erigaisi_Tata_2023_-_27.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AArjun_Erigaisi_Tata_2023_-_27.jpg"
+  caption: "Arjun Erigaisi"
 ---
 
 The [46th Chess Olympiad opened in Samarkand](https://www.fide.com/samarkand-olympiad-day-1-favourites-fireworks-and-a-shock/) with 207 teams in the Open section and 191 in the Women's, and Round 1 played out exactly the way a Swiss-system event with that many mismatches usually does: favorites rolling, a handful of shocks, and one genuinely brutal turnaround on the very top board.

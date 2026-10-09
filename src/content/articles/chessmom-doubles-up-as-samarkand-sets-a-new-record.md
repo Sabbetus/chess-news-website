@@ -12,6 +12,7 @@ image:
   src: "./_images/Sebag_marie_20081120_olympiade_dresden.webp"
   credit: "Frank Hoppe, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASebag_marie_20081120_olympiade_dresden.jpg"
+  caption: "Marie Sebag"
 ---
 
 The 46th Chess Olympiad in Samarkand has already made history for its sheer scale, with a confirmed 205 open teams and 189 women's teams once Angola finally joined for round three. That's [the biggest field the Olympiad has ever assembled](/articles/samarkand-s-400-teams-break-budapest-s-record-by-20/), and buried inside that record-breaking number is a much smaller, quieter expansion worth noting on its own terms.

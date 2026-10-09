@@ -14,6 +14,7 @@ image:
   src: "./_images/Bent_Larsen_in_1970.webp"
   credit: "Anefo, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABent_Larsen_in_1970.jpg"
+  caption: "Bent Larsen"
 ---
 
 Bent Larsen is remembered for 1.b3 and for opening ideas his contemporaries thought odd. A [ChessBase Master Class lesson on his strategy](https://en.chessbase.com/post/learning-strategy-from-bent-larsen) argues that this is only half the picture. His real strength lay in imbalanced positions, where he accepted structural concessions in return for squares, active pieces and attacking chances.

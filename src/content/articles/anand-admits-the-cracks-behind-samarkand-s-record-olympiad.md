@@ -12,6 +12,7 @@ image:
   src: "./_images/Viswanathan_Anand__2016.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_%282016%29.jpeg"
+  caption: "Viswanathan Anand"
 ---
 
 Every Olympiad opening press conference is supposed to be a victory lap before a ball has been played. Samarkand's version, held ahead of the [46th FIDE Chess Olympiad](https://www.fide.com/opening-press-conference-of-the-46th-fide-chess-olympiad/), mostly followed that script. Then Viswanathan Anand, five months into his job as FIDE Interim President, spent a chunk of his time at the microphone doing damage control instead.

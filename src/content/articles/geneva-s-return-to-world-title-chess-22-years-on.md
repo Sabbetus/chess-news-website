@@ -12,6 +12,7 @@ image:
   src: "./_images/Gukesh_D_at_the_Candidates_2024_tournament_03.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGukesh_D_at_the_Candidates_2024_tournament_03.jpg"
+  caption: "Gukesh Dommaraju"
 ---
 
 FIDE has locked in the details for the next World Championship match, and the venue choice does more work than a press release usually allows. The [Salesforce FIDE World Championship Match 2026 will run from 22 November to 12 December](https://www.fide.com/salesforce-fide-world-championship-match-2026-schedule-format-and-prize-fund-confirmed/) at the Fondation Martin Bodmer in Cologny, Geneva, pitting reigning champion Gukesh D against challenger Javokhir Sindarov.

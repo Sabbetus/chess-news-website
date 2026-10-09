@@ -12,6 +12,7 @@ image:
   src: "./_images/Garry_Kasparov__37097592314.webp"
   credit: "Gage Skidmore from Peoria, AZ, United States of America, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGarry_Kasparov_%2837097592314%29.jpg"
+  caption: "Garry Kasparov"
 ---
 
 Garry Kasparov has spent much of his post-retirement career being the one who makes other legends sweat. On the first day of the 2026 Clutch Chess: The Legends, it was the other way around. Veselin Topalov [took a 2.5-1.5 lead after Kasparov struggled to manage his clock and his composure](https://www.chess.com/news/view/2026-clutch-chess-legends-kasparov-topalov-day-1), with Topalov making the most of the chances that came his way.

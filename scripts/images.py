@@ -17,6 +17,7 @@ import io
 import json
 import re
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -943,3 +944,40 @@ def localize_image(image: dict) -> dict | None:
         "credit": image["credit"],
         "sourceUrl": image["sourceUrl"],
     }
+
+
+# Words that mark an image subject as an event or organisation rather than
+# a person -- those never get a name caption.
+_NON_PERSON_WORDS = {
+    "fide", "chess", "olympiad", "championship", "championships", "cup", "tour",
+    "open", "tuesday", "friday", "festival", "federation", "club", "classic",
+    "grand", "prix", "swiss", "league", "memorial", "tournament", "team",
+    "world", "youth", "junior", "senior", "women", "rapid", "blitz", "bullet",
+}
+
+
+def _fold(text: str) -> str:
+    """Lowercase ASCII with umlauts written out ("Blübaum" -> "bluebaum")."""
+    for src, dst in (("ä", "ae"), ("ö", "oe"), ("ü", "ue"), ("Ä", "ae"), ("Ö", "oe"), ("Ü", "ue"), ("ß", "ss")):
+        text = text.replace(src, dst)
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+    return text.lower()
+
+
+def person_caption(source_url: str, names: list) -> str | None:
+    """The name to show under a photo when it is of a person: the first of
+    `names` (full names, most central first) whose every part appears in
+    the Commons file name. Events and organisations never match, so a
+    neutral board or a logo gets no caption (user's call, 2026-10-09: a
+    lesser-known player's photo reads as anyone without one)."""
+    stem = _fold(urllib.parse.unquote(source_url).rsplit("/", 1)[-1])
+    file_words = set(re.findall(r"[a-z]+", stem))
+    for name in names or []:
+        parts = re.findall(r"[a-z]+", _fold(name))
+        if len(parts) < 2 or any(p in _NON_PERSON_WORDS for p in parts):
+            continue
+        # Accent-stripped and umlaut-expanded spellings both count.
+        alt = re.findall(r"[a-z]+", unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower())
+        if all(p in file_words for p in parts) or all(p in file_words for p in alt):
+            return name.strip()
+    return None

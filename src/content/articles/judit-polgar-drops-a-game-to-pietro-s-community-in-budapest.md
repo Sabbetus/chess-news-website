@@ -13,6 +13,7 @@ image:
   src: "./_images/Judit_polgar_2013.webp"
   credit: "Ruperto Miller, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJudit_polgar_2013.jpg"
+  caption: "Judit Polgar"
 tweetEmbeds:
   - url: "https://x.com/GMJuditPolgar/status/2103821743160771031"
     author: "Judit Polgar"

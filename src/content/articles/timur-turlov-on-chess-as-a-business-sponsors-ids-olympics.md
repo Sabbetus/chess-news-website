@@ -13,6 +13,7 @@ image:
   src: "./_images/Timur_Turlov.webp"
   credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
+  caption: "Timur Turlov"
 ---
 
 In an interview with American Chess Magazine, conducted by video link in early August before the vote and republished by ChessBase, Timur Turlov [described chess as "massively undervalued"](https://en.chessbase.com/post/turlov-chess-is-massively-undervalued). He has since been [elected FIDE president](/articles/timur-turlov-elected-fide-president-ending-a-30-year-russian-run/), so the conversation now reads as a statement of intent from the man in charge.

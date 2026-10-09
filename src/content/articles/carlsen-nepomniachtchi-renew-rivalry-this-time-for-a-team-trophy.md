@@ -12,6 +12,7 @@ image:
   src: "./_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 Magnus Carlsen and Ian Nepomniachtchi are set to face off yet again, and this time it will not be for a world championship.

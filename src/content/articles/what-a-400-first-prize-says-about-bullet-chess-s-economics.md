@@ -12,6 +12,7 @@ image:
   src: "./_images/what-a-400-first-prize-says-about-bullet-chess-s-economics.webp"
   credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJefferyXiong23a.jpg"
+  caption: "Jeffery Xiong"
 ---
 
 Jeffery Xiong [successfully defended his Bullet Brawl title](https://www.chess.com/news/view/jeffery-xiong-wins-bullet-brawl-aug-15-2026) on Saturday, taking home the $400 first prize after a tense finish that saw him post 162 points and edge out [IM Renato Terry](/articles/renato-terry-s-bullet-arena-dominance-echoes-titled-tuesday-s-nakamura-era/) and GM Nihal by a four-point margin. It's a repeat title for Xiong, and on paper the numbers look modest: a few hundred dollars for hours of blitz-speed combat against some of the strongest bullet players in the world. But the prize figure is exactly what makes Bullet Brawl worth looking at through a financial lens rather than a purely competitive one.

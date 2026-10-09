@@ -12,6 +12,7 @@ image:
   src: "./_images/why-kramnik-s-legal-defeat-over-the-naroditsky-article-matters-more-than-it-look.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKramnik_Vladimir_getting_his_tea_%2828956973443%29.jpg"
+  caption: "Vladimir Kramnik"
 ---
 
 An Amsterdam court has [thrown out Vladimir Kramnik's lawsuit against New In Chess](https://www.chess.com/news/view/vladimir-kramnik-loses-new-in-chess-lawsuit), ruling that the Dutch magazine's article accusing the former world champion of cyberbullying GM Daniel Naroditsky was not unlawful. Kramnik had demanded the article be taken down, a published correction, a ban on the magazine repeating similar statements, and €30,000 in damages. The court refused all of it, and ordered him to cover €4,449 of the magazine's litigation costs, a fraction of the more than €25,000 New In Chess says it actually spent defending the case. Kramnik says he will appeal, which means this fight is far from finished.

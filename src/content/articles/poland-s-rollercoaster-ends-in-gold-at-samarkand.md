@@ -14,6 +14,7 @@ image:
   src: "./_images/Viswanathan_Anand_08_19_2007.webp"
   credit: "Ygrek, Public domain, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_08_19_2007.jpg"
+  caption: "Viswanathan Anand"
 ---
 
 Poland went from a round-one loss to an undefeated title run, [claiming gold at the 3rd FIDE Chess Olympiad for People with Disabilities](https://www.fide.com/poland-crowned-champions-as-samarkand-olympiad-for-people-with-disabilities-concludes-with-a-celebration-of-chess-and-inclusion/) in Samarkand. The seven-round event drew a record 41 teams, and it closed with Poland on 13 match points, Cuba taking silver on 12, and hosts Uzbekistan 1 claiming bronze on 11.

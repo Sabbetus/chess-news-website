@@ -12,6 +12,7 @@ image:
   src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_26.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_26.jpg"
+  caption: "Gukesh Dommaraju and Arjun Erigaisi"
 ---
 
 Freedom Holding Corp. has [signed on as General Partner of the 2026 FIDE World Championship Match](https://www.fide.com/freedom-holding-corp-backs-fide-world-championship-match-2026-as-general-partner/), putting a NASDAQ-listed financial and technology group's name behind the biggest fixture in chess.

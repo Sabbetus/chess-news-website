@@ -12,6 +12,7 @@ image:
   src: "./_images/carlsen-and-nepomniachtchi-meet-again-this-time-with-nothing-like-a-world-title.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 The last time Magnus Carlsen and Ian Nepomniachtchi sat across a board with real stakes attached, it ended with a five-hour, 136-move slog in Dubai that broke Nepomniachtchi and handed Carlsen his fifth world championship. That match finished 7.5-3.5, and the psychological gap it opened between the two men has never fully closed. On Sunday they meet again, this time on board one of [Global Chess League Season 4](/articles/the-business-case-for-gcl-season-4-why-bengaluru-twice-makes-financial-sense/), and the stakes could not be more different.

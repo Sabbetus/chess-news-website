@@ -12,6 +12,7 @@ image:
   src: "./_images/the-torch-passes-again-sindarov-s-win-over-anand-echoes-a-familiar-chess-story.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AViswanathan_Anand_%282016%29.jpeg"
+  caption: "Viswanathan Anand"
 ---
 
 Javokhir Sindarov's [opening day at the 2026 Tech Mahindra Global Chess League](https://www.chess.com/news/view/2026-tech-mahindra-global-chess-league-day-1) produced one of those results that chess fans have seen before, just with the names swapped. The 20-year-old Uzbek grandmaster beat Viswanathan Anand and held Alireza Firouzja to a draw, powering the FYERS American Gambits to a clean sweep of both their matches on day one. Anand, the five-time world champion, found himself on the wrong side of a scoreline against a player who was born nearly two decades after Anand first became a grandmaster.

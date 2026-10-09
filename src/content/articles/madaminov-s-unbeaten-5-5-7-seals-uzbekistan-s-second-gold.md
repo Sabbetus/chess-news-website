@@ -17,6 +17,7 @@ image:
   src: "./_images/Mukhiddin_Madaminov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMukhiddin_Madaminov_chess_player.jpg"
+  caption: "Mukhiddin Madaminov"
 ---
 
 Uzbekistan won the Open section of the 2026 Chess Olympiad on home soil in Samarkand, [beating Ukraine 2.5-1.5 in the final round](https://www.fide.com/uzbekistans-dream-finish-olympiad-gold-in-samarkand/) to claim the country's second Olympiad title after Chennai 2022. Four of the five players from that 2022 squad repeated the feat in Samarkand, a rare piece of continuity in an event where rosters usually turn over heavily between cycles.

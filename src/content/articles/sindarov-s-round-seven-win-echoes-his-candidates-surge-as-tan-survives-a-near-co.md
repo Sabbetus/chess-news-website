@@ -12,6 +12,7 @@ image:
   src: "./_images/sindarov-s-round-seven-win-echoes-his-candidates-surge-as-tan-survives-a-near-co.webp"
   credit: "MiroJP, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov.jpg"
+  caption: "Javokhir Sindarov"
 ---
 
 The 2026 Sinquefield Cup and Cairns Cup are entering the stretch run in St. Louis, and round seven produced one decisive game in each event, plus a near-miss escape that will linger in the memory longer than most results.

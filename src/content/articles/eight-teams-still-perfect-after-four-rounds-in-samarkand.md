@@ -17,6 +17,7 @@ image:
   src: "./_images/Levon_Aronian_in_2023.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALevon_Aronian_in_2023.jpg"
+  caption: "Levon Aronian"
 ---
 
 Four rounds into the Chess Olympiad in Samarkand, the field of unbeaten teams has finally started to thin. In the Open section, [FIDE reported](https://www.fide.com/olympiad-day-4-the-leaders-begin-to-emerge/) that China, host nation Uzbekistan, Germany, Armenia, the USA, India, the Netherlands and Hungary all won their fourth straight match and remain perfect. In the Women's section, India, Kazakhstan, China and the USA lead a larger group still boasting flawless records.

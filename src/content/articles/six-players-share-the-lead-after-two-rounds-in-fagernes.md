@@ -15,6 +15,7 @@ image:
   src: "./_images/Harika_Dronavalli_in_2024.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AHarika_Dronavalli_in_2024.jpg"
+  caption: "Harika Dronavalli"
 ---
 
 Two rounds into the Fagernes International Autumn Tournament, [six players share first place with perfect scores](https://en.chessbase.com/post/fagernes-autumn-2026-r2). The GM Swiss is running from 3 to 11 October at the Scandic Valdres hotel, about 187 kilometres north of Oslo.

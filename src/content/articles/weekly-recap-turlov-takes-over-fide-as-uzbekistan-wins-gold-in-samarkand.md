@@ -10,6 +10,7 @@ image:
   src: "./_images/Timur_Turlov.webp"
   credit: "Fassileety, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATimur_Turlov.jpg"
+  caption: "Timur Turlov"
 ---
 
 Samarkand dominated the week. The Olympiad ended, FIDE elected a new president at the same General Assembly, and the stories around those two events fill most of this recap. Online events, rating news, a tournament-size roundup and two off-the-board stories round out the 19 pieces.

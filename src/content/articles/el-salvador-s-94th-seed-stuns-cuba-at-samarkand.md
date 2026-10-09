@@ -14,6 +14,7 @@ image:
   src: "./_images/Gukesh_in_2025__cropped.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGukesh_in_2025_%28cropped%29.jpg"
+  caption: "Gukesh Dommaraju"
 ---
 
 Round two of the [46th Chess Olympiad in Samarkand](https://www.chess.com/news/view/2026-samarkand-chess-olympiad-round-2) mostly went to script, but one result stood well outside it. El Salvador, seeded 94th in the field, beat Cuba, seeded 44th, in a result that had almost nothing to do with the pecking order on paper.

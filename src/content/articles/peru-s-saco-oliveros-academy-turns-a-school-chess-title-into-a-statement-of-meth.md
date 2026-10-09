@@ -12,6 +12,7 @@ image:
   src: "./_images/peru-s-saco-oliveros-academy-turns-a-school-chess-title-into-a-statement-of-meth.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEmilio_Cordova_Peru_%2829391240486%29.jpg"
+  caption: "Emilio Córdova"
 ---
 
 The American Continental Stage of the [FIDE ISCF World Schools Team Championship 2026](https://www.fide.com/saco-oliveros-de-lince-takes-gold-as-san-jose-closes-with-emotion-and-a-tribute-to-mothers/) wrapped up at the DoubleTree by Hilton Cariari in San José, and the team that had been out front since midweek never let go. The American Continental Stage of the FIDE ISCF World Schools Team Championship 2026 concluded at the DoubleTree by Hilton Cariari in San José, with the team that had led the standings since Wednesday still in front. Saco Oliveros de Lince, representing Peru, closed the week having done what few teams manage in a format built for upsets: Saco Oliveros de Lince of Peru won the title without losing a match all week.

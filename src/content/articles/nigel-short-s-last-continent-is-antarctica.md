@@ -12,6 +12,7 @@ image:
   src: "./_images/nigel-short-s-last-continent-is-antarctica.webp"
   credit: "GibChess, CC BY 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANigel_Short_%282018%29.jpg"
+  caption: "Nigel Short"
 ---
 
 Nigel Short has spent more than four decades collecting chess milestones, but until now, one gap remained on his personal map. This Antarctic summer, six players representing all six inhabited continents will [travel to Antarctica and the Geographic South Pole for the Polar Chess Expedition](https://www.fide.com/polar-chess-expedition-brings-the-first-fide-rated-chess-tournament-to-antarctica-and-the-south-pole/), a FIDE-rated rapid event billed as the most geographically extreme chess tournament ever staged.

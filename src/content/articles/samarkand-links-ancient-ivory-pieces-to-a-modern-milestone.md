@@ -12,6 +12,7 @@ image:
   src: "./_images/Dana_Reizniece-Ozola_2017.webp"
   credit: "Saeima of Latvija, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADana_Reizniece-Ozola_2017.jpg"
+  caption: "Dana Reizniece-Ozola"
 ---
 
 Uzbekistan has spent the last several years turning itself into one of chess's busiest hosts, and this week it added a genuine first.

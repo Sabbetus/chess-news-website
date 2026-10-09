@@ -183,7 +183,8 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <article class="story">
-    <ArticleThumb lens={article.data.lens ?? 'historical-parallel'} size="lead" image={article.data.image} alt={article.data.title} />
+    <ArticleThumb lens={article.data.lens ?? 'historical-parallel'} size="lead" image={article.data.image} alt={article.data.image?.caption ?? article.data.title} />
+    {article.data.image?.caption && <p class="photo-caption">{article.data.image.caption}</p>}
 
     <div class="story-head">
       <h1>{article.data.title}</h1>
@@ -445,6 +446,15 @@ const jsonLd = [
   .source-callout a.correction-link {
     color: var(--ink-soft);
     text-decoration: underline;
+  }
+  /* The pictured person's name, under the lead photo. */
+  .photo-caption {
+    /* Same column as the photo; pulled up into the photo's own bottom
+       margin so it reads as belonging to the photo, not the headline. */
+    max-width: var(--content-width);
+    margin: -16px auto 22px;
+    font: 12px/1.4 'IBM Plex Mono', monospace;
+    color: var(--ink-soft);
   }
   .byline-credit {
     display: inline-block;
