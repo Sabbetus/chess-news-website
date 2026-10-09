@@ -242,19 +242,16 @@ def _event_key(t: dict) -> tuple:
 
 def _merge_sections(pool: list[dict]) -> list[dict]:
     """Sections of one event (same base name, place and start date) count
-    once: the best-scoring section stands in for the event, with the
-    sections' player counts summed when all are known."""
+    once: the best-scoring section stands in for the event with its own
+    player count. Counts are never summed -- caught live 2026-10-09: an
+    "Open" section was reported with 190 players when it had 84, the rest
+    being youth sections folded in under its name."""
     groups: dict[tuple, list[dict]] = {}
     for t in pool:
         groups.setdefault(_event_key(t), []).append(t)
     merged = []
     for group in groups.values():
-        best = max(group, key=_notability_score)
-        if len(group) > 1:
-            counts = [g.get("playersRegistered") for g in group]
-            if all(isinstance(c, (int, float)) and c > 0 for c in counts):
-                best = {**best, "playersRegistered": sum(counts)}
-        merged.append(best)
+        merged.append(max(group, key=_notability_score))
     return merged
 
 

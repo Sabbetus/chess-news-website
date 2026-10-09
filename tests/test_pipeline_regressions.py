@@ -283,7 +283,8 @@ def test_calendar_sections_merge_and_youth_words():
         {**common, "name": "Abierto Rosario - Grupo B", "playersRegistered": 30},
     ]
     merged = _merge_sections(pool)
-    assert len(merged) == 1 and merged[0]["playersRegistered"] == 70
+    # One entry, keeping its own count: never the sections' sum.
+    assert len(merged) == 1 and merged[0]["playersRegistered"] == 40
 
 
 def test_aggregate_facts_lists_event_lengths():

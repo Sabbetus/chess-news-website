@@ -20,6 +20,11 @@
   problem -- was missed because the rest of the piece wasn't actually
   checked, just assumed fine after fixing the first spot.)
 
+- **Judge our own additions on whether they are sound, not on whether
+  the source says them.** Analysis, chess explanation and background the
+  drafter adds are meant to be there; flag them only when they are wrong
+  or misleading (user's rule, 2026-10-09).
+
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
