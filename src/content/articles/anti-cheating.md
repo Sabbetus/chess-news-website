@@ -1,6 +1,6 @@
 ---
 title: "How Chess Fights Cheating, Online and Over the Board"
-publishDate: "TBD"
+publishDate: "2026-10-09"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/fair-play"
 additionalSources:
