@@ -331,3 +331,10 @@ def test_us_championship_preview_beats_product_review():
     assert is_promotional(review)
     assert score_item(preview)[1]["majorTournament"] > 0
     assert "nordic" not in score_item(review)[1]
+
+
+def test_player_title_is_not_a_major_event():
+    from selection import score_major_tournament
+
+    assert score_major_tournament("Dubov, the former world rapid chess champion, accepts a bullet challenge") == 0
+    assert score_major_tournament("Caruana begins his title defence at the US Championship") > 0

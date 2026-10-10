@@ -364,9 +364,24 @@ def score_keywords(text: str) -> int:
 
 
 
+# "former world rapid chess champion" is a player's title, not the event --
+# caught live 2026-10-10: a streamer's bullet challenge to Dubov earned the
+# full major-event bonus from his bio line and outscored the U.S.
+# Championship.
+_TITLE_AFTER_EVENT_RE = re.compile(r"\s+(?:chess\s+)?champion\b(?!ship)")
+
+
+def _mentions_major_event(text_lower: str) -> bool:
+    for kw in MAJOR_TOURNAMENT_KEYWORDS:
+        for m in re.finditer(re.escape(kw), text_lower):
+            if not _TITLE_AFTER_EVENT_RE.match(text_lower, m.end()):
+                return True
+    return False
+
+
 def score_major_tournament(text: str) -> int:
     text_lower = text.lower()
-    if not any(kw in text_lower for kw in MAJOR_TOURNAMENT_KEYWORDS):
+    if not _mentions_major_event(text_lower):
         return 0
     return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else MAJOR_EVENT_PREVIEW_BONUS
 
