@@ -207,7 +207,7 @@ MAJOR_TOURNAMENT_KEYWORDS = [
 MAJOR_TOURNAMENT_BONUS = 45
 # The same events without results yet (a preview, a field announcement):
 # well above routine stories, still below the event's own round reports.
-MAJOR_EVENT_PREVIEW_BONUS = 40
+MAJOR_EVENT_PREVIEW_BONUS = 25
 
 # A new FIDE president is a once-every-few-years governance story, not a
 # routine federation announcement -- worth guaranteeing a slot the way the
