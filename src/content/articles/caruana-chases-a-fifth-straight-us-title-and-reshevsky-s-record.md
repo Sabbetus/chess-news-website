@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/us-championships-2026-caruana-titles"
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 92
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Fabiano Caruana has won the last four US Championships. A fifth in a row in Saint Louis would equal Samuel Reshevsky's run from 1936-1942, a streak nobody has matched in more than eight decades."
 metaDescription: "Fabiano Caruana defends his US Championship title in Saint Louis, chasing a fifth straight win that would equal Samuel Reshevsky's 1936-1942 run."
 image:

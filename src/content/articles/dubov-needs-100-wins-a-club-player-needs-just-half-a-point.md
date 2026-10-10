@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/club-player-challenges-dubov-to-100-
 lens: "results"
 continent: "north-america"
 selectionScore: 111
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Daniil Dubov must sweep all 100 one-minute games against Arizona club player Josh Smith to collect $20,000. Dubov himself calls Smith a \"massive favorite\" to avoid the whitewash. The match is set for November 7."
 metaDescription: "GM Daniil Dubov plays Josh Smith, the \"Bullet Grandpa,\" in a 100-game bullet match on November 7. Dubov must win every game to earn the full $20,000."
 image:
