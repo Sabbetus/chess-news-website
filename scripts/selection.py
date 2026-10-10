@@ -111,7 +111,10 @@ CHESSBASE_PROMO_TITLE_PATTERNS = [
     r"chessbase.{0,3}\d{2}\b", r"^chessbase\b", r"tips for beginners", r"players? guide",
     r"problem challenge", r"endgame challenge", r"upcoming tournaments", r"help us build",
     r"cloud power", r"\bvol\.?\s*\d", r"\blive!?\s*$", r"\d+ years ago",
-    r"\bfritz\b", r"\bmega database\b", r"\bplaychess\b",
+    r"\bfritz", r"\bmega database\b", r"\bplaychess\b",
+    # Reviews of ChessBase's own training products ("Review: Robert Ris'
+    # FritzTrainers...", 2026-10-10) are advertising, not news.
+    r"^review\b", r"\bfritztrainer", r"\bdvds?\b",
 ]
 
 
@@ -172,11 +175,9 @@ def is_feature_story(item: dict) -> bool:
     return bool(FEATURE_KEYWORD_RE.search(title) or FEATURE_PROFILE_RE.search(title))
 
 
-# Nordic/regional relevance -- boosts stories that matter for the site's
-# Nordic Chess Festival backlink strategy, independent of which lens ends up
-# writing the piece.
-NORDIC_KEYWORDS = ["norway", "sweden", "denmark", "finland", "iceland", "nordic", "scandinavia"]
-NORDIC_BONUS = 15
+# (A Nordic bonus of +15 used to sit here. Removed 2026-10-10, user's call:
+# it matched "Scandinavian Defence" and lifted a product review over the
+# U.S. Championship.)
 
 # The major recurring/marquee tournaments -- not just the Olympiad -- are
 # the biggest events on the calendar while they're running, and their
@@ -185,20 +186,28 @@ NORDIC_BONUS = 15
 # keywords below through unrelated phrase matches. "Olympiad" used to
 # just be one entry in KEYWORD_WEIGHTS worth 12 points, diluted by the
 # same 30-point cap every other story competes for -- pulled out into its
-# own uncapped bonus instead, the same pattern as the Nordic bonus above
+# own uncapped bonus instead
 # (caught live: a Total Chess Tour field announcement scored 80 purely
 # from two different "world championship" phrasings, "youngest" and
 # "grandmaster" -- all just describing players in its own roster, nothing
-# about that story's actual newsworthiness -- plus the unrelated Nordic
-# bonus, while the real Olympiad Round 7 recap scored only 52 with
+# about that story's actual newsworthiness -- while the real Olympiad Round 7 recap scored only 52 with
 # "olympiad" contributing a mere 12 of that).
 MAJOR_TOURNAMENT_KEYWORDS = [
     "olympiad", "candidates tournament", "world championship match",
     "grand chess tour", "sinquefield cup", "cairns cup", "tata steel",
     "norway chess", "fide world cup", "world team championship",
     "european team championship", "world rapid", "world blitz",
+    # National title events of the top chess countries -- caught live
+    # 2026-10-10: the U.S. Championship's opening-day preview scored 47 and
+    # lost to a ChessBase product review.
+    "u.s. championship", "us championship", "u.s. chess championship",
+    "u.s. women's championship", "us women's championship", "american cup",
+    "world junior", "world cup",
 ]
 MAJOR_TOURNAMENT_BONUS = 45
+# The same events without results yet (a preview, a field announcement):
+# well above routine stories, still below the event's own round reports.
+MAJOR_EVENT_PREVIEW_BONUS = 40
 
 # A new FIDE president is a once-every-few-years governance story, not a
 # routine federation announcement -- worth guaranteeing a slot the way the
@@ -354,16 +363,12 @@ def score_keywords(text: str) -> int:
     return min(score, MAX_KEYWORD_SCORE)
 
 
-def score_nordic(text: str) -> int:
-    text_lower = text.lower()
-    return NORDIC_BONUS if any(kw in text_lower for kw in NORDIC_KEYWORDS) else 0
-
 
 def score_major_tournament(text: str) -> int:
     text_lower = text.lower()
     if not any(kw in text_lower for kw in MAJOR_TOURNAMENT_KEYWORDS):
         return 0
-    return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else 0
+    return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else MAJOR_EVENT_PREVIEW_BONUS
 
 
 def score_specificity(item: dict) -> int:
@@ -499,7 +504,6 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     # 150 against the round report's 153. Not a result; no bonus.
     governance = not feature and bool(GOVERNANCE_TITLE_RE.search(item.get("title") or ""))
     breakdown["keywords"] = min(score_keywords(text), FEATURE_MAX_KEYWORD_SCORE) if feature else score_keywords(text)
-    breakdown["nordic"] = score_nordic(text)
     breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text)
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
     breakdown["feature"] = FEATURE_BONUS if feature else 0

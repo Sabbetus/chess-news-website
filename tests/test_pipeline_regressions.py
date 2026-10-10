@@ -318,3 +318,16 @@ def test_person_caption_only_for_people():
     assert person_caption(url + "2021-Matthias-Bluebaum.JPG", ["Matthias Blübaum"]) == "Matthias Blübaum"
     assert person_caption(url + "FIDE_text_on_white.svg", ["FIDE"]) is None
     assert person_caption(url + "Jack_visits_Mamaia_again_in_the_World_Youth_Chess_Championships_2022.jpg", ["World Youth"]) is None
+
+
+def test_us_championship_preview_beats_product_review():
+    from selection import is_promotional, score_item
+
+    preview = {"sourceName": "ChessBase", "sourceTier": "tier2", "kind": "news",
+               "title": "Fabiano Caruana targets fifth consecutive US title",
+               "summary": "When Fabiano Caruana begins his title defence at the 2026 US Championship in Saint Louis..."}
+    review = {"sourceName": "ChessBase", "title": "Review: Robert Ris' FritzTrainers on openings",
+              "summary": "Scandinavian Defence repertoire"}
+    assert is_promotional(review)
+    assert score_item(preview)[1]["majorTournament"] > 0
+    assert "nordic" not in score_item(review)[1]
