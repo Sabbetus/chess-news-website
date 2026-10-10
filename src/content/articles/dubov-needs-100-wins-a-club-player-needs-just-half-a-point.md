@@ -13,7 +13,7 @@ image:
   src: "./_images/P_ter_L_k___li__und_Daniil_Dubov__re__bei_der_Blitzschach-WM_2015_in_Berlin.webp"
   credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AP%C3%A9ter_L%C3%A9k%C3%B3_%28li.%29_und_Daniil_Dubov_%28re.%29_bei_der_Blitzschach-WM_2015_in_Berlin.jpg"
-  caption: "Daniil Dubov"
+  caption: "Daniil Dubov (right) at the 2015 World Blitz in Berlin"
 ---
 
 The most interesting thing about this match is the scoring, not the players. Josh Smith, a 49-year-old Arizona businessman rated in the 1800s by US Chess, is set to play GM Daniil Dubov in 100 bullet games. The handicap is built into the payout rather than the clock.
@@ -42,6 +42,6 @@ His method is to aim for solid positions that allow quick decisions, and to buil
 
 Smith has had occasional hits against titled players. Against his coach, GM Kayden Troff, his Chess.com record at the time of the interview was six wins, three draws and 151 losses. That is roughly a 4 percent win rate, but it is not zero.
 
-Over 100 games, that matters. If Smith could score even half that against Dubov, the odds of a clean sweep would be tiny. Dubov is a different opponent from Troff, and perhaps a stronger one at this speed, but the arithmetic shows why he is wary.
+Over 100 games, that matters. If Smith dropped only one game in fifty against Dubov, the chance of a clean 100-0 sweep would be about one in eight. Dubov is a different opponent from Troff, and perhaps a stronger one at this speed, but the arithmetic shows why he is wary.
 
 Dubov also respected the stakes for Smith. "I think he has the guts and the mental strength to do it," he said of Smith accepting a possible public 100-0 loss. Smith's own hope is modest: "Maybe a grandpa can beat a grandmaster."
