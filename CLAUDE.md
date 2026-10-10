@@ -55,7 +55,10 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-10-10: PR #62 review accepted (0 -> 1). The missing U.S.
+  Championship story was raised by the user before the review began;
+  the review's fix list and reset call stood.
 - 2026-10-09: PR #61 review overruled twice (1 -> 0): user called the
   calendar count error minor, not a reset; and two Adams lines I wanted
   cut as "not in the source" were sound additions (kept, one softened).
@@ -74,7 +77,18 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-10: PR #62 reset (streak 1 -> 0). Selection bug: ChessBase's
+  Caruana / U.S. Championship piece (opening week of the event) scored 47
+  and lost to a ChessBase product review (52, lifted by a +15 Nordic bonus
+  from "Scandinavian Defence"); Dubov's bullet challenge got the +45
+  major-event bonus from "former world rapid chess champion". Fixed: Nordic
+  bonus removed (user's call), U.S./U.S. Women's Championships and other
+  marquee events added to the major list, +40 for major-event previews,
+  product and book reviews skipped as promotional, a player's title no
+  longer counts as the event. Ris review dropped; Caruana piece written by
+  hand from the ChessBase source. Dubov piece: "tiny" sweep odds corrected
+  (about 1 in 8), group-photo caption clarified; kept (user's call).
 - 2026-10-09: PR #61 clean (streak 0 -> 1, user's call: borderline, the
   pipeline did what it was told). Africa calendar piece gave two "Open"
   sections their events' summed counts (Jumuiya 190 vs 84, ABACUS 124 vs
@@ -209,8 +223,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-08 (PR #60, see above).
-- Earlier resets: 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-10 (PR #62, see above).
+- Earlier resets: 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
