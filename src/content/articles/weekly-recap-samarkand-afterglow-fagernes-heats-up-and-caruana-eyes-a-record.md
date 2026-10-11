@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-10-11"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "This week: Speelman hunts Olympiad miniatures, Germany's bronze gets a backstory, 14-year-old Gloeckler leads Fagernes, Artemiev beats Nakamura, and Caruana chases Reshevsky's record in Saint Louis."
 image:
   src: "./_images/caruana-s-italian-job-an-old-opening-finds-new-teeth-in-the-grand-chess-tour-fin.webp"
