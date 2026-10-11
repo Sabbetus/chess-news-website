@@ -349,3 +349,33 @@ def test_background_links_always_offered_and_event_links_checked():
     assert not any("weekly-recap" in u for u in urls)
     body = "[a GM norm](/articles/chess-titles/) and [the format](/events/made-up-event/#how-it-works)"
     assert check_article_links(body) == ["/events/made-up-event/"]
+
+
+def test_short_surname_must_match_photo():
+    from images import _title_matches_query
+
+    assert not _title_matches_query("File:Wesley_moraes_ferreira_da_silva-1556197874.jpg", "Wesley So", True)
+    assert _title_matches_query("File:Wesley_So_Tata_2023_-_63.jpg", "Wesley So", True)
+
+
+def test_passing_olympiad_mention_is_not_a_major_event_story():
+    from selection import score_item
+
+    freestyle = {"sourceName": "Chess.com", "title": "Maghsoodloo Wins Star-Studded Freestyle Friday",
+                 "summary": "GM Parham Maghsoodloo took a step closer to qualifying for the 2027 FIDE Freestyle "
+                            "Chess World Championship by taking out the latest edition of Freestyle Friday. He "
+                            "scored 9/11, losing only to one of Uzbekistan's Olympiad heroes."}
+    report = {"sourceName": "ChessBase", "title": "US Championships: So and Liang remain perfect",
+              "summary": "Two players remain perfect after the second round of the US Chess Championship, 2-0."}
+    assert score_item(freestyle)[1]["majorTournament"] == 0
+    assert score_item(report)[1]["majorTournament"] > 0
+
+
+def test_earlier_round_report_dropped_when_later_round_in_batch():
+    from selection import drop_superseded_rounds
+
+    r1 = {"sourceName": "Chess.com", "title": "So Starts U.S. Championship With Win",
+          "summary": "So won in the first round of the 2026 U.S. Chess Championship."}
+    r2 = {"sourceName": "Chess.com", "title": "So, Liang Lead",
+          "summary": "So and Liang won again in round two of the 2026 U.S. Chess Championship."}
+    assert drop_superseded_rounds([r1, r2]) == [r2]

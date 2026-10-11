@@ -172,6 +172,10 @@ def is_feature_story(item: dict) -> bool:
     title = item.get("title") or ""
     if FEATURE_EXCLUDE_TITLE_RE.search(title):
         return False
+    # "US Championships: So and Liang remain perfect" has the profile shape
+    # but names an event, not a person (caught live 2026-10-11).
+    if _mentions_major_event(title.split(":", 1)[0].lower()):
+        return False
     return bool(FEATURE_KEYWORD_RE.search(title) or FEATURE_PROFILE_RE.search(title))
 
 
@@ -379,9 +383,18 @@ def _mentions_major_event(text_lower: str) -> bool:
     return False
 
 
-def score_major_tournament(text: str) -> int:
+# How much of the summary counts as the story's opening for the event check:
+# about one sentence. (A sentence split breaks on "U.S.".)
+MAJOR_EVENT_LEAD_CHARS = 200
+
+
+def score_major_tournament(text: str, lead: str | None = None) -> int:
+    """The event has to be named in the headline or opening (`lead`), not
+    just mentioned in passing -- caught live 2026-10-11: a Freestyle Friday
+    report got the full Olympiad bonus from "one of Uzbekistan's Olympiad
+    heroes" and outscored both U.S. Championship round reports."""
     text_lower = text.lower()
-    if not _mentions_major_event(text_lower):
+    if not _mentions_major_event((lead if lead is not None else text).lower()):
         return 0
     return MAJOR_TOURNAMENT_BONUS if _has_result_signal(text_lower) else MAJOR_EVENT_PREVIEW_BONUS
 
@@ -519,7 +532,8 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     # 150 against the round report's 153. Not a result; no bonus.
     governance = not feature and bool(GOVERNANCE_TITLE_RE.search(item.get("title") or ""))
     breakdown["keywords"] = min(score_keywords(text), FEATURE_MAX_KEYWORD_SCORE) if feature else score_keywords(text)
-    breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text)
+    lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS]}"
+    breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text, lead)
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
     breakdown["feature"] = FEATURE_BONUS if feature else 0
     breakdown["specificity"] = score_specificity(item)
@@ -530,6 +544,49 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     if total != raw_total:
         breakdown["bandAdjustment"] = total - raw_total
     return total, breakdown
+
+
+_ROUND_WORDS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6, "seventh": 7,
+                "eighth": 8, "ninth": 9, "tenth": 10, "eleventh": 11, "one": 1, "two": 2, "three": 3,
+                "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11}
+_ROUND_RE = re.compile(
+    r"\bround\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven)\b"
+    r"|\b(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh)\s+round\b",
+    re.IGNORECASE,
+)
+
+
+def _report_round(item: dict) -> tuple[str, int] | None:
+    """(event, round) for a round report, read from its headline and
+    opening -- None when the opening names no major event or no round."""
+    lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS + 100]}".lower()
+    event = next((kw for kw in MAJOR_TOURNAMENT_KEYWORDS if kw in lead), None)
+    m = _ROUND_RE.search(lead)
+    if not event or not m:
+        return None
+    word = (m.group(1) or m.group(2)).lower()
+    return event.replace("u.s.", "us").replace(" chess ", " "), int(word) if word.isdigit() else _ROUND_WORDS[word]
+
+
+def drop_superseded_rounds(scored: list[dict]) -> list[dict]:
+    """A report on an earlier round of an event is stale once a later
+    round's report is in the same batch -- caught live 2026-10-11: the U.S.
+    Championship's round 1 and round 2 reports were both drafted, and round
+    1's "round 2 is on Saturday" had already happened by publication."""
+    latest: dict[str, int] = {}
+    for item in scored:
+        found = _report_round(item)
+        if found:
+            latest[found[0]] = max(latest.get(found[0], 0), found[1])
+    kept = []
+    for item in scored:
+        found = _report_round(item)
+        if found and found[1] < latest[found[0]]:
+            print(f"  Dropping superseded round report: {item['sourceName']}: {item['title']}")
+            print(f"      round {found[1]} of {found[0]}; round {latest[found[0]]} is in this batch")
+            continue
+        kept.append(item)
+    return kept
 
 
 def dedupe_by_topic(scored: list[dict]) -> list[dict]:
@@ -915,6 +972,7 @@ def main() -> None:
     scored = merge_duplicate_stories(scored, client)
     scored = drop_already_covered(client, scored)
     scored = drop_superseded_previews(client, scored)
+    scored = drop_superseded_rounds(scored)
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
