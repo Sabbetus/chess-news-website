@@ -268,9 +268,6 @@ def _is_high_enough_resolution(title: str, info: dict) -> bool:
 _QUERY_WORD_PATTERN = re.compile(r"[A-Za-z]+")
 
 
-_NAME_PARTICLES = {"de", "da", "di", "do", "du", "dos", "le", "la", "el", "al", "of"}
-
-
 def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     """Require the candidate's filename to actually contain part of the
     search query, not just something Commons' full-text search matched
@@ -326,14 +323,13 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
         # Three-letter first names count here ("Jon", "Wei"): leaving them
         # out let "Speelman en Speelman" (a Dutch music duo) match "Jon
         # Speelman".
-        # Two-letter surnames count too ("So", "Li", "Ju"): leaving them out
-        # let "Wesley So" match a footballer's "Wesley_moraes_ferreira_da_
-        # silva" photo on "Wesley" alone (caught live 2026-10-11). Name
-        # particles ("de", "da", "van") stay optional.
-        significant_words = [
-            w for w in _QUERY_WORD_PATTERN.findall(query)
-            if len(w) >= 3 or (len(w) == 2 and w.lower() not in _NAME_PARTICLES)
-        ]
+        significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 3]
+        # Wesley So is the one case where the surname is too short to count:
+        # "Wesley" alone matched a footballer's "Wesley_moraes_ferreira_da_
+        # silva" photo (caught live 2026-10-11). Hard-coded for him only, by
+        # the user's call, so other searches keep the usual rule.
+        if re.search(r"\bwesley so\b", query.lower()) and not re.search(r"(?<![a-z])so(?![a-z])", title_lower):
+            return False
         if all(_word_present(word) for word in significant_words):
             return True
         # Names run together in the filename ("JonSpeelman24.jpg") -- caught
