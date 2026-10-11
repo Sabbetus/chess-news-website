@@ -55,7 +55,9 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 2.**
+- 2026-10-11: PR #63/#64 review accepted (1 -> 2); user asked for the
+  selection scores, which exposed one more bug (fixed with the rest).
 - 2026-10-10: PR #62 review accepted (0 -> 1). The missing U.S.
   Championship story was raised by the user before the review began;
   the review's fix list and reset call stood.
@@ -78,6 +80,21 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-11: PR #63 reset (streak stays at 0). Resets: the U.S.
+  Championship round 2 piece showed a footballer ("Wesley moraes ferreira
+  da silva") -- the photo match ignored two-letter surnames, so "Wesley So"
+  matched on "Wesley"; and the round 1 report was drafted in the same batch
+  as round 2 (dropped; its "round 2 is on Saturday" had passed). Also:
+  Freestyle Friday (115) and an Olympiad travel diary (100) outscored both
+  U.S. Championship round reports on passing "Olympiad" mentions. Minor:
+  So/Titled Tuesday link and "five-time-title chaser" (R2), a line about
+  qualifying places (Freestyle), unrelated Uzbek-team photo (travel piece,
+  now neutral), Oceania "was classical" -> "mostly classical". Fixed at the
+  source: two-letter surnames must match, the major-event bonus needs the
+  event in the headline or opening 200 characters, event headlines with a
+  colon aren't profiles, and an earlier round's report is dropped when a
+  later round of the same event is in the batch. PR #64 (weekly recap)
+  clean: all 21 links and every claim checked.
 - 2026-10-10: PR #62 reset (streak 1 -> 0). Selection bug: ChessBase's
   Caruana / U.S. Championship piece (opening week of the event) scored 47
   and lost to a ChessBase product review (52, lifted by a +15 Nordic bonus
@@ -223,8 +240,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-10 (PR #62, see above).
-- Earlier resets: 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-11 (PR #63, see above).
+- Earlier resets: 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
