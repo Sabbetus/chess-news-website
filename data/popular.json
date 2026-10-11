@@ -5,6 +5,11 @@
     "views": 12
   },
   {
+    "slug": "anti-cheating",
+    "title": "How Chess Fights Cheating, Online and Over the Board",
+    "views": 11
+  },
+  {
     "slug": "time-controls",
     "title": "Classical, Rapid, Blitz: How Chess Time Controls Work",
     "views": 10
@@ -13,10 +18,5 @@
     "slug": "tokayev-receives-turlov-and-kazakhstan-becomes-the-model",
     "title": "Tokayev Receives Turlov, Who Pitches Kazakh Chess as a Model",
     "views": 10
-  },
-  {
-    "slug": "anti-cheating",
-    "title": "How Chess Fights Cheating, Online and Over the Board",
-    "views": 9
   }
 ]
