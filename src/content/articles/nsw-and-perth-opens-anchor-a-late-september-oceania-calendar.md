@@ -7,7 +7,7 @@ lens: "tournament-db"
 continent: "oceania"
 selectionScore: 23
 reviewStatus: "published"
-socialCopy: "September in Oceania: the Perth International Open, the NSW State Championship in Sydney, and an eight-day Victorian Women's Championship in Melbourne. All classical, and almost all in Australia."
+socialCopy: "September in Oceania: the Perth International Open, the NSW State Championship in Sydney, and an eight-day Victorian Women's Championship in Melbourne. Mostly classical, and all in Australia."
 metaDescription: "September 2026 in Oceania: the Perth International Open, NSW State Championship and Victorian Women's Championship led a month of Australian classical chess."
 aggregateKind: "calendar-biggest"
 continentName: "Oceania"
