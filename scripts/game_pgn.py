@@ -5,7 +5,9 @@ Lichess embed, which lets readers switch to other games from the same
 event (user's call, 2026-10-06). pgn_from_lichess_embed is kept for other
 uses but draft.py doesn't call it for the board.
 
-Source: the page itself. ChessBase articles load their board from a PGN
+Source: the page itself. Chess.com reports show each game as a diagram
+  whose PGN comes from Chess.com's diagram endpoint (see
+  _chesscom_diagram_pgns). ChessBase articles load their board from a PGN
   file named in a data-url attribute. One file can hold several games, so
   a game is only used when it can be picked unambiguously (the players the
   draft named, or the only game whose two players both appear in the body).
@@ -23,6 +25,7 @@ USER_AGENT = "Chess-Herald-Pipeline/1.0 (https://chessherald.com)"
 TIMEOUT = 30
 KEEP_HEADERS = ("Event", "Site", "Date", "Round", "White", "Black", "Result")
 PGN_URL_RE = re.compile(r'data-url="([^"]+\.pgn)"', re.IGNORECASE)
+CHESSCOM_DIAGRAM_RE = re.compile(r"diagram_\d+_(\d+)")
 EMBED_RE = re.compile(r"lichess\.org/embed/broadcast/[^/]+/[^/]+/(\w{8})/(\w{8})")
 
 
@@ -88,8 +91,14 @@ def pick_game(games: list[str], body: str, player1: str = "", player2: str = "")
         white = (head.get("White", "").split(",")[0] or "").strip().lower()
         black = (head.get("Black", "").split(",")[0] or "").strip().lower()
         if white and black and white in text and black in text:
-            in_body.append(g)
-    return in_body[0] if len(in_body) == 1 else None
+            # Where the pair is first discussed: the later of the two names'
+            # first mentions.
+            in_body.append((max(text.index(white), text.index(black)), g))
+    if not in_body:
+        return None
+    # A round report names many games; the lead game is the one whose
+    # players the article reaches first (2026-10-11, U.S. Championship).
+    return min(in_body, key=lambda pair: pair[0])[1]
 
 
 def pgn_from_lichess_embed(embed_url: str) -> str | None:
@@ -100,14 +109,37 @@ def pgn_from_lichess_embed(embed_url: str) -> str | None:
     return _get(f"https://lichess.org/api/study/{round_id}/{game_id}.pgn")
 
 
+def _chesscom_diagram_pgns(page: str) -> str | None:
+    """Chess.com reports show games as diagrams ("diagram_3_15843838"); each
+    one's PGN comes from its public diagram endpoint. Added 2026-10-11 so
+    the U.S. Championship (not on Lichess) gets our own board."""
+    games = []
+    for diagram_id in dict.fromkeys(CHESSCOM_DIAGRAM_RE.findall(page)):
+        try:
+            response = requests.get(f"https://www.chess.com/callback/diagram/{diagram_id}",
+                                    headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT)
+            response.raise_for_status()
+            data = response.json()
+        except (requests.RequestException, ValueError):
+            continue
+        if data.get("type") != "chessGame":
+            continue
+        for setup in data.get("setup") or []:
+            if (setup.get("pgn") or "").strip().startswith("["):
+                games.append(setup["pgn"].strip())
+    return "\n\n".join(games) or None
+
+
 def pgn_from_source_page(source_url: str) -> str | None:
     page = _get(source_url) if source_url else None
     if not page:
         return None
     m = PGN_URL_RE.search(page)
-    if not m:
-        return None
-    return _get(urllib.parse.urljoin(source_url, m.group(1)))
+    if m:
+        return _get(urllib.parse.urljoin(source_url, m.group(1)))
+    if "chess.com" in urllib.parse.urlparse(source_url).netloc:
+        return _chesscom_diagram_pgns(page)
+    return None
 
 
 def find_game_pgn(source_url: str, embed_url: str, body: str, player1: str = "", player2: str = "") -> str | None:

@@ -34,9 +34,10 @@ const name = (raw = '') => {
 const white = name(headers.White);
 const black = name(headers.Black);
 const year = (headers.Date || '').slice(0, 4);
-// Lichess broadcasts put a URL in Site; fall back to the event name then.
-const place = headers.Site && !/^https?:/.test(headers.Site) ? headers.Site : headers.Event;
-const event = [place, year].filter(Boolean).join(' ');
+// Lichess broadcasts put a URL in Site, Chess.com its own name; fall back
+// to the event name then.
+const place = headers.Site && !/^https?:|\.(com|org|net)$/i.test(headers.Site) ? headers.Site : headers.Event;
+const event = [place, place?.includes(year) ? '' : year].filter(Boolean).join(' ');
 const result = headers.Result && headers.Result !== '*' ? headers.Result : '';
 
 // Move list rows: [number, white ply, black ply]

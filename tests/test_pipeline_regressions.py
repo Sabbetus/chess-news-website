@@ -379,3 +379,12 @@ def test_earlier_round_report_dropped_when_later_round_in_batch():
     r2 = {"sourceName": "Chess.com", "title": "So, Liang Lead",
           "summary": "So and Liang won again in round two of the 2026 U.S. Chess Championship."}
     assert drop_superseded_rounds([r1, r2]) == [r2]
+
+
+def test_round_report_picks_the_lead_game():
+    from game_pgn import pick_game
+
+    g1 = '[Event "x"]\n[White "Sevian, Samuel"]\n[Black "Liang, Awonder"]\n\n1. e4 e5 1-0'
+    g2 = '[Event "x"]\n[White "So, Wesley"]\n[Black "Xiong, Jeffery"]\n\n1. d4 d5 1-0'
+    body = "Liang beat Sevian in a King's Indian Attack. Later, So beat Xiong."
+    assert pick_game([g2, g1], body) == g1

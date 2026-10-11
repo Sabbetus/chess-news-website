@@ -14,6 +14,7 @@ image:
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_Tata_2023_-_63.jpg"
   caption: "Wesley So"
+gamePgn: "so-and-liang-lead-open-at-2-2-bottom-seeds-top-the-women.pgn"
 ---
 
 Round two of the 2026 U.S. Championships [thinned the leaders in both sections](https://www.chess.com/news/view/2026-us-chess-championships-round-2). In the Open, GMs Wesley So and Awonder Liang both won again and sit on 2/2, down from three co-leaders after round one. Half the games were decisive.
@@ -22,7 +23,7 @@ Round two of the 2026 U.S. Championships [thinned the leaders in both sections](
 
 Liang was the first to finish, winning with Black in a King's Indian Attack against GM Sam Sevian. It is Sevian's second loss in two rounds. Liang pointed to the opening move order as the key: "I think Sam probably confused himself a little bit in the opening and just got a very bad position almost immediately."
 
-He added that Sevian was probably fine for a long time before "all of a sudden I was winning, and he had no defense." Black was better throughout, usually only slightly, until the slow 32.Kg2?? lost on the spot.
+He added that Sevian was probably fine for a long time before "all of a sudden I was winning, and he had no defense." Black was better throughout, usually only slightly, until the slow [32.Kg2??](#ply-63) lost on the spot.
 
 Liang then converted with some flair. He sacrificed his knight and then his rook to clear the way for connected passed pawns.
 
