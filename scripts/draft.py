@@ -482,6 +482,15 @@ genuinely relevant to this story, link none of them -- a forced link is worse \
 than no link. Note these are companion pieces, not news reports: never describe \
 one as having "broken" or "first reported" anything.
 
+Background links: the user turn also lists our explainers and event guides. \
+Link at most one explainer and at most one event guide, and only where this \
+piece actually uses the concept a reader may not know -- a GM norm links the \
+titles explainer on the words "GM norm"; a Grand Swiss story that turns on its \
+Candidates spots links that event's guide. A passing mention (a player's \
+rating quoted in a results line) needs no link. Put the link on a phrase \
+already in the sentence, never "learn more" or "see our explainer", and use \
+the path exactly as given, including any #how-it-works anchor.
+
 Before linking a name, confirm it's the same real person or entity the \
 listed article is actually about, not just matching text -- a shared surname, \
 club, or federation is not enough. Chess federations are small worlds: two \
@@ -680,6 +689,39 @@ def published_articles(exclude_slug: str | None = None) -> list[dict]:
     return entries[:INTERNAL_LINK_CANDIDATES]
 
 
+EVENTS_DIR = ROOT / "src" / "content" / "events"
+
+
+def background_link_targets() -> list[dict]:
+    """The evergreen explainers and the event pages with a "How it works"
+    section, for news pieces to link where a reader needs the background.
+    Always offered in full -- unlike published_articles(), which keeps
+    only the newest INTERNAL_LINK_CANDIDATES and would soon push the
+    explainers out. Found from the files, so new ones need no code change:
+    an explainer is a published article with selectionScore 0 that is not
+    a recap."""
+    targets = []
+    for path in sorted(ARTICLES_DIR.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if ('reviewStatus: "published"' not in text or not re.search(r"^selectionScore:\s*0\s*$", text, re.M)
+                or re.search(r'^type:\s*"?recap', text, re.M)):
+            continue
+        title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
+        about = re.search(r'^metaDescription:\s*"(.*?)"\s*$', text, re.M)
+        if title:
+            targets.append({"url": f"/articles/{path.stem}/", "title": title.group(1),
+                            "about": about.group(1) if about else ""})
+    for path in sorted(EVENTS_DIR.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if not re.search(r"^## How it works\s*$", text, re.M):
+            continue
+        name = re.search(r'^name:\s*"(.*?)"\s*$', text, re.M)
+        if name:
+            targets.append({"url": f"/events/{path.stem}/#how-it-works",
+                            "title": f"{name.group(1)}: how it works", "about": ""})
+    return targets
+
+
 def calendar_pieces_for_continent(continent_slug: str) -> list[dict]:
     """Previously published calendar aggregates for one continent, newest
     first. Each continent gets two of these a month -- a retrospective on
@@ -840,6 +882,17 @@ def build_user_prompt(item: dict) -> str:
         )
         for entry in previous:
             parts.append(f"- \"{entry['title']}\" -> /articles/{entry['slug']}/")
+    background = background_link_targets()
+    if background:
+        parts.append("")
+        parts.append(
+            "Background explainers and event guides (see the background-link rule in your "
+            "instructions -- at most one explainer and one event guide, only where this piece "
+            "actually uses the concept):"
+        )
+        for entry in background:
+            about = f" -- {entry['about']}" if entry["about"] else ""
+            parts.append(f"- \"{entry['title']}\" -> {entry['url']}{about}")
     return "\n".join(parts)
 
 
@@ -993,6 +1046,7 @@ PARAGRAPH_WORD_CEILING = 70
 
 
 _ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
+_EVENT_LINK_RE = re.compile(r"/events/([a-z0-9-]+)/")
 
 
 RANKINGS_LINE = (
@@ -1019,8 +1073,10 @@ def check_article_links(body_markdown: str) -> list[str]:
         if 'reviewStatus: "published"' in path.read_text(encoding="utf-8")
     }
     found = set(_ARTICLE_LINK_RE.findall(body_markdown))
-    bad = found - real_slugs
-    return sorted(f"/articles/{slug}/" for slug in bad)
+    bad = sorted(f"/articles/{slug}/" for slug in found - real_slugs)
+    event_slugs = {path.stem for path in EVENTS_DIR.glob("*.md")}
+    bad += sorted(f"/events/{slug}/" for slug in set(_EVENT_LINK_RE.findall(body_markdown)) - event_slugs)
+    return bad
 
 
 def attach_standings_table(item: dict, body_markdown: str) -> str:

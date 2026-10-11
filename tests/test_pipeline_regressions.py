@@ -338,3 +338,14 @@ def test_player_title_is_not_a_major_event():
 
     assert score_major_tournament("Dubov, the former world rapid chess champion, accepts a bullet challenge") == 0
     assert score_major_tournament("Caruana begins his title defence at the US Championship") > 0
+
+
+def test_background_links_always_offered_and_event_links_checked():
+    from draft import background_link_targets, check_article_links
+
+    urls = {t["url"] for t in background_link_targets()}
+    assert "/articles/chess-titles/" in urls
+    assert "/events/chess-olympiad/#how-it-works" in urls
+    assert not any("weekly-recap" in u for u in urls)
+    body = "[a GM norm](/articles/chess-titles/) and [the format](/events/made-up-event/#how-it-works)"
+    assert check_article_links(body) == ["/events/made-up-event/"]
