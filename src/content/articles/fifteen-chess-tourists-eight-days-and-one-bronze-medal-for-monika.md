@@ -5,14 +5,14 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/eight-days-uzbekistan-axel-eger"
 lens: "people"
 continent: "asia"
-selectionScore: 100
-reviewStatus: "draft"
+selectionScore: 55
+reviewStatus: "published"
 socialCopy: "Nine Dutch, five Germans and one Italian crossed Uzbekistan during the Olympiad. They played local juniors, watched Germany edge the Netherlands for bronze, and gave a bronze medal to the one non-player."
 metaDescription: "A ChessBase travel diary follows a Dutch-German-Italian chess group through Bukhara, Samarkand and Tashkent during the Olympiad."
 image:
-  src: "./_images/Chess_Olympiad_Team_of_Uzbekistan__45th_Chess_Olympiad.webp"
-  credit: "MiroJP, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_Olympiad_Team_of_Uzbekistan_%2845th_Chess_Olympiad%29.jpg"
+  src: "./_images/Chess_game_Staunton_No__6_perfil_view_8.webp"
+  credit: "Wilfredor, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-1-12/round-11/QJSVWmNu/7o028s7R"
 ---
@@ -39,7 +39,7 @@ Eger describes the hall as no less impressive than Registan: hundreds of players
 
 The final round produced a pairing that might have been drawn for this group. On Sunday, with the travellers already in Tashkent, Germany played the Netherlands, and bronze was at stake for Germany. Nearly everyone on the bus was watching their phones.
 
-Matthias Bluebaum [defeated Jorden van Foreest](#game-embed). Frederik Svane and Loek van Wely then agreed a draw at around half past five, which confirmed bronze for Germany. For more on that medal, see [Svane's second Olympiad gold and Germany's board-prize history](/articles/svane-s-second-olympiad-gold-and-germany-s-board-prize-history/).
+Matthias Bluebaum [defeated Jorden van Foreest](#game-embed). Frederik Svane and Loek van Wely then agreed a draw at around half past five, which confirmed [Germany's bronze](/articles/germany-s-bronze-traces-back-to-bernd-v-kler-s-chess-princes/).
 
 The football match between the two nations during the trip ended 1-1. In chess, Eger writes, things were "a little less diplomatic", though the group on the bus stayed friendly.
 

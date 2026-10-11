@@ -5,8 +5,8 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/maghsoodloo-wins-freestyle-friday-october-9-2026"
 lens: "results"
 continent: "global"
-selectionScore: 115
-reviewStatus: "draft"
+selectionScore: 70
+reviewStatus: "published"
 socialCopy: "GM Parham Maghsoodloo scored 9/11 to win Freestyle Friday, losing only to Nodirbek Yakubboev, in a field of 112 that included Keymer, Duda, Kamsky and Kosteniuk. Bortnyk took second after winning his last three."
 metaDescription: "Parham Maghsoodloo won Freestyle Friday with 9/11, losing only to Nodirbek Yakubboev, ahead of Oleksandr Bortnyk, Sergey Sklokin and Jan-Krzysztof Duda."
 image:
@@ -34,12 +34,8 @@ Duda arrived in form. Less than a day earlier he had won the first 3 0 Thursday 
 
 The game had the hallmarks of a clash between two super-GMs, with plenty of complexity, and it was fitting that it was decided in time trouble.
 
-In a format where the starting position is shuffled, there is no opening theory to lean on, so a game like that tends to turn on calculation and the clock rather than preparation.
-
-For background on how the shuffled starts work, see [our Chess960 explainer](/articles/chess960-freestyle/).
+In a format where [the starting position is shuffled](/articles/chess960-freestyle/), there is no opening theory to lean on, so a game like that tends to turn on calculation and the clock rather than preparation.
 
 **What the result means**
 
 Nine points from eleven in a field with that many 2700 players is a strong score, and a single loss to Yakubboev kept Maghsoodloo clear of the pack. Bortnyk's late surge of three straight wins was enough for second, while Duda's round-six win over Keymer put him in the top four.
-
-How many qualifying places these events carry is not something to guess at here, but a win against this field is the kind of result that helps.

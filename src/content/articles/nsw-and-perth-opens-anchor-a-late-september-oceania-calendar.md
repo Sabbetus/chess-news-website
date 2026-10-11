@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"
 continent: "oceania"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "September in Oceania: the Perth International Open, the NSW State Championship in Sydney, and an eight-day Victorian Women's Championship in Melbourne. All classical, and almost all in Australia."
 metaDescription: "September 2026 in Oceania: the Perth International Open, NSW State Championship and Victorian Women's Championship led a month of Australian classical chess."
 aggregateKind: "calendar-biggest"
@@ -19,7 +19,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
 ---
 
-Oceania's September chess was classical and Australian in the data we track, with the heaviest action stacked into the last week. Two events stand out by name and format: the Perth International Open and the NSW State Championship.
+Oceania's September chess was mostly classical and entirely Australian in the data we track, with the heaviest action stacked into the last week. Two events stand out by name and format: the Perth International Open and the NSW State Championship.
 
 **The late-month headliners**
 
@@ -27,7 +27,7 @@ The [2026 Perth International Open](https://chesstournamentcalendar.com/tourname
 
 In Sydney, the [2026 NSW State Championship](https://chesstournamentcalendar.com/tournament/2026-nsw-state-championship-fide-500879/) took place September 25 to 29. Winston Zhao Chen is listed as organizer. The [Reserves](https://chesstournamentcalendar.com/tournament/2026-nsw-state-championship-reserves-fide-500880/) and [Minor](https://chesstournamentcalendar.com/tournament/2026-nsw-state-championship-minor-fide-500881/) sections shared the same five-day window.
 
-The same organizer also listed the [2026 University of Sydney Classic](https://chesstournamentcalendar.com/tournament/2026-university-of-sydney-classic-fide-500882/), a three-day classical event from September 26 to 28. In Melbourne, the [2026 MCC Spring Classic](https://chesstournamentcalendar.com/tournament/2026-mcc-spring-classic-fide-501310/) began September 29 and runs into October 1.
+The same organizer also listed the [2026 University of Sydney Classic](https://chesstournamentcalendar.com/tournament/2026-university-of-sydney-classic-fide-500882/), a three-day classical event from September 26 to 28. In Melbourne, the [2026 MCC Spring Classic](https://chesstournamentcalendar.com/tournament/2026-mcc-spring-classic-fide-501310/) ran from September 29 to October 1.
 
 **Eight-day events in Melbourne, Perth and Adelaide**
 
@@ -43,4 +43,4 @@ Elsewhere, the [Chess Artists Winter Open Round 6](https://chesstournamentcalend
 
 **What the data covers**
 
-We have no player counts for these events, so field sizes can't be compared. Of those 25, 21 are classical and four are rapid.
+We have no player counts for these events, so field sizes can't be compared. Of the 25 events tracked, 21 were classical and four rapid.
