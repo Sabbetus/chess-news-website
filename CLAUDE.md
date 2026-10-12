@@ -55,7 +55,8 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 2.**
+- **Current review-acceptance streak: 3.**
+- 2026-10-12: PR #65 review accepted as proposed (2 -> 3).
 - 2026-10-11: PR #63/#64 review accepted (1 -> 2); user asked for the
   selection scores, which exposed one more bug (fixed with the rest).
 - 2026-10-10: PR #62 review accepted (0 -> 1). The missing U.S.
@@ -79,7 +80,13 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-12: PR #65 clean (streak 0 -> 1). Munich 1936 and Bundesliga
+  round 1-3 pieces checked claim by claim against ChessBase; Navara-MVL
+  embed and both photos fine. Minor: "Solingen's" Navara, "most
+  hard-fought" (all three Baden-Baden wins were 4½-3½), "former FIDE world
+  champion", Munich headline "Won 20-0" -> "Won Every Match". No U.S.
+  Championship piece: Chess.com had not yet published round 3.
 - 2026-10-11: PR #63 reset (streak stays at 0). Resets: the U.S.
   Championship round 2 piece showed a footballer ("Wesley moraes ferreira
   da silva") -- the photo match ignored two-letter surnames, so "Wesley So"
