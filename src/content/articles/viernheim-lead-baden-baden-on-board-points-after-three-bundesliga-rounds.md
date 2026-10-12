@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/bundesliga-2026-27-r3"
 lens: "results"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Two perfect records, one tiebreak. Viernheim and Baden-Baden both have 6 match points in the Bundesliga, but Viernheim's 17½ board points, four more than Baden-Baden's, put the defending champions on top. Bayern sit third on 5, and 18-year-old Matic Lavrencic is 3/3."
 metaDescription: "Viernheim and Baden-Baden won all three matches in the opening Bundesliga weekend; Viernheim lead on board points, 17½ to 13½, with Bayern third."
 image:
@@ -32,9 +32,9 @@ Suleymanli, Aravindh and Georg Meier each scored 2½ points over the three round
 
 **Baden-Baden win three 4½-3½ matches**
 
-Baden-Baden's three wins were all by a single point. The first, against SG Solingen, was the closest call. On top board, [David Navara beat Maxime Vachier-Lagrave](#game-embed), one of the weekend's more significant individual results. Wins by Maxime Lagarde and Etienne Bacrot still gave Baden-Baden the match.
+Baden-Baden's three wins were all by a single point. The first, against SG Solingen, was the most hard-fought. On top board, [Solingen's David Navara beat Maxime Vachier-Lagrave](#game-embed), one of the weekend's more significant individual results. Wins by Maxime Lagarde and Etienne Bacrot still gave Baden-Baden the match.
 
-Against newly promoted SC Remagen Sinzig, Matthias Bluebaum and Alexander Donchenko supplied the decisive wins. In round three, Deggendorf's Martin Petrov beat former world champion Rustam Kasimdzhanov, yet Baden-Baden found enough points elsewhere.
+Against newly promoted SC Remagen Sinzig, Matthias Bluebaum and Alexander Donchenko supplied the decisive wins. In round three, Deggendorf's Martin Petrov beat former FIDE world champion Rustam Kasimdzhanov, yet Baden-Baden found enough points elsewhere.
 
 Three one-point escapes from a club with 16 league titles suggest either rotation or a field that is tighter than the rating sheets imply. Probably some of both, though a weekend is a small sample.
 

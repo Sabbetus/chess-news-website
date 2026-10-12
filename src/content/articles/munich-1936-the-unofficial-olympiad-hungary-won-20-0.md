@@ -1,12 +1,12 @@
 ---
-title: "Munich 1936: The Unofficial Olympiad Hungary Won 20-0"
+title: "Munich 1936: The Unofficial Olympiad Hungary Won Every Match"
 publishDate: "2026-10-12"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/chess-olympiad-that-was-not-munich-1936"
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Munich 1936 called itself a Chess Olympiad, but FIDE never granted it that status. Hungary won every match, Najdorf took board-two gold, and Germany's federation was still outside FIDE."
 metaDescription: "The 1936 Munich team tournament was staged by the Nazi-run German federation, never recognised as an Olympiad by FIDE. Hungary won all 20 matches."
 image:
