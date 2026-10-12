@@ -25,7 +25,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from social_text import delink  # noqa: E402
+from social_text import delink, fit_for_x  # noqa: E402
 
 import anthropic
 
@@ -541,7 +541,7 @@ Vary the actual construction, not just the words. Before settling on a title, ch
 - "Why [Subject] [Verb]s More Than [Comparison]"
 A headline built as a direct statement ("Cuba Stays Perfect as the Field Nearly Doubles"), a plain declarative sentence naming who did what, or one anchored on a single concrete number, is often the more natural choice -- don't reach for a possessive-noun-plus-colon or a comparison-verb template purely out of habit. If you notice yourself writing "X's Y [verb]s Z" or "X: Y" for the second title in a row, deliberately write this one a different way.
 @@SOCIAL_COPY@@
-a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
 @@META_DESCRIPTION@@
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@IMAGE_SUBJECTS@@
@@ -620,7 +620,7 @@ a clear, specific headline for this piece (not a generic restatement). Aim for 4
 
 Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
 @@SOCIAL_COPY@@
-a single short social post (under 260 characters) teasing the piece, no hashtags spam, at most one relevant hashtag
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag
 @@META_DESCRIPTION@@
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@BODY_MARKDOWN@@
@@ -1587,7 +1587,7 @@ def draft_one(
         # string despite the prompt -- happened once in practice (a
         # calendar aggregate with a blank socialCopy), and a blank social
         # teaser is a worse failure mode than a slightly generic one.
-        "socialCopy": delink((parsed.get("socialCopy") or "").strip() or parsed["title"]),
+        "socialCopy": fit_for_x(delink((parsed.get("socialCopy") or "").strip() or parsed["title"]))[0],
     }
     # Optional: the article page falls back to a body excerpt, so a missing
     # or over-long answer is dropped rather than failing the draft.

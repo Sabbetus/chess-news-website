@@ -7,7 +7,7 @@ lens: "results"
 continent: "europe"
 selectionScore: 67
 reviewStatus: "published"
-socialCopy: "Two perfect records, one tiebreak. Viernheim and Baden-Baden both have 6 match points in the Bundesliga, but Viernheim's 17½ board points, four more than Baden-Baden's, put the defending champions on top. Bayern sit third on 5, and 18-year-old Matic Lavrencic is 3/3."
+socialCopy: "Viernheim and Baden-Baden both opened the Bundesliga with three wins, but Viernheim lead on board points, 17½ to 13½. Bayern are third, and 18-year-old Matic Lavrencic went 3/3."
 metaDescription: "Viernheim and Baden-Baden won all three matches in the opening Bundesliga weekend; Viernheim lead on board points, 17½ to 13½, with Bayern third."
 image:
   src: "./_images/David_Navara_Chessolympiad_2022.webp"

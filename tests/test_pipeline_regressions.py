@@ -388,3 +388,13 @@ def test_round_report_picks_the_lead_game():
     g2 = '[Event "x"]\n[White "So, Wesley"]\n[Black "Xiong, Jeffery"]\n\n1. d4 d5 1-0'
     body = "Liang beat Sevian in a King's Indian Attack. Later, So beat Xiong."
     assert pick_game([g2, g1], body) == g1
+
+
+def test_social_copy_fits_on_x():
+    from social_text import X_COPY_LIMIT, fit_for_x
+
+    long = ("Two perfect records, one tiebreak. Viernheim and Baden-Baden both have 6 match points in the "
+            "Bundesliga, but Viernheim's 17½ board points, four more than Baden-Baden's, put the defending "
+            "champions on top. Bayern sit third on 5, and 18-year-old Matic Lavrencic is 3/3.")
+    copy, ok = fit_for_x(long)
+    assert ok and len(copy) <= X_COPY_LIMIT and copy.endswith(".")

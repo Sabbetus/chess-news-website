@@ -20,7 +20,7 @@ this doesn't starve lower-scored older entries the way it would if supply
 regularly outpaced posting slots.
 """
 from __future__ import annotations
-from social_text import delink  # noqa: E402
+from social_text import delink, fit_for_x  # noqa: E402
 
 import json
 import os
@@ -87,7 +87,7 @@ def load_published_articles() -> list[dict]:
                 # socialCopy is written as a hook for sharing (tension, a
                 # concrete detail, sometimes a hashtag) -- falls back to
                 # the article title only if a draft is missing the field.
-                "socialCopy": delink(social_copy or title),
+                "socialCopy": fit_for_x(delink(social_copy or title))[0],
                 "publishDate": publish_date,
                 "selectionScore": int(selection_score) if selection_score else 0,
             }

@@ -18,7 +18,7 @@ import sys
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from social_text import delink  # noqa: E402
+from social_text import delink, fit_for_x  # noqa: E402
 
 import anthropic
 
@@ -364,7 +364,7 @@ a headline for this week's recap in the form "Weekly Recap: <the week's actual t
 (e.g. "Weekly Recap: Rating Shakeups and a Controversial Finish in St. Louis") -- name the \
 real theme, not a generic placeholder like "This Week in Chess"
 @@SOCIAL_COPY@@
-a single short social post (under 260 characters) teasing this week's recap, no hashtag spam, at most one relevant hashtag. Never include a URL or domain name of any kind -- the posting script appends the real article link separately, and a guessed one is always wrong.
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing this week's recap, no hashtag spam, at most one relevant hashtag. Never include a URL or domain name of any kind -- the posting script appends the real article link separately, and a guessed one is always wrong.
 @@IMAGE_SUBJECT@@
 the ONE real person (or, failing that, organization/event) THIS recap's own headline is \
 actually about -- e.g. "Magnus Carlsen", not "Magnus Carlsen and Ian Nepomniachtchi" and \
@@ -454,7 +454,7 @@ def main() -> None:
         "continent": "global",
         "selectionScore": 0,
         "reviewStatus": "draft",
-        "socialCopy": delink((parsed.get("socialCopy") or "").strip() or parsed["title"]),
+        "socialCopy": fit_for_x(delink((parsed.get("socialCopy") or "").strip() or parsed["title"]))[0],
     }
     image = pick_recap_image((parsed.get("imageSubject") or "").strip())
     if image:
