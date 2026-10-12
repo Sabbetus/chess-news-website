@@ -55,7 +55,10 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 3.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-12: PR #65 review's Munich headline fix ("The Unofficial
+  Olympiad Hungary Won Every Match") was ungrammatical; user caught it
+  (3 -> 0). Now "Munich 1936: The Chess Olympiad FIDE Never Recognised".
 - 2026-10-12: PR #65 review accepted as proposed (2 -> 3).
 - 2026-10-11: PR #63/#64 review accepted (1 -> 2); user asked for the
   selection scores, which exposed one more bug (fixed with the rest).

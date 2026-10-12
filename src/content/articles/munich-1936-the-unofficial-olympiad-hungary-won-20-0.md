@@ -1,5 +1,5 @@
 ---
-title: "Munich 1936: The Unofficial Olympiad Hungary Won Every Match"
+title: "Munich 1936: The Chess Olympiad FIDE Never Recognised"
 publishDate: "2026-10-12"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/chess-olympiad-that-was-not-munich-1936"
