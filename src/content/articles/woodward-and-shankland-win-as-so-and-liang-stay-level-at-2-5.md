@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-3"
 lens: "results"
 continent: "north-america"
 selectionScore: 91
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Round 3 at the U.S. Championship: So and Liang draw and stay on 2.5, Woodward and Shankland score first wins, and defending women's champion Carissa Yip is down to 0.5."
 metaDescription: "So and Liang drew to stay joint leaders at the U.S. Championship, while Woodward and Shankland won and Alice Lee joined the women's lead on 2.5."
 additionalSources:

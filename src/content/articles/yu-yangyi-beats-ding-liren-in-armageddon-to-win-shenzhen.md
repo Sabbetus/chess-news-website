@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/shenzhen-nanshan-mastes-2026-report"
 lens: "results"
 continent: "asia"
 selectionScore: 60
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Four rapid draws, a blitz split, then Armageddon: Yu Yangyi edged Ding Liren with White to win the Shenzhen Nanshan Masters. Wang Hao took third."
 metaDescription: "Yu Yangyi beat Ding Liren in an Armageddon decider after four drawn rapid games and a split blitz tiebreak to win the Shenzhen Nanshan Masters 2026."
 image:
