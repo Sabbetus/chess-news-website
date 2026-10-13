@@ -13,10 +13,11 @@ additionalSources:
   - sourceName: "ChessBase"
     sourceUrl: "https://en.chessbase.com/post/us-championships-2026-3"
 image:
-  src: "./_images/So_wesley_20081119_olympiade_dresden3.webp"
-  credit: "Frank Hoppe, CC BY 2.5, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASo_wesley_20081119_olympiade_dresden3.jpg"
-  caption: "Wesley So"
+  src: "./_images/SamShankland23c.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASamShankland23c.jpg"
+  caption: "Sam Shankland"
+gamePgn: "woodward-and-shankland-win-as-so-and-liang-stay-level-at-2-5.pgn"
 ---
 
 The top of the open section did not change in round three. Wesley So and Awonder Liang met head-on and [drew in 30 moves without much action](https://www.chess.com/news/view/2026-us-chess-championships-round-3), leaving both on 2.5/3. Behind them, two decisive games reshaped the chasing pack.
@@ -35,13 +36,13 @@ It was Woodward's first win after two draws. He moves to 2/3 and joins Fabiano C
 
 Sam Shankland's win with Black over Jeffery Xiong is Chess.com's Game of the Day, annotated by GM Dejan Bojkov. Chess.com called Xiong's strategic handling of the middlegame concerning. He allowed an isolated queen's pawn, then weakened his kingside by accepting the traditionally brittle h3-g2-f3 pawn structure.
 
-Shankland's strike was 29...Nxf3!, exploiting that advantage. ChessBase adds that his pieces gradually infiltrated and he gave no meaningful counterplay. It was his first point of the event, a recovery from the opening-round loss to So.
+Shankland's strike was [29...Nxf3!](#ply-58), exploiting that advantage. ChessBase adds that his pieces gradually infiltrated and he gave no meaningful counterplay. It was his first point of the event, a recovery from the opening-round loss to So.
 
 Xiong has now won once (against Sevian) and lost twice.
 
 **Women's section: three-way lead**
 
-Alice Lee, 16, moved to 2.5/3 when IM Nazi Paikidze blundered. Chess.com credits the blunder for the win. ChessBase says a one-move blunder turned Lee's positional edge into a clear material advantage. Paikidze kept looking for compensation, but Lee neutralised the threats and she resigned.
+Alice Lee moved to 2.5/3 when IM Nazi Paikidze blundered. Chess.com credits the blunder for the win. ChessBase says a one-move blunder turned Lee's positional edge into a clear material advantage. Paikidze kept looking for compensation, but Lee neutralised the threats and she resigned.
 
 Lee has had a bumpy start. She escaped with a draw from a losing position against Carissa Yip in round one, then overcame Jennifer Yu after again being in difficulty. She now shares the lead with Thalia Cervantes and 13-year-old Megan Paragua, who both drew their third-round games. Anna Zatonskih and Rachael Li follow on 2/3.
 
@@ -56,5 +57,3 @@ Abrahamyan, who lost to Cervantes in round one despite a big advantage, climbs t
 **What is gone, and what is next**
 
 With no one on a perfect score in either event, the $64,000 Fischer Prize is already off the table. It rewards an 11/11 score, matching Fischer in 1964.
-
-Round four is Monday, October 12, at 1 p.m. ET.

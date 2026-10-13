@@ -15,7 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AYu_Yangyi_Tata_Steel_Chess_2020.jpg"
   caption: "Yu Yangyi"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/shenzhen-nanshan-masters-2026-main-event/finals-game-4/2tJoxMRy/sMzlFz8M"
+  url: "https://lichess.org/embed/broadcast/shenzhen-nanshan-masters-2026-main-event/finals-tiebreaks/G0nwDnZ3/u8cJmc6s"
 ---
 
 Yu Yangyi won the Shenzhen Nanshan International Chess Masters 2026 by beating Ding Liren in an Armageddon game with the white pieces, after a final that [could not be separated until the second tiebreak stage](https://en.chessbase.com/post/shenzhen-nanshan-mastes-2026-report). Both finalists were seeded directly into the main draw, and the all-Chinese showdown went the distance.
@@ -48,4 +48,4 @@ Kong's run ended there. Ding beat him 2½-½. Yu drew his first two games with W
 
 Yu's path was the cleaner of the two: he never needed a tiebreak until the final, and he beat Wang Hao in regulation after being held in the first two games. Ding, the former world champion, got through both his earlier matches in regulation as well, so the final was the first time either had to go to blitz.
 
-Armageddon is a lottery with a thumb on the scale. White gets more time but must win, and Black can draw. Winning it with White, under that pressure, is a real mark in Yu's favour, though one decider says little about the wider gap between two players who split ten games' worth of play so evenly.
+Armageddon is a lottery with a thumb on the scale. White gets more time but must win, and Black can draw. Winning it with White, under that pressure, is a real mark in Yu's favour, though one decider says little about the wider gap between two players who split seven games so evenly.
