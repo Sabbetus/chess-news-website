@@ -226,6 +226,17 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     if len(matches) == 1:
         print(f"    lichess lookup: matched exactly 1 game of {games_seen} in round {round_id!r}", file=sys.stderr)
         return matches[0]
+    if len(matches) > 1:
+        # Several games between the same two players in one round are a
+        # tiebreak or match round; the last one is the decider -- caught
+        # live 2026-10-13: Shenzhen's three-game tiebreak round was skipped
+        # and the piece got a drawn rapid game instead of the Armageddon.
+        print(
+            f"    lichess lookup: {len(matches)} games between the same pair in round {round_id!r}, "
+            f"taking the last (the decider)",
+            file=sys.stderr,
+        )
+        return matches[-1]
     print(
         f"    lichess lookup: {len(matches)} game(s) matched surnames "
         f"{surname1!r}/{surname2!r} out of {games_seen} in round {round_id!r} "

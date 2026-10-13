@@ -61,6 +61,10 @@ def clean_game(game: str) -> str:
         moves = stripped
     moves = re.sub(r"\$\d+|\d+\.\.\.", " ", moves)
     moves = re.sub(r"(?<=[\w+#=])[!?]+", "", moves)  # "a5??" -> "a5"
+    # Annotation glyphs standing as their own token: "N" for a novelty
+    # (Chess.com, caught live 2026-10-11 -- it shifted every later move by a
+    # ply), and evaluation signs.
+    moves = " ".join(t for t in moves.split() if t not in {"N", "=", "+-", "-+", "+=", "=+", "\u00b1", "\u2213", "\u221e", "\u2a72", "\u2a71"})
     kept = "\n".join(f'[{k} "{head[k]}"]' for k in KEEP_HEADERS if k in head)
     return kept + "\n\n" + " ".join(moves.split()) + "\n"
 

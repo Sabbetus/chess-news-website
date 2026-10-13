@@ -592,6 +592,20 @@ def _loosened_event_query(subject: str) -> str | None:
     return " ".join(kept)
 
 
+_ORGANISATION_WORDS = {"federation", "council", "commission", "association", "union", "committee", "board"}
+
+
+def _organisation_name(subject: str) -> str:
+    """"FIDE Council" -> "FIDE": the body that has a logo."""
+    acronyms = [w for w in subject.split() if len(w) >= 2 and w.isupper()]
+    return acronyms[0] if acronyms else subject
+
+
+def _is_organisation(subject: str) -> bool:
+    words = subject.split()
+    return any(w.isupper() and len(w) >= 2 for w in words) or any(w.lower() in _ORGANISATION_WORDS for w in words)
+
+
 def build_query_cascade(
     item: dict, drafted_title: str, image_subjects: list | None = None, prefer_neutral: bool = False
 ) -> list:
@@ -664,6 +678,12 @@ def build_query_cascade(
         # photo of Nigel Short, his main rival in the story.
         subjects = (image_subjects or [])[:1] if prefer_neutral else (image_subjects or [])
         for subject in subjects:
+            if subject and _is_organisation(subject):
+                # An organisation's "photo" is its logo. "FIDE chess" matched
+                # a Magnus Carlsen photo from a FIDE event (caught live
+                # 2026-10-11), which read as if the story were about him.
+                queries.append((f"{_organisation_name(subject)} logo", False, True, False))
+                continue
             if subject:
                 # A person's full name is not guaranteed unique on Commons --
                 # caught live: "José Antonio Carrillo" (a FIDE Americas

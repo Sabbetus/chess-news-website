@@ -398,3 +398,12 @@ def test_social_copy_fits_on_x():
             "champions on top. Bayern sit third on 5, and 18-year-old Matic Lavrencic is 3/3.")
     copy, ok = fit_for_x(long)
     assert ok and len(copy) <= X_COPY_LIMIT and copy.endswith(".")
+
+
+def test_novelty_marker_does_not_shift_move_links():
+    from game_links import link_moves
+    from game_pgn import clean_game
+
+    pgn = clean_game('[Event "x"]\n[White "A"]\n[Black "B"]\n\n1. e4 e5 2. Nf3 Nc6 N 3. Bb5 a6 1-0')
+    body, unmatched = link_moves("After 3.Bb5 Black played 3...a6.", pgn)
+    assert not unmatched and "(#ply-5)" in body and "(#ply-6)" in body
