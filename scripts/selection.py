@@ -118,9 +118,21 @@ CHESSBASE_PROMO_TITLE_PATTERNS = [
 ]
 
 
+# Administrative notices, not news -- caught live 2026-10-13: a media-
+# accreditation notice and a three-week-old Council decision list were both
+# drafted.
+ADMIN_NOTICE_TITLE_PATTERNS = [
+    r"\baccreditation\b", r"\bregistration\b", r"\blist of decisions\b",
+    r"\bcouncil meeting\b", r"\bcall for (bids|applications|nominations|candidates)\b",
+    r"\bminutes\b", r"\bdeadline (extended|approaching)\b", r"\bvacanc(y|ies)\b",
+]
+
+
 def is_promotional(item: dict) -> bool:
     title = (item.get("title") or "").strip().lower()
     if any(re.search(pattern, title) for pattern in PROMO_TITLE_PATTERNS):
+        return True
+    if any(re.search(pattern, title) for pattern in ADMIN_NOTICE_TITLE_PATTERNS):
         return True
     return item.get("sourceName") == "ChessBase" and any(
         re.search(pattern, title) for pattern in CHESSBASE_PROMO_TITLE_PATTERNS
