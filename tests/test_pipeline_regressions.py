@@ -407,3 +407,12 @@ def test_novelty_marker_does_not_shift_move_links():
     pgn = clean_game('[Event "x"]\n[White "A"]\n[Black "B"]\n\n1. e4 e5 2. Nf3 Nc6 N 3. Bb5 a6 1-0')
     body, unmatched = link_moves("After 3.Bb5 Black played 3...a6.", pgn)
     assert not unmatched and "(#ply-5)" in body and "(#ply-6)" in body
+
+
+def test_follow_up_bonus_only_for_followed_events():
+    from selection import score_follow_up
+
+    words = {"fagernes"}
+    assert score_follow_up({"title": "Fagernes: Jumabayev takes title"}, words) > 0
+    assert score_follow_up({"title": "Fagernes: round 8 report"}, words) == 0
+    assert score_follow_up({"title": "Yu Yangyi wins Shenzhen Masters"}, words) == 0

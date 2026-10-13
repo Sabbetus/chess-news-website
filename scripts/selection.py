@@ -532,6 +532,67 @@ def _apply_priority_band(total: int, breakdown: dict, governance: bool) -> int:
     return total
 
 
+# The final result of an event we've been covering -- caught live
+# 2026-10-13: ChessBase's Fagernes final report (Jumabayev wins, Gloeckler's
+# second GM norm) scored 51 and was left out after we had followed the
+# event from round two.
+FOLLOW_UP_RESULT_BONUS = 25
+FOLLOW_UP_WINDOW_DAYS = 21
+_FINAL_RESULT_RE = re.compile(
+    r"\bwins?\b|\btakes? (?:the )?title\b|\bchampion\b|\btriumphs?\b|\bclinch(?:es)?\b|\bwinner\b",
+    re.IGNORECASE,
+)
+_COMMON_TITLE_WORDS = {
+    "chess", "round", "rounds", "after", "championship", "championships", "open", "tournament",
+    "world", "first", "second", "third", "three", "final", "title", "leads", "wins", "weekly", "recap",
+    "record", "points", "board", "field", "player", "players", "history", "straight", "becomes",
+    "heads", "fills", "draws", "anchor", "biggest", "medal", "bronze", "silver", "slate", "rapid",
+    "blitz", "classical", "january", "february", "march", "april", "june", "july", "august",
+    "september", "october", "november", "december", "russian", "season", "event", "events",
+    # Weekly online series: each week is a new event, not a follow-up.
+    "titled", "tuesday", "freestyle", "friday", "bullet", "brawl", "thursday",
+}
+ARTICLES_DIR = Path(__file__).parent.parent / "src" / "content" / "articles"
+
+
+def _recent_event_words(days: int = FOLLOW_UP_WINDOW_DAYS) -> set[str]:
+    """Distinctive capitalised words (place and event names) found in at
+    least two titles of articles published in the last `days` days, today's
+    own batch excluded."""
+    from datetime import date, timedelta
+
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    today = date.today().isoformat()
+    counts: dict[str, int] = {}
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text or 'type: "recap"' in text:
+            continue
+        published = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.M)
+        title = re.search(r'^title:\s*"(.*)"', text, re.M)
+        if published and title and cutoff <= published.group(1) < today:
+            for w in {w.lower() for w in re.findall(r"\b[A-Z][a-z]{4,}\b", title.group(1))}:
+                counts[w] = counts.get(w, 0) + 1
+    # An event we've been following shows up in at least two headlines; a
+    # one-off name match doesn't count, and neither do players' names (the
+    # photo captions list them) -- a player winning again is not a follow-up.
+    people: set[str] = set()
+    for path in ARTICLES_DIR.glob("*.md"):
+        caption = re.search(r'^  caption:\s*"(.*)"', path.read_text(encoding="utf-8"), re.M)
+        if caption:
+            people |= {w.lower() for w in re.findall(r"[A-Za-z]+", caption.group(1))}
+    return {w for w, n in counts.items() if n >= 2} - _COMMON_TITLE_WORDS - people
+
+
+def score_follow_up(item: dict, recent_words: set[str] | None = None) -> int:
+    title = item.get("title") or ""
+    if not _FINAL_RESULT_RE.search(title):
+        return 0
+    recent_words = _recent_event_words() if recent_words is None else recent_words
+    title_words = {w.lower() for w in re.findall(r"\b[A-Z][a-z]{4,}\b", title)} - _COMMON_TITLE_WORDS
+    return FOLLOW_UP_RESULT_BONUS if title_words & recent_words else 0
+
+
 def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, dict]:
     breakdown = {}
     breakdown["sourceTier"] = SOURCE_TIER_SCORE.get(item.get("sourceTier"), 0)
@@ -550,6 +611,7 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["feature"] = FEATURE_BONUS if feature else 0
     breakdown["specificity"] = score_specificity(item)
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
+    breakdown["followUp"] = 0 if (feature or governance) else score_follow_up(item)
 
     raw_total = sum(breakdown.values())
     total = _apply_priority_band(raw_total, breakdown, governance)
