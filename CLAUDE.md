@@ -56,6 +56,8 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-13: PR #66 review proposed keeping the accreditation notice and
+  reframing the Council piece; user removed both (stays 0).
 - 2026-10-12: PR #65 review's Munich headline fix ("The Unofficial
   Olympiad Hungary Won Every Match") was ungrammatical; user caught it
   (3 -> 0). Now "Munich 1936: The Chess Olympiad FIDE Never Recognised".
@@ -83,7 +85,20 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-13: PR #66 reset (streak 1 -> 0). Dropped (user's call): a
+  media-accreditation notice ("ridiculous" to publish) and a FIDE Council
+  decision list from 21 September framed as if the Samarkand Assembly were
+  still to come, with an unrelated Magnus Carlsen photo. Fixes: R3 photo
+  (So aged 15 -> Shankland), "Alice Lee, 16" and a passed round-4 date cut,
+  Xiong-Shankland board added (Chess.com's novelty "N" had shifted move
+  links); Shenzhen board moved from a drawn rapid game to the Armageddon,
+  "ten games" -> seven. Added by hand: the Fagernes final (Jumabayev wins,
+  Gloeckler's second GM norm), which had scored 51 and was left out.
+  Fixed at the source: administrative notices skipped like promotional
+  items; organisation photo searches use the logo only; the decider is
+  taken when one round holds several games between a pair; novelty markers
+  stripped; +25 for the final result of an event we've followed.
 - 2026-10-12: PR #65 clean (streak 0 -> 1). Munich 1936 and Bundesliga
   round 1-3 pieces checked claim by claim against ChessBase; Navara-MVL
   embed and both photos fine. Minor: "Solingen's" Navara, "most
@@ -250,8 +265,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-11 (PR #63, see above).
-- Earlier resets: 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-13 (PR #66, see above).
+- Earlier resets: 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
