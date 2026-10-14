@@ -1791,7 +1791,8 @@ def draft_one(
         try:
             players = game_lookup or {}
             pgn = find_game_pgn(
-                item.get("sourceUrl", ""),
+                [item.get("sourceUrl", "")]
+                + [extra.get("sourceUrl", "") for extra in item.get("additionalSources") or []],
                 "",
                 body_markdown,
                 players.get("player1", ""),
@@ -1803,13 +1804,16 @@ def draft_one(
         if pgn:
             linked_body, unmatched = link_moves(body_markdown, pgn)
             linked = linked_body.count("](#ply-")
-            if linked:
-                GAMES_DIR.mkdir(parents=True, exist_ok=True)
-                (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
-                fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
-                body_markdown = linked_body
-                if unmatched:
-                    GAME_LINK_NOTES.append((out_path.stem, unmatched))
+            # The board goes on even when the text quotes no moves -- a
+            # round report rarely does (user's rule, 2026-10-14: every U.S.
+            # Championship report gets a game). pick_game only returns a
+            # game whose two players the article names.
+            GAMES_DIR.mkdir(parents=True, exist_ok=True)
+            (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
+            fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
+            body_markdown = linked_body
+            if unmatched:
+                GAME_LINK_NOTES.append((out_path.stem, unmatched))
             print(
                 f"  game board: PGN found, {linked} move link(s), {len(unmatched)} quoted move(s) not in the game "
                 f"for '{item['title']}'",

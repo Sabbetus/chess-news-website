@@ -146,9 +146,15 @@ def pgn_from_source_page(source_url: str) -> str | None:
     return None
 
 
-def find_game_pgn(source_url: str, embed_url: str, body: str, player1: str = "", player2: str = "") -> str | None:
-    """Returns a cleaned single-game PGN, or None."""
-    for raw in (pgn_from_lichess_embed(embed_url) if embed_url else None, pgn_from_source_page(source_url)):
+def find_game_pgn(source_url: str | list[str], embed_url: str, body: str, player1: str = "", player2: str = "") -> str | None:
+    """Returns a cleaned single-game PGN, or None. source_url may be a list:
+    every source of a merged story is tried in order, since the primary one
+    may have no games (ChessBase's U.S. Championship round 4 report, while
+    the merged Chess.com report had all four -- caught live 2026-10-14)."""
+    urls = [source_url] if isinstance(source_url, str) else list(source_url)
+    candidates = [pgn_from_lichess_embed(embed_url) if embed_url else None]
+    candidates += [pgn_from_source_page(url) for url in urls if url]
+    for raw in candidates:
         if not raw:
             continue
         game = pick_game(split_games(raw), body, player1, player2)
