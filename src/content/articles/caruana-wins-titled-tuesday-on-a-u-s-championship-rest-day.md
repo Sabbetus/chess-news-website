@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/caruana-wins-titled-tuesday-october-
 lens: "results"
 continent: "north-america"
 selectionScore: 96
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana won Titled Tuesday on 9.5 with a final-round draw, helped by Nakamura beating Nihal, who had led the storyline for nine rounds. All of it on a rest day in the U.S. Championship."
 metaDescription: "Fabiano Caruana won Titled Tuesday on October 13 with 9.5 points on a U.S. Championship rest day. Nakamura took second on tiebreaks and Nihal Sarin was third."
 image:

@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/us-championships-2026-4"
 lens: "results"
 continent: "north-america"
 selectionScore: 115
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana beat Robson to join So on 3/4 at the US Championship, while Xiong handed Liang his first loss. In the women's section, Alice Lee took the sole lead on 3½/4."
 metaDescription: "Round 4 of the US Championship in Saint Louis: Caruana beat Robson to share the lead with So, and Alice Lee took sole lead of the women's event."
 additionalSources:

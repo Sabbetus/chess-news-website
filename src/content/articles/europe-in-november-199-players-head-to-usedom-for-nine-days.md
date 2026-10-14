@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "330 European tournaments are tracked for November 2026. The biggest field so far is 199 players at the Mecklenburg-Vorpommern seniors championship on Usedom, while Funchal advertises 13,000€ in prizes."
 metaDescription: "November 2026 brings 330 tracked European events. A 199-player seniors' championship on Usedom, Spanish hotel events and a 13,000€ Funchal open stand out."
 aggregateKind: "calendar-comingup"
