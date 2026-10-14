@@ -17,6 +17,7 @@ image:
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_at_the_Candidates_Tournament_2024_03.jpg"
   caption: "Fabiano Caruana"
+gamePgn: "caruana-joins-so-in-the-lead-as-liang-falls-to-xiong.pgn"
 ---
 
 Round four in Saint Louis was a day for long endgames, and it reshaped both sections. [Fabiano Caruana beat Ray Robson to join Wesley So in the open lead](https://en.chessbase.com/post/us-championships-2026-4) on 3/4, while Alice Lee moved to the sole top spot in the women's event.
@@ -49,7 +50,7 @@ Andy Woodward drew in round four after beating Robson in round three. He and Lia
 
 Lee beat Megan Paragua, the 13-year-old who had been co-leader, to reach 3½/4. It was her third win in a row. Thalia Cervantes drew and sits alone in second on 3/4.
 
-Lee had the better of the middlegame, but a serious oversight gave Paragua a chance to turn the game around. Lee survived, simplified into an opposite-coloured bishop endgame with two extra pawns, and Paragua resigned.
+Lee had the better of the middlegame, but a serious oversight gave Paragua a chance to turn the game around. Lee survived and reached an endgame of rook against bishop, then won it with her last pawn, a technical ending grandmasters are expected to know. Paragua resigned on move 85.
 
 Her tournament has involved a lot of survival. She escaped with a draw from a losing position against Carissa Yip in round one, then turned an inferior position into a win over Jennifer Yu. In round three she profited from a tactical oversight by Nazi Paikidze.
 

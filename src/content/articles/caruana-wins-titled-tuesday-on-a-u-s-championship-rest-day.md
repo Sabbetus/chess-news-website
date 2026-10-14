@@ -40,6 +40,6 @@ He would go on to finish 35th, enough for this week's under-16 prize.
 
 **What it means for Saint Louis**
 
-For Caruana, the win is a useful sign of form in the middle of a long classical event. He is [chasing a fifth straight U.S. title and Reshevsky's record](/articles/caruana-chases-a-fifth-straight-us-title-and-reshevsky-s-record/), and a blitz win on a rest day suggests he is not short of energy.
+It was not a smooth ride. Caruana beat Kacper Piorun on time from a hopeless position, with 0.7 seconds left on his own clock, and two rounds later Praggnanandhaa lost on time to him as well. Commentator GM Robert Hess said he was "stretching his luck." Against Nihal he never had a real advantage on the board; Nihal ran out of time.
 
-It is worth being careful about how much to read into it, though. Blitz form and classical form are different things, and the tournament lead he shares is still to be settled over the remaining rounds.
+It was Caruana's first Titled Tuesday win since February 17. He returns to Saint Louis [chasing a fifth straight U.S. title and Reshevsky's record](/articles/caruana-chases-a-fifth-straight-us-title-and-reshevsky-s-record/), where the classical rounds resume on Wednesday.
