@@ -56,6 +56,8 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-14: PR #67 review called the missing round 4 board a fix, not a
+  reset; user ruled it a reset and asked for the pipeline fix (stays 0).
 - 2026-10-13: PR #66 review proposed keeping the accreditation notice and
   reframing the Council piece; user removed both (stays 0).
 - 2026-10-12: PR #65 review's Munich headline fix ("The Unofficial
@@ -86,6 +88,16 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-14: PR #67 reset (user's call; streak stays at 0). The U.S.
+  Championship round 4 report had no game board: ChessBase (primary) has
+  no PGN and the merged Chess.com source with all four games was never
+  tried, and a board also needed a quoted move. Also: Lee's ending was
+  rook vs bishop, not opposite-coloured bishops as ChessBase said (game
+  moves checked); calendar piece presented senior events (Usedom, Cap
+  Negret 65+/50+) as ordinary opens; Titled Tuesday ending read the win
+  as form when it came from time-scramble wins. Fixed at the source: the
+  board is looked up on every merged source and attached without quoted
+  moves.
 - 2026-10-13: PR #66 reset (streak 1 -> 0). Dropped (user's call): a
   media-accreditation notice ("ridiculous" to publish) and a FIDE Council
   decision list from 21 September framed as if the Samarkand Assembly were
@@ -265,8 +277,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-13 (PR #66, see above).
-- Earlier resets: 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-14 (PR #67, see above).
+- Earlier resets: 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
