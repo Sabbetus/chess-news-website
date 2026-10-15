@@ -560,6 +560,10 @@ the full article body in Markdown, 400-800 words -- long enough to fit both the 
 Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
 writing that a player won or lost, check which colour they had against the result.
 
+Rounds left: only state how many rounds remain if you can work it out from the source \
+(total rounds minus rounds played; a 12-player round-robin is 11 rounds). Otherwise don't \
+give a number.
+
 Commentary on a game: when you quote moves with a remark about the position, keep the \
 remark at the same move the source attaches it to -- put it right after that move, before \
 the moves that follow, never after the end of the game."""
@@ -1181,6 +1185,9 @@ was placed after 38.Re1+ and the resignation, describing pieces that had already
 draw. When the body says who won or lost a game, check which colour that player had and \
 that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \
 (0-1)" was written up as X losing, when 0-1 means X won.)
+- Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
+rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
+event.)
 
 Check at the level of individual named details, not just each sentence's main assertion. A \
 sentence's headline claim can be completely true while still carrying a fabricated specific \

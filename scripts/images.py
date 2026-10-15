@@ -1006,4 +1006,8 @@ def person_caption(source_url: str, names: list) -> str | None:
         alt = re.findall(r"[a-z]+", unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower())
         if all(p in file_words for p in parts) or all(p in file_words for p in alt):
             return name.strip()
+        # Run-together names ("AndyWoodward2026.jpg", caught 2026-10-15).
+        compact = re.sub(r"[^a-z]", "", stem)
+        if "".join(parts) in compact or "".join(alt) in compact:
+            return name.strip()
     return None
