@@ -6,13 +6,14 @@ sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-5"
 lens: "results"
 continent: "north-america"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Andy Woodward beat defending champion Fabiano Caruana to join Wesley So on 3.5/5, and Alice Lee leads the Women's by a full point on 4.5/5 after the bloodiest round of the 2026 U.S. Championships."
 metaDescription: "Andy Woodward beat Fabiano Caruana to join Wesley So in the lead on 3.5/5 at the U.S. Championship, while Alice Lee leads the Women's on 4.5/5."
 image:
   src: "./_images/AndyWoodward2026.webp"
   credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAndyWoodward2026.jpg"
+  caption: "Andy Woodward"
 gamePgn: "woodward-beats-caruana-as-eight-of-12-games-are-decisive.pgn"
 ---
 
@@ -42,6 +43,6 @@ Her closest trailers are WIM Rachael Li, who beat WGM Jennifer Yu, and FM Megan 
 
 IM Rose Atwell won a brilliancy against defending champion IM Carissa Yip, but she is on 2/5. Yip's loss leaves the defending champion well off the pace in her own section as well.
 
-A full-point cushion with four rounds left is not decisive, but Lee now controls her own fate. The chasing group will need her to slip, and she has dropped only half a point so far.
+A full-point cushion with six rounds left is not decisive, but Lee now controls her own fate. The chasing group will need her to slip, and she has dropped only half a point so far.
 
 Round six is on Thursday, October 15, starting at 1 p.m. ET.

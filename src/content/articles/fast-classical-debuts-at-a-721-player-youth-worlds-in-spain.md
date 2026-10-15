@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/world-championships-u7-u17-2026-young-talents-m
 lens: "results"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "721 players from 82 countries, 12 sections and a new 45+30 time control: the FIDE U7–U17 World Championships open in Roquetas de Mar with upsets in the youngest groups."
 metaDescription: "The 2026 FIDE World Championships U7–U17 opened in Roquetas de Mar, Spain, with 721 players, a new 45+30 time control and early upsets after two rounds."
 image:
@@ -42,5 +42,7 @@ In Under 13 Girls, WFM Alina Donets of Austria leads on tiebreak among eight pla
 Two Syrian FIDE Masters, the second and fourth seeds in that section, had not arrived in Spain. They are expected to join on day two, but will start from zero after missing the first two rounds.
 
 Under 15 Open has 16 perfect scores, including the six highest-ranked masters in the category. Kazakhstan's Zhanbolat Amankos produced one of the day's biggest upsets by beating Austria's FM Florentin Stickler. In the Girls' section, local player Amaya Alfaro Aldunate beat Turkey's WCM Arya Aydogan in round two and is one of nine on 2/2, led on tiebreak by WFM Aiaru Altynbek.
+
+In Under 17, China's WIM Xue Tianhao leads the Girls' section on tiebreak among nine perfect scores, while top seed WIM Mariya Kholyavko of Kazakhstan has already dropped half a point. Top seed FM Maxime Hauchamps is among 12 players on 2/2 in the Open.
 
 With only two of 11 rounds played, leads on tiebreak mean little. The pairings will sort out the large perfect-score groups quickly, and the late-arriving Syrians will have to climb back from the bottom of the table.

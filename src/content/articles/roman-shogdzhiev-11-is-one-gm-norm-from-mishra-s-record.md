@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/roman-shogdzhiev-second-gm-norm-youn
 lens: "results"
 continent: "europe"
 selectionScore: 73
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "11-year-old IM Roman Shogdzhiev scored his second GM norm in the Serbian Super League, beating Cheparinov, Subramaniyam and Tin. He now needs one norm and 29 rating points to pass Mishra."
 metaDescription: "IM Roman Shogdzhiev, 11, scored a second GM norm for Partizan Belgrade in the Serbian Super League, leaving him one norm and 29 points short of Mishra's record."
 image:
@@ -20,7 +20,7 @@ gameEmbed:
 
 IM Roman Shogdzhiev, 11, [scored his second GM norm on Monday](https://www.chess.com/news/view/roman-shogdzhiev-second-gm-norm-youngest-grandmaster-record) in the Serbian Super League. He now needs one more norm and 29 rating points to pass GM Abhimanyu Mishra's 2021 mark as the youngest grandmaster in chess history.
 
-He played board one for Partizan Belgrade in the team event, a heavy assignment for a player his age. He finished on 6/9 after drawing Hungarian GM Ferenc Berkes in round nine, then sat out the last two rounds.
+He played board one for Partizan Belgrade in the team event, a heavy assignment for a player his age. He finished on 6/9 after drawing Hungarian GM Ferenc Berkes in round nine, then sat out the last two rounds. His only loss came in round seven, against Santhosh.
 
 **The wins behind the norm**
 
@@ -40,4 +40,4 @@ That rating is the second hurdle. The GM title needs a 2500 rating alongside the
 
 The remaining task is one more norm, which means another strong event against titled opposition with enough GMs in the field and a performance near 2600 again. That is hard to schedule and harder to deliver, but he has just done it against a field that included three 2600-plus players.
 
-Mishra's record is the one he is chasing. Whether he can repeat a 2662 performance in his next norm event is the open question, and neither the next tournament nor its date has been announced.
+The clock is part of the story. Mishra became a grandmaster at 12 years, four months and 25 days in June 2021, so Shogdzhiev, now 11 years and eight months, has until late June 2027 to beat that. If he completes the requirements before his 12th birthday on February 4, he would be the first grandmaster ever under 12. His next norm event has not been announced.
