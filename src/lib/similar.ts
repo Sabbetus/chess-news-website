@@ -127,8 +127,24 @@ export async function similarArticles(article: Article, count = 3): Promise<Arti
       if (p.article.data.continent === article.data.continent) score += 1;
       return { p, score };
     });
-  return scored
-    .sort((a, b) => b.score - a.score || b.p.article.data.publishDate.valueOf() - a.p.article.data.publishDate.valueOf())
-    .slice(0, count)
-    .map((s) => s.p.article);
+  // No two cards with the same photo, and none repeating this article's
+  // own (user's call, 2026-10-15: Caruana's photo three times in a row).
+  const photo = (a: Article) => {
+    const src = (a.data.image as { src?: unknown } | undefined)?.src;
+    return typeof src === 'string' ? src : (src as { src?: string } | undefined)?.src;
+  };
+  const seen = new Set<string>();
+  const own = photo(article);
+  if (own) seen.add(own);
+  const picked: Article[] = [];
+  for (const { p } of scored.sort(
+    (a, b) => b.score - a.score || b.p.article.data.publishDate.valueOf() - a.p.article.data.publishDate.valueOf()
+  )) {
+    const img = photo(p.article);
+    if (img && seen.has(img)) continue;
+    if (img) seen.add(img);
+    picked.push(p.article);
+    if (picked.length === count) break;
+  }
+  return picked;
 }
