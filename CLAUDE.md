@@ -55,7 +55,8 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-10-15: PR #68 review accepted in full (0 -> 1).
 - 2026-10-14: PR #67 review called the missing round 4 board a fix, not a
   reset; user ruled it a reset and asked for the pipeline fix (stays 0).
 - 2026-10-13: PR #66 review proposed keeping the accreditation notice and
@@ -88,6 +89,15 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-15: PR #68 reset (streak stays at 0). Resets: the U.S.
+  Championship round 5 report said "four rounds left" after round 5 of an
+  11-round event (six); and FIDE's World Championship ticket-sale notice
+  was drafted (dropped), padded with unsourced pricing guesses. Minor:
+  Woodward photo had no caption (run-together file name), Shogdzhiev piece
+  gained his one loss and the record deadline, youth worlds piece gained
+  the Under 17 sections. ChessBase's feed timed out this run. Fixed at the
+  source: ticket and pass sale headlines skipped as notices; run-together
+  names caption; drafting and fact-check prompts check rounds left.
 - 2026-10-14: PR #67 reset (user's call; streak stays at 0). The U.S.
   Championship round 4 report had no game board: ChessBase (primary) has
   no PGN and the merged Chess.com source with all four games was never
@@ -277,8 +287,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-14 (PR #67, see above).
-- Earlier resets: 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-15 (PR #68, see above).
+- Earlier resets: 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
