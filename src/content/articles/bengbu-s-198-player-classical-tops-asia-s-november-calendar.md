@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
 continent: "asia"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Asia's November has 168 tracked events. The biggest classical field is in Bengbu, China, where 198 players are registered for the 2nd Belt and Road International. Japan Open follows in Chiba."
 metaDescription: "Asia has 168 tournaments tracked for November 2026. Bengbu's Belt and Road International, the Japan Open in Chiba and a 410-player Jerusalem rapid stand out."
 aggregateKind: "calendar-comingup"
@@ -45,6 +45,6 @@ In Azerbaijan, the [Məmmədyarovlar Şahmat Mərkəzi / Zəfər Gününə Həsr
 
 **The rapids**
 
-The biggest field of any listed event is rapid. The [Jerusalem Rapid Open 2026](https://chesstournamentcalendar.com/tournament/jerusalem-open-2026-1478696/), with a 45,000 prize fund, runs November 17 and 18 and has 410 players registered.
+The biggest field of any listed event is rapid. The [Jerusalem Rapid Open 2026](https://chesstournamentcalendar.com/tournament/jerusalem-open-2026-1478696/), with a €45,000 prize fund, runs November 17 and 18 and has 410 players registered.
 
 In Iran, the one-day [Kazeroon Rapid Bishapoor Cup](https://chesstournamentcalendar.com/tournament/kazeroon-rapid-bishapoor-cup%D8%A8%D8%A7-%D8%AD%D8%B6%D9%88%D8%B1-%D8%A7%D8%B3%D8%AA%D8%A7%D8%AF%D8%A8-1483194/) on November 9 has 317. The [1st CastleMasters International Open Rapid](https://chesstournamentcalendar.com/tournament/1st-castlemasters-international-open-rapid-fide-r-1484855/) in Gurgaon, November 21 and 22, has 240.

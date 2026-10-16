@@ -6,8 +6,8 @@ sourceUrl: "https://en.chessbase.com/post/rafael-vaganian-75th-birthday"
 lens: "people"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
-socialCopy: "Rafael Vaganian turns 75: Armenia's first grandmaster, 1989 USSR champion, world No. 4 in 1986 and still commentating in Dortmund."
+reviewStatus: "published"
+socialCopy: "Rafael Vaganian turns 75: Armenia's first grandmaster, 1989 USSR champion, world No. 4 in 1986 and a co-commentator in Dortmund last year."
 metaDescription: "Rafael Vaganian turns 75 on 15 October. A look at Armenia's first grandmaster: USSR champion in 1989, world No. 4 in 1986, Olympiad gold medallist."
 image:
   src: "./_images/Atypical_chess_pieces__3.webp"
@@ -20,7 +20,7 @@ Rafael Vaganian was born on 15 October 1951 in Yerevan, and [turns 75 this week]
 
 **A prodigy in a crowded year group**
 
-His father, a physicist and keen player, taught him chess at five. At 15 Vaganian beat former world champion Max Euwe in a simultaneous exhibition, and at 16 he was Soviet school champion.
+His father, a physicist and keen player, taught him chess at five. As a boy Vaganian beat former world champion Max Euwe in a clock simultaneous in 1965, and at 16 he was Soviet school champion.
 
 At 18 he won an international youth tournament in Groningen, level on points with Karl-Heinz Maeder of Germany and Zoltan Ribli of Hungary. In those years he was ranked alongside Anatoly Karpov, of the same age, and Mikhail Steinberg, who died young, as one of the USSR's greatest talents.
 

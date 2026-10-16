@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/atyrau-masters-2026-r3"
 lens: "results"
 continent: "asia"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Top seed Vokhidov lost in round one, second seed Mendonca in round two. After three rounds at the Atyrau Masters, Pranav Anand and Khagan Ahmad lead on 3/3."
 metaDescription: "Atyrau Masters in Kazakhstan: the top two seeds lost early, and Pranav Anand and Khagan Ahmad lead with 3/3 after round three, with 13 players half a point back."
 image:
@@ -28,7 +28,7 @@ The rating gap was 244 points, which by the standard Elo curve means the favouri
 
 Mendonca's game was a different kind of story. He had survived a clearly inferior middlegame and restored equality, only to badly misjudge a simplification. That allowed Sklokin-Bagiyan, playing White, to get a new queen by force.
 
-For both seeds the damage is mostly practical. In a nine-round Swiss, a zero in the first two rounds means facing lower-rated opponents for a while, and the pairing system will not give them a quick route back to the top boards. They would need to string together wins to return to prize contention.
+Each seed lost only one game. Mendonca won his other two and is on 2/3, a point behind the leaders with six rounds to play. In a Swiss, a loss pushes a player down to lower boards for a while, so the way back to the top is a run of wins against the field below.
 
 **The leaders**
 
