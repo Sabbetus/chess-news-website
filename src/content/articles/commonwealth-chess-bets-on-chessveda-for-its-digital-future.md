@@ -29,7 +29,7 @@ That grassroots-access pitch is the part worth paying attention to. The Commonwe
 
 It's the same logic driving a wider trend of platforms chasing chess's online audience, one [The Chess Herald has tracked with Chess.com's recent esports investment](/articles/chess-com-bets-15-000-a-month-on-esports-fandom/), where the money follows engagement rather than just prize funds.
 
-For Chessveda, which bundles online play, learning, coaching, tournaments and chess news into one platform, the CCA partnership is a credibility play as much as a distribution one. Attaching itself to an official Commonwealth body gives it institutional standing that a standalone app doesn't get on its own, and a built-in pipeline of federations to work with on scheduling and outreach.
+For [Chessveda](https://www.chessveda.com), which bundles online play, learning, coaching, tournaments and chess news into one platform, the CCA partnership is a credibility play as much as a distribution one. Attaching itself to an official Commonwealth body gives it institutional standing that a standalone app doesn't get on its own, and a built-in pipeline of federations to work with on scheduling and outreach.
 
 No financial terms, prize structures or launch dates for any specific online event were disclosed. The announcement leans entirely on stated intentions: exploring "suitable tournaments, championships and other chess activities" that benefit players and communities across the Commonwealth, with hybrid and online formats cited as the near-term focus.
 
