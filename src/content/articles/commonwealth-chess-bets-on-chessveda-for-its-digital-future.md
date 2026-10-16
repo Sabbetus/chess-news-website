@@ -17,7 +17,7 @@ image:
 
 The Commonwealth Chess Association has found itself a digital partner, and it picked the moment carefully. On the sidelines of the 46th Chess Olympiad in Samarkand, [the CCA signed a partnership agreement with Chessveda](https://www.fide.com/commonwealth-chess-association-partners-with-chessveda-to-expand-digital-chess-across-commonwealth-nations/), an integrated online chess platform, to jointly build out digital chess activity across Commonwealth member nations.
 
-The signing itself was a diplomatic show as much as a business one. CCA Chairman Bharat Singh Chauhan signed alongside Chessveda Chairman Adv. Nandan Jha, with federation presidents from across the Commonwealth, plus Grandmasters and International Masters, watching on. That kind of turnout for a platform partnership is the real signal here: this isn't a quiet vendor deal, it's being treated as a flagship initiative.
+The signing itself was a diplomatic show as much as a business one. CCA Chairman Bharat Singh Chauhan signed alongside [Chessveda](https://www.chessveda.com) Chairman Adv. Nandan Jha, with federation presidents from across the Commonwealth, plus Grandmasters and International Masters, watching on. That kind of turnout for a platform partnership is the real signal here: this isn't a quiet vendor deal, it's being treated as a flagship initiative.
 
 What the deal actually covers is broad by design. The two organizations plan to collaborate on online tournaments, and on what's described as online Chess Olympiads, alongside other events aimed at players, coaches and organisers across Commonwealth countries.
 
