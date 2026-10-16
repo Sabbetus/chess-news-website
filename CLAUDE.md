@@ -55,7 +55,8 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 2.**
+- 2026-10-16: PR #69 review accepted in full (1 -> 2).
 - 2026-10-15: PR #68 review accepted in full (0 -> 1).
 - 2026-10-14: PR #67 review called the missing round 4 board a fix, not a
   reset; user ruled it a reset and asked for the pipeline fix (stays 0).
@@ -89,6 +90,17 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-16: PR #69 reset (streak stays at 0). Resets: the U.S.
+  Championship round 6 piece repeated Chess.com's "would be the first to
+  win five U.S. Championships in a row" right before linking our own piece
+  saying a fifth would equal Reshevsky's five (now "equal"); and its
+  Caruana photo was a frame from the same 2024 Candidates shoot as Titled
+  Tuesday's, still on the front page (now Awonder Liang). Minor: Atyrau
+  piece had both seeds on "a zero in the first two rounds" (each lost one
+  game); Vaganian's Euwe simul is dated 1965 (13, not "15"), Dortmund was
+  last year; calendar euros; Xiong and So-Woodward line added. Fixed at
+  the source: the photo cooldown orders same-day articles by score like
+  the front page, and "_02"/"_03" frame numbers count as one shoot.
 - 2026-10-15: PR #68 reset (streak stays at 0). Resets: the U.S.
   Championship round 5 report said "four rounds left" after round 5 of an
   11-round event (six); and FIDE's World Championship ticket-sale notice
@@ -287,8 +299,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-15 (PR #68, see above).
-- Earlier resets: 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-16 (PR #69, see above).
+- Earlier resets: 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
