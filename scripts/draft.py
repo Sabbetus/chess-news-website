@@ -1030,11 +1030,17 @@ def used_image_source_urls() -> set[str]:
             continue
         date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
         image_match = re.search(r'^  sourceUrl:\s*"(.*?)"\s*$', text, re.MULTILINE)
+        score_match = re.search(r"^selectionScore:\s*(\d+)", text, re.MULTILINE)
         if date_match and image_match:
-            dated_urls.append((date_match.group(1), image_match.group(1)))
+            score = int(score_match.group(1)) if score_match else 0
+            dated_urls.append((date_match.group(1), score, image_match.group(1)))
 
-    dated_urls.sort(key=lambda pair: pair[0], reverse=True)
-    recent_on_disk = {url for _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
+    # Same order as the front page (index.astro): newest day, then highest
+    # selectionScore. By date alone, same-day ties fell in file order, and a
+    # piece still on the front page slipped out of the window (caught
+    # 2026-10-16: Titled Tuesday's Caruana photo reused in round 6).
+    dated_urls.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    recent_on_disk = {url for _, _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
     return recent_on_disk | _session_used_urls
 
 

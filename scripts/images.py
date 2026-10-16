@@ -363,6 +363,7 @@ _PHOTOSET_INDEX_RE = re.compile(r"[\s_]*-[\s_]*\d+(\.\w+)$")
 # them as the same underlying photo). Stripped before the numeric-index
 # regex runs, so a photoset frame that also happens to be a labeled crop
 # (e.g. "..._-_13_(cropped).jpg") still normalizes down to one shared stem.
+_PHOTOSET_SHORT_INDEX_RE = re.compile(r"\s+\d{1,2}(\.\w+)$")
 _CROPPED_SUFFIX_RE = re.compile(r"[\s_]*\(cropped\)(\.\w+)$", re.IGNORECASE)
 
 
@@ -373,7 +374,10 @@ def _photoset_stem(title_or_url: str) -> str:
         name = name[5:]
     name = name.replace("_", " ").strip().lower()
     name = _CROPPED_SUFFIX_RE.sub(r"\1", name)
-    return _PHOTOSET_INDEX_RE.sub(r"\1", name)
+    name = _PHOTOSET_INDEX_RE.sub(r"\1", name)
+    # Plain "_02"/"_03" frame numbers (caught 2026-10-16: two Caruana frames
+    # from the 2024 Candidates). One or two digits only, so a year stays.
+    return _PHOTOSET_SHORT_INDEX_RE.sub(r"\1", name)
 
 
 def _fetch_first_licensed_file(
