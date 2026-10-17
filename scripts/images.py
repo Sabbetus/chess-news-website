@@ -794,6 +794,22 @@ def build_query_cascade(
 FALLBACK_PHOTOS_PATH = Path(__file__).parent / "fallback_photos.json"
 
 
+def _pool_last_used() -> dict[str, str]:
+    """Commons source URL -> latest publishDate among published articles
+    that use it."""
+    last: dict[str, str] = {}
+    for path in (Path(__file__).parent.parent / "src" / "content" / "articles").glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text:
+            continue
+        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.MULTILINE)
+        url = re.search(r'^  sourceUrl:\s*"(.*?)"', text, re.MULTILINE)
+        if date and url:
+            key = urllib.parse.unquote(url.group(1))
+            last[key] = max(last.get(key, ""), date.group(1))
+    return last
+
+
 def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> dict | None:
     try:
         pool = json.loads(FALLBACK_PHOTOS_PATH.read_text(encoding="utf-8"))
@@ -801,17 +817,21 @@ def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> di
         return None
     if not pool:
         return None
+    # Rotate through the whole pool: the photo that has gone longest
+    # without appearing on a published article wins, never-used ones first
+    # (user's call, 2026-10-17 -- a headline hash alone let one photo come
+    # back while others sat unused). The hash only breaks ties. Photos in
+    # exclude_source_urls (on the front page, or picked earlier this run)
+    # are skipped while any other is free.
     index = int(hashlib.sha256(seed_text.encode("utf-8")).hexdigest(), 16) % len(pool)
-    # Step past photos recent articles already use -- caught live
-    # 2026-10-01: two neighbouring articles on the front page both got
-    # the same chess-pieces photo.
     exclude = {urllib.parse.unquote(u) for u in (exclude_source_urls or set())}
-    for offset in range(len(pool)):
-        photo = pool[(index + offset) % len(pool)]
-        if urllib.parse.unquote(photo["sourceUrl"]) not in exclude:
-            break
-    else:
-        photo = pool[index]
+    last = _pool_last_used()
+    order = sorted(
+        range(len(pool)),
+        key=lambda i: (last.get(urllib.parse.unquote(pool[i]["sourceUrl"]), ""), (i - index) % len(pool)),
+    )
+    free = [i for i in order if urllib.parse.unquote(pool[i]["sourceUrl"]) not in exclude]
+    photo = pool[(free or order)[0]]
     return {"src": photo["src"], "credit": photo["credit"], "sourceUrl": photo["sourceUrl"]}
 
 
