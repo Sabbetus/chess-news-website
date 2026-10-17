@@ -343,6 +343,35 @@ def _tour_matches_date(tour: dict, around: datetime) -> bool:
     return start - timedelta(days=3) <= around <= end + timedelta(days=45)
 
 
+def _tour_has_players(tour_id: str, player1: str, player2: str) -> int:
+    """How many of the two players' surnames appear in the broadcast's two
+    latest played rounds (0-2). Cheap: two PGN fetches per broadcast."""
+    try:
+        response = requests.get(
+            f"https://lichess.org/api/broadcast/{tour_id}",
+            headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+            timeout=REQUEST_TIMEOUT,
+        )
+        response.raise_for_status()
+        rounds = response.json().get("rounds", [])
+    except (requests.RequestException, ValueError):
+        return 0
+    played = [r for r in reversed(rounds) if r.get("finished") or r.get("ongoing")][:2]
+    text = ""
+    for round_ in played:
+        try:
+            pgn = requests.get(
+                f"https://lichess.org/api/broadcast/round/{round_['id']}.pgn",
+                headers={"User-Agent": USER_AGENT},
+                timeout=REQUEST_TIMEOUT,
+            )
+            pgn.raise_for_status()
+            text += pgn.text.lower()
+        except requests.RequestException:
+            continue
+    return sum(1 for name in (player1, player2) if name and _surname(name) in text)
+
+
 def find_round_via_search(event: str, player1: str, player2: str, around: datetime | None = None) -> str | None:
     """Lichess's own broadcast search, for events not in the known registry
     and never covered before -- caught live 2026-10-06: the Fagernes Autumn
@@ -383,6 +412,14 @@ def find_round_via_search(event: str, player1: str, player2: str, around: dateti
         print(f"    lichess lookup: broadcast search found no tournament for event={event!r}", file=sys.stderr)
         return None
     deadline = time.monotonic() + _SEARCH_TIME_BUDGET
+
+    if len(tours) > _MAX_SEARCH_TOURS:
+        # Big events split into one broadcast per section (the World
+        # U7-U17 has twelve); only the first few were ever scanned, so a
+        # game outside them was never found (caught 2026-10-17: the
+        # Under-9 Girls mate of the day). Put the sections whose recent
+        # boards include either player first.
+        tours.sort(key=lambda t: -_tour_has_players(t["id"], player1, player2))
 
     for tour in tours[:_MAX_SEARCH_TOURS]:
         try:
