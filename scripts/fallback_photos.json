@@ -1,8 +1,8 @@
 [
   {
-    "src": "./_images/Chess_game_Staunton_No__6_perfil_view_8.webp",
-    "credit": "Wilfredor, CC0, via Wikimedia Commons",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
+    "src": "./_images/Opening_chess_position_from_black_side.webp",
+    "credit": "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
   },
   {
     "src": "./_images/Atypical_chess_pieces__3.webp",
@@ -10,18 +10,43 @@
     "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
   },
   {
-    "src": "./_images/Opening_chess_position_from_black_side.webp",
-    "credit": "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
+    "src": "./_images/Chess_clock.webp",
+    "credit": "Thomas Depenbusch, CC BY 2.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_clock.jpg"
   },
   {
-    "src": "./_images/Chess_set_2014.webp",
-    "credit": "Conal Gallagher, CC BY 2.0, via Wikimedia Commons",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
+    "src": "./_images/DGT_2010_digital_chess_clock_ajb.webp",
+    "credit": "Ajepbah, CC BY-SA 3.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ADGT_2010_digital_chess_clock.ajb.jpg"
   },
   {
-    "src": "./_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp",
-    "credit": "Bin im Garten, CC BY-SA 3.0, via Wikimedia Commons",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_board_with_chess_set_in_opening_position_2012_PD_04.jpg"
+    "src": "./_images/Poertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.webp",
+    "credit": "Johann Jaritz, CC BY-SA 4.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3APoertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.jpg"
+  },
+  {
+    "src": "./_images/NMSLewisChessmen28.webp",
+    "credit": "National Museums Scotland, CC BY-SA 4.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ANMSLewisChessmen28.jpg"
+  },
+  {
+    "src": "./_images/Schachfiguren_--_2022_--_0292.webp",
+    "credit": "Dietmar Rabich, CC BY-SA 4.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ASchachfiguren_--_2022_--_0292.jpg"
+  },
+  {
+    "src": "./_images/Schachfiguren__Bauern_--_2022_--_0022.webp",
+    "credit": "Dietmar Rabich, CC BY-SA 4.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ASchachfiguren%2C_Bauern_--_2022_--_0022.jpg"
+  },
+  {
+    "src": "./_images/Chess_pieces_bokeh.webp",
+    "credit": "Mukumbura, CC BY-SA 2.0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_pieces_bokeh.jpg"
+  },
+  {
+    "src": "./_images/Chess_pieces_from_Samarkand_700s.webp",
+    "credit": "LAS30a, CC0, via Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AChess_pieces_from_Samarkand_700s.jpg"
   }
 ]
