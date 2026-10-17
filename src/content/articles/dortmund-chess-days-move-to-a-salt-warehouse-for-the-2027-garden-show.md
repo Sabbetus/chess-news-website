@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/dortmund-sparkassen-trophy-2027"
 lens: "money-angle"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "published"
+reviewStatus: "draft"
 socialCopy: "The 54th Dortmund Chess Days, 8-15 August 2027, move to the Salzlager at the Hansa Coking Plant, with room for up to 450 players and free IGA 2027 garden show entry for every participant."
 metaDescription: "The 2027 Sparkassen Chess Trophy in Dortmund, 8-15 August, moves to the Salzlager, expects up to 450 players and gives them entry to the IGA 2027 garden show."
 image:

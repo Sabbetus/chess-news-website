@@ -28,7 +28,7 @@ from pathlib import Path
 import feedparser
 import requests
 
-from article_text import fetch_full_article_text
+from article_text import PRESS_RELEASE, fetch_full_article_text
 from continents import CONTINENT_CODES, CONTINENT_NAMES, continent_code_for, continent_url
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -137,6 +137,9 @@ def restore_full_text(items: list[dict]) -> tuple[list[dict], list[dict], list[d
         full = fetch_full_article_text(item["sourceUrl"])
         if full is None:
             retry_later.append(item)
+        elif full == PRESS_RELEASE:
+            print(f"  Skipping press release: {item['title']}")
+            no_substance.append(item)
         elif item["sourceName"] in ALWAYS_FETCH_FULL_TEXT and len(full) < MIN_FULL_TEXT_CHARS:
             no_substance.append(item)
         else:

@@ -126,6 +126,8 @@ ADMIN_NOTICE_TITLE_PATTERNS = [
     r"\bcouncil meeting\b", r"\bcall for (bids|applications|nominations|candidates)\b",
     r"\bminutes\b", r"\bdeadline (extended|approaching)\b", r"\bvacanc(y|ies)\b",
     # Ticket and pass sales (caught 2026-10-15: World Championship tickets).
+    # Press releases, no exceptions (user's rule, 2026-10-17).
+    r"\bpress release\b",
     # Not a bare "ticket": "punches his ticket to the Candidates" is news.
     r"\bticket sales\b", r"\b(tickets|passes) (are |go |now )*on sale\b",
 ]

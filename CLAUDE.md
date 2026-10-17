@@ -105,6 +105,10 @@ responded.
   is kept on top of the ingested full text; the loose "{continent} chess"
   and "chess tournament" photo tiers are gone (neutral pool instead);
   drafting and fact-check prompts keep each standing in its own section.
+  After publishing, user unpublished the Dortmund piece: it was a ChessBase
+  "Press release" and read as an advertisement. Press releases are now
+  skipped with no exceptions ("by Press release" byline, or "press
+  release" in the headline).
 - 2026-10-16: PR #69 reset (streak stays at 0). Resets: the U.S.
   Championship round 6 piece repeated Chess.com's "would be the first to
   win five U.S. Championships in a row" right before linking our own piece

@@ -103,6 +103,18 @@ def extract_chesscom_text(page_html: str) -> str | None:
     return text[:MAX_ARTICLE_TEXT_CHARS] if text else None
 
 
+# Returned instead of text for a page bylined as a press release. Press
+# releases are skipped outright, no exceptions (user's rule, 2026-10-17:
+# ChessBase's "by Press release" Dortmund 2027 announcement read as an
+# advertisement).
+PRESS_RELEASE = "\x00press-release"
+_PRESS_RELEASE_BYLINE_RE = re.compile(r'blog-author-line[^>]*>\s*by\s+Press\s+release', re.IGNORECASE)
+
+
+def is_press_release_page(page_html: str) -> bool:
+    return bool(_PRESS_RELEASE_BYLINE_RE.search(page_html))
+
+
 def fetch_full_article_text(url: str) -> str | None:
     host = urlparse(url).netloc.lower()
     if host.endswith("chessbase.com"):
@@ -118,6 +130,8 @@ def fetch_full_article_text(url: str) -> str | None:
     except requests.RequestException as exc:
         print(f"  Could not fetch full text for {url}: {exc}")
         return None
+    if is_press_release_page(resp.text):
+        return PRESS_RELEASE
     text = extract(resp.text)
     if text is None:
         print(f"  No article body found in {url}")
