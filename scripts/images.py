@@ -778,11 +778,11 @@ def build_query_cascade(
             # meaningless for a static organization logo the way it's
             # meaningful for a person's face changing over time.
             queries.append((f"{source_name} logo", False, True, False))
-        if continent_name and not prefer_neutral:
-            queries.append((f"{continent_name} chess", False, False, False))
-
-    if not prefer_neutral:
-        queries.append(("chess tournament", False, False, False))
+        # No loose "{continent} chess" / "chess tournament" tiers: they
+        # matched photos of named players at unrelated events (caught
+        # 2026-10-17: "Kim_Steven_Yap_Dubai_Open_Chess_Tournament_2013" on a
+        # Dortmund festival piece). With no subject match, the object-only
+        # fallback pool (fallback_image) is the neutral image.
     return queries
 
 

@@ -140,6 +140,14 @@ def restore_full_text(items: list[dict]) -> tuple[list[dict], list[dict], list[d
         elif item["sourceName"] in ALWAYS_FETCH_FULL_TEXT and len(full) < MIN_FULL_TEXT_CHARS:
             no_substance.append(item)
         else:
+            # ChessBase's feed summary is the article's lede, shown above
+            # the body on the page but not part of the text we extract --
+            # keep it on top (caught 2026-10-17: the Dortmund 2027 dates,
+            # 8-15 August, were only in the lede and the draft said the
+            # announcement gave none).
+            teaser = (item.get("summary") or "").strip()
+            if teaser and teaser[:80] not in full:
+                full = teaser + "\n\n" + full
             usable.append({**item, "summary": full})
     return usable, retry_later, no_substance
 

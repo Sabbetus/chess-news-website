@@ -560,6 +560,12 @@ the full article body in Markdown, 400-800 words -- long enough to fit both the 
 Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
 writing that a player won or lost, check which colour they had against the result.
 
+Sections: an event with separate sections (age groups, Open and Women's, rating groups) is \
+several separate tournaments. State every standing within its own section ("leads the \
+Under-13 Open on 6/6"). Never count, group or compare leaders across sections ("three \
+perfect scores", "Kazakhstan leads four sections"), in the headline, body, social copy or \
+meta. A headline is about one section, or about the event without anyone's standing.
+
 Rounds left: only state how many rounds remain if you can work it out from the source \
 (total rounds minus rounds played; a 12-player round-robin is 11 rounds). Otherwise don't \
 give a number.
@@ -1191,6 +1197,10 @@ was placed after 38.Re1+ and the resignation, describing pieces that had already
 draw. When the body says who won or lost a game, check which colour that player had and \
 that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \
 (0-1)" was written up as X losing, when 0-1 means X won.)
+- Sections: in an event with separate sections (age groups, Open and Women's), every \
+standing must name its section, and nothing may count or group leaders across sections \
+(headline, body, social copy, meta). (Caught live 2026-10-17: "Three Perfect Scores Lead the \
+Youth Worlds" lumped leaders of separate age-group tournaments together.)
 - Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
 rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
 event.)
