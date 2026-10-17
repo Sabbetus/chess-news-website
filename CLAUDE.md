@@ -55,7 +55,11 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 2.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-17: PR #70 review overruled (2 -> 0): I proposed "Five Perfect
+  Scores Lead the Youth Worlds"; user pointed out age-group sections are
+  separate tournaments, so no sentence may count or group leaders across
+  them. Rewritten section by section.
 - 2026-10-16: PR #69 review accepted in full (1 -> 2).
 - 2026-10-15: PR #68 review accepted in full (0 -> 1).
 - 2026-10-14: PR #67 review called the missing round 4 board a fix, not a
@@ -90,6 +94,17 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-17: PR #70 reset (streak stays at 0). Resets: the youth worlds
+  piece ("Three Perfect Scores Lead the Youth Worlds") grouped leaders of
+  separate age-group sections, and left out Under 17 again (rewritten
+  section by section, headline on Sameh-Kuandykuly in the U13 Open);
+  the Dortmund 2027 piece said the announcement gave no dates when the
+  lede says 8-15 August, and showed an unrelated named player
+  (Kim Steven Yap, Dubai 2013). No round 7 U.S. Championship report:
+  Chess.com had not published it. Fixed at the source: ChessBase's lede
+  is kept on top of the ingested full text; the loose "{continent} chess"
+  and "chess tournament" photo tiers are gone (neutral pool instead);
+  drafting and fact-check prompts keep each standing in its own section.
 - 2026-10-16: PR #69 reset (streak stays at 0). Resets: the U.S.
   Championship round 6 piece repeated Chess.com's "would be the first to
   win five U.S. Championships in a row" right before linking our own piece
@@ -299,8 +314,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-16 (PR #69, see above).
-- Earlier resets: 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-17 (PR #70, see above).
+- Earlier resets: 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
