@@ -13,6 +13,8 @@ image:
   src: "./_images/Opening_chess_position_from_black_side.webp"
   credit: "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
+gameEmbed:
+  url: "https://lichess.org/embed/broadcast/fide-world-u7-u17-championships-2026-g09/round-3/5vbqBrrg/Cugf9LWn"
 ---
 
 Egypt's IM Abdalrahman Sameh Mohamed has won all six of his games in the Under-13 Open at the [2026 World U7-U17 Championships](https://www.fide.com/one-move-can-change-everything-in-the-world-championships-u7-u17/) in Roquetas de Mar, Spain. After the rest day he faces Kazakhstan's IM Danis Kuandykuly, the section's rating favourite, who has dropped only one draw.
@@ -33,7 +35,7 @@ In the Under-9 Open, Latvia's Akims Jefimovs and Uzbekistan's Sayfuddin Erkinboe
 
 In the Under-9 Girls, Kazakhstan's Amaliya Yedresheva leads on 5.5/6, half a point ahead of New Zealand's Vera Jintian Xu. Top seed Stella Zhu of Finland is among three players on 4.5/6.
 
-FIDE's mate of the day came from this section in round three: Varvara Volkova, with Black against Symbat Otargali, played 28...Rf1+! and after 29.Rxf1 Qxf1+ 30.Qxf1 Rxf1# it was mate.
+FIDE's mate of the day came from this section in round three: Varvara Volkova, with Black against Symbat Otargali, played [28...Rf1+!](#game-embed) and after 29.Rxf1 Qxf1+ 30.Qxf1 Rxf1# it was mate.
 
 **Under 11**
 
