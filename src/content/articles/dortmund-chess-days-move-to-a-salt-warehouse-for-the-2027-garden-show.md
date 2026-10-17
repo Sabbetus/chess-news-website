@@ -6,16 +6,16 @@ sourceUrl: "https://en.chessbase.com/post/dortmund-sparkassen-trophy-2027"
 lens: "money-angle"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
-socialCopy: "The 54th Dortmund Chess Days will be played in the Salzlager, with room for up to 450 players and free IGA 2027 Garden Show entry for every active participant. Formats come around New Year."
-metaDescription: "The 2027 Sparkassen Chess Trophy in Dortmund moves to the Salzlager, expects up to 450 players and gives them entry to the IGA 2027 garden exhibition."
+reviewStatus: "published"
+socialCopy: "The 54th Dortmund Chess Days, 8-15 August 2027, move to the Salzlager at the Hansa Coking Plant, with room for up to 450 players and free IGA 2027 garden show entry for every participant."
+metaDescription: "The 2027 Sparkassen Chess Trophy in Dortmund, 8-15 August, moves to the Salzlager, expects up to 450 players and gives them entry to the IGA 2027 garden show."
 image:
-  src: "./_images/Kim_Steven_Yap_Dubai_Open_Chess_Tournament_2013.webp"
-  credit: "Jobannie C. Tabada, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKim_Steven_Yap_Dubai_Open_Chess_Tournament_2013.jpg"
+  src: "./_images/Chess_set_2014.webp"
+  credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
 ---
 
-The 54th International Dortmund Chess Days will leave their usual surroundings next year. According to the [announcement of the 2027 Sparkassen Chess Trophy](https://en.chessbase.com/post/dortmund-sparkassen-trophy-2027), the festival moves to the Salzlager, the salt warehouse, and becomes part of the 2027 International Garden Exhibition (IGA) in the Ruhr region.
+The 54th International Dortmund Chess Days will leave their usual surroundings next year. According to the [announcement of the 2027 Sparkassen Chess Trophy](https://en.chessbase.com/post/dortmund-sparkassen-trophy-2027), the festival will be held from 8 to 15 August 2027 in the Salzlager, the salt warehouse at the Hansa Coking Plant, and becomes part of the 2027 International Garden Exhibition (IGA) in the Ruhr region.
 
 The practical change is capacity. Up to 450 active participants are expected, and the organiser, Initiative Pro Schach e.V., calls the move a clear signal about Dortmund's development as a chess centre.
 
@@ -43,6 +43,6 @@ Christian Jochmann, Managing Director of Pro Schach e.V., called the partnership
 
 **What is still open**
 
-The announcement gives no dates within the IGA season, and no tournament formats. Those details, along with the official announcements and registration options, are due around the turn of the year.
+The dates are fixed, but the tournament formats are not. Those details, along with the official announcements and registration options, are due around the turn of the year.
 
-Until then, interested players can watch www.sparkassen-chess-trophy.de. The questions to answer first: which of the open sections get the new space, and when in the April to October window the festival falls.
+Until then, interested players can watch www.sparkassen-chess-trophy.de.
