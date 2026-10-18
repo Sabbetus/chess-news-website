@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-7"
 lens: "results"
 continent: "north-america"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wesley So came back from a worse position to beat Ray Robson and lead the U.S. Championship on 5/7. Awonder Liang lost to Oparin in 27 moves. Li and Lee share the Women's lead on 5.5."
 metaDescription: "Wesley So beat Ray Robson to lead the U.S. Championship on 5/7 after round 7, while Rachael Li and Alice Lee share the Women's lead on 5.5/7."
 additionalSources:
@@ -20,7 +20,7 @@ image:
 gamePgn: "so-takes-sole-lead-on-5-7-as-liang-falls-in-27-moves.pgn"
 ---
 
-Wesley So is now the only unbeaten player and the sole leader of the 2026 U.S. Chess Championship. He [fought back from a worse position to beat Ray Robson in round seven](https://www.chess.com/news/view/2026-us-chess-championships-round-7), moving to 5/7 with four wins so far.
+Wesley So is now the only unbeaten player and the sole leader of the 2026 U.S. Chess Championship. He [fought back from a worse position to beat Ray Robson in round seven](https://www.chess.com/news/view/2026-us-chess-championships-round-7), moving to 5/7 with three wins and four draws.
 
 That puts him half a point clear of Fabiano Caruana and Andy Woodward, who both drew. It is a swing from [round six](/articles/caruana-and-liang-join-a-four-way-lead-after-round-6/), when four players shared first.
 
@@ -56,6 +56,6 @@ Li, 16, beat Megan Paragua after an unusual opening setup and an active middlega
 
 Cervantes, the other co-leader and the only unbeaten player until now, lost to Anna Sargsyan. She overextended while trying to win, opening lines on the kingside, and struggled to defend under time pressure.
 
-Irina Krush, the eight-time national champion, beat defending champion Carissa Yip in a sharp King's Indian. Yip made the decisive mistake under heavy time pressure. Krush has 5/7 and sits alone in third by ChessBase's count, while Chess.com has her in sole second.
+Irina Krush, the eight-time national champion, beat defending champion Carissa Yip in a sharp King's Indian. Yip made the decisive mistake under heavy time pressure. Krush is on 5/7, half a point behind the leaders.
 
-Round eight is on Saturday, October 17, at 1 p.m. ET.
+In round eight, So meets Woodward.

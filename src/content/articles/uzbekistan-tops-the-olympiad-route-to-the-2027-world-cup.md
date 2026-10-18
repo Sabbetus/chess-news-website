@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/olympiad-qualification-spots-for-2027-world-cup
 lens: "results"
 continent: "global"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Samarkand results decide 83 Open and 45 Women's federation spots for the 2027 World Cups. Uzbekistan heads the Open list, China the Women's. Federations name players 1-15 July 2027."
 metaDescription: "FIDE has allocated 2027 World Cup spots from Samarkand Olympiad results: 83 federations in the Open, 45 in the Women's, led by Uzbekistan and China."
 image:

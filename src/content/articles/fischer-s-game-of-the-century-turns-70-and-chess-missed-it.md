@@ -1,19 +1,18 @@
 ---
-title: "Fischer's Game of the Century Turns 70, and Chess Missed It"
+title: "Fischer's Game of the Century at 70, and the Magazine That Never Printed It"
 publishDate: "2026-10-18"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/my-70th-memorable-game"
 lens: "historical-parallel"
 continent: "north-america"
 selectionScore: 67
-reviewStatus: "draft"
-socialCopy: "Seventy years ago today, 13-year-old Bobby Fischer beat Donald Byrne in the \"Game of the Century.\" CHESS magazine never published it in the 1950s, and John Henderson explains why."
+reviewStatus: "published"
+socialCopy: "Seventy years ago this week, 13-year-old Bobby Fischer beat Donald Byrne in the \"Game of the Century.\" CHESS magazine never published it in the 1950s, and John Henderson explains why."
 metaDescription: "On 17 October 1956, 13-year-old Bobby Fischer beat Donald Byrne in New York. John Henderson recalls the game and why CHESS magazine never ran it."
 image:
-  src: "./_images/Bobby_Fischer_RIP.webp"
-  credit: "Ted Cross, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABobby_Fischer_RIP.jpg"
-  caption: "Bobby Fischer"
+  src: "./_images/Chess_pieces_from_Samarkand_700s.webp"
+  credit: "LAS30a, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_pieces_from_Samarkand_700s.jpg"
 gamePgn: "fischer-s-game-of-the-century-turns-70-and-chess-missed-it.pgn"
 ---
 
