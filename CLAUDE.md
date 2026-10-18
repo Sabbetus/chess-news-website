@@ -56,11 +56,11 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 1.**
-- 2026-10-18: PR #71/#72 review: user challenged the So "four wins" call;
-  rechecked round by round, it stood (3W 4D). User then added a request
-  (Finnish clubs) rather than correcting the review. Treated as accepted
-  but the photo choice for Fischer was left to me after the user stopped
-  the Leipzig download (0 -> 1).
+- 2026-10-18: PR #71/#72 review accepted (0 -> 1). User challenged the So
+  "four wins" call; rechecked round by round, it stood (3W 4D). The
+  Finnish clubs sub-section was a new request, not a correction. User
+  stopped the Fischer 1960 photo download, so the piece uses a neutral
+  pool photo.
 - 2026-10-17: PR #70 review overruled (2 -> 0): I proposed "Five Perfect
   Scores Lead the Youth Worlds"; user pointed out age-group sections are
   separate tournaments, so no sentence may count or group leaders across
