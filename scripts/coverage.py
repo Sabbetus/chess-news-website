@@ -188,9 +188,12 @@ SUPERSEDED_PROMPT = """\
 You are given today's candidate chess news stories. Find any story that is a \
 PREVIEW or announcement of an event (looking ahead: "returns on", "starts \
 tomorrow", "who is playing") when ANOTHER story in the same list already \
-reports that same event's RESULT. That preview is stale and should be dropped. \
-A preview of a different edition, round or event does not count. When unsure, \
-do not flag it.
+reports that same event's RESULT -- a final result OR any round report of the \
+event (round 1 included). Once a round has been played, a preview or \
+"kicks off" piece is stale and should be dropped. A preview of a different \
+edition or a different event does not count. When unsure, do not flag it. \
+(Caught 2026-10-18: ChessBase's European Club Cup preview was kept alongside \
+Chess.com's round 1 report.)
 
 Answer with only a JSON object: {"stale_previews": [{"candidate": <number>, \
 "result_candidate": <number>, "reason": "<one short sentence>"}]}. Use an \

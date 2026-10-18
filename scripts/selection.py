@@ -224,6 +224,9 @@ MAJOR_TOURNAMENT_KEYWORDS = [
     "u.s. championship", "us championship", "u.s. chess championship",
     "u.s. women's championship", "us women's championship", "american cup",
     "world junior", "world cup",
+    # Caught 2026-10-18: a ChessBase preview (67) beat Chess.com's round 1
+    # report (54) because the Club Cup had no major-event bonus.
+    "european club cup", "european chess club cup", "women's club cup",
 ]
 MAJOR_TOURNAMENT_BONUS = 45
 # The same events without results yet (a preview, a field announcement):
