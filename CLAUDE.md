@@ -55,7 +55,12 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-10-18: PR #71/#72 review: user challenged the So "four wins" call;
+  rechecked round by round, it stood (3W 4D). User then added a request
+  (Finnish clubs) rather than correcting the review. Treated as accepted
+  but the photo choice for Fischer was left to me after the user stopped
+  the Leipzig download (0 -> 1).
 - 2026-10-17: PR #70 review overruled (2 -> 0): I proposed "Five Perfect
   Scores Lead the Youth Worlds"; user pointed out age-group sections are
   separate tournaments, so no sentence may count or group leaders across
@@ -94,6 +99,21 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-18: PR #71 reset (streak stays at 0). Resets: the round 7
+  piece gave So "four wins" (3W 4D on 5/7; ChessBase's own slip, checked
+  round by round); and a ChessBase European Club Cup preview (67) was
+  drafted over Chess.com's round 1 report (54), the event having started
+  (replaced by the round 1 report, with a Finnish clubs sub-section).
+  Borderline, fixed: Fischer headline "and Chess Missed It" (the magazine
+  missed it), his gravestone captioned "Bobby Fischer" (now a neutral
+  photo), "seventy years ago today" a day late. Minor: round 8 and Krush
+  lines, calendar wording. World Cup spots piece clean. PR #72 (weekly
+  recap) clean: all 16 links and claims checked; two lines about our own
+  headline/source reworded, round 7 and Club Cup lines added. Fixed at the
+  source: European Club Cup on the major-event list; a "kicks off" or
+  "preview" headline gets only the preview bonus; any round report makes
+  a preview stale; Club Cup pieces get a Finnish clubs sub-section from
+  chess-results (teams by federation flag, results per round).
 - 2026-10-17: PR #70 reset (streak stays at 0). Resets: the youth worlds
   piece ("Three Perfect Scores Lead the Youth Worlds") grouped leaders of
   separate age-group sections, and left out Under 17 again (rewritten
@@ -318,8 +338,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-17 (PR #70, see above).
-- Earlier resets: 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-18 (PR #71, see above).
+- Earlier resets: 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
