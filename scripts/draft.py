@@ -38,6 +38,7 @@ from chess_results_standings import (
 )
 from continents import CONTINENT_SLUGS
 from game_links import link_moves
+from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts
 from game_pgn import find_game_pgn
 from images import fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
@@ -879,6 +880,16 @@ def build_user_prompt(item: dict) -> str:
         parts.append(f"Additional source name: {extra['sourceName']}")
         if extra.get("summary"):
             parts.append(f"Additional source summary/excerpt: {extra['summary']}")
+
+    # European Club Cup pieces carry a Finnish-clubs sub-section (user's
+    # call, 2026-10-18); see club_cup.py.
+    try:
+        finnish = finnish_clubs_facts(item)
+    except Exception as exc:  # noqa: BLE001 -- never fail a draft over it
+        print(f"  Finnish clubs lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+        finnish = None
+    if finnish:
+        parts += ["", FINNISH_SUBSECTION_INSTRUCTION, finnish]
 
     # Internal-link candidates. Supplied as data rather than baked into the
     # system prompt because the list changes with every published batch.
