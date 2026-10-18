@@ -13,9 +13,10 @@ additionalSources:
   - sourceName: "ChessBase"
     sourceUrl: "https://en.chessbase.com/post/european-club-cup-2026-preview"
 image:
-  src: "./_images/Schachfiguren__Bauern_--_2022_--_0022.webp"
-  credit: "Dietmar Rabich, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASchachfiguren%2C_Bauern_--_2022_--_0022.jpg"
+  src: "./_images/NilsGrandelius23a.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANilsGrandelius23a.jpg"
+  caption: "Nils Grandelius"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/41st-european-chess-club-cup-2026-open/round-1/EEnnGszr/7CQkUPtn"
 ---

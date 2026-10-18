@@ -10,9 +10,10 @@ reviewStatus: "published"
 socialCopy: "Seventy years ago this week, 13-year-old Bobby Fischer beat Donald Byrne in the \"Game of the Century.\" CHESS magazine never published it in the 1950s, and John Henderson explains why."
 metaDescription: "On 17 October 1956, 13-year-old Bobby Fischer beat Donald Byrne in New York. John Henderson recalls the game and why CHESS magazine never ran it."
 image:
-  src: "./_images/Chess_pieces_from_Samarkand_700s.webp"
-  credit: "LAS30a, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_pieces_from_Samarkand_700s.jpg"
+  src: "./_images/Bundesarchiv_Bild_183-76052-0335__Schacholympiade__Tal__UdSSR__gegen_Fischer__USA.webp"
+  credit: "Ulrich Kohls, CC BY-SA 3.0 de, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABundesarchiv_Bild_183-76052-0335%2C_Schacholympiade%2C_Tal_%28UdSSR%29_gegen_Fischer_%28USA%29.jpg"
+  caption: "Bobby Fischer (left) against Mikhail Tal at the 1960 Olympiad in Leipzig"
 gamePgn: "fischer-s-game-of-the-century-turns-70-and-chess-missed-it.pgn"
 ---
 
