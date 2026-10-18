@@ -408,6 +408,12 @@ def _mentions_major_event(text_lower: str) -> bool:
 MAJOR_EVENT_LEAD_CHARS = 200
 
 
+# A headline that announces the start is a preview, whatever last year's
+# results its body recaps (caught 2026-10-18: "The European Club Cup kicks
+# off in Budva" got the results bonus from last year's medal list).
+PREVIEW_TITLE_RE = re.compile(r"\b(kicks? off|preview|gets? under ?way|set to (start|begin)|ahead of)\b", re.IGNORECASE)
+
+
 def score_major_tournament(text: str, lead: str | None = None) -> int:
     """The event has to be named in the headline or opening (`lead`), not
     just mentioned in passing -- caught live 2026-10-11: a Freestyle Friday
@@ -615,6 +621,8 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["keywords"] = min(score_keywords(text), FEATURE_MAX_KEYWORD_SCORE) if feature else score_keywords(text)
     lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS]}"
     breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text, lead)
+    if breakdown["majorTournament"] and PREVIEW_TITLE_RE.search(item.get("title", "")):
+        breakdown["majorTournament"] = MAJOR_EVENT_PREVIEW_BONUS
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
     breakdown["feature"] = FEATURE_BONUS if feature else 0
     breakdown["specificity"] = score_specificity(item)
