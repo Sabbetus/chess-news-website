@@ -1647,7 +1647,7 @@ def draft_one(
         ]
 
     image = pick_image_for_item(
-        item,
+        {**item, "lens": parsed.get("lens")},
         parsed["title"],
         parsed.get("imageSubjects", []),
         exclude_source_urls=used_image_source_urls(),

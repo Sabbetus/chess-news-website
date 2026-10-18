@@ -387,6 +387,7 @@ def _fetch_first_licensed_file(
     exclude_source_urls: set | None = None,
     prefer_relevance: bool = False,
     require_known_date: bool = False,
+    historical: bool = False,
 ) -> dict | None:
     """Among the given candidate titles, return the most recently-taken
     acceptably-licensed file -- not just the first one Commons' text search
@@ -479,7 +480,12 @@ def _fetch_first_licensed_file(
             continue
 
         date = _photo_date(meta)
-        if _is_too_old(date):
+        # Profiles and history pieces are about players whose photos are
+        # old or undated (caught 2026-10-18: Vaganian's are from 1983 or
+        # undated, Fischer's from 1960, so both pieces got neutral photos).
+        # Their queries are strict full-name matches, so the floor and the
+        # known-date rule below are lifted for them.
+        if _is_too_old(date) and not historical:
             continue
         # A bare person-name query has no "chess"/topic qualifier at all, so
         # an unknown-date file (which the age floor above explicitly lets
@@ -491,7 +497,7 @@ def _fetch_first_licensed_file(
         # for these queries costs nothing for genuine matches (real modern
         # photos of chess people have upload/capture dates) and closes this
         # gap without weakening the age floor itself for other queries.
-        if require_known_date and date == "0000-00-00":
+        if require_known_date and date == "0000-00-00" and not historical:
             continue
 
         artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
@@ -556,13 +562,14 @@ def search_image(
     exclude_source_urls: set | None = None,
     prefer_relevance: bool = False,
     require_known_date: bool = False,
+    historical: bool = False,
 ) -> dict | None:
     """Search Commons for one query, return the first acceptably-licensed
     file, or None if nothing usable was found."""
     try:
         titles = _search_titles(query, limit=8)
         return _fetch_first_licensed_file(
-            titles, query, strict, exclude_source_urls, prefer_relevance, require_known_date
+            titles, query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical
         )
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
@@ -835,6 +842,9 @@ def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> di
     return {"src": photo["src"], "credit": photo["credit"], "sourceUrl": photo["sourceUrl"]}
 
 
+HISTORICAL_LENSES = {"people", "historical-parallel"}
+
+
 def pick_image_for_item(
     item: dict,
     drafted_title: str,
@@ -848,10 +858,11 @@ def pick_image_for_item(
     (None only if the pool file itself is missing). A result with a local
     "src" is already stored in _images; one with a "url" still has to go
     through localize_image."""
+    historical = item.get("lens") in HISTORICAL_LENSES
     for query, strict, prefer_relevance, require_known_date in build_query_cascade(
         item, drafted_title, image_subjects, prefer_neutral
     ):
-        result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date)
+        result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
         if result:
             return result
     return fallback_image(drafted_title, exclude_source_urls) or fallback_image(item.get("title", ""), exclude_source_urls)

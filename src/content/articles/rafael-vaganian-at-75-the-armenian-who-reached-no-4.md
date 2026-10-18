@@ -10,9 +10,10 @@ reviewStatus: "published"
 socialCopy: "Rafael Vaganian turns 75: Armenia's first grandmaster, 1989 USSR champion, world No. 4 in 1986 and a co-commentator in Dortmund last year."
 metaDescription: "Rafael Vaganian turns 75 on 15 October. A look at Armenia's first grandmaster: USSR champion in 1989, world No. 4 in 1986, Olympiad gold medallist."
 image:
-  src: "./_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "./_images/Rafael_Vaganian.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARafael_Vaganian.jpg"
+  caption: "Rafael Vaganian playing for SG Porz in the Bundesliga"
 gamePgn: "rafael-vaganian-at-75-the-armenian-who-reached-no-4.pgn"
 ---
 
