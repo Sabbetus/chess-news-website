@@ -18,7 +18,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/german-bundesliga-202627-schachbundesliga/round-1/dppuxRu1/dWCZyH4a"
 ---
 
-Two clubs won everything on the opening weekend of the German Bundesliga. [SC Viernheim and OSG Baden-Baden each took 6 match points from three rounds](https://en.chessbase.com/post/bundesliga-2026-27-r3), played from 9 to 11 October, and the board-point count separates them: Viernheim have 17½, four more than Baden-Baden.
+Two clubs won everything on the opening weekend of the [German Bundesliga](/events/chess-bundesliga/). [SC Viernheim and OSG Baden-Baden each took 6 match points from three rounds](https://en.chessbase.com/post/bundesliga-2026-27-r3), played from 9 to 11 October, and the board-point count separates them: Viernheim have 17½, four more than Baden-Baden.
 
 That gap is the story of the weekend. Viernheim win big, while Baden-Baden keep winning narrowly. With a 16-team league decided on match points first, the margin only matters if the two finish level, but it is a useful early measure of how comfortable each side looks.
 
