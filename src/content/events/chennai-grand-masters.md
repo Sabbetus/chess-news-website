@@ -17,9 +17,10 @@ winners:
   - { year: 2024, names: ["Aravindh Chithambaram"] }
   - { year: 2023, names: ["Gukesh Dommaraju"] }
 image:
-  src: "../articles/_images/Chess_set_2014.webp"
-  credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
+  src: "../articles/_images/Alireza_Firouzja_2026_Norway_Chess.webp"
+  credit: "Ahmed0112, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_2026_Norway_Chess.jpg"
+  caption: "Alireza Firouzja, champion 2026"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

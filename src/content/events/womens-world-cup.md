@@ -19,9 +19,10 @@ winners:
   - { year: 2023, names: ["Aleksandra Goryachkina"], note: "Baku" }
   - { year: 2021, names: ["Alexandra Kosteniuk"], note: "Sochi" }
 image:
-  src: "../articles/_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "../articles/_images/Divya_Deshmukh_in_2025.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADivya_Deshmukh_in_2025.jpg"
+  caption: "Divya Deshmukh, champion 2025"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

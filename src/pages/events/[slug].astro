@@ -81,7 +81,7 @@ const jsonLd = [
       <p class="hub-lede">{d.summary}</p>
     </header>
 
-    <div class="hub-body"><Portrait name={d.name} image={d.image} alt={`${d.name}`} /></div>
+    <div class="hub-body"><Portrait name={d.name} image={d.image} alt={d.image?.caption ?? d.name} /></div>
 
     {next && (
       <aside class="hub-section next">

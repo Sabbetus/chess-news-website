@@ -8,7 +8,7 @@ import { initials } from '../lib/hubs';
 
 interface Props {
   name: string;
-  image?: { src: ImageMetadata; credit: string; sourceUrl: string };
+  image?: { src: ImageMetadata; credit: string; sourceUrl: string; caption?: string };
   size?: 'hero' | 'small';
   // Player headshots are nearly all taller than wide; a portrait box shows
   // the whole head and face instead of a wide slice of a tall photo.
@@ -34,7 +34,7 @@ const width = size === 'hero' ? 960 : 160;
   {
     image && size === 'hero' && (
       <figcaption>
-        Photo: <a href={image.sourceUrl} target="_blank" rel="noopener">{image.credit}</a>
+        {image.caption && <span class="who">{image.caption}. </span>}Photo: <a href={image.sourceUrl} target="_blank" rel="noopener">{image.credit}</a>
       </figcaption>
     )
   }
@@ -94,6 +94,10 @@ const width = size === 'hero' ? 960 : 160;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--ink-soft);
+  }
+  figcaption .who {
+    font-family: inherit;
+    color: var(--ink);
   }
   figcaption a {
     color: inherit;

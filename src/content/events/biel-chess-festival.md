@@ -40,9 +40,10 @@ winners:
   - { year: 2003, names: ["Alexander Morozevich"] }
   - { year: 2002, names: ["Ilya Smirin"] }
 image:
-  src: "../articles/_images/Chess_game_Staunton_No__6_perfil_view_8.webp"
-  credit: "Wilfredor, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
+  src: "../articles/_images/Levon_Aronian_in_2023.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALevon_Aronian_in_2023.jpg"
+  caption: "Levon Aronian, champion 2026"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

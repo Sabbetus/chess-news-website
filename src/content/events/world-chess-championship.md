@@ -82,9 +82,10 @@ winners:
   - { year: 1889, names: ["Wilhelm Steinitz"], note: "beat Mikhail Chigorin 10½–6½" }
   - { year: 1886, names: ["Wilhelm Steinitz"], note: "beat Johannes Zukertort 12½–7½ in the first official match" }
 image:
-  src: "../articles/_images/Chess_set_2014.webp"
-  credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
+  src: "../articles/_images/D_Gukesh_at_2025_Tata_Steel_CT.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AD_Gukesh_at_2025_Tata_Steel_CT.jpg"
+  caption: "Gukesh Dommaraju, world champion since 2024"
 reviewStatus: "published"
 updatedDate: "2026-10-03"
 ---

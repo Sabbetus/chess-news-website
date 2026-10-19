@@ -23,9 +23,10 @@ winners:
   - { year: 2020, names: ["Alireza Firouzja"] }
   - { year: 2019, names: ["Nikita Vitiugov"] }
 image:
-  src: "../articles/_images/Chess_set_2014.webp"
-  credit: "Conal Gallagher, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_set_2014.jpg"
+  src: "../articles/_images/Nodirbek_Abdusattorov_chess_player.webp"
+  credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Abdusattorov_chess_player.jpg"
+  caption: "Nodirbek Abdusattorov, champion 2024, 2026"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

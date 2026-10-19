@@ -26,9 +26,10 @@ winners:
   - { year: 2007, names: ["Gata Kamsky"], note: "beat Alexei Shirov in the final" }
   - { year: 2005, names: ["Levon Aronian"], note: "beat Ruslan Ponomariov in the final" }
 image:
-  src: "../articles/_images/Chess_game_Staunton_No__6_perfil_view_8.webp"
-  credit: "Wilfredor, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
+  src: "../articles/_images/Javokhir_Sindarov_chess_player.webp"
+  credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_chess_player.jpg"
+  caption: "Javokhir Sindarov, champion 2025"
 reviewStatus: "published"
 updatedDate: "2026-10-03"
 ---

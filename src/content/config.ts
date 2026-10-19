@@ -188,7 +188,8 @@ const events = defineCollection({
       showMostTitles: z.boolean().default(true),
       winnersSource: z.object({ label: z.string(), url: z.string().url() }).optional(),
       aliases: z.array(z.string()).default([]),
-      image: z.object({ src: image(), credit: z.string(), sourceUrl: z.string().url() }).optional(),
+      // caption: who is pictured, when the photo is a champion rather than the venue.
+      image: z.object({ src: image(), credit: z.string(), sourceUrl: z.string().url(), caption: z.string().optional() }).optional(),
       reviewStatus: z.enum(['draft', 'published']),
       updatedDate: z.coerce.date(),
     }),

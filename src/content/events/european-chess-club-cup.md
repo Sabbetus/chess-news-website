@@ -65,9 +65,10 @@ winners:
   - { year: 1979, names: ["Burevestnik Moscow"], note: "Bad Lauterberg" }
   - { year: 1976, names: ["Burevestnik Moscow", "Solingen SG"], note: "Solingen, shared" }
 image:
-  src: "../articles/_images/Chess_clock.webp"
-  credit: "Thomas Depenbusch, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_clock.jpg"
+  src: "../articles/_images/David_Navara_Chessolympiad_2022.webp"
+  credit: "Paul Meyer-Dunker, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADavid_Navara_Chessolympiad_2022.jpg"
+  caption: "David Navara of 1. Nový Bor, winners 2013, 2022, 2024"
 reviewStatus: "published"
 updatedDate: "2026-10-19"
 ---

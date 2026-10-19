@@ -21,9 +21,10 @@ winners:
   - { year: 2023, names: ["Gukesh Dommaraju"], note: "won a blitz playoff with Pranav Venkatesh" }
   - { year: 2022, names: ["Gukesh Dommaraju"], note: "first edition" }
 image:
-  src: "../articles/_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "../articles/_images/TataSteelMishra2023.webp"
+  credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelMishra2023.jpg"
+  caption: "Abhimanyu Mishra, champion 2026"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
