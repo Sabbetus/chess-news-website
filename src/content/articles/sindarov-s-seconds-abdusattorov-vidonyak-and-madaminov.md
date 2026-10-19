@@ -1,12 +1,12 @@
 ---
-title: "Sindarov's Seconds: Abdusattorov, Vidonyak and Madaminov"
+title: "Sindarov's Seconds: Abdusattorov, Vidonyak and Likely Madaminov"
 publishDate: "2026-10-19"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-ch-2026-seconds"
 lens: "people"
 continent: "global"
 selectionScore: 92
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Before Gukesh-Sindarov starts on 24 November, the fight is over who sits in the back room. Abdusattorov is in Sindarov's camp and puts the odds at 80:20. Gukesh's team is mostly a question mark."
 metaDescription: "Ahead of the 14-game Gukesh-Sindarov World Championship match in Geneva, a look at the seconds: Abdusattorov, Vidonyak, Madaminov and Gajewski."
 image:

@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/total-chess-unified-rating-system"
 lens: "results"
 continent: "global"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Total Chess has proposed one Elo-scale rating blending classical, rapid and blitz. Carlsen leads on 2830, with Nakamura on 2779 and Abdusattorov on 2774. Public feedback is open until 24 December."
 metaDescription: "Total Chess proposes a single rating blending classical, rapid and blitz FIDE ratings. Carlsen leads at 2830 ahead of Nakamura and Abdusattorov."
 image:

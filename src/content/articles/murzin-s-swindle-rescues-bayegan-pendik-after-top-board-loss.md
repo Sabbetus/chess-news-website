@@ -1,12 +1,12 @@
 ---
-title: "Murzin's Swindle Rescues Bayegan Pendik After Top-Board Loss"
+title: "Murzin's Swindle Keeps Bayegan Pendik Clear After a Top-Board Loss"
 publishDate: "2026-10-19"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-european-chess-club-cup-round-2"
 lens: "results"
 continent: "europe"
 selectionScore: 98
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Top seed Bayegan Pendik rested Giri and Erdogmus, lost on board one, and still won 5-1 after Volodar Murzin swindled a lost position. Wei Yi and Arjun also won in round 2 of the European Club Cup."
 metaDescription: "Round 2 of the European Club Cup: Bayegan Pendik won 5-1 despite a top-board loss, Wei Yi's Alkaloid won 6-0, and Monte-Carlo beat Odlar Yurdu in the Women's event."
 image:
@@ -45,5 +45,11 @@ Gaps of 28 seeds are large, but club events with six boards and uneven lineups l
 The European Women's Chess Club Cup already produced major meetings. Cercle d'Echecs de Monte-Carlo beat fifth seed Odlar Yurdu, with big wins from IM Stavroula Tsolakidou and GM Koneru Humpy.
 
 Third seed SuperChess Romania escaped with a 2-2 tie against eighth seed Club Ajedrez Linares. WFM Viviana Galvan at one point missed a mate in three in a crazy finish to a 121-move draw against IM Deimante Daulyte-Cornette.
+
+**The Finnish clubs**
+
+Two of the three Finnish clubs in the Open bounced back from their opening defeats. Etelä-Vantaan Shakki beat the Norwegian club SK1911 4-2, and Aatos swept St Benildus 6-0. Gambiitti lost 4-2 to SK Rockaden's second team.
+
+In round three, Etelä-Vantaa face FC St. Pauli 1910, Aatos meet SC Erlangen and Gambiitti play S.S. Lazio Scacchi.
 
 Round three is on Monday, October 19, at 8 a.m. ET / 14:00 CEST / 5:30 p.m. IST.

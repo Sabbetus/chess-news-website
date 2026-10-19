@@ -6,16 +6,16 @@ sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-8"
 lens: "results"
 continent: "north-america"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wesley So beat Andy Woodward in a pawn endgame to reach 6/8 and lead Caruana by a full point. They meet in round 9 with Caruana on white. Lee and Li share the women's lead."
 metaDescription: "Wesley So beat Andy Woodward in a pawn ending to lead the US Championship on 6/8, a point clear of Caruana, whom he meets in round 9 after the rest day."
 additionalSources:
   - sourceName: "ChessBase"
     sourceUrl: "https://en.chessbase.com/post/us-championships-2026-8"
 image:
-  src: "./_images/So_wesley_20081119_olympiade_dresden3.webp"
-  credit: "Frank Hoppe, CC BY 2.5, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASo_wesley_20081119_olympiade_dresden3.jpg"
+  src: "./_images/Wesley_So_in_2023.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_in_2023.jpg"
   caption: "Wesley So"
 gamePgn: "so-beats-woodward-in-a-pawn-ending-leads-caruana-by-a-point.pgn"
 ---
@@ -28,7 +28,7 @@ The game was a Ragozin Variation of the Queen's Gambit Declined. According to Ch
 
 Martina Gerdts's annotations for ChessBase point to the decisive slip. Instead of [36...Kc6](#ply-72), Woodward needed ...h6, and after [37.h4](#ply-73) that move was no longer possible because b5 would win the endgame. Woodward played [37...Kd6](#ply-74), and So answered [38.c5!](#ply-75) bxc5 [39.b5!](#ply-77), creating a passed pawn.
 
-From there So collected the kingside pawns. It was his fifth win of the tournament, and Chess.com notes his three earlier wins had come in different kinds of endgames. Taken together, that is a pattern of squeezing small edges in simplified positions, which is hard to stop when the opponent is short of ideas.
+From there So collected the kingside pawns. It was his fourth win of the tournament, and Chess.com notes his three earlier wins had come in different kinds of endgames. Taken together, that is a pattern of squeezing small edges in simplified positions, which is hard to stop when the opponent is short of ideas.
 
 **Why the chasers stalled**
 
@@ -38,7 +38,7 @@ In the diagram position, 42.f5? gave Black the tempo for ...Nc6, and after 43.Ne
 
 Caruana could not make headway as Black against Sam Sevian, and that game was drawn in 42 moves. Liang took a quick draw with Abhimanyu Mishra, and Oparin had chances against Levon Aronian that he did not convert, so that game was drawn too. Sam Shankland beat Hans Niemann with white for his second win of the event.
 
-Woodward, Xiong, Liang and Oparin share third on 4.5. With three rounds left, they need So to stumble and then win out themselves. I'd read the draws as the leader's best friend: a rest day before a head-to-head is the only thing standing between So and a comfortable position.
+Woodward, Xiong, Liang and Oparin share third on 4.5. With three rounds left, they need So to stumble and then win out themselves. Every draw among the chasers helps the leader, and only the head-to-head with Caruana now stands between So and a comfortable position.
 
 **Round nine stakes**
 
