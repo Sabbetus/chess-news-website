@@ -18,7 +18,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/41st-european-chess-club-cup-2026-open/round-2/ETE9LeyG/cM9Z6S6J"
 ---
 
-The favorites kept cruising in round two of the European Chess Club Cup, with GMs Wei Yi, Arjun Erigaisi and Richard Rapport among the stars to [reach 2/2](https://www.chess.com/news/view/2026-european-chess-club-cup-round-2). The one real scare came for the top seed, and it needed a rescue act to avoid becoming a story.
+The favorites kept cruising in round two of the [European Chess Club Cup](/events/european-chess-club-cup/), with GMs Wei Yi, Arjun Erigaisi and Richard Rapport among the stars to [reach 2/2](https://www.chess.com/news/view/2026-european-chess-club-cup-round-2). The one real scare came for the top seed, and it needed a rescue act to avoid becoming a story.
 
 **Bayegan Pendik survives its own rotation**
 

@@ -21,7 +21,7 @@ gameEmbed:
   url: "https://lichess.org/embed/broadcast/41st-european-chess-club-cup-2026-open/round-1/EEnnGszr/7CQkUPtn"
 ---
 
-The 41st European Chess Club Cup began in Budva, Montenegro, on Saturday, and [round one went much as the seedings said](https://www.chess.com/news/view/2026-european-chess-club-cup-round-1). The top three teams all won 6-0, even while resting players such as Nodirbek Abdusattorov, Anish Giri and Yagiz Kaan Erdogmus.
+The 41st [European Chess Club Cup](/events/european-chess-club-cup/) began in Budva, Montenegro, on Saturday, and [round one went much as the seedings said](https://www.chess.com/news/view/2026-european-chess-club-cup-round-1). The top three teams all won 6-0, even while resting players such as Nodirbek Abdusattorov, Anish Giri and Yagiz Kaan Erdogmus.
 
 The event runs until 23 October: seven rounds of a team Swiss, six boards a side in the Open, four in the Women's. There are 108 teams in the Open and 22 in the Women's, from [the strongest professional clubs to ordinary club players](https://en.chessbase.com/post/european-club-cup-2026-preview), with €40,000 in prize money. This year the top four Open teams also qualify for a new eight-team European Chess Super League in Bucharest in February 2027.
 
