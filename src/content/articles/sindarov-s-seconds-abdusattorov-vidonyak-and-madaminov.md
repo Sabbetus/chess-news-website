@@ -16,7 +16,9 @@ image:
   caption: "Javokhir Sindarov"
 ---
 
-The World Championship match between Gukesh Dommaraju and Javokhir Sindarov runs from 24 November to 12 December in Cologny, near Geneva, over 14 games at the Fondation Martin Bodmer. [Sindarov will lean on a compatriot, Nodirbek Abdusattorov, among his seconds](https://en.chessbase.com/post/world-ch-2026-seconds), as Abdusattorov himself revealed on an Uzbek podcast. The prize fund is 2.5 million US dollars, backed by Salesforce as main sponsor and Timur Turlov's Freedom Holding as co-sponsor.
+The World Championship match between Gukesh Dommaraju and Javokhir Sindarov runs from 24 November to 12 December in Cologny, near Geneva, over 14 games at the Fondation Martin Bodmer.
+
+[Sindarov will lean on a compatriot, Nodirbek Abdusattorov, among his seconds](https://en.chessbase.com/post/world-ch-2026-seconds), as Abdusattorov himself revealed on an Uzbek podcast. The prize fund is 2.5 million US dollars, backed by Salesforce as main sponsor and Timur Turlov's Freedom Holding as co-sponsor.
 
 **Sindarov's camp**
 
@@ -42,7 +44,9 @@ At the opening press conference, Kramnik offered a few names as a smokescreen. A
 
 **The form guide**
 
-The ratings tilt toward Sindarov. Gukesh was at 2794 in November 2024 and is now at 2710, 28th in the world. Sindarov is at 2782, number 4. A convincing win could lift him past Caruana and Nakamura to number 2 behind Carlsen.
+The ratings tilt toward Sindarov. Gukesh was at 2794 in November 2024 and is now at 2710, 28th in the world.
+
+Sindarov is at 2782, number 4. A convincing win could lift him past Caruana and Nakamura to number 2 behind Carlsen.
 
 Abdusattorov puts his compatriot's chances at 80:20. In their three classical games, Sindarov has won two and drawn one against Gukesh.
 

@@ -416,3 +416,33 @@ def test_follow_up_bonus_only_for_followed_events():
     assert score_follow_up({"title": "Fagernes: Jumabayev takes title"}, words) > 0
     assert score_follow_up({"title": "Fagernes: round 8 report"}, words) == 0
     assert score_follow_up({"title": "Yu Yangyi wins Shenzhen Masters"}, words) == 0
+
+
+def test_sentence_counter_handles_moves_and_abbreviations():
+    from draft import count_sentences
+
+    assert count_sentences("White's 17.f5? was a mistake. After 17...Nb4! 18.Rg1? Wei won.") == 2
+    assert count_sentences("She played 37.Qxf2 rather than the engine's 37.Qg1. Sargsyan then erred.") == 2
+    assert count_sentences("The U.S. Championship resumes at 1 p.m. ET. Dr. Seven agreed.") == 2
+
+
+def test_published_articles_respect_paragraph_limits():
+    """Every article published from 2026-10-19 on (when the 350-character /
+    3-sentence limits came in) -- this also covers hand edits made during
+    review, which never pass through draft.py's own check."""
+    import re
+    from pathlib import Path
+
+    from draft import check_paragraph_lengths
+
+    articles = Path(__file__).resolve().parent.parent / "src" / "content" / "articles"
+    problems = []
+    for path in articles.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.MULTILINE)
+        if 'reviewStatus: "published"' not in text or not date or date.group(1) < "2026-10-19":
+            continue
+        offenders = check_paragraph_lengths(text.split("---", 2)[2])
+        if offenders:
+            problems.append(f"{path.stem}: {offenders}")
+    assert not problems, "\n".join(problems)

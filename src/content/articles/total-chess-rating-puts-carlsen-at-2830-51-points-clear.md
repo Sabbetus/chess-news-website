@@ -30,7 +30,9 @@ The formula was developed by Dr Mehmet Mars Seven of King's College London with 
 
 Elo is logarithmic, so the method converts each of the three ratings into a measure of playing strength, averages those, and converts back. The three formats carry equal weight, but the nonlinear step lets stronger individual ratings pull the total up a little more.
 
-Carlsen is the worked example. His 1 October ratings were 2823 classical, 2801 rapid and 2860 blitz. The plain average is 2828; the formula gives 2830. The difference is small for him, but it shows the direction of the effect.
+Carlsen is the worked example. His 1 October ratings were 2823 classical, 2801 rapid and 2860 blitz.
+
+The plain average is 2828; the formula gives 2830. The difference is small for him, but it shows the direction of the effect.
 
 A reader who wants to see how the three inputs compare on the [FIDE Top 100](/rankings/) can check the open list directly, and the [FIDE Women's Top 25](/rankings/women/) covers the women's side. The new ranking is built from those same published ratings, though it reorders players by a blended figure rather than classical alone.
 

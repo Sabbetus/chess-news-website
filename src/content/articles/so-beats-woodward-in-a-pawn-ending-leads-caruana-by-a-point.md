@@ -46,10 +46,14 @@ If So beats Caruana he leads by two points with two rounds to play, which would 
 
 **Women's section**
 
-Alice Lee and Rachael Li both drew and remain joint leaders on 6/8. Lee, 17, had a considerable edge from a Catalan against Anna Zatonskih in a heavy-piece endgame, but missed the most effective continuation and Zatonskih held. Li, 16, struggled as Black against Tatev Abrahamyan after ceding the dark squares, but both sides missed chances and it was drawn.
+Alice Lee and Rachael Li both drew and remain joint leaders on 6/8.
+
+Lee, 17, had a considerable edge from a Catalan against Anna Zatonskih in a heavy-piece endgame, but missed the most effective continuation and Zatonskih held. Li, 16, struggled as Black against Tatev Abrahamyan after ceding the dark squares, but both sides missed chances and it was drawn.
 
 Thalia Cervantes beat defending champion Carissa Yip with Black and is half a point back on 5.5. Yip overlooked a direct mating threat. Jennifer Yu beat Irina Krush, who stays on 5 after having recovered from an opening-round loss.
 
-Nazi Paikidze won the round's longest game against Anna Sargsyan. She sacrificed her queen from a clearly inferior position, which the engine rates as mistaken, and with 11 seconds left she played 37.Qxf2 rather than the engine's 37.Qg1. Sargsyan then spent only two and three minutes on 55...Kh8? and 56...Qb2 after Rf7+ and Rf3, and Paikidze went on to create mating threats. Sargsyan resigned facing mate in four.
+Nazi Paikidze won the round's longest game against Anna Sargsyan. She sacrificed her queen from a clearly inferior position, which the engine rates as mistaken, and with 11 seconds left she played 37.Qxf2 rather than the engine's 37.Qg1.
+
+Sargsyan then spent only two and three minutes on 55...Kh8? and 56...Qb2 after Rf7+ and Rf3, and Paikidze went on to create mating threats. Sargsyan resigned facing mate in four.
 
 Round nine starts at 1 p.m. ET.

@@ -280,18 +280,18 @@ same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do no
 default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
-- Keep paragraphs short: 2-4 sentences each, one idea per paragraph, hard cap at 4 \
-sentences with no exceptions, AND a target of roughly 60 words per paragraph \
-(70 as a hard ceiling). Tracking a running word count while you write is not \
+- Keep paragraphs short: 2-3 sentences each, one idea per paragraph, hard cap at 3 \
+sentences with no exceptions, AND at most about 50 words (350 characters as a hard \
+ceiling -- move notation and names count in full). Tracking a running word count while you write is not \
 reliable -- don't try. Use this concrete rule instead, checked sentence by \
 sentence as you write it, not after the fact: the moment a sentence names a \
 SECOND person's individual result, a second direct quote, or a second distinct \
 outcome, joined by "and," a comma, or a semicolon, stop -- that fact starts a \
-new sentence, and if the paragraph is already at 3-4 sentences, a new paragraph. \
+new sentence, and if the paragraph is already at 3 sentences, a new paragraph. \
 "X beat Y in N moves, A beat B, and C also won" is three facts stapled into one \
 sentence with commas; it must be two or three sentences, and likely two \
 paragraphs, not one. This is the actual, observed failure mode: a paragraph \
-that stays at 3-4 sentences by fusing several separate results or quotes \
+that stays at 3 sentences by fusing several separate results or quotes \
 together with commas reads as dense and cluttered no matter how short the \
 sentence count makes it look, and it still blows past the word ceiling even \
 though nothing here "counted" as too many sentences. This is a paragraph-length \
@@ -556,7 +556,7 @@ event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
 player1: first player's full name
 player2: second player's full name
 @@BODY_MARKDOWN@@
-the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the ~60-word/70-ceiling paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the 3-sentence/350-character paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
 
 Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
 writing that a player won or lost, check which colour they had against the result.
@@ -1074,7 +1074,47 @@ def used_image_source_urls() -> set[str]:
 # asking for an exact word or letter count) -- verifying it after the fact
 # and surfacing violations to the human reviewer is the actual backstop,
 # not a substitute for the prompt wording but a check on whether it worked.
-PARAGRAPH_WORD_CEILING = 70
+PARAGRAPH_WORD_CEILING = 70  # kept for the prompt wording only
+# The check itself (user's call, 2026-10-19): a word count let dense
+# paragraphs through -- move notation and stacked names count as one word
+# each, so a 68-word round-report paragraph ran to 416 characters. A
+# paragraph now offends at over 350 characters (link URLs and bold markers
+# not counted) or over 3 sentences.
+PARAGRAPH_CHAR_CEILING = 350
+PARAGRAPH_SENTENCE_CEILING = 3
+
+_ABBREVIATIONS = {"u.s.", "dr.", "mr.", "mrs.", "ms.", "st.", "vs.", "e.g.", "i.e.", "a.m.", "p.m.", "no.", "jr.", "sr.", "approx."}
+# A chess move ("17.f5?", "35...Kc6", "Nb4!", "O-O-O+") ends with ! or ? but
+# does not end a sentence.
+_MOVE_TOKEN_RE = re.compile(r"^(\d+\.+)?(O-O(-O)?|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](=[QRBN])?)[+#]?[!?]*[.,;:]?$")
+
+
+def paragraph_chars(paragraph: str) -> int:
+    text = re.sub(r"\]\([^)]*\)", "]", paragraph)
+    return len(text.replace("**", "").replace("[", "").replace("]", "").strip())
+
+
+def count_sentences(paragraph: str) -> int:
+    text = re.sub(r"\]\([^)]*\)", "]", paragraph).replace("**", "").replace("[", "").replace("]", "")
+    tokens = text.split()
+    count = 0
+    for i, token in enumerate(tokens):
+        if not re.search(r"[.!?][\"'\u201d)]*$", token):
+            continue
+        if i + 1 < len(tokens) and not re.match(r"[\"'\u201c(]*[A-Z0-9]", tokens[i + 1]):
+            continue
+        # A move ending in ! or ? ("18.Rg1? Wei") is an annotation, but one
+        # ending in a full stop ("37.Qg1. Sargsyan") does end the sentence.
+        is_annotated_move = bool(_MOVE_TOKEN_RE.match(token)) and token[-1] in "!?" and i + 1 < len(tokens)
+        if token.lower().strip("\"'\u201c\u201d()") in _ABBREVIATIONS or is_annotated_move:
+            continue
+        count += 1
+    return max(count, 1)
+
+
+def _is_prose(paragraph: str) -> bool:
+    p = paragraph.strip()
+    return bool(p) and not p.startswith(("#", "|", "- ", "* ", "<", ">")) and not re.fullmatch(r"\*\*[^*]+\*\*", p)
 
 
 _ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
@@ -1421,21 +1461,25 @@ def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
     prose paragraphs and aren't subject to the rule. Best-effort like image
     sourcing: this never blocks or fails a draft, only flags it for review."""
     paragraphs = [p.strip() for p in body_markdown.split("\n\n") if p.strip() and not p.strip().startswith("#")]
-    return [
-        (i, word_count)
-        for i, para in enumerate(paragraphs, 1)
-        if (word_count := len(para.split())) > PARAGRAPH_WORD_CEILING
-    ]
+    offenders = []
+    for i, para in enumerate(paragraphs, 1):
+        if not _is_prose(para):
+            continue
+        chars, sentences = paragraph_chars(para), count_sentences(para)
+        if chars > PARAGRAPH_CHAR_CEILING or sentences > PARAGRAPH_SENTENCE_CEILING:
+            offenders.append((i, f"{chars} chars, {sentences} sentences"))
+    return offenders
 
 
 _PARAGRAPH_FIX_PROMPT = """You will be given one or more numbered paragraphs from an \
-already-written chess article. Each one runs over a 70-word style-guide ceiling. Your \
+already-written chess article. Each one is over the style guide's limit of 350 characters \
+or 3 sentences per paragraph. Your \
 only job is to split each into 2 or more shorter paragraphs at natural sentence or \
 topic boundaries -- do not reword, cut, add, fact-check, or otherwise change a single \
 word. Preserve every word, number, quote, and Markdown link exactly as given, byte for \
 byte; only insert paragraph breaks (a blank line) between existing sentences. Split \
-generously enough that every resulting paragraph is genuinely under 70 words, not just \
-barely under.
+generously enough that every resulting paragraph is at most 3 sentences and well under 350 \
+characters, not just barely under.
 
 Respond with ONLY the fixed paragraphs, each introduced by its own @@PARA_N@@ marker \
 matching the input numbering exactly (e.g. @@PARA_1@@), with no commentary before, \
@@ -1538,10 +1582,9 @@ def fix_long_paragraphs(
         details = []
         for n in sorted(fixed):
             pieces = [p for p in fixed[n].split("\n\n") if p.strip()]
-            piece_words = [len(p.split()) for p in pieces]
             details.append(
-                f"#{n} ({offender_word_counts.get(n, '?')}w -> {len(pieces)} paragraphs, "
-                f"{'/'.join(str(w) + 'w' for w in piece_words)})"
+                f"#{n} ({offender_word_counts.get(n, '?')} -> {len(pieces)} paragraphs, "
+                f"{'/'.join(str(paragraph_chars(p)) + 'c' for p in pieces)})"
             )
         print(f"  paragraph fix-up: split {', '.join(details)}", file=sys.stderr)
 
@@ -1903,9 +1946,9 @@ def write_run_report(
         # reliable -- this is the actual backstop, not just a restatement
         # of the prompt rule, so it's worth a reviewer's attention even
         # though it never blocks the draft itself.
-        lines += ["", f"**{len(long_paragraphs)} article(s) have a paragraph over the {PARAGRAPH_WORD_CEILING}-word style-guide ceiling:**", ""]
+        lines += ["", f"**{len(long_paragraphs)} article(s) have a paragraph over {PARAGRAPH_CHAR_CEILING} characters or {PARAGRAPH_SENTENCE_CEILING} sentences:**", ""]
         for path, offenders in long_paragraphs:
-            spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
+            spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
             lines.append(f"- {path.stem} — paragraph {spots}")
     if GAME_LINK_NOTES:
         lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
@@ -1944,7 +1987,7 @@ def main() -> None:
             print(f"Drafted: {path.relative_to(ROOT)}")
             if offenders:
                 long_paragraphs.append((path, offenders))
-                print(f"  NOTE: {len(offenders)} paragraph(s) over {PARAGRAPH_WORD_CEILING} words", file=sys.stderr)
+                print(f"  NOTE: {len(offenders)} paragraph(s) over {PARAGRAPH_CHAR_CEILING} characters or {PARAGRAPH_SENTENCE_CEILING} sentences", file=sys.stderr)
             if bad_links:
                 bad_link_articles.append((path, bad_links))
                 print(f"  NOTE: {len(bad_links)} broken internal link(s): {bad_links}", file=sys.stderr)

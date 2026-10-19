@@ -487,8 +487,8 @@ def main() -> None:
 
     lines = [f"Drafted this week's recap from {len(entries)} article(s)."]
     if offenders:
-        spots = ", ".join(f"#{i} ({n} words)" for i, n in offenders)
-        lines += ["", f"**Paragraph(s) over the style-guide word ceiling:** {spots}"]
+        spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
+        lines += ["", f"**Paragraph(s) over the style-guide limit (350 characters or 3 sentences):** {spots}"]
     if bad_links:
         lines += [
             "",
