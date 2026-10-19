@@ -143,6 +143,7 @@ def _photo_date(meta: dict) -> str:
 # date (not "0000-00-00" unknown, which is a separate, already-handled
 # case) older than this is disqualifying, not just deprioritized.
 MIN_ACCEPTABLE_PHOTO_YEAR = 1990
+RECENT_PHOTO_YEARS = 8
 
 
 def _is_too_old(date: str) -> bool:
@@ -553,6 +554,15 @@ def _fetch_first_licensed_file(
     # sort or a pure orientation sort.
     candidates.sort(key=lambda c: c[2], reverse=True)
     candidates.sort(key=lambda c: c[0])
+    # Recency outranks shape for current stories (user's call, 2026-10-19):
+    # a well-framed 2023 portrait of Wesley So lost to landscape photos of
+    # him aged 15 at the 2008 Olympiad whenever his usual photo was in the
+    # front-page cooldown. A dated photo older than RECENT_PHOTO_YEARS goes
+    # behind every recent one; profiles and history pieces keep the old
+    # order, since old photos are expected there.
+    if not historical:
+        cutoff = str(time.gmtime().tm_year - RECENT_PHOTO_YEARS)
+        candidates.sort(key=lambda c: c[2] != "0000-00-00" and c[2][:4] < cutoff)
     return candidates[0][3]
 
 
