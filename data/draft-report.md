@@ -1,5 +1,5 @@
-Drafted 5 of 5 selected item(s).
+Drafted 4 of 4 selected item(s).
 
 **Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):
 
-- so-takes-sole-lead-on-5-7-as-liang-falls-in-27-moves — 78.Kf5, 36.Nd7, 17...c5, 26...Bd8, 27.Bb7+, 27...Kh8, 28.Rxf8+, 29.Rxg8#
+- so-beats-woodward-in-a-pawn-ending-leads-caruana-by-a-point — 42.f5?, 43.Ne4+, 44.Nc3, 42.Ne4+, 37.Qxf2, 37.Qg1, 55...Kh8?, 56...Qb2
