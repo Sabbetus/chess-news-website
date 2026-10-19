@@ -30,9 +30,9 @@ winners:
   - { year: 2013, names: ["Shakhriyar Mamedyarov"], note: "Blitz: Le Quang Liem" }
   - { year: 2012, names: ["Sergey Karjakin"], note: "Blitz: Alexander Grischuk" }
 image:
-  src: "../articles/_images/Opening_chess_position_from_black_side.webp"
-  credit: "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
+  src: "../articles/_images/2016_World_Blitz_Chess_Championship__31141736634.webp"
+  credit: "Sam Sloan, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2016_World_Blitz_Chess_Championship_%2831141736634%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

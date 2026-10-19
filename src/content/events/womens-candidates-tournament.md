@@ -31,9 +31,9 @@ winners:
   - { year: 1971, names: ["Alla Kushnir"] }
   - { year: 1967, names: ["Alla Kushnir"] }
 image:
-  src: "../articles/_images/Chess_game_Staunton_No__6_perfil_view_8.webp"
-  credit: "Wilfredor, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
+  src: "../articles/_images/Lei_Tingjie_-_Vaishali__Women_s_Candidates_Tournament_2024.webp"
+  credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALei_Tingjie_-_Vaishali%2C_Women%27s_Candidates_Tournament_2024.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

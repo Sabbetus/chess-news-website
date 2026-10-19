@@ -19,9 +19,9 @@ winners:
   - { year: 2021, names: ["Alireza Firouzja"], note: "Women: Lei Tingjie" }
   - { year: 2019, names: ["Wang Hao"] }
 image:
-  src: "../articles/_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "../articles/_images/FIDE_Grand_Swiss_2025_Samarkand_Mukhammadzokhid_Suyarov.webp"
+  credit: "TheBoburshokh, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_Grand_Swiss_2025_Samarkand_Mukhammadzokhid_Suyarov.jpg"
 reviewStatus: "published"
 updatedDate: "2026-10-03"
 ---

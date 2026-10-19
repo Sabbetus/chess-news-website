@@ -70,9 +70,9 @@ winners:
   - { year: 1982, names: ["SG Porz"], note: "1981/82" }
   - { year: 1981, names: ["Solinger SG 1868"], note: "1980/81" }
 image:
-  src: "../articles/_images/Chess_clock.webp"
-  credit: "Thomas Depenbusch, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_clock.jpg"
+  src: "../articles/_images/Finalrundensaal_im_Maritim_Hotel_Berlin_-_H_-_Bundesliga_30-4-2018.webp"
+  credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFinalrundensaal_im_Maritim_Hotel_Berlin_-_H_-_Bundesliga_30-4-2018.jpg"
 reviewStatus: "published"
 updatedDate: "2026-10-19"
 ---

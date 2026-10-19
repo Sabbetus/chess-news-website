@@ -28,9 +28,9 @@ winners:
   - { year: 2014, names: ["Fabiano Caruana"] }
   - { year: 2013, names: ["Magnus Carlsen"] }
 image:
-  src: "../articles/_images/Opening_chess_position_from_black_side.webp"
-  credit: "MichaelMaggs, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AOpening_chess_position_from_black_side.jpg"
+  src: "../articles/_images/SinquefieldCup2015.webp"
+  credit: "Pmehta8, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASinquefieldCup2015.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

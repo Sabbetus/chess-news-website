@@ -28,9 +28,9 @@ winners:
   - { year: 2012, names: ["Nigel Short"] }
   - { year: 2011, names: ["Jan Gustafsson"] }
 image:
-  src: "../articles/_images/Chess_game_Staunton_No__6_perfil_view_8.webp"
-  credit: "Wilfredor, CC0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_game_Staunton_No._6_perfil_view_8.jpg"
+  src: "../articles/_images/Sriram_Jha_19th_Bangkok_Chess_Club_Open.webp"
+  credit: "Aryan Sriram, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASriram_Jha_19th_Bangkok_Chess_Club_Open.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

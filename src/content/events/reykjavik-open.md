@@ -29,9 +29,9 @@ winners:
   - { year: 2013, names: ["Pavel Eljanov", "Wesley So", "Bassem Amin"] }
   - { year: 2012, names: ["Fabiano Caruana"] }
 image:
-  src: "../articles/_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "../articles/_images/MP_Reykjav_k_Open_2010__4393179673.webp"
+  credit: "Helgi Halldórsson from Reykjavík, Iceland, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMP_Reykjav%C3%ADk_Open_2010_%284393179673%29.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -32,9 +32,9 @@ winners:
   - { year: 2011, names: ["Hou Yifan"], note: "beat Koneru Humpy" }
   - { year: 2010, names: ["Hou Yifan"], note: "knockout" }
 image:
-  src: "../articles/_images/Chess_board_with_chess_set_in_opening_position_2012_PD_04.webp"
-  credit: "Bin im Garten, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_board_with_chess_set_in_opening_position_2012_PD_04.jpg"
+  src: "../articles/_images/Women_s_World_Chess_Championship_Tirana_2011.webp"
+  credit: "Roberto Berna from Tirana, Albania, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWomen%27s_World_Chess_Championship_Tirana_2011.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
