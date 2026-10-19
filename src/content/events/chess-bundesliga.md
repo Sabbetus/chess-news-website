@@ -73,6 +73,7 @@ image:
   src: "../articles/_images/Finalrundensaal_im_Maritim_Hotel_Berlin_-_H_-_Bundesliga_30-4-2018.webp"
   credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFinalrundensaal_im_Maritim_Hotel_Berlin_-_H_-_Bundesliga_30-4-2018.jpg"
+  caption: "Final rounds, Berlin 2018"
 reviewStatus: "published"
 updatedDate: "2026-10-19"
 ---

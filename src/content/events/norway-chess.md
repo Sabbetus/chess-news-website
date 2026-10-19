@@ -32,6 +32,7 @@ image:
   src: "../articles/_images/Vincent_Keymer_2026_Norway_Chess.webp"
   credit: "Ahmed0112, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AVincent_Keymer_2026_Norway_Chess.jpg"
+  caption: "Vincent Keymer, Norway Chess 2026"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

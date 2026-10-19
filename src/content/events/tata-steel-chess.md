@@ -116,6 +116,7 @@ image:
   src: "../articles/_images/Nodirbek_Abdusattorov_v_Anish_Giri_Tata_2023_-_10.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANodirbek_Abdusattorov_v_Anish_Giri_Tata_2023_-_10.jpg"
+  caption: "Nodirbek Abdusattorov vs Anish Giri, 2023"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

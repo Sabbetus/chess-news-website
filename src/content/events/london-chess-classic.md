@@ -30,6 +30,7 @@ image:
   src: "../articles/_images/London_Chess_Classic_2016_12_09-10__31502949546.webp"
   credit: "Wolfgang Jekel, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALondon_Chess_Classic_2016_12_09-10_%2831502949546%29.jpg"
+  caption: "The open event at the 2016 Classic"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

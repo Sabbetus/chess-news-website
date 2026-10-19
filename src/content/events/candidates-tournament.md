@@ -27,6 +27,7 @@ image:
   src: "../articles/_images/Gukesh_D_at_the_Candidates_2024_tournament_02.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGukesh_D_at_the_Candidates_2024_tournament_02.jpg"
+  caption: "Gukesh Dommaraju at the 2024 Candidates, which he won"
 reviewStatus: "published"
 updatedDate: "2026-10-03"
 ---

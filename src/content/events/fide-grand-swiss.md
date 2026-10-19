@@ -22,6 +22,7 @@ image:
   src: "../articles/_images/FIDE_Grand_Swiss_2025_Samarkand_Mukhammadzokhid_Suyarov.webp"
   credit: "TheBoburshokh, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFIDE_Grand_Swiss_2025_Samarkand_Mukhammadzokhid_Suyarov.jpg"
+  caption: "Mukhammadzokhid Suyarov, Samarkand 2025"
 reviewStatus: "published"
 updatedDate: "2026-10-03"
 ---

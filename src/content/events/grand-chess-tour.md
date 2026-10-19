@@ -30,6 +30,7 @@ image:
   src: "../articles/_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
   credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  caption: "Magnus Carlsen at the 2025 Rapid & Blitz in Zagreb"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

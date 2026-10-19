@@ -32,6 +32,7 @@ image:
   src: "../articles/_images/MP_Reykjav_k_Open_2010__4393179673.webp"
   credit: "Helgi Halldórsson from Reykjavík, Iceland, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMP_Reykjav%C3%ADk_Open_2010_%284393179673%29.jpg"
+  caption: "Igor-Alexandre Nataf vs Harika Dronavalli, 2010"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

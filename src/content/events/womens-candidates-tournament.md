@@ -34,6 +34,7 @@ image:
   src: "../articles/_images/Lei_Tingjie_-_Vaishali__Women_s_Candidates_Tournament_2024.webp"
   credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ALei_Tingjie_-_Vaishali%2C_Women%27s_Candidates_Tournament_2024.jpg"
+  caption: "Lei Tingjie vs Vaishali, 2024"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -35,6 +35,7 @@ image:
   src: "../articles/_images/Women_s_World_Chess_Championship_Tirana_2011.webp"
   credit: "Roberto Berna from Tirana, Albania, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWomen%27s_World_Chess_Championship_Tirana_2011.jpg"
+  caption: "Hou Yifan vs Humpy Koneru, Tirana 2011, won by Hou"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

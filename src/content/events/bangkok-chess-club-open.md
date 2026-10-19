@@ -31,6 +31,7 @@ image:
   src: "../articles/_images/Sriram_Jha_19th_Bangkok_Chess_Club_Open.webp"
   credit: "Aryan Sriram, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASriram_Jha_19th_Bangkok_Chess_Club_Open.jpg"
+  caption: "Sriram Jha at the 19th edition"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

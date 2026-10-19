@@ -33,6 +33,7 @@ image:
   src: "../articles/_images/2016_World_Blitz_Chess_Championship__31141736634.webp"
   credit: "Sam Sloan, CC BY 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2016_World_Blitz_Chess_Championship_%2831141736634%29.jpg"
+  caption: "Women's blitz, Doha 2016"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

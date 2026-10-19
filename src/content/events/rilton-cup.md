@@ -31,6 +31,7 @@ image:
   src: "../articles/_images/Stockholm_Rilton_Cup_2009_2010.webp"
   credit: "Paweł Grochowalski, CC BY-SA 3.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AStockholm_Rilton_Cup_2009_2010.jpg"
+  caption: "The Stockholm playing hall, 2009/10"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

@@ -31,6 +31,7 @@ image:
   src: "../articles/_images/SinquefieldCup2015.webp"
   credit: "Pmehta8, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASinquefieldCup2015.jpg"
+  caption: "The playing hall, 2015"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
