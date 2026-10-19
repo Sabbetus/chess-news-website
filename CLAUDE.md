@@ -67,7 +67,11 @@ correction from the user (a missed problem, a wrong call, a fix they
 reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 0.**
+- 2026-10-19: PR #73 review overruled (1 -> 0): user called So's "fifth
+  win" and the Murzin "rescues" headline borderline, not resets (a team
+  result can shift match dynamics); and "likely Madaminov" is the hedged
+  speculation wanted, not a problem. Russia rule clarified (see top).
 - 2026-10-18: PR #71/#72 review accepted (0 -> 1). User challenged the So
   "four wins" call; rechecked round by round, it stood (3W 4D). The
   Finnish clubs sub-section was a new request, not a correction. User
@@ -110,7 +114,18 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-19: PR #73 clean (streak 0 -> 1, user's call). Borderline,
+  fixed: round 8 gave So a "fifth win" (his fourth; ChessBase's slip
+  again) and a 2008 photo of him aged 15 (now 2023); Club Cup round 2
+  headline "Murzin's Swindle Rescues..." softened to "Keeps ... Clear".
+  Minor: a first-person line. Total Chess and Sindarov seconds checked
+  clean ("Likely Madaminov" in the headline). Bug of mine: the Finnish
+  clubs section was missing -- the fact-check pass never saw the
+  chess-results data and cut it; added by hand (Etela-Vantaa 4-2,
+  Aatos 6-0, Gambiitti 2-4). Fixed at the source: the fact-checker gets
+  the Finnish data, the run logs whether it was found, and win counts are
+  checked against the score.
 - 2026-10-18: PR #71 reset (streak stays at 0). Resets: the round 7
   piece gave So "four wins" (3W 4D on 5/7; ChessBase's own slip, checked
   round by round); and a ChessBase European Club Cup preview (67) was
