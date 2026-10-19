@@ -38,7 +38,7 @@ from chess_results_standings import (
 )
 from continents import CONTINENT_SLUGS
 from game_links import link_moves
-from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts
+from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import find_game_pgn
 from images import fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
@@ -890,6 +890,11 @@ def build_user_prompt(item: dict) -> str:
         finnish = None
     if finnish:
         parts += ["", FINNISH_SUBSECTION_INSTRUCTION, finnish]
+        # verify_claims checks against this too, or it cuts the section as
+        # unsupported (caught 2026-10-19: Club Cup round 2 lost it).
+        item["finnishClubsFacts"] = finnish
+    if is_club_cup(item):
+        print(f"  Finnish clubs: {'found' if finnish else 'none found'} for '{item['title']}'", file=sys.stderr)
 
     # Internal-link candidates. Supplied as data rather than baked into the
     # system prompt because the list changes with every published batch.
@@ -1212,6 +1217,10 @@ that the result matches. (Caught live 2026-10-06: a caption "X played black agai
 standing must name its section, and nothing may count or group leaders across sections \
 (headline, body, social copy, meta). (Caught live 2026-10-17: "Three Perfect Scores Lead the \
 Youth Worlds" lumped leaders of separate age-group tournaments together.)
+- Win counts: check any "Nth win" or "N wins" against the player's score (wins + half the \
+draws = points; an unbeaten player on 6/8 has 4 wins and 4 draws). If the sources disagree, use \
+the count that adds up. (Caught live 2026-10-18 and -19: ChessBase twice gave So one win too \
+many.)
 - Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
 rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
 event.)
@@ -1309,6 +1318,8 @@ def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict
         for extra in item.get("additionalSources", []):
             if extra.get("summary"):
                 source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
+        if item.get("finnishClubsFacts"):
+            source_parts.append(f"ADDITIONAL SOURCE (chess-results.com, Finnish clubs):\n{item['finnishClubsFacts']}")
         source_text = "\n\n".join(source_parts)
 
     fields = "\n".join(

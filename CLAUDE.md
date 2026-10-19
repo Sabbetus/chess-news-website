@@ -31,6 +31,18 @@
   "(cropped)" face crop. (Added 2026-10-02 after a repeated Turlov photo
   slipped through a review that only read file names.)
 
+- **Russia: skip only what represents Russia** (user's rule, clarified
+  2026-10-19). Leave out content where a player, team, tournament or
+  anything else clearly represents Russia (Russian national teams, Russian
+  events, players presented as Russia's). Russian-born players competing
+  under the FIDE flag or for foreign clubs are ordinary subjects (e.g.
+  Murzin playing for Bayegan Pendik at the Club Cup).
+
+- **Hedged, plausible speculation is welcome** (user's call, 2026-10-19):
+  "likely Madaminov" for a second the source calls "almost certainly" is
+  the kind of reasonable reading wanted -- flag only guesses stated as
+  fact, not well-hedged ones.
+
 ## Clean-review streak tracker
 
 The user's long-term plan: once a full week of daily batches goes by with
