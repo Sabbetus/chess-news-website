@@ -7,7 +7,7 @@ lens: "tournament-db"
 continent: "south-america"
 selectionScore: 15
 reviewStatus: "published"
-socialCopy: "84 South American tournaments are tracked for November 2026. The month opens with 158 players at the Sudamericano in Bogotá and runs through a six-day Brazilian women's championship in Florianópolis."
+socialCopy: "84 South American tournaments are tracked for November 2026. The month opens with 158 players at the Sudamericano in Bogotá and includes a six-day Brazilian women's championship in Florianópolis."
 metaDescription: "November 2026 in South America: 84 tournaments, from the 158-player Sudamericano in Bogotá to the 6-day Brazilian women's championship in Florianópolis."
 aggregateKind: "calendar-comingup"
 continentName: "South America"
