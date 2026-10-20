@@ -429,6 +429,15 @@ def test_same_event_round_reports_reach_the_merge_check():
     assert not selection._same_major_event(erdogmus, other)
 
 
+def test_titles_never_use_semicolons():
+    assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
+        "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
+    import glob
+    for path in glob.glob("src/content/articles/*.md"):
+        title = next(line for line in open(path) if line.startswith("title:"))
+        assert ";" not in title, path
+
+
 def test_sentence_counter_handles_moves_and_abbreviations():
     from draft import count_sentences
 

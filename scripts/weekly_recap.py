@@ -25,6 +25,7 @@ import anthropic
 from api_usage import track
 
 from draft import (
+    no_semicolons,
     bold_subheads,
     ARTICLES_DIR,
     BATCH_MAX_RETRIES,
@@ -448,7 +449,7 @@ def main() -> None:
     out_path = ARTICLES_DIR / f"{slug}.md"
 
     frontmatter = {
-        "title": parsed["title"],
+        "title": no_semicolons(parsed["title"]),
         "type": "recap",
         "publishDate": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "continent": "global",

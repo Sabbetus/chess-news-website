@@ -1,5 +1,5 @@
 ---
-title: "Dubov Needs 100 Wins; a Club Player Needs Just Half a Point"
+title: "Dubov Needs 100 Wins, a Club Player Needs Just Half a Point"
 publishDate: "2026-10-10"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/club-player-challenges-dubov-to-100-bullet-games"

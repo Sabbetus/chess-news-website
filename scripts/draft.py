@@ -532,7 +532,7 @@ one of: {', '.join(LENS_OPTIONS.keys())}
 @@CONTINENT@@
 one of: {CONTINENT_OPTIONS}
 @@TITLE@@
-a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler ("What This Means For...", "Here's Why...", "And That's the Point") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like "anyway", "and more", or "explained" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place).
+a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler ("What This Means For...", "Here's Why...", "And That's the Point") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like "anyway", "and more", or "explained" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place). Never put a semicolon in a title: join two parts with a comma instead (a semicolon is fine in body text).
 
 Never use these words/phrases in a title, in any form -- they have already been overused across the site and are banned outright: "echoes" (and "echoing"), "dominates" (and "dominance"/"dominant"), "playbook", "packed" (as in "a packed calendar"). Also avoid "Matters More Than..." as a title formula -- it has already been used more than once.
 
@@ -627,7 +627,7 @@ BODY_MARKDOWN can freely contain quotes, apostrophes, or any other \
 character -- there is no escaping to worry about, just write normal prose:
 
 @@TITLE@@
-a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline.
+a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline. Never put a semicolon in a title: join two parts with a comma instead (a semicolon is fine in body text).
 
 Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
 @@SOCIAL_COPY@@
@@ -951,6 +951,12 @@ _HEADING_LINE_RE = re.compile(r"^#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$", re.MULTILINE
 
 def bold_subheads(body: str) -> str:
     return _HEADING_LINE_RE.sub(lambda m: f"**{m.group(1).strip('* ')}**", body)
+
+
+def no_semicolons(title: str) -> str:
+    """A semicolon in a headline reads oddly (user's rule, 2026-10-20); the
+    prompts ask for a comma, and this makes sure of it."""
+    return re.sub(r"\s*;\s*", ", ", title)
 
 
 def parse_response(text: str) -> dict:
@@ -1658,6 +1664,7 @@ def draft_one(
         if continent not in CONTINENT_SLUGS.values() and continent != "global":
             raise ValueError(f"Model returned unknown continent {continent!r} for: {item['title']}")
 
+    parsed["title"] = no_semicolons(parsed["title"])
     slug = slugify(parsed["title"])
     ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
     out_path = ARTICLES_DIR / f"{slug}.md"

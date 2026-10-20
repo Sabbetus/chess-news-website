@@ -1,5 +1,5 @@
 ---
-title: "Eleven Teams Perfect After Round 3; Beer Sheva Slip Against Dunajska Streda"
+title: "Eleven Teams Perfect After Round 3, Beer Sheva Slip Against Dunajska Streda"
 publishDate: "2026-10-20"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/european-club-cup-2026-3"

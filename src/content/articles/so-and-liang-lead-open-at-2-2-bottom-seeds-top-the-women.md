@@ -1,5 +1,5 @@
 ---
-title: "So and Liang Lead Open at 2/2; Bottom Seeds Top the Women"
+title: "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
 publishDate: "2026-10-11"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-2"
