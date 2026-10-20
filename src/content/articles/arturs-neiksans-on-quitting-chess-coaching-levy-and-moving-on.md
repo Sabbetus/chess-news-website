@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/from-quitting-chess-to-becoming-a-gran
 lens: "people"
 continent: "europe"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GM Arturs Neiksans talks to ChessBase about quitting chess, returning to become a GM, coaching Levy Rozman and why he skipped the 2026 Olympiad."
 metaDescription: "Latvian GM Arturs Neiksans tells ChessBase about his long break, his return to GM, coaching Levy Rozman and skipping the 2026 Olympiad."
 image:
@@ -28,7 +28,7 @@ The early part of his career included a breakthrough that sent him to a World Ch
 
 Then he stepped away. He explains why he took a long break from competitive chess, and how he studied public relations while searching for the right career. He also discusses how he became so fluent in English, a skill that later matters a great deal in his work as a commentator and streamer.
 
-The detour, he says, ultimately brought him back to the game. He returned and became a [Grandmaster](/articles/chess-titles/). That sequence is unusual: most players who leave in their teens do not come back and finish the job.
+The detour, he says, ultimately brought him back to the game. He returned and became a [Grandmaster](/articles/chess-titles/). That sequence is unusual: most players who step away for years do not come back and finish the job.
 
 **Coach, then 2631**
 
@@ -48,8 +48,4 @@ That shift is gradual rather than final. The closing chapter asks directly wheth
 
 He also reflects on perfectionism, self-criticism and taking responsibility, and on the future of Latvian chess.
 
-**New ChessBase courses**
-
-During the studio visit he recorded three courses: the Scandinavian with ...Qd8, the Alekhine Defence and the Chigorin Slav. All three are solid, counterpunching systems. That suits a coach who has spent years explaining openings to students at very different levels.
-
-For the full conversation, the video runs just over an hour and is divided into timestamped chapters, so readers can jump to the Shirov or Olympiad sections directly.
+During the studio visit he also recorded three ChessBase opening courses. For the full conversation, the video runs just over an hour and is divided into timestamped chapters, so readers can jump to the Shirov or Olympiad sections directly.

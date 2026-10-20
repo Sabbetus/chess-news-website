@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "84 South American tournaments are tracked for November 2026. The month opens with 158 players at the Sudamericano in Bogotá and runs through a six-day Brazilian women's championship in Florianópolis."
 metaDescription: "November 2026 in South America: 84 tournaments, from the 158-player Sudamericano in Bogotá to the 6-day Brazilian women's championship in Florianópolis."
 aggregateKind: "calendar-comingup"
@@ -31,7 +31,7 @@ Colombia's capital also hosts the [Academia F.I.C.M & Chaturanga classical](http
 
 The [65o Campeonato Brasileiro Feminino de Xadrez STD](https://chesstournamentcalendar.com/tournament/evento-1494004/) runs November 6 to 11 in Florianópolis, Santa Catarina. At six days it is the longest event on the list. It is organized by the Confederação Brasileira de Xadrez together with the Federação Catarinense de Xadrez, and 19 players are registered.
 
-Santa Catarina has a second event later in the week. The [1º Aberto do Brasil de Xadrez ArcelorMittal / APX](https://chesstournamentcalendar.com/tournament/xadrez-educa-12-a-15-de-novembro-irt-aberto-d-1496511/) is a classical tournament from November 13 to 15 in Rio Negrinho, with 44 players registered.
+Santa Catarina has a second event two days after it ends. The [1º Aberto do Brasil de Xadrez ArcelorMittal / APX](https://chesstournamentcalendar.com/tournament/xadrez-educa-12-a-15-de-novembro-irt-aberto-d-1496511/) is a classical tournament from November 13 to 15 in Rio Negrinho, with 44 players registered.
 
 Further south, the [Campeonato Gaucho de Xadrez Standard](https://chesstournamentcalendar.com/tournament/campeonato-gaucho-de-xadrez-standard-masculino-e-f-1521738/) takes place November 27 to 29 in Farroupilha, Rio Grande do Sul, with 19 players. Porto Alegre hosts the [5ª Copa Francisco Trois 2026](https://chesstournamentcalendar.com/tournament/5ª-copa-francisco-trois-2026-1493030/) from November 19 to 22.
 

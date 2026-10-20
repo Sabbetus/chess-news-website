@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/european-club-cup-2026-3"
 lens: "results"
 continent: "europe"
 selectionScore: 108
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Eleven open teams are still on 6/6 at the European Club Cup, Beer Sheva were held 3-3 by 27th seeds Dunajska Streda, and round 4 brings Bayegan Pendik v SuperChess. Monte-Carlo meet Bonnevoie in the women's event."
 metaDescription: "Eleven teams lead the European Club Cup open on 6/6 after round 3, Beer Sheva were held 3-3, and Monte-Carlo and Bonnevoie meet in the women's event."
 image:
@@ -30,6 +30,8 @@ Dunajska Streda were outrated on the other five boards, yet Hungarian IM Aron Pa
 
 The other top-ten seeds all won by at least 4-2. Top seeds Bayegan Pendik fielded Anish Giri and Yagiz Kaan Erdogmus together for the first time, and both won, giving the team a third straight match win. Our report on [Bayegan Pendik's earlier escape after a top-board loss](/articles/murzin-s-swindle-rescues-bayegan-pendik-after-top-board-loss/) shows how close that run has been.
 
+Erdogmus, the highest-rated 15-year-old of all time, [is now world No. 15 on the live rating list](https://www.chess.com/news/view/2026-european-chess-club-cup-round-3) after his debut win.
+
 Defending champions SuperChess Romania, third seeds, brought in Nodirbek Abdusattorov, the highest-rated player in the field. He won on his debut.
 
 **Upsets on the boards**
@@ -42,7 +44,7 @@ Alvar Alonso (2560) of Silla Integrant Col-lectius beat Nodirbek Yakubboev (2712
 
 The headline pairing is Bayegan Pendik against SuperChess, which could put Giri opposite Abdusattorov on top board. Individual pairings had not been published when the report was written.
 
-Gashimov lead the standings on tiebreaks at 6 match points, with 44 game points. Bayegan Pendik and Alkaloid follow on 42.
+Gashimov top the table on tiebreaks with 17 game points; Bayegan Pendik and Alkaloid have 16½.
 
 **Women: two perfect teams meet**
 
