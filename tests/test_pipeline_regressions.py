@@ -418,6 +418,17 @@ def test_follow_up_bonus_only_for_followed_events():
     assert score_follow_up({"title": "Yu Yangyi wins Shenzhen Masters"}, words) == 0
 
 
+def test_same_event_round_reports_reach_the_merge_check():
+    # 2026-10-20: a player-led Club Cup round 3 headline never got a merge check.
+    erdogmus = {"title": "15-Year-Old Erdogmus Climbs To World No. 15",
+                "summary": "GM Yagiz Kaan Erdogmus is now world number-15 after winning on his 2026 European Chess Club Cup debut."}
+    chessbase = {"title": "European Club Cup: Favourites set for direct encounters",
+                 "summary": "Eleven teams remain tied for first place after three rounds."}
+    other = {"title": "Rookie Rachael Li Leads Women", "summary": "Round nine of the U.S. Chess Championship."}
+    assert selection._same_major_event(erdogmus, chessbase)
+    assert not selection._same_major_event(erdogmus, other)
+
+
 def test_sentence_counter_handles_moves_and_abbreviations():
     from draft import count_sentences
 

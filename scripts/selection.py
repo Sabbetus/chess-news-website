@@ -949,7 +949,10 @@ def confirm_same_story(client, a: dict, b: dict) -> bool:
         "Do these two chess news items report the SAME specific news event "
         "(the same announcement, result, list or incident), so one article "
         "could cover both? Sharing a tournament, a player or a topic is not "
-        "enough. Answer only YES or NO.\n\n"
+        "enough. But two reports on the same round (or day) of the same "
+        "tournament ARE the same event, even when one headline leads on a "
+        "single player's result or a rating milestone from that round. "
+        "Answer only YES or NO.\n\n"
         f"A: {a.get('title')}\n{(a.get('summary') or '')[:800]}\n\n"
         f"B: {b.get('title')}\n{(b.get('summary') or '')[:800]}"
     )
@@ -969,6 +972,22 @@ def confirm_same_story(client, a: dict, b: dict) -> bool:
         print(f"  Not merging (model says different stories): {a['title']} / {b['title']}")
     _merge_verdicts[key] = verdict
     return verdict
+
+
+def _lead_event(item: dict) -> str | None:
+    lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS]}".lower()
+    event = next((kw for kw in MAJOR_TOURNAMENT_KEYWORDS if kw in lead), None)
+    # "European Chess Club Cup" and "European Club Cup" are one event.
+    return re.sub(r"\bchess\s+", "", event.replace("u.s.", "us")) if event else None
+
+
+def _same_major_event(a: dict, b: dict) -> bool:
+    """Both open on the same major event -- enough to ask the model, even
+    when the name overlap misses. Caught live 2026-10-20: Chess.com's Club
+    Cup round 3 report, headlined on Erdogmus, and ChessBase's round 3
+    report were both drafted."""
+    event = _lead_event(a)
+    return event is not None and event == _lead_event(b)
 
 
 def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
@@ -1008,7 +1027,7 @@ def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
                 for existing in result
                 if existing["kind"] not in CALENDAR_KINDS
                 and _compatible_for_merge(item, existing)
-                and _is_same_story(item, existing)
+                and (_is_same_story(item, existing) or _same_major_event(item, existing))
                 and item["sourceName"] != existing["sourceName"]
                 and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
                 and confirm_same_story(client, existing, item)

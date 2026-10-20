@@ -114,7 +114,18 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-20: PR #74 reset (streak 1 -> 0). Resets: two European Club
+  Cup round 3 reports drafted (Chess.com's, headlined "Erdogmus Climbs To
+  World No. 15", and ChessBase's) -- Erdogmus piece dropped, its live-list
+  line folded into the ChessBase piece; and that piece called a tiebreak
+  column "game points" (44/42; really 17 and 16½). Minor: So-Caruana piece
+  credited our Caruana preview with a point about So it never made, "a few
+  games" (two), fact-checker's clumsy "penultimate round and one more";
+  Neiksans piece assumed he left "in their teens" and ran an advert-like
+  courses section (cut to one line); calendar "later in the week". Fixed
+  at the source: two items naming the same major event always reach the
+  merge check, and the check treats same-round reports as one story.
 - 2026-10-19: PR #73 clean (streak 0 -> 1, user's call). Borderline,
   fixed: round 8 gave So a "fifth win" (his fourth; ChessBase's slip
   again) and a 2008 photo of him aged 15 (now 2023); Club Cup round 2
@@ -365,8 +376,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-18 (PR #71, see above).
-- Earlier resets: 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-20 (PR #74, see above).
+- Earlier resets: 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
