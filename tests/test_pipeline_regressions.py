@@ -429,6 +429,13 @@ def test_same_event_round_reports_reach_the_merge_check():
     assert not selection._same_major_event(erdogmus, other)
 
 
+def test_fan_side_event_notices_are_skipped():
+    assert selection.is_promotional({"title": "Where chess meets its fans: Join side activities of the Salesforce FIDE World Championship Match", "sourceName": "FIDE"})
+    assert selection.is_promotional({"title": "Meet the legends in Geneva", "sourceName": "FIDE",
+                                     "summary": "Registration details at: https://tickets.fide.com/en/events"})
+    assert not selection.is_promotional({"title": "So, Li Lead By Full Point Ahead Of Final Round", "sourceName": "Chess.com"})
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

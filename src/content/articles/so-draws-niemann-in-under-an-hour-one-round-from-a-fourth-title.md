@@ -6,13 +6,13 @@ sourceUrl: "https://www.chess.com/news/view/2026-us-chess-championships-round-10
 lens: "results"
 continent: "north-america"
 selectionScore: 94
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Wesley So drew Hans Niemann in under an hour and sits a full point clear of Caruana and Oparin with one round left at the U.S. Championship. Rachael Li leads the Women's section with only Alice Lee a point behind."
 metaDescription: "Wesley So leads the U.S. Championship by a full point after a quick draw with Niemann. Rachael Li leads the Women's section ahead of the final round."
 image:
-  src: "./_images/Wesley_So_in_2023.webp"
-  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_in_2023.jpg"
+  src: "./_images/Wesley_So_Tata_2023_-_63.webp"
+  credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AWesley_So_Tata_2023_-_63.jpg"
   caption: "Wesley So"
 gamePgn: "so-draws-niemann-in-under-an-hour-one-round-from-a-fourth-title.pgn"
 ---
@@ -27,7 +27,7 @@ So's postgame remarks on the broadcast were mixed. "Hans is a really good player
 
 "I'm not sure what's going on with his classical chess career."
 
-He added that a few months ago Niemann looked to be competing at the level of Javokhir Sindarov and Praggnanandhaa Rameshbabu. So also said Niemann had told him a couple of days earlier that he is focused on other chess formats, not classical, which sits oddly with Niemann's stated goal of becoming classical world champion.
+He added that a few months ago Niemann looked to be competing at the level of Javokhir Sindarov and Praggnanandhaa Rameshbabu. So also said Niemann had told him a couple of days earlier that he is focused on other chess formats, not classical, and So wondered how that fits Niemann's stated goal of becoming classical world champion.
 
 **The chasers stall**
 
@@ -37,7 +37,7 @@ Caruana's verdict, as quoted by Chess.com: "Nobody checks the Scandinavian anymo
 
 For the chasers, the arithmetic is simple. So can lose his lead only if he loses the last round and a rival wins. He said a draw would be a good result but that he would also like to win.
 
-He also noted he was briefly ahead of Nodirbek Abdusattorov, who lost in round two of the European Club Cup, and back in the top five. He wants to stay there.
+He also noted he was briefly ahead of Nodirbek Abdusattorov, who lost in round four of the European Club Cup, and back in the top five. He wants to stay there.
 
 **The money and the bonuses**
 

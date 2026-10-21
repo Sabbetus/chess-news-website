@@ -130,7 +130,14 @@ ADMIN_NOTICE_TITLE_PATTERNS = [
     r"\bpress release\b",
     # Not a bare "ticket": "punches his ticket to the Candidates" is news.
     r"\bticket sales\b", r"\b(tickets|passes) (are |go |now )*on sale\b",
+    # Fan side-event programmes (caught 2026-10-20: "Join side activities of
+    # the ... World Championship Match", a sign-up notice).
+    r"\bside (activities|events)\b", r"\bjoin (the )?(fan |side )?(activities|events)\b",
 ]
+
+# The same kind of notice can hide behind a neutral headline; its body sends
+# readers to a ticket or sign-up page.
+ADMIN_NOTICE_BODY_RE = re.compile(r"tickets\.fide\.com|secure your (place|spot|seat)", re.IGNORECASE)
 
 
 def is_promotional(item: dict) -> bool:
@@ -138,6 +145,8 @@ def is_promotional(item: dict) -> bool:
     if any(re.search(pattern, title) for pattern in PROMO_TITLE_PATTERNS):
         return True
     if any(re.search(pattern, title) for pattern in ADMIN_NOTICE_TITLE_PATTERNS):
+        return True
+    if ADMIN_NOTICE_BODY_RE.search(item.get("summary") or ""):
         return True
     return item.get("sourceName") == "ChessBase" and any(
         re.search(pattern, title) for pattern in CHESSBASE_PROMO_TITLE_PATTERNS

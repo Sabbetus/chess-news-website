@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-european-chess-club-cup-round-4
 lens: "results"
 continent: "europe"
 selectionScore: 95
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Three big names fell in round 4 of the European Club Cup: Abdusattorov, Giri and Erdogmus. SuperChess Romania still won 4-2, while top seed Bayegan Pendik was held 3-3 by Elektroprivreda."
 metaDescription: "Abdusattorov, Giri and Erdogmus all lost in round 4 of the European Club Cup. Bayegan Pendik drew 3-3, and Nitra and Bonnevoie have strong starts."
 image:
@@ -26,7 +26,7 @@ The consequences differed by team. Abdusattorov's SuperChess Romania teammates c
 
 Bayegan Pendik Chess Sports Club had no such cushion. With Giri and Erdogmus both losing, the top seeds scraped a 3-3 draw against sixth-seed Elektroprivreda.
 
-The Turkish side already had a close call in [an earlier round](/articles/murzin-s-swindle-rescues-bayegan-pendik-after-top-board-loss/), when a swindle saved them after a top-board loss. Two defeats on the top boards in one match is a heavier load to carry, and a draw was a fair result for a team that came close to losing.
+The Turkish side already had a close call in [an earlier round](/articles/murzin-s-swindle-rescues-bayegan-pendik-after-top-board-loss/), when a swindle saved them after a top-board loss. Losses from its two highest-rated players in one match is a heavier load to carry, and a draw was a fair result for a team that came close to losing.
 
 None of the matches at the top were easy this round. In another result, 11th-seed Aix-en-Provence tied fifth-seed Tuxera Aquaprofit Nagykanizsai in a match where every game was decisive. GM Marc'Andria Maurizzi beat GM Pranesh M on top board.
 
@@ -44,10 +44,10 @@ GM Elina Danielian won her fourth game in a row, against IM Stavroula Tsolakidou
 
 **Finnish clubs**
 
-Aatos (seed 72) beat Cardiff A 4-2, its second win of the event after a 6-0 over St Benildus in round two. It lost its other two matches, 1/2-5 1/2 to C.A Silla Integrant Col-lectius and 2-4 to SC Erlangen 48/88. Round five brings Hillerod Skakklub.
+Aatos (seed 72) beat Cardiff A 4-2, its second win of the event after a 6-0 over St Benildus in round two. It lost its other two matches, ½-5½ to C.A Silla Integrant Col-lectius and 2-4 to SC Erlangen 48/88. Round five brings Hillerod Skakklub.
 
-Etela-Vantaan Shakki (seed 71) had the day's biggest Finnish score, 5 1/2-1/2 over SK Weisse Dame Hamburg. It has two wins and two losses, and meets Multi Essence next.
+Etela-Vantaan Shakki (seed 71) had the day's biggest Finnish score, 5½-½ over SK Weisse Dame Hamburg. It has two wins and two losses, and meets Multi Essence next.
 
-Gambiitti (seed 88) edged Standard de Liege TAL 3 1/2-2 1/2 after a 5-1 win over S.S. Lazio Scacchi in round three. It faces MTK Budapest 2 in round five.
+Gambiitti (seed 88) edged Standard de Liege TAL 3½-2½ after a 5-1 win over S.S. Lazio Scacchi in round three. It faces MTK Budapest 2 in round five.
 
 Round five is on Wednesday, October 21, at 8 a.m. ET / 14:00 CEST / 5:30 p.m. IST. The format of the [European Chess Club Cup](/events/european-chess-club-cup/#how-it-works) is explained in our event guide.

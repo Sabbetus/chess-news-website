@@ -68,6 +68,14 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-21: PR #75 review overruled (1 -> 0): I called So's "can lose
+  his lead only if he loses the last round and a rival wins" a reset (a
+  loss plus a rival's draw ties); user: the sentence is true, the text need
+  not cover every scenario -- very minor at most, left as written. User
+  also ruled Chess.com's "Abdusattorov lost in round two" (it was round
+  four) minor.
+- 2026-10-20: PR #74 review accepted (0 -> 1). The no-semicolon title rule
+  was a new style rule, not a correction.
 - 2026-10-19: PR #73 review overruled (1 -> 0): user called So's "fifth
   win" and the Murzin "rescues" headline borderline, not resets (a team
   result can shift match dynamics); and "likely Madaminov" is the hedged
@@ -115,6 +123,17 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-21: PR #75 reset (streak stays at 0). Reset (user: "unacceptable"):
+  FIDE's World Championship side-events notice ("Join side activities...",
+  sign-ups at tickets.fide.com) was drafted as an article, with FIDE's
+  rhetorical "where else can you play against Anand" read as a programme
+  item (dropped). Minor: U.S. Championship round 10 piece repeated
+  Chess.com's "Abdusattorov lost in round two" (round four), put So's
+  remark about Niemann's goal as our own comment, and used the So photo
+  still on the front page (now Tata 2023); Club Cup round 4 piece "two
+  defeats on the top boards" (board order unknown) and "1/2" scores. Fixed
+  at the source: side-event/"join activities" headlines and bodies pointing
+  to tickets.fide.com or "secure your place" are skipped as notices.
 - 2026-10-20: PR #74 reset (streak 1 -> 0). Resets: two European Club
   Cup round 3 reports drafted (Chess.com's, headlined "Erdogmus Climbs To
   World No. 15", and ChessBase's) -- Erdogmus piece dropped, its live-list
@@ -376,8 +395,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-20 (PR #74, see above).
-- Earlier resets: 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-21 (PR #75, see above).
+- Earlier resets: 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
