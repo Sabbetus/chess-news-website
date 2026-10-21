@@ -10,10 +10,10 @@ reviewStatus: "published"
 socialCopy: "Wesley So drew Hans Niemann in under an hour and sits a full point clear of Caruana and Oparin with one round left at the U.S. Championship. Rachael Li leads the Women's section with only Alice Lee a point behind."
 metaDescription: "Wesley So leads the U.S. Championship by a full point after a quick draw with Niemann. Rachael Li leads the Women's section ahead of the final round."
 image:
-  src: "./_images/TataSteelChess2023-51.webp"
+  src: "./_images/TataSteelChess2023-36.webp"
   credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2023-51.jpg"
-  caption: "Wesley So"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2023-36.jpg"
+  caption: "Fabiano Caruana and Wesley So, Tata Steel 2023"
 gamePgn: "so-draws-niemann-in-under-an-hour-one-round-from-a-fourth-title.pgn"
 ---
 
