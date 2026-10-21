@@ -436,6 +436,14 @@ def test_fan_side_event_notices_are_skipped():
     assert not selection.is_promotional({"title": "So, Li Lead By Full Point Ahead Of Final Round", "sourceName": "Chess.com"})
 
 
+def test_photo_cooldown_matches_front_page():
+    import re as _re
+    page = open("src/pages/index.astro").read()
+    secondary = int(_re.search(r"rest\.slice\(0,\s*(\d+)\)", page).group(1))
+    assert draft.FRONT_PAGE_SIZE == 1 + secondary
+    assert draft.RECENT_IMAGE_COOLDOWN == draft.FRONT_PAGE_SIZE
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

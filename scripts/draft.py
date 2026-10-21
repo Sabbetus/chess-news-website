@@ -678,6 +678,9 @@ def published_articles(exclude_slug: str | None = None) -> list[dict]:
         text = path.read_text(encoding="utf-8")
         if 'reviewStatus: "published"' not in text:
             continue
+        # Recaps never sit on the front page (index.astro filters them out).
+        if re.search(r'^type:\s*"recap"', text, re.MULTILINE):
+            continue
         title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
         date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
         if not title or not date or path.stem == exclude_slug:
@@ -991,21 +994,15 @@ def parse_response(text: str) -> dict:
     return parsed
 
 
-# How many of the most recently published articles count as "recently
-# used" for image-reuse purposes, so the same photo can't appear twice on
-# the front page at once, without banning a photo outright forever. The
-# homepage shows 9 (lead + 8, see index.astro), but by the time today's
-# batch publishes, it pushes ~4 of those off -- so only the newest 5 are
-# still sharing the page with it. Was 10 until 2026-10-01, which kept the
-# better Turlov photo (last used five days earlier, by then off the front
-# page) out of his next article. The Commons pool
-# for a lot of chess subjects is small enough that a permanent ban would
-# eventually starve the picker of any real photo at all; a cooldown lets a
-# photo come back into rotation once enough new articles have gone out.
-# 8 since 2026-10-21: a small batch pushes few articles off the front page
-# (that day's two drafts left the So photo from two days earlier on it,
-# outside a window of 5), so the window assumes a batch of one.
-RECENT_IMAGE_COOLDOWN = 8
+# The front page shows the lead plus 8 more (src/pages/index.astro; a test
+# keeps the two in step). Every published article on it right now counts as
+# recently used, whatever the batch size: a small batch, or drafts dropped in
+# review, leave older pieces on the page (caught 2026-10-21: a window of 5
+# missed the So photo from two days earlier, still ninth on the page). Off
+# the front page, a photo is free again -- a permanent ban would starve the
+# picker, since the Commons pool for many chess subjects is small.
+FRONT_PAGE_SIZE = 9
+RECENT_IMAGE_COOLDOWN = FRONT_PAGE_SIZE
 
 
 # Same-run siblings (e.g. two backfill items drafted a few seconds apart)
