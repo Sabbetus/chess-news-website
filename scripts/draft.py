@@ -1002,7 +1002,10 @@ def parse_response(text: str) -> dict:
 # for a lot of chess subjects is small enough that a permanent ban would
 # eventually starve the picker of any real photo at all; a cooldown lets a
 # photo come back into rotation once enough new articles have gone out.
-RECENT_IMAGE_COOLDOWN = 5
+# 8 since 2026-10-21: a small batch pushes few articles off the front page
+# (that day's two drafts left the So photo from two days earlier on it,
+# outside a window of 5), so the window assumes a batch of one.
+RECENT_IMAGE_COOLDOWN = 8
 
 
 # Same-run siblings (e.g. two backfill items drafted a few seconds apart)
