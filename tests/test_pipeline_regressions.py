@@ -506,6 +506,35 @@ def test_event_result_updates_the_page(tmp_path, monkeypatch):
     assert event_results.parse("") is None
 
 
+def test_final_result_updates_the_winners_player_page(tmp_path, monkeypatch):
+    import types as _types
+    import event_results
+    events, players = tmp_path / "events", tmp_path / "players"
+    events.mkdir(); players.mkdir()
+    (events / "demo-open.md").write_text('---\nname: "Demo Open"\nreviewStatus: "published"\n---\n')
+    (players / "c-d.md").write_text(
+        '---\nname: "C D"\naliases:\n  - "C D"\nhighlights:\n  - "Two-time Demo Open winner"\n'
+        'reviewStatus: "published"\nupdatedDate: "2026-01-01"\n---\n\nC D has won the Demo Open twice.\n'
+    )
+    monkeypatch.setattr(event_results, "EVENTS_DIR", events)
+    monkeypatch.setattr(event_results, "PLAYERS_DIR", players)
+    reply = "@@HIGHLIGHTS@@\nThree-time Demo Open winner\n@@BODY@@\nC D has won the Demo Open three times."
+
+    class FakeClient:
+        class messages:
+            @staticmethod
+            def create(**kwargs):
+                return _types.SimpleNamespace(content=[_types.SimpleNamespace(type="text", text=reply)])
+
+    notes = event_results.update_player_pages(
+        FakeClient(), "m", {"event": "demo-open", "year": 2026, "winners": ["C D", "No Page"]}, "T", "B", "2026-10-23"
+    )
+    assert len(notes) == 1 and "updated" in notes[0]
+    text = (players / "c-d.md").read_text()
+    assert '- "Three-time Demo Open winner"' in text and "three times" in text
+    assert 'updatedDate: "2026-10-23"' in text and 'name: "C D"' in text
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

@@ -1901,6 +1901,11 @@ def draft_one(
         note = event_results.apply(result, frontmatter["publishDate"])
         EVENT_PAGE_NOTES.append(f"{out_path.stem} -- {note}")
         print(f"  event page: {note}", file=sys.stderr)
+        for player_note in event_results.update_player_pages(
+            client, MODEL, result, parsed["title"], parsed["bodyMarkdown"], frontmatter["publishDate"]
+        ):
+            EVENT_PAGE_NOTES.append(f"{out_path.stem} -- {player_note}")
+            print(f"  player page: {player_note}", file=sys.stderr)
     fm_lines.append("---")
 
     body_markdown = bold_subheads(parsed["bodyMarkdown"])
@@ -2017,7 +2022,7 @@ def write_run_report(
             spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
             lines.append(f"- {path.stem} — paragraph {spots}")
     if EVENT_PAGE_NOTES:
-        lines += ["", "**Event pages updated from a final result** (check the winner on the page):", ""]
+        lines += ["", "**Event and player pages updated from a final result** (check each page edit):", ""]
         lines += [f"- {note}" for note in EVENT_PAGE_NOTES]
     if GAME_LINK_NOTES:
         lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]

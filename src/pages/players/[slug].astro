@@ -5,7 +5,7 @@ import Portrait from '../../components/Portrait.astro';
 import CoverageList from '../../components/CoverageList.astro';
 import '../../styles/hubs.css';
 import {
-  TOP100, playerPages, articlesMentioning, federationName, periodLabel, ageOn, longDate, shortDate,
+  TOP100, playerPages, articlesMentioning, titlesFor, federationName, periodLabel, ageOn, longDate, shortDate,
 } from '../../lib/hubs';
 
 export async function getStaticPaths() {
@@ -19,6 +19,7 @@ const ranked = TOP100.players.find((p) => p.fideId === d.fideId);
 const rankedWomen = TOP100.women.find((p) => p.fideId === d.fideId);
 const rated = ranked ?? rankedWomen;
 const coverage = await articlesMentioning([d.name, ...d.aliases]);
+const titles = await titlesFor([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
 const pageURL = new URL(`/players/${player.slug}/`, Astro.site).toString();
 
@@ -107,6 +108,18 @@ const jsonLd = [
       <section class="hub-section">
         <h2>Career highlights</h2>
         <ul class="highlights">{d.highlights.map((h) => <li>{h}</li>)}</ul>
+      </section>
+    )}
+
+    {titles.length > 0 && (
+      <section class="hub-section">
+        <h2>Titles</h2>
+        <ul class="highlights">
+          {titles.map((t) => (
+            <li><a href={`/events/${t.slug}/`}>{t.name}</a>: {t.years.join(', ')}</li>
+          ))}
+        </ul>
+        <p class="note">From the winners lists on our event pages.</p>
       </section>
     )}
 

@@ -50,6 +50,21 @@ export async function eventPages() {
   return (await getCollection('events')).filter(isVisible);
 }
 
+// A player's wins on our event pages, newest event title first: built from the
+// winners lists, so a winner added there (scripts/event_results.py) shows on
+// the player's page with no edit to it. Team events are skipped (their
+// winners are clubs and countries), and so are winners rows given by note only.
+export async function titlesFor(names: string[]) {
+  const wanted = new Set(names);
+  const out: { slug: string; name: string; years: number[] }[] = [];
+  for (const e of await eventPages()) {
+    if (e.data.category === 'team') continue;
+    const years = (e.data.winners ?? []).filter((w) => w.names.some((n) => wanted.has(n))).map((w) => w.year);
+    if (years.length) out.push({ slug: e.slug, name: e.data.name, years: years.sort((a, b) => a - b) });
+  }
+  return out.sort((a, b) => b.years[b.years.length - 1] - a.years[a.years.length - 1]);
+}
+
 // Published articles that mention any of the given full names in their title
 // or body, newest first. Full names only -- a bare surname collides (the
 // Javokhir/Komil Sindarov case in scripts/draft.py).

@@ -49,7 +49,10 @@
   pipeline does it (`eventResult` in the article, `scripts/event_results.py`
   edits the page, the PR report lists it); every review checks the page edit
   along with the article, and adds it by hand for a hand-written piece. A
-  test fails if a published `eventResult` and its page disagree.
+  test fails if a published `eventResult` and its page disagree. The
+  winner's player page, if we have one, gets its highlights/summary edited
+  in the same PR (check the edit in review); its Titles list is built from
+  the event pages, so it needs no edit.
 
 ## Clean-review streak tracker
 
