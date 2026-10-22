@@ -18,7 +18,7 @@ image:
 
 The Saint Louis Chess Club has [announced the fields for the 2026 U.S. Championship and U.S. Women's Chess Championship](https://en.chessbase.com/post/us-championships-2026-announcement). Each event has 12 players, competing over the board from Oct. 8 to 23, with Round 1 on Oct. 9. The total prize fund is more than $400,000.
 
-Both events are 11-round, classical round-robin tournaments. Games are streamed daily at 12:20 p.m. CST on the club's YouTube and Twitch channels, with commentary from Yasser Seirawan, Maurice Ashley and WGM Katerina Nemcova.
+Both events are 11-round, classical round-robin tournaments ([how the U.S. Championship works](/events/us-chess-championship/#how-it-works)). Games are streamed daily at 12:20 p.m. CST on the club's YouTube and Twitch channels, with commentary from Yasser Seirawan, Maurice Ashley and WGM Katerina Nemcova.
 
 **The open field**
 

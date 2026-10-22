@@ -1348,9 +1348,7 @@ nothing else -- no preamble, no explanation, no list of what you changed, no cod
 EVENTS_DIR = Path(__file__).resolve().parent.parent / "src" / "content" / "events"
 # Title-holders for events without an event page. Update when the title
 # changes hands (the event pages are read directly).
-EXTRA_TITLE_HOLDERS = {
-    "U.S. Chess Championship": (2025, ["Fabiano Caruana"]),
-}
+EXTRA_TITLE_HOLDERS: dict[str, tuple[int, list[str]]] = {}
 
 
 def title_holders_note() -> str:

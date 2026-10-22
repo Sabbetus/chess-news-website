@@ -20,7 +20,7 @@ image:
 gamePgn: "caruana-joins-so-in-the-lead-as-liang-falls-to-xiong.pgn"
 ---
 
-Round four in Saint Louis was a day for long endgames, and it reshaped both sections. [Fabiano Caruana beat Ray Robson to join Wesley So in the open lead](https://en.chessbase.com/post/us-championships-2026-4) on 3/4, while Alice Lee moved to the sole top spot in the women's event.
+Round four of the [U.S. Championship](/events/us-chess-championship/) in Saint Louis was a day for long endgames, and it reshaped both sections. [Fabiano Caruana beat Ray Robson to join Wesley So in the open lead](https://en.chessbase.com/post/us-championships-2026-4) on 3/4, while Alice Lee moved to the sole top spot in the women's event.
 
 **Caruana finds his rhythm**
 

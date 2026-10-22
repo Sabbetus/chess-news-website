@@ -17,7 +17,7 @@ image:
 gamePgn: "so-draws-niemann-in-under-an-hour-one-round-from-a-fourth-title.pgn"
 ---
 
-Wesley So needed very little time on Round 10 day. He [drew Hans Niemann in under an hour](https://www.chess.com/news/view/2026-us-chess-championships-round-10) and kept a full-point lead over Fabiano Caruana and Grigoriy Oparin in the Open section, with one round to play.
+Wesley So needed very little time on Round 10 day. He [drew Hans Niemann in under an hour](https://www.chess.com/news/view/2026-us-chess-championships-round-10) and kept a full-point lead over Fabiano Caruana and Grigoriy Oparin in the Open section of the [U.S. Championship](/events/us-chess-championship/), with one round to play.
 
 The game was a theoretical Nimzo-Indian that quickly slid into an endgame with mass trades. So described his strategy for the final stretch as "to remove games from the tournament." Few approaches are more sensible for a player a point clear.
 

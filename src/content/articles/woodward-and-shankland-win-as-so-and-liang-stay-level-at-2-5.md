@@ -20,7 +20,7 @@ image:
 gamePgn: "woodward-and-shankland-win-as-so-and-liang-stay-level-at-2-5.pgn"
 ---
 
-The top of the open section did not change in round three. Wesley So and Awonder Liang met head-on and [drew in 30 moves without much action](https://www.chess.com/news/view/2026-us-chess-championships-round-3), leaving both on 2.5/3. Behind them, two decisive games reshaped the chasing pack.
+The top of the [U.S. Championship](/events/us-chess-championship/) open section did not change in round three. Wesley So and Awonder Liang met head-on and [drew in 30 moves without much action](https://www.chess.com/news/view/2026-us-chess-championships-round-3), leaving both on 2.5/3. Behind them, two decisive games reshaped the chasing pack.
 
 Liang had White and arrived having beaten Hans Niemann and Sam Sevian. So, by contrast, had [survived difficult positions](https://en.chessbase.com/post/us-championships-2026-3) before beating Shankland and Xiong. A quiet draw suits both of them: neither gave the other a target, and both keep a half-point cushion.
 
