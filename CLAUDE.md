@@ -43,6 +43,14 @@
   the kind of reasonable reading wanted -- flag only guesses stated as
   fact, not well-hedged ones.
 
+- **Event pages follow our own final results** (user's rule, 2026-10-22).
+  When we publish the final result of an edition of an event that has an
+  event page, the page's winners list gets that winner in the same PR. The
+  pipeline does it (`eventResult` in the article, `scripts/event_results.py`
+  edits the page, the PR report lists it); every review checks the page edit
+  along with the article, and adds it by hand for a hand-written piece. A
+  test fails if a published `eventResult` and its page disagree.
+
 ## Clean-review streak tracker
 
 The user's long-term plan: once a full week of daily batches goes by with

@@ -86,6 +86,12 @@ const articles = defineCollection({
     // of gameEmbed when we have the game ourselves; in-body links to
     // #ply-<n> jump the board to that position.
     gamePgn: z.string().optional(),
+    // The final result of an edition of an event with a page here: the
+    // event page's winners list must agree (scripts/event_results.py adds it;
+    // a test checks every published article against the page).
+    eventResult: z
+      .object({ event: z.string(), year: z.number().int(), winners: z.array(z.string()).min(1) })
+      .optional(),
     gameEmbed: z
       .object({
         url: z.string().url(),

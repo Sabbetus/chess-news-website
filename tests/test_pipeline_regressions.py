@@ -473,6 +473,39 @@ def test_opening_paragraph_names_the_event():
     assert "Event name: if the piece is about a tournament" in draft._CLAIM_VERIFICATION_PROMPT
 
 
+def test_published_final_results_match_event_pages():
+    import glob, json as _json, re as _re
+    import event_results
+    for path in glob.glob("src/content/articles/*.md"):
+        text = open(path).read()
+        if 'reviewStatus: "published"' not in text:
+            continue
+        m = _re.search(r'^eventResult: \{ event: "(.*?)", year: (\d{4}), winners: (\[.*?\]) \}$', text, _re.MULTILINE)
+        if not m:
+            continue
+        listed = event_results.page_winners(m.group(1))
+        assert listed.get(int(m.group(2))) == _json.loads(m.group(3)), path
+
+
+def test_event_result_updates_the_page(tmp_path, monkeypatch):
+    import event_results
+    page = tmp_path / "demo-open.md"
+    page.write_text(
+        '---\nname: "Demo Open"\nnextEdition:\n  label: "Demo Open 2026"\n  start: "2026-10-08"\n'
+        '  end: "2026-10-23"\nwinners:\n  - { year: 2025, names: ["A B"] }\n'
+        'reviewStatus: "published"\nupdatedDate: "2026-01-01"\n---\n'
+    )
+    monkeypatch.setattr(event_results, "EVENTS_DIR", tmp_path)
+    result = event_results.parse("demo-open | 2026 | C D")
+    assert result == {"event": "demo-open", "year": 2026, "winners": ["C D"]}
+    assert "added" in event_results.apply(result, "2026-10-23")
+    assert event_results.page_winners("demo-open") == {2026: ["C D"], 2025: ["A B"]}
+    text = page.read_text()
+    assert "nextEdition" not in text and 'updatedDate: "2026-10-23"' in text
+    assert event_results.parse("unknown-event | 2026 | C D") is None
+    assert event_results.parse("") is None
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

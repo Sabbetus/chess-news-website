@@ -25,6 +25,8 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+import event_results
 from social_text import delink, fit_for_x  # noqa: E402
 
 import anthropic
@@ -555,6 +557,8 @@ When it does apply, write exactly these three lines and nothing else, with the r
 event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
 player1: first player's full name
 player2: second player's full name
+@@EVENT_RESULT@@
+{event_results.instruction()}
 @@BODY_MARKDOWN@@
 the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the 3-sentence/350-character paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
 
@@ -946,6 +950,7 @@ _FIELD_MARKERS = {
     # headline is about, not a ranked list of Commons search candidates.
     "IMAGE_SUBJECT": "imageSubject",
     "GAME_LOOKUP": "gameLookup",
+    "EVENT_RESULT": "eventResult",
     "BODY_MARKDOWN": "bodyMarkdown",
 }
 _FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
@@ -1890,6 +1895,12 @@ def draft_one(
                     fm_lines.append(f'    {sub_key}: "{escaped}"')
         else:
             fm_lines.append(f"{key}: {value}")
+    result = None if is_aggregate else event_results.parse(parsed.get("eventResult"))
+    if result:
+        fm_lines.append(event_results.frontmatter_line(result))
+        note = event_results.apply(result, frontmatter["publishDate"])
+        EVENT_PAGE_NOTES.append(f"{out_path.stem} -- {note}")
+        print(f"  event page: {note}", file=sys.stderr)
     fm_lines.append("---")
 
     body_markdown = bold_subheads(parsed["bodyMarkdown"])
@@ -1983,6 +1994,8 @@ RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
 # match the game, collected per article for the run report.
 GAMES_DIR = ARTICLES_DIR / "_games"
 GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
+# Event pages updated from a final-result piece, for the run report.
+EVENT_PAGE_NOTES: list[str] = []
 
 
 def write_run_report(
@@ -2003,6 +2016,9 @@ def write_run_report(
         for path, offenders in long_paragraphs:
             spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
             lines.append(f"- {path.stem} — paragraph {spots}")
+    if EVENT_PAGE_NOTES:
+        lines += ["", "**Event pages updated from a final result** (check the winner on the page):", ""]
+        lines += [f"- {note}" for note in EVENT_PAGE_NOTES]
     if GAME_LINK_NOTES:
         lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
         lines += [f"- {slug} — {', '.join(moves)}" for slug, moves in GAME_LINK_NOTES]
