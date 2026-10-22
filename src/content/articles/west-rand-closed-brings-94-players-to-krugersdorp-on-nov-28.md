@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Five tracked events in Africa this November. West Rand Closed in Krugersdorp has 94 registered, the largest known field, while Benin City hosts the only two-day event, the Edo Chess Classic."
 metaDescription: "Africa's November 2026 chess calendar has five tracked events, led by the West Rand Closed in Krugersdorp with 94 players and a two-day classic in Benin City."
 aggregateKind: "calendar-comingup"
@@ -23,7 +23,7 @@ Five tournaments are tracked in Africa for November 2026. Three are classical an
 
 **West Rand Closed**
 
-[West Rand Closed 2026all](https://chesstournamentcalendar.com/tournament/west-rand-closed-2026all-1523870/) is played on Nov. 28 at HTS N Diederichs High School in Krugersdorp.
+[West Rand Closed 2026](https://chesstournamentcalendar.com/tournament/west-rand-closed-2026all-1523870/) is played on Nov. 28 at HTS N Diederichs High School in Krugersdorp.
 
 It is a classical event with 94 players registered, the largest known field of the month. Eazy Tshabadira is listed as organizer.
 
@@ -49,4 +49,4 @@ The [ZEPHYR CHESS CHALLENGE 1st November 2026](https://chesstournamentcalendar.c
 
 **Looking back**
 
-For a sense of how a big African field can look, see [how October's Cairo rapid drew the continent's largest turnout](/articles/adly-power-play-rapid-draws-381-as-cairo-hosts-africa-s-biggest-field/). November's registration numbers are still early, and the Nigerian and Brits fields in particular have room to grow before the first rounds are played.
+For a sense of how a big African field can look, see [how September's 381-player Cairo rapid looked](/articles/adly-power-play-rapid-draws-381-as-cairo-hosts-africa-s-biggest-field/). November's registration numbers are still early, and the Nigerian and Brits fields in particular have room to grow before the first rounds are played.

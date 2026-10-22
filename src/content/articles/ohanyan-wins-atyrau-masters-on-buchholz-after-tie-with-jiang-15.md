@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/atyrau-masters-2026-r9"
 lens: "results"
 continent: "asia"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Emin Ohanyan (seed 20) and 15-year-old Jiang Haochen (seed 30) both made 7/9 at the Atyrau Masters. A Buchholz cut-1 gap of 46 to 36½ gave Ohanyan the title and the 9 million tenge first prize."
 metaDescription: "Armenian GM Emin Ohanyan won the Atyrau Masters on tiebreak over 15-year-old Chinese IM Jiang Haochen after both scored 7/9 in Kazakhstan."
 image:
@@ -46,7 +46,7 @@ Buchholz cut-1 drops the weakest opponent's score and sums the rest. For more on
 
 **Behind the leaders**
 
-Three players finished on 6½/9, all undefeated: Georgia's Jobava, Russia's Zemlyanskii and Kazakhstan's Aldiyar Ansat. Jobava took bronze on Buchholz (47.5), ahead of Zemlyanskii (46) and Ansat (43.5).
+Three players finished on 6½/9, all undefeated: Georgia's Jobava, Ivan Zemlyanskii and Kazakhstan's Aldiyar Ansat. Jobava took bronze on Buchholz (47.5), ahead of Zemlyanskii (46) and Ansat (43.5).
 
 Ansat was seeded 32nd, so the top five included three players from outside the top 15. Ohanyan, Jiang and Ansat were seeded 20th, 30th and 32nd.
 

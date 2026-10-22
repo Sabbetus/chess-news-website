@@ -68,6 +68,10 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-22: PR #76 review (stays 0): accepted, with the calendar "October's"
+  link ruled minor rather than borderline. 2026-10-21 also counted a miss:
+  the So photo swap put a photo from the previous day's piece back on the
+  front page, then a badly framed one; user caught both.
 - 2026-10-21: PR #75 review overruled (1 -> 0): I called So's "can lose
   his lead only if he loses the last round and a rival wins" a reset (a
   loss plus a rival's draw ties); user: the sentence is true, the text need
@@ -123,6 +127,21 @@ responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-22: PR #76 reset (streak stays at 0). Reset: the U.S.
+  Championship final-round piece called So "the defending champion" --
+  Chess.com's unnamed "The American number-one and defending champion went
+  over his full game" meant Caruana. Also fixed: a 2008 photo of So aged
+  15 (all three recent So photos were in the front-page cooldown; now a
+  2025 Caruana photo), "October's" Cairo rapid (September's; minor, user's
+  call), "very likely sealed" (would have), "nearly the whole event" (the
+  second half), "Thursday" playoff (today), "Russia's Zemlyanskii" (Russia
+  rule), "West Rand Closed 2026all". Club Cup round 5 (merged
+  ChessBase/Chess.com) and Atyrau final checked clean. Fixed at the
+  source: the fact check lists every description attached to a person
+  (title, role, age, nationality, rating) and checks the source gives it to
+  the same person; it also gets our records of each event's latest winner
+  (event pages + EXTRA_TITLE_HOLDERS) to test "defending champion" claims;
+  current stories never use a dated photo older than 8 years.
 - 2026-10-21: PR #75 reset (streak stays at 0). Reset (user: "unacceptable"):
   FIDE's World Championship side-events notice ("Join side activities...",
   sign-ups at tickets.fide.com) was drafted as an article, with FIDE's
@@ -395,8 +414,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-21 (PR #75, see above).
-- Earlier resets: 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-22 (PR #76, see above).
+- Earlier resets: 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

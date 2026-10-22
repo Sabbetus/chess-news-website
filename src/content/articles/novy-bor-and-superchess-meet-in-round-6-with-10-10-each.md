@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/european-club-cup-2026-5"
 lens: "results"
 continent: "europe"
 selectionScore: 108
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Novy Bor beat Alkaloid 4-2, SuperChess crushed Nitra 5½-½, and now the only two perfect teams in Budva meet in round 6 with three clubs a point behind. #EuropeanClubCup"
 metaDescription: "Novy Bor and SuperChess Romania lead the European Club Cup open on 10/10 and meet in round 6. Gambit Bonnevoie lead the women by two points."
 additionalSources:
