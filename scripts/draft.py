@@ -1267,6 +1267,17 @@ Youth Worlds" lumped leaders of separate age-group tournaments together.)
 draws = points; an unbeaten player on 6/8 has 4 wins and 4 draws). If the sources disagree, use \
 the count that adds up. (Caught live 2026-10-18 and -19: ChessBase twice gave So one win too \
 many.)
+- Who each description belongs to. List every description the article attaches to a \
+person -- a title or role ("defending champion", "world champion", "reigning", "leader", \
+"top seed", "his second"), an age, a nationality, a rating, a ranking -- and find the source \
+sentence that gives it. Check it names the SAME person. A description that opens a sentence \
+without a name ("The American number-one and defending champion went over his full game...") \
+belongs to whoever that sentence and its neighbours are about -- here, the player whose own \
+game and moves follow -- not to the last name mentioned before it. A description the source \
+gives to someone else is corrected or removed, never kept. For any "defending", "reigning" or \
+"current" champion claim, also check it against OUR RECORDS below the sources: a mismatch \
+there means the claim is wrong. (Caught live 2026-10-22: Chess.com's "defending champion" \
+meant Caruana; the draft gave it to So, the player named just before.)
 - Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
 rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
 event.)
@@ -1334,6 +1345,31 @@ its text, and so on, ending with @@BODY_MARKDOWN@@ and the ENTIRE corrected body
 nothing else -- no preamble, no explanation, no list of what you changed, no code fence."""
 
 
+EVENTS_DIR = Path(__file__).resolve().parent.parent / "src" / "content" / "events"
+# Title-holders for events without an event page. Update when the title
+# changes hands (the event pages are read directly).
+EXTRA_TITLE_HOLDERS = {
+    "U.S. Chess Championship": (2025, ["Fabiano Caruana"]),
+}
+
+
+def title_holders_note() -> str:
+    """The latest winner of each event we keep a page for, plus
+    EXTRA_TITLE_HOLDERS -- so the fact check can test "defending champion"
+    claims against our own records."""
+    lines = []
+    for path in sorted(EVENTS_DIR.glob("*.md")):
+        text = path.read_text()
+        name = re.search(r'^name:\s*"(.*?)"', text, re.MULTILINE)
+        first = re.search(r'^winners:\s*\n\s*- \{ year: (\d{4}), names: \[(.*?)\]', text, re.MULTILINE)
+        if name and first:
+            names = ", ".join(n.strip().strip('"') for n in first.group(2).split('",'))
+            lines.append(f"- {name.group(1)}: {names} won the {first.group(1)} edition")
+    for event, (year, names) in EXTRA_TITLE_HOLDERS.items():
+        lines.append(f"- {event}: {', '.join(names)} won the {year} edition")
+    return "\n".join(lines)
+
+
 def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict:
     """Independent second pass: re-checks every non-trivial factual claim in the finished
     body against the actual source text the drafting call was given, fixing or removing
@@ -1366,6 +1402,10 @@ def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict
                 source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
         if item.get("finnishClubsFacts"):
             source_parts.append(f"ADDITIONAL SOURCE (chess-results.com, Finnish clubs):\n{item['finnishClubsFacts']}")
+        source_parts.append(
+            "OUR RECORDS (latest winner of each event; only for checking \"defending\", "
+            "\"reigning\" or \"current\" champion claims, not a source of news):\n" + title_holders_note()
+        )
         source_text = "\n\n".join(source_parts)
 
     fields = "\n".join(

@@ -444,6 +444,28 @@ def test_photo_cooldown_matches_front_page():
     assert draft.RECENT_IMAGE_COOLDOWN == draft.FRONT_PAGE_SIZE
 
 
+def test_fact_check_gets_who_is_who_rule_and_title_holders():
+    # 2026-10-22: "defending champion" (Caruana in the source) was given to So.
+    assert "Who each description belongs to" in draft._CLAIM_VERIFICATION_PROMPT
+    note = draft.title_holders_note()
+    assert "U.S. Chess Championship: Fabiano Caruana" in note
+    assert "World Chess Championship: Gukesh Dommaraju" in note
+
+    sent = {}
+
+    class FakeClient:
+        class messages:
+            @staticmethod
+            def create(**kwargs):
+                sent.update(kwargs)
+                raise RuntimeError("stop")
+
+    parsed = {"title": "T", "socialCopy": "S", "metaDescription": "M", "bodyMarkdown": "B"}
+    item = {"kind": "news", "title": "T", "sourceName": "Chess.com", "summary": "text"}
+    draft.verify_claims(FakeClient(), parsed, item)
+    assert "OUR RECORDS" in sent["messages"][0]["content"]
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
