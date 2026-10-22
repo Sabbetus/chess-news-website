@@ -33,6 +33,7 @@ const ARTICLES_DIR = path.join(ROOT, 'src/content/articles');
 const OUT_WIDTH = 1200;
 const OUT_HEIGHT = 630;
 const TOP_BIAS = 0.3;
+const MAX_TOP_OFFSET = 0.3;
 
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\n([\s\S]*?)\n---/);
@@ -76,7 +77,9 @@ export default async function generateSocialImages(outDirUrl) {
       // failure mode as ArticleThumb.astro's old position="top" default --
       // so bias the window TOP_BIAS of the way down through the spare
       // vertical room instead of starting right at the hairline.
-      const offset = Math.round((scaledHeight - OUT_HEIGHT) * TOP_BIAS);
+      // Capped: for a very tall source (Ohanyan's 1:2 photo, 2026-10-22) a
+      // share of the slack alone started the window below the head.
+      const offset = Math.min(Math.round((scaledHeight - OUT_HEIGHT) * TOP_BIAS), Math.round(OUT_HEIGHT * MAX_TOP_OFFSET));
       pipeline = sharp(sourcePath)
         .rotate()
         .resize({ width: OUT_WIDTH })
