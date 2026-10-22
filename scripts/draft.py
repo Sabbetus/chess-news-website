@@ -567,6 +567,10 @@ Under-13 Open on 6/6"). Never count, group or compare leaders across sections ("
 perfect scores", "Kazakhstan leads four sections"), in the headline, body, social copy or \
 meta. A headline is about one section, or about the event without anyone's standing.
 
+Naming the event: when the piece is about a tournament, match or league, the opening \
+paragraph names it in full ("the 2026 U.S. Chess Championship", "the European Club Cup"), \
+not only "Saint Louis" or "the open section". The headline alone doesn't count.
+
 Rounds left: only state how many rounds remain if you can work it out from the source \
 (total rounds minus rounds played; a 12-player round-robin is 11 rounds). Otherwise don't \
 give a number.
@@ -1278,6 +1282,10 @@ gives to someone else is corrected or removed, never kept. For any "defending", 
 "current" champion claim, also check it against OUR RECORDS below the sources: a mismatch \
 there means the claim is wrong. (Caught live 2026-10-22: Chess.com's "defending champion" \
 meant Caruana; the draft gave it to So, the player named just before.)
+- Event name: if the piece is about a tournament, match or league, the opening paragraph \
+of the body must name it in full (the headline alone doesn't count). If it doesn't, add the \
+name to that paragraph with the smallest possible edit ("Round four in Saint Louis" -> \
+"Round four of the U.S. Championship in Saint Louis").
 - Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
 rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
 event.)

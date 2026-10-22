@@ -466,6 +466,13 @@ def test_fact_check_gets_who_is_who_rule_and_title_holders():
     assert "OUR RECORDS" in sent["messages"][0]["content"]
 
 
+def test_opening_paragraph_names_the_event():
+    # 2026-10-22: four U.S. Championship round reports never named the event
+    # in their body, so the build-time event link had nothing to attach to.
+    assert "Naming the event" in draft.NEWS_SYSTEM_PROMPT
+    assert "Event name: if the piece is about a tournament" in draft._CLAIM_VERIFICATION_PROMPT
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
