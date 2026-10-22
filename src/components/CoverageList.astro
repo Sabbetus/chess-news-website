@@ -8,11 +8,9 @@ import { shortDate } from '../lib/hubs';
 interface Props {
   name: string;
   articles: CollectionEntry<'articles'>[];
-  // How many to list before the toggle (event pages show 5).
-  shown?: number;
 }
-const { name, articles, shown = 10 } = Astro.props;
-const COVERAGE_SHOWN = shown;
+const { name, articles } = Astro.props;
+const COVERAGE_SHOWN = 5;
 const first = articles.slice(0, COVERAGE_SHOWN);
 const rest = articles.slice(COVERAGE_SHOWN);
 ---
