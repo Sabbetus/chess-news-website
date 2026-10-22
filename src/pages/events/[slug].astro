@@ -24,8 +24,13 @@ for (const p of await playerPages()) for (const n of [p.data.name, ...p.data.ali
 const tally = new Map<string, number>();
 for (const w of d.winners) for (const n of w.names) tally.set(n, (tally.get(n) ?? 0) + 1);
 const record = [...tally.entries()].filter(([, c]) => c >= 3).sort((a, b) => b[1] - a[1]);
-const WINNERS_SHOWN = 20;
+const WINNERS_SHOWN = 10;
 const heading = d.winnersHeading ?? 'Winners';
+// "Show all champions since 1999": lower-case the heading's first word only
+// when it is a common word, so "German champions" keeps its capital.
+const headingInline = /^(Champions|Winners|Open|Women's|Men's|Team|Overall)\b/.test(heading)
+  ? heading.charAt(0).toLowerCase() + heading.slice(1)
+  : heading;
 const latest = d.winners.find((w) => w.names.length > 0);
 
 const ogImage = d.image
@@ -110,7 +115,7 @@ const jsonLd = [
       <Content />
     </div>
 
-    <CoverageList name={d.name} articles={coverage} />
+    <CoverageList name={d.name} articles={coverage} shown={5} />
 
     {d.winners.length > 0 && (
       <section class="hub-section">
@@ -136,7 +141,7 @@ const jsonLd = [
         </div>
         {d.winners.length > WINNERS_SHOWN && (
           <details class="more-winners">
-            <summary>Show all {heading.toLowerCase()} since {d.winners[d.winners.length - 1].year}</summary>
+            <summary>Show all {headingInline}{/\bsince\b/i.test(heading) ? '' : ` since ${d.winners[d.winners.length - 1].year}`}</summary>
             <div class="table-wrap">
               <table class="data-table winners">
                 <tbody>
