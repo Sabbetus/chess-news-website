@@ -55,8 +55,6 @@
   font-weight: 540;
   font-size: 22px;
   margin: 0 0 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
 }
 .facts {
   display: grid;
@@ -107,7 +105,6 @@
 }
 .coverage li {
   padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
   display: flex;
   gap: 16px;
   align-items: baseline;
@@ -142,12 +139,10 @@
   color: var(--ink-soft);
   font-weight: 500;
   padding: 8px 10px;
-  border-bottom: 2px solid var(--rule);
   white-space: nowrap;
 }
 .data-table td {
   padding: 8px 10px;
-  border-bottom: 1px solid var(--rule);
   vertical-align: top;
 }
 .data-table .num {
@@ -177,17 +172,4 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent);
-}
-
-/* Player and event profile pages: no thin rule lines between sections,
-   list items or table rows (user's call, 2026-10-22). Rankings and the
-   directory pages keep theirs. */
-.hub .hub-section h2 {
-  border-top: 0;
-  padding-top: 0;
-}
-.hub .coverage li,
-.hub .data-table th,
-.hub .data-table td {
-  border-bottom: 0;
 }
