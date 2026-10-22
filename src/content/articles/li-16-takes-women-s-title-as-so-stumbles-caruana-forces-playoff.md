@@ -7,7 +7,7 @@ lens: "results"
 continent: "north-america"
 selectionScore: 111
 reviewStatus: "published"
-socialCopy: "16-year-old Rachael Li wins the U.S. Women's title and earns an IM norm with two rounds to spare, while Wesley So loses to Sam Sevian and Caruana's win over Liang forces an Open playoff today."
+socialCopy: "16-year-old Rachael Li wins the U.S. Women's title, plus her first IM norm, while Wesley So loses to Sam Sevian and Caruana's win over Liang forces an Open playoff today."
 metaDescription: "Rachael Li, 16, won the U.S. Women's Championship and an IM norm. In the Open, So lost to Sevian and Caruana beat Liang to force a playoff today."
 image:
   src: "./_images/Fabiano_Caruana_at_2025_Tata_Steel_CT.webp"
