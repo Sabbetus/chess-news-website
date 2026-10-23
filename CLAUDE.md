@@ -79,6 +79,8 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-23: PR #77 review overruled (stays 0): my reset call on the
+  Club Cup "at most one can finish on 13" line; user ruled it minor.
 - 2026-10-22: PR #76 review (stays 0): accepted, with the calendar "October's"
   link ruled minor rather than borderline. 2026-10-21 also counted a miss:
   the So photo swap put a photo from the previous day's piece back on the
@@ -137,7 +139,18 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-23: PR #77 clean (streak 0 -> 1, user's call). Minor, fixed: Club
+  Cup round 6 "at most one of the leading trio can finish on 13" (two:
+  Novy Bor play Elektroprivreda; I called it a reset, user ruled minor);
+  So's title "four years after the last" (five; Chess.com's slip);
+  Yakubboev "teammate" (Uzbekistan teammate, rival clubs); a line about the
+  standings table; two So quotes split across paragraphs. Pipeline bug: the
+  first event-page/player-page update (So, 2026 U.S. Champion) was made on
+  the runner but never committed (git add only covered articles) -- applied
+  by hand, the event page now leads with So. Fixed at the source: the
+  workflows commit all of src/content/, and the paragraph splitter keeps a
+  paragraph whole rather than break inside a quote.
 - 2026-10-22: PR #76 reset (streak stays at 0). Reset: the U.S.
   Championship final-round piece called So "the defending champion" --
   Chess.com's unnamed "The American number-one and defending champion went

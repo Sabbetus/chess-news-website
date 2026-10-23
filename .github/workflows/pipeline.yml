@@ -85,7 +85,7 @@ jobs:
           # data/seen.json and data/candidates.json/selected.json track pipeline
           # state and are useful to review alongside the drafts (shows what was
           # considered and why), so commit them too.
-          git add data/ src/content/articles/
+          git add data/ src/content/
           git commit -m "chore: daily draft batch $(date -u +%Y-%m-%d)"
           git push origin "$BRANCH"
 
