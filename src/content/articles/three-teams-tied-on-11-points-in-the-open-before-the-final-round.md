@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/european-club-cup-2026-6"
 lens: "results"
 continent: "europe"
 selectionScore: 100
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "SuperChess, Novy Bor and Bayegan Pendik all sit on 11/12 in the open at the European Club Cup, and the last round pits two of them against each other. Monte-Carlo, Gambit Bonnevoie and Odlar Yurdu lead the women."
 metaDescription: "SuperChess, Novy Bor and Bayegan Pendik share the lead in the European Club Cup open before round 7, while three teams are level in the women's section."
 additionalSources:
@@ -27,7 +27,7 @@ All three sit on 11/12 match points. Four clubs follow on 10, so medals are stil
 
 **Open: four decisive games at the top**
 
-On top board, Nodirbek Abdusattorov [beat his namesake and teammate Nodirbek Yakubboev](#game-embed). Chess.com quotes Abdusattorov calling it "annoying" to face a friend, with sharp home preparation starting at 11.g4 and a final mistake he managed to punish.
+On top board, Nodirbek Abdusattorov [beat his namesake and Uzbekistan teammate Nodirbek Yakubboev](#game-embed). Chess.com quotes Abdusattorov calling it "annoying" to face a friend, with sharp home preparation starting at 11.g4 and a final mistake he managed to punish.
 
 Nihal Sarin answered for Novy Bor by beating Jorden van Foreest on board two. Bogdan-Daniel Deac then put SuperChess ahead by defeating Nils Grandelius.
 
@@ -43,9 +43,9 @@ Elektroprivreda, the sixth seeds, drew 3-3 with second seeds Alkaloid and stay o
 
 **What the last round holds**
 
-Bayegan Pendik meet SuperChess directly, so at most one of the leading trio can finish on 13. Novy Bor face Elektroprivreda, Cheddleton play Rishon LeZion A, and Marseille meet Alkaloid.
+Bayegan Pendik meet SuperChess directly, so at most two of the leading trio can finish on 13. Novy Bor face Elektroprivreda, Cheddleton play Rishon LeZion A, and Marseille meet Alkaloid.
 
-On tiebreaks SuperChess lead the trio on the first listed measure (212.5 against 186 for Pendik and 181 for Novy Bor), though the table does not say which tiebreak decides the medals.
+SuperChess have the best first tiebreak score of the three (212.5, against 186 for Pendik and 181 for Novy Bor).
 
 **Women: Bonnevoie's first loss**
 

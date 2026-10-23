@@ -448,7 +448,7 @@ def test_fact_check_gets_who_is_who_rule_and_title_holders():
     # 2026-10-22: "defending champion" (Caruana in the source) was given to So.
     assert "Who each description belongs to" in draft._CLAIM_VERIFICATION_PROMPT
     note = draft.title_holders_note()
-    assert "U.S. Chess Championship: Fabiano Caruana" in note
+    assert "U.S. Chess Championship: Wesley So won the 2026 edition" in note
     assert "World Chess Championship: Gukesh Dommaraju" in note
 
     sent = {}
@@ -533,6 +533,18 @@ def test_final_result_updates_the_winners_player_page(tmp_path, monkeypatch):
     text = (players / "c-d.md").read_text()
     assert '- "Three-time Demo Open winner"' in text and "three times" in text
     assert 'updatedDate: "2026-10-23"' in text and 'name: "C D"' in text
+
+
+def test_paragraph_split_never_breaks_a_quote():
+    assert draft._quotes_balanced('He said "Kudos to Sam. He had a tough tournament."')
+    assert not draft._quotes_balanced('He said "Kudos to Sam. He had a tough tournament.')
+
+
+def test_pipeline_commits_event_and_player_page_edits():
+    # 2026-10-23: the event and player page updates were made on the runner
+    # but never committed (git add covered only src/content/articles/).
+    workflow = open(".github/workflows/pipeline.yml").read()
+    assert "git add data/ src/content/\n" in workflow
 
 
 def test_titles_never_use_semicolons():

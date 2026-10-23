@@ -1536,12 +1536,18 @@ topic boundaries -- do not reword, cut, add, fact-check, or otherwise change a s
 word. Preserve every word, number, quote, and Markdown link exactly as given, byte for \
 byte; only insert paragraph breaks (a blank line) between existing sentences. Split \
 generously enough that every resulting paragraph is at most 3 sentences and well under 350 \
-characters, not just barely under.
+characters, not just barely under. Never put a break inside a quotation: a quote that \
+runs over several sentences stays whole in one paragraph, so break before or after it.
 
 Respond with ONLY the fixed paragraphs, each introduced by its own @@PARA_N@@ marker \
 matching the input numbering exactly (e.g. @@PARA_1@@), with no commentary before, \
 between, or after them. Within each @@PARA_N@@ section, separate the resulting \
 paragraphs with a single blank line, same as normal Markdown."""
+
+
+def _quotes_balanced(text: str) -> bool:
+    """Every quotation opened in this text is closed in it."""
+    return text.count('"') % 2 == 0 and text.count("\u201c") == text.count("\u201d")
 
 
 def fix_long_paragraphs(
@@ -1628,6 +1634,14 @@ def fix_long_paragraphs(
 
         for n, para_idx in enumerate(prose_indices, 1):
             if n in fixed:
+                # A break inside a quotation leaves a quote open in one
+                # paragraph and closed in the next (caught 2026-10-23: two So
+                # quotes). Keep the original paragraph rather than that.
+                if _quotes_balanced(paragraphs[para_idx]) and not all(
+                    _quotes_balanced(part) for part in fixed[n].split("\n\n")
+                ):
+                    print(f"  paragraph fix-up: #{n} split inside a quote, kept as it was", file=sys.stderr)
+                    continue
                 paragraphs[para_idx] = fixed[n]
 
         # The success path used to log nothing at all -- indistinguishable
