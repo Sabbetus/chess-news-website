@@ -10,7 +10,8 @@
 // themselves).
 import { readdirSync, readFileSync } from 'node:fs';
 
-const MAX_PLAYERS = 3;
+// Every profiled player gets one link (user's call, 2026-10-23).
+const MAX_PLAYERS = Infinity;
 const MAX_EVENTS = 1;
 const SKIP = new Set(['a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre', 'figcaption']);
 
@@ -51,13 +52,51 @@ function buildMatcher(entities) {
   };
 }
 
+function sourceUrls(path) {
+  try {
+    const fm = readFileSync(path, 'utf-8').split('---')[1] ?? '';
+    return new Set([...fm.matchAll(/^\s*sourceUrl:\s*"(.*?)"/gm)].map((m) => m[1]));
+  } catch {
+    return new Set();
+  }
+}
+
+const textOf = (node) => (node.type === 'text' ? node.value : (node.children ?? []).map(textOf).join(''));
+
 export default function linkHubs() {
   const players = buildMatcher(loadEntities('../src/content/players/', '/players/'));
   const events = buildMatcher(loadEntities('../src/content/events/', '/events/'));
+  const mentionsHub = (text) =>
+    [players, events].some((m) => {
+      if (!m) return false;
+      m.re.lastIndex = 0;
+      return m.re.test(text);
+    });
 
   return (tree, file) => {
     const path = file?.path ?? file?.history?.[0] ?? '';
     if (!path.includes('/content/articles/')) return;
+    // A link to the article's own source, wrapped around text that names a
+    // player or event we have a page for, gives way to the internal link:
+    // the sources are already listed under the article (user's call,
+    // 2026-10-23: "won the 2026 U.S. Chess Championship" should link the
+    // event page and So's page, not Chess.com).
+    const sources = sourceUrls(path);
+    (function unwrap(node) {
+      if (!node.children) return;
+      node.children = node.children.flatMap((child) => {
+        if (
+          child.tagName === 'a' &&
+          sources.has(String(child.properties?.href ?? '')) &&
+          mentionsHub(textOf(child))
+        ) {
+          return child.children;
+        }
+        unwrap(child);
+        return [child];
+      });
+    })(tree);
+
     const used = new Set();
     const counts = { player: 0, event: 0 };
     // Links the article already has to our own pages count as used.
