@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-european-chess-club-cup-round-7
 lens: "results"
 continent: "europe"
 selectionScore: 130
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Bayegan Pendik beat SuperChess Romania 3.5-2.5 to win the 2026 European Club Cup, with Giri crushing Abdusattorov. Novy Bor missed gold on tiebreaks despite a 4.5-1.5 win; Pendik took the title by 8.5 tiebreak points."
 metaDescription: "Bayegan Pendik beat SuperChess Romania 3.5-2.5 in round 7 to win the 2026 European Chess Club Cup. Novy Bor missed gold on tiebreaks; Rishon LeZion took bronze."
 image:
@@ -27,7 +27,7 @@ eventResult: { event: "european-chess-club-cup", year: 2026, winners: ["Bayegan 
 
 Top seed Bayegan Pendik Chess Sports Club [won the 2026 European Chess Club Cup](https://www.chess.com/news/view/2026-european-chess-club-cup-round-7) by beating defending champion SuperChess Romania 3.5-2.5 in the final round. GM Anish Giri [scored a crushing win](#game-embed) over GM Nodirbek Abdusattorov.
 
-That is a sweet turn for both men. Abdusattorov had lost in round 4, as [we reported](/articles/abdusattorov-giri-and-erdogmus-all-lose-in-club-cup-round-4/) when Giri and Erdogmus also fell. Giri answered in the game that mattered most.
+That was a sweet turnaround for Giri and Erdogmus, who had both lost in round 4, [as we reported](/articles/abdusattorov-giri-and-erdogmus-all-lose-in-club-cup-round-4/). Giri answered in the game that mattered most.
 
 **A nervous wait on tiebreaks**
 

@@ -45,7 +45,9 @@ def _cells(row_html: str) -> list[str]:
 
 
 def is_club_cup(item: dict) -> bool:
-    return bool(CLUB_CUP_RE.search(f"{item.get('title', '')} {(item.get('summary') or '')[:400]}"))
+    # The headline only: a story set at the event but about something else
+    # (caught 2026-10-24: Bodhana's IM record) gets no Finnish sub-section.
+    return bool(CLUB_CUP_RE.search(item.get("title", "")))
 
 
 def tournament_ids(item: dict) -> list[str]:

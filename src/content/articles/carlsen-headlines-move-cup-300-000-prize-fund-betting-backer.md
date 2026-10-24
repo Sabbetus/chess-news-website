@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/carlsen-move-cup-barcelona-2027"
 lens: "money-angle"
 continent: "europe"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen will headline the inaugural MOVE Cup in Barcelona, Jan 19-20, 2027: eight players, €300,000 in prizes, 10+1 rapid, a BETBY backer, and a date clash with Tata Steel."
 metaDescription: "Magnus Carlsen headlines the new MOVE Cup in Barcelona on January 19-20, 2027: an eight-player 10+1 rapid event with €300,000 in prizes, backed by BETBY."
 image:

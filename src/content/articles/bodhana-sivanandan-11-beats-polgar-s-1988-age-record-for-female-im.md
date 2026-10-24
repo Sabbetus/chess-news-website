@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/bodhana-sivanandan-youngest-female-i
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 75
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "At 11 years, seven months and 16 days, Bodhana Sivanandan has completed the IM requirements, a female age record that had stood since Judit Polgar in 1988. The final norm came at the European Club Cup in Budva."
 metaDescription: "FM Bodhana Sivanandan, 11, scored her third IM norm at the European Club Cup in Budva, becoming the youngest female IM in history, ahead of Judit Polgar."
 image:
@@ -28,7 +28,7 @@ She got there by beating WIM Viktoria Johansson of Sweden's Wasa SK in the seven
 
 **Passing Polgar**
 
-The previous female mark belonged to GM Judit Polgar, who earned the IM title at 12 in 1988 and went on to become the strongest female player in chess history. Bodhana's record has therefore stood against the best benchmark the women's game has. Polgar's age had survived for 38 years.
+The previous female mark belonged to GM Judit Polgar, who earned the IM title at 12 in 1988 and went on to become the strongest female player in chess history. The record she took belonged to the best benchmark the women's game has. Polgar's age had survived for 38 years.
 
 Chess.com's research ranks Bodhana as the seventh-youngest IM of all time. She is exactly one month older than Javokhir Sindarov, now a World Championship challenger, was when he got the title in 2017.
 
@@ -38,7 +38,7 @@ The British player from Harrow, outside London, was asked about the feat in a po
 
 **A fast month**
 
-The IM norm comes less than a month after she became the youngest player to fulfil the requirements for the Woman Grandmaster title at the Chess Olympiad in Samarkand. That title still awaits formal approval. In Budva she also passed the 2400 live rating it requires.
+The IM norm comes less than a month after she became the youngest player to fulfil the requirements for the Woman Grandmaster title at the Chess Olympiad in Samarkand. That title still awaits formal approval. In Budva she also passed the 2400 live rating the IM title requires.
 
 The IM title is open to players of any gender, so this is a separate achievement from the women's title. The [titles explainer](/articles/chess-titles/) covers how the norm system works.
 
@@ -46,12 +46,6 @@ IM Malcolm Pein, the English Chess Federation's Director of International Chess 
 
 **How the event went**
 
-Her tournament did not start smoothly. She lost in round one to GM Aleksandra Goryachkina, a former Women's World Championship challenger. She then recovered with two wins, one of them over IM Olga Badelka, before the Johansson game closed the norm.
+Her tournament did not start smoothly. She lost in round one to GM Aleksandra Goryachkina, a former Women's World Championship challenger. She then went unbeaten: five wins, among them IM Olga Badelka and finally Johansson to close the norm, and a draw with Nino Batsiashvili.
 
 Going from a round-one loss to a Polgar-beating record in a week is a useful reminder of the format. A seven-round club event with a top-board assignment against strong opposition is a demanding norm hunt, and she handled it. The [European Club Cup guide](/events/european-chess-club-cup/#how-it-works) explains how the event runs.
-
-**Finnish clubs in Budva**
-
-Three Finnish teams played. Aatos (seed 72) finished with a 5.5-0.5 win over Paul Keres 2 after earlier wins of 6-0 over St Benildus and 4-2 over Cardiff A. They lost the other four, including 0.5-5.5 to C.A Silla Integrant Col-lectius in round one.
-
-Etela-Vantaan Shakki (seed 71) won 4-2 against SK1911, 5.5-0.5 against SK Weisse Dame Hamburg and 3.5-2.5 against Gambiitti in round seven. Gambiitti (seed 88) beat S.S. Lazio Scacchi 5-1 and Standard de Liege TAL 3.5-2.5, but lost that final-round all-Finnish pairing.

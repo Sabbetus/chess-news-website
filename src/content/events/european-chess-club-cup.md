@@ -17,7 +17,7 @@ winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/European_Chess_Club_Cup"
 winners:
-  - { year: 2026, names: ["Bayegan Pendik Chess Sports Club"] }
+  - { year: 2026, names: ["Bayegan Pendik Chess Sports Club"], note: "Budva" }
   - { year: 2025, names: ["SuperChess"], note: "Rhodes" }
   - { year: 2024, names: ["1. Nový Bor Chess Club"], note: "Vrnjačka Banja" }
   - { year: 2023, names: ["Offerspill Chess Club"], note: "Durrës" }

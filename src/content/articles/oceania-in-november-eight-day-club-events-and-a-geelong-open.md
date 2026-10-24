@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"
 continent: "oceania"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Twenty Oceania events are tracked for November 2026, all in Australia. Five run eight days, including the SA Seniors Championship in Adelaide, and the Geelong Open lands on Nov. 21-22."
 metaDescription: "Twenty Oceania tournaments are tracked for November 2026, all in Australia. A look at the SA Seniors Championship, Geelong Open and the Sydney and Melbourne club events."
 aggregateKind: "calendar-comingup"
