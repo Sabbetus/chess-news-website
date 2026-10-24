@@ -876,6 +876,19 @@ def pick_image_for_item(
         result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
         if result:
             return result
+    # A person's own milestone with no photo of them: the next person the
+    # drafter ranked -- the record holder they passed, say -- before a
+    # neutral image. Each is tried on their own name only, and draft.py
+    # captions the photo with that name (user's call, 2026-10-24: Bodhana's
+    # IM record should show Judit Polgar, not a generic board).
+    if prefer_neutral:
+        for subject in (image_subjects or [])[1:]:
+            for query, strict, prefer_relevance, require_known_date in build_query_cascade(
+                item, drafted_title, [subject], True
+            ):
+                result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
+                if result:
+                    return result
     return fallback_image(drafted_title, exclude_source_urls) or fallback_image(item.get("title", ""), exclude_source_urls)
 
 

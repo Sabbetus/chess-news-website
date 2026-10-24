@@ -555,6 +555,22 @@ def test_finnish_section_only_for_club_cup_headlines():
                                      "summary": "securing her third norm at the European Club Cup in Budva"})
 
 
+def test_milestone_without_subject_photo_uses_next_person(monkeypatch):
+    # 2026-10-24: Bodhana's IM record got a generic board; Polgar was next.
+    calls = []
+
+    def fake_search(query, *args):
+        calls.append(query)
+        return {"url": "u", "sourceUrl": "s"} if "Polgar" in query else None
+
+    monkeypatch.setattr(images, "search_image", fake_search)
+    monkeypatch.setattr(images, "fallback_image", lambda *a, **k: {"src": "pool"})
+    item = {"kind": "news", "sourceName": "Chess.com", "title": "Bodhana, 11, Breaks Polgar's Record", "lens": "results", "summary": ""}
+    got = images.pick_image_for_item(item, item["title"], ["Bodhana Sivanandan", "Judit Polgar"], set(), prefer_neutral=True)
+    assert got == {"url": "u", "sourceUrl": "s"}
+    assert any("Bodhana" in q for q in calls)
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

@@ -10,9 +10,10 @@ reviewStatus: "published"
 socialCopy: "At 11 years, seven months and 16 days, Bodhana Sivanandan has completed the IM requirements, a female age record that had stood since Judit Polgar in 1988. The final norm came at the European Club Cup in Budva."
 metaDescription: "FM Bodhana Sivanandan, 11, scored her third IM norm at the European Club Cup in Budva, becoming the youngest female IM in history, ahead of Judit Polgar."
 image:
-  src: "./_images/Poertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.webp"
-  credit: "Johann Jaritz, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APoertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.jpg"
+  src: "./_images/Judit_polgar_2013.webp"
+  credit: "Ruperto Miller, CC0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJudit_polgar_2013.jpg"
+  caption: "Judit Polgar, whose 1988 record Bodhana broke"
 tweetEmbeds:
   - url: "https://x.com/ecfchess/status/2113680004831723768"
     author: "English Chess Federation (ECF)"
