@@ -547,6 +547,14 @@ def test_pipeline_commits_event_and_player_page_edits():
     assert "git add data/ src/content/\n" in workflow
 
 
+def test_finnish_section_only_for_club_cup_headlines():
+    import club_cup
+    assert club_cup.is_club_cup({"title": "Leaders Caught As 3 Teams Tie For Top Before Euro Club Cup Final Round"})
+    assert club_cup.is_club_cup({"title": "European Club Cup: Novy Bor and SuperChess remain perfect"})
+    assert not club_cup.is_club_cup({"title": "Bodhana, 11, Breaks Judit Polgar's Record To Become Youngest Female IM",
+                                     "summary": "securing her third norm at the European Club Cup in Budva"})
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

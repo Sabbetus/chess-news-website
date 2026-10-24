@@ -38,6 +38,12 @@
   under the FIDE flag or for foreign clubs are ordinary subjects (e.g.
   Murzin playing for Bayegan Pendik at the Club Cup).
 
+- **Bold claims the source reasonably supports are fine** (user's call,
+  2026-10-24). Don't flag or soften strong wording of what the source
+  says ("the increment was his call" when the source has him designing
+  the format and explaining the increment). Flag only claims that go
+  beyond the source or contradict it.
+
 - **Hedged, plausible speculation is welcome** (user's call, 2026-10-19):
   "likely Madaminov" for a second the source calls "almost certainly" is
   the kind of reasonable reading wanted -- flag only guesses stated as
@@ -79,6 +85,9 @@ reject) resets it to 0. Update after each batch review, once the user has
 responded.
 
 - **Current review-acceptance streak: 0.**
+- 2026-10-24: PR #78 review corrected (stays 0): user dropped my Carlsen
+  "increment was his call" flag (a bold claim the source supports) and
+  questioned the 2400 and "sweet turn" calls (both stood, reworded).
 - 2026-10-23: PR #77 review overruled (stays 0): my reset call on the
   Club Cup "at most one can finish on 13" line; user ruled it minor.
 - 2026-10-22: PR #76 review (stays 0): accepted, with the calendar "October's"
@@ -139,7 +148,17 @@ responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-24: PR #78 reset (streak 1 -> 0). Reset: the Bodhana Sivanandan
+  IM-record piece carried a "Finnish clubs in Budva" section (unrelated,
+  and a repeat of the Club Cup final's) -- the Finnish sub-section fired on
+  "club cup" anywhere in the opening; now headline only. Minor: Bodhana's
+  2400 tied to the WGM title (IM's), "Bodhana's record" (Polgar's), her
+  run after round 1 (five wins and a draw, not "two wins"); Club Cup final
+  "sweet turn for both men" (Giri and Erdogmus); the event page's new 2026
+  row lacked its "Budva" note. First event-page update committed by the
+  pipeline itself (Bayegan Pendik). Carlsen MOVE Cup and Oceania calendar
+  clean (my "increment was his call" flag dropped, user's call).
 - 2026-10-23: PR #77 clean (streak 0 -> 1, user's call). Minor, fixed: Club
   Cup round 6 "at most one of the leading trio can finish on 13" (two:
   Novy Bor play Elektroprivreda; I called it a reset, user ruled minor);
@@ -438,8 +457,8 @@ responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-22 (PR #76, see above).
-- Earlier resets: 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-24 (PR #78, see above).
+- Earlier resets: 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
