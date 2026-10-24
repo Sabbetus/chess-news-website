@@ -6,13 +6,6 @@ frequency: "Every year"
 founded: 1976
 location: "Varies"
 format: "7-round Swiss for club teams: six boards plus two reserves in the open section, four boards plus one reserve in the women's"
-nextEdition:
-  label: "41st European Chess Club Cup, 2026"
-  start: "2026-10-17"
-  end: "2026-10-23"
-  location: "Budva, Montenegro"
-  sourceUrl: "https://www.chess.com/news/view/2026-european-chess-club-cup-round-1"
-  checked: "2026-10-19"
 organizer: { name: "European Chess Union", url: "https://www.europechess.org/" }
 aliases:
   - "European Chess Club Cup"
@@ -24,6 +17,7 @@ winnersSource:
   label: "Wikipedia"
   url: "https://en.wikipedia.org/wiki/European_Chess_Club_Cup"
 winners:
+  - { year: 2026, names: ["Bayegan Pendik Chess Sports Club"] }
   - { year: 2025, names: ["SuperChess"], note: "Rhodes" }
   - { year: 2024, names: ["1. Nový Bor Chess Club"], note: "Vrnjačka Banja" }
   - { year: 2023, names: ["Offerspill Chess Club"], note: "Durrës" }
@@ -70,7 +64,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADavid_Navara_Chessolympiad_2022.jpg"
   caption: "David Navara of 1. Nový Bor, winners 2013, 2022, 2024"
 reviewStatus: "published"
-updatedDate: "2026-10-19"
+updatedDate: "2026-10-24"
 ---
 
 The European Chess Club Cup grew out of the club competitions of the former Yugoslavia. A first edition was played in Belgrade in 1956, won by Partizan Belgrade, and it has been a regular event since 1976 and an annual one since 1992. A women's competition was added in 1996.
