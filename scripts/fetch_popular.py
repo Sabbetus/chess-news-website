@@ -6,7 +6,7 @@ src/pages/index.astro).
 
 Eligibility window is anchored to the most recently published article's
 own date, not to "today" -- see eligible_articles() for why. Pageview
-traffic itself is still always the real last 7 days (fetch_pageviews()),
+traffic itself is still always the real last WINDOW_DAYS days (fetch_pageviews()),
 regardless of where the eligibility window sits.
 
 Best-effort like images.py's photo search: any failure (missing
@@ -30,7 +30,10 @@ ROOT = Path(__file__).parent.parent
 ARTICLES_DIR = ROOT / "src" / "content" / "articles"
 POPULAR_PATH = ROOT / "data" / "popular.json"
 
-WINDOW_DAYS = 7
+# Five calendar days, counting the newest article's own day (user's call,
+# 2026-10-24: a week, which ran to eight days with the old "minus 7"
+# cutoff, kept articles on the list long after they felt current).
+WINDOW_DAYS = 5
 MAX_ENTRIES = 4
 
 GA4_API_URL = "https://analyticsdata.googleapis.com/v1beta/properties/{property_id}:runReport"
@@ -64,7 +67,7 @@ def eligible_articles() -> dict[str, str]:
         return {}
 
     most_recent = max(pub_date for _, _, pub_date in parsed)
-    cutoff = most_recent - timedelta(days=WINDOW_DAYS)
+    cutoff = most_recent - timedelta(days=WINDOW_DAYS - 1)
     return {slug: title for slug, title, pub_date in parsed if pub_date >= cutoff}
 
 
@@ -97,7 +100,7 @@ def fetch_pageviews(property_id: str, token: str) -> dict[str, int]:
     /articles/ path GA4 reports traffic for -- not yet filtered to this
     site's current eligibility list, the caller does that."""
     payload = {
-        "dateRanges": [{"startDate": f"{WINDOW_DAYS}daysAgo", "endDate": "today"}],
+        "dateRanges": [{"startDate": f"{WINDOW_DAYS - 1}daysAgo", "endDate": "today"}],
         "dimensions": [{"name": "pagePath"}],
         "metrics": [{"name": "screenPageViews"}],
         "dimensionFilter": {
