@@ -79,15 +79,17 @@ Update this after every batch review.
 ### Review-acceptance streak (separate, user's rule 2026-10-06)
 
 Tracks whether the user accepted Claude's review as proposed (fix list,
-verdicts, reset calls) without needing to correct or overrule it. Any
-correction from the user (a missed problem, a wrong call, a fix they
-reject) resets it to 0. Update after each batch review, once the user has
-responded.
+verdicts, reset calls) without needing to correct or overrule it. A
+significant correction from the user (a missed problem, a wrong reset
+call, a fix they reject) resets it to 0; minor corrections (dropping a
+small flag, rewording a fix) don't count (user's rule, 2026-10-24).
+Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 0.**
-- 2026-10-24: PR #78 review corrected (stays 0): user dropped my Carlsen
-  "increment was his call" flag (a bold claim the source supports) and
-  questioned the 2400 and "sweet turn" calls (both stood, reworded).
+- **Current review-acceptance streak: 1.**
+- 2026-10-24: PR #78 review accepted (0 -> 1, minor corrections only):
+  user dropped my Carlsen "increment was his call" flag (a bold claim the
+  source supports) and questioned the 2400 and "sweet turn" calls (both
+  stood, reworded).
 - 2026-10-23: PR #77 review overruled (stays 0): my reset call on the
   Club Cup "at most one can finish on 13" line; user ruled it minor.
 - 2026-10-22: PR #76 review (stays 0): accepted, with the calendar "October's"
