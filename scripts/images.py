@@ -158,16 +158,17 @@ def _is_too_old(date: str) -> bool:
     return year.isdigit() and int(year) < MIN_ACCEPTABLE_PHOTO_YEAR
 
 
-def _search_titles(query: str, limit: int = 5) -> list:
-    data = _get(
-        {
-            "action": "query",
-            "list": "search",
-            "srsearch": query,
-            "srnamespace": 6,  # File namespace
-            "srlimit": limit,
-        }
-    )
+def _search_titles(query: str, limit: int = 5, newest: bool = False) -> list:
+    params = {
+        "action": "query",
+        "list": "search",
+        "srsearch": query,
+        "srnamespace": 6,  # File namespace
+        "srlimit": limit,
+    }
+    if newest:
+        params["srsort"] = "create_timestamp_desc"
+    data = _get(params)
     return [r["title"] for r in data.get("query", {}).get("search", [])]
 
 
@@ -579,9 +580,21 @@ def search_image(
     file, or None if nothing usable was found."""
     try:
         titles = _search_titles(query, limit=8)
-        return _fetch_first_licensed_file(
+        result = _fetch_first_licensed_file(
             titles, query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical
         )
+        # A well-photographed player's top hits can all be older than
+        # RECENT_PHOTO_YEARS, hiding newer photos further down. Caught live
+        # 2026-10-25: Nakamura's top 8 were 2008-2016, so the Bullet Brawl
+        # piece got a pool photo though 2026 photos of him exist. The
+        # newest uploads for the same query get the same checks.
+        if result is None and not historical:
+            newest = [t for t in _search_titles(query, limit=8, newest=True) if t not in titles]
+            if newest:
+                result = _fetch_first_licensed_file(
+                    newest, query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical
+                )
+        return result
     except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
         return None
 

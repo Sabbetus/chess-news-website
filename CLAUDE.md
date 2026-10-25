@@ -159,7 +159,10 @@ Update after each batch review, once the user has responded.
   our own piece, a clumsy opening; Woodward photo -> So. All 20 links and
   claims checked. Nakamura Bullet Brawl piece: generic Chess_clock pool photo
   while an unused 2026 Nakamura photo existed (swapped); "even 218 strong ...
-  for seven editions" reworded.
+  for seven editions" reworded. Fixed at the source (after the user asked
+  why it wasn't): Commons' top 8 hits for Nakamura were all 2008-2016, all
+  dropped by the 8-year recency rule; a current story's search now retries
+  the newest uploads for the same query before giving up.
 - 2026-10-24: PR #78 reset (streak 1 -> 0). Reset: the Bodhana Sivanandan
   IM-record piece carried a "Finnish clubs in Budva" section (unrelated,
   and a repeat of the Club Cup final's) -- the Finnish sub-section fired on

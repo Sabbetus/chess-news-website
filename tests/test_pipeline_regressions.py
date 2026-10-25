@@ -571,6 +571,27 @@ def test_milestone_without_subject_photo_uses_next_person(monkeypatch):
     assert any("Bodhana" in q for q in calls)
 
 
+def test_old_top_hits_fall_back_to_newest_uploads(monkeypatch):
+    # 2026-10-25: Nakamura's top Commons hits were all 2008-2016, dropped by
+    # the recency rule, so the piece got a pool photo; newer ones exist.
+    calls = []
+
+    def fake_titles(query, limit=5, newest=False):
+        calls.append(newest)
+        return ["File:New.jpg"] if newest else ["File:Old.jpg"]
+
+    def fake_fetch(titles, *a, **k):
+        return {"sourceUrl": "new"} if titles == ["File:New.jpg"] else None
+
+    monkeypatch.setattr(images, "_search_titles", fake_titles)
+    monkeypatch.setattr(images, "_fetch_first_licensed_file", fake_fetch)
+    assert images.search_image("Hikaru Nakamura") == {"sourceUrl": "new"}
+    assert calls == [False, True]
+    calls.clear()
+    assert images.search_image("Hikaru Nakamura", historical=True) is None
+    assert calls == [False]
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
