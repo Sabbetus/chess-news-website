@@ -85,7 +85,8 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 2.**
+- 2026-10-25: PR #79/#80 review accepted in full (1 -> 2).
 - 2026-10-24: PR #78 review accepted (0 -> 1, minor corrections only):
   user dropped my Carlsen "increment was his call" flag (a bold claim the
   source supports) and questioned the 2400 and "sweet turn" calls (both
@@ -150,7 +151,15 @@ Update after each batch review, once the user has responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-25: PR #79/#80 clean (streak 0 -> 1; the borderline "Wednesday"
+  was fixed without a reset ruling). Recap: "a reversal of Wednesday's loss
+  for the Uzbek" (round 4 was Tuesday, and Abdusattorov lost to Suleymanli,
+  not Giri), "Murzin's swindle rescued" (headline was softened), a line about
+  our own piece, a clumsy opening; Woodward photo -> So. All 20 links and
+  claims checked. Nakamura Bullet Brawl piece: generic Chess_clock pool photo
+  while an unused 2026 Nakamura photo existed (swapped); "even 218 strong ...
+  for seven editions" reworded.
 - 2026-10-24: PR #78 reset (streak 1 -> 0). Reset: the Bodhana Sivanandan
   IM-record piece carried a "Finnish clubs in Budva" section (unrelated,
   and a repeat of the Club Cup final's) -- the Finnish sub-section fired on
