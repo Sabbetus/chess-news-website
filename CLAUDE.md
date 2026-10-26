@@ -85,7 +85,9 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 2.**
+- **Current review-acceptance streak: 3.**
+- 2026-10-26: PR #81 review accepted (2 -> 3, minor correction): user kept
+  the 2025 Clutch game board I proposed dropping, with a caption instead.
 - 2026-10-25: PR #79/#80 review accepted in full (1 -> 2).
 - 2026-10-24: PR #78 review accepted (0 -> 1, minor corrections only):
   user dropped my Carlsen "increment was his call" flag (a bold claim the
@@ -151,7 +153,15 @@ Update after each batch review, once the user has responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 2 consecutive clean batches.**
+- 2026-10-26: PR #81 clean (streak 1 -> 2). Capablanca 1939 piece:
+  borderline "one reading ... the sat-out game ... gave Capablanca a symbolic
+  win" (the source's symbolic win is the gold) fixed; simul group photo
+  captioned as such. Clutch Chess preview: its 2025 Caruana-Nakamura board
+  had no explanation -- user wants boards kept when relevant, with a caption.
+  Fixed at the source: a gameCaption field shown in the game box; draft.py
+  writes "From the <event>" when a current story's game is from an earlier
+  year.
 - 2026-10-25: PR #79/#80 clean (streak 0 -> 1; the borderline "Wednesday"
   was fixed without a reset ruling). Recap: "a reversal of Wednesday's loss
   for the Uzbek" (round 4 was Tuesday, and Abdusattorov lost to Suleymanli,

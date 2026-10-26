@@ -86,6 +86,9 @@ const articles = defineCollection({
     // of gameEmbed when we have the game ourselves; in-body links to
     // #ply-<n> jump the board to that position.
     gamePgn: z.string().optional(),
+    // Shown with the board when the game isn't from the story's own event
+    // (e.g. last year's edition in a preview); draft.py writes it.
+    gameCaption: z.string().optional(),
     // The final result of an edition of an event with a page here: the
     // event page's winners list must agree (scripts/event_results.py adds it;
     // a test checks every published article against the page).

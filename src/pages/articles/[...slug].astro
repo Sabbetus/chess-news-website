@@ -212,7 +212,7 @@ const jsonLd = [
     </div>
 
     {article.data.gamePgn && GAMES[article.data.gamePgn] ? (
-      <GameViewer pgn={GAMES[article.data.gamePgn]} />
+      <GameViewer pgn={GAMES[article.data.gamePgn]} caption={article.data.gameCaption} />
     ) : (
       article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />
     )}

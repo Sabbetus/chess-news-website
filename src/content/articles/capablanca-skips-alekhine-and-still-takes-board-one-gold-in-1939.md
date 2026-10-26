@@ -6,14 +6,14 @@ sourceUrl: "https://en.chessbase.com/post/capablanca-wins-gold-buenos-aires-1939
 lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 112
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "At the 1939 Buenos Aires Olympiad, Capablanca sat out his round against Alekhine, stayed unbeaten, and won board-one gold in his last tournament. Alekhine took silver."
 metaDescription: "Capablanca played his final tournament at the 1939 Buenos Aires Olympiad, going unbeaten, avoiding Alekhine and winning board-one gold as war broke out."
 image:
   src: "./_images/Simult_nea_de_Jos__Raul_Capablanca_no_CXSP.webp"
   credit: "Clube de Xadrez São Paulo, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ASimult%C3%A2nea_de_Jos%C3%A9_Raul_Capablanca_no_CXSP.jpg"
-  caption: "José Raúl Capablanca"
+  caption: "Capablanca giving a simultaneous exhibition at the São Paulo Chess Club"
 gamePgn: "capablanca-skips-alekhine-and-still-takes-board-one-gold-in-1939.pgn"
 ---
 
@@ -43,7 +43,7 @@ Capablanca went unbeaten, scoring 11½ from 16 games (+7, =9, -0). Alekhine was 
 
 Only final-group results counted for individual medals, though. Capablanca made 8½/11 there and took board-one gold. Alekhine managed 7½/10 for silver.
 
-One reading is that the sat-out game cost Alekhine nothing on paper but gave Capablanca a symbolic win anyway.
+The gold gave Capablanca one last, symbolic victory over his great rival.
 
 His last tournament game was against Brazil's Octávio Trompowsky, whose name is attached to 1.d4 Nf6 2.Bg5. Capablanca avoided opening theory and tactical complications, outplayed his opponent in the middlegame by simple means, and converted the endgame without difficulty. It was the style of countless earlier wins.
 

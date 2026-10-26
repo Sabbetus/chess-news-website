@@ -42,7 +42,7 @@ from continents import CONTINENT_SLUGS
 from game_links import link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import find_game_pgn
-from images import fallback_image, localize_image, person_caption, pick_image_for_item
+from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
     SAN_MOVE_RE,
@@ -1982,6 +1982,9 @@ def draft_one(
             GAMES_DIR.mkdir(parents=True, exist_ok=True)
             (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
             fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
+            caption = game_caption(pgn, parsed.get("lens"), datetime.now(timezone.utc).year)
+            if caption:
+                fm_lines.insert(len(fm_lines) - 1, f"gameCaption: {json.dumps(caption)}")
             body_markdown = linked_body
             if unmatched:
                 GAME_LINK_NOTES.append((out_path.stem, unmatched))
@@ -2008,6 +2011,24 @@ BATCH_MAX_RETRIES = 5
 # remaining drafts still look fine, and the piece that never got written
 # leaves no trace in front of the person deciding what to merge.
 RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
+
+def game_caption(pgn: str, lens: str | None, this_year: int) -> str | None:
+    """A line saying where the board's game is from, when a current story
+    shows a game from an earlier year (user's call, 2026-10-26: the Clutch
+    Chess preview's board was a 2025 game -- keep it, but say so).
+    Historical pieces are about old games, so they need none."""
+    if lens in HISTORICAL_LENSES:
+        return None
+    date = re.search(r'^\[Date "(\d{4})', pgn, re.MULTILINE)
+    if not date or int(date.group(1)) >= this_year:
+        return None
+    year = date.group(1)
+    event = re.search(r'^\[Event "(.*?)"\]', pgn, re.MULTILINE)
+    name = event.group(1).strip() if event else ""
+    if not name or name == "?":
+        return f"A game from {year}"
+    return f"From the {name}" if year in name else f"From the {name}, {year}"
+
 
 # Our own game files for GameViewer (gamePgn), and quoted moves that didn't
 # match the game, collected per article for the run report.

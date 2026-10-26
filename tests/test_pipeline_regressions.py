@@ -592,6 +592,15 @@ def test_old_top_hits_fall_back_to_newest_uploads(monkeypatch):
     assert calls == [False]
 
 
+def test_old_game_on_a_current_story_gets_a_caption():
+    # 2026-10-26: the Clutch Chess preview showed a 2025 game unexplained.
+    old = '[Event "Clutch Chess Champions Showdown 2025"]\n[Date "2025.10.27"]\n'
+    assert draft.game_caption(old, "money-angle", 2026) == "From the Clutch Chess Champions Showdown 2025"
+    assert draft.game_caption(old.replace(" 2025\"", "\""), "news", 2026) == "From the Clutch Chess Champions Showdown, 2025"
+    assert draft.game_caption(old, "historical-parallel", 2026) is None
+    assert draft.game_caption(old.replace("2025.", "2026."), "news", 2026) is None
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

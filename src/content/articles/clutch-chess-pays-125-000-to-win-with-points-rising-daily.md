@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/clutch-chess-showdown-2026-preview"
 lens: "money-angle"
 continent: "north-america"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana, Nakamura, Pragg and Sindarov play the Clutch Chess Champions Showdown in Saint Louis, 27-29 Oct: $425,000 in prizes, a draw-funded jackpot, and wins worth triple on day three."
 metaDescription: "Caruana, Nakamura, Praggnanandhaa and Sindarov play the $425,000 Clutch Chess Champions Showdown in Saint Louis, 27-29 October, with a draw-funded jackpot."
 image:
@@ -15,6 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_chess_player.jpg"
   caption: "Javokhir Sindarov"
 gamePgn: "clutch-chess-pays-125-000-to-win-with-points-rising-daily.pgn"
+gameCaption: "From the Clutch Chess Champions Showdown 2025"
 ---
 
 The Saint Louis Chess Club hosts the Clutch Chess: Champions Showdown from 27 to 29 October, and [the field and format are now set](https://en.chessbase.com/post/clutch-chess-showdown-2026-preview). Fabiano Caruana, Hikaru Nakamura, Praggnanandhaa Rameshbabu and Javokhir Sindarov will play an 18-game rapid event for $425,000.

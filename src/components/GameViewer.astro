@@ -12,8 +12,9 @@ import { Chess } from 'chess.js';
 
 interface Props {
   pgn: string;
+  caption?: string;
 }
-const { pgn } = Astro.props;
+const { pgn, caption } = Astro.props;
 
 const chess = new Chess();
 chess.loadPgn(pgn);
@@ -51,6 +52,7 @@ const data = JSON.stringify(positions);
 ---
 
 <figure class="gv" id="game-embed" data-positions={data} tabindex="0" aria-label={`Game viewer: ${white} vs ${black}`}>
+  {caption && <p class="gv-caption">{caption}</p>}
   <div class="gv-main">
     <div class="gv-board-wrap">
       <div class="gv-board" role="img" aria-live="polite">
@@ -295,6 +297,12 @@ const data = JSON.stringify(positions);
   .gv-move:hover { background: var(--rule-soft); }
   .gv-move.active { background: #bfcfdd; color: #111; font-weight: 600; }
   .gv-credit a { color: inherit; }
+  .gv-caption {
+    margin: 0 0 8px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-style: italic;
+  }
   .gv-credit {
     margin-top: 6px;
     font: 11px 'IBM Plex Mono', monospace;
