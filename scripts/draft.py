@@ -544,7 +544,7 @@ Vary the actual construction, not just the words. Before settling on a title, ch
 - "Why [Subject] [Verb]s More Than [Comparison]"
 A headline built as a direct statement ("Cuba Stays Perfect as the Field Nearly Doubles"), a plain declarative sentence naming who did what, or one anchored on a single concrete number, is often the more natural choice -- don't reach for a possessive-noun-plus-colon or a comparison-verb template purely out of habit. If you notice yourself writing "X's Y [verb]s Z" or "X: Y" for the second title in a row, deliberately write this one a different way.
 @@SOCIAL_COPY@@
-a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty. Write it in plain, everyday words a general reader knows: no sports-journalism slang ("side" for a team, "outfit", "skipper") and no uncommon words ("peering", "vaunted") -- say "team", "looking at" (user's rule, 2026-10-27).
 @@META_DESCRIPTION@@
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@IMAGE_SUBJECTS@@
@@ -639,7 +639,7 @@ a clear, specific headline for this piece (not a generic restatement). Aim for 4
 
 Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
 @@SOCIAL_COPY@@
-a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag. Write it in plain, everyday words a general reader knows: no sports-journalism slang ("side" for a team, "outfit", "skipper") and no uncommon words ("peering", "vaunted") -- say "team", "looking at" (user's rule, 2026-10-27).
 @@META_DESCRIPTION@@
 a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
 @@BODY_MARKDOWN@@
