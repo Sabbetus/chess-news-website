@@ -7,7 +7,7 @@ lens: "people"
 continent: "europe"
 selectionScore: 94
 reviewStatus: "published"
-socialCopy: "SK Weisse Dame Hamburg, a fourth-tier German side, won two matches at the European Club Cup in Budva. Their player-writer René Mandelbaum tells of a long border wait, cold rooms and Giri peering at a board."
+socialCopy: "SK Weisse Dame Hamburg, a club from Germany's fourth division, won two matches at the European Club Cup. Player René Mandelbaum writes about a long border wait, cold hotel rooms and Giri stopping to look at a game."
 metaDescription: "René Mandelbaum describes how fourth-tier SK Weisse Dame Hamburg, rated around 1981 on average, won two matches at the 2026 European Club Cup in Budva."
 image:
   src: "./_images/Poertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.webp"
