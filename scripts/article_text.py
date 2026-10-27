@@ -108,7 +108,14 @@ def extract_chesscom_text(page_html: str) -> str | None:
 # ChessBase's "by Press release" Dortmund 2027 announcement read as an
 # advertisement).
 PRESS_RELEASE = "\x00press-release"
-_PRESS_RELEASE_BYLINE_RE = re.compile(r'blog-author-line[^>]*>\s*by\s+Press\s+release', re.IGNORECASE)
+# An organisation writing about itself counts too (caught 2026-10-27:
+# "by Kasparov Chess Foundation", its academy's season recap and 2027
+# sign-up pitch).
+_PRESS_RELEASE_BYLINE_RE = re.compile(
+    r'blog-author-line[^>]*>\s*by\s+(?:Press\s+release'
+    r'|[^<]*\b(?:Foundation|Academy|Federation|Association|Organi[sz]ers?|Festival)\b)',
+    re.IGNORECASE,
+)
 
 
 def is_press_release_page(page_html: str) -> bool:

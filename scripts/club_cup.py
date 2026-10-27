@@ -44,10 +44,21 @@ def _cells(row_html: str) -> list[str]:
     return [html.unescape(re.sub(r"<[^>]+>", "", c)).strip() for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row_html, re.S)]
 
 
+# A round or result report, not a feature set at the event (caught
+# 2026-10-27: an amateur team's travel diary after the event repeated the
+# final's Finnish section).
+RESULTS_RE = re.compile(
+    r"\bround\b|\bfinal\b|\bwins?\b|\bwon\b|\bchampions?\b|\blead|\btied\b|\bperfect\b"
+    r"|\bbeats?\b|\blos[es]\b|\bloss\b|\bdraws?\b|\bresults?\b|\bstandings\b|\bday \d",
+    re.IGNORECASE,
+)
+
+
 def is_club_cup(item: dict) -> bool:
     # The headline only: a story set at the event but about something else
     # (caught 2026-10-24: Bodhana's IM record) gets no Finnish sub-section.
-    return bool(CLUB_CUP_RE.search(item.get("title", "")))
+    title = item.get("title", "")
+    return bool(CLUB_CUP_RE.search(title) and RESULTS_RE.search(title))
 
 
 def tournament_ids(item: dict) -> list[str]:

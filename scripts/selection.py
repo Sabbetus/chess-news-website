@@ -137,7 +137,12 @@ ADMIN_NOTICE_TITLE_PATTERNS = [
 
 # The same kind of notice can hide behind a neutral headline; its body sends
 # readers to a ticket or sign-up page.
-ADMIN_NOTICE_BODY_RE = re.compile(r"tickets\.fide\.com|secure your (place|spot|seat)", re.IGNORECASE)
+ADMIN_NOTICE_BODY_RE = re.compile(
+    r"tickets\.fide\.com|secure your (place|spot|seat)"
+    # A course or programme's sign-up pitch (caught 2026-10-27: KCF Academy).
+    r"|registration (is )?(now )?open(s|ed)? for|to join, visit|sign[- ]?up (now|today|at)",
+    re.IGNORECASE,
+)
 
 
 def is_promotional(item: dict) -> bool:

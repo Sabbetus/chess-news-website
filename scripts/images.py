@@ -628,17 +628,24 @@ def _loosened_event_query(subject: str) -> str | None:
 
 
 _ORGANISATION_WORDS = {"federation", "council", "commission", "association", "union", "committee", "board"}
+# Club-name prefixes ("SK Weisse Dame Hamburg", "SC Erlangen"), not a body
+# with a logo of its own (caught 2026-10-27: "SK" found the SK Gaming logo).
+_CLUB_PREFIXES = {"SK", "SC", "SV", "SG", "SF", "CE", "CA", "CC", "AS", "SS", "TSV", "VFL", "USC", "ASD"}
+
+
+def _acronyms(subject: str) -> list[str]:
+    return [w for w in subject.split() if len(w) >= 2 and w.isupper() and w.strip(".") not in _CLUB_PREFIXES]
 
 
 def _organisation_name(subject: str) -> str:
     """"FIDE Council" -> "FIDE": the body that has a logo."""
-    acronyms = [w for w in subject.split() if len(w) >= 2 and w.isupper()]
+    acronyms = _acronyms(subject)
     return acronyms[0] if acronyms else subject
 
 
 def _is_organisation(subject: str) -> bool:
     words = subject.split()
-    return any(w.isupper() and len(w) >= 2 for w in words) or any(w.lower() in _ORGANISATION_WORDS for w in words)
+    return bool(_acronyms(subject)) or any(w.lower() in _ORGANISATION_WORDS for w in words)
 
 
 def build_query_cascade(

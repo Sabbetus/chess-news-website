@@ -601,6 +601,30 @@ def test_old_game_on_a_current_story_gets_a_caption():
     assert draft.game_caption(old.replace("2025.", "2026."), "news", 2026) is None
 
 
+def test_organisation_bylines_and_signup_pitches_are_skipped():
+    # 2026-10-27: "by Kasparov Chess Foundation", a 2027 sign-up pitch.
+    import article_text
+    assert article_text.is_press_release_page('<span class="blog-author-line">by Kasparov Chess Foundation</span>')
+    assert article_text.is_press_release_page('<span class="blog-author-line">by Press release</span>')
+    assert not article_text.is_press_release_page('<span class="blog-author-line">by Johannes Fischer</span>')
+    assert selection.is_promotional({"title": "KCF Academy: Third Season Highlights",
+                                     "summary": "For more information and to join, visit kcfacademy.org"})
+
+
+def test_club_prefix_is_not_an_organisation_logo():
+    # 2026-10-27: "SK Weisse Dame Hamburg" searched for an "SK" logo.
+    assert not images._is_organisation("SK Weisse Dame Hamburg")
+    assert images._organisation_name("FIDE Council") == "FIDE"
+
+
+def test_finnish_section_only_on_club_cup_results():
+    # 2026-10-27: an amateur's post-event diary repeated the final's section.
+    import club_cup
+    assert not club_cup.is_club_cup({"title": "European Club Cup: Amateurs rub shoulders with the pros"})
+    assert club_cup.is_club_cup({"title": "European Club Cup 2026: Round 3"})
+    assert club_cup.is_club_cup({"title": "Bayegan Pendik and Monte-Carlo are 2026 European Club Cup champions"})
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

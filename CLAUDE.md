@@ -85,7 +85,8 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 3.**
+- **Current review-acceptance streak: 4.**
+- 2026-10-27: PR #82 review accepted in full (3 -> 4).
 - 2026-10-26: PR #81 review accepted (2 -> 3, minor correction): user kept
   the 2025 Clutch game board I proposed dropping, with a caption instead.
 - 2026-10-25: PR #79/#80 review accepted in full (1 -> 2).
@@ -153,7 +154,19 @@ Update after each batch review, once the user has responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 2 consecutive clean batches.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-27: PR #82 reset (streak 2 -> 0). Resets: KCF Academy's own
+  season recap and 2027 sign-up pitch ("by Kasparov Chess Foundation") was
+  drafted (dropped); the Hamburg amateur-team piece showed the SK Gaming
+  esports logo -- "SK Weisse Dame Hamburg" was read as an organisation with
+  the acronym "SK" (now a neutral photo). Borderline, fixed: "landed on 23
+  October" (the source's slip; round 3 was 19 October), Finnish section
+  repeating the final's (cut to the Etela-Vantaan result). Minor: "ranked
+  99th" (finished; seeded 91st). Fixed at the source: organisation bylines
+  (Foundation, Academy, Federation...) count as press releases; sign-up
+  pitches in the body are skipped as notices; club prefixes (SK, SC, SV...)
+  don't make a logo search; the Finnish section needs a round/result
+  headline.
 - 2026-10-26: PR #81 clean (streak 1 -> 2). Capablanca 1939 piece:
   borderline "one reading ... the sat-out game ... gave Capablanca a symbolic
   win" (the source's symbolic win is the gold) fixed; simul group photo
@@ -481,8 +494,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-24 (PR #78, see above).
-- Earlier resets: 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-27 (PR #82, see above).
+- Earlier resets: 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
