@@ -585,6 +585,28 @@ Rules:
 - Respond with the ENTIRE body Markdown, verbatim except for that one added link, and nothing else -- no preamble, no explanation, no code fence."""
 
 
+def embed_game_pgn(embed_url: str) -> str | None:
+    """The PGN of the one game an embed URL shows
+    (.../embed/broadcast/<tour>/<round>/<roundId>/<gameId>), or None."""
+    parts = embed_url.rstrip("/").split("/")
+    if len(parts) < 2:
+        return None
+    round_id, game_id = parts[-2], parts[-1]
+    try:
+        response = requests.get(
+            f"https://lichess.org/api/broadcast/round/{round_id}.pgn",
+            headers={"User-Agent": USER_AGENT},
+            timeout=REQUEST_TIMEOUT,
+        )
+        response.raise_for_status()
+    except requests.RequestException:
+        return None
+    for game in re.split(r"\n\n(?=\[Event )", response.text):
+        if f"/{game_id}" in game:
+            return game.strip()
+    return None
+
+
 def add_embed_scroll_link(client, body_markdown: str, player1: str, player2: str) -> str:
     """Wrap one short, already-existing phrase describing the embedded game
     in a Markdown link to "#game-embed", so a reader can jump straight to

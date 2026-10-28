@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/roman-shogdzhiev-second-gm-norm"
 lens: "results"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Eleven-year-old Roman Shogdzhiev beat three 2600+ grandmasters in Serbia and earned his second GM norm. One more norm and 2500 would make him the youngest grandmaster ever."
 metaDescription: "Roman Shogdzhiev, 11, scored 6/9 for Partizan in the Serbian Super Liga for his second GM norm, with wins over three 2600-rated grandmasters."
 image:
@@ -52,4 +52,4 @@ Shogdzhiev has until late June 2027 to beat Mishra. If he finishes before his 12
 
 The pace of the current junior generation is striking. England's Bodhana Sivanandan, also born in 2015, recently became [the youngest female international master ever](/articles/bodhana-sivanandan-11-beats-polgar-s-1988-age-record-for-female-im/), passing Judit Polgar's record.
 
-Our earlier piece on [Shogdzhiev being one norm from Mishra's record](/articles/roman-shogdzhiev-11-is-one-gm-norm-from-mishra-s-record/) covered the first norm. The next question is where he finds a third norm opportunity, with about eight months to the birthday deadline.
+Our earlier piece on [Shogdzhiev being one norm from Mishra's record](/articles/roman-shogdzhiev-11-is-one-gm-norm-from-mishra-s-record/) covered the first norm. The next question is where he finds a third norm opportunity, with about eight months left to beat Mishra's mark.

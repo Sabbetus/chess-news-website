@@ -65,6 +65,32 @@ def link_moves(body: str, pgn: str) -> tuple[str, list[str]]:
     return "\n".join(out_lines), unmatched
 
 
+def fix_embed_link(body: str, pgn: str) -> str:
+    """A quoted move linked to "#game-embed" must be a move of that game.
+    Caught 2026-10-28: Clutch Chess day 1 linked 58...hxg5 (game 1) to the
+    embedded game 2. A move that isn't in the game is unlinked, and the
+    first quoted move that is gets the link instead (none if none is)."""
+    sans = mainline_sans(pgn)
+
+    def played(m: re.Match) -> bool:
+        number, black, san = int(m.group(1)), bool(m.group(2)), m.group(3)
+        ply = 2 * number - (0 if black else 1)
+        return 1 <= ply <= len(sans) and _bare(sans[ply - 1]) == _bare(san)
+
+    def check(m: re.Match) -> str:
+        move = MOVE_RE.fullmatch(m.group(1))
+        return m.group(0) if move is None or played(move) else m.group(1)
+
+    fixed = re.sub(r"\[([^\]]+)\]\(#game-embed\)", check, body)
+    if "(#game-embed)" in fixed:
+        return fixed
+    for m in MOVE_RE.finditer(fixed):
+        before = fixed[: m.start()]
+        if played(m) and before.count("[") == before.count("]"):
+            return fixed[: m.start()] + f"[{m.group(0)}](#game-embed)" + fixed[m.end():]
+    return fixed
+
+
 def main() -> None:
     article_path, pgn_path = sys.argv[1], sys.argv[2]
     text = open(article_path, encoding="utf-8").read()

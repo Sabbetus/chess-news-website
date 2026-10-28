@@ -625,6 +625,29 @@ def test_finnish_section_only_on_club_cup_results():
     assert club_cup.is_club_cup({"title": "Bayegan Pendik and Monte-Carlo are 2026 European Club Cup champions"})
 
 
+def test_reports_naming_the_same_event_reach_the_merge_check():
+    # 2026-10-28: both Clutch Chess day-one reports were drafted.
+    a = {"title": "Clutch Chess: Nakamura leads after lively first day of action",
+         "summary": "Hikaru Nakamura took the early lead at the Clutch Chess: Champions Showdown tournament"}
+    b = {"title": "Nakamura Leads After Wins Vs. Caruana & Praggnanandhaa",
+         "summary": "GM Hikaru Nakamura leads by half a point after day one of Clutch Chess: Champions Showdown 2026."}
+    assert selection._same_major_event(a, b)
+
+
+def test_board_link_only_on_a_move_of_the_embedded_game():
+    # 2026-10-28: 58...hxg5 (game 1) was linked to the embedded game 2.
+    import game_links
+    pgn = '[Event "x"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 *'
+    body = "First [2...d6](#game-embed) in another game, then 3...a6 here."
+    assert game_links.fix_embed_link(body, pgn) == "First 2...d6 in another game, then [3...a6](#game-embed) here."
+
+
+def test_editor_notes_are_stripped_from_the_body():
+    # 2026-10-28: "The leads and format text are unchanged below, with one link added."
+    body = "The leads and format text are unchanged below, with one link added.\n\nNakamura leads."
+    assert draft.strip_editor_notes(body) == "Nakamura leads."
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

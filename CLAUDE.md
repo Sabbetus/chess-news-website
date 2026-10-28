@@ -85,7 +85,8 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 4.**
+- **Current review-acceptance streak: 5.**
+- 2026-10-28: PR #83 review accepted in full (4 -> 5).
 - 2026-10-27: PR #82 review accepted in full (3 -> 4).
 - 2026-10-26: PR #81 review accepted (2 -> 3, minor correction): user kept
   the 2025 Clutch game board I proposed dropping, with a caption instead.
@@ -155,6 +156,20 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-28: PR #83 reset (streak stays at 0). Resets: ChessBase's and
+  Chess.com's Clutch Chess day-one reports were both drafted (merged by hand
+  into the ChessBase piece, Chess.com as second source) -- Clutch Chess isn't
+  on the major list and name overlap missed, so the pair never reached the
+  merge check; and the ChessBase piece linked 58...hxg5 (game 1) to the
+  embedded game 2. The Chess.com draft also opened with a model's editing
+  note ("unchanged below, with one link added"). Borderline: "winning queen
+  endgame" (rooks; ChessBase's slip). Minor: "the one he will replay",
+  "zugzwang-style control", "a 1.5-point gap"; Shogdzhiev "eight months to
+  the birthday deadline" (eight to Mishra's mark, three to the birthday).
+  Fixed at the source: any event name shared by two openings sends the pair
+  to the merge check; a "#game-embed" link must be a move of the embedded
+  game (else it moves to one that is); paragraphs that talk about the
+  editing are stripped.
 - 2026-10-27: PR #82 reset (streak 2 -> 0). Resets: KCF Academy's own
   season recap and 2027 sign-up pitch ("by Kasparov Chess Foundation") was
   drafted (dropped); the Hamburg amateur-team piece showed the SK Gaming

@@ -39,7 +39,7 @@ from chess_results_standings import (
     standings_markdown_table,
 )
 from continents import CONTINENT_SLUGS
-from game_links import link_moves
+from game_links import fix_embed_link, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import find_game_pgn
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
@@ -47,6 +47,7 @@ from lichess_game import (
     GAME_LOOKUP_CRITERIA,
     SAN_MOVE_RE,
     add_embed_scroll_link,
+    embed_game_pgn,
     find_game_embed,
     recheck_game_lookup,
 )
@@ -1381,6 +1382,23 @@ def title_holders_note() -> str:
     return "\n".join(lines)
 
 
+# A model's note about its own edits, not article text. Caught 2026-10-28:
+# "The leads and format text are unchanged below, with one link added."
+# opened a Clutch Chess draft.
+_EDITOR_NOTE_RE = re.compile(
+    r"\b(unchanged (below|above)|(one|a|the) link (was )?added|no (other )?changes (were )?(needed|made)"
+    r"|(i|we)('ve| have) (corrected|fixed|added|removed|kept|changed)|corrected version|revised (body|version))\b",
+    re.IGNORECASE,
+)
+
+
+def strip_editor_notes(body: str) -> str:
+    """Drops whole paragraphs that only talk about the editing."""
+    paragraphs = body.split("\n\n")
+    kept = [p for p in paragraphs if not (_EDITOR_NOTE_RE.search(p) and len(p) < 300 and "](" not in p)]
+    return "\n\n".join(kept)
+
+
 def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict:
     """Independent second pass: re-checks every non-trivial factual claim in the finished
     body against the actual source text the drafting call was given, fixing or removing
@@ -1934,6 +1952,8 @@ def draft_one(
         body_markdown = body_markdown.rstrip() + "\n\n" + RANKINGS_LINE
     bad_links = check_article_links(body_markdown)
 
+    body_markdown = strip_editor_notes(body_markdown)
+
     # After the paragraph/link checks (an added scroll-link only touches
     # one short phrase, but run it after paragraph fixing rather than
     # before so it can't get silently rewritten/dropped by that pass) and
@@ -1944,6 +1964,9 @@ def draft_one(
             body_markdown = add_embed_scroll_link(
                 client, body_markdown, game_lookup["player1"], game_lookup["player2"]
             )
+            embed_pgn = embed_game_pgn(embed["url"] if isinstance(embed, dict) else embed)
+            if embed_pgn:
+                body_markdown = fix_embed_link(body_markdown, embed_pgn)
         except Exception as exc:
             print(f"  Game embed scroll-link failed for '{item['title']}': {exc}", file=sys.stderr)
 

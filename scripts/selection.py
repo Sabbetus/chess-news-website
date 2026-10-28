@@ -995,13 +995,35 @@ def _lead_event(item: dict) -> str | None:
     return re.sub(r"\bchess\s+", "", event.replace("u.s.", "us")) if event else None
 
 
+# A named event in an item's opening: a few capitalised words ending in an
+# event word ("Clutch Chess: Champions Showdown", "Serbian Super Liga").
+_EVENT_PHRASE_RE = re.compile(
+    r"((?:[A-Z][\w'\u2019.&-]*:?\s+){1,5}(?:Championships?|Cup|Showdown|Open|Memorial|Classic|Tour|Liga"
+    r"|League|Olympiad|Festival|Masters|Invitational|Brawl|Tuesday|Friday))\b"
+)
+
+
+def _lead_event_phrases(item: dict) -> set[str]:
+    lead = f"{item.get('title', '')}. {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS]}"
+    out = set()
+    for phrase in _EVENT_PHRASE_RE.findall(lead):
+        words = re.sub(r"[:.]", " ", phrase.lower()).split()
+        words = [w for w in words if w not in {"the", "chess", "2025", "2026", "2027"}]
+        if len(words) >= 2:
+            out.add(" ".join(words))
+    return out
+
+
 def _same_major_event(a: dict, b: dict) -> bool:
-    """Both open on the same major event -- enough to ask the model, even
-    when the name overlap misses. Caught live 2026-10-20: Chess.com's Club
-    Cup round 3 report, headlined on Erdogmus, and ChessBase's round 3
-    report were both drafted."""
+    """Both open on the same event -- enough to ask the model, even when
+    the name overlap misses. Caught live 2026-10-20: Chess.com's Club Cup
+    round 3 report, headlined on Erdogmus, and ChessBase's round 3 report
+    were both drafted. And 2026-10-28: both Clutch Chess day-one reports,
+    an event not on the major list -- any shared event name counts."""
     event = _lead_event(a)
-    return event is not None and event == _lead_event(b)
+    if event is not None and event == _lead_event(b):
+        return True
+    return bool(_lead_event_phrases(a) & _lead_event_phrases(b))
 
 
 def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
