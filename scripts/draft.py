@@ -1883,7 +1883,9 @@ def draft_one(
             # on a Lichess broadcast) -- only log and skip, never fail the
             # whole draft over a lookup that didn't pan out.
             try:
-                embed = find_game_embed(client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"])
+                embed = find_game_embed(
+                    client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"], body_markdown
+                )
             except Exception as exc:
                 print(f"  Game embed lookup failed for '{item['title']}': {exc}", file=sys.stderr)
                 embed = None

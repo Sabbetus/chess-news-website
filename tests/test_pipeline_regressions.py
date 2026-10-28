@@ -648,6 +648,16 @@ def test_editor_notes_are_stripped_from_the_body():
     assert draft.strip_editor_notes(body) == "Nakamura leads."
 
 
+def test_quoted_moves_pick_the_game_among_a_pairs_games():
+    # 2026-10-28: Clutch Chess pairs two players twice per round.
+    import lichess_game
+    game1 = '[Event "x"]\n\n1. e4 e5 2. Nf3 Nc6 *'
+    game2 = '[Event "x"]\n\n1. d4 d5 2. c4 e6 *'
+    body = "After 1.e4 e5 2.Nf3 the game was level."
+    assert lichess_game._quoted_moves_in(game1, body) == 2
+    assert lichess_game._quoted_moves_in(game2, body) == 0
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

@@ -170,6 +170,10 @@ Update after each batch review, once the user has responded.
   to the merge check; a "#game-embed" link must be a move of the embedded
   game (else it moves to one that is); paragraphs that talk about the
   editing are stripped.
+  Later (user's call): when a Lichess round holds several games between
+  one pair, the lookup takes the one with the most of the article's quoted
+  moves; the last game (the decider) only when the moves don't tell them
+  apart.
 - 2026-10-27: PR #82 reset (streak 2 -> 0). Resets: KCF Academy's own
   season recap and 2027 sign-up pitch ("by Kasparov Chess Foundation") was
   drafted (dropped); the Hamburg amateur-team piece showed the SK Gaming

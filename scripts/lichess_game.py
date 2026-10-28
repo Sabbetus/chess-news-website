@@ -185,6 +185,25 @@ def find_broadcast_round(client, event: str, player1: str, player2: str) -> tupl
     return (match.group(1), match.group(2), match.group(3))
 
 
+# The article body for the lookup in progress (set by find_game_embed), so
+# a round holding several games between one pair can pick the one quoted.
+_article_body = ""
+
+
+def _quoted_moves_in(game_pgn: str, body: str) -> int:
+    """How many moves quoted in the body ("58...hxg5") were played at that
+    point in this game."""
+    from game_links import MOVE_RE, _bare, mainline_sans
+
+    sans = mainline_sans(game_pgn)
+    count = 0
+    for m in MOVE_RE.finditer(body or ""):
+        ply = 2 * int(m.group(1)) - (0 if m.group(2) else 1)
+        if 1 <= ply <= len(sans) and _bare(sans[ply - 1]) == _bare(m.group(3)):
+            count += 1
+    return count
+
+
 def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     """Fetches the round's PGN from Lichess's broadcast API and returns the
     matched game's own GameURL tag if exactly one game's White/Black pair
@@ -221,12 +240,25 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
             surname2 in white_tokens and surname1 in black_tokens
         )
         if matched:
-            matches.append(game_url.group(1))
+            matches.append((game_url.group(1), game_pgn))
 
     if len(matches) == 1:
         print(f"    lichess lookup: matched exactly 1 game of {games_seen} in round {round_id!r}", file=sys.stderr)
-        return matches[0]
+        return matches[0][0]
     if len(matches) > 1:
+        # The game the article actually quotes, when its moves tell them
+        # apart (user's call, 2026-10-28: Clutch Chess pairs two players
+        # twice per round, and the decider rule embedded game 2 for a piece
+        # built around game 1's blunder).
+        scores = [_quoted_moves_in(pgn, _article_body) for _, pgn in matches]
+        if max(scores) > 0 and scores.count(max(scores)) == 1:
+            best = scores.index(max(scores))
+            print(
+                f"    lichess lookup: {len(matches)} games between the same pair in round {round_id!r}, "
+                f"taking game {best + 1}, which has {scores[best]} of the article's quoted moves",
+                file=sys.stderr,
+            )
+            return matches[best][0]
         # Several games between the same two players in one round are a
         # tiebreak or match round; the last one is the decider -- caught
         # live 2026-10-13: Shenzhen's three-game tiebreak round was skipped
@@ -236,7 +268,7 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
             f"taking the last (the decider)",
             file=sys.stderr,
         )
-        return matches[-1]
+        return matches[-1][0]
     print(
         f"    lichess lookup: {len(matches)} game(s) matched surnames "
         f"{surname1!r}/{surname2!r} out of {games_seen} in round {round_id!r} "
@@ -455,7 +487,7 @@ def embed_url_from_game_url(game_url: str) -> str:
     return game_url.replace("lichess.org/broadcast/", "lichess.org/embed/broadcast/", 1)
 
 
-def find_game_embed(client, event: str, player1: str, player2: str) -> dict | None:
+def find_game_embed(client, event: str, player1: str, player2: str, body: str = "") -> dict | None:
     """Top-level entry point: returns {"url": <embed url>} or None. Never
     raises for a "just didn't find it" outcome -- only network/programming
     errors propagate, since a missing embed is an expected, normal result
@@ -472,6 +504,8 @@ def find_game_embed(client, event: str, player1: str, player2: str) -> dict | No
     Tries the free, deterministic KNOWN_BROADCAST_TOURNAMENTS path first --
     see its own docstring for why the web-search finder alone isn't
     reliable enough on its own for events this pipeline tracks regularly."""
+    global _article_body
+    _article_body = body
     print(f"    lichess lookup: event={event!r} player1={player1!r} player2={player2!r}", file=sys.stderr)
 
     game_url = find_round_via_known_tournament(event, player1, player2)
