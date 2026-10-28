@@ -71,6 +71,8 @@ Caruana was less pleased with his own day: "I was kind of saving all the losing 
 
 **What comes next**
 
-The day produced five decisive games and seven draws, with plenty of time-trouble swings behind the draws. With twelve games each still to play across the next two days, Nakamura's lead of half a point over Sindarov, and two over Pragg, is small. A single won mini-match on Wednesday, at two points a win, could reshuffle the table, and Thursday's triple-weighted wins count for even more.
+The day produced five decisive games and seven draws, with plenty of time-trouble swings behind the draws.
+
+With twelve games each still to play across the next two days, Nakamura's lead of half a point over Sindarov, and two over Pragg, is small. A single won mini-match on Wednesday, at two points a win, could reshuffle the table, and Thursday's triple-weighted wins count for even more.
 
 Day two starts at 1 p.m. ET on Wednesday, 28 October.
