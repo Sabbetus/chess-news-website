@@ -10,9 +10,10 @@ reviewStatus: "published"
 socialCopy: "Two Kazakh grandmasters, 16-year-old Edgar Mamedov and Denis Makhnev, share the lead at the KazChess Masters in Almaty on 2½/3. Dubov, Vokhidov and Lazavik trail by half a point."
 metaDescription: "Kazakhstan's Edgar Mamedov and Denis Makhnev lead the KazChess Masters in Almaty on 2½/3, with Dubov, Vokhidov and Lazavik half a point back."
 image:
-  src: "./_images/Chess_clock.webp"
-  credit: "Thomas Depenbusch, CC BY 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_clock.jpg"
+  src: "./_images/DaniilDubov19a.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADaniilDubov19a.jpg"
+  caption: "Daniil Dubov, half a point behind the leaders"
 gamePgn: "mamedov-16-and-makhnev-lead-the-kazchess-masters-on-2-3.pgn"
 ---
 

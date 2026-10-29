@@ -686,6 +686,28 @@ def test_lichess_lookup_gets_the_body_that_exists():
     assert "body_for_recheck" in call and "body_markdown" not in call
 
 
+def test_event_headlines_with_a_colon_are_not_profiles():
+    # 2026-10-29: "KazChess Masters: ..." got the +40 feature bonus.
+    assert not selection.is_feature_story({"sourceName": "ChessBase", "title": "KazChess Masters: Mamedov and Makhnev set the pace in Almaty"})
+    assert not selection.is_feature_story({"sourceName": "ChessBase", "title": "Clutch Chess: Nakamura leads after lively first day of action"})
+
+
+def test_elite_field_outscores_a_regular_masters():
+    # 2026-10-29: Clutch Chess (Caruana, Nakamura, Pragg, Sindarov) scored
+    # below the KazChess Masters.
+    item = {"title": "Praggnanandhaa Jumps From Last To 1st With Hat Trick",
+            "summary": "Praggnanandhaa won twice against Hikaru Nakamura and once against Fabiano Caruana. Javokhir Sindarov is second."}
+    assert selection.score_elite_field(item) == selection.ELITE_FIELD_BONUS[3]
+    assert selection.score_elite_field({"title": "Mamedov and Makhnev lead in Almaty", "summary": "Dubov is half a point back."}) == 0
+
+
+def test_player_page_photo_is_used_for_a_named_player():
+    # 2026-10-29: KazChess got a generic photo though Dubov has a page photo.
+    photo = images.player_page_photo("Daniil Dubov", set())
+    assert photo and photo["src"].startswith("./_images/")
+    assert images.player_page_photo("Daniil Dubov", {photo["sourceUrl"]}) is None
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
