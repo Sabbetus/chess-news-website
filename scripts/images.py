@@ -186,6 +186,13 @@ def _license_ok(license_short_name: str) -> bool:
 _REJECTED_EXTENSIONS = (".pdf", ".djvu", ".tiff", ".tif")
 
 
+_BUSINESS_OR_STREET_RE = re.compile(
+    r"\b(autos?|motors?|garage|road|street|avenue|lane|ltd|limited|plc|inc|shop|store|restaurant|pub"
+    r"|geograph)\b",
+    re.IGNORECASE,
+)
+
+
 def _is_photo_file(title: str) -> bool:
     return not title.lower().endswith(_REJECTED_EXTENSIONS)
 
@@ -453,6 +460,11 @@ def _fetch_first_licensed_file(
             continue
         if _is_signature_file(title):
             continue
+        # A shop, firm or street named like the person (caught 2026-10-29:
+        # "Chris Ward Autos in Tangier Road - geograph.org.uk" for GM Chris
+        # Ward). geograph.org.uk files are street and landscape photos.
+        if _BUSINESS_OR_STREET_RE.search(title):
+            continue
         # "(cropped)" re-uploads are tight face crops that our wide card
         # and hero slots zoom into badly; the uncropped original is almost
         # always on Commons too. User's call, 2026-10-01 (the Turlov
@@ -482,6 +494,13 @@ def _fetch_first_licensed_file(
             continue
 
         date = _photo_date(meta)
+        # No recorded date: a year in the file name will do (caught
+        # 2026-10-29: "...Blitzschach-WM 2015 in Berlin" passed the 8-year
+        # limit for a current story).
+        if date == "0000-00-00":
+            year = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", title)
+            if year:
+                date = f"{year.group(1)}-01-01"
         # Profiles and history pieces are about players whose photos are
         # old or undated (caught 2026-10-18: Vaganian's are from 1983 or
         # undated, Fischer's from 1960, so both pieces got neutral photos).

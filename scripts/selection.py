@@ -115,6 +115,9 @@ CHESSBASE_PROMO_TITLE_PATTERNS = [
     # Reviews of ChessBase's own training products ("Review: Robert Ris'
     # FritzTrainers...", 2026-10-10) are advertising, not news.
     r"^review\b", r"\bfritztrainer", r"\bdvds?\b",
+    # ChessBase's video columns that sell the author's courses (caught
+    # 2026-10-29: "Dragons of the Olympiad 2026 - The Monthly Dragon").
+    r"\bmonthly dragon\b", r"\bmonthly\s+\w+\s*$",
 ]
 
 
@@ -140,7 +143,9 @@ ADMIN_NOTICE_TITLE_PATTERNS = [
 ADMIN_NOTICE_BODY_RE = re.compile(
     r"tickets\.fide\.com|secure your (place|spot|seat)"
     # A course or programme's sign-up pitch (caught 2026-10-27: KCF Academy).
-    r"|registration (is )?(now )?open(s|ed)? for|to join, visit|sign[- ]?up (now|today|at)",
+    r"|registration (is )?(now )?open(s|ed)? for|to join, visit|sign[- ]?up (now|today|at)"
+    # A ChessBase post whose text sends readers to its own shop.
+    r"|in our chessbase shop|fritztrainers? (in|from) (the|our) (chessbase )?shop",
     re.IGNORECASE,
 )
 
@@ -612,10 +617,37 @@ def _recent_event_words(days: int = FOLLOW_UP_WINDOW_DAYS) -> set[str]:
     return {w for w, n in counts.items() if n >= 2} - _COMMON_TITLE_WORDS - people
 
 
-def score_follow_up(item: dict, recent_words: set[str] | None = None) -> int:
+FOLLOW_UP_ONGOING_BONUS = 25
+
+
+def _recent_event_phrases(days: int = FOLLOW_UP_WINDOW_DAYS) -> set[str]:
+    """Event names in the openings of our articles from the last `days` days."""
+    from datetime import date, timedelta
+
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    phrases: set[str] = set()
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text or 'type: "recap"' in text:
+            continue
+        published = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.M)
+        title = re.search(r'^title:\s*"(.*)"', text, re.M)
+        if not (published and title and published.group(1) >= cutoff):
+            continue
+        body = text.split("\n---\n", 1)[-1]
+        body = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", body)
+        phrases |= _lead_event_phrases({"title": title.group(1), "summary": body.strip()})
+    return phrases
+
+
+def score_follow_up(item: dict, recent_words: set[str] | None = None, recent_events: set[str] | None = None) -> int:
     title = item.get("title") or ""
     if not _FINAL_RESULT_RE.search(title):
-        return 0
+        # A later round or day of an event we're covering right now
+        # (caught 2026-10-28: Clutch Chess day two scored 40, under a
+        # video column, the day after we published day one).
+        recent_events = _recent_event_phrases() if recent_events is None else recent_events
+        return FOLLOW_UP_ONGOING_BONUS if _lead_event_phrases(item) & recent_events else 0
     recent_words = _recent_event_words() if recent_words is None else recent_words
     title_words = {w.lower() for w in re.findall(r"\b[A-Z][a-z]{4,}\b", title)} - _COMMON_TITLE_WORDS
     return FOLLOW_UP_RESULT_BONUS if title_words & recent_words else 0

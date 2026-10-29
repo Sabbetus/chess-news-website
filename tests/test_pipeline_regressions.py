@@ -658,6 +658,34 @@ def test_quoted_moves_pick_the_game_among_a_pairs_games():
     assert lichess_game._quoted_moves_in(game2, body) == 0
 
 
+def test_ongoing_event_gets_the_follow_up_bonus():
+    # 2026-10-29: Clutch Chess day two scored 40 the day after day one ran.
+    item = {"title": "Praggnanandhaa Jumps From Last To 1st With Hat Trick",
+            "summary": "GM Praggnanandhaa Rameshbabu is at the top of Clutch Chess: Champions Showdown 2026 after day two."}
+    assert selection.score_follow_up(item, recent_events={"clutch champions showdown"}) == selection.FOLLOW_UP_ONGOING_BONUS
+    assert selection.score_follow_up(item, recent_events={"tata steel masters"}) == 0
+
+
+def test_chessbase_shop_columns_are_promotional():
+    # 2026-10-29: "Dragons of the Olympiad 2026 - The Monthly Dragon".
+    assert selection.is_promotional({"title": "Dragons of the Olympiad 2026 - The Monthly Dragon", "sourceName": "ChessBase"})
+    assert selection.is_promotional({"title": "Some column", "summary": "his three FritzTrainers in our ChessBase shop"})
+
+
+def test_business_named_files_are_not_person_photos():
+    # 2026-10-29: "Chris Ward Autos in Tangier Road - geograph.org.uk".
+    assert images._BUSINESS_OR_STREET_RE.search("File:Chris Ward Autos in Tangier Road - geograph.org.uk - 859647.jpg")
+    assert not images._BUSINESS_OR_STREET_RE.search("File:Rameshbabu Praggnanandhaa in 2023 (52638384854).jpg")
+
+
+def test_lichess_lookup_gets_the_body_that_exists():
+    # 2026-10-29: find_game_embed was passed body_markdown before it existed.
+    import inspect
+    source = inspect.getsource(draft)
+    call = source[source.index("embed = find_game_embed("):][:300]
+    assert "body_for_recheck" in call and "body_markdown" not in call
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
