@@ -895,6 +895,38 @@ def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> di
 HISTORICAL_LENSES = {"people", "historical-parallel"}
 
 
+def player_page_photo(subject: str, exclude_source_urls: set | None, historical: bool = False) -> dict | None:
+    """The photo on our player page for this person (by name or alias), if
+    it isn't in the front-page cooldown and isn't too old for a current
+    story. Returned with a local "src", like a fallback-pool photo."""
+    players_dir = Path(__file__).resolve().parent.parent / "src" / "content" / "players"
+    wanted = subject.strip().lower()
+    excludes = {urllib.parse.unquote(u) for u in (exclude_source_urls or set())}
+    for path in sorted(players_dir.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text:
+            continue
+        names = re.findall(r'^name:\s*"(.*?)"', text, re.M) + re.findall(r'^  - "(.*?)"', text, re.M)
+        if wanted not in {n.lower() for n in names}:
+            continue
+        image = re.search(r'^image:\n((?:  .*\n)+)', text, re.M)
+        if not image:
+            return None
+        fields = dict(re.findall(r'^  (\w+):\s*"(.*?)"', image.group(1), re.M))
+        src, source_url = fields.get("src", ""), fields.get("sourceUrl", "")
+        if not src or urllib.parse.unquote(source_url) in excludes:
+            return None
+        year = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", src)
+        if year and not historical and int(year.group(1)) < time.gmtime().tm_year - RECENT_PHOTO_YEARS:
+            return None
+        return {
+            "src": "./_images/" + src.rsplit("/", 1)[-1],
+            "credit": fields.get("credit", ""),
+            "sourceUrl": source_url,
+        }
+    return None
+
+
 def pick_image_for_item(
     item: dict,
     drafted_title: str,
@@ -909,12 +941,25 @@ def pick_image_for_item(
     "src" is already stored in _images; one with a "url" still has to go
     through localize_image."""
     historical = item.get("lens") in HISTORICAL_LENSES
+    subjects = list(image_subjects or [])
+    # Our own player pages hold checked photos (user's call, 2026-10-29:
+    # the KazChess piece got a generic photo though Dubov, Muradli, Vokhidov
+    # and Hakobyan all have one). The main subject's page photo comes first.
+    if subjects:
+        result = player_page_photo(subjects[0], exclude_source_urls, historical)
+        if result:
+            return result
     for query, strict, prefer_relevance, require_known_date in build_query_cascade(
         item, drafted_title, image_subjects, prefer_neutral
     ):
         result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
         if result:
             return result
+    if not prefer_neutral:
+        for subject in subjects[1:]:
+            result = player_page_photo(subject, exclude_source_urls, historical)
+            if result:
+                return result
     # A person's own milestone with no photo of them: the next person the
     # drafter ranked -- the record holder they passed, say -- before a
     # neutral image. Each is tried on their own name only, and draft.py

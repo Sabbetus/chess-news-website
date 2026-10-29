@@ -172,6 +172,13 @@ Update after each batch review, once the user has responded.
   "FritzTrainers in the shop") skipped; shop, firm and street file names
   ("Autos", "Road", "Ltd", geograph) are never person photos; a year in the
   file name counts when the photo has no recorded date.
+  User follow-ups the same day: KazChess (a regular masters) outscored the
+  Clutch Chess elite field, and its generic photo was a failed search.
+  Fixed: "Event Name: ..." headlines aren't profiles (KazChess and Clutch
+  day 1 had both taken the +40 feature bonus); +20/+40 for two/three of
+  the FIDE top 20 named in the opening; the photo search tries our own
+  player pages (main subject first, other subjects after Commons). KazChess
+  now shows Dubov (2019, from his player page).
 - 2026-10-28: PR #83 reset (streak stays at 0). Resets: ChessBase's and
   Chess.com's Clutch Chess day-one reports were both drafted (merged by hand
   into the ChessBase piece, Chess.com as second source) -- Clutch Chess isn't

@@ -202,6 +202,13 @@ FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+)
 FEATURE_EXCLUDE_TITLE_RE = re.compile(r"\bR\d{1,2}\b|\bround \d+|\bday \d+", re.IGNORECASE)
 
 
+_EVENT_WORD_RE = re.compile(
+    r"\b(chess|masters|open|cup|championships?|showdown|memorial|classic|tour|liga|league|olympiad|festival"
+    r"|invitational|brawl|tuesday|friday|rapid|blitz|tournament|series)\b",
+    re.IGNORECASE,
+)
+
+
 def is_feature_story(item: dict) -> bool:
     if item.get("sourceName") != "ChessBase":
         return False
@@ -211,6 +218,10 @@ def is_feature_story(item: dict) -> bool:
     # "US Championships: So and Liang remain perfect" has the profile shape
     # but names an event, not a person (caught live 2026-10-11).
     if _mentions_major_event(title.split(":", 1)[0].lower()):
+        return False
+    # "KazChess Masters: ..." and "Clutch Chess: ..." are events, not
+    # people (caught 2026-10-29: both got the +40 feature bonus).
+    if _EVENT_WORD_RE.search(title.split(":", 1)[0]):
         return False
     return bool(FEATURE_KEYWORD_RE.search(title) or FEATURE_PROFILE_RE.search(title))
 
@@ -653,6 +664,36 @@ def score_follow_up(item: dict, recent_words: set[str] | None = None, recent_eve
     return FOLLOW_UP_RESULT_BONUS if title_words & recent_words else 0
 
 
+# An event with several of the world's top players is top-level news even
+# when it isn't on the major list (user's call, 2026-10-29: Clutch Chess,
+# with Caruana, Nakamura, Pragg and Sindarov, scored below the KazChess
+# Masters).
+ELITE_RANK_LIMIT = 20
+ELITE_FIELD_BONUS = {2: 20, 3: 40}
+_elite_tokens_cache: list[set[str]] | None = None
+
+
+def _elite_name_tokens() -> list[set[str]]:
+    global _elite_tokens_cache
+    if _elite_tokens_cache is None:
+        try:
+            data = json.loads((Path(__file__).resolve().parent.parent / "data" / "fide-top100.json").read_text())
+            players = [p for p in data.get("players", []) if p.get("rank", 999) <= ELITE_RANK_LIMIT]
+        except (OSError, ValueError):
+            players = []
+        _elite_tokens_cache = [
+            {w.lower() for w in re.findall(r"[A-Za-z][\w'-]+", p["name"]) if len(w) >= 4} for p in players
+        ]
+    return _elite_tokens_cache
+
+
+def score_elite_field(item: dict) -> int:
+    lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:400]}".lower()
+    words = set(re.findall(r"[a-z][\w'-]+", lead))
+    count = sum(1 for tokens in _elite_name_tokens() if tokens & words)
+    return ELITE_FIELD_BONUS[min(count, 3)] if count >= 2 else 0
+
+
 def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, dict]:
     breakdown = {}
     breakdown["sourceTier"] = SOURCE_TIER_SCORE.get(item.get("sourceTier"), 0)
@@ -674,6 +715,7 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["specificity"] = score_specificity(item)
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
     breakdown["followUp"] = 0 if (feature or governance) else score_follow_up(item)
+    breakdown["eliteField"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_elite_field(item)
 
     raw_total = sum(breakdown.values())
     total = _apply_priority_band(raw_total, breakdown, governance)
