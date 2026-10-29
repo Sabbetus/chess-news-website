@@ -1,0 +1,626 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleThumb from '../components/ArticleThumb.astro';
+import TagRow from '../components/TagRow.astro';
+import { estimateReadMinutes } from '../lib/reading';
+import { excerptFrom } from '../lib/excerpt';
+// Written by scripts/fetch_popular.py during deploy -- last-7-days GA4
+// pageviews for last-7-days-published articles, ranked. Best-effort: a
+// failed fetch leaves this file (and so this list) exactly as it was
+// after the last successful run, rather than going empty.
+import popular from '../../data/popular.json';
+
+const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
+// Newest day first, then highest selectionScore as the tiebreaker -- publishDate
+// has no time component (see weekly_recap.py's own note on this), so every
+// article published the same day ties on the primary sort, and without this
+// tiebreaker the lead slot fell to whichever one happened to sort first, not
+// necessarily the batch's actual best story.
+const articles = allArticles.sort((a, b) => {
+  const dateDiff = b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
+  if (dateDiff !== 0) return dateDiff;
+  return b.data.selectionScore - a.data.selectionScore;
+});
+
+const [lead, ...rest] = articles;
+const secondary = rest.slice(0, 8);
+const secondaryFirstHalf = secondary.slice(0, 4);
+const secondarySecondHalf = secondary.slice(4, 8);
+
+// Always the most recently published recap, whichever week it's from --
+// this section isn't gated on "was one published this week," it just
+// shows the latest one until a newer one replaces it. Only genuinely
+// empty before the very first recap ever exists.
+const allRecaps = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type === 'recap');
+const latestRecap = allRecaps.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())[0];
+
+// The Latest Articles sidebar mixes recaps back in -- unlike Most Popular
+// (driven by real pageview data in popular.json, which fetch_popular.py
+// already excludes recaps from), "latest" is genuinely incomplete without
+// them, since a recap is real, freshly-published content too.
+const latestWithRecap = latestRecap
+  ? [...articles, latestRecap].sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  : articles;
+const latest = latestWithRecap.slice(0, 4);
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'The Chess Herald',
+    url: 'https://chessherald.com/',
+    description:
+      'Daily chess news with original analysis: results, prize money, chess history, and the controversies, plus real tournament data from around the world.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'The Chess Herald',
+    url: 'https://chessherald.com/',
+    sameAs: ['https://nordicchess.fi', 'https://chesstournamentcalendar.com'],
+  },
+];
+---
+
+<BaseLayout
+  title="The Chess Herald: Chess News, Original Analysis &amp; Tournament Stats"
+  ogTitle="The Chess Herald: Chess News, Original Analysis &amp; Tournament Statistics"
+  activeSection="front-page"
+  jsonLd={jsonLd}
+>
+  {
+    !lead && (
+      <section class="empty-state">
+        <p>No articles published yet -- check back soon.</p>
+      </section>
+    )
+  }
+
+  {
+    lead && (
+      <section class="lead">
+        <div class="lead-cols">
+          <div class="lead-main">
+            <ArticleThumb
+              lens={lead.data.lens}
+              size="lead"
+              image={lead.data.image}
+              alt={lead.data.title}
+              href={`/articles/${lead.slug}/`}
+            />
+            <h2>
+              <a href={`/articles/${lead.slug}/`}>{lead.data.title}</a>
+            </h2>
+            <p class="dek">{excerptFrom(lead.body, 280)}</p>
+            <TagRow lens={lead.data.lens} continent={lead.data.continent} />
+            <div class="byline">
+              <span>{estimateReadMinutes(lead.body)} min read</span>
+              <span class="dot">&bull;</span>
+              <span>{dateFmt(lead.data.publishDate)}</span>
+            </div>
+          </div>
+          {latest.length > 0 && (
+            <aside class="issue-index">
+              <span class="label">Latest Articles</span>
+              <ol>
+                {latest.map((a) => (
+                  <li>
+                    <a href={`/articles/${a.slug}/`}>
+                      <span class="txt">{a.data.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </aside>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    secondaryFirstHalf.length > 0 && (
+      <section class="grid">
+        {secondaryFirstHalf.map((a, i) => (
+          <article class="card">
+            <ArticleThumb
+              lens={a.data.lens}
+              size="card"
+              seed={i + 1}
+              image={a.data.image}
+              alt={a.data.title}
+              href={`/articles/${a.slug}/`}
+            />
+            <h3>
+              <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+            </h3>
+            <p>{excerptFrom(a.body, 160)}</p>
+            <TagRow lens={a.data.lens} continent={a.data.continent} />
+            <div class="byline">
+              <span>{estimateReadMinutes(a.body)} min read</span>
+              <span class="dot">&bull;</span>
+              <span>{dateFmt(a.data.publishDate)}</span>
+            </div>
+          </article>
+        ))}
+      </section>
+    )
+  }
+
+  <div class="digest-row">
+    <section class="recap-block">
+      <span class="recap-label">
+        Weekly Recap
+        <a class="recap-all" href="/recaps/">All recaps &rarr;</a>
+      </span>
+      {
+        latestRecap ? (
+          <>
+            <h2>
+              <a href={`/articles/${latestRecap.slug}/`}>{latestRecap.data.title}</a>
+            </h2>
+            <div class="byline">
+              <span>{dateFmt(latestRecap.data.publishDate)}</span>
+            </div>
+            <p>{excerptFrom(latestRecap.body, 340)}</p>
+            <a class="recap-link" href={`/articles/${latestRecap.slug}/`}>Read the full recap &rarr;</a>
+          </>
+        ) : (
+          <p class="digest-empty">The first Weekly Recap is coming soon.</p>
+        )
+      }
+    </section>
+
+    <section class="popular-block">
+      <span class="popular-label">Most Popular</span>
+      {
+        popular.length > 0 ? (
+          <ol class="popular-list">
+            {popular.map((p) => (
+              <li>
+                <a href={`/articles/${p.slug}/`}>{p.title}</a>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="digest-empty">Coming soon.</p>
+        )
+      }
+    </section>
+  </div>
+
+  {
+    secondarySecondHalf.length > 0 && (
+      <section class="grid">
+        {secondarySecondHalf.map((a, i) => (
+          <article class="card">
+            <ArticleThumb
+              lens={a.data.lens}
+              size="card"
+              seed={i + 5}
+              image={a.data.image}
+              alt={a.data.title}
+              href={`/articles/${a.slug}/`}
+            />
+            <h3>
+              <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+            </h3>
+            <p>{excerptFrom(a.body, 160)}</p>
+            <TagRow lens={a.data.lens} continent={a.data.continent} />
+            <div class="byline">
+              <span>{estimateReadMinutes(a.body)} min read</span>
+              <span class="dot">&bull;</span>
+              <span>{dateFmt(a.data.publishDate)}</span>
+            </div>
+          </article>
+        ))}
+      </section>
+    )
+  }
+
+  {
+    articles.length > secondary.length + 1 && (
+      <p class="view-all">
+        <a href="/archive/">View all {articles.length} articles &rarr;</a>
+      </p>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .empty-state {
+    padding: 60px 0;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  .lead {
+    padding: 34px 0 24px;
+  }
+  /* flex + space-between, not grid -- deliberately: lead-main and
+     issue-index both get a FIXED desktop width (671px / 330px, the exact
+     sizes the earlier "shrink the photo" and "widen the sidebar" changes
+     landed on), so narrowing .wrap can only eat into the space BETWEEN
+     them. A percentage/1fr-based column would have shrunk the photo
+     itself again every time .wrap narrows, which is exactly the mistake
+     that got reverted earlier today. */
+  .lead-cols {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .lead-main {
+    width: 671px;
+  }
+  .lead-main :global(.thumb) {
+    margin-bottom: 22px;
+  }
+  .lead-main :global(.thumb--lead) {
+    width: 100%;
+  }
+  .lead h2 {
+    margin: 0 0 14px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 520;
+    /* Floor lowered from 28px: on phone widths a long title was wrapping
+       to 5 lines, tested against real long headlines down to 360px
+       wide -- 24px keeps even the longest ones to 4. */
+    font-size: clamp(24px, 3.6vw, 41px);
+    line-height: 1.08;
+    letter-spacing: -0.008em;
+  }
+  .lead h2 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .lead h2 a:hover {
+    color: var(--accent);
+  }
+  .dek {
+    color: var(--ink-soft);
+    font-size: 19px;
+    line-height: 1.62;
+    margin: 0 0 16px;
+  }
+
+  /* Same plain bordered-card treatment as .popular-block (see the digest
+     section below) -- both are list-style sidebar widgets, so they read
+     as one consistent pattern rather than two different styles. */
+  .issue-index {
+    width: 330px;
+    flex-shrink: 0;
+    padding: 22px 24px;
+    border: 1px solid var(--rule);
+    background: var(--digest-tint);
+  }
+  .issue-index .label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .issue-index ol {
+    list-style: none;
+    counter-reset: latest;
+    margin: 0;
+    padding: 0;
+  }
+  .issue-index li {
+    counter-increment: latest;
+    display: flex;
+    gap: 10px;
+    padding: 11px 0;
+  }
+  .issue-index li:first-child {
+    padding-top: 0;
+  }
+  .issue-index li::before {
+    content: counter(latest);
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--brass);
+  }
+  .issue-index .txt {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .issue-index a {
+    /* Matches .txt's own font-size/line-height exactly: without this,
+       the anchor's box metrics fall back to the page's inherited (larger)
+       font, throwing off the flex alignment between the number and the
+       title text -- unlike .popular-list, where the title sits directly
+       in the anchor with no wrapping span to create that mismatch. */
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+  .issue-index a:hover .txt {
+    color: var(--accent);
+  }
+
+  .grid {
+    padding: 10px 0 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 46px;
+    row-gap: 6px;
+  }
+  .card {
+    padding: 24px 0;
+  }
+  /* Desktop (2-column grid) only -- see the 640px breakpoint below that
+     drops the grid to a single column. :nth-last-child(-n+2) / :nth-
+     child(-n+2) mean "the last/first ROW" only when there are 2 cards
+     per row; on a single-column mobile grid the same selectors instead
+     hit two separate, individually-stacked cards, zeroing padding
+     between two cards that aren't even adjacent to the digest row --
+     which is exactly what made mobile's inter-card gaps inconsistent
+     (a visibly smaller gap right next to the digest-row boundary).
+     Gating this behind the breakpoint keeps every mobile card's padding
+     uniform, so every inter-card gap on mobile matches. */
+  @media (min-width: 641px) {
+    /* Both boundary rows against the digest row: a .card's own vertical
+       padding otherwise adds an extra, uncounted 24px on top of the
+       section-level gap (grid's own padding + digest-row's margin) --
+       exactly the discrepancy that made the grid-to-digest-row gaps read
+       larger than the nav-to-lead / lead-to-grid gap they're meant to
+       match. Zeroing it here for just these two rows lets the gap be
+       controlled purely by .grid/.digest-row's own spacing, the same way
+       the lead-row gaps already are. */
+    .grid:has(+ .digest-row) .card:nth-last-child(-n + 2) {
+      padding-bottom: 0;
+    }
+    .digest-row + .grid .card:nth-child(-n + 2) {
+      padding-top: 0;
+    }
+  }
+  .card h3 {
+    margin: 0 0 9px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1.2;
+  }
+  .card h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .card h3 a:hover {
+    color: var(--accent);
+  }
+  .card p {
+    margin: 0 0 11px;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+  .card .byline {
+    font-size: 11.5px;
+    gap: 8px;
+  }
+
+  /* Two independent blocks, not a shared box -- "Most Popular" is a
+     genuinely different kind of content (usage data, not editorial), so
+     it gets its own plain/neutral treatment rather than borrowing the
+     recap's brass styling. */
+  .digest-row {
+    /* Deliberately more than the 34px used elsewhere on the page: the
+       recap/popular boxes' solid color fill sits right at the edge of
+       this margin with no soft transition, which reads as visually
+       "denser" than the sparse text/photo edges bordering the other
+       gaps -- makes an identical pixel distance look smaller by
+       contrast. Bumped up to compensate for that, not because the
+       raw number needs to match. */
+    margin: 38px 0;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    /* Matches the lead row's photo-to-sidebar gap (see .lead-cols) so
+       the two side-by-side rows on the page read consistently. */
+    gap: 35px;
+    /* stretch (not start): with a real Most Popular list now rendering
+       real content, the two boxes are rarely the same natural height --
+       stretching them to match keeps their bottom edges aligned instead
+       of one looking randomly taller than the other. */
+    align-items: stretch;
+  }
+
+  .recap-block {
+    padding: 28px 32px;
+    background: var(--digest-tint);
+    border-top: 3px solid var(--brass);
+    border-bottom: 3px solid var(--brass);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .recap-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 14px;
+  }
+  .recap-all {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--ink-soft);
+    text-transform: none;
+  }
+  .recap-all:hover {
+    color: var(--accent);
+  }
+  .recap-block h2 {
+    margin: 0 0 10px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(22px, 2.6vw, 28px);
+    line-height: 1.15;
+  }
+  .recap-block h2 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .recap-block h2 a:hover {
+    color: var(--accent);
+  }
+  .recap-block p {
+    margin: 0 0 14px;
+    color: var(--digest-text);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .recap-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .recap-link:hover {
+    text-decoration: underline;
+  }
+
+  .popular-block {
+    padding: 22px 24px;
+    border: 1px solid var(--rule);
+    background: var(--digest-tint);
+  }
+  .popular-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .popular-list {
+    list-style: none;
+    counter-reset: popular;
+    margin: 0;
+    padding: 0;
+  }
+  .popular-list li {
+    counter-increment: popular;
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  .popular-list li:first-child {
+    padding-top: 0;
+  }
+  .popular-list li:last-child {
+    padding-bottom: 0;
+  }
+  .popular-list li::before {
+    content: counter(popular);
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--brass);
+  }
+  .popular-list a {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .popular-list a:hover {
+    color: var(--accent);
+  }
+
+  .digest-empty {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    font-style: italic;
+  }
+
+  @media (max-width: 860px) {
+    .digest-row {
+      grid-template-columns: 1fr;
+    }
+    .recap-block {
+      padding: 24px 22px;
+    }
+  }
+
+  .view-all {
+    /* Was a bare <p>, so the browser's default ~17px margin (top and
+       bottom) was adding on top of this padding uncounted -- combined
+       with the last card's own bottom padding and the grid's own
+       padding, that made the gap above and below this link far bigger
+       than anywhere else on the page. */
+    margin: 0;
+    /* Asymmetric on purpose: the last card's own bottom padding + the
+       grid's own bottom padding already contribute 34px above this
+       element regardless of its own padding-top, so top is 0 here and
+       only bottom padding is added -- balances both gaps around ~40px
+       instead of the ~54px an equal-padding version landed on. */
+    padding: 0 0 14px;
+    text-align: center;
+  }
+  .view-all a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .view-all a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 860px) {
+    .lead-cols {
+      flex-direction: column;
+    }
+    .lead-main {
+      width: 100%;
+    }
+    /* Desktop's 19px reads too large next to the smaller mobile title
+       (24px floor, down from 28px) -- unbalanced by comparison. */
+    .dek {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .issue-index {
+      width: 100%;
+      /* Matches the 34px rhythm used elsewhere on the page (was 20px,
+         a value that predates that rhythm and was never revisited). */
+      margin-top: 34px;
+    }
+    /* Stacked layout only: .issue-index is now the last visible element
+       of .lead, so its own 22px bottom padding (see .issue-index above)
+       adds an extra, uncounted layer on top of .lead's own bottom
+       padding + .grid's own top padding -- the same kind of double-
+       counting the desktop grid/digest-row gap had. Dropping .lead's
+       mobile bottom padding to 0 here cancels that out, landing on
+       the same ~34px gap instead of ~56px. */
+    .lead {
+      padding-bottom: 0;
+    }
+  }
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

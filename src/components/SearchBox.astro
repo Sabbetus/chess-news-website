@@ -1,0 +1,234 @@
+---
+// Client-side search: fetches the small static index at /search-index.json
+// once (there's no backend to query on a static site) and filters it
+// locally by substring match against title/excerpt as the visitor types.
+---
+
+<div class="search-box" id="searchBox">
+  <input
+    type="search"
+    id="searchInput"
+    class="search-input"
+    placeholder="Search"
+    autocomplete="off"
+    aria-label="Search articles"
+  />
+  <div class="search-results" id="searchResults" hidden></div>
+</div>
+
+<script is:inline>
+  (function () {
+    var box = document.getElementById('searchBox');
+    var input = document.getElementById('searchInput');
+    var results = document.getElementById('searchResults');
+    if (!box || !input || !results) return;
+
+    var index = null;
+    var indexPromise = null;
+
+    function loadIndex() {
+      if (!indexPromise) {
+        indexPromise = fetch('/search-index.json')
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (data) {
+            index = data;
+            return data;
+          })
+          .catch(function () {
+            index = [];
+            return index;
+          });
+      }
+      return indexPromise;
+    }
+
+    function formatDate(iso) {
+      var d = new Date(iso);
+      return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // The dropdown is position:fixed and placed here in JS (rather than
+    // anchored via CSS right:0 on the input) because the input doesn't sit
+    // at the edge of the page -- the theme switch sits to its right -- so a
+    // dropdown wide enough to be readable would push past the left edge of
+    // the viewport on narrow screens if it were simply right-aligned to the
+    // input. Computing left/width from the actual viewport keeps it fully
+    // on-screen at any width.
+    function positionResults() {
+      var rect = input.getBoundingClientRect();
+      var margin = 12;
+      var width = Math.min(340, window.innerWidth - margin * 2);
+      var left = rect.right - width;
+      if (left < margin) left = margin;
+      if (left + width > window.innerWidth - margin) left = window.innerWidth - margin - width;
+      results.style.width = width + 'px';
+      results.style.left = left + 'px';
+      results.style.top = rect.bottom + 8 + 'px';
+    }
+
+    function render(matches, query) {
+      results.innerHTML = '';
+      if (!query) {
+        results.hidden = true;
+        return;
+      }
+      if (matches.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'search-empty';
+        empty.textContent = 'No matching articles.';
+        results.appendChild(empty);
+      } else {
+        matches.slice(0, 8).forEach(function (item) {
+          var a = document.createElement('a');
+          a.className = 'search-result';
+          a.href = '/articles/' + item.slug + '/';
+          var title = document.createElement('span');
+          title.className = 'search-result-title';
+          title.textContent = item.title;
+          var meta = document.createElement('span');
+          meta.className = 'search-result-meta';
+          meta.textContent = item.sourceName + ' · ' + formatDate(item.publishDate);
+          a.appendChild(title);
+          a.appendChild(meta);
+          results.appendChild(a);
+        });
+      }
+      positionResults();
+      results.hidden = false;
+    }
+
+    function search(query) {
+      var q = query.trim().toLowerCase();
+      if (!q) {
+        render([], '');
+        return;
+      }
+      loadIndex().then(function (data) {
+        var matches = data.filter(function (item) {
+          return item.title.toLowerCase().indexOf(q) !== -1 || item.excerpt.toLowerCase().indexOf(q) !== -1;
+        });
+        render(matches, q);
+      });
+    }
+
+    input.addEventListener('input', function () {
+      search(input.value);
+    });
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) search(input.value);
+    });
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target)) {
+        results.hidden = true;
+      }
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        input.blur();
+        results.hidden = true;
+      }
+    });
+    window.addEventListener('resize', function () {
+      if (!results.hidden) positionResults();
+    });
+  })();
+</script>
+
+<style>
+  .search-box {
+    position: relative;
+  }
+  .search-input {
+    width: 76px;
+    padding: 5px 10px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    text-transform: none;
+    transition: width 0.15s ease;
+  }
+  .search-input::placeholder {
+    color: var(--ink-soft);
+    opacity: 1;
+  }
+  .search-input:focus {
+    width: 190px;
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+
+  /* The results below are appended via document.createElement in the
+     inline script, not written in this component's template -- so Astro's
+     scoped-CSS attribute (which it only stamps onto template-authored
+     elements) never lands on them. Without :global() here, every rule
+     targeting them is silently dropped and they fall back to whatever
+     ambient styles their ancestors impose (in this case .masthead-top's
+     uppercase), which is exactly the "bad UI" this replaces.
+
+     position/left/top/width are set in JS (positionResults() above), not
+     here -- see that function for why. */
+  :global(.search-results) {
+    position: fixed;
+    max-height: 400px;
+    overflow-y: auto;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    z-index: 20;
+    text-transform: none;
+  }
+  :global(.search-result) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-faint);
+  }
+  :global(.search-result:last-child) {
+    border-bottom: none;
+  }
+  :global(.search-result:hover) {
+    background: var(--paper-raised);
+  }
+  :global(.search-result-title) {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  :global(.search-result-meta) {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  :global(.search-empty) {
+    padding: 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-transform: none;
+  }
+
+  @media (max-width: 640px) {
+    /* No growth on focus here (unlike desktop): the masthead-top row is
+       already tight against the eyebrow text and theme switch on narrow
+       phones, and letting the input claim 50+ extra px there is what
+       caused it to visually collide with the eyebrow text. The dropdown
+       below does the real work of showing results either way, so the
+       input itself doesn't need the extra typing room. 84px is enough to
+       show the "Search" placeholder in full with a little breathing room. */
+    .search-input,
+    .search-input:focus {
+      width: 84px;
+    }
+  }
+</style>

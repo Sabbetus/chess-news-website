@@ -1,0 +1,49 @@
+---
+import { LENS_META, LENS_SLUGS, type Lens } from '../lib/lens';
+import { CONTINENT_META, type Continent } from '../lib/continent';
+
+interface Props {
+  lens?: Lens;
+  continent: Continent;
+}
+const { lens, continent } = Astro.props;
+const lensMeta = lens ? LENS_META[lens] : null;
+const continentMeta = CONTINENT_META[continent];
+---
+
+<div class="tag-row">
+  {lensMeta && lens && (
+    <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${LENS_SLUGS[lens]}/`}>{lensMeta.label}</a>
+  )}
+  <a class="continent-tag" href={`/continent/${continent}/`}>{continentMeta.label}</a>
+</div>
+
+<style>
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag-row a {
+    text-decoration: none;
+  }
+  .lens-tag,
+  .continent-tag {
+    transition: opacity 0.15s ease;
+  }
+  .lens-tag:hover,
+  .continent-tag:hover {
+    opacity: 0.75;
+  }
+  .continent-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 2px;
+    background: var(--rule-faint);
+    color: var(--ink-soft);
+  }
+</style>

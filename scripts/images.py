@@ -1,0 +1,1092 @@
+"""Picks a real, legally-reusable photo for an article from Wikimedia
+Commons -- no scraping of chess.com/FIDE's own (copyrighted) images, and no
+Claude API calls involved; this is a plain HTTP search against Commons'
+public API, filtered to genuinely free licenses.
+
+Search is a cascade of increasingly generic queries (specific subject ->
+organization -> continent/region -> nothing found), and the first query that
+returns an acceptably-licensed file wins. Callers should treat a `None`
+result as normal, not an error: most stories, especially smaller or
+governance/money-angle ones, won't have a specific real photo available, and
+fall back to the site's SVG placeholder thumbnail instead.
+"""
+
+import hashlib
+import html
+import io
+import json
+import re
+import time
+import unicodedata
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+from PIL import Image
+
+from continents import CONTINENT_NAMES
+
+ROOT = Path(__file__).parent.parent
+# Co-located with the article content, not public/ -- this is what lets
+# each article's frontmatter reference its master photo as a relative path
+# ("./_images/<slug>.webp") through Astro's content-collection image()
+# schema helper (see src/content/config.ts), which resolves it into a real
+# typed image asset. That's what gives every on-site display size AND the
+# social-card crop (see BaseLayout/article page) to Astro's own build-time
+# Sharp pipeline, from this one committed file -- nothing else is generated
+# or stored.
+IMAGES_DIR = ROOT / "src" / "content" / "articles" / "_images"
+
+API_URL = "https://commons.wikimedia.org/w/api.php"
+USER_AGENT = "Chess-Herald-ImagePicker/1.0 (https://chessherald.com; contact: https://chessherald.com/contact/)"
+
+# Only accept files under licenses that are unambiguously free to reuse
+# (with attribution where the license requires it). Anything else -- most
+# notably plain "All rights reserved" press photos some uploaders mislabel
+# -- is skipped.
+ACCEPTED_LICENSE_PREFIXES = ("cc0", "cc by", "public domain")
+
+# Wikimedia Commons throttles unauthenticated/shared-IP traffic; keep a
+# small gap between requests so a run of several articles doesn't trip it.
+REQUEST_DELAY_SECONDS = 2.0
+
+_last_request_time = 0.0
+
+
+def _get(params: dict, retries: int = 3) -> dict:
+    global _last_request_time
+    import json
+
+    query = urllib.parse.urlencode({**params, "format": "json"})
+    request = urllib.request.Request(f"{API_URL}?{query}", headers={"User-Agent": USER_AGENT})
+
+    for attempt in range(retries + 1):
+        elapsed = time.monotonic() - _last_request_time
+        if elapsed < REQUEST_DELAY_SECONDS:
+            time.sleep(REQUEST_DELAY_SECONDS - elapsed)
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                _last_request_time = time.monotonic()
+                return json.loads(response.read())
+        except urllib.error.HTTPError as exc:
+            _last_request_time = time.monotonic()
+            if exc.code == 429 and attempt < retries:
+                retry_after = exc.headers.get("Retry-After")
+                delay = float(retry_after) if retry_after and retry_after.isdigit() else 8.0
+                time.sleep(delay)
+                continue
+            raise
+
+
+def _strip_html(text: str) -> str:
+    # Commons' extmetadata fields (Artist in particular) commonly carry a
+    # visible value plus a hidden duplicate for machine parsing, e.g.
+    # 'Unknown author<span style="display: none;">Unknown author</span>' --
+    # stripping tags alone concatenates both into "Unknown authorUnknown
+    # author". Drop the hidden span's content before stripping the rest.
+    text = re.sub(r'<span style="display:\s*none;?">.*?</span>', "", text or "", flags=re.DOTALL)
+    text = re.sub(r"<[^>]+>", "", text)
+    return html.unescape(text).strip()
+
+
+_BOLD_TAG = re.compile(r"<b>(.*?)</b>", re.DOTALL)
+
+
+def _extract_artist_name(raw: str) -> str:
+    """Some Commons uploaders use a full "photographer credit" template for
+    the Artist field instead of a plain name -- a table/paragraph with
+    instructional text repeated in multiple languages, e.g. "This photo was
+    taken by <b>Name</b>.<br>Foto <b>Name</b> ... çəkilib.<br>Mention the
+    author's name ...: <b>Name</b>". `_strip_html` alone turns that into one
+    long run-on sentence with the name repeated 2-3 times and translator/
+    instruction text mixed in -- a real credit shown on real articles this
+    way (caught live: an Azerbaijani/English credit-line template).
+
+    The name is reliably wrapped in <b> in these templates, so prefer the
+    first bolded span when the field looks like this template rather than a
+    plain name: either multiple identical <b> spans, or a stripped length
+    long enough that it's prose, not a name. A plain name (with or without
+    HTML) is always shorter than that and passes through unchanged."""
+    bold_matches = _BOLD_TAG.findall(raw or "")
+    stripped = _strip_html(raw)
+    if bold_matches and (len(bold_matches) > 1 or len(stripped) > 60):
+        return _strip_html(bold_matches[0]) or stripped
+    return stripped
+
+
+_DATE_PATTERN = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+
+
+def _photo_date(meta: dict) -> str:
+    """Sortable date string for when the photo was actually taken, from
+    Commons' DateTimeOriginal field -- deliberately NOT falling back to the
+    file's upload timestamp, which reflects nothing about the photo's
+    subject (an old document scanned and uploaded yesterday would otherwise
+    sort as "recent"). A file with no DateTimeOriginal sorts as unknown/
+    oldest rather than winning on a recency it can't actually claim."""
+    raw = _strip_html(meta.get("DateTimeOriginal", {}).get("value", ""))
+    match = _DATE_PATTERN.search(raw)
+    return match.group(0) if match else "0000-00-00"
+
+
+# A hard floor, not just a sort preference: recency sorting only helps when
+# there's more than one surviving candidate to sort, and a wrong-but-
+# plausible-looking match can be the ONLY candidate a query produces (caught
+# live: "José Antonio Carrillo" -- a FIDE Americas president elected in
+# 2026 -- matched a 1955 photo of an unrelated actor posing with a portrait
+# of a different, unrelated "Antonio Carrillo"; nothing else survived that
+# query's title filter to outrank it on recency). No article on this site
+# has a legitimate reason to illustrate a current person or current event
+# with a photo this old -- even a historical-parallel piece discusses its
+# past echo in prose, it doesn't need a period photo to do it -- so a known
+# date (not "0000-00-00" unknown, which is a separate, already-handled
+# case) older than this is disqualifying, not just deprioritized.
+MIN_ACCEPTABLE_PHOTO_YEAR = 1990
+RECENT_PHOTO_YEARS = 8
+
+
+def _is_too_old(date: str) -> bool:
+    # "0000-00-00" is _photo_date's own sentinel for "no DateTimeOriginal
+    # at all" (most logos, graphics, and plenty of real photos have none),
+    # not a real date -- treating it as year 0 would silently reject every
+    # undated file as "too old" rather than "unknown", which is a far
+    # bigger regression than the one case this floor exists to catch.
+    if date == "0000-00-00":
+        return False
+    year = date[:4]
+    return year.isdigit() and int(year) < MIN_ACCEPTABLE_PHOTO_YEAR
+
+
+def _search_titles(query: str, limit: int = 5, newest: bool = False) -> list:
+    params = {
+        "action": "query",
+        "list": "search",
+        "srsearch": query,
+        "srnamespace": 6,  # File namespace
+        "srlimit": limit,
+    }
+    if newest:
+        params["srsort"] = "create_timestamp_desc"
+    data = _get(params)
+    return [r["title"] for r in data.get("query", {}).get("search", [])]
+
+
+def _license_ok(license_short_name: str) -> bool:
+    name = (license_short_name or "").strip().lower()
+    return any(name.startswith(prefix) for prefix in ACCEPTED_LICENSE_PREFIXES)
+
+
+# Commons' full-text search matches words anywhere in a file's page (OCR'd
+# text in a scanned document, a caption, a description), not just its
+# title or subject -- a query can land on a completely unrelated PDF/book
+# scan that happens to contain the search words somewhere. Real tournament
+# photos and logos are never document-scan formats, so excluding those
+# extensions outright is a cheap, general guard against that failure mode.
+_REJECTED_EXTENSIONS = (".pdf", ".djvu", ".tiff", ".tif")
+
+
+def _is_photo_file(title: str) -> bool:
+    return not title.lower().endswith(_REJECTED_EXTENSIONS)
+
+
+_FILENAME_WORD_PATTERN = re.compile(r"[A-Za-z]+")
+
+
+def _filename_words(title: str) -> set[str]:
+    """Commons file titles are underscore-separated ("Magnus_Carlsen_sig.svg"),
+    not space-separated -- a raw \\b-anchored regex never fires around an
+    underscore (it's a \\w character, same as the letters on either side of
+    it), so a pattern like r"\\bsig\\b" silently never matches real
+    filenames despite looking correct. Splitting into alpha-only tokens
+    first, then matching against that set, sidesteps the problem
+    entirely."""
+    return {w.lower() for w in _FILENAME_WORD_PATTERN.findall(title)}
+
+
+# A generic country/continent query can genuinely satisfy a lenient
+# "{country} chess" match with a postage stamp, banknote, or coin
+# depicting a chess motif (found real: "2002 Chess Olympiad Romanian
+# stamp" for "Romania chess") -- these aren't wrong matches, they really
+# do have both words, but they're philatelic/numismatic ephemera, not a
+# photo of anyone or anything happening, and don't belong here regardless
+# of how well they match.
+_EPHEMERA_WORDS = {"stamp", "stamps", "banknote", "banknotes", "postcard", "postcards", "coin", "coins"}
+
+
+def _is_ephemera(title: str) -> bool:
+    return bool(_filename_words(title) & _EPHEMERA_WORDS)
+
+
+# A person-name query can also turn up that person's signature/autograph as
+# a standalone Commons file (found real: "Magnus_Carlsen_sig.svg") -- a
+# vector squiggle, not a photo of them, but one that otherwise sails
+# through every other filter (real file, correctly licensed, SVGs exempt
+# from the resolution check since they're vector).
+_SIGNATURE_WORDS = {"sig", "signature", "signatures", "autograph", "autographs"}
+
+
+def _is_signature_file(title: str) -> bool:
+    return bool(_filename_words(title) & _SIGNATURE_WORDS)
+
+
+# A person's name is also, not infrequently, a street, square, or building
+# named after them -- "Rue Vladimir Kramnik - Asnieres-sur-Seine" matches a
+# "Vladimir Kramnik" query under every other filter (real photo file,
+# correctly licensed, high enough resolution) while being a street sign,
+# not a picture of the person. These filename prefixes are how Commons
+# titles that kind of file across the languages sourced articles are
+# likely to come from.
+_PLACE_NAME_PREFIXES = (
+    "rue ", "avenue ", "boulevard ", "place ", "square ", "plaza ", "street ",
+    "via ", "calle ", "strasse ", "straße ", "platz ",
+)
+
+
+def _is_place_named_after_subject(title: str) -> bool:
+    # Titles are "File:<name>.ext" once the namespace prefix is stripped by
+    # the caller -- check the bare name, case-insensitively.
+    name = title.split(":", 1)[-1].lower()
+    return name.startswith(_PLACE_NAME_PREFIXES)
+
+
+# The lead image slot renders at 680px wide. A source photo much narrower
+# than that gets stretched to fill it and looks visibly blurry -- found in
+# testing with a 222x224px Commons photo that was otherwise a perfectly
+# relevant, correctly-licensed match. SVGs are vector and scale cleanly
+# regardless of their reported "native" size, so they're exempt.
+MIN_IMAGE_WIDTH = 500
+MIN_IMAGE_HEIGHT = 350
+
+
+def _is_high_enough_resolution(title: str, info: dict) -> bool:
+    if title.lower().endswith(".svg"):
+        return True
+    width = info.get("width") or 0
+    height = info.get("height") or 0
+    return width >= MIN_IMAGE_WIDTH and height >= MIN_IMAGE_HEIGHT
+
+
+_QUERY_WORD_PATTERN = re.compile(r"[A-Za-z]+")
+
+
+def _title_matches_query(title: str, query: str, strict: bool) -> bool:
+    """Require the candidate's filename to actually contain part of the
+    search query, not just something Commons' full-text search matched
+    somewhere in the file's page. Without this, a resolution or license
+    rejection on the one genuinely relevant result can fall through to an
+    unrelated file that only coincidentally shares a word with the query
+    (found in testing: "Renato Terry" fell through to a photo of a
+    different, unrelated person once the real match was filtered out for
+    being too small).
+
+    `strict` requires ALL significant query words to appear in the title,
+    not just one -- used for auto-extracted headline-fragment queries like
+    "Terry Extends" (not a real name; "Extends" only got capitalized by
+    Title Case styling), where a single-word match let through a
+    completely different "Terry" once tried in testing. Lenient (any-word)
+    matching stays for the deliberately-constructed queries (explicit
+    subject, org name, continent/country) that testing already confirmed
+    work well with it -- e.g. "Asian Team Chess Championship..." correctly
+    matches an "{continent} chess tournament" query without containing
+    every word of it.
+
+    No significant words rejects every candidate outright (found live: a
+    real tournament name, "MAT 2026", is almost entirely decorative
+    Unicode symbols once stripped to plain letters -- its only word,
+    "MAT", is 3 letters, under the >=4 threshold below, leaving nothing
+    to filter on. The old behavior treated "nothing to check" as
+    "anything passes", which let Commons' full-text search return an
+    unrelated "Yoga mat strap" product photo -- matched on the word
+    "mat" somewhere on its page, nothing to do with chess -- straight
+    through with no filter at all. A query too weak to build a real
+    filter from should fail closed and let the cascade move on to its
+    next, more specific query, not accept whatever Commons hands back)."""
+    significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 4]
+    if not significant_words:
+        return False
+    title_lower = title.lower()
+
+    # Word-boundary match, not plain substring containment -- a short word
+    # can hide inside an unrelated longer one ("fide" inside "confident"/
+    # "fidelity"). Deliberately NOT Python's \b, which treats underscore as
+    # a word character: Commons titles join every word with underscores in
+    # place of spaces ("Jose_Antonio_Carrillo_chess.jpg"), so \b would find
+    # no boundary at any of those joins and silently fail to match almost
+    # every real, legitimate title -- caught while testing this exact fix.
+    # Bounding on "not a letter" instead (digits, underscores, punctuation,
+    # and string start/end all count as separators) treats underscore-
+    # joined titles the way Commons actually means them: as separate words.
+    def _word_present(word: str) -> bool:
+        pattern = rf"(?<![a-z]){re.escape(word.lower())}(?![a-z])"
+        return re.search(pattern, title_lower) is not None
+
+    if strict:
+        # Three-letter first names count here ("Jon", "Wei"): leaving them
+        # out let "Speelman en Speelman" (a Dutch music duo) match "Jon
+        # Speelman".
+        significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 3]
+        # Wesley So is the one case where the surname is too short to count:
+        # "Wesley" alone matched a footballer's "Wesley_moraes_ferreira_da_
+        # silva" photo (caught live 2026-10-11). Hard-coded for him only, by
+        # the user's call, so other searches keep the usual rule.
+        if re.search(r"\bwesley so\b", query.lower()) and not re.search(r"(?<![a-z])so(?![a-z])", title_lower):
+            return False
+        if all(_word_present(word) for word in significant_words):
+            return True
+        # Names run together in the filename ("JonSpeelman24.jpg") -- caught
+        # live 2026-10-03: Speelman's own 2024 photo was skipped this way and
+        # the piece got Nigel Short instead. All the words, in order, with
+        # nothing between them, is as specific as the spaced version.
+        compact_title = re.sub(r"[^a-z]", "", title_lower)
+        return "".join(w.lower() for w in significant_words) in compact_title
+    return any(_word_present(word) for word in significant_words)
+
+
+# Commons photosets from a single shoot are near-universally batch-uploaded
+# with a shared filename stem and a trailing running index -- e.g.
+# "Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.jpg" and "..._-_26.jpg"
+# are two different frames of the same moment, not two different photos.
+# Exact-URL exclusion alone missed this (caught live: two articles days
+# apart both got a Gukesh-v-Erigaisi frame from the same shoot -- visually
+# near-identical to a reader, but different Commons pages so the ordinary
+# reuse-cooldown never flagged it). Stripping the trailing index and
+# comparing stems catches every frame from the same batch upload, not just
+# an exact repeat.
+_PHOTOSET_INDEX_RE = re.compile(r"[\s_]*-[\s_]*\d+(\.\w+)$")
+# The other common Commons derivative pattern this same mechanism missed:
+# an explicit crop of an existing file, uploaded separately with a
+# "(cropped)" suffix rather than a numeric index (caught live: an article
+# picked "Nodirbek_Abdusattorov_chess_player_(cropped).jpg" two days after
+# a different article already used "Nodirbek_Abdusattorov_chess_player.jpg"
+# -- confirmed via the file's own Commons page, under "Other versions", to
+# be a literal crop of that exact file -- but the numeric-only regex above
+# left the two filenames' stems different, so the reuse-cooldown never saw
+# them as the same underlying photo). Stripped before the numeric-index
+# regex runs, so a photoset frame that also happens to be a labeled crop
+# (e.g. "..._-_13_(cropped).jpg") still normalizes down to one shared stem.
+_PHOTOSET_SHORT_INDEX_RE = re.compile(r"\s+\d{1,2}(\.\w+)$")
+_CROPPED_SUFFIX_RE = re.compile(r"[\s_]*\(cropped\)(\.\w+)$", re.IGNORECASE)
+
+
+def _photoset_stem(title_or_url: str) -> str:
+    name = title_or_url.rsplit("/", 1)[-1]
+    name = urllib.parse.unquote(name)
+    if name.lower().startswith("file:"):
+        name = name[5:]
+    name = name.replace("_", " ").strip().lower()
+    name = _CROPPED_SUFFIX_RE.sub(r"\1", name)
+    name = _PHOTOSET_INDEX_RE.sub(r"\1", name)
+    # Plain "_02"/"_03" frame numbers (caught 2026-10-16: two Caruana frames
+    # from the 2024 Candidates). One or two digits only, so a year stays.
+    return _PHOTOSET_SHORT_INDEX_RE.sub(r"\1", name)
+
+
+def _fetch_first_licensed_file(
+    titles: list,
+    query: str,
+    strict: bool,
+    exclude_source_urls: set | None = None,
+    prefer_relevance: bool = False,
+    require_known_date: bool = False,
+    historical: bool = False,
+) -> dict | None:
+    """Among the given candidate titles, return the most recently-taken
+    acceptably-licensed file -- not just the first one Commons' text search
+    happened to rank highest. Search relevance has no relationship to photo
+    age, and an old photo of a young player (or a much-changed player) reads
+    as wrong even when it's the "right" person and properly licensed.
+
+    `prefer_relevance` flips that for queries where recency isn't a
+    meaningful signal at all -- a static organization logo doesn't change
+    over time the way a person's face does, so re-sorting by upload date
+    can bury the actually-correct, most-relevant match under an
+    irrelevant-but-newer file that only coincidentally passed the title
+    filter (caught live: "FIDE logo" re-sorted by date picked an unrelated
+    Mexican organization's identically-named logo over the real FIDE's,
+    which Commons' own search already correctly ranked first). When set,
+    candidates keep Commons' own search-result order instead.
+
+    `exclude_source_urls` skips files already used as another article's
+    image -- the query cascade is deterministic, so two articles that both
+    name the same central subject (e.g. two money-angle pieces that both
+    cite Magnus Carlsen) would otherwise pick the identical top-ranked
+    photo of him."""
+    if not titles:
+        return None
+
+    # Normalize once: articles written at different times (or by different
+    # code versions) can have their image sourceUrl percent-encoded
+    # differently -- e.g. "File:Name.jpg" vs "File%3AName.jpg", the exact
+    # same Commons page as two different strings. Comparing raw strings let
+    # a photo already used in another recent article slip past the
+    # exclusion check and get picked again (caught live: the same Carlsen
+    # photo on two GCL articles two days apart, because the older article's
+    # stored URL used a raw colon that no longer matched what this function
+    # constructs). Unquoting both sides makes the comparison encoding-proof.
+    normalized_excludes = (
+        {urllib.parse.unquote(u) for u in exclude_source_urls} if exclude_source_urls else set()
+    )
+    excluded_photoset_stems = {_photoset_stem(u) for u in normalized_excludes}
+
+    data = _get(
+        {
+            "action": "query",
+            "titles": "|".join(titles),
+            "prop": "imageinfo",
+            "iiprop": "url|extmetadata|timestamp|size",
+            "iiurlwidth": 1200,
+        }
+    )
+    pages = data.get("query", {}).get("pages", {})
+    # Preserve search-result order (dict iteration order from the API
+    # response doesn't match titles order).
+    pages_by_title = {p.get("title"): p for p in pages.values() if p.get("title")}
+
+    candidates = []
+    for rank, title in enumerate(titles):
+        if not _is_photo_file(title):
+            continue
+        if _is_place_named_after_subject(title):
+            continue
+        if _is_ephemera(title):
+            continue
+        if _is_signature_file(title):
+            continue
+        # "(cropped)" re-uploads are tight face crops that our wide card
+        # and hero slots zoom into badly; the uncropped original is almost
+        # always on Commons too. User's call, 2026-10-01 (the Turlov
+        # interview got "Timur Turlov in 2023 (cropped)").
+        if re.search(r"\bcrop(ped)?\b", title, re.I):
+            continue
+        if not _title_matches_query(title, query, strict):
+            continue
+        page = pages_by_title.get(title)
+        if not page:
+            continue
+        info_list = page.get("imageinfo")
+        if not info_list:
+            continue
+        info = info_list[0]
+        if not _is_high_enough_resolution(title, info):
+            continue
+        meta = info.get("extmetadata", {})
+        license_name = meta.get("LicenseShortName", {}).get("value", "")
+        if not _license_ok(license_name):
+            continue
+
+        page_url = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}"
+        if urllib.parse.unquote(page_url) in normalized_excludes:
+            continue
+        if excluded_photoset_stems and _photoset_stem(title) in excluded_photoset_stems:
+            continue
+
+        date = _photo_date(meta)
+        # Profiles and history pieces are about players whose photos are
+        # old or undated (caught 2026-10-18: Vaganian's are from 1983 or
+        # undated, Fischer's from 1960, so both pieces got neutral photos).
+        # Their queries are strict full-name matches, so the floor and the
+        # known-date rule below are lifted for them.
+        if _is_too_old(date) and not historical:
+            continue
+        # A bare person-name query has no "chess"/topic qualifier at all, so
+        # an unknown-date file (which the age floor above explicitly lets
+        # through) is the one case that can still be a same-name collision
+        # with a completely unrelated person -- caught live: an undated
+        # 19th-century portrait of an unrelated José Antonio Carrillo (a
+        # former LA mayor) beat the real FIDE Americas president's photo
+        # because it had no date to be rejected by. Requiring a known date
+        # for these queries costs nothing for genuine matches (real modern
+        # photos of chess people have upload/capture dates) and closes this
+        # gap without weakening the age floor itself for other queries.
+        if require_known_date and date == "0000-00-00" and not historical:
+            continue
+
+        artist = _extract_artist_name(meta.get("Artist", {}).get("value", "")) or "Wikimedia Commons contributor"
+        url = info.get("thumburl") or info.get("url")
+
+        # Every on-site slot this image can land in is a wide landscape box
+        # (1.91:1 lead, 16:9 card) rendered with object-fit: cover -- a
+        # portrait-oriented source gets scaled up until its width fills the
+        # box, then has most of its height cropped away. A tight face-closeup
+        # portrait (the common case for headshot-style Commons photos) loses
+        # so much of that height that only eyes/nose/mouth survive the crop,
+        # blown up far larger than intended (found in testing: a 869x1303
+        # Carlsen closeup read as a giant, awkwardly-cropped face on-site).
+        # A well-composed portrait with headroom and shoulders survives the
+        # same crop fine, and there's no metadata that distinguishes the two
+        # -- but ANY portrait is strictly more likely to crop badly than a
+        # landscape or square photo of the same subject, so treat orientation
+        # as a soft preference (not a hard filter -- a portrait is still
+        # better than no image) rather than trying to guess crop tightness.
+        width = info.get("width") or 0
+        height = info.get("height") or 1
+        is_portrait = width < height
+
+        candidates.append(
+            (
+                is_portrait,
+                rank,
+                date,
+                {
+                    "url": url,
+                    "credit": f"{artist}, {license_name}, via Wikimedia Commons",
+                    "sourceUrl": page_url,
+                },
+            )
+        )
+
+    if not candidates:
+        return None
+    # Since 2026-10-22 an old photo is not used at all for a current story:
+    # with all three recent So photos in the cooldown, the 2008 one (aged 15)
+    # was picked. The next subject, or the neutral pool, comes first.
+    if not historical:
+        cutoff = str(time.gmtime().tm_year - RECENT_PHOTO_YEARS)
+        candidates = [c for c in candidates if c[2] == "0000-00-00" or c[2][:4] >= cutoff]
+        if not candidates:
+            return None
+
+    if prefer_relevance:
+        # Keep Commons' own search-result order (already stored as each
+        # candidate's rank) instead of re-sorting by date -- see the
+        # docstring for why recency isn't a meaningful signal here.
+        # Orientation stays a light preference on top of that.
+        candidates.sort(key=lambda c: c[1])
+        candidates.sort(key=lambda c: c[0])
+        return candidates[0][3]
+
+    # Two stable passes, least-significant key first: sort by recency, then
+    # re-sort by orientation -- the recency order survives within each
+    # orientation tier, so this is "most recent landscape/square photo, or
+    # if none exists, most recent portrait photo" rather than a pure date
+    # sort or a pure orientation sort.
+    candidates.sort(key=lambda c: c[2], reverse=True)
+    candidates.sort(key=lambda c: c[0])
+    # Photos older than RECENT_PHOTO_YEARS were already dropped above for
+    # current stories (user's call, 2026-10-19: recency over shape).
+    return candidates[0][3]
+
+
+def search_image(
+    query: str,
+    strict: bool = False,
+    exclude_source_urls: set | None = None,
+    prefer_relevance: bool = False,
+    require_known_date: bool = False,
+    historical: bool = False,
+) -> dict | None:
+    """Search Commons for one query, return the first acceptably-licensed
+    file, or None if nothing usable was found."""
+    try:
+        titles = _search_titles(query, limit=8)
+        result = _fetch_first_licensed_file(
+            titles, query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical
+        )
+        # A well-photographed player's top hits can all be older than
+        # RECENT_PHOTO_YEARS, hiding newer photos further down. Caught live
+        # 2026-10-25: Nakamura's top 8 were 2008-2016, so the Bullet Brawl
+        # piece got a pool photo though 2026 photos of him exist. The
+        # newest uploads for the same query get the same checks.
+        if result is None and not historical:
+            newest = [t for t in _search_titles(query, limit=8, newest=True) if t not in titles]
+            if newest:
+                result = _fetch_first_licensed_file(
+                    newest, query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical
+                )
+        return result
+    except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
+        return None
+
+
+# Dropped from a named subject to build its loosened fallback query below.
+# Ordinals/numbers ("3rd", "2026") and these connector words add nothing a
+# reader would search for and only make Commons' own relevance ranking
+# less likely to surface a real match in the handful of results actually
+# fetched (_search_titles only asks for the top 5) -- found live: "3rd FIDE
+# Chess Olympiad for People with Disabilities" found nothing, but stripping
+# it down to "FIDE Chess Olympiad Disabilities" surfaced a real team photo
+# from that exact event on the first try.
+_LOOSENING_STOPWORDS = {"for", "of", "the", "in", "and", "a", "an", "with", "to", "at", "on"}
+_ORDINAL_OR_NUMBER = re.compile(r"^\d+(st|nd|rd|th)?$", re.I)
+
+
+def _loosened_event_query(subject: str) -> str | None:
+    """A shorter fallback phrasing of `subject`, or None when there's
+    nothing to strip. Only ever removes ordinals/numbers and short
+    connector words -- never touches, reorders, or substitutes a single
+    content word -- so a short person's name (already free of both) comes
+    back unchanged and this adds no extra query for it; it's only a real
+    fallback for longer, formally-phrased event names, which is exactly
+    the case that needs Commons search to have fewer, more distinctive
+    words to rank on."""
+    words = subject.split()
+    kept = [w for w in words if not _ORDINAL_OR_NUMBER.match(w) and w.lower() not in _LOOSENING_STOPWORDS]
+    if len(kept) < 2 or len(kept) == len(words):
+        return None
+    return " ".join(kept)
+
+
+_ORGANISATION_WORDS = {"federation", "council", "commission", "association", "union", "committee", "board"}
+# Club-name prefixes ("SK Weisse Dame Hamburg", "SC Erlangen"), not a body
+# with a logo of its own (caught 2026-10-27: "SK" found the SK Gaming logo).
+_CLUB_PREFIXES = {"SK", "SC", "SV", "SG", "SF", "CE", "CA", "CC", "AS", "SS", "TSV", "VFL", "USC", "ASD"}
+
+
+def _acronyms(subject: str) -> list[str]:
+    return [w for w in subject.split() if len(w) >= 2 and w.isupper() and w.strip(".") not in _CLUB_PREFIXES]
+
+
+def _organisation_name(subject: str) -> str:
+    """"FIDE Council" -> "FIDE": the body that has a logo."""
+    acronyms = _acronyms(subject)
+    return acronyms[0] if acronyms else subject
+
+
+def _is_organisation(subject: str) -> bool:
+    words = subject.split()
+    return bool(_acronyms(subject)) or any(w.lower() in _ORGANISATION_WORDS for w in words)
+
+
+def build_query_cascade(
+    item: dict, drafted_title: str, image_subjects: list | None = None, prefer_neutral: bool = False
+) -> list:
+    """Ordered list of (query, strict) tuples to try, most specific first,
+    for a drafted article. `item` is the original candidate dict (from
+    selected.json); `drafted_title` is the headline Claude wrote;
+    `image_subjects` is the list of specific people/orgs/events Claude named,
+    ordered by centrality to the piece (the actual subject first, a more
+    photogenic secondary mention only after) -- the first one that finds a
+    usable photo wins, so this order determines whose photo the article
+    gets, not just which query happens to run first. `strict` marks auto-extracted headline-fragment
+    queries, which need a stronger title-match bar than the
+    deliberately-constructed ones (see _title_matches_query).
+
+    `prefer_neutral` is for stories about a person (the People lens): when
+    the subject itself has no photo, a photo of some other identifiable
+    player next to their story would read as if it were them, and next to a
+    story like a harassment case that's worse than unhelpful. So the
+    cascade stops after the subject queries and the caller falls back to an
+    object-only photo (pick_image_for_item, below)."""
+    queries = []
+    continent_code = item.get("continentCode")
+    continent_name = CONTINENT_NAMES.get(continent_code) if continent_code else None
+
+    if item["kind"] in ("calendar-biggest", "calendar-comingup"):
+        # The generic "{continent} chess tournament" query returns the same
+        # small, static pool of Commons results every time, so every
+        # calendar piece for a given continent ends up with the same photo
+        # regardless of what month or country it's actually about. Trying
+        # the month's actual top tournament (name, then country) first
+        # gives the search something that genuinely differs month to
+        # month, without ever forcing a worse match -- if nothing specific
+        # is found, it still falls through to the same safe continent-level
+        # queries as before.
+        tournaments = item.get("tournamentData") or []
+        if tournaments:
+            # Try more than just the single top tournament -- when the #1
+            # entry has no real photo on Commons (common; most of these are
+            # small regional opens), falling straight to a generic
+            # continent-level query produces the same recycled, often
+            # barely-relevant image every time (a 2002 Olympiad postage
+            # stamp standing in for an unrelated Craiova rapid open, in one
+            # case). Every additional named tournament tried here is a real
+            # chance at a genuinely specific photo before giving up on
+            # specificity altogether.
+            for candidate in tournaments[:5]:
+                name = (candidate.get("name") or "").strip()
+                if name:
+                    # Strict: a specific multi-word tournament name matching on
+                    # just one generic word is a real failure mode, not a
+                    # hypothetical -- "2026 Perth International Open" lenient-
+                    # matched a Hungry Jack's ad photo titled "...Perth
+                    # International Airport..." purely off "Perth" and
+                    # "International". A genuine photo of this exact tournament
+                    # would still match every word easily; requiring that is a
+                    # much safer bar than "any one word in common".
+                    queries.append((name, True, False, False))
+
+        # Only an exact tournament-name match, then the neutral object-photo
+        # pool. The broader "{country} chess" / "{continent} chess
+        # tournament" queries mostly return portraits of whoever is tagged
+        # with that country -- caught live 2026-10-01: Europe's September
+        # piece got a portrait of a Romanian arbiter with no link to any
+        # tournament in it.
+        return queries
+    else:
+        # A person-centred piece (prefer_neutral) tries only its own subject:
+        # anyone else named in it would read as if they were that person.
+        # Caught live 2026-10-03: a Jon Speelman 70th-birthday profile got a
+        # photo of Nigel Short, his main rival in the story.
+        subjects = (image_subjects or [])[:1] if prefer_neutral else (image_subjects or [])
+        for subject in subjects:
+            if subject and _is_organisation(subject):
+                # An organisation's "photo" is its logo. "FIDE chess" matched
+                # a Magnus Carlsen photo from a FIDE event (caught live
+                # 2026-10-11), which read as if the story were about him.
+                queries.append((f"{_organisation_name(subject)} logo", False, True, False))
+                continue
+            if subject:
+                # A person's full name is not guaranteed unique on Commons --
+                # caught live: "José Antonio Carrillo" (a FIDE Americas
+                # president) lenient-matched a completely unrelated
+                # Commons photo, "Leo Carillo with portrait of Antonio
+                # Carrillo" (an actor posing next to a portrait of a
+                # different, unrelated Antonio Carrillo), because both
+                # significant words genuinely appear in that title -- a
+                # real name collision, not a matching-strictness bug (even
+                # strict all-words matching would have passed it). Every
+                # other tier in this cascade already qualifies its query
+                # with "chess" for exactly this kind of disambiguation
+                # (see the tournament-name/country/continent queries
+                # below); a bare person name had no such qualifier at all.
+                # Try the qualified version first -- it can only be more
+                # specific -- and keep the bare name as a fallback for
+                # subjects a "{subject} chess" query doesn't find anything
+                # for (a real risk, accepted only once the safer query has
+                # already failed, same as the rest of this cascade).
+                #
+                # Must be strict (all words including "chess"), not
+                # lenient: lenient mode passes on ANY significant word
+                # matching, so a lenient "{subject} chess" query is no
+                # safer than the bare name at all -- "chess" being merely
+                # one of several words that could satisfy an any-word
+                # match means a title with zero mention of chess still
+                # passes as long as the person's name matches (confirmed
+                # live: the Carrillo collision above still matched with
+                # this qualifier appended, lenient, because "Carrillo"
+                # alone was enough). Strict forces "chess" to actually be
+                # present.
+                queries.append((f"{subject} chess", True, False, True))
+                # Strict here too, not lenient: a full name is not
+                # guaranteed unique even among real, notable people on
+                # Commons -- the Carrillo collision above wasn't a one-off
+                # ("Leo Carillo with portrait of Antonio Carrillo," an
+                # actor's photo, blocked separately by the photo-age floor
+                # since it's from 1955); the very next candidate this same
+                # bare query matched was a *different* unrelated person,
+                # a Spanish mathematician named "Carrillo de la Plata,"
+                # whose Commons file has nothing to do with either the
+                # actor or the FIDE Americas president. Requiring every
+                # significant word of the name (not just one) costs
+                # nothing for a genuine match -- Frederik Svane's real
+                # photo, for example, contains both "Frederik" and "Svane"
+                # even though its title has no mention of chess at all --
+                # and rejects a same-surname-only collision like this one.
+                queries.append((subject, True, False, True))
+                loosened = _loosened_event_query(subject)
+                if loosened:
+                    queries.append((loosened, False, False, False))
+        # No auto-extracted headline-fragment fallback here: tried and
+        # dropped in testing. Even requiring every word to match, generic
+        # capitalized fragments like "Thursday Record" (from a headline,
+        # not a real name) matched Wikimedia files for entirely unrelated
+        # subjects (a musician, in one case) -- too unreliable to keep at
+        # any strictness. Claude's own imageSubject already covers this
+        # case when a real subject exists; when it's empty or too specific
+        # to find, falling straight to the org/continent/generic queries
+        # below is safer than guessing from the headline text.
+        source_name = item.get("sourceName", "")
+        # The outlet's own logo stands in for a photo only when the outlet
+        # is what the story is about (a FIDE-sourced piece on a FIDE vote).
+        # Otherwise it's just whoever happened to publish the story --
+        # caught live: a ChessBase-sourced piece about a streamer got
+        # "ChessBase India Logo" as its photo, which says nothing about her.
+        subject_text = " ".join([drafted_title, *(image_subjects or [])]).lower()
+        if source_name and source_name.lower() in subject_text and not prefer_neutral:
+            # Lenient, not strict, and prefer_relevance=True -- an earlier
+            # version of this made the query strict (require "logo" too,
+            # not just "FIDE") after a cruise-ship photo matched on "FIDE"
+            # alone (its title genuinely contains "BONA FIDE," an unrelated
+            # Latin phrase). That fix backfired: the real, correct FIDE
+            # logo file on Commons is titled "FIDE text on white.svg" --
+            # no word "logo" in it at all -- so requiring "logo" literally
+            # excluded the right answer and fell through to a WRONG one,
+            # "Fide logo.png," which is a Mexican organization's unrelated
+            # logo that just happens to also be called FIDE (caught live,
+            # published: 2026-09-25's Carrillo article). The ship photo
+            # itself turned out not to be reachable through this specific
+            # query anyway (it isn't in Commons' own top search results for
+            # "FIDE logo" at all -- it surfaced through a different,
+            # looser query tier, now blocked separately by that query's own
+            # strict subject matching above). prefer_relevance keeps
+            # Commons' own search ranking as the deciding order instead of
+            # re-sorting by recency: relevance correctly puts the real FIDE
+            # logo first for this query, and "most recently uploaded" is
+            # meaningless for a static organization logo the way it's
+            # meaningful for a person's face changing over time.
+            queries.append((f"{source_name} logo", False, True, False))
+        # No loose "{continent} chess" / "chess tournament" tiers: they
+        # matched photos of named players at unrelated events (caught
+        # 2026-10-17: "Kim_Steven_Yap_Dubai_Open_Chess_Tournament_2013" on a
+        # Dortmund festival piece). With no subject match, the object-only
+        # fallback pool (fallback_image) is the neutral image.
+    return queries
+
+
+# Local, already-committed masters of object-only chess photos (pieces, a
+# board, a set) with no identifiable people in them -- the last resort that
+# guarantees every article has a real, license-clean photo whatever Commons
+# search does. Kept as a small pool so consecutive fallbacks don't all look
+# the same; picked by a stable hash of the headline.
+FALLBACK_PHOTOS_PATH = Path(__file__).parent / "fallback_photos.json"
+
+
+def _pool_last_used() -> dict[str, str]:
+    """Commons source URL -> latest publishDate among published articles
+    that use it."""
+    last: dict[str, str] = {}
+    for path in (Path(__file__).parent.parent / "src" / "content" / "articles").glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text:
+            continue
+        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.MULTILINE)
+        url = re.search(r'^  sourceUrl:\s*"(.*?)"', text, re.MULTILINE)
+        if date and url:
+            key = urllib.parse.unquote(url.group(1))
+            last[key] = max(last.get(key, ""), date.group(1))
+    return last
+
+
+def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> dict | None:
+    try:
+        pool = json.loads(FALLBACK_PHOTOS_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not pool:
+        return None
+    # Rotate through the whole pool: the photo that has gone longest
+    # without appearing on a published article wins, never-used ones first
+    # (user's call, 2026-10-17 -- a headline hash alone let one photo come
+    # back while others sat unused). The hash only breaks ties. Photos in
+    # exclude_source_urls (on the front page, or picked earlier this run)
+    # are skipped while any other is free.
+    index = int(hashlib.sha256(seed_text.encode("utf-8")).hexdigest(), 16) % len(pool)
+    exclude = {urllib.parse.unquote(u) for u in (exclude_source_urls or set())}
+    last = _pool_last_used()
+    order = sorted(
+        range(len(pool)),
+        key=lambda i: (last.get(urllib.parse.unquote(pool[i]["sourceUrl"]), ""), (i - index) % len(pool)),
+    )
+    free = [i for i in order if urllib.parse.unquote(pool[i]["sourceUrl"]) not in exclude]
+    photo = pool[(free or order)[0]]
+    return {"src": photo["src"], "credit": photo["credit"], "sourceUrl": photo["sourceUrl"]}
+
+
+HISTORICAL_LENSES = {"people", "historical-parallel"}
+
+
+def pick_image_for_item(
+    item: dict,
+    drafted_title: str,
+    image_subjects: list | None = None,
+    exclude_source_urls: set | None = None,
+    prefer_neutral: bool = False,
+) -> dict | None:
+    """A photo for the article: the cascade's specific-to-generic Commons
+    search first, and if that finds nothing (for a person story, nothing of
+    the person) the committed fallback pool -- so every article gets one
+    (None only if the pool file itself is missing). A result with a local
+    "src" is already stored in _images; one with a "url" still has to go
+    through localize_image."""
+    historical = item.get("lens") in HISTORICAL_LENSES
+    for query, strict, prefer_relevance, require_known_date in build_query_cascade(
+        item, drafted_title, image_subjects, prefer_neutral
+    ):
+        result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
+        if result:
+            return result
+    # A person's own milestone with no photo of them: the next person the
+    # drafter ranked -- the record holder they passed, say -- before a
+    # neutral image. Each is tried on their own name only, and draft.py
+    # captions the photo with that name (user's call, 2026-10-24: Bodhana's
+    # IM record should show Judit Polgar, not a generic board).
+    if prefer_neutral:
+        for subject in (image_subjects or [])[1:]:
+            for query, strict, prefer_relevance, require_known_date in build_query_cascade(
+                item, drafted_title, [subject], True
+            ):
+                result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
+                if result:
+                    return result
+    return fallback_image(drafted_title, exclude_source_urls) or fallback_image(item.get("title", ""), exclude_source_urls)
+
+
+# The only local master ever stored -- every on-site display size (lead,
+# card) and the social-card crop are derived from this one file by Astro's
+# build-time image pipeline (see ArticleThumb.astro and the article page's
+# og:image generation), not generated or committed here. 1280px covers the
+# widest on-site use (960px lead slot) with real headroom for high-DPI
+# screens without shipping Wikimedia's often much larger originals.
+MASTER_MAX_WIDTH = 1280
+MASTER_QUALITY = 82
+
+
+def _fetch_bytes(url: str, retries: int) -> bytes:
+    global _last_request_time
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+
+    for attempt in range(retries + 1):
+        elapsed = time.monotonic() - _last_request_time
+        if elapsed < REQUEST_DELAY_SECONDS:
+            time.sleep(REQUEST_DELAY_SECONDS - elapsed)
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                _last_request_time = time.monotonic()
+                return response.read()
+        except urllib.error.HTTPError as exc:
+            _last_request_time = time.monotonic()
+            if exc.code == 429 and attempt < retries:
+                retry_after = exc.headers.get("Retry-After")
+                # Capped, not honored outright: a shared-IP throttle can
+                # advertise a Retry-After in the hundreds of seconds (seen
+                # in testing: 600), and waiting that out here would stall
+                # the whole batch on one photo. _download_bytes has a
+                # fallback endpoint for exactly this case -- better to fail
+                # this attempt quickly and let it try that than block.
+                delay = min(float(retry_after), 15.0) if retry_after and retry_after.isdigit() else 8.0
+                time.sleep(delay)
+                continue
+            raise
+
+
+_THUMB_FILENAME = re.compile(r"/(?:\d+px-)?([^/]+)$")
+
+
+def _download_bytes(url: str, retries: int = 3) -> bytes:
+    """Fetch raw bytes from Commons, sharing the same rate-limit pacing and
+    429/Retry-After handling as `_get` -- this hits the same Wikimedia
+    infrastructure as the search API, just for a file instead of JSON.
+
+    Falls back to commons.wikimedia.org/wiki/Special:FilePath/<filename> --
+    a different endpoint that in practice sits on a separate rate-limit
+    pool from direct upload.wikimedia.org fetches -- if the direct URL is
+    still failing once retries are exhausted, rather than losing the image
+    outright over what's often a transient, endpoint-specific throttle."""
+    try:
+        return _fetch_bytes(url, retries=1)
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
+        match = _THUMB_FILENAME.search(urllib.parse.urlparse(url).path)
+        if not match:
+            raise
+        # match.group(1) comes from urlparse().path, which does NOT decode
+        # percent-escapes -- it's already URL-encoded (e.g. "...%28cropped
+        # %29.jpg"). quote()-ing it again without unquoting first turns
+        # "%28" into "%2528", a filename that doesn't exist on Commons and
+        # 404s outright (found live: a real, existing file failed to
+        # localize this way). Round-trip through unquote first so the
+        # re-encoding starts from the real filename, not its escaped form.
+        filename = urllib.parse.quote(urllib.parse.unquote(match.group(1)))
+        fallback_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width={MASTER_MAX_WIDTH}"
+        return _fetch_bytes(fallback_url, retries)
+
+
+_COMMONS_FILE_TITLE = re.compile(r"/([^/]+)$")
+
+
+def _commons_file_stem(source_url: str) -> str:
+    """A stable, filesystem-safe identifier for a Commons file, derived
+    from its wiki page URL ("File:Name.jpg") rather than the article
+    slug -- used as the stored filename so the same photo picked for two
+    different articles (a recurring figure like Carlsen, easily picked
+    again months apart, once the reuse cooldown has passed) resolves to
+    one shared file on disk instead of a duplicate copy per article, and
+    skips the download and re-encode entirely on the second pick. Two
+    distinct Commons files can never collide here: this is the same
+    "File:Title.ext" name Commons itself already guarantees is unique."""
+    match = _COMMONS_FILE_TITLE.search(urllib.parse.unquote(urllib.parse.urlparse(source_url).path))
+    title = re.sub(r"^File:", "", match.group(1)) if match else source_url
+    title = re.sub(r"\.[A-Za-z0-9]+$", "", title)  # drop the original extension; we control the stored one
+    return re.sub(r"[^A-Za-z0-9_-]+", "_", title).strip("_") or "image"
+
+
+def localize_image(image: dict) -> dict | None:
+    """Download the Commons photo `pick_image_for_item` chose, once, and
+    store a single compressed master locally -- see IMAGES_DIR above for
+    why co-located with the content and why just one file. Returns a
+    frontmatter-ready dict (relative `src` path in place of the hotlinked
+    `url`, same `credit`/`sourceUrl`), or None if the download/decode fails.
+
+    Reuses an already-stored file for the same Commons source without any
+    network call at all when one exists (see _commons_file_stem) -- pure
+    storage/bandwidth win on top of the localization itself, and it only
+    grows as the same well-known players and organizations recur.
+
+    Best-effort like the search step itself (see module docstring): a
+    transient fetch failure here is a missing image, not a failed draft --
+    matching how `search_image` already treats "nothing found" as normal
+    rather than an error."""
+    is_svg = urllib.parse.urlparse(image["url"]).path.lower().endswith(".svg")
+    stem = _commons_file_stem(image["sourceUrl"])
+    filename = f"{stem}.svg" if is_svg else f"{stem}.webp"
+    if (IMAGES_DIR / filename).exists():
+        return {
+            "src": f"./_images/{filename}",
+            "credit": image["credit"],
+            "sourceUrl": image["sourceUrl"],
+        }
+    try:
+        raw = _download_bytes(image["url"])
+        IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        if is_svg:
+            # Pillow can't decode SVG at all (it's vector, not raster) --
+            # every organization-logo pick from build_query_cascade's
+            # "{source} logo" fallback query is one of these. Store the
+            # vector file as-is; Astro's own image() pipeline (Sharp) can
+            # rasterize an SVG source into whatever raster crop/size a
+            # given slot needs, same as it does for real photos.
+            (IMAGES_DIR / filename).write_bytes(raw)
+        else:
+            photo = Image.open(io.BytesIO(raw)).convert("RGB")
+            if photo.width > MASTER_MAX_WIDTH:
+                new_height = round(photo.height * MASTER_MAX_WIDTH / photo.width)
+                photo = photo.resize((MASTER_MAX_WIDTH, new_height), Image.LANCZOS)
+            photo.save(IMAGES_DIR / filename, "WEBP", quality=MASTER_QUALITY)
+    except Exception:  # noqa: BLE001 -- image sourcing is best-effort, never fatal
+        return None
+    return {
+        "src": f"./_images/{filename}",
+        "credit": image["credit"],
+        "sourceUrl": image["sourceUrl"],
+    }
+
+
+# Words that mark an image subject as an event or organisation rather than
+# a person -- those never get a name caption.
+_NON_PERSON_WORDS = {
+    "fide", "chess", "olympiad", "championship", "championships", "cup", "tour",
+    "open", "tuesday", "friday", "festival", "federation", "club", "classic",
+    "grand", "prix", "swiss", "league", "memorial", "tournament", "team",
+    "world", "youth", "junior", "senior", "women", "rapid", "blitz", "bullet",
+}
+
+
+def _fold(text: str) -> str:
+    """Lowercase ASCII with umlauts written out ("Blübaum" -> "bluebaum")."""
+    for src, dst in (("ä", "ae"), ("ö", "oe"), ("ü", "ue"), ("Ä", "ae"), ("Ö", "oe"), ("Ü", "ue"), ("ß", "ss")):
+        text = text.replace(src, dst)
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+    return text.lower()
+
+
+def person_caption(source_url: str, names: list) -> str | None:
+    """The name to show under a photo when it is of a person: the first of
+    `names` (full names, most central first) whose every part appears in
+    the Commons file name. Events and organisations never match, so a
+    neutral board or a logo gets no caption (user's call, 2026-10-09: a
+    lesser-known player's photo reads as anyone without one)."""
+    stem = _fold(urllib.parse.unquote(source_url).rsplit("/", 1)[-1])
+    file_words = set(re.findall(r"[a-z]+", stem))
+    for name in names or []:
+        parts = re.findall(r"[a-z]+", _fold(name))
+        if len(parts) < 2 or any(p in _NON_PERSON_WORDS for p in parts):
+            continue
+        # Accent-stripped and umlaut-expanded spellings both count.
+        alt = re.findall(r"[a-z]+", unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower())
+        if all(p in file_words for p in parts) or all(p in file_words for p in alt):
+            return name.strip()
+        # Run-together names ("AndyWoodward2026.jpg", caught 2026-10-15).
+        compact = re.sub(r"[^a-z]", "", stem)
+        if "".join(parts) in compact or "".join(alt) in compact:
+            return name.strip()
+    return None

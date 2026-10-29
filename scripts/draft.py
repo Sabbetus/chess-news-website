@@ -1,0 +1,2145 @@
+"""
+AI drafting: for each item in data/selected.json, calls Claude (Sonnet 5) to
+write a companion piece, then writes a Markdown file into
+src/content/articles/ with reviewStatus: "draft" in its frontmatter --
+nothing here ever sets reviewStatus to "published" directly; that only
+happens when a human approves and merges the PR (see the pipeline workflow).
+
+Every article carries two independent pieces of metadata:
+  - continent: the site's primary browsing category (europe/asia/
+    north-america/south-america/africa/oceania/global). Calendar aggregate
+    items already know theirs from ingestion; for news items the model
+    infers it from the story content, falling back to "global" when no
+    single continent fits.
+  - lens: the analytical angle the piece is written through -- shapes the
+    prompt, shown on-site as a secondary label, not the primary category.
+    "tournament-db" is reserved for calendar aggregates (forced, not
+    chosen); news items get one of five lenses (people, drama, money-angle,
+    results, historical-parallel), picked by the model as whichever best fits
+    that specific story -- checked roughly in that order, with
+    historical-parallel as the fallback (see LENS_OPTIONS below).
+"""
+
+import json
+import re
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+import event_results
+from social_text import delink, fit_for_x  # noqa: E402
+
+import anthropic
+
+from api_usage import track
+
+from chess_results_standings import (
+    KNOWN_TOURNAMENTS,
+    fetch_team_standings,
+    standings_markdown_table,
+)
+from continents import CONTINENT_SLUGS
+from game_links import fix_embed_link, link_moves
+from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
+from game_pgn import find_game_pgn
+from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
+from lichess_game import (
+    GAME_LOOKUP_CRITERIA,
+    SAN_MOVE_RE,
+    add_embed_scroll_link,
+    embed_game_pgn,
+    find_game_embed,
+    recheck_game_lookup,
+)
+from selection import _has_result_signal, is_rating_list_story, tournament_has_round_context
+from tweets import tweet_quotes_for_item
+
+ROOT = Path(__file__).parent.parent
+DATA_DIR = ROOT / "data"
+SELECTED_PATH = DATA_DIR / "selected.json"
+ARTICLES_DIR = ROOT / "src" / "content" / "articles"
+
+MODEL = "claude-sonnet-5-5"
+
+CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
+
+# Instructions for the two calendar aggregate kinds -- keyed by candidate
+# "kind" rather than "lens", since both use the tournament-db lens but need
+# very different framing (retrospective ranking vs. forward-looking list).
+# Shared caveat for both aggregate kinds: when player counts/prize funds are
+# missing from the data, that's a gap in what chesstournamentcalendar.com
+# tracks, not a fact about the tournaments themselves -- plenty of them
+# genuinely do report this information, just not to that source. Phrasing
+# like "no player counts were reported for any of these events" reads as a
+# claim about the tournaments/organizers, which is neither true nor ours to
+# assert; frame it as our data's limitation instead (e.g. "we don't have
+# player counts for most of these" / "not tracked here").
+# Only North America and Oceania have a genuine, continent-wide player-count
+# reporting gap (the US and Australia specifically don't report much through
+# chess-results, which is where most of this data comes from). Everywhere
+# else, the vast majority of countries do report through chess-results, so a
+# sweeping "we don't have numbers for a lot of these" caveat is simply
+# inaccurate there -- it happened on a South America piece where it wasn't
+# true. A country here or there with thin data (e.g. Norway/Denmark within
+# Europe) is normal noise, not a pattern worth a caveat paragraph about.
+_CONTINENTS_WITH_REPORTING_GAP = {"NA", "OC"}
+
+
+def aggregate_data_gap_note(continent_code: str) -> str:
+    if continent_code in _CONTINENTS_WITH_REPORTING_GAP:
+        return (
+            "This continent has a genuine, known gap: some countries here (notably the US and "
+            "Australia) don't report through chess-results, the main source for this data, so "
+            "plenty of real tournaments from those countries are likely missing player counts "
+            "or missing from this data entirely. It's fine, and often worth a line, to caveat "
+            "the ranking on that basis. When player counts or other data points are missing for "
+            "some tournaments, frame that as a gap in what this data covers, not as something "
+            "the tournaments or their organizers failed to do (never write \"no player counts "
+            "were reported for any of these events\" or similar -- write \"we don't have player "
+            "counts for most of these\" or \"not tracked in this data\" instead)."
+        )
+    return (
+        "Most countries on this continent report reliably through chess-results, the main "
+        "source for this data, so do NOT add a general caveat suggesting player counts are "
+        "widely missing or that the ranking might be unrepresentative -- that would be "
+        "inaccurate here. If a specific tournament is missing a field (a player count, a city), "
+        "leave that detail out silently rather than telling the reader it is missing."
+    )
+
+AGGREGATE_INSTRUCTIONS = {
+    "calendar-biggest": (
+        "Write an original retrospective piece on the most notable tournaments "
+        "in this continent last month, grounded entirely in the tournament data "
+        "provided (a JSON list, already sorted by notability: classical and "
+        "multi-day events, opens, championships and invitationals rank above "
+        "one-day rapids and school or rating-capped sections, with field size "
+        "as one factor among several). Lead with the most notable events, not "
+        "simply the largest field, and give the reader a sense of what each "
+        "event was (format, length, place). Mention player counts where the "
+        "data has them, but only call an event the biggest or largest field "
+        "when its playersRegistered figure is the highest in the list. This "
+        "is original reporting, not commentary on someone else's article. Do "
+        "not invent details not present in the data. Every tournament you "
+        "mention by name MUST be a Markdown link using its \"url\" field from "
+        "the data -- link the tournament's own name text, not generic text like "
+        "\"here\". Whether to caveat missing player counts is entirely covered "
+        "by the data-gap guidance below -- don't add your own version of that "
+        "caveat on top of it, and don't reach for one at all on a continent "
+        "that guidance says not to."
+    ),
+    "calendar-comingup": (
+        "Write an original preview piece highlighting notable tournaments "
+        "coming up next month in this continent, grounded entirely in the "
+        "tournament data provided (a JSON list already sorted by notability: "
+        "classical and multi-day events, opens, championships and invitationals "
+        "rank above one-day rapids and school or rating-capped sections, with "
+        "field size as one factor). Lead with the most notable events. This is "
+        "original reporting, not commentary on someone else's article. Cover a "
+        "handful of the most interesting entries by name, date, location, and "
+        "any other notable detail given in the data -- do not invent details "
+        "not present in the data. Every tournament you mention by name MUST be "
+        "a Markdown link using its \"url\" field from the data -- link the "
+        "tournament's own name text, not generic text like \"here\". Mention "
+        "the overall count of tracked tournaments in the continent that month "
+        "for context."
+    ),
+}
+
+# The five lenses a news item can be drafted through -- the model picks
+# whichever fits the specific story best (see NEWS_SYSTEM_PROMPT). Checked
+# in this order: drama and money-angle first (a real scandal or financial
+# angle is unambiguous when it exists), then results, and historical-parallel
+# only as the fallback when none of the other four genuinely fit -- chess
+# has enough documented history that *a* parallel can be found for nearly
+# any story, which is exactly why that ease can't be the deciding factor.
+#
+# results used to be split into a separate "upsets" lens and no lens at all
+# for standings/contenders stories -- but a shocking individual result and
+# "who's leading the tournament" are two angles on the same underlying
+# question (what actually happened in the competition), not two different
+# stories, and keeping them apart meant a genuinely standings-relevant piece
+# (which sources rarely frame that way early in a long event, but reliably
+# do once the field of perfect scores thins out) had nowhere to go. Merged
+# into one lens that covers both, since a piece can lean on either or both
+# depending on what the story actually is.
+LENS_OPTIONS = {
+    "people": (
+        "People: for a story that is centrally about a person -- an interview, "
+        "a profile, a personal column, a tribute, or someone's own account of "
+        "their life, habits, views or career -- rather than about a result or "
+        "an event. Tell the reader what the piece reveals about the person: "
+        "what they think, how they work, what they care about, what surprised "
+        "you. Lean on the person's own words for the substance, but quote "
+        "sparingly -- a few short, exact, attributed lines (a sentence, not a "
+        "paragraph), never a long stretch of the source's text and never a "
+        "reconstruction of the whole interview; the piece adds the reading "
+        "and the context, and the reader can go to the source for the full "
+        "conversation. Pick this lens only when the person is the story: "
+        "a match report that quotes a player afterwards is results, not "
+        "this."
+    ),
+    "drama": (
+        "Drama angle: lean into any scandal, controversy, or genuine "
+        "interpersonal conflict in the story -- add color and reasonable "
+        "speculation about motives, stakes, and fallout, the way a sharp "
+        "opinion columnist would. Only pick this lens when there's a real "
+        "scandal, dispute, grievance, or falling-out to work with -- someone "
+        "objecting to something, a rules or conduct controversy, a rivalry "
+        "with real tension behind it, or a complaint about how an event "
+        "itself was organized or run (venue/hotel conditions, scheduling, "
+        "an arbiter's ruling, prize distribution) -- an organizational "
+        "complaint is drama just as much as a player-vs-player dispute is, "
+        "as long as there's a real grievance being aired, not just an event "
+        "running imperfectly with nobody actually objecting to it. A team "
+        "or player simply winning or "
+        "losing, even in a surprising or unusual way, is competition, not "
+        "drama -- that's results (if the story is really about how surprising "
+        "or costly the result itself was, or about the standings it "
+        "reshuffled) or historical-parallel (if there's a genuine echo of the "
+        "past) territory instead. Don't reach for this lens just because a "
+        "result was surprising."
+    ),
+    "money-angle": (
+        "Money angle: analyze the story through prize funds, sponsorship, "
+        "appearance fees, or the broader economics of the event/players "
+        "involved -- what it costs, who's paying, what it signals about where "
+        "money is moving in chess. Only pick this lens when there's a real "
+        "financial angle to dig into."
+    ),
+    "results": (
+        "Results: for a story that's fundamentally about what happened in "
+        "the competition itself -- not a scandal or dispute (that's drama "
+        "instead; a controversial call or conduct dispute stays there even "
+        "if it also produced a surprising result). This covers three related "
+        "angles, and a single piece can lean on any one or a combination "
+        "depending on what the story actually is:\n"
+        "1. A surprising individual result -- an underdog win, a blunder, a "
+        "favorite's collapse, a shock scoreline. Quantify the surprise: use "
+        "the rating gap (or seed/ranking gap when that's what's given) to "
+        "say something concrete about how unlikely a result like this "
+        "'should' have been -- a real number or grounded estimate, not just "
+        "an assertion that it was shocking.\n"
+        "2. A comeback -- a player recovering from a losing position within "
+        "one game, or a team/player clawing back from a bad start over the "
+        "course of an event. This doesn't need a rating-gap surprise to "
+        "qualify; the reversal itself is the story. Say what actually "
+        "turned it around (a specific tactical or positional moment for a "
+        "single game; a specific stretch of results for a tournament-long "
+        "comeback), not just that a comeback happened.\n"
+        "3. The shape of the standings -- who's leading, who's still "
+        "unbeaten, who's fallen out of contention, what a specific upcoming "
+        "pairing means for the tournament's actual outcome. This angle is "
+        "usually more relevant later in a long event, once the field of "
+        "perfect scores has thinned out -- don't force a standings framing "
+        "onto an early round where dozens of teams are still tied at the top "
+        "and a 'leader' claim wouldn't mean much yet; most sources won't even "
+        "offer one that early. Only use this angle when the source itself "
+        "gives real standings/contention detail to work with, not by "
+        "inferring a leaderboard from scattered results.\n"
+        "Either way, look forward, not back: say what the result (or the "
+        "standings shift) actually changes -- momentum into the next round, "
+        "seeding, a psychological edge for a rematch, what's now at stake -- "
+        "rather than ending at 'and that was surprising.' Only pick this "
+        "lens when the story is centrally about a result or the standings, "
+        "not one that merely mentions a score in passing. This lens is for "
+        "the competition on the board specifically -- a federation election "
+        "or committee vote is NOT a 'result' in this sense even though its "
+        "tally (e.g. '29 to 12') is formatted like a scoreline; that's "
+        "governance, not competition, and belongs in money-angle (if the "
+        "story is really about what the vote means for funding, sponsorship, "
+        "or where money in chess is heading), drama (if there's a real "
+        "dispute or grievance behind it), or historical-parallel (the "
+        "fallback otherwise) instead."
+    ),
+    "historical-parallel": (
+        "Historical parallel -- the fallback lens: pick this only when the "
+        "story doesn't have a clear money, controversy, or results angle to "
+        "write through instead. When it does, prefer that lens even if a "
+        "historical parallel also exists. Ground the story against chess "
+        "history -- a similar record, controversy, or milestone from the "
+        "past, and what changed (or didn't) between then and now. Still "
+        "requires a genuine, specific parallel, not a vague 'chess has "
+        "always had drama' gesture -- but don't reach for this lens by "
+        "default just because one can always be found somewhere in a "
+        "century-plus of chess history."
+    ),
+}
+
+CONTINENT_OPTIONS = "europe, asia, north-america, south-america, africa, oceania, global"
+
+# Shared prose-style guidance -- aimed squarely at the tells that make AI-drafted
+# text read as AI-drafted, independent of what the piece is arguing.
+STYLE_GUIDE = """Writing style: write like an experienced human beat writer, not an \
+AI assistant. Concretely:
+- Do not use em dashes (--) or en dashes as a substitute for commas, periods, or \
+parentheses. Use a period, comma, or colon instead, or just write two sentences.
+- Avoid AI-tell stock phrases and constructions: "it's not just X, it's Y", \
+"the real story is/isn't", "at the end of the day", "in a world where", \
+"underscores", "highlights the fact that", "serves as a reminder", "speaks to", \
+"paints a picture of". If a sentence would fit unchanged into any other article on \
+any other topic, rewrite or cut it.
+- Vary sentence length and structure. Do not open consecutive paragraphs with the \
+same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do not \
+default to three-item lists.
+- No false triads ("informs, entertains, and connects"). Say the specific thing.
+- Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
+- Keep paragraphs short: 2-3 sentences each, one idea per paragraph, hard cap at 3 \
+sentences with no exceptions, AND at most about 50 words (350 characters as a hard \
+ceiling -- move notation and names count in full). Tracking a running word count while you write is not \
+reliable -- don't try. Use this concrete rule instead, checked sentence by \
+sentence as you write it, not after the fact: the moment a sentence names a \
+SECOND person's individual result, a second direct quote, or a second distinct \
+outcome, joined by "and," a comma, or a semicolon, stop -- that fact starts a \
+new sentence, and if the paragraph is already at 3 sentences, a new paragraph. \
+"X beat Y in N moves, A beat B, and C also won" is three facts stapled into one \
+sentence with commas; it must be two or three sentences, and likely two \
+paragraphs, not one. This is the actual, observed failure mode: a paragraph \
+that stays at 3 sentences by fusing several separate results or quotes \
+together with commas reads as dense and cluttered no matter how short the \
+sentence count makes it look, and it still blows past the word ceiling even \
+though nothing here "counted" as too many sentences. This is a paragraph-length \
+rule, not an article-length one -- add more short paragraphs to fit everything \
+in, don't cut content to keep the piece itself short. When you have another \
+fact to add to a paragraph that already has 2+ sentences (a format detail, a \
+prize tier, a second player's result, a piece of context), that is the signal \
+to start a new paragraph, not to fold it into the current sentence with "and" \
+or a comma.
+- Vary how the piece ENDS. The default failure mode here is closing every \
+article by zooming out to a summarising pronouncement about what it all means \
+("...and that's exactly the point", "...says something about where chess is \
+heading next", "...in this corner of chess, the story is the product"). One of \
+those reads fine; every article ending that way reads as a template, which is \
+exactly what a returning reader notices. Only reach for the zoom-out ending when \
+this specific piece has genuinely earned a broader claim. Otherwise end on \
+something concrete: the next fixture or what happens next, a specific number, a \
+quote, an unresolved question, or simply the last relevant fact -- and let it \
+stand without a closing line explaining its significance."""
+
+NEWS_SYSTEM_PROMPT = f"""You are writing for a small, curated chess news site. Every \
+piece is a companion analysis to a linked source article -- never a reworded \
+summary of the source. Add genuine analysis and context a casual reader wouldn't \
+get from the source alone. Be accurate: never invent facts, quotes, or statistics \
+about the event itself that the source material doesn't give you. If you are not \
+confident about a detail, omit it rather than guess.
+
+Original material is the point of these pieces, not a risk to be minimized. The \
+facts about THIS event -- results, scores, standings, names, titles, dates, quotes, \
+how a specific rule or mechanic works -- come from the source and must match it. \
+Everything around those facts is yours to add and encouraged: analysis, comparison, \
+what a result suggests, a player's well-known style or reputation, real background \
+about the venue, the format or the history, and a point of view. Well-established \
+general knowledge belongs in the piece when it sharpens the story (for example, \
+what a player is known for at the board, or that a city hosted a past Olympiad); do \
+not leave it out just because the source didn't say it. Only steer clear of \
+background you are not sure is true.
+
+Speculation is welcome when it reads as speculation -- "perhaps", "it may be \
+that", "one reading is" -- it adds flavor. What must not happen is a guess \
+written as a fact: a specific thing someone did or a cause the source doesn't \
+give, stated flatly ("he raised it unprompted", "the extra resistance came from \
+the crowd watching"), or a label for an event, team or person the source \
+doesn't support ("a championship-circuit event"). Reasonable readings of the \
+source are fine as they are: if the source doesn't report someone saying \
+something, "she hasn't said" is fair. The one firm exception: when the subject is \
+an allegation, a crime, a threat or someone's safety, no speculation at all, \
+flagged or not -- report it strictly as the source does and connect no dots it \
+doesn't. (Caught live 2026-10-01.)
+
+If the source says its piece is republished from, or was conducted by, another \
+publication (an interview "conducted by American Chess Magazine"), credit that \
+publication as the interviewer, not the site that republished it.
+
+An "additional source" is only there because an automatic matcher thought it \
+covers the same story, and it can be wrong. If an additional source is about a \
+different event or subject, ignore it completely -- do not mention it or write \
+a section about it.
+
+The headline, social copy and meta description must not claim more than the body \
+supports: no "named in" when the source says he was reportedly warned, no outlet \
+credited for an interview it only republished.
+
+Keep every claim, opinion and piece of praise with the person who said it, in the body \
+and above all in the headline and social copy, where two speakers are easiest to merge \
+into one sentence. When a source quotes several people, check whose words each point \
+is before writing it. Never state someone's claim as fact in a headline ("Kazakhstan \
+Becomes the Model"); write it as their claim ("Turlov Pitches Kazakh Chess as a Model"). \
+(Caught 2026-10-08: social copy had President Tokayev hold up Kazakh chess as a template \
+for other federations; that was Turlov's line, and Tokayev only praised its progress.)
+
+Write as a publication addressing its readers, never about your own inputs. Do not \
+mention "the excerpt", "the source material", "the text we had", what you were or \
+weren't given, or that anything was cut off or unavailable, and never write a \
+sentence whose job is to say what you can't say ("we can't say more about..."). If \
+a detail isn't in the source, leave it out silently and write about what you do \
+know.
+
+Do not trade away the source's own concrete details to make room for your added \
+context -- include the specific facts the source gives alongside your analysis, \
+not instead of it. A reader should come away knowing both what actually happened \
+and why it matters; losing the former to make room for the latter is a failure, \
+not a stylistic choice. It's fine, expected even, for the piece to run longer to \
+fit both in -- do not compress by cutting real source detail. Never satisfy this \
+by cramming more into each paragraph, though -- a longer piece means MORE short \
+paragraphs, never fewer, longer ones. This matters most on exactly the stories \
+where it's easiest to forget: a stat-heavy or multi-quote source is precisely \
+when paragraphs need to split more often, not when the paragraph-length rule \
+below quietly stops applying.
+
+Before finalizing, check the source material against each of these categories and \
+include whatever it actually gives you -- do not stop at the single headline \
+figure or result if the source has more:
+- Full numeric breakdowns, not just the top line: every prize-money tier given \
+(not only 1st place), all named standings/scores given (not only the winner), \
+every score/streak/count in the piece, not a representative one or two.
+- The named individual result behind a team score, whenever the source gives one: \
+a team-event upset is a scoreline ("Kyrgyzstan beat Brazil 2.5-1.5") standing in \
+for what actually decided it -- a specific player beating a specific opponent, \
+often with a rating gap or title gap the source states outright. Naming that \
+player and result is frequently the entire substance of an upset story; a body \
+that repeats the team scoreline without ever naming who actually delivered it \
+has told the reader nothing the headline didn't already say (caught live: a \
+piece headlined "Kyrgyzstan's 2.5-1.5 Shocker" never named either of the two \
+upsets it was about, even though the source named both -- untitled Timur Daudov \
+beating IM Diego Di Berardino, and GM Jingyao Tin beating GM Johan-Sebastian \
+Christiansen -- and separately called out GM Anish Giri's win as its explicit \
+"Game of the Day" with real detail (a critical opposite-colored-bishops endgame), \
+none of which made it into the piece).
+- Format/structure specifics: bracket or match format, time control, schedule/dates, \
+qualification path -- anything the source says about how the event was actually run.
+- The specific turning point: a notable move, tactic, quote, or moment the source \
+describes, not just the final result stripped of how it happened.
+- Series/scheduling context: what this event is part of, what's next, prior \
+meetings/history the source mentions.
+Omit a category only if the source genuinely doesn't cover it -- never because \
+including it would make the piece longer.
+
+When paraphrasing a mechanical or technical detail that has one correct answer -- \
+which of two named things does which, how a specific rule or mechanic works, which \
+side of a comparison a fact belongs to -- match the source's own statement of it \
+exactly rather than reconstructing it from general knowledge, even for something \
+well-known. General knowledge is where these go wrong: it's easy to be confident \
+and still have it backwards (caught live: a Seirawan chess piece described the \
+hawk moving like a rook+knight and the elephant like a bishop+knight -- backwards \
+from what the source article itself said, and from the actual rules -- because it \
+was written from memory of the variant rather than from the source's own sentence \
+stating it correctly). If the source gives the specific wording, stay close to it; \
+if it doesn't state the detail at all, omit it rather than fill the gap from memory.
+
+Before finalizing, reread your own title against your own body. Whatever specific \
+hook the title promises -- a name, a score, a margin, a stat -- the body must \
+actually deliver it, not just gesture at the general shape of the story. A title \
+naming a specific upset needs the body to say who did it and by what margin; a \
+body that stays abstract under a specific title reads as a piece that never \
+looked past its own headline. This is exactly the kind of number-heavy detail \
+source articles bury well past the lead paragraph, not in the opening lines -- if \
+your first pass came up short, reread the full source once more hunting \
+specifically for it before giving up on it being there (caught live: "El \
+Salvador's 94th Seed Stuns Cuba at Samarkand" shipped with no player names, no \
+board-by-board result, and no rating figures at all, even though the source \
+article named both of El Salvador's winning players several paragraphs in and \
+gave the exact team rating averages for both sides).
+
+The piece must stand alone for a reader who has never seen the source. Never refer \
+back to the source by form ("the interview", "the piece", "his comments", "the \
+article") unless you first establish, in your own words, that that form of source \
+exists (e.g. "In a recent interview with Chess.com, Praggnanandhaa said...") -- a \
+bare "the interview's mention of X" with no earlier sentence establishing an \
+interview took place is confusing and reads as broken.
+
+{STYLE_GUIDE}
+
+LINKS IN THE BODY. Every piece must carry links in its own text, not just in \
+the byline the site adds automatically:
+
+1. Link the source article exactly once, early on, at the point where you first \
+report what actually happened. Use the "Source URL" you were given, as a normal \
+Markdown link, with the anchor text being the fact or result itself (e.g. \
+"[picked up his 65th career Bullet Brawl title](url)"). Never use bare "here", \
+"this article", "according to Chess.com" as the whole anchor, or the raw URL as \
+the visible text. Once is enough; the site prints the source again at the foot of \
+every piece.
+
+If the user turn gives you more than one source (this happens when two outlets \
+covered the same event -- you'll see a "Source URL" plus one or more "Additional \
+source" blocks), this is one story reported by multiple outlets, not two separate \
+stories: write one piece that draws on whichever of them actually has the detail \
+you're using at that moment, not just the primary one. Link each source once, at \
+the point where you use a fact that specifically came from it -- a detail only the \
+second outlet reported gets linked to the second outlet's URL, not the primary \
+one. Skip a source's link entirely if you end up not using anything specific to \
+it. Never link the same source twice, and never link a source at a point where \
+you're stating a fact that came from a different source.
+
+2. Where the user turn lists previously published The Chess Herald articles, link one or \
+two of them from a phrase in your own text that genuinely refers to what that \
+article covers -- a player, event, tournament or theme you are already \
+mentioning. Use the "/articles/<slug>/" path exactly as given, and make the \
+anchor a natural noun phrase already in the sentence rather than bolting on \
+"as we reported" or "read more about". If you mention that The Chess Herald has \
+covered something before, that mention MUST itself be the Markdown link -- \
+never describe or gesture at a previous piece in prose ("as covered in \
+The Chess Herald's look at...") without the "[...](/articles/<slug>/)" markup actually \
+wrapped around it; an unlinked reference to a specific past article reads as a \
+broken or fabricated citation. Do not reword a sentence just to create a link, \
+do not link the same article twice, and if none of the listed pieces is \
+genuinely relevant to this story, link none of them -- a forced link is worse \
+than no link. Note these are companion pieces, not news reports: never describe \
+one as having "broken" or "first reported" anything.
+
+Background links: the user turn also lists our explainers and event guides. \
+Link at most one explainer and at most one event guide, and only where this \
+piece actually uses the concept a reader may not know -- a GM norm links the \
+titles explainer on the words "GM norm"; a Grand Swiss story that turns on its \
+Candidates spots links that event's guide. A passing mention (a player's \
+rating quoted in a results line) needs no link. Put the link on a phrase \
+already in the sentence, never "learn more" or "see our explainer", and use \
+the path exactly as given, including any #how-it-works anchor.
+
+Before linking a name, confirm it's the same real person or entity the \
+listed article is actually about, not just matching text -- a shared surname, \
+club, or federation is not enough. Chess federations are small worlds: two \
+different people can share a last name (a federation official and an unrelated \
+grandmaster), and a listed title mentioning a name is only about that specific \
+person, not everyone who shares it. If you cannot confirm from what you actually \
+know that it's the same person, don't link it -- a wrong link that misidentifies \
+someone is worse than a missed one (caught live: a piece mentioning "Komil \
+Sindarov," a federation vice president, was linked to an unrelated article about \
+"Javokhir Sindarov," a grandmaster -- same surname, different, unrelated people).
+
+First, pick the single best-fitting lens for THIS story from these options, checked \
+in the order listed -- people is clear-cut when the source is an interview, \
+profile or personal column, drama and money-angle are unambiguous when they \
+genuinely apply, results covers a story that's centrally about a result or the \
+standings it shifted, and historical-parallel is the fallback: only reach for it \
+when none of the other four genuinely fit, even though a historical parallel can \
+usually be found for almost any story:
+{chr(10).join(f"- {name}: {desc}" for name, desc in LENS_OPTIONS.items())}
+
+Then pick the single most relevant continent for this story from: {CONTINENT_OPTIONS}. \
+Use "global" only when no single continent genuinely fits (e.g. a story about \
+international chess governance or an online-only event with no regional angle) -- \
+prefer picking a real continent whenever the story has any regional anchor \
+(a player's federation, a tournament's location, etc.).
+
+Your FINAL message must consist ONLY of the fields below, each introduced by \
+its marker line exactly as shown (@@NAME@@ alone on its own line, nothing \
+else on that line) -- no markdown fences, no JSON, no commentary before, \
+between, or after them. Any searching or reasoning happens before this \
+final message, never mixed into it. Write each field's actual content on \
+the line(s) that follow its marker; the text under BODY_MARKDOWN can \
+freely contain quotes, apostrophes, or any other character -- there is no \
+escaping to worry about, just write normal prose:
+
+@@LENS@@
+one of: {', '.join(LENS_OPTIONS.keys())}
+@@CONTINENT@@
+one of: {CONTINENT_OPTIONS}
+@@TITLE@@
+a clear, specific headline for this companion piece (not the source's title verbatim). Aim for 45-65 characters -- tight and punchy, not a full sentence restating every detail. Cut qualifying clauses and filler ("What This Means For...", "Here's Why...", "And That's the Point") rather than reaching for them; a shorter headline that names the one real hook beats a longer one that hedges. Only go past 65 when the story genuinely can't be named any shorter -- never as the default. If the title has two parts split by a colon or comma, the second part must build on or resolve the first, not restate it in weaker words or bolt on a vague tag like "anyway", "and more", or "explained" -- read the whole title aloud as one phrase before settling on it, and if the second half sounds like a shrug rather than a payoff, replace it with the actual concrete result (a name, a score, a place). Never put a semicolon in a title: join two parts with a comma instead (a semicolon is fine in body text).
+
+Never use these words/phrases in a title, in any form -- they have already been overused across the site and are banned outright: "echoes" (and "echoing"), "dominates" (and "dominance"/"dominant"), "playbook", "packed" (as in "a packed calendar"). Also avoid "Matters More Than..." as a title formula -- it has already been used more than once.
+
+Vary the actual construction, not just the words. Before settling on a title, check it isn't the same shape as one of these already-overused formulas and pick a genuinely different one if it is:
+- "[Subject]'s [Noun] Echoes/Extends/Shows/Turns [Result]" (the "X's Y verbs Z" template)
+- "[Subject]'s [Noun]: [Payoff]" (colon splitting a possessive noun phrase from its resolution)
+- "Why [Subject] [Verb]s More Than [Comparison]"
+A headline built as a direct statement ("Cuba Stays Perfect as the Field Nearly Doubles"), a plain declarative sentence naming who did what, or one anchored on a single concrete number, is often the more natural choice -- don't reach for a possessive-noun-plus-colon or a comparison-verb template purely out of habit. If you notice yourself writing "X's Y [verb]s Z" or "X: Y" for the second title in a row, deliberately write this one a different way.
+@@SOCIAL_COPY@@
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag -- never leave this empty. Write it in plain, everyday words a general reader knows: no sports-journalism slang ("side" for a team, "outfit", "skipper") and no uncommon words ("peering", "vaunted") -- say "team", "looking at" (user's rule, 2026-10-27).
+@@META_DESCRIPTION@@
+a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
+@@IMAGE_SUBJECTS@@
+up to 3 real-world subjects mentioned in this piece, one per line, ordered by how central each is to THIS piece -- the actual protagonist or headline figure always first, whoever the piece is actually about, even when a more famous person who appears only in passing would be easier to find a photo of. The first name here gets tried first and wins if it finds any usable photo, so ranking by findability instead of centrality can hand the piece's photo to the wrong person entirely (caught live: a piece about Javokhir Sindarov's decisive result also mentioned Magnus Carlsen in an unrelated secondary match, and Carlsen -- more photographed, not more relevant -- ended up as the article's photo). Findability is still a real, secondary reason to include a name at all: a piece comparing player X to more famous player Y should still list Y as a fallback after X, since Y often has better photo coverage -- just never ahead of the piece's actual subject. Each a specific person's full name (e.g. "Magnus Carlsen", not just "Carlsen") or a specific organization/event name (e.g. "FIDE", "Chess Olympiad", "Titled Tuesday"). Leave this field's content empty if truly nothing fits.
+@@IMAGE_SUBJECT_ONLY@@
+yes or no. Answer yes only when the piece is about the first subject's own personal milestone -- a title earned, a record set, an award, a "youngest-ever" -- so that a photo of anyone else next to it would read as if it were them. For these pieces, list second in IMAGE_SUBJECTS the person most tied to the milestone (the record holder they passed, the player they beat to it): if there is no photo of the subject, that person's photo is used, captioned with their name. Also answer yes for a piece that is a portrait of one person -- a profile, birthday, obituary, interview, or a personal case such as harassment or a dispute -- where a rival or anyone else named would read as if it were them. For everything else (results, matches, events, a team or programme story, news that merely features the person) answer no: another named person's photo is fine there, and for a team or programme story list its best-known players in IMAGE_SUBJECTS after the main subject so one of them can supply the photo.
+@@GAME_LOOKUP@@
+{GAME_LOOKUP_CRITERIA}
+When it does apply, write exactly these three lines and nothing else, with the real values filled in:
+event: the tournament/event name (e.g. "46th FIDE Chess Olympiad")
+player1: first player's full name
+player2: second player's full name
+@@EVENT_RESULT@@
+{event_results.instruction()}
+@@BODY_MARKDOWN@@
+the full article body in Markdown, 400-800 words -- long enough to fit both the source's own concrete details and your added analysis, never shortened by dropping one for the other. That length comes from MORE short paragraphs, not fewer, longer ones -- the 3-sentence/350-character paragraph rule above applies to every single paragraph here, with no exception for length or source density. If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style.
+
+Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" is a draw. Before \
+writing that a player won or lost, check which colour they had against the result.
+
+Sections: an event with separate sections (age groups, Open and Women's, rating groups) is \
+several separate tournaments. State every standing within its own section ("leads the \
+Under-13 Open on 6/6"). Never count, group or compare leaders across sections ("three \
+perfect scores", "Kazakhstan leads four sections"), in the headline, body, social copy or \
+meta. A headline is about one section, or about the event without anyone's standing.
+
+Naming the event: when the piece is about a tournament, match or league, the opening \
+paragraph names it in full ("the 2026 U.S. Chess Championship", "the European Club Cup"), \
+not only "Saint Louis" or "the open section". The headline alone doesn't count.
+
+Rounds left: only state how many rounds remain if you can work it out from the source \
+(total rounds minus rounds played; a 12-player round-robin is 11 rounds). Otherwise don't \
+give a number.
+
+Commentary on a game: when you quote moves with a remark about the position, keep the \
+remark at the same move the source attaches it to -- put it right after that move, before \
+the moves that follow, never after the end of the game."""
+
+def build_aggregate_system_prompt(continent_code: str) -> str:
+    return f"""You are writing for a small, curated chess news site. \
+This piece is original reporting on tournament data, not commentary on someone \
+else's article. Be accurate: never invent facts or figures not present in the \
+tournament data given to you. If you are not confident about a detail, omit it \
+rather than guess.
+
+{aggregate_data_gap_note(continent_code)}
+
+Don't manufacture a caveat about fields the data happens not to have for any \
+given tournament -- prize pool, currency, or rating requirement in particular. \
+Mention one of these when a tournament in the data actually has it (a real, \
+concrete detail worth reporting), but its absence is not itself a finding: \
+never write a sentence like "none of the tournaments listed a prize pool, so \
+no format-based cut existed" -- that both invents a narrative frame nobody \
+asked for and, like the player-count case above, misattributes an ordinary \
+gap in what this data covers to the tournaments themselves.
+
+{STYLE_GUIDE}
+
+LINKING TO THE COMPANION PIECE. Where the user turn lists earlier The Chess Herald \
+calendar pieces for this same continent, link the most recent one exactly once, \
+using the "/articles/<slug>/" path exactly as given. Each is labelled \
+(retrospective) or (preview) -- these pieces come in pairs, one of each per \
+continent per month, so the other one is genuinely the next thing a reader of \
+this piece would want, and its label tells you which direction to phrase the \
+anchor in. Put the link wherever you naturally refer to the neighbouring \
+month, and make the anchor a noun phrase describing what that piece covers, \
+matching its own tense to its label -- never "read more" or "our previous \
+article":
+- Linking to a (retrospective): past tense, it already happened, e.g. "how \
+[the same tournaments actually turned out](/articles/slug/)".
+- Linking to a (preview): future tense, nothing has happened yet, e.g. "a \
+first look at [what's coming up this month](/articles/slug/)" -- THIS month, \
+not next: the preview was published the month before, when the month it \
+covers genuinely was "next month," but a retrospective always publishes \
+during the very month the paired preview covers, so by the time a reader \
+sees this link that month is the current one, not the next one (caught \
+live: a retrospective published Sept. 9 said "next month" about a preview \
+that was already covering September). Never use turned-out/already-happened \
+phrasing for one of these -- the tournaments it covers haven't been played \
+yet.
+One link only, and none at all if the list is empty. This is separate from, \
+and additional to, the tournament links required above.
+
+Respond with ONLY the fields below, each introduced by its marker line \
+exactly as shown (@@NAME@@ alone on its own line) -- no markdown fences, no \
+JSON, no commentary before, between, or after them. The text under \
+BODY_MARKDOWN can freely contain quotes, apostrophes, or any other \
+character -- there is no escaping to worry about, just write normal prose:
+
+@@TITLE@@
+a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline. Never put a semicolon in a title: join two parts with a comma instead (a semicolon is fine in body text).
+
+Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
+@@SOCIAL_COPY@@
+a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag. Write it in plain, everyday words a general reader knows: no sports-journalism slang ("side" for a team, "outfit", "skipper") and no uncommon words ("peering", "vaunted") -- say "team", "looking at" (user's rule, 2026-10-27).
+@@META_DESCRIPTION@@
+a one- or two-sentence summary for search results, 120-155 characters: say plainly what happened and who it involves, as a searcher would want it -- no hashtags, no teaser phrasing ("you won't believe"), no quotes
+@@BODY_MARKDOWN@@
+the full article body in Markdown, 300-600 words If you use section subheadings, write each as a bold line on its own (**Like this**), never a Markdown # heading -- that is the site's house style."""
+
+
+def slugify(title: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+    return slug[:80].rstrip("-")
+
+
+def parse_game_lookup(text: str) -> dict | None:
+    """Parses the @@GAME_LOOKUP@@ field's "event: ...\\nplayer1: ...\\n
+    player2: ..." format. Returns None for the (normal, expected) case
+    where the model left it empty or the piece doesn't have one specific
+    game to look up -- see that field's instructions in NEWS_SYSTEM_PROMPT."""
+    event = re.search(r"^event:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player1 = re.search(r"^player1:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    player2 = re.search(r"^player2:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
+    if not (event and player1 and player2):
+        return None
+    return {
+        "event": event.group(1).strip(),
+        "player1": player1.group(1).strip(),
+        "player2": player2.group(1).strip(),
+    }
+
+
+# How many previously-published pieces to offer the model as internal-link
+# candidates. Newest first: recent stories are far likelier to share a
+# subject with today's news than something from months back, and a list long
+# enough to cover the whole archive would be mostly noise the model has to
+# read past on every call.
+INTERNAL_LINK_CANDIDATES = 40
+
+
+def published_articles(exclude_slug: str | None = None) -> list[dict]:
+    """Title + slug for every published article on disk, newest first, for
+    the model to link from a new piece. Read from the files rather than
+    tracked separately so a manually-added or hand-edited article is a
+    link candidate too."""
+    entries = []
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if 'reviewStatus: "published"' not in text:
+            continue
+        # Recaps never sit on the front page (index.astro filters them out).
+        if re.search(r'^type:\s*"recap"', text, re.MULTILINE):
+            continue
+        title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
+        date = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.M)
+        if not title or not date or path.stem == exclude_slug:
+            continue
+        continent = re.search(r'^continent:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        lens = re.search(r'^lens:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        aggregate_kind = re.search(r'^aggregateKind:\s*"?([a-z-]+)"?\s*$', text, re.M)
+        entries.append(
+            {
+                "slug": path.stem,
+                "title": title.group(1),
+                "date": date.group(1),
+                "continent": continent.group(1) if continent else "",
+                "lens": lens.group(1) if lens else "",
+                "aggregateKind": aggregate_kind.group(1) if aggregate_kind else "",
+            }
+        )
+
+    entries.sort(key=lambda e: e["date"], reverse=True)
+    return entries[:INTERNAL_LINK_CANDIDATES]
+
+
+EVENTS_DIR = ROOT / "src" / "content" / "events"
+
+
+def background_link_targets() -> list[dict]:
+    """The evergreen explainers and the event pages with a "How it works"
+    section, for news pieces to link where a reader needs the background.
+    Always offered in full -- unlike published_articles(), which keeps
+    only the newest INTERNAL_LINK_CANDIDATES and would soon push the
+    explainers out. Found from the files, so new ones need no code change:
+    an explainer is a published article with selectionScore 0 that is not
+    a recap."""
+    targets = []
+    for path in sorted(ARTICLES_DIR.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if ('reviewStatus: "published"' not in text or not re.search(r"^selectionScore:\s*0\s*$", text, re.M)
+                or re.search(r'^type:\s*"?recap', text, re.M)):
+            continue
+        title = re.search(r'^title:\s*"(.*?)"\s*$', text, re.M)
+        about = re.search(r'^metaDescription:\s*"(.*?)"\s*$', text, re.M)
+        if title:
+            targets.append({"url": f"/articles/{path.stem}/", "title": title.group(1),
+                            "about": about.group(1) if about else ""})
+    for path in sorted(EVENTS_DIR.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if not re.search(r"^## How it works\s*$", text, re.M):
+            continue
+        name = re.search(r'^name:\s*"(.*?)"\s*$', text, re.M)
+        if name:
+            targets.append({"url": f"/events/{path.stem}/#how-it-works",
+                            "title": f"{name.group(1)}: how it works", "about": ""})
+    return targets
+
+
+def calendar_pieces_for_continent(continent_slug: str) -> list[dict]:
+    """Previously published calendar aggregates for one continent, newest
+    first. Each continent gets two of these a month -- a retrospective on
+    last month and a preview of next -- so its counterpart is reliably the
+    one other article a reader of either would actually want. Matched on
+    frontmatter rather than by asking the model to infer it from titles,
+    which are written for readers and don't name the continent
+    consistently ("Barcelona's Sants Open and a Romanian Rapid Lead
+    Europe's August Field")."""
+    return [
+        entry
+        for entry in published_articles()
+        if entry["lens"] == "tournament-db" and entry["continent"] == continent_slug
+    ]
+
+
+# chess-results cuts tournament names at 50 characters, mid-word
+# ("...School Boys Ca", "...Chess Tourname"). Trim a name that hit the
+# limit back to its last whole word so readers never see a cut-off word.
+TOURNAMENT_NAME_LIMIT = 50
+
+
+def clean_tournament_name(name: str) -> str:
+    name = name.strip()
+    if len(name) >= TOURNAMENT_NAME_LIMIT and " " in name:
+        name = name.rsplit(" ", 1)[0]
+    return name.rstrip(" -&,(/:").strip()
+
+
+def aggregate_facts(tournaments: list, month_formats: dict | None = None, total: int | None = None) -> str:
+    """Counts the model would otherwise do in its head, and got wrong
+    (caught live 2026-10-01: "only three of the 18 entries... plus Naples,
+    making four" for a 20-entry list with four classical events)."""
+    from collections import Counter
+
+    formats = Counter((t.get("timeControl") or "unknown").lower() for t in tournaments)
+    names = Counter(t.get("name") for t in tournaments)
+    repeated = [n for n, c in names.items() if c > 1]
+    lines = [
+        "Precomputed facts (use these numbers; do not count again yourself):",
+        f"- Entries in this list: {len(tournaments)}",
+        "- By format: " + ", ".join(f"{fmt} {n}" for fmt, n in formats.most_common()),
+    ]
+    if month_formats:
+        # Caught live 2026-10-07: a list ranked toward classical events was
+        # written up as "every event this month was classical" when 514 of
+        # the month's 640 South American events were rapid.
+        lines.append(
+            f"- All {total or sum(month_formats.values())} tracked events this month, by format: "
+            + ", ".join(f"{k} {v}" for k, v in sorted(month_formats.items(), key=lambda kv: -kv[1]))
+            + ". The list above is a notability selection that favours classical events; never "
+            "describe the month's chess as a whole from the list's format mix."
+        )
+    counted = [t for t in tournaments if isinstance(t.get("playersRegistered"), (int, float)) and t["playersRegistered"] > 0]
+    if counted:
+        top = max(counted, key=lambda t: t["playersRegistered"])
+        lines.append(
+            f"- Largest field with a known player count: {top.get('name')} ({top['playersRegistered']}). "
+            "The list is ordered by notability, not size, so only this event may be called the biggest."
+        )
+    dated = [t for t in tournaments if t.get("startDate")]
+    if dated:
+        from ingest import _duration_days
+
+        lengths = sorted(((_duration_days(t), t.get("name")) for t in dated), reverse=True)
+        longest = [n for d, n in lengths if d == lengths[0][0]]
+        lines.append(
+            f"- Longest event: {lengths[0][0]} days ({'; '.join(longest)}). Any 'longest' or "
+            "'shortest' claim must match these lengths: "
+            + "; ".join(f"{n} {d} days" for d, n in lengths)
+        )
+    if repeated:
+        lines.append(
+            "- These names appear more than once as separate chess-results tournaments "
+            "(different sections or listings; do not claim they are the same event or a "
+            "duplicate): " + "; ".join(repeated)
+        )
+    lines.append(
+        "- Describe each tournament only with what its fields say. Do not add a description "
+        "of what kind of event it is (a circuit, a championship series, a youth event) unless "
+        "its name or fields say so, and never tell the reader a field is missing from the data "
+        "for a single tournament -- just leave that detail out."
+    )
+    return "\n".join(lines)
+
+
+def build_user_prompt(item: dict) -> str:
+    if item["kind"] in CALENDAR_KINDS:
+        # Each tournament gets its own chesstournamentcalendar.com page at
+        # /tournament/<slug>/ -- add that as a "url" field so the model can
+        # link each tournament's name directly to its own page rather than
+        # just the continent-level overview.
+        tournament_data = [
+            {**t, "name": clean_tournament_name(t.get("name") or ""), "url": f"https://chesstournamentcalendar.com/tournament/{t['slug']}/"}
+            for t in item["tournamentData"]
+        ]
+        parts = [
+            AGGREGATE_INSTRUCTIONS[item["kind"]],
+            "",
+            f"Continent: {item['continentName']}",
+            f"Month: {item['monthLabel']}",
+            f"Total tournaments tracked in this continent this month: {item['totalTracked']}",
+            f"Continent page URL (for reference, not required in the body): {item['sourceUrl']}",
+            f"Tournament data (JSON list): {json.dumps(tournament_data, ensure_ascii=False)}",
+            "",
+            aggregate_facts(item["tournamentData"], item.get("formatCounts"), item.get("totalTracked")),
+        ]
+
+        companions = calendar_pieces_for_continent(CONTINENT_SLUGS[item["continentCode"]])
+        if companions:
+            parts.append("")
+            parts.append(
+                "Earlier The Chess Herald calendar pieces covering this same continent, newest "
+                "first. Link the most recent one once, per the linking rule in your "
+                "instructions:"
+            )
+            for entry in companions:
+                kind_label = "preview" if entry["aggregateKind"] == "calendar-comingup" else "retrospective"
+                parts.append(f"- \"{entry['title']}\" ({entry['date']}, {kind_label}) -> /articles/{entry['slug']}/")
+        return "\n".join(parts)
+
+    parts = []
+    if is_rating_list_story(item):
+        parts += [
+            "This is a FIDE rating-list story. Link The Chess Herald's own tables in the "
+            "text, where they fit naturally: [FIDE Top 100](/rankings/) for the open list "
+            "and [FIDE Women's Top 25](/rankings/women/) for the women's list.",
+            "",
+        ]
+    parts += [
+        f"Source title: {item['title']}",
+        f"Source URL: {item['sourceUrl']}",
+        f"Source name: {item['sourceName']}",
+    ]
+    if item.get("summary"):
+        parts.append(f"Source summary/excerpt: {item['summary']}")
+
+    # Set when selection.py recognized another outlet's item as coverage of
+    # this same event (see merge_duplicate_stories there) -- write one piece
+    # informed by all of them, per the multi-source linking rule above.
+    for extra in item.get("additionalSources", []):
+        parts.append("")
+        parts.append(f"Additional source title: {extra['title']}")
+        parts.append(f"Additional source URL: {extra['sourceUrl']}")
+        parts.append(f"Additional source name: {extra['sourceName']}")
+        if extra.get("summary"):
+            parts.append(f"Additional source summary/excerpt: {extra['summary']}")
+
+    # European Club Cup pieces carry a Finnish-clubs sub-section (user's
+    # call, 2026-10-18); see club_cup.py.
+    try:
+        finnish = finnish_clubs_facts(item)
+    except Exception as exc:  # noqa: BLE001 -- never fail a draft over it
+        print(f"  Finnish clubs lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+        finnish = None
+    if finnish:
+        parts += ["", FINNISH_SUBSECTION_INSTRUCTION, finnish]
+        # verify_claims checks against this too, or it cuts the section as
+        # unsupported (caught 2026-10-19: Club Cup round 2 lost it).
+        item["finnishClubsFacts"] = finnish
+    if is_club_cup(item):
+        print(f"  Finnish clubs: {'found' if finnish else 'none found'} for '{item['title']}'", file=sys.stderr)
+
+    # Internal-link candidates. Supplied as data rather than baked into the
+    # system prompt because the list changes with every published batch.
+    previous = published_articles()
+    if previous:
+        parts.append("")
+        parts.append(
+            "Previously published The Chess Herald articles you may link to (see the linking "
+            "rules in your instructions). Link one only where it genuinely helps the "
+            "reader; skip them all if nothing here is actually related:"
+        )
+        for entry in previous:
+            parts.append(f"- \"{entry['title']}\" -> /articles/{entry['slug']}/")
+    background = background_link_targets()
+    if background:
+        parts.append("")
+        parts.append(
+            "Background explainers and event guides (see the background-link rule in your "
+            "instructions -- at most one explainer and one event guide, only where this piece "
+            "actually uses the concept):"
+        )
+        for entry in background:
+            about = f" -- {entry['about']}" if entry["about"] else ""
+            parts.append(f"- \"{entry['title']}\" -> {entry['url']}{about}")
+    return "\n".join(parts)
+
+
+# Maps each @@NAME@@ marker to its dict key. Field order in the prompts
+# always ends with BODY_MARKDOWN, so its content can safely run to the end
+# of the message without a closing marker.
+_FIELD_MARKERS = {
+    "LENS": "lens",
+    "CONTINENT": "continent",
+    "TITLE": "title",
+    "SOCIAL_COPY": "socialCopy",
+    "META_DESCRIPTION": "metaDescription",
+    "IMAGE_SUBJECTS": "imageSubjects",
+    "IMAGE_SUBJECT_ONLY": "imageSubjectOnly",
+    # Only emitted by weekly_recap.py's prompt, not draft.py's own -- shared
+    # here so both scripts can reuse this same parser. Singular, unlike
+    # IMAGE_SUBJECTS above: the recap names the one person/subject its own
+    # headline is about, not a ranked list of Commons search candidates.
+    "IMAGE_SUBJECT": "imageSubject",
+    "GAME_LOOKUP": "gameLookup",
+    "EVENT_RESULT": "eventResult",
+    "BODY_MARKDOWN": "bodyMarkdown",
+}
+_FIELD_MARKER_RE = re.compile(r"^@@([A-Z_]+)@@[ \t]*\r?\n", re.MULTILINE)
+
+
+# House style: section subheads are bold lines, not Markdown headings (which
+# render at h2 size). The prompts ask for this; this enforces it.
+_HEADING_LINE_RE = re.compile(r"^#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$", re.MULTILINE)
+
+
+def bold_subheads(body: str) -> str:
+    return _HEADING_LINE_RE.sub(lambda m: f"**{m.group(1).strip('* ')}**", body)
+
+
+def no_semicolons(title: str) -> str:
+    """A semicolon in a headline reads oddly (user's rule, 2026-10-20); the
+    prompts ask for a comma, and this makes sure of it."""
+    return re.sub(r"\s*;\s*", ", ", title)
+
+
+def parse_response(text: str) -> dict:
+    text = text.strip()
+    # Defensive: strip accidental code fences even though the prompt asks for none.
+    text = re.sub(r"^```(?:json)?\s*", "", text)
+    text = re.sub(r"\s*```$", "", text)
+
+    # Sentinel-marker format instead of JSON: the model writes each field's
+    # content as plain text after its own @@NAME@@ line, so nothing needs
+    # escaping (a stray unescaped quote in dialogue used to break json.loads
+    # and lose the whole article -- this format has no such failure mode).
+    segments = _FIELD_MARKER_RE.split(text)
+    if len(segments) < 3:
+        raise ValueError(f"No @@FIELD@@ markers found in model response: {text[:200]!r}")
+
+    parsed: dict = {}
+    # segments alternates [preamble, marker, content, marker, content, ...]
+    for marker, content in zip(segments[1::2], segments[2::2]):
+        key = _FIELD_MARKERS.get(marker)
+        if key is None:
+            continue
+        content = content.strip()
+        if key == "imageSubjects":
+            parsed[key] = [line.strip() for line in content.splitlines() if line.strip()]
+        else:
+            parsed[key] = content
+
+    if "title" not in parsed or "bodyMarkdown" not in parsed:
+        raise ValueError(f"Missing required field(s) in model response, got: {sorted(parsed)}")
+
+    return parsed
+
+
+# The front page shows the lead plus 8 more (src/pages/index.astro; a test
+# keeps the two in step). Every published article on it right now counts as
+# recently used, whatever the batch size: a small batch, or drafts dropped in
+# review, leave older pieces on the page (caught 2026-10-21: a window of 5
+# missed the So photo from two days earlier, still ninth on the page). Off
+# the front page, a photo is free again -- a permanent ban would starve the
+# picker, since the Commons pool for many chess subjects is small.
+FRONT_PAGE_SIZE = 9
+RECENT_IMAGE_COOLDOWN = FRONT_PAGE_SIZE
+
+
+# Same-run siblings (e.g. two backfill items drafted a few seconds apart)
+# need to see each other's image choice regardless of what publishDate ends
+# up in their frontmatter -- see used_image_source_urls() below for why
+# neither publishDate nor file mtime alone can carry that signal reliably.
+# Populated by draft_one() as it goes; a plain module-level set is fine
+# since backfill.py calls draft_one() in a simple loop, not concurrently.
+_session_used_urls: set[str] = set()
+
+
+def used_image_source_urls() -> set[str]:
+    """Commons page URLs to treat as recently used -- not a permanent,
+    site-wide ban, just a cooldown so the same photo can't appear twice
+    close together (e.g. both on the homepage at once).
+
+    Two signals, combined, because neither alone is reliable in every
+    context this runs in:
+
+    - The RECENT_IMAGE_COOLDOWN most recently *published* articles on disk,
+      ranked by publishDate. This is what actually reflects real-world
+      recency for articles from earlier runs/days -- but backfill runs
+      backdate publishDate into the past, so a batch of backfilled articles
+      drafted seconds apart can carry publishDates far apart from each
+      other (and from "today"), which previously let siblings fall outside
+      this window entirely (the original bug here).
+
+    - _session_used_urls: every image picked so far in *this* process
+      (see draft_one()). This is what actually catches same-run siblings
+      regardless of their backdated publishDate -- ranking by file mtime
+      instead was tried and reverted: a fresh CI checkout resets every
+      pre-existing file's mtime to checkout time, so "most recent by
+      mtime" degrades to an arbitrary tie-break across runs and silently
+      stopped catching articles from a *previous day's* run (the bug that
+      prompted this fix -- two live articles from the day before shared an
+      image with a new draft because neither made an essentially-random
+      mtime cutoff).
+
+    Read from disk each call rather than cached, so the on-disk half can't
+    go stale within a batch as draft_one writes new files. The image's
+    sourceUrl is written with a 2-space indent (nested under "image:"); the
+    top-level article sourceUrl has none, so matching just the indented
+    form can't collide with it."""
+    dated_urls: list[tuple[str, str]] = []
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text()
+        # Published only: this run's own drafts are already in
+        # _session_used_urls, and counting them here too let them fill the
+        # window and push real front-page photos out of it (caught live
+        # 2026-10-02: the FIDE Assembly piece reused the Turlov photo from
+        # the day before because three same-run drafts took its slots).
+        if 'reviewStatus: "published"' not in text:
+            continue
+        date_match = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"\s*$', text, re.MULTILINE)
+        image_match = re.search(r'^  sourceUrl:\s*"(.*?)"\s*$', text, re.MULTILINE)
+        score_match = re.search(r"^selectionScore:\s*(\d+)", text, re.MULTILINE)
+        if date_match and image_match:
+            score = int(score_match.group(1)) if score_match else 0
+            dated_urls.append((date_match.group(1), score, image_match.group(1)))
+
+    # Same order as the front page (index.astro): newest day, then highest
+    # selectionScore. By date alone, same-day ties fell in file order, and a
+    # piece still on the front page slipped out of the window (caught
+    # 2026-10-16: Titled Tuesday's Caruana photo reused in round 6).
+    dated_urls.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    recent_on_disk = {url for _, _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
+    return recent_on_disk | _session_used_urls
+
+
+# Matches the "70 as a hard ceiling" language in STYLE_GUIDE. A separate
+# constant rather than parsing it back out of that prose: measured against
+# real published output, paragraph-length compliance turned out to depend on
+# the model reliably self-tracking a running word count while generating
+# linearly, which it does not do well (the same class of limitation as
+# asking for an exact word or letter count) -- verifying it after the fact
+# and surfacing violations to the human reviewer is the actual backstop,
+# not a substitute for the prompt wording but a check on whether it worked.
+PARAGRAPH_WORD_CEILING = 70  # kept for the prompt wording only
+# The check itself (user's call, 2026-10-19): a word count let dense
+# paragraphs through -- move notation and stacked names count as one word
+# each, so a 68-word round-report paragraph ran to 416 characters. A
+# paragraph now offends at over 350 characters (link URLs and bold markers
+# not counted) or over 3 sentences.
+PARAGRAPH_CHAR_CEILING = 350
+PARAGRAPH_SENTENCE_CEILING = 3
+
+_ABBREVIATIONS = {"u.s.", "dr.", "mr.", "mrs.", "ms.", "st.", "vs.", "e.g.", "i.e.", "a.m.", "p.m.", "no.", "jr.", "sr.", "approx."}
+# A chess move ("17.f5?", "35...Kc6", "Nb4!", "O-O-O+") ends with ! or ? but
+# does not end a sentence.
+_MOVE_TOKEN_RE = re.compile(r"^(\d+\.+)?(O-O(-O)?|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](=[QRBN])?)[+#]?[!?]*[.,;:]?$")
+
+
+def paragraph_chars(paragraph: str) -> int:
+    text = re.sub(r"\]\([^)]*\)", "]", paragraph)
+    return len(text.replace("**", "").replace("[", "").replace("]", "").strip())
+
+
+def count_sentences(paragraph: str) -> int:
+    text = re.sub(r"\]\([^)]*\)", "]", paragraph).replace("**", "").replace("[", "").replace("]", "")
+    tokens = text.split()
+    count = 0
+    for i, token in enumerate(tokens):
+        if not re.search(r"[.!?][\"'\u201d)]*$", token):
+            continue
+        if i + 1 < len(tokens) and not re.match(r"[\"'\u201c(]*[A-Z0-9]", tokens[i + 1]):
+            continue
+        # A move ending in ! or ? ("18.Rg1? Wei") is an annotation, but one
+        # ending in a full stop ("37.Qg1. Sargsyan") does end the sentence.
+        is_annotated_move = bool(_MOVE_TOKEN_RE.match(token)) and token[-1] in "!?" and i + 1 < len(tokens)
+        if token.lower().strip("\"'\u201c\u201d()") in _ABBREVIATIONS or is_annotated_move:
+            continue
+        count += 1
+    return max(count, 1)
+
+
+def _is_prose(paragraph: str) -> bool:
+    p = paragraph.strip()
+    return bool(p) and not p.startswith(("#", "|", "- ", "* ", "<", ">")) and not re.fullmatch(r"\*\*[^*]+\*\*", p)
+
+
+_ARTICLE_LINK_RE = re.compile(r"/articles/([a-z0-9-]+)/")
+_EVENT_LINK_RE = re.compile(r"/events/([a-z0-9-]+)/")
+
+
+RANKINGS_LINE = (
+    "The new numbers are already in our [FIDE Top 100](/rankings/) and "
+    "[Women's Top 25](/rankings/women/) tables."
+)
+
+
+def check_article_links(body_markdown: str) -> list[str]:
+    """Every "/articles/<slug>/" link in a drafted body against the real
+    slugs of published articles on disk. The model is handed the exact
+    slug for each internal-link candidate (see published_articles()) but
+    can still reconstruct a different one from the article's title text
+    when writing the link -- the same failure mode weekly_recap.py's
+    check_recap_links() exists to catch, now also seen in the daily
+    pipeline (caught live: 2026-09-24's Commonwealth/Chessveda piece
+    linked a title-guessed slug for the weekly recap instead of its real
+    file slug, even though the real slug was given). Returns the bad
+    links, unmodified -- never auto-fix by fuzzy-matching, since a wrong
+    guess here would silently point at the wrong article."""
+    real_slugs = {
+        path.stem
+        for path in ARTICLES_DIR.glob("*.md")
+        if 'reviewStatus: "published"' in path.read_text(encoding="utf-8")
+    }
+    found = set(_ARTICLE_LINK_RE.findall(body_markdown))
+    bad = sorted(f"/articles/{slug}/" for slug in found - real_slugs)
+    event_slugs = {path.stem for path in EVENTS_DIR.glob("*.md")}
+    bad += sorted(f"/events/{slug}/" for slug in set(_EVENT_LINK_RE.findall(body_markdown)) - event_slugs)
+    return bad
+
+
+def attach_standings_table(item: dict, body_markdown: str) -> str:
+    """Append verified top-10 standings table(s) for a known ongoing major
+    tournament, when this story is actually about its results (not just a
+    passing mention -- reuses selection.py's own result-signal gate so the
+    same precision bar applies here as decides the majorTournament scoring
+    bonus).
+
+    Placed at the end of the body, after the narrative and before the game
+    embed (which the article page always renders after the full body
+    content) -- the story sets up who's leading and why first; the table
+    then serves as reference material, not the opening act.
+
+    The table is built entirely from parsed chess-results.com HTML (see
+    chess_results_standings.py) -- the model never transcribes or is asked
+    to reconstruct rankings, since a source article rarely states the full
+    order clearly and doing that from memory/inference is exactly the kind
+    of fabrication this pipeline has been burned by before (see CLAUDE.md's
+    standing rules). If chess-results doesn't have the tournament, or a
+    fetch fails for any reason, that table is skipped -- an incomplete
+    article beats a wrong one.
+    """
+    text_lower = f"{item['title']} {item.get('summary', '')}".lower()
+    if not _has_result_signal(text_lower):
+        return body_markdown
+
+    # Not just "tournament name anywhere + result signal anywhere" -- see
+    # tournament_has_round_context's docstring for the false positive that
+    # combination let through (a bullet-event recap that mentioned the
+    # Olympiad only as a backdrop, with its own unrelated "standings").
+    # Require the tournament name and an actual round/day label or scoreline
+    # in the same sentence, the same shape every genuine round recap uses.
+    tournament_key = next(
+        (key for key in KNOWN_TOURNAMENTS if tournament_has_round_context(text_lower, key)), None
+    )
+    if not tournament_key:
+        return body_markdown
+
+    # Which sections to attach is decided from the actual drafted body, not
+    # the source item's title/summary -- a daily recap routinely covers both
+    # Open and Women's results in one piece regardless of which one its own
+    # headline led with (caught live: the real 2026-09-24 Chess.com recap
+    # was titled around the Open leader but its body covered the Women's
+    # section standings just as fully). Open is always attached, since it's
+    # the tournament's headline section in essentially every case; Women's
+    # is added on top whenever the body itself actually discusses it.
+    sections = ["open"]
+    if re.search(r"\bwomen", body_markdown, re.IGNORECASE):
+        sections.append("women")
+
+    tables = []
+    for section in sections:
+        try:
+            standings = fetch_team_standings(tournament_key, section=section, top_n=10)
+        except Exception as exc:
+            print(f"  Standings fetch failed ({section}) for '{item['title']}': {exc}", file=sys.stderr)
+            continue
+
+        if not standings:
+            print(f"  Standings: no {section} table available for '{item['title']}'", file=sys.stderr)
+            continue
+
+        print(
+            f"  Standings: attached {section} table ({len(standings.rows)} rows, "
+            f"round {standings.current_round}) for '{item['title']}'",
+            file=sys.stderr,
+        )
+        tables.append(standings_markdown_table(standings, section_label=section.capitalize()))
+
+    if not tables:
+        return body_markdown
+
+    return f"{body_markdown.rstrip()}\n\n" + "\n\n".join(tables)
+
+
+_CLAIM_VERIFICATION_PROMPT = """You are given the source material a chess news article was \
+written from, and the finished article body itself. Your job is an independent fact-check \
+pass, not a rewrite: read every sentence in the body and check whether the specific claim it \
+makes is actually supported by the source material -- particularly:
+
+- Any "first", "record", "never before", "biggest", "youngest", "only time", or similar \
+superlative/milestone claim.
+- Any specific number, score, date, or named attribution (who said or did what).
+- Any claim that contradicts another statement made elsewhere in the same body (e.g. calling \
+a match that the body itself says was drawn a "defeat").
+- Any quote presented as a direct quotation.
+- Who a quote or line belongs to. A social-media post embedded in the source (it ends \
+with "-- Name (@handle) date") belongs to that post's author, not to the outlet whose \
+article it sits in; a line one interviewee said must not be credited to another. (Caught \
+live: a player's own tweet, embedded in a Chess.com report, was written up as "Chess.com's \
+own line".)
+- Move notation: a move written with "..." (38...Ne6+) is Black's; without it (38.Ne6+) \
+White's. When the body credits a move to a player, the notation must match that player's \
+colour, even if the source itself slips.
+- Move commentary placement: a remark about a position ("with the queen on the open \
+e-file...", "White is winning here") belongs to the move it follows in the source. Check \
+it sits after that same move in the body, not after later moves or the result, where it \
+would describe a different position. (Caught live 2026-10-06: a note made after 33...Kf7 \
+was placed after 38.Re1+ and the resignation, describing pieces that had already moved.)
+- Game results: "1-0" means White won, "0-1" means Black won, "1/2-1/2" (or "½-½") is a \
+draw. When the body says who won or lost a game, check which colour that player had and \
+that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \
+(0-1)" was written up as X losing, when 0-1 means X won.)
+- Sections: in an event with separate sections (age groups, Open and Women's), every \
+standing must name its section, and nothing may count or group leaders across sections \
+(headline, body, social copy, meta). (Caught live 2026-10-17: "Three Perfect Scores Lead the \
+Youth Worlds" lumped leaders of separate age-group tournaments together.)
+- Win counts: check any "Nth win" or "N wins" against the player's score (wins + half the \
+draws = points; an unbeaten player on 6/8 has 4 wins and 4 draws). If the sources disagree, use \
+the count that adds up. (Caught live 2026-10-18 and -19: ChessBase twice gave So one win too \
+many.)
+- Order of events. List every claim about which of two events came first ("before", \
+"after", "then", "earlier", "since", "followed", "first ... later") and find the source \
+sentence or dates that give that order. Never infer it from the order the source mentions \
+them in: a source often covers the newest result first and an earlier one after. An order \
+the source doesn't give is removed (say both results without ordering them), and one it \
+contradicts is corrected. (Caught live 2026-10-28: "Before Serbia, he scored 4½/7 ... at the \
+European Club Cup" -- the source called the Club Cup his "second consecutive strong \
+showing", after Serbia; a reader wrote in.)
+- Who each description belongs to. List every description the article attaches to a \
+person -- a title or role ("defending champion", "world champion", "reigning", "leader", \
+"top seed", "his second"), an age, a nationality, a rating, a ranking -- and find the source \
+sentence that gives it. Check it names the SAME person. A description that opens a sentence \
+without a name ("The American number-one and defending champion went over his full game...") \
+belongs to whoever that sentence and its neighbours are about -- here, the player whose own \
+game and moves follow -- not to the last name mentioned before it. A description the source \
+gives to someone else is corrected or removed, never kept. For any "defending", "reigning" or \
+"current" champion claim, also check it against OUR RECORDS below the sources: a mismatch \
+there means the claim is wrong. (Caught live 2026-10-22: Chess.com's "defending champion" \
+meant Caruana; the draft gave it to So, the player named just before.)
+- Event name: if the piece is about a tournament, match or league, the opening paragraph \
+of the body must name it in full (the headline alone doesn't count). If it doesn't, add the \
+name to that paragraph with the smallest possible edit ("Round four in Saint Louis" -> \
+"Round four of the U.S. Championship in Saint Louis").
+- Rounds remaining: check any "N rounds left" against the event's total rounds minus the \
+rounds played. (Caught live 2026-10-15: "four rounds left" after round 5 of an 11-round \
+event.)
+
+Check at the level of individual named details, not just each sentence's main assertion. A \
+sentence's headline claim can be completely true while still carrying a fabricated specific \
+riding inside it -- a first name attached to a person the source only ever refers to by \
+surname, a made-up nickname or title, a location or round number that isn't actually stated \
+anywhere, a specific game or moment credited as the source of something that the source \
+material describes happening somewhere else entirely. (Caught live: a body correctly reported \
+that two named players drew a level game -- true, straight from the source -- but the source \
+never gave one of those players' first names anywhere, and the draft had invented one that \
+happened to match two OTHER players' first names elsewhere in the same piece. The claim \
+"they drew" was accurate, so this kind of error survives a check that only asks "is the \
+sentence's main assertion true" -- it takes deliberately pulling out every specific, named \
+detail and confirming each one, independent of the sentence's main assertion, to catch it.) \
+Treat every name, title, nickname, count, date, and location as its own fact to verify, even \
+inside a sentence whose overall claim is otherwise correct.
+
+For each claim or detail you find that is NOT supported by the source material, or that \
+contradicts the body itself, fix it with the smallest possible edit -- reword it to what the \
+source actually supports, or remove the unsupported clause/sentence if it can't be salvaged \
+that way (for an unsupported name/detail specifically, prefer falling back to whatever the \
+source material actually calls that person or thing -- a surname alone if that's all the \
+source gives -- over inventing a plausible-sounding replacement). Do not remove or soften \
+anything that IS supported by the source, even if it sounds like a strong claim -- your job is \
+accuracy, not caution, and the source material is often more detailed than it first appears \
+(check the full text, not just the parts a quick skim would catch).
+
+This is a check on the facts about the event itself, not on the writer's own contribution. \
+Leave analysis, opinion, comparison, a player's well-known style or reputation, and \
+well-established general or historical background completely alone even when the source \
+never mentions them -- those are meant to be there, and so is speculation that reads as \
+speculation ("perhaps", "it may be that"). Fix only a guess written as a fact: a specific \
+thing someone did, or a cause, that the source doesn't give, stated flatly -- either soften \
+it into clearly flagged speculation or remove it; a descriptor of an event/team/person the \
+source doesn't support; and any count or tally that doesn't match the material (count it \
+yourself). A reasonable reading of the source, such as "she hasn't said" when the source \
+reports nothing from her, is fine. When the subject is an allegation, a crime, a threat or \
+someone's safety, remove any speculation or dot-connecting about named people beyond what \
+the source says, flagged or not.
+
+The input has four marked fields: @@TITLE@@, @@SOCIAL_COPY@@, @@META_DESCRIPTION@@ and \
+@@BODY_MARKDOWN@@. Check all four the same way -- the headline, social copy and meta \
+description must not claim more than the source supports either (a headline saying someone \
+was "named" in a case when the source says the opposite; an interview credited to the outlet \
+that only republished it). Check attribution too: every claim, opinion or bit of praise \
+must be credited to the person the source gives it to, and a headline must not state one \
+person's claim as fact -- fix a misattributed or merged speaker by naming the right one. \
+Only fix a claim about this specific \
+event that the source doesn't support or that contradicts the source or the body itself, or \
+background that is plainly false.
+
+Also remove any sentence or clause where the article talks about its own source material \
+instead of chess -- "the excerpt we had", "the text available to us", "cut off in the \
+source", "we can't say more about..." -- and any truncated fragment such as a name ending in \
+"...". Cut it cleanly so the surrounding text still reads naturally; never replace it with \
+a guess at what the missing text said.
+
+Leave everything else completely untouched: same words, same paragraph breaks, same Markdown \
+links and formatting, everywhere except the specific claims and details you're correcting.
+
+Respond with all four fields in the same marked format (@@TITLE@@ on its own line, then \
+its text, and so on, ending with @@BODY_MARKDOWN@@ and the ENTIRE corrected body), and \
+nothing else -- no preamble, no explanation, no list of what you changed, no code fence."""
+
+
+EVENTS_DIR = Path(__file__).resolve().parent.parent / "src" / "content" / "events"
+# Title-holders for events without an event page. Update when the title
+# changes hands (the event pages are read directly).
+EXTRA_TITLE_HOLDERS: dict[str, tuple[int, list[str]]] = {}
+
+
+def title_holders_note() -> str:
+    """The latest winner of each event we keep a page for, plus
+    EXTRA_TITLE_HOLDERS -- so the fact check can test "defending champion"
+    claims against our own records."""
+    lines = []
+    for path in sorted(EVENTS_DIR.glob("*.md")):
+        text = path.read_text()
+        name = re.search(r'^name:\s*"(.*?)"', text, re.MULTILINE)
+        first = re.search(r'^winners:\s*\n\s*- \{ year: (\d{4}), names: \[(.*?)\]', text, re.MULTILINE)
+        if name and first:
+            names = ", ".join(n.strip().strip('"') for n in first.group(2).split('",'))
+            lines.append(f"- {name.group(1)}: {names} won the {first.group(1)} edition")
+    for event, (year, names) in EXTRA_TITLE_HOLDERS.items():
+        lines.append(f"- {event}: {', '.join(names)} won the {year} edition")
+    return "\n".join(lines)
+
+
+# A model's note about its own edits, not article text. Caught 2026-10-28:
+# "The leads and format text are unchanged below, with one link added."
+# opened a Clutch Chess draft.
+_EDITOR_NOTE_RE = re.compile(
+    r"\b(unchanged (below|above)|(one|a|the) link (was )?added|no (other )?changes (were )?(needed|made)"
+    r"|(i|we)('ve| have) (corrected|fixed|added|removed|kept|changed)|corrected version|revised (body|version))\b",
+    re.IGNORECASE,
+)
+
+
+def strip_editor_notes(body: str) -> str:
+    """Drops whole paragraphs that only talk about the editing."""
+    paragraphs = body.split("\n\n")
+    kept = [p for p in paragraphs if not (_EDITOR_NOTE_RE.search(p) and len(p) < 300 and "](" not in p)]
+    return "\n\n".join(kept)
+
+
+def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict:
+    """Independent second pass: re-checks every non-trivial factual claim in the finished
+    body against the actual source text the drafting call was given, fixing or removing
+    anything unsupported.
+
+    Exists because generation has repeatedly produced claims -- a superlative, a "first
+    defeat of the tournament" style framing, a detail that reads plausibly but either isn't
+    in the source or contradicts another line in the same piece -- that the same pass that
+    wrote the body didn't catch about its own writing. Same idea as fix_long_paragraphs and
+    the game-lookup recheck (a fresh read with no drafting task competing for attention
+    catches what writing-while-checking misses), applied to accuracy instead of style or
+    completeness.
+
+    Checks the headline, social copy and meta description along with the body, and runs
+    for calendar aggregates too, against the tournament data they were written from
+    (caught live 2026-10-01: an aggregate shipped a wrong entry count, invented event
+    descriptors and talk about missing data, and a news headline said "named" where the
+    source said the opposite -- none of it was ever fact-checked).
+
+    Falls back to the original body untouched on any failure (no text returned, or a
+    response different enough in length to look like more than a claims-level edit) -- an
+    unflagged article for human review beats a silently mangled one."""
+    body_markdown = bold_subheads(parsed["bodyMarkdown"])
+    if item["kind"] in CALENDAR_KINDS:
+        source_text = "TOURNAMENT DATA (the piece's only source):\n" + build_user_prompt(item)
+    else:
+        source_parts = [f"PRIMARY SOURCE ({item['sourceName']}):\n{item.get('summary', '')}"]
+        for extra in item.get("additionalSources", []):
+            if extra.get("summary"):
+                source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
+        if item.get("finnishClubsFacts"):
+            source_parts.append(f"ADDITIONAL SOURCE (chess-results.com, Finnish clubs):\n{item['finnishClubsFacts']}")
+        source_parts.append(
+            "OUR RECORDS (latest winner of each event; only for checking \"defending\", "
+            "\"reigning\" or \"current\" champion claims, not a source of news):\n" + title_holders_note()
+        )
+        source_text = "\n\n".join(source_parts)
+
+    fields = "\n".join(
+        f"@@{marker}@@\n{parsed.get(key) or ''}"
+        for marker, key in (("TITLE", "title"), ("SOCIAL_COPY", "socialCopy"), ("META_DESCRIPTION", "metaDescription"))
+    )
+    article_text = f"{fields}\n@@BODY_MARKDOWN@@\n{body_markdown}"
+    user_prompt = f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE TO FACT-CHECK:\n\n{article_text}"
+
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            # This is the exact failure mode fix_long_paragraphs already hit
+            # once this session: a max_tokens floor sized for the output text
+            # alone, combined with a non-"low" effort level, let thinking eat
+            # the whole budget before any text was written (that bug's floor
+            # was also 4096, and its cause was thinking with no effort cap at
+            # all -- "medium" here is more bounded than "unset", but "more
+            # bounded than unbounded" is not the same guarantee as "small
+            # enough to fit in this floor"). This call is riskier than that
+            # one on both axes that mattered there: it reasons over the full
+            # source material (thousands of characters, not a handful of
+            # paragraphs) before writing anything, and it always echoes back
+            # the ENTIRE body rather than just the paragraphs that changed.
+            # len(body_markdown) as a token count (not // 2, // 3, or any
+            # other shrinking factor) already overestimates the output alone
+            # several times over (a token is ~4 characters), leaving that
+            # multiple as real headroom for "medium" effort's thinking on
+            # top of it -- the 8192 floor exists for short articles, where
+            # len(body_markdown) alone could still land under a safe number.
+            max_tokens=max(8192, len(body_markdown)),
+            output_config={"effort": "medium"},
+            system=_CLAIM_VERIFICATION_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+        )
+    except Exception as exc:
+        print(f"  Claim verification failed for '{item['title']}': {exc}", file=sys.stderr)
+        return parsed
+
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        block_types = [b.type for b in response.content]
+        print(
+            f"  Claim verification: no text content in response, falling back for "
+            f"'{item['title']}' (stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+            file=sys.stderr,
+        )
+        return parsed
+
+    if response.stop_reason == "max_tokens":
+        # A max_tokens stop is a truncation failure even when some text did
+        # come back -- weekly_recap.py caught this live once already (a
+        # recap that silently cut off mid-sentence, mid-link, with
+        # non-empty text_blocks that a bare "did we get text" check would
+        # have accepted). The length-diff guard below would likely also
+        # catch a truncated body as "too different", but that's incidental
+        # coverage, not a guarantee -- check the actual signal directly.
+        print(
+            f"  Claim verification: response hit max_tokens (truncated), falling back for '{item['title']}'",
+            file=sys.stderr,
+        )
+        return parsed
+
+    try:
+        checked = parse_response(text_blocks[-1])
+    except ValueError as exc:
+        print(f"  Claim verification: unparseable response ({exc}), falling back for '{item['title']}'", file=sys.stderr)
+        return parsed
+    corrected = checked["bodyMarkdown"].strip()
+
+    # A real fix only touches a handful of claims -- a response wildly different
+    # in length from the original suggests the model rewrote, truncated, or
+    # otherwise did more than the targeted correction asked for.
+    if abs(len(corrected) - len(body_markdown)) > max(300, len(body_markdown) // 4):
+        print(
+            f"  Claim verification: response length too different from original "
+            f"({len(corrected)} vs {len(body_markdown)} chars), falling back for '{item['title']}'",
+            file=sys.stderr,
+        )
+        return parsed
+
+    result = {**parsed, "bodyMarkdown": corrected}
+    for key in ("title", "socialCopy", "metaDescription"):
+        value = (checked.get(key) or "").strip()
+        if value and parsed.get(key) and value != parsed[key].strip():
+            print(f"  Claim verification: {key} corrected for '{item['title']}': {parsed[key]!r} -> {value!r}", file=sys.stderr)
+            result[key] = value
+    if corrected != body_markdown:
+        print(f"  Claim verification: body corrected for '{item['title']}'", file=sys.stderr)
+    elif result == parsed:
+        print(f"  Claim verification: no changes needed for '{item['title']}'", file=sys.stderr)
+
+    return result
+
+
+def check_paragraph_lengths(body_markdown: str) -> list[tuple[int, int]]:
+    """(paragraph number, word count) for every paragraph over the style
+    guide's hard ceiling -- heading lines are skipped since they're not
+    prose paragraphs and aren't subject to the rule. Best-effort like image
+    sourcing: this never blocks or fails a draft, only flags it for review."""
+    paragraphs = [p.strip() for p in body_markdown.split("\n\n") if p.strip() and not p.strip().startswith("#")]
+    offenders = []
+    for i, para in enumerate(paragraphs, 1):
+        if not _is_prose(para):
+            continue
+        chars, sentences = paragraph_chars(para), count_sentences(para)
+        if chars > PARAGRAPH_CHAR_CEILING or sentences > PARAGRAPH_SENTENCE_CEILING:
+            offenders.append((i, f"{chars} chars, {sentences} sentences"))
+    return offenders
+
+
+_PARAGRAPH_FIX_PROMPT = """You will be given one or more numbered paragraphs from an \
+already-written chess article. Each one is over the style guide's limit of 350 characters \
+or 3 sentences per paragraph. Your \
+only job is to split each into 2 or more shorter paragraphs at natural sentence or \
+topic boundaries -- do not reword, cut, add, fact-check, or otherwise change a single \
+word. Preserve every word, number, quote, and Markdown link exactly as given, byte for \
+byte; only insert paragraph breaks (a blank line) between existing sentences. Split \
+generously enough that every resulting paragraph is at most 3 sentences and well under 350 \
+characters, not just barely under. Never put a break inside a quotation: a quote that \
+runs over several sentences stays whole in one paragraph, so break before or after it.
+
+Respond with ONLY the fixed paragraphs, each introduced by its own @@PARA_N@@ marker \
+matching the input numbering exactly (e.g. @@PARA_1@@), with no commentary before, \
+between, or after them. Within each @@PARA_N@@ section, separate the resulting \
+paragraphs with a single blank line, same as normal Markdown."""
+
+
+def _quotes_balanced(text: str) -> bool:
+    """Every quotation opened in this text is closed in it."""
+    return text.count('"') % 2 == 0 and text.count("\u201c") == text.count("\u201d")
+
+
+def fix_long_paragraphs(
+    client: anthropic.Anthropic, body_markdown: str, offenders: list[tuple[int, int]]
+) -> str:
+    """Targeted follow-up pass: send back only the paragraphs check_paragraph_lengths
+    flagged, ask the model to split each at natural boundaries with no other changes,
+    and splice the results back in place.
+
+    Deliberately narrower than re-drafting the whole piece: generation already
+    proved unreliable at self-tracking paragraph length while juggling a dozen
+    other simultaneous instructions (accuracy, links, quotes, lens, style) --
+    "find a good place to break this one paragraph" is a much easier, isolated
+    task, and the blast radius of a bad split is a paragraph break in the wrong
+    place, not a reworded fact or a dropped link. Falls back to the original
+    text on any failure (missing markers, wrong count) -- a still-flagged
+    paragraph for human review beats a silently mangled one."""
+    if not offenders:
+        return body_markdown
+
+    paragraphs = body_markdown.split("\n\n")
+    # Mirrors check_paragraph_lengths' own enumeration (skips heading lines) so
+    # offender indices line up with the same paragraphs it flagged.
+    prose_indices = [i for i, p in enumerate(paragraphs) if p.strip() and not p.strip().startswith("#")]
+    offender_numbers = {n for n, _ in offenders}
+
+    request_parts = []
+    for n, para_idx in enumerate(prose_indices, 1):
+        if n in offender_numbers:
+            request_parts.append(f"@@PARA_{n}@@\n{paragraphs[para_idx].strip()}")
+    user_prompt = "\n\n".join(request_parts)
+
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            # Scales with the number of flagged paragraphs -- caught live
+            # (twice): a 4-paragraph batch silently fell back to the
+            # unfixed original because the model's thinking alone ate the
+            # whole budget before it wrote any @@PARA_N@@ output, leaving
+            # response.content with no text block at all. The first fix
+            # (1024/paragraph) still wasn't enough at exactly 4 paragraphs
+            # (4096, hitting the floor) -- raised the per-paragraph rate
+            # and, more importantly, capped effort explicitly: this is a
+            # narrow, mechanical "find a good place to split this text"
+            # task with no reason to reason hard about it, unlike the main
+            # drafting call it inherited an unset (so unrestricted, worse
+            # than that call's own "medium") thinking budget from.
+            max_tokens=max(4096, 2048 * len(offenders)),
+            output_config={"effort": "low"},
+            system=_PARAGRAPH_FIX_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+        )
+        text_blocks = [b.text for b in response.content if b.type == "text"]
+        if not text_blocks:
+            # stop_reason == "max_tokens" here means exactly the failure
+            # mode above (ran out of budget before any text); anything
+            # else (e.g. only a thinking or tool-use block with a normal
+            # stop_reason) points somewhere different -- log both so the
+            # next occurrence is diagnosable instead of a repeat mystery.
+            block_types = [b.type for b in response.content]
+            print(
+                f"  paragraph fix-up: no text content in response, falling back "
+                f"(stop_reason={response.stop_reason!r}, content block types={block_types!r})",
+                file=sys.stderr,
+            )
+            return body_markdown
+
+        segments = re.split(r"^@@PARA_(\d+)@@[ \t]*\r?\n", text_blocks[-1].strip(), flags=re.MULTILINE)
+        fixed = {int(n): content.strip() for n, content in zip(segments[1::2], segments[2::2])}
+
+        if set(fixed) != offender_numbers:
+            # Visibility for next time: this used to fail completely silently,
+            # indistinguishable from "the fix-up never ran at all" in the
+            # draft-report -- log what we actually got back so a format
+            # mismatch (stray commentary, wrong marker style) is diagnosable
+            # instead of a mystery.
+            print(
+                f"  paragraph fix-up: expected paragraphs {sorted(offender_numbers)}, "
+                f"got {sorted(fixed)}, falling back. Raw response (first 500 chars): "
+                f"{text_blocks[-1][:500]!r}",
+                file=sys.stderr,
+            )
+            return body_markdown  # partial/malformed response -- don't risk a half-applied fix
+
+        for n, para_idx in enumerate(prose_indices, 1):
+            if n in fixed:
+                # A break inside a quotation leaves a quote open in one
+                # paragraph and closed in the next (caught 2026-10-23: two So
+                # quotes). Keep the original paragraph rather than that.
+                if _quotes_balanced(paragraphs[para_idx]) and not all(
+                    _quotes_balanced(part) for part in fixed[n].split("\n\n")
+                ):
+                    print(f"  paragraph fix-up: #{n} split inside a quote, kept as it was", file=sys.stderr)
+                    continue
+                paragraphs[para_idx] = fixed[n]
+
+        # The success path used to log nothing at all -- indistinguishable
+        # after the fact from "never triggered", unlike every failure path
+        # above, which does log. Report exactly what changed (original
+        # word count, and each replacement paragraph's own word count) so
+        # a real run is auditable, not just "something happened".
+        offender_word_counts = dict(offenders)
+        details = []
+        for n in sorted(fixed):
+            pieces = [p for p in fixed[n].split("\n\n") if p.strip()]
+            details.append(
+                f"#{n} ({offender_word_counts.get(n, '?')} -> {len(pieces)} paragraphs, "
+                f"{'/'.join(str(paragraph_chars(p)) + 'c' for p in pieces)})"
+            )
+        print(f"  paragraph fix-up: split {', '.join(details)}", file=sys.stderr)
+
+        return "\n\n".join(paragraphs)
+    except Exception as exc:  # noqa: BLE001 -- best-effort like image sourcing; never fail the whole draft over this
+        print(f"  paragraph fix-up: {type(exc).__name__}: {exc}, falling back", file=sys.stderr)
+        return body_markdown
+
+
+# At most one historical-parallel piece a day. It's the fallback lens and a
+# parallel can be found for almost anything, so without a cap it took over
+# (34 of the first 93 lensed pieces), often as a thin retelling of the source.
+HISTORY_LENS_DAILY_CAP = 1
+HISTORY_CAP_NOTE = (
+    "\n\nLENS LIMIT: today's historical-parallel piece has already been written, "
+    "so do not pick historical-parallel for this story. Choose whichever of the "
+    "other lenses fits best."
+)
+
+
+def history_lens_used_on(day: str) -> bool:
+    """True once the day's historical-parallel quota is filled. Reads the
+    article files themselves, so it counts drafts written earlier in this
+    same run (and backfill days) as well as published pieces."""
+    count = 0
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        if f'publishDate: "{day}"' in text and 'lens: "historical-parallel"' in text:
+            count += 1
+    return count >= HISTORY_LENS_DAILY_CAP
+
+
+def draft_one(
+    client: anthropic.Anthropic, item: dict, publish_date: str | None = None
+) -> tuple[Path, list[tuple[int, int]]]:
+    is_aggregate = item["kind"] in CALENDAR_KINDS
+    system_prompt = build_aggregate_system_prompt(item["continentCode"]) if is_aggregate else NEWS_SYSTEM_PROMPT
+    user_prompt = build_user_prompt(item)
+    day = publish_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if not is_aggregate and history_lens_used_on(day):
+        user_prompt += HISTORY_CAP_NOTE
+
+    create_kwargs = dict(
+        model=MODEL,
+        max_tokens=4096,
+        system=system_prompt,
+        output_config={"effort": "medium"},
+    )
+
+    messages = [{"role": "user", "content": user_prompt}]
+    response = client.messages.create(messages=messages, **create_kwargs)
+
+    text_blocks = [b.text for b in response.content if b.type == "text"]
+    if not text_blocks:
+        raise RuntimeError(f"No text content returned for: {item['title']}")
+
+    parsed = parse_response(text_blocks[-1])
+    if item["kind"] in CALENDAR_KINDS or item.get("summary"):
+        parsed = verify_claims(client, parsed, item)
+
+    if is_aggregate:
+        lens = "tournament-db"
+        continent = CONTINENT_SLUGS[item["continentCode"]]
+    else:
+        lens = parsed["lens"]
+        if lens not in LENS_OPTIONS:
+            raise ValueError(f"Model returned unknown lens {lens!r} for: {item['title']}")
+        if lens == "historical-parallel" and HISTORY_CAP_NOTE in user_prompt:
+            print(f"  NOTE: historical-parallel picked despite the daily cap: {item['title']}", file=sys.stderr)
+        continent = parsed["continent"]
+        if continent not in CONTINENT_SLUGS.values() and continent != "global":
+            raise ValueError(f"Model returned unknown continent {continent!r} for: {item['title']}")
+
+    parsed["title"] = no_semicolons(parsed["title"])
+    slug = slugify(parsed["title"])
+    ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = ARTICLES_DIR / f"{slug}.md"
+
+    frontmatter = {
+        "title": parsed["title"],
+        "publishDate": publish_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "sourceName": item["sourceName"],
+        "sourceUrl": item["sourceUrl"],
+        "lens": lens,
+        "continent": continent,
+        "selectionScore": item["selectionScore"],
+        "reviewStatus": "draft",
+        # Fall back to the title itself if the model ever returns an empty
+        # string despite the prompt -- happened once in practice (a
+        # calendar aggregate with a blank socialCopy), and a blank social
+        # teaser is a worse failure mode than a slightly generic one.
+        "socialCopy": fit_for_x(delink((parsed.get("socialCopy") or "").strip() or parsed["title"]))[0],
+    }
+    # Optional: the article page falls back to a body excerpt, so a missing
+    # or over-long answer is dropped rather than failing the draft.
+    meta_description = " ".join((parsed.get("metaDescription") or "").split())
+    if 50 <= len(meta_description) <= 170:
+        frontmatter["metaDescription"] = meta_description
+    if is_aggregate:
+        # Extra context for reviewers -- not part of the content schema (unknown
+        # frontmatter keys are stripped at build time), but visible in the raw
+        # file/PR diff, which is where a reviewer actually looks.
+        frontmatter["aggregateKind"] = item["kind"]
+        frontmatter["continentName"] = item["continentName"]
+        frontmatter["monthLabel"] = item["monthLabel"]
+        frontmatter["totalTracked"] = item["totalTracked"]
+
+    if item.get("additionalSources"):
+        # Only sourceName/sourceUrl are part of the content schema (see
+        # config.ts) -- the rest of each entry (title/summary) was only
+        # ever needed as drafting input, not published metadata.
+        frontmatter["additionalSources"] = [
+            {"sourceName": extra["sourceName"], "sourceUrl": extra["sourceUrl"]}
+            for extra in item["additionalSources"]
+        ]
+
+    image = pick_image_for_item(
+        {**item, "lens": parsed.get("lens")},
+        parsed["title"],
+        parsed.get("imageSubjects", []),
+        exclude_source_urls=used_image_source_urls(),
+        # A person's story gets an object-only photo rather than some other
+        # player's face when the person themselves has none.
+        # Same, whatever the lens, when the drafter flags the piece as one
+        # person's own milestone (IMAGE_SUBJECT_ONLY). Rare on purpose: any
+        # named person's photo is fine for everything else. Caught live
+        # 2026-09-30: "Bodhana Sivanandan, 11, Becomes Youngest WGM" had no
+        # photo of her, and the cascade moved on to her opponent.
+        # Not forced by the People lens alone any more: caught live
+        # 2026-10-07, a People piece on coach Bernd Vokler's programme got a
+        # generic photo though the bronze-medal players it produced are the
+        # story's other protagonists. The drafter's IMAGE_SUBJECT_ONLY call
+        # (yes for a profile of one person) decides instead.
+        prefer_neutral=parsed.get("imageSubjectOnly", "").strip().lower().startswith("y"),
+    )
+    if image:
+        # Mark the Commons source as used regardless of what localize_image
+        # does next -- a photo we already downloaded (even if the download
+        # then failed to decode/save) shouldn't be offered to the very next
+        # sibling article in this same run.
+        _session_used_urls.add(image["sourceUrl"])
+        # A fallback-pool photo is already a committed master ("src" set).
+        localized = image if image.get("src") else localize_image(image)
+        if localized:
+            frontmatter["image"] = localized
+            # A person's photo gets their name under it on the article page
+            # (lesser-known players read as anyone without one).
+            caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
+            if caption:
+                frontmatter["image"] = {**localized, "caption": caption}
+    # Every article has a photo: a search hit whose download failed falls
+    # back to the committed pool too, not to the site's SVG placeholder.
+    if "image" not in frontmatter:
+        fallback = fallback_image(parsed["title"])
+        if fallback:
+            frontmatter["image"] = fallback
+
+    embed = None
+    if not is_aggregate:
+        game_lookup = parse_game_lookup(parsed.get("gameLookup") or "")
+        body_for_recheck = parsed.get("bodyMarkdown") or ""
+        # Diagnostic only -- see SAN_MOVE_RE's comment for why this can't
+        # gate the recheck below (it misses the named-winner-no-moves-
+        # quoted case entirely). Logged so a body that plainly quotes moves
+        # but still skipped the lookup is obvious in CI logs at a glance.
+        quoted_move_count = len(SAN_MOVE_RE.findall(body_for_recheck))
+        # Always logged, not just on failure -- @@GAME_LOOKUP@@ relies on
+        # the same model call that wrote the body correctly noticing its
+        # own body qualifies, which has missed real cases in practice
+        # (Liang's shock loss, Yu Yangyi's forced mate vs. Georgiev, and
+        # Poland's title-clinching wins over the Philippines all shipped
+        # with no embed despite qualifying). Printing this on every
+        # non-aggregate draft, not just misses, is what makes those cases
+        # auditable from CI logs after the fact instead of only when a
+        # human happens to notice on review.
+        print(
+            f"  game lookup: {'requested (' + game_lookup['event'] + ')' if game_lookup else 'not requested'}, "
+            f"body has {quoted_move_count} quoted move(s) for '{item['title']}'",
+            file=sys.stderr,
+        )
+
+        if not game_lookup:
+            # Independent second pass, unconditional -- not gated on
+            # quoted_move_count or any other heuristic, since the
+            # qualifying criteria (GAME_LOOKUP_CRITERIA) cover cases no
+            # regex over the text can reliably detect (a title-clinching
+            # paragraph naming winners with no moves quoted). Splitting
+            # "write the piece" and "does this piece qualify" into two
+            # separate calls is the actual fix: a fresh read with no
+            # drafting task competing for the model's attention has
+            # repeatedly caught what the inline self-report missed.
+            print(f"  game lookup: recheck firing for '{item['title']}'", file=sys.stderr)
+            try:
+                game_lookup = recheck_game_lookup(client, body_for_recheck)
+            except Exception as exc:
+                print(f"  Game lookup recheck failed for '{item['title']}': {exc}", file=sys.stderr)
+                game_lookup = None
+            print(
+                f"  game lookup: recheck {'found ' + game_lookup['event'] if game_lookup else 'found nothing'} "
+                f"for '{item['title']}'",
+                file=sys.stderr,
+            )
+
+        if game_lookup:
+            # A missing embed is still a normal, expected outcome even once
+            # a lookup was attempted (plenty of named games still won't be
+            # on a Lichess broadcast) -- only log and skip, never fail the
+            # whole draft over a lookup that didn't pan out.
+            try:
+                embed = find_game_embed(
+                    client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"], body_markdown
+                )
+            except Exception as exc:
+                print(f"  Game embed lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+                embed = None
+            print(
+                f"  game lookup: embed {'attached' if embed else 'not found'} for '{item['title']}'",
+                file=sys.stderr,
+            )
+            if embed:
+                frontmatter["gameEmbed"] = embed
+
+    # Posts on X that the source page itself embeds, as static text (see
+    # tweets.py) -- best-effort like the game embed: none found is normal.
+    if not is_aggregate:
+        try:
+            quotes = tweet_quotes_for_item(item)
+        except Exception as exc:  # noqa: BLE001 -- never fail a draft over a quote
+            print(f"  Tweet quote lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            quotes = []
+        if quotes:
+            frontmatter["tweetEmbeds"] = quotes
+            print(f"  tweet quotes: attached {len(quotes)} for '{item['title']}'", file=sys.stderr)
+
+    fm_lines = ["---"]
+    for key, value in frontmatter.items():
+        if isinstance(value, str):
+            escaped = value.replace('"', '\\"')
+            fm_lines.append(f'{key}: "{escaped}"')
+        elif isinstance(value, dict):
+            fm_lines.append(f"{key}:")
+            for sub_key, sub_value in value.items():
+                escaped = str(sub_value).replace('"', '\\"')
+                fm_lines.append(f'  {sub_key}: "{escaped}"')
+        elif isinstance(value, list):
+            fm_lines.append(f"{key}:")
+            for entry in value:
+                items = list(entry.items())
+                first_key, first_value = items[0]
+                fm_lines.append(f'  - {first_key}: "{str(first_value).replace(chr(34), chr(92) + chr(34))}"')
+                for sub_key, sub_value in items[1:]:
+                    escaped = str(sub_value).replace('"', '\\"')
+                    fm_lines.append(f'    {sub_key}: "{escaped}"')
+        else:
+            fm_lines.append(f"{key}: {value}")
+    result = None if is_aggregate else event_results.parse(parsed.get("eventResult"))
+    if result:
+        fm_lines.append(event_results.frontmatter_line(result))
+        note = event_results.apply(result, frontmatter["publishDate"])
+        EVENT_PAGE_NOTES.append(f"{out_path.stem} -- {note}")
+        print(f"  event page: {note}", file=sys.stderr)
+        for player_note in event_results.update_player_pages(
+            client, MODEL, result, parsed["title"], parsed["bodyMarkdown"], frontmatter["publishDate"]
+        ):
+            EVENT_PAGE_NOTES.append(f"{out_path.stem} -- {player_note}")
+            print(f"  player page: {player_note}", file=sys.stderr)
+    fm_lines.append("---")
+
+    body_markdown = bold_subheads(parsed["bodyMarkdown"])
+    offenders = check_paragraph_lengths(body_markdown)
+    if offenders:
+        body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
+        offenders = check_paragraph_lengths(body_markdown)
+    # A rating-list story always points readers at our own tables (user's
+    # rule, 2026-10-02). The prompt asks for it in the text; this backstop
+    # adds a closing line if the draft still left it out.
+    if not is_aggregate and is_rating_list_story(item) and "/rankings/" not in body_markdown:
+        body_markdown = body_markdown.rstrip() + "\n\n" + RANKINGS_LINE
+    bad_links = check_article_links(body_markdown)
+
+    body_markdown = strip_editor_notes(body_markdown)
+
+    # After the paragraph/link checks (an added scroll-link only touches
+    # one short phrase, but run it after paragraph fixing rather than
+    # before so it can't get silently rewritten/dropped by that pass) and
+    # only when an embed actually attached -- a link to "#game-embed" with
+    # no embed on the page would be a dead jump.
+    if embed:
+        try:
+            body_markdown = add_embed_scroll_link(
+                client, body_markdown, game_lookup["player1"], game_lookup["player2"]
+            )
+            embed_pgn = embed_game_pgn(embed["url"] if isinstance(embed, dict) else embed)
+            if embed_pgn:
+                body_markdown = fix_embed_link(body_markdown, embed_pgn)
+        except Exception as exc:
+            print(f"  Game embed scroll-link failed for '{item['title']}': {exc}", file=sys.stderr)
+
+    # After the paragraph/link checks (a table has neither prose paragraphs
+    # nor internal links to validate) and only for ordinary news items --
+    # calendar aggregates aren't tournament-results stories.
+    if not is_aggregate:
+        body_markdown = attach_standings_table(item, body_markdown)
+
+    # Our own board (GameViewer) for games that aren't on Lichess, from a
+    # PGN file the source page itself loads (ChessBase). A Lichess game
+    # keeps the Lichess embed (user's call, 2026-10-06: it lets readers
+    # switch to other games from the same event). Quoted moves link to
+    # their positions; quoted moves that aren't in the game go in the PR.
+    if not is_aggregate and not embed:
+        try:
+            players = game_lookup or {}
+            pgn = find_game_pgn(
+                [item.get("sourceUrl", "")]
+                + [extra.get("sourceUrl", "") for extra in item.get("additionalSources") or []],
+                "",
+                body_markdown,
+                players.get("player1", ""),
+                players.get("player2", ""),
+            )
+        except Exception as exc:  # noqa: BLE001 -- never fail a draft over a board
+            print(f"  Game PGN lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            pgn = None
+        if pgn:
+            linked_body, unmatched = link_moves(body_markdown, pgn)
+            linked = linked_body.count("](#ply-")
+            # The board goes on even when the text quotes no moves -- a
+            # round report rarely does (user's rule, 2026-10-14: every U.S.
+            # Championship report gets a game). pick_game only returns a
+            # game whose two players the article names.
+            GAMES_DIR.mkdir(parents=True, exist_ok=True)
+            (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
+            fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
+            caption = game_caption(pgn, parsed.get("lens"), datetime.now(timezone.utc).year)
+            if caption:
+                fm_lines.insert(len(fm_lines) - 1, f"gameCaption: {json.dumps(caption)}")
+            body_markdown = linked_body
+            if unmatched:
+                GAME_LINK_NOTES.append((out_path.stem, unmatched))
+            print(
+                f"  game board: PGN found, {linked} move link(s), {len(unmatched)} quoted move(s) not in the game "
+                f"for '{item['title']}'",
+                file=sys.stderr,
+            )
+
+    out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
+    return out_path, offenders, bad_links
+
+
+# The SDK already retries 408/409/429 and every 5xx (so 529 overloaded is
+# covered) with exponential backoff, plus connection errors and timeouts --
+# its default is 2. That default is tuned for interactive apps, where failing
+# fast beats making a user wait. This is an unattended daily batch: a draft
+# lost to a transient overload is simply gone until someone notices, and the
+# run has all day, so it is worth waiting out a longer wobble.
+BATCH_MAX_RETRIES = 5
+
+# Written for the workflow to fold into the review PR's body. Without it a
+# failed article is a line on a CI log nobody reads: the PR still opens, the
+# remaining drafts still look fine, and the piece that never got written
+# leaves no trace in front of the person deciding what to merge.
+RUN_REPORT_PATH = DATA_DIR / "draft-report.md"
+
+def game_caption(pgn: str, lens: str | None, this_year: int) -> str | None:
+    """A line saying where the board's game is from, when a current story
+    shows a game from an earlier year (user's call, 2026-10-26: the Clutch
+    Chess preview's board was a 2025 game -- keep it, but say so).
+    Historical pieces are about old games, so they need none."""
+    if lens in HISTORICAL_LENSES:
+        return None
+    date = re.search(r'^\[Date "(\d{4})', pgn, re.MULTILINE)
+    if not date or int(date.group(1)) >= this_year:
+        return None
+    year = date.group(1)
+    event = re.search(r'^\[Event "(.*?)"\]', pgn, re.MULTILINE)
+    name = event.group(1).strip() if event else ""
+    if not name or name == "?":
+        return f"A game from {year}"
+    return f"From the {name}" if year in name else f"From the {name}, {year}"
+
+
+# Our own game files for GameViewer (gamePgn), and quoted moves that didn't
+# match the game, collected per article for the run report.
+GAMES_DIR = ARTICLES_DIR / "_games"
+GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
+# Event pages updated from a final-result piece, for the run report.
+EVENT_PAGE_NOTES: list[str] = []
+
+
+def write_run_report(
+    written: list, failed: list, selected_count: int, long_paragraphs: list, bad_link_articles: list
+) -> None:
+    lines = [f"Drafted {len(written)} of {selected_count} selected item(s)."]
+    if failed:
+        lines += ["", f"**{len(failed)} failed and are not in this PR:**", ""]
+        lines += [f"- {title} — `{error}`" for title, error in failed]
+        lines += ["", "Re-run the workflow to retry them, or draft them by hand."]
+    if long_paragraphs:
+        # The style guide's paragraph-length rule depends on the model
+        # tracking its own running word count while writing, which isn't
+        # reliable -- this is the actual backstop, not just a restatement
+        # of the prompt rule, so it's worth a reviewer's attention even
+        # though it never blocks the draft itself.
+        lines += ["", f"**{len(long_paragraphs)} article(s) have a paragraph over {PARAGRAPH_CHAR_CEILING} characters or {PARAGRAPH_SENTENCE_CEILING} sentences:**", ""]
+        for path, offenders in long_paragraphs:
+            spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
+            lines.append(f"- {path.stem} — paragraph {spots}")
+    if EVENT_PAGE_NOTES:
+        lines += ["", "**Event and player pages updated from a final result** (check each page edit):", ""]
+        lines += [f"- {note}" for note in EVENT_PAGE_NOTES]
+    if GAME_LINK_NOTES:
+        lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
+        lines += [f"- {slug} — {', '.join(moves)}" for slug, moves in GAME_LINK_NOTES]
+    if bad_link_articles:
+        lines += [
+            "",
+            "**Broken internal link(s) -- slug doesn't match any published article, likely a "
+            "model transcription error even though the real slug was given (see "
+            "check_article_links()). Fix manually before merging:**",
+            "",
+        ]
+        for path, bad_links in bad_link_articles:
+            lines.append(f"- {path.stem} — {', '.join(f'`{link}`' for link in bad_links)}")
+    RUN_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RUN_REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def main() -> None:
+    if not SELECTED_PATH.exists():
+        print("No selected.json found -- run selection.py first.")
+        sys.exit(1)
+
+    selected = json.loads(SELECTED_PATH.read_text())
+    if not selected:
+        print("No items selected -- nothing to draft.")
+        return
+
+    client = track(anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES))
+
+    written, failed, long_paragraphs, bad_link_articles = [], [], [], []
+    for item in selected:
+        try:
+            path, offenders, bad_links = draft_one(client, item)
+            written.append(path)
+            print(f"Drafted: {path.relative_to(ROOT)}")
+            if offenders:
+                long_paragraphs.append((path, offenders))
+                print(f"  NOTE: {len(offenders)} paragraph(s) over {PARAGRAPH_CHAR_CEILING} characters or {PARAGRAPH_SENTENCE_CEILING} sentences", file=sys.stderr)
+            if bad_links:
+                bad_link_articles.append((path, bad_links))
+                print(f"  NOTE: {len(bad_links)} broken internal link(s): {bad_links}", file=sys.stderr)
+        except Exception as exc:  # noqa: BLE001 -- one bad draft shouldn't kill the run
+            failed.append((item["title"], f"{type(exc).__name__}: {exc}"))
+            print(f"FAILED to draft '{item['title']}': {exc}", file=sys.stderr)
+
+    write_run_report(written, failed, len(selected), long_paragraphs, bad_link_articles)
+    print(f"Wrote {len(written)}/{len(selected)} draft(s).")
+
+
+if __name__ == "__main__":
+    main()

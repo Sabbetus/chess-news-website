@@ -1,0 +1,80 @@
+---
+interface Tweet {
+  url: string;
+  author: string;
+  handle: string;
+  text: string;
+  date?: string;
+}
+interface Props {
+  tweets: Tweet[];
+}
+const { tweets } = Astro.props;
+
+const fmt = (iso?: string) =>
+  iso
+    ? new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        timeZone: 'UTC',
+      })
+    : '';
+---
+
+<aside class="tweet-quotes" aria-label="Posts on X quoted in this story">
+  <h2 class="tweet-quotes-label">On X</h2>
+  {
+    tweets.map((tweet) => (
+      <blockquote class="tweet-quote" cite={tweet.url}>
+        <p>{tweet.text}</p>
+        <footer>
+          <a href={tweet.url} target="_blank" rel="noopener nofollow">
+            {tweet.author} <span class="tweet-handle">@{tweet.handle}</span>
+          </a>
+          {tweet.date && <span class="tweet-date"> &middot; {fmt(tweet.date)}</span>}
+        </footer>
+      </blockquote>
+    ))
+  }
+</aside>
+
+<style>
+  .tweet-quotes {
+    margin: 2.2em 0 0;
+  }
+  .tweet-quotes-label {
+    margin: 0 0 12px;
+    font-family: var(--sans, inherit);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .tweet-quote {
+    margin: 0 0 14px;
+    padding: 14px 18px;
+    background: var(--paper-raised);
+    border-left: 3px solid var(--brass);
+  }
+  .tweet-quote p {
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .tweet-quote footer {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .tweet-quote footer a {
+    color: var(--ink-soft);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  .tweet-handle {
+    font-weight: 400;
+  }
+</style>

@@ -1,0 +1,135 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      ratings_refreshed: ${{ steps.ratings.outputs.refreshed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      # Keyless: exchanges this job's own GitHub OIDC token (the id-token:
+      # write permission above) for short-lived Google credentials via
+      # Workload Identity Federation. No service-account JSON key exists
+      # anywhere -- the org's policy blocks creating those entirely, and
+      # this is also just the modern recommended approach regardless.
+      # continue-on-error so a not-yet-configured or temporarily-broken
+      # provider never blocks the actual site deploy -- fetch_popular.py
+      # itself already treats "no usable credentials" as a normal,
+      # non-fatal skip.
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        continue-on-error: true
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Fetch Most Popular data from GA4
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+        run: python scripts/fetch_popular.py
+
+      - name: Commit updated popular.json
+        run: |
+          # Best-effort like fetch_popular.py itself: a failed/skipped
+          # fetch leaves data/popular.json unchanged, so there's often
+          # nothing to commit here -- that's normal, not an error.
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/popular.json; then
+            echo "No change to data/popular.json."
+            exit 0
+          fi
+          git add data/popular.json
+          git commit -m "chore: update most-popular data"
+          git push
+
+      # A no-op on all but about one deploy a month: only downloads when FIDE
+      # has published a newer list than data/fide-top100.json holds.
+      - name: Refresh FIDE top 100
+        id: ratings
+        continue-on-error: true
+        run: |
+          python scripts/fide_ratings.py
+          if git diff --quiet -- data/fide-top100.json; then exit 0; fi
+          git add data/fide-top100.json
+          git commit -m "chore: update FIDE top 100"
+          git push
+          echo "refreshed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # A new monthly rating list changes the rankings pages and every
+      # player page (rank, rating). This commit is pushed with the workflow
+      # token, which never triggers indexnow.yml, so submit here -- after
+      # the deploy, so the new pages are already live.
+      - name: Submit rankings and player pages to IndexNow
+        if: needs.build.outputs.ratings_refreshed == 'true'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          urls=$(curl -sS https://chessherald.com/sitemap-0.xml \
+            | grep -oP '(?<=<loc>)https://chessherald.com/(players|rankings)/[^<]*' \
+            | jq -R . | jq -s .)
+          payload=$(jq -n \
+            --arg host "chessherald.com" \
+            --arg key "7081e549d516e07f4b446ccbaa83905b" \
+            --arg keyLocation "https://chessherald.com/7081e549d516e07f4b446ccbaa83905b.txt" \
+            --argjson urlList "$urls" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+          echo "Submitting $(echo "$urls" | jq length) URL(s) to IndexNow..."
+          curl -sS -X POST 'https://api.indexnow.org/indexnow' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "$payload" \
+            -w '\nIndexNow responded: %{http_code}\n'

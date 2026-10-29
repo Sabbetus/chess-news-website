@@ -1,0 +1,308 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
+import SearchBox from '../components/SearchBox.astro';
+import { LENS_META, LENS_ORDER, LENS_SLUGS, type Lens } from '../lib/lens';
+
+interface Props {
+  title: string;
+  // The <title> tag has a hard practical length limit (search engines
+  // truncate/ignore past ~70 characters) that the on-page headline
+  // shouldn't be bent to fit -- see lib/seoTitle.ts. Social cards don't
+  // have that constraint and read better with the full headline, so
+  // og:title/twitter:title default to the possibly-shortened `title`
+  // but can be overridden with the untruncated version via `ogTitle`.
+  ogTitle?: string;
+  description?: string;
+  // Which top-nav item (now the lenses, not the continents -- readers care
+  // more about the analytical angle than the region) to highlight, or one
+  // of a handful of page identifiers with no nav entry of their own
+  // ("continent" covers every /continent/<c>/ page, which still exist as
+  // URLs -- linked from TagRow's continent tag -- just not from the top
+  // nav) so they still get the correct non-front-page BrandTag treatment
+  // below without wrongly lighting up an unrelated nav item.
+  activeSection?: Lens | 'events' | 'rankings' | 'players' | 'front-page' | 'archive' | 'recaps' | 'continent' | 'contact' | 'privacy' | 'about' | 'not-found';
+  // Keeps a page out of search results. Only the 404 uses this -- it has no
+  // stable URL of its own (GitHub Pages serves it for every unmatched path),
+  // so an indexed copy would compete with real pages for no benefit.
+  noindex?: boolean;
+  articleMeta?: { publishedTime: string; source?: string };
+  jsonLd?: Record<string, unknown>[];
+  image?: string;
+}
+const DEFAULT_DESCRIPTION =
+  'Daily chess news with original analysis: results, prize money, chess history, and the controversies, plus real tournament data from around the world.';
+const {
+  title,
+  ogTitle = title,
+  description = DEFAULT_DESCRIPTION,
+  activeSection = 'front-page',
+  articleMeta,
+  jsonLd = [],
+  image,
+  noindex = false,
+} = Astro.props;
+
+// Every page needs exactly one <h1>. The front page has no other page-level
+// heading, so the masthead brand mark IS that page's h1 there; every other
+// page has its own more specific h1 (the article title, the continent
+// name), so the brand there is a non-heading element carrying the same
+// look via a shared class -- not a second, competing h1.
+const BrandTag = activeSection === 'front-page' ? 'h1' : 'p';
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
+// Both the per-article crop (generated at exactly 1200x630 -- see the
+// article page's getImage() call) and this fallback (public/og-image.png,
+// also 1200x630) are the same fixed size, so width/height can be stated
+// unconditionally rather than measured per page. Meta's docs recommend
+// setting these explicitly: it lets Facebook/Threads' scraper skip a
+// fetch-and-guess round trip on first share. Type is inferred from the
+// extension since the two cases use different formats (jpg vs png).
+const ogImageType = ogImageURL.toString().endsWith('.png') ? 'image/png' : 'image/jpeg';
+
+const sections = [
+  { id: 'front-page' as const, label: 'Front Page', href: '/' },
+  ...LENS_ORDER.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
+  { id: 'archive' as const, label: 'All Articles', href: '/archive/' },
+];
+// Results carries a sub-menu for the reference pages (events, rankings,
+// player profiles). They
+// aren't news lists like every other nav item, so they sit one level down
+// rather than changing what the top row means.
+const RESULTS_CHILDREN = [
+  { id: 'results', label: 'Latest', href: `/lens/${LENS_SLUGS.results}/` },
+  { id: 'events', label: 'Events', href: '/events/' },
+  { id: 'rankings', label: 'Rankings', href: '/rankings/' },
+  { id: 'players', label: 'Players', href: '/players/' },
+];
+const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <meta name="robots" content="max-image-preview:large" />}
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="The Chess Herald" href="/rss.xml" />
+
+    <!-- Without this, fonts are only discovered once the stylesheet has
+         been fetched and parsed, adding them sequentially to the critical
+         path (each around 500ms in testing). Preloading lets them fetch in
+         parallel with the CSS instead of after it, and shortens the window
+         where fallback-font text is visible before the swap.
+
+         All four faces below are measured as requested on every page type,
+         and all four render above the fold: Fraunces in the masthead and
+         headlines, Source Serif in body text, and both IBM Plex Mono
+         weights in the eyebrow, section nav (500 marks the active one) and
+         bylines. The two mono files are 14 KB each, so covering them costs
+         little. Deliberately not preloaded: the latin-ext subsets, which
+         unicode-range only pulls for the minority of articles carrying
+         diacritics, and the italic face, which now loads only where a
+         blockquote appears. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/fraunces-variable-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/source-serif-4-400-normal-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/ibm-plex-mono-400-normal-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/ibm-plex-mono-500-normal-latin.woff2"
+      crossorigin
+    />
+
+    <!--
+      Google Search explicitly does not support SVG favicons (only BMP,
+      GIF, ICO, PNG, JPEG, PPM, TIFF -- see developers.google.com/search/
+      docs/appearance/favicon-in-search), so the SVG (for browsers, which
+      all support it) is listed last: a browser evaluates every matching
+      <link rel="icon"> and picks its preferred one, so order doesn't cost
+      browsers anything, but a simpler crawler that just takes the first
+      tag now gets a format Google actually indexes. /favicon.ico is also
+      the classic default path several crawlers/bots still check even
+      without any <link> tag at all.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content={articleMeta ? 'article' : 'website'} />
+    <meta property="og:site_name" content="The Chess Herald" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content={ogImageType} />
+    {articleMeta && <meta property="article:published_time" content={articleMeta.publishedTime} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    {
+      jsonLd.map((entry) => (
+        <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+      ))
+    }
+
+    <script is:inline>
+      // Applied before first paint to avoid a flash of the wrong theme --
+      // ThemeSwitch.astro owns the toggle interaction itself.
+      (function () {
+        try {
+          var stored = localStorage.getItem('chessherald-theme');
+          var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Google tag (gtag.js), gated on the opt-out set from /privacy/.
+         Injected from script rather than a plain <script src> so that an
+         opted-out visitor never issues the request at all: a tag that
+         loads and is then disabled has already handed Google the IP
+         address, which defeats the point of offering the choice. -->
+    <script is:inline>
+      (function () {
+        var GA_ID = 'G-KY9DGJ4ZDQ';
+        try {
+          if (localStorage.getItem('chessherald-analytics-optout') === '1') {
+            // Also set for the benefit of anything that might load a tag
+            // later in the page's life; the early return is what actually
+            // prevents the request.
+            window['ga-disable-' + GA_ID] = true;
+            return;
+          }
+        } catch (e) {
+          // Storage blocked -- fall through and load as normal rather
+          // than silently opting everyone out.
+        }
+
+        var tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(tag);
+
+        window.dataLayer = window.dataLayer || [];
+        // gtag has to be global for gtag.js to pick it up; declaring it
+        // inside this IIFE would otherwise scope it away.
+        window.gtag = function () {
+          dataLayer.push(arguments);
+        };
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- First focusable thing on the page, so a keyboard or screen-reader
+         user can jump straight past the masthead, search box, theme switch
+         and eight nav links instead of tabbing through all of them on every
+         page. Off-screen until focused (see .skip-link in global.css) --
+         never display:none, which would hide it from screen readers too and
+         defeat the point. -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="wrap">
+      <div class="masthead-top">
+        <a href="/" class="eyebrow">
+          <span class="eyebrow-full">Chess news from around the world</span>
+          <span class="eyebrow-short">Chess news</span>
+        </a>
+        <span class="masthead-top-right">
+          <SearchBox />
+          <ThemeSwitch />
+        </span>
+      </div>
+
+      <header class="masthead">
+        <BrandTag class="brand"><a href="/">The Chess Herald</a></BrandTag>
+        <div class="tagline">
+          Chess news &amp; articles<span class="sep">&middot;</span>original analysis<span class="sep">&middot;</span>tournament
+          statistics
+        </div>
+      </header>
+
+      <nav class="sections">
+        {
+          sections.map((s) =>
+            s.id === 'results' ? (
+              <span class="has-sub">
+                <a href={s.href} class={inResults ? 'on' : ''} aria-haspopup="true">
+                  {s.label}<span class="caret" aria-hidden="true">▾</span>
+                </a>
+                <span class="sub-menu">
+                  {RESULTS_CHILDREN.map((c) => (
+                    <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+                  ))}
+                </span>
+              </span>
+            ) : (
+              <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
+                {s.label}
+              </a>
+            )
+          )
+        }
+      </nav>
+      {
+        inResults && (
+          <nav class="sub-sections" aria-label="Results">
+            {RESULTS_CHILDREN.map((c) => (
+              <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+            ))}
+          </nav>
+        )
+      }
+
+      <!-- tabindex="-1" so the skip link can actually move focus here.
+           Without it browsers scroll to the anchor but leave focus in the
+           header, and the next Tab drops the reader back at the top. -->
+      <main id="main-content" tabindex="-1">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <span>The Chess Herald</span>
+        <span class="partners">
+          Partners:
+          <a href="https://nordicchess.fi" target="_blank" rel="noopener">Nordic Chess Festival</a><span class="sep"
+            >&middot;</span
+          ><a href="https://chesstournamentcalendar.com" target="_blank" rel="noopener">Chess Tournament Calendar</a>
+        </span>
+        <span class="footer-contact">
+          <a href="/about/">About</a><span class="sep">&middot;</span><a href="/privacy/">Privacy</a><span
+            class="sep">&middot;</span
+          ><a href="/contact/">Contact</a>
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import { LENS_META, pieceForLens, type Lens } from '../lib/lens';
+import type { ImageMetadata } from 'astro';
+import { imageAlt } from '../lib/imageAlt';
+
+interface Props {
+  lens: Lens;
+  size: 'lead' | 'card';
+  seed?: number;
+  image?: { src: ImageMetadata; credit: string; sourceUrl: string; caption?: string };
+  alt?: string;
+  href?: string;
+}
+const { lens, size, seed = 0, image, alt: headline = '', href } = Astro.props;
+// Describe the photo, not the story: the headline is already on the page.
+const alt = image ? imageAlt(image.sourceUrl, headline) : headline;
+const lensMeta = LENS_META[lens];
+const piece = pieceForLens(lens, seed);
+
+// Fixed pixel dimensions matching each slot's CSS aspect-ratio exactly
+// (.thumb--lead and .thumb--card are both 4/3 -- see global.css) so
+// Astro's fit="cover" crop lands on the same box the CSS already draws,
+// with no mismatch between the requested crop and the rendered one, and
+// no mismatch between an article's own hero and its card thumbnail
+// elsewhere on the site either (same top-anchored crop, just a bigger
+// box for the hero).
+//
+// position="attention" (Sharp's saliency-based smart crop) was tried
+// first and reverted -- on real site photos it repeatedly cropped out
+// the subject's face entirely (found live, across multiple articles),
+// picking some other "busy" region of the frame instead. A fixed
+// top-bias is boring but predictable: most sourced photos are portrait
+// headshots cropped into a much wider slot, and a face sits in the top
+// third of the frame far more reliably than any saliency heuristic
+// picked it out correctly in practice.
+const DIMS = {
+  lead: { width: 960, height: 720 },
+  card: { width: 500, height: 375 },
+}[size];
+
+// Astro/Sharp's fit="cover" clamps the requested WIDTH to the source
+// photo's native width when asked to upscale, but does not recompute the
+// HEIGHT to match -- it keeps the full unclamped target height for that
+// density, breaking the crop's aspect ratio entirely. Caught live: a
+// 853px-wide portrait source photo served as the "2x" density variant of
+// a 960x640 lead box came back as a completely uncropped 853x1280 image
+// -- the full original photo, not a crop at all -- because 960*2=1920
+// exceeds 853 so width got clamped, but height's own 640*2=1280 request
+// didn't get clamped to match, and 1280 happened to equal the source's
+// actual height exactly. A phone with devicePixelRatio 2+ then loads
+// that broken variant from the srcset and gets a completely different,
+// CSS center-cropped framing than desktop's correctly top-anchored crop
+// -- density descriptors are supposed to mean "same image, more pixels,"
+// not "a different crop entirely."
+//
+// Fix: only ever request a density whose target width AND height (see
+// OVERSAMPLE_FACTOR below -- the requested height isn't just the box's
+// own height any more) the source can actually satisfy without upscaling.
+// If even the 1x target can't be satisfied (a source narrower than the
+// box itself), fall back to a single width/height pair clamped to the
+// source's own resolution -- still at the box's exact aspect ratio, just
+// smaller, never a different crop and never upscaled.
+const boxRatio = DIMS.width / DIMS.height;
+const nativeWidth = image?.src.width;
+const nativeHeight = image?.src.height;
+
+// Astro/Sharp's position="top" (used below) has no "nearly top" or "top,
+// with a bit of headroom" option -- fit="cover" position only takes named
+// gravities (top/center/etc.), never a percentage offset. Landing exactly
+// on "top" reads fine for a landscape source, but for a portrait source
+// (most headshots) it crops in tight to just the face -- found live
+// across several articles, worst on a photo whose subject had visible
+// headroom in the original that a literal top-edge crop threw away
+// entirely.
+//
+// Fix: bake a server-side crop OVERSAMPLE_FACTOR taller than the box
+// actually needs, still top-anchored (so it never risks losing the top of
+// the subject's head the way center framing could), then let CSS
+// object-position (see global.css) pick a window starting partway down
+// through that extra slack instead of at its very top edge -- a real,
+// tunable "nearly top," not a Sharp gravity keyword. The density/upscale
+// check above now has to account for this too, not just the box's own
+// height, or the oversampled crop could silently hit the exact same
+// upscale-clamping bug in the height dimension that the width fix above
+// was written for.
+//
+// But this whole problem is specific to sources NARROWER (relatively
+// taller) than the box: those are the ones where a width-matched
+// top-anchored crop eats deep into the vertical frame. A source at or
+// wider than the box's own ratio never had that failure mode -- cover-fit
+// crops those from the sides with the full height intact, so a literal
+// top position was already correct. Applying the same oversample+shift
+// there doesn't add headroom, it just throws away real height off the
+// bottom for no reason -- caught live: several front-page wide photos
+// that were already perfectly framed lost their previously-fine top crop
+// once this landed. Gate the whole oversample treatment on the source
+// actually being narrower than the box ratio.
+const needsHeadroomFix = !nativeWidth || !nativeHeight || nativeWidth / nativeHeight < boxRatio;
+const OVERSAMPLE_FACTOR = needsHeadroomFix ? 1.3 : 1;
+
+const supportedDensities = nativeWidth
+  ? [1, 1.5, 2].filter(
+      (d) => DIMS.width * d <= nativeWidth && Math.round(DIMS.height * d * OVERSAMPLE_FACTOR) <= (nativeHeight ?? 0),
+    )
+  : [1, 1.5, 2];
+const renderWidth =
+  nativeWidth && supportedDensities.length === 0 ? Math.min(DIMS.width, nativeWidth) : DIMS.width;
+const boxHeight = nativeWidth && supportedDensities.length === 0 ? Math.round(renderWidth / boxRatio) : DIMS.height;
+const renderDensities = supportedDensities.length > 0 ? supportedDensities : undefined;
+
+// When the fallback above already had to clamp width (a source too
+// narrow even for 1x), there's normally no spare height budget left to
+// oversample with either -- but still worth trying, clamped to whatever
+// the source can actually provide, rather than skipping the "nearly top"
+// treatment entirely for exactly the photos most likely to need it
+// (a narrow source is very often a tall portrait crop).
+const desiredOversampledHeight = Math.round(boxHeight * OVERSAMPLE_FACTOR);
+const maxAvailableHeight =
+  nativeWidth && nativeHeight ? Math.floor((nativeHeight * renderWidth) / nativeWidth) : desiredOversampledHeight;
+const renderHeight =
+  supportedDensities.length > 0
+    ? Math.round(DIMS.height * OVERSAMPLE_FACTOR)
+    : Math.max(boxHeight, Math.min(desiredOversampledHeight, maxAvailableHeight));
+
+// The lead image is always the single largest above-the-fold image on
+// whichever page it appears on (homepage lead story, or an article's own
+// hero) -- likely the LCP element -- so it should never be lazy-loaded,
+// and fetchpriority tells the browser to fetch it before other same-priority
+// resources. Card thumbnails (grid listings) keep the lazy default since
+// most of them are below the fold.
+const loading = size === 'lead' ? 'eager' : 'lazy';
+const fetchpriority = size === 'lead' ? 'high' : undefined;
+
+// The image-credit link (to the photo's Commons page) and a link to the
+// article itself must never nest -- <a> inside <a> is invalid HTML and
+// breaks the outer link's accessible name/content. When href is given,
+// this component owns the article link itself (wrapping only the image/
+// chip/piece), so callers should NOT also wrap <ArticleThumb> in an <a>.
+---
+
+<div class={`thumb thumb--${size} ${lensMeta.className}`}>
+  {
+    href ? (
+      <a href={href} class="thumb-link">
+        {image && (
+          <Image
+            class={`thumb-photo ${needsHeadroomFix ? 'thumb-photo--headroom' : ''}`}
+            src={image.src}
+            width={renderWidth}
+            height={renderHeight}
+            fit="cover"
+            position="top"
+            densities={renderDensities}
+            alt={alt}
+            loading={loading}
+            fetchpriority={fetchpriority}
+          />
+        )}
+        {!image && <span class="piece">{piece}</span>}
+      </a>
+    ) : (
+      <>
+        {image && (
+          <Image
+            class={`thumb-photo ${needsHeadroomFix ? 'thumb-photo--headroom' : ''}`}
+            src={image.src}
+            width={renderWidth}
+            height={renderHeight}
+            fit="cover"
+            position="top"
+            densities={renderDensities}
+            alt={alt}
+            loading={loading}
+            fetchpriority={fetchpriority}
+          />
+        )}
+        {!image && <span class="piece">{piece}</span>}
+      </>
+    )
+  }
+  {
+    image && (
+      <a class="thumb-credit" href={image.sourceUrl} target="_blank" rel="noopener" title={image.credit} aria-label={`Image credit: ${image.credit}`}>
+        i
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .thumb-link {
+    display: contents;
+  }
+</style>

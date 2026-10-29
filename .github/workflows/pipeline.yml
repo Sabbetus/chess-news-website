@@ -1,0 +1,116 @@
+name: Ingest, select, and draft articles
+
+on:
+  # Runs daily; still opens a PR for human review before anything goes
+  # live -- reviewStatus only flips to "published" on merge, never
+  # automatically. workflow_dispatch stays available for manual/backfill
+  # runs alongside the schedule.
+  #
+  # Nominal time is 4 hours earlier than it looks like it should be: this
+  # cron has consistently run ~4.5-6h late in practice (GitHub Actions
+  # deprioritizes scheduled runs under load, and a public repo with a
+  # handful of daily cron jobs gets queued behind higher-traffic ones).
+  # 01:03 UTC -> actual delivery lands around 09:00 Finnish time (EEST,
+  # UTC+3), moved an hour earlier than the previous 02:07 UTC / ~10:00
+  # EEST nominal-to-actual pairing (same 4h actual-vs-nominal gap, just
+  # shifted). :03 rather than :00 or :07 avoids both the single most
+  # contested scheduling minute AND a direct collision with social.yml,
+  # which already has a run at 1:07 UTC.
+  schedule:
+    - cron: '3 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    env:
+      # Per-run token log for the PR description (scripts/api_usage.py).
+      API_USAGE_LOG: /tmp/api-usage.jsonl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Ingest candidate stories
+        run: python scripts/ingest.py
+
+      - name: Fetch r/chess trends (best effort)
+        continue-on-error: true
+        run: python scripts/trends.py
+
+      - name: Select today's stories
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/selection.py
+
+      - name: Draft articles with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/draft.py
+
+      - name: Release one queued explainer
+        run: python scripts/release_explainer.py
+
+      - name: Open review PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Only open a PR when there's an actual article to review -- data/
+          # (seen.json, candidates.json, selected.json) changes on every run
+          # regardless of whether anything was drafted, so checking the full
+          # working tree here would open an empty PR on a quiet news day.
+          if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
+            echo "No new articles -- nothing to review today."
+            exit 0
+          fi
+
+          BRANCH="drafts/$(date -u +%Y-%m-%d)-$(date -u +%H%M%S)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+
+          # data/seen.json and data/candidates.json/selected.json track pipeline
+          # state and are useful to review alongside the drafts (shows what was
+          # considered and why), so commit them too.
+          git add data/ src/content/
+          git commit -m "chore: daily draft batch $(date -u +%Y-%m-%d)"
+          git push origin "$BRANCH"
+
+          # draft.py writes a short report naming anything it failed to
+          # draft. Without it in the body, an article lost to a transient
+          # API error leaves no trace in front of whoever merges the PR.
+          BODY="Automated draft batch from the ingestion/selection/drafting pipeline. Review each article's frontmatter (source, lens, selectionScore) and body before merging. Merging sets these live once reviewStatus is flipped to \`approved\`/\`published\` -- see docs/review-workflow.md."
+          if [ -s data/draft-report.md ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$(cat data/draft-report.md)"
+          fi
+          USAGE="$(python scripts/api_usage.py)"
+          if [ -n "$USAGE" ]; then
+            BODY="$BODY"$'\n\n---\n\n'"$USAGE"
+          fi
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Draft batch: $(date -u +%Y-%m-%d)" \
+            --body "$BODY"
+
+          # Separate from pr create so a GitHub API hiccup on the reviewer
+          # request can't fail the run after the PR already exists (caught
+          # live 2026-10-04: a GraphQL error here marked the recap run failed).
+          for attempt in 1 2; do
+            gh pr edit "$BRANCH" --add-reviewer Sabbetus && break
+            [ "$attempt" = 2 ] && echo "::warning::Could not request review from Sabbetus" || sleep 10
+          done

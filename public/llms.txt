@@ -1,0 +1,47 @@
+# The Chess Herald
+
+> The Chess Herald (https://chessherald.com) is a curated chess news site.
+> Each day it picks a handful of the most newsworthy chess stories and
+> publishes an original analysis piece on each, linking to the original
+> source rather than rewording it. Articles are AI-drafted (credited to the
+> house byline "Claude Henry") and reviewed by a human editor before
+> publishing.
+
+## Key facts
+
+- Sources: FIDE, Chess.com and ChessBase news, plus Chess Tournament
+  Calendar's own tournament database for monthly regional round-ups.
+- Every article names and links its original source, both inline and at
+  the end of the piece.
+- Each article is written through one lens: Results, People (interviews
+  and profiles), History (a specific historical parallel), Money (prize
+  funds, sponsors, deals), Controversy (disputes, cheating cases,
+  politics) or OTB Tournaments (data-driven regional tournament round-ups).
+- Photos are correctly licensed images from Wikimedia Commons with visible
+  credit and a link to the original file.
+- How the site works, including its use of AI: https://chessherald.com/about/
+
+## Sections
+
+- [Homepage](https://chessherald.com/): the latest articles.
+- [All articles](https://chessherald.com/archive/): every article, newest first.
+- [Weekly recaps](https://chessherald.com/recaps/): the week's biggest stories.
+- [Results](https://chessherald.com/lens/results/)
+- [FIDE rankings, open top 100](https://chessherald.com/rankings/): updated monthly from FIDE's official standard rating list.
+- [FIDE rankings, women's top 25](https://chessherald.com/rankings/women/)
+- [Players](https://chessherald.com/players/): profiles of every ranked player, with career highlights and our coverage of each.
+- [Events](https://chessherald.com/events/): the major events of the chess year, with history, past winners and upcoming dates.
+- [People](https://chessherald.com/lens/people/)
+- [History](https://chessherald.com/lens/history/)
+- [Money](https://chessherald.com/lens/money/)
+- [Controversy](https://chessherald.com/lens/controversy/)
+- [OTB Tournaments](https://chessherald.com/lens/otb-tournaments/)
+- Regions: [Europe](https://chessherald.com/continent/europe/), [Asia](https://chessherald.com/continent/asia/), [North America](https://chessherald.com/continent/north-america/), [South America](https://chessherald.com/continent/south-america/), [Africa](https://chessherald.com/continent/africa/), [Oceania](https://chessherald.com/continent/oceania/), [Global](https://chessherald.com/continent/global/)
+- [RSS feed](https://chessherald.com/rss.xml)
+- [Sitemap](https://chessherald.com/sitemap-index.xml)
+
+## Reuse
+
+Article text may be quoted with attribution to The Chess Herald and a link
+to the specific article. Each linked source article keeps its own outlet's
+rights, separate from The Chess Herald's analysis.

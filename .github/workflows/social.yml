@@ -1,0 +1,69 @@
+name: Post to social media
+
+on:
+  # 12x/day, every 2 hours, so a newly published article doesn't sit long
+  # before it goes out. Times are UTC, offset to :07 rather than the top
+  # of the hour -- GitHub queues scheduled runs against global load, and
+  # :00 is the most contested minute, so runs land closer to on-time here.
+  schedule:
+    - cron: '7 1 * * *'
+    - cron: '7 3 * * *'
+    - cron: '7 5 * * *'
+    - cron: '7 7 * * *'
+    - cron: '7 9 * * *'
+    - cron: '7 11 * * *'
+    - cron: '7 13 * * *'
+    - cron: '7 15 * * *'
+    - cron: '7 17 * * *'
+    - cron: '7 19 * * *'
+    - cron: '7 21 * * *'
+    - cron: '7 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          # No pip cache: this job installs nothing, so the cache step had
+          # nothing to save and failed the run once the runner's Python
+          # version changed and no older cache was restored (2026-10-06).
+
+      - name: Post pending articles
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python scripts/social_post.py
+
+      - name: Commit updated queue
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/social-queue.json && [ -z "$(git status --porcelain -- data/social-queue.json)" ]; then
+            echo "No queue changes."
+            exit 0
+          fi
+          git add data/social-queue.json
+          git commit -m "chore: social posting queue update"
+          git push
+
+      # Refreshes Most Popular between article pushes -- those can go a
+      # couple of days without a new one, but view counts keep changing.
+      # deploy.yml already does the whole fetch+commit+build+deploy
+      # itself; just dispatch it rather than duplicating that logic here.
+      - name: Trigger a site rebuild (refreshes Most Popular)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main

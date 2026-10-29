@@ -1,0 +1,87 @@
+name: Backfill past days
+
+# One-off manual tool: replays the daily select+draft cycle over a past date
+# range instead of "today" (see scripts/backfill.py for why this is a
+# separate script, not just re-running the normal pipeline repeatedly).
+# Not meant to run unattended -- always inputs a specific range by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'Start date (YYYY-MM-DD, inclusive)'
+        required: true
+      end:
+        description: 'End date (YYYY-MM-DD, inclusive)'
+        required: true
+      calendar_only:
+        description: 'Skip news, only build calendar-aggregate slots (safe way to retry a failed one)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Backfill articles with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+          CALENDAR_ONLY: ${{ inputs.calendar_only }}
+        run: |
+          # Inputs come in through env rather than being interpolated into
+          # the script text. Only someone with write access can dispatch
+          # this workflow, so the practical risk was near zero, but an
+          # expression expansion inside a run block is substituted before
+          # the shell ever sees it -- a value containing shell
+          # metacharacters would execute, not be passed as an argument.
+          # (Which is also why this comment spells that out rather than
+          # writing the expansion syntax literally: Actions would expand
+          # it here too.)
+          args=(--start "$START" --end "$END")
+          [ "$CALENDAR_ONLY" = "true" ] && args+=(--calendar-only)
+          python scripts/backfill.py "${args[@]}"
+
+      - name: Open review PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+        run: |
+          if git diff --quiet -- src/content/articles/ && [ -z "$(git status --porcelain -- src/content/articles/)" ]; then
+            echo "No articles backfilled -- nothing to review."
+            exit 0
+          fi
+
+          BRANCH="drafts/backfill-${START}-to-${END}-$(date -u +%H%M%S)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+
+          git add data/ src/content/
+          git commit -m "chore: backfill drafts ${START} to ${END}"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Backfill batch: ${START} to ${END}" \
+            --body "One-off backfill replaying the daily selection over ${START} .. ${END}. Each article's publishDate reflects its real original date, not the day this ran. Review each article's frontmatter (source, lens, selectionScore) and body before merging." \
+            --reviewer Sabbetus

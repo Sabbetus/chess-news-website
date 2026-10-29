@@ -1,0 +1,504 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleThumb from '../../components/ArticleThumb.astro';
+import TagRow from '../../components/TagRow.astro';
+import LichessGame from '../../components/LichessGame.astro';
+import GameViewer from '../../components/GameViewer.astro';
+import TweetQuotes from '../../components/TweetQuotes.astro';
+import { estimateReadMinutes } from '../../lib/reading';
+import { excerptFrom } from '../../lib/excerpt';
+import { seoTitle } from '../../lib/seoTitle';
+import { CONTINENT_META } from '../../lib/continent';
+import { similarArticles } from '../../lib/similar';
+import { articleEntities } from '../../lib/hubs';
+
+// Our own PGN files for GameViewer, keyed by file name (see gamePgn in config.ts).
+const GAMES: Record<string, string> = Object.fromEntries(
+  Object.entries(import.meta.glob('../../content/articles/_games/*.pgn', { query: '?raw', import: 'default', eager: true })).map(
+    ([path, text]) => [path.split('/').pop()!, text as string]
+  )
+);
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+const { article } = Astro.props;
+const { Content } = await article.render();
+const dateFmt = article.data.publishDate.toLocaleDateString('en-US', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const shortDateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+// 155, not 200: Google truncates meta descriptions around 155-160 characters,
+// so the tail of a longer one is cut mid-sentence in results. Feeds the
+// JSON-LD description and og:description too, which have no such limit but
+// read better consistent with what search actually shows.
+// A drafted, search-facing summary when the article has one (the pipeline
+// writes it since 2026-09-29); older pieces fall back to the body excerpt.
+const description = article.data.metaDescription ?? excerptFrom(article.body, 155);
+const pageURL = new URL(Astro.url.pathname, Astro.site).toString();
+const correctionHref = `/contact/?${new URLSearchParams({
+  topic: 'Article correction',
+  title: article.data.title,
+}).toString()}`;
+
+// Similar articles: same people/events/organizations first (see
+// lib/similar.ts), then same lens/continent, then most recent.
+const similar = await similarArticles(article);
+const entities = await articleEntities(article, Astro.site!);
+
+const continentMeta = CONTINENT_META[article.data.continent];
+
+// Primary source plus every additional outlet the piece also draws on
+// (see additionalSources in config.ts) -- most articles have just the
+// one, but a piece merged from two outlets' coverage of the same event
+// lists both here so the byline and JSON-LD credit all of them.
+const allSources =
+  article.data.sourceUrl && article.data.sourceName
+    ? [{ sourceName: article.data.sourceName, sourceUrl: article.data.sourceUrl }, ...(article.data.additionalSources ?? [])]
+    : [];
+
+// Recap articles have no `lens` field, so article.data.lens is
+// undefined -- and BaseLayout's destructuring default
+// (`activeSection = 'front-page'`) kicks in for an explicitly-
+// undefined prop the same as an omitted one, wrongly rendering the
+// masthead brand mark as a second <h1> (BrandTag there is 'h1' only
+// when activeSection is 'front-page'). 'recaps' is a real BaseLayout
+// activeSection identifier with no matching nav item, same as recaps
+// not being in the top nav at all.
+const activeSection = article.data.lens ?? 'recaps';
+
+// The social-card crop: fixed 1200x630 (1.91:1), the size Meta's own docs
+// recommend for Facebook/Threads link previews and the same ratio X's
+// summary_large_image card uses -- one crop serves all three.
+//
+// This isn't generated with getImage() like the rest of the images on this
+// page (jsonLdImage below, ArticleThumb.astro's on-site crops) -- Astro's
+// built-in Sharp service only exposes Sharp's `position` as a fixed named
+// gravity, with no percentage-offset option, so a naive position="top" crop
+// here cut portrait photos off at the hairline (caught live, unusable on
+// X). ArticleThumb.astro works around the same limitation with a
+// server-crop + CSS object-position two-stage trick, but that only works
+// because a browser renders the second stage; a shared social card is just
+// the raw file we hand the platform, with no second stage available. See
+// scripts/generate-social-images.mjs (run as an astro:build:done hook in
+// astro.config.mjs, writing dist/social/<slug>.jpg) for the actual crop,
+// which uses Sharp's `.extract()` directly to bias the window down through
+// the photo's spare vertical room the same way ArticleThumb.astro's CSS
+// does, instead of landing right at the top edge.
+const ogImageUrl = article.data.image ? new URL(`/social/${article.slug}.jpg`, Astro.site).toString() : null;
+// JSON-LD's `image` has no crop requirement -- Google just wants a
+// reasonably large, accessible copy (1280 clears its 1200px-wide
+// preference) -- so this reuses the same source with a plain resize, no
+// fixed aspect ratio forced onto it.
+const jsonLdImage = article.data.image ? await getImage({ src: article.data.image.src, width: 1280, format: 'jpg' }) : null;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.data.title,
+    ...(entities.about.length ? { about: entities.about } : {}),
+    ...(entities.mentions.length ? { mentions: entities.mentions } : {}),
+    description,
+    datePublished: article.data.publishDate.toISOString(),
+    // Falls back to the publish date rather than being omitted: for a piece
+    // never corrected since publication, those genuinely are the same
+    // moment, and search engines treat a missing dateModified as unknown
+    // freshness rather than inferring it.
+    dateModified: (article.data.updatedDate ?? article.data.publishDate).toISOString(),
+    mainEntityOfPage: pageURL,
+    url: pageURL,
+    ...(jsonLdImage ? { image: [new URL(jsonLdImage.src, Astro.site).toString()] } : {}),
+    // Organization, not Person. "Claude Henry" is a house byline, and this
+    // is the one place the site made a typed, machine-readable claim that a
+    // person by that name wrote the piece -- which contradicted llms.txt,
+    // where the AI drafting is disclosed. The visible byline is unchanged;
+    // institutional authorship is standard for news, and Google retired
+    // author rich results, so Person was not buying anything either.
+    author: { '@type': 'Organization', name: 'The Chess Herald' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'The Chess Herald',
+      logo: { '@type': 'ImageObject', url: new URL('/favicon.png', Astro.site).toString() },
+    },
+    ...(allSources.length > 0
+      ? {
+          isBasedOn: allSources.length === 1 ? allSources[0].sourceUrl : allSources.map((s) => s.sourceUrl),
+          citation: allSources.length === 1 ? allSources[0].sourceUrl : allSources.map((s) => s.sourceUrl),
+        }
+      : {}),
+  },
+  // The site already has a real Home > Continent > Article hierarchy in its
+  // URLs and nav; describing it in markup is what lets search results show
+  // that trail instead of a bare URL.
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'The Chess Herald',
+        item: new URL('/', Astro.site).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: continentMeta.label,
+        item: new URL(`/continent/${article.data.continent}/`, Astro.site).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.data.title,
+        item: pageURL,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={seoTitle(article.data.title)}
+  ogTitle={`${article.data.title} | The Chess Herald`}
+  description={description}
+  activeSection={activeSection}
+  articleMeta={{
+    publishedTime: article.data.publishDate.toISOString(),
+    source: article.data.sourceName,
+  }}
+  image={ogImageUrl}
+  jsonLd={jsonLd}
+>
+  <article class="story">
+    <ArticleThumb lens={article.data.lens ?? 'historical-parallel'} size="lead" image={article.data.image} alt={article.data.image?.caption ?? article.data.title} />
+    {article.data.image?.caption && <p class="photo-caption">{article.data.image.caption}</p>}
+
+    <div class="story-head">
+      <h1>{article.data.title}</h1>
+      <TagRow lens={article.data.lens} continent={article.data.continent} />
+      <div class="byline">
+        {allSources.length > 0 ? (
+          <>
+            <span class="src">
+              {allSources.length === 1 ? 'Source: ' : 'Sources: '}
+              {allSources.map((s, i) => (
+                <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
+              ))}
+            </span>
+            <span class="dot">&bull;</span>
+          </>
+        ) : null}
+        <span>{estimateReadMinutes(article.body)} min read</span>
+        <span class="dot">&bull;</span>
+        <span>{dateFmt}</span>
+      </div>
+    </div>
+
+    <div class="story-body">
+      <Content />
+    </div>
+
+    {article.data.gamePgn && GAMES[article.data.gamePgn] ? (
+      <GameViewer pgn={GAMES[article.data.gamePgn]} caption={article.data.gameCaption} />
+    ) : (
+      article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />
+    )}
+
+    {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
+
+    <p class="source-callout">
+      <span class="byline-credit">By <a href="/about/#ai-and-people">Claude Henry</a></span><br />
+      {allSources.length > 0 && (
+        <>
+          {allSources.length === 1 ? 'Original source: ' : 'Original sources: '}
+          {allSources.map((s, i) => (
+            <>{i > 0 && ', '}<a href={s.sourceUrl} target="_blank" rel="noopener">{s.sourceName}</a></>
+          ))}
+          <br />
+        </>
+      )}
+      <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>
+    </p>
+
+    {
+      similar.length > 0 && (
+        <section class="similar">
+          <h2 class="similar-label">Similar Articles</h2>
+          <div class="similar-grid">
+            {similar.map((a, i) => (
+              <article class="similar-card">
+                <ArticleThumb lens={a.data.lens} size="card" seed={i} image={a.data.image} alt={a.data.title} href={`/articles/${a.slug}/`} />
+                <h3>
+                  <a href={`/articles/${a.slug}/`}>{a.data.title}</a>
+                </h3>
+                <TagRow lens={a.data.lens} continent={a.data.continent} />
+                <div class="byline">
+                  <span>{shortDateFmt(a.data.publishDate)}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .story {
+    padding: 34px 0 60px;
+    /* A single shared width, rather than 68ch repeated on several
+       elements -- ch resolves against each element's own font-size, and
+       .story-body sets an explicit 18px while .story-head/.thumb don't
+       (inheriting the body's 17px), so the same "68ch" was quietly
+       computing to different pixel widths and misaligning the title,
+       image, and body text. */
+    --content-width: 680px;
+  }
+  .story :global(.thumb) {
+    max-width: var(--content-width);
+    margin: 0 auto 22px;
+  }
+  .story-head {
+    max-width: var(--content-width);
+    margin: 0 auto 30px;
+  }
+  .story-head h1 {
+    margin: 0 0 16px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    /* Floor lowered from 32px: a long real headline was wrapping to 5
+       lines at common phone widths (375px, 360px) -- 27px keeps it to
+       4 there. Ceiling trimmed too, per "a bit smaller on both". */
+    font-size: clamp(27px, 4.6vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.008em;
+  }
+
+  .story-body {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.72;
+  }
+  .story-body :global(p) {
+    margin: 0 0 1.3em;
+  }
+  /* Subhead size, a step above body text. House style is bold-line
+     subheads (draft.py's bold_subheads), so these only show up if a
+     heading slips through; 28px read as a second headline. */
+  .story-body :global(h2) {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 540;
+    font-size: 21px;
+    margin: 1.6em 0 0.6em;
+  }
+  .story-body :global(h3) {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 520;
+    font-size: 19px;
+    margin: 1.4em 0 0.5em;
+  }
+  .story-body :global(a) {
+    color: var(--accent);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  .story-body :global(blockquote) {
+    margin: 1.4em 0;
+    padding-left: 20px;
+    border-left: 3px solid var(--brass);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  /* A standings table's 5 columns (rank, team, W-D-L, Match Points, Board
+     Points) don't all fit a phone viewport at full header text -- Board
+     Points (the least essential column; Match Points is the actual
+     standings sort key) is hidden outright under the mobile breakpoint
+     below rather than abbreviating every viewport's headers to fix one
+     viewport's overflow. overflow-x: auto stays as a fallback for
+     whatever doesn't fit even after that (display: block keeps native
+     <table> layout for its children while making the element itself a
+     scrollable box); the wrapping <p>/<strong> heading stays put, only
+     the table scrolls. */
+  .story-body :global(table) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin: 1.6em 0;
+    border-collapse: collapse;
+    font-size: 15.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .story-body :global(th),
+  .story-body :global(td) {
+    padding: 7px 10px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .story-body :global(th) {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .story-body :global(td:first-child),
+  .story-body :global(th:first-child) {
+    text-align: center;
+  }
+  /* Match Points and Board Points (columns 4 and 5) are numeric -- right
+     aligning the data (rather than the default left) lets digits stack
+     for easy scanning down the column, the normal convention for a
+     numeric table column. The headers stay left-aligned (not right, like
+     their data): "Match Points"/"Board Points" wraps to two lines on
+     mobile, and right-aligning a wrapped header leaves a ragged left
+     edge since "Match" and "Points" are different widths -- left keeps
+     both lines flush on the side a reader's eye actually lands on. */
+  .story-body :global(td:nth-child(4)),
+  .story-body :global(td:nth-child(5)) {
+    text-align: right;
+  }
+  @media (max-width: 480px) {
+    .story-body :global(table) {
+      font-size: 14px;
+    }
+    .story-body :global(th),
+    .story-body :global(td) {
+      padding: 6px 7px;
+    }
+    /* Board Points is the 5th column -- dropped on mobile since Match
+       Points is the actual standings sort key and the table doesn't need
+       both to stay useful at this width. */
+    .story-body :global(th:nth-child(5)),
+    .story-body :global(td:nth-child(5)) {
+      display: none;
+    }
+    /* "Match Points" as one nowrap line is still wider than a phone
+       viewport leaves once Team and W-D-L take their share -- letting
+       just the header wrap to two lines (data cells stay nowrap; a
+       number should never wrap) closes that gap without falling back to
+       the horizontal scroll for every reader. */
+    .story-body :global(th) {
+      white-space: normal;
+      line-height: 1.25;
+    }
+  }
+  .story-body :global(strong:has(+ table)),
+  .story-body :global(p:has(+ table) strong:only-child) {
+    display: inline-block;
+    margin-top: 0.6em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .source-callout {
+    max-width: var(--content-width);
+    /* No rule lines around this block (user's call, 2026-10-22); the
+       padding alone separates it from the body and from .similar. */
+    margin: 32px auto 0;
+    padding: 20px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    /* The source link now shows a short name (see below), but this stays
+       as a defensive default -- the correction-link href/topic query
+       string and other unbroken runs of text in this block could still
+       overflow the content column on narrow viewports without it. */
+    overflow-wrap: anywhere;
+  }
+  .source-callout a {
+    color: var(--nordic);
+  }
+  .correction-note {
+    display: inline-block;
+    /* Matches .byline-credit's margin-bottom below -- these two, plus the
+       plain source-link line between them, read as three stacked rows of
+       one meta block, and the gaps between all three should be equal. */
+    margin-top: 8px;
+  }
+  .source-callout a.correction-link {
+    color: var(--ink-soft);
+    text-decoration: underline;
+  }
+  /* The pictured person's name, under the lead photo. */
+  .photo-caption {
+    /* Same column as the photo; pulled up into the photo's own bottom
+       margin so it reads as belonging to the photo, not the headline. */
+    max-width: var(--content-width);
+    margin: -16px auto 22px;
+    font: 12px/1.4 'IBM Plex Mono', monospace;
+    color: var(--ink-soft);
+  }
+  .byline-credit {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .similar {
+    max-width: var(--content-width);
+    /* No margin-top: .source-callout's padding-bottom already spaces it. */
+    margin: 0 auto;
+    padding-top: 28px;
+  }
+  /* A real <h2> rather than a styled span: it's the heading for the
+     section, and without it the h3 cards below sat directly under the
+     article's h1 with nothing at level 2 in between -- a jump screen-reader
+     users hit when navigating by heading. Styled to look exactly as it did
+     as a span, so nothing moves visually; the explicit margin overrides the
+     browser's default h2 spacing. */
+  .similar-label {
+    display: block;
+    margin: 0 0 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .similar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .similar-card h3 {
+    margin: 12px 0 8px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.25;
+  }
+  .similar-card h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .similar-card h3 a:hover {
+    color: var(--accent);
+  }
+  .similar-card .byline {
+    font-size: 11px;
+  }
+
+  @media (max-width: 640px) {
+    .similar-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
