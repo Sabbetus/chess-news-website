@@ -6,14 +6,13 @@ sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r3"
 lens: "results"
 continent: "asia"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Two Kazakh grandmasters, 16-year-old Edgar Mamedov and Denis Makhnev, share the lead at the KazChess Masters in Almaty on 2½/3. Dubov, Vokhidov and Lazavik trail by half a point."
 metaDescription: "Kazakhstan's Edgar Mamedov and Denis Makhnev lead the KazChess Masters in Almaty on 2½/3, with Dubov, Vokhidov and Lazavik half a point back."
 image:
-  src: "./_images/P_ter_L_k___li__und_Daniil_Dubov__re__bei_der_Blitzschach-WM_2015_in_Berlin.webp"
-  credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AP%C3%A9ter_L%C3%A9k%C3%B3_%28li.%29_und_Daniil_Dubov_%28re.%29_bei_der_Blitzschach-WM_2015_in_Berlin.jpg"
-  caption: "Daniil Dubov"
+  src: "./_images/Chess_clock.webp"
+  credit: "Thomas Depenbusch, CC BY 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AChess_clock.jpg"
 gamePgn: "mamedov-16-and-makhnev-lead-the-kazchess-masters-on-2-3.pgn"
 ---
 
@@ -23,7 +22,7 @@ Three of the five foreign players are half a point back: Daniil Dubov, Shamsiddi
 
 **The field and format**
 
-The tournament is a ten-player round-robin, played from 26 October to 3 November. Five local players, rated 2451 to 2581, face five visiting grandmasters who are all above 2600. Azerbaijan's Mahammad Muradli came in as top seed, and the others from abroad are Dubov (Russia), Vokhidov (Uzbekistan), Hakobyan (Armenia) and Lazavik (Belarus).
+The tournament is a ten-player round-robin, played from 26 October to 3 November. Five local players, rated 2451 to 2581, face five visiting grandmasters who are all above 2600. Azerbaijan's Mahammad Muradli came in as top seed, and the others from abroad are Dubov, Vokhidov (Uzbekistan), Hakobyan (Armenia) and Lazavik (Belarus).
 
 A rating gap like that is one reason the Kazakh start stands out. On paper the home players are underdogs in most pairings, and [a rating gap](/articles/chess-ratings/) of 100 points or more usually means the lower-rated player scores well under half.
 
@@ -31,7 +30,7 @@ A rating gap like that is one reason the Kazakh start stands out. On paper the h
 
 Mamedov is 16 and the lowest-rated grandmaster in the field. He opened with a white win over Sauat Nurgaliyev, then became sole leader in round two by beating Hakobyan with Black in 92 moves.
 
-In round three he drew with Muradli and stayed unbeaten. A long grind against a 2600-plus opponent, followed by a draw with the top seed, is a solid start for the youngest player on the leaderboard (Mark Smirnov, at 14, is younger but is not among the leaders).
+In round three he drew with Muradli and stayed unbeaten. A long grind against a 2600-plus opponent, followed by a draw with the top seed, is a solid start for the youngest of the leaders.
 
 **Makhnev's pattern**
 

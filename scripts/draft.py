@@ -1892,7 +1892,7 @@ def draft_one(
             # whole draft over a lookup that didn't pan out.
             try:
                 embed = find_game_embed(
-                    client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"], body_markdown
+                    client, game_lookup["event"], game_lookup["player1"], game_lookup["player2"], body_for_recheck
                 )
             except Exception as exc:
                 print(f"  Game embed lookup failed for '{item['title']}': {exc}", file=sys.stderr)

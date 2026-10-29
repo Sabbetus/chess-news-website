@@ -85,7 +85,8 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 5.**
+- **Current review-acceptance streak: 6.**
+- 2026-10-29: PR #84 review accepted in full (5 -> 6).
 - 2026-10-28: PR #83 review accepted in full (4 -> 5).
 - 2026-10-27: PR #82 review accepted in full (3 -> 4).
 - 2026-10-26: PR #81 review accepted (2 -> 3, minor correction): user kept
@@ -156,6 +157,21 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-29: PR #84 reset (streak stays at 0). Resets: Chris Ward's
+  Monthly Dragon video column (no games or players named, text all shop
+  links) was drafted with a "Chris Ward Autos in Tangier Road" car-dealer
+  photo (dropped); my 2026-10-28 change crashed every Lichess board lookup
+  (body_markdown passed before it existed); Chess.com's Clutch Chess day-two
+  report scored 40 and was never drafted (written by hand -- Chess.com's
+  "1.5-point lead" was its own slip, the Lichess results give Pragg 11 to
+  8.5). Borderline, fixed: KazChess "Dubov (Russia)" (Russia rule), a 2015
+  crowded Berlin hall photo of Dubov (no recorded date; now neutral). Minor:
+  "youngest on the leaderboard (Smirnov...)". Fixed at the source: +25 for
+  a later round/day of an event named in our last 7 days' openings;
+  ChessBase product columns ("Monthly Dragon", "in our ChessBase shop",
+  "FritzTrainers in the shop") skipped; shop, firm and street file names
+  ("Autos", "Road", "Ltd", geograph) are never person photos; a year in the
+  file name counts when the photo has no recorded date.
 - 2026-10-28: PR #83 reset (streak stays at 0). Resets: ChessBase's and
   Chess.com's Clutch Chess day-one reports were both drafted (merged by hand
   into the ChessBase piece, Chess.com as second source) -- Clutch Chess isn't
@@ -519,8 +535,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-27 (PR #82, see above).
-- Earlier resets: 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-29 (PR #84, see above).
+- Earlier resets: 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
