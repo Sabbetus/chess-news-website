@@ -5,7 +5,7 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-clutch-chess-champions-showdown-day-2"
 lens: "results"
 continent: "north-america"
-selectionScore: 65
+selectionScore: 105
 reviewStatus: "published"
 socialCopy: "Praggnanandhaa was last after day one of Clutch Chess in Saint Louis. Four wins later, he leads on 11 points, 2.5 ahead of Caruana and Sindarov, with wins worth triple on the final day."
 metaDescription: "Praggnanandhaa won four games on day two of the Clutch Chess: Champions Showdown and leads on 11 points, ahead of Caruana and Sindarov on 8.5."

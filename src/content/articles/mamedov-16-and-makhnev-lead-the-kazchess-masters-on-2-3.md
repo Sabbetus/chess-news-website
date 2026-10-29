@@ -5,7 +5,7 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r3"
 lens: "results"
 continent: "asia"
-selectionScore: 86
+selectionScore: 67
 reviewStatus: "published"
 socialCopy: "Two Kazakh grandmasters, 16-year-old Edgar Mamedov and Denis Makhnev, share the lead at the KazChess Masters in Almaty on 2½/3. Dubov, Vokhidov and Lazavik trail by half a point."
 metaDescription: "Kazakhstan's Edgar Mamedov and Denis Makhnev lead the KazChess Masters in Almaty on 2½/3, with Dubov, Vokhidov and Lazavik half a point back."
