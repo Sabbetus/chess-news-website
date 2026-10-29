@@ -1277,6 +1277,14 @@ Youth Worlds" lumped leaders of separate age-group tournaments together.)
 draws = points; an unbeaten player on 6/8 has 4 wins and 4 draws). If the sources disagree, use \
 the count that adds up. (Caught live 2026-10-18 and -19: ChessBase twice gave So one win too \
 many.)
+- Order of events. List every claim about which of two events came first ("before", \
+"after", "then", "earlier", "since", "followed", "first ... later") and find the source \
+sentence or dates that give that order. Never infer it from the order the source mentions \
+them in: a source often covers the newest result first and an earlier one after. An order \
+the source doesn't give is removed (say both results without ordering them), and one it \
+contradicts is corrected. (Caught live 2026-10-28: "Before Serbia, he scored 4½/7 ... at the \
+European Club Cup" -- the source called the Club Cup his "second consecutive strong \
+showing", after Serbia; a reader wrote in.)
 - Who each description belongs to. List every description the article attaches to a \
 person -- a title or role ("defending champion", "world champion", "reigning", "leader", \
 "top seed", "his second"), an age, a nationality, a rating, a ranking -- and find the source \

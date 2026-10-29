@@ -1,6 +1,7 @@
 ---
 title: "Shogdzhiev, 11, Beats Three 2600s in Serbia for a Second GM Norm"
 publishDate: "2026-10-28"
+updatedDate: "2026-10-29"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/roman-shogdzhiev-second-gm-norm"
 lens: "results"
@@ -40,7 +41,7 @@ Leonard Barden noted in The Guardian that the coaching team has organised period
 
 **What is left**
 
-Before Serbia, he scored 4½/7 on board four for Elektroprivreda at the European Club Cup. His live rating is now 2484.1, and he is ranked 19th among players aged 16 or younger.
+After Serbia, he followed up with 4½/7 on board four for Elektroprivreda at the European Club Cup in Budva. That left his live rating at 2484.1, and he is ranked 19th among players aged 16 or younger.
 
 He still needs a third norm and has to reach 2500. That means roughly 16 more rating points on the live list, though a rating is only official once published, so the exact threshold on the next list matters.
 

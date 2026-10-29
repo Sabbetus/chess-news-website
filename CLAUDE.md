@@ -174,6 +174,12 @@ Update after each batch review, once the user has responded.
   one pair, the lookup takes the one with the most of the article's quoted
   moves; the last game (the decider) only when the moves don't tell them
   apart.
+  2026-10-29, after publishing (reader's comment): the Shogdzhiev piece said
+  "Before Serbia, he scored 4½/7 ... at the European Club Cup" -- the Club
+  Cup came after (Serbian round 4 was 26 September; ChessBase: "a second
+  consecutive strong showing"). The drafter inferred the order from the
+  source's sentence order. Fixed live; the fact check now lists every
+  before/after claim and needs the source or dates to give that order.
 - 2026-10-27: PR #82 reset (streak 2 -> 0). Resets: KCF Academy's own
   season recap and 2027 sign-up pitch ("by Kasparov Chess Foundation") was
   drafted (dropped); the Hamburg amateur-team piece showed the SK Gaming
