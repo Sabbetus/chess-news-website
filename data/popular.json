@@ -1,15 +1,5 @@
 [
   {
-    "slug": "capablanca-skips-alekhine-and-still-takes-board-one-gold-in-1939",
-    "title": "Capablanca Skips Alekhine and Still Takes Board-One Gold in 1939",
-    "views": 13
-  },
-  {
-    "slug": "clutch-chess-pays-125-000-to-win-with-points-rising-daily",
-    "title": "Clutch Chess Pays $125,000 to Win, With Points Rising Daily",
-    "views": 12
-  },
-  {
     "slug": "shogdzhiev-11-beats-three-2600s-in-serbia-for-a-second-gm-norm",
     "title": "Shogdzhiev, 11, Beats Three 2600s in Serbia for a Second GM Norm",
     "views": 8
@@ -18,5 +8,15 @@
     "slug": "sindarov-erases-a-2-point-gap-to-win-clutch-chess",
     "title": "Sindarov Erases a 2\u00bd-Point Gap to Win Clutch Chess",
     "views": 8
+  },
+  {
+    "slug": "clutch-chess-pays-125-000-to-win-with-points-rising-daily",
+    "title": "Clutch Chess Pays $125,000 to Win, With Points Rising Daily",
+    "views": 4
+  },
+  {
+    "slug": "mamedov-16-and-makhnev-lead-the-kazchess-masters-on-2-3",
+    "title": "Mamedov, 16, and Makhnev Lead the KazChess Masters on 2\u00bd/3",
+    "views": 4
   }
 ]
