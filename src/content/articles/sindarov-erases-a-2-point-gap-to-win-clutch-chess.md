@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/clutch-chess-showdown-2026-3"
 lens: "results"
 continent: "north-america"
 selectionScore: 127
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Javokhir Sindarov started the last day 2½ points behind Pragg, then won Clutch Chess with 20½. A King's Indian win over Nakamura was the key. Gukesh awaits in Geneva on 24 November."
 metaDescription: "Javokhir Sindarov overturned a 2½-point deficit to win the Clutch Chess: Champions Showdown in Saint Louis, weeks before his match with Gukesh."
 additionalSources:
@@ -16,8 +16,9 @@ image:
   src: "./_images/Javoxir_Sindarov.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavoxir_Sindarov.jpg"
+  caption: "Javokhir Sindarov"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/2026-clutch-chess-champions-showdown/round-9/GhpkcmaD/d6JIDm8Q"
+  url: "https://lichess.org/embed/broadcast/2026-clutch-chess-champions-showdown/round-9/GhpkcmaD/uWajdLOz"
 ---
 
 Javokhir Sindarov [won the second edition of the Clutch Chess: Champions Showdown](https://en.chessbase.com/post/clutch-chess-showdown-2026-3) in Saint Louis, finishing the three-day rapid event on 20½ points. He began Thursday's final session tied for second with Fabiano Caruana, 2½ points behind leader Praggnanandhaa Rameshbabu.
@@ -48,7 +49,7 @@ He told Maurice Ashley it was "one of the best King's Indian games I've ever pla
 
 Meanwhile Pragg ground against Caruana, playing a pawn up for long stretches, but Caruana defended accurately and drew after 100 moves. That left Sindarov half a point clear going into the last round.
 
-Pragg needed a win with Black against Caruana, or else a Nakamura win over Sindarov. He built a Stonewall structure against Caruana's Slav and looked for complications. In the late middlegame he made a costly error that let Caruana trap his queen, and the American won.
+Pragg needed a win with Black against Caruana, or else a Nakamura win over Sindarov. From a Slav Defence he set up a Stonewall structure and looked for complications. In the late middlegame he made a costly error that let Caruana trap his queen, and the American won.
 
 Sindarov drew his last game against Nakamura and took the title by 1½ points. Pragg's [rise from last to first on day two](/articles/praggnanandhaa-goes-from-last-to-first-on-day-two-of-clutch-chess/) therefore ended in second place.
 

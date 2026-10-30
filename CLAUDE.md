@@ -85,7 +85,10 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 6.**
+- **Current review-acceptance streak: 7.**
+- 2026-10-30: PR #85 review accepted (6 -> 7). User ruled my two borderline
+  flags: the Slav attribution minor, the Carlsen "Defends Both" headline the
+  more serious of the two (left to the user as borderline, so not counted).
 - 2026-10-29: PR #84 review accepted in full (5 -> 6).
 - 2026-10-28: PR #83 review accepted in full (4 -> 5).
 - 2026-10-27: PR #82 review accepted in full (3 -> 4).
@@ -157,6 +160,16 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-10-30: PR #85 reset (streak stays at 0). Reset: the Clutch final's
+  board was the game-18 Sindarov-Nakamura draw, not the game-17 King's
+  Indian win the piece links -- no moves quoted, so the pair lookup took the
+  last game. Borderline (user: closer to a reset than the Slav one): the
+  Istanbul headline "Carlsen Defends Both" when the sources only call him
+  the defending champion. Minor: Pragg's Slav given to Caruana, no caption on
+  the "Javoxir" photo, a pointed "worth keeping in mind" aside on Turlov and
+  the sponsor, "a recent run of events at this time of year". Fixed at the
+  source: the pair lookup takes the last decisive game; the fact check
+  needs a source for any claim that a title holder will play.
 - 2026-10-29: PR #84 reset (streak stays at 0). Resets: Chris Ward's
   Monthly Dragon video column (no games or players named, text all shop
   links) was drafted with a "Chris Ward Autos in Tangier Road" car-dealer

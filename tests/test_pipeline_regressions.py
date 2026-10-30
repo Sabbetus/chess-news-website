@@ -708,6 +708,26 @@ def test_player_page_photo_is_used_for_a_named_player():
     assert images.player_page_photo("Daniil Dubov", {photo["sourceUrl"]}) is None
 
 
+def test_pair_lookup_prefers_the_last_decisive_game(monkeypatch):
+    # 2026-10-30: the Clutch final's King's Indian win (game 17) lost to the
+    # game-18 draw between the same pair.
+    import lichess_game
+
+    pgn = (
+        '[White "Nakamura, Hikaru"]\n[Black "Sindarov, Javokhir"]\n[Result "0-1"]\n[GameURL "u/win"]\n\n1. d4 Nf6 0-1\n\n\n'
+        '[White "Sindarov, Javokhir"]\n[Black "Nakamura, Hikaru"]\n[Result "1/2-1/2"]\n[GameURL "u/draw"]\n\n1. e4 e5 1/2-1/2'
+    )
+
+    class R:
+        text = pgn
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(lichess_game.requests, "get", lambda *a, **k: R())
+    monkeypatch.setattr(lichess_game, "_article_body", "")
+    assert lichess_game.find_game_in_round("r", "Hikaru Nakamura", "Javokhir Sindarov") == "u/win"
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

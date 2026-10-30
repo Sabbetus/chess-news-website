@@ -1,14 +1,14 @@
 ---
-title: "Istanbul Gets the 2026 World Rapid and Blitz, Carlsen Defends Both"
+title: "Istanbul Gets the 2026 World Rapid and Blitz, Carlsen Holds Both Titles"
 publishDate: "2026-10-30"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/istanbul-to-host-2026-world-rapid-blitz-championships"
 lens: "results"
 continent: "europe"
 selectionScore: 115
-reviewStatus: "draft"
-socialCopy: "Istanbul will host the 2026 World Rapid and Blitz Championships, Dec. 26-30. Carlsen defends both titles, and Turkey's young stars get a home event. Venue and rules are still to come."
-metaDescription: "FIDE confirms Istanbul as host of the 2026 World Rapid and Blitz Championships, Dec. 26-30, with Magnus Carlsen defending both of his titles."
+reviewStatus: "published"
+socialCopy: "Istanbul will host the 2026 World Rapid and Blitz Championships, Dec. 26-30. Carlsen holds both titles, and Turkey's young stars get a home event. Venue and rules are still to come."
+metaDescription: "FIDE confirms Istanbul as host of the 2026 World Rapid and Blitz Championships, Dec. 26-30, with Magnus Carlsen the holder of both Open titles."
 additionalSources:
   - sourceName: "FIDE"
     sourceUrl: "https://www.fide.com/istanbul-to-host-fide-world-rapid-and-blitz-championships-2026/"
@@ -39,7 +39,7 @@ No regulations are out yet, but last year's pattern is a fair guide. The rapid w
 
 Freedom Holding Corp., FIDE's strategic partner since 2023, is the title sponsor. FIDE says its 2026 agreement also covers the Candidates and the World Championship match, plus training centres, school programmes and talent scouting.
 
-The financial group is led by FIDE President Timur Turlov, who was elected to head the federation in September. That makes the sponsor and the federation's president tightly linked, a connection worth keeping in mind whenever the two appear in the same announcement.
+The financial group is led by FIDE President Timur Turlov, who was elected to head the federation in September. That makes the sponsor and the federation's president tightly linked.
 
 Turlov said Türkiye "has repeatedly demonstrated its ability to organise world-class chess events." He thanked the Turkish Chess Federation and its partners, and spoke of celebrating the end of the chess year in "one of the world's most dynamic and welcoming cities."
 
@@ -47,8 +47,7 @@ Turlov said Türkiye "has repeatedly demonstrated its ability to organise world-
 
 The city has done this before at the top level. It staged the 2012 Chess Olympiad, 14 years ago, which FIDE counts as the 40th.
 
-Türkiye also hosted the World U9-U17 Rapid & Blitz Championships in Antalya in December 2025. That is a recent run of large events at exactly this time of year.
-
+Türkiye also hosted the World U9-U17 Rapid & Blitz Championships in Antalya in December 2025.
 FIDE also points to Istanbul's role as a transport hub linking Europe, Asia, Africa and the Americas. For a field of hundreds of players arriving in the last week of December, easy flights are a real practical argument.
 
 There is a home-interest angle too. GMs Yagiz Kaan Erdogmus and Ediz Gurel, two of the country's leading young players, get a chance to face the world's best in front of a home crowd.

@@ -1277,6 +1277,12 @@ Youth Worlds" lumped leaders of separate age-group tournaments together.)
 draws = points; an unbeaten player on 6/8 has 4 wins and 4 draws). If the sources disagree, use \
 the count that adds up. (Caught live 2026-10-18 and -19: ChessBase twice gave So one win too \
 many.)
+- Defending is not playing. "The defending champion", "holds the title" and "defends" in \
+the sense of holding a title don't mean the player has entered the next edition. A headline, \
+social copy or body that says or implies someone WILL play ("X defends both", "X returns", \
+"X headlines") needs a source sentence confirming the entry; without one, say they hold the \
+title. (Caught live 2026-10-30: "Istanbul Gets the 2026 World Rapid and Blitz, Carlsen \
+Defends Both" when the sources only called him the defending champion.)
 - Order of events. List every claim about which of two events came first ("before", \
 "after", "then", "earlier", "since", "followed", "first ... later") and find the source \
 sentence or dates that give that order. Never infer it from the order the source mentions \

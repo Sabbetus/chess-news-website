@@ -263,12 +263,17 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
         # tiebreak or match round; the last one is the decider -- caught
         # live 2026-10-13: Shenzhen's three-game tiebreak round was skipped
         # and the piece got a drawn rapid game instead of the Armageddon.
+        # The last DECISIVE one (caught 2026-10-30: the Clutch final's
+        # King's Indian win was game 17, and game 18 between the same pair
+        # was a draw, so "the last game" embedded the draw).
+        decisive = [m for m in matches if re.search(r'\[Result "(1-0|0-1)"\]', m[1])]
+        chosen = (decisive or matches)[-1]
         print(
             f"    lichess lookup: {len(matches)} games between the same pair in round {round_id!r}, "
-            f"taking the last (the decider)",
+            f"taking the last {'decisive one' if decisive else 'one'}",
             file=sys.stderr,
         )
-        return matches[-1][0]
+        return chosen[0]
     print(
         f"    lichess lookup: {len(matches)} game(s) matched surnames "
         f"{surname1!r}/{surname2!r} out of {games_seen} in round {round_id!r} "
