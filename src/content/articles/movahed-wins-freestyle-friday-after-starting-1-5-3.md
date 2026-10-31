@@ -9,6 +9,7 @@ selectionScore: 65
 reviewStatus: "published"
 socialCopy: "GM Sina Movahed won Freestyle Friday on October 30 for the second time in three weeks, winning eight games in a row after a 1.5/3 start and beating leader Nodirbek Yakubboev in round 10."
 metaDescription: "GM Sina Movahed won Freestyle Friday on October 30 after a 1.5/3 start, beating leader Nodirbek Yakubboev in round 10 during an eight-game winning streak."
+gamePgn: "movahed-wins-freestyle-friday-after-starting-1-5-3.pgn"
 image:
   src: "./_images/Nodirbek_Yakubboev_46th_fide_chess_olympiad.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"

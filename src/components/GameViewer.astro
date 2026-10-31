@@ -2,13 +2,16 @@
 // Our own game viewer, styled after Lichess's board (brown squares,
 // cburnett pieces) so it sits comfortably next to the Lichess broadcast
 // embeds used elsewhere. Every position is computed at build time with
-// chess.js; the browser only swaps pieces between precomputed positions.
+// chessops; the browser only swaps pieces between precomputed positions.
 //
 // In-body links like [23.h4!](#ply-45) jump the board to that position
 // (ply = half-moves played: 1.e4 is ply 1, 1...e5 is ply 2). See
 // plyFor() below, which the article page uses to turn quoted moves into
 // those links.
-import { Chess } from 'chess.js';
+import { parsePgn, startingPosition } from 'chessops/pgn';
+import { parseSan, makeSan } from 'chessops/san';
+import { makeFen } from 'chessops/fen';
+import { makeSquare } from 'chessops/util';
 
 interface Props {
   pgn: string;
@@ -16,23 +19,32 @@ interface Props {
 }
 const { pgn, caption } = Astro.props;
 
-const chess = new Chess();
-// A game the library can't replay (a Chess960 start, a corrupt file)
-// renders no board rather than failing the whole site build.
+// chessops (Lichess's library) rather than chess.js: it plays Chess960
+// from the game's own FEN, castling included (user's call, 2026-10-31,
+// after a Freestyle Friday game broke the build). A game it can't replay
+// (a corrupt file) renders no board rather than failing the site build.
 let valid = true;
+let headers: Record<string, string> = {};
+const positions: { fen: string; from?: string; to?: string; san?: string }[] = [];
 try {
-  chess.loadPgn(pgn);
+  const game = parsePgn(pgn)[0];
+  headers = Object.fromEntries(game.headers);
+  const pos = startingPosition(game.headers).unwrap();
+  positions.push({ fen: makeFen(pos.toSetup()) });
+  for (const node of game.moves.mainline()) {
+    const move = parseSan(pos, node.san);
+    if (!move || !('from' in move)) throw new Error(`Invalid move in PGN: ${node.san}`);
+    const san = makeSan(pos, move);
+    // A castling move is stored as king takes rook; show the king's own
+    // destination square instead.
+    const castle = pos.board.get(move.from)?.role === 'king' && pos.board.get(move.to)?.role === 'rook'
+      && pos.board.get(move.to)?.color === pos.turn;
+    const to = castle ? makeSquare(((move.to & 7) > (move.from & 7) ? 6 : 2) + (move.from & ~7)) : makeSquare(move.to);
+    pos.play(move);
+    positions.push({ fen: makeFen(pos.toSetup()), from: makeSquare(move.from), to, san });
+  }
 } catch {
   valid = false;
-}
-const headers = chess.getHeaders();
-const history = chess.history({ verbose: true });
-
-const replay = new Chess();
-const positions: { fen: string; from?: string; to?: string; san?: string }[] = [{ fen: replay.fen() }];
-for (const move of history) {
-  replay.move(move.san);
-  positions.push({ fen: replay.fen(), from: move.from, to: move.to, san: move.san });
 }
 
 const name = (raw = '') => {
