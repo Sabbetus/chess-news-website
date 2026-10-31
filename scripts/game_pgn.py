@@ -81,23 +81,29 @@ def _plays(game: str, name: str) -> bool:
     return surname in _surnames(head.get("White", "")) | _surnames(head.get("Black", ""))
 
 
+def _first_mention(tag: str, text: str) -> int | None:
+    """Where the article first names this player ("Fischer, Robert James" ->
+    "fischer"; "Praggnanandhaa R" -> "praggnanandhaa"), or None."""
+    surname = tag.split(",")[0] if "," in tag else tag
+    spots = [m.start() for w in re.findall(r"[\w'-]{3,}", surname.lower())
+             for m in [re.search(r"\b" + re.escape(w) + r"\b", text)] if m]
+    return min(spots) if spots else None
+
+
 def pick_game(games: list[str], body: str, player1: str = "", player2: str = "") -> str | None:
     if player1 and player2:
         named = [g for g in games if _plays(g, player1) and _plays(g, player2)]
         if len(named) == 1:
             return named[0]
-    if len(games) == 1:
-        return games[0]
     text = body.lower()
     in_body = []
     for g in games:
         head = headers(g)
-        white = (head.get("White", "").split(",")[0] or "").strip().lower()
-        black = (head.get("Black", "").split(",")[0] or "").strip().lower()
-        if white and black and white in text and black in text:
+        white, black = _first_mention(head.get("White", ""), text), _first_mention(head.get("Black", ""), text)
+        if white is not None and black is not None:
             # Where the pair is first discussed: the later of the two names'
             # first mentions.
-            in_body.append((max(text.index(white), text.index(black)), g))
+            in_body.append((max(white, black), g))
     if not in_body:
         return None
     # A round report names many games; the lead game is the one whose
@@ -138,9 +144,14 @@ def pgn_from_source_page(source_url: str) -> str | None:
     page = _get(source_url) if source_url else None
     if not page:
         return None
-    m = PGN_URL_RE.search(page)
-    if m:
-        return _get(urllib.parse.urljoin(source_url, m.group(1)))
+    # Every game file on the page, not just the first (caught 2026-10-31:
+    # the Myagmarsuren obituary got the 1960 game listed first, never seeing
+    # the Fischer and Larsen games the piece is about).
+    urls = list(dict.fromkeys(PGN_URL_RE.findall(page)))
+    if urls:
+        files = [_get(urllib.parse.urljoin(source_url, u)) for u in urls]
+        joined = "\n\n".join(f.strip() for f in files if f)
+        return joined or None
     if "chess.com" in urllib.parse.urlparse(source_url).netloc:
         return _chesscom_diagram_pgns(page)
     return None
@@ -157,7 +168,11 @@ def find_game_pgn(source_url: str | list[str], embed_url: str, body: str, player
     for raw in candidates:
         if not raw:
             continue
-        game = pick_game(split_games(raw), body, player1, player2)
+        # Chess960 games start from a shuffled position our board can't
+        # replay (caught 2026-10-31: a Freestyle Friday game broke the
+        # site build on "O-O").
+        games = [g for g in split_games(raw) if not re.search(r'\[(Variant "[^"]*960|SetUp "1")', g, re.I)]
+        game = pick_game(games, body, player1, player2)
         if game:
             return clean_game(game)
     return None

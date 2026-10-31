@@ -85,7 +85,9 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 7.**
+- **Current review-acceptance streak: 8.**
+- 2026-10-31: PR #86 review accepted (7 -> 8). User ruled the Fischer
+  photo fine (he's in the headline) and the unrelated board minor.
 - 2026-10-30: PR #85 review accepted (6 -> 7). User ruled my two borderline
   flags: the Slav attribution minor, the Carlsen "Defends Both" headline the
   more serious of the two (left to the user as borderline, so not counted).
@@ -159,7 +161,24 @@ Update after each batch review, once the user has responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-10-31: PR #86 clean (streak 0 -> 1, user's call). Minor, fixed: the
+  Myagmarsuren obituary's board was Papapostolou-Myagmarsuren 1960, a game
+  the piece never mentions (now Fischer-Myagmarsuren, Sousse 1967) -- only
+  the first game file on a ChessBase page was read, and a lone game was used
+  without checking its players are named; Freestyle Friday "the source's
+  Meat Loaf reference" line and a missing Carlsen line. The Fischer photo
+  on "... Who Met Fischer, Dies at 88" stood (user: he's in the headline).
+  Fixed at the source: every game file on a ChessBase page is read; a game
+  needs both players named in the text, even when it's the only one; the
+  next-person photo fallback tries people named in the headline first.
+  Also caught while fixing: the Freestyle Friday draft's Chess960 board
+  broke the site build ("Invalid move in PGN: O-O" -- the cleaner dropped
+  the start FEN, and our board library can't play 960 anyway). Chess960
+  games now get no board, and the board renders nothing on an unreadable
+  game instead of failing the build.
+  Noted: Commons has a small (351px) photo of Myagmarsuren under
+  "Lkhamsuren", missed on spelling and size.
 - 2026-10-30: PR #85 reset (streak stays at 0). Reset: the Clutch final's
   board was the game-18 Sindarov-Nakamura draw, not the game-17 King's
   Indian win the piece links -- no moves quoted, so the pair lookup took the
