@@ -1,5 +1,5 @@
 ---
-title: "Movahed Wins Freestyle Friday After Starting 1.5/3"
+title: "Movahed Beats Leader Yakubboev to Win Freestyle Friday"
 publishDate: "2026-10-31"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/movahed-wins-freestyle-friday-october-30-2026"
