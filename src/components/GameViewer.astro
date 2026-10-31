@@ -17,7 +17,14 @@ interface Props {
 const { pgn, caption } = Astro.props;
 
 const chess = new Chess();
-chess.loadPgn(pgn);
+// A game the library can't replay (a Chess960 start, a corrupt file)
+// renders no board rather than failing the whole site build.
+let valid = true;
+try {
+  chess.loadPgn(pgn);
+} catch {
+  valid = false;
+}
 const headers = chess.getHeaders();
 const history = chess.history({ verbose: true });
 
@@ -51,6 +58,7 @@ const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const data = JSON.stringify(positions);
 ---
 
+{valid && (
 <figure class="gv" id="game-embed" data-positions={data} tabindex="0" aria-label={`Game viewer: ${white} vs ${black}`}>
   {caption && <p class="gv-caption">{caption}</p>}
   <div class="gv-main">
@@ -98,6 +106,7 @@ const data = JSON.stringify(positions);
   </div>
   <figcaption class="gv-credit">Pieces: <a href="https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces" target="_blank" rel="noopener">Cburnett</a>, CC BY-SA 3.0, via Wikimedia Commons</figcaption>
 </figure>
+)}
 
 <script>
   const PIECES: Record<string, string> = {

@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/lhamsuren-myagmarsuren-1938-2026"
 lens: "people"
 continent: "asia"
 selectionScore: 52
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Lhamsuren Myagmarsuren, four-time Mongolian champion, Olympiad gold medallist and the chief geologist of his country, has died at 88. He is best remembered for his 1967 game against Fischer."
 metaDescription: "Lhamsuren Myagmarsuren, four-time Mongolian champion, 1960 Olympiad board gold medallist and International Master, died on 26 October at 88."
 image:
@@ -37,7 +37,7 @@ He rarely played individual international events. That makes his 1967 appearance
 
 **The Fischer game**
 
-At Sousse, Fischer beat him in a brilliant game that is still frequently cited. ChessBase says Myagmarsuren often had to acknowledge the superiority of the professionals there, and this was the best-known example.
+At Sousse, Fischer [beat him in a brilliant game](#game-embed) that is still frequently cited. ChessBase says Myagmarsuren often had to acknowledge the superiority of the professionals there, and this was the best-known example.
 
 Fischer, angered by organisational shortcomings, withdrew from the tournament early. He needed a third attempt, in 1970-72, to become world champion.
 

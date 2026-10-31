@@ -966,7 +966,11 @@ def pick_image_for_item(
     # captions the photo with that name (user's call, 2026-10-24: Bodhana's
     # IM record should show Judit Polgar, not a generic board).
     if prefer_neutral:
-        for subject in (image_subjects or [])[1:]:
+        # Someone the headline names comes first (user's call, 2026-10-31:
+        # Fischer's photo on "... Who Met Fischer, Dies at 88" is right).
+        title_words = set(re.findall(r"\w+", drafted_title.lower()))
+        rest = sorted((image_subjects or [])[1:], key=lambda s: not (set(re.findall(r"\w+", s.lower())) & title_words))
+        for subject in rest:
             for query, strict, prefer_relevance, require_known_date in build_query_cascade(
                 item, drafted_title, [subject], True
             ):

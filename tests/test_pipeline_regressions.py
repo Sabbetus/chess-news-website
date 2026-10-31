@@ -728,6 +728,26 @@ def test_pair_lookup_prefers_the_last_decisive_game(monkeypatch):
     assert lichess_game.find_game_in_round("r", "Hikaru Nakamura", "Javokhir Sindarov") == "u/win"
 
 
+def test_single_game_needs_its_players_named():
+    # 2026-10-31: the only game read (the page's first file) was used though
+    # the article never names Papapostolou.
+    import game_pgn
+    game = '[White "Papapostolou, Christos"]\n[Black "Myagmarsuren, Lhamsuren"]\n\n1. e4 c5 0-1'
+    assert game_pgn.pick_game([game], "Fischer beat Myagmarsuren at Sousse.") is None
+    fischer = game.replace("Papapostolou, Christos", "Fischer, Robert James")
+    assert game_pgn.pick_game([game, fischer], "Fischer beat Myagmarsuren at Sousse.") == fischer
+    pragg = '[White "Praggnanandhaa R"]\n[Black "Sindarov, Javokhir"]\n\n1. e4 0-1'
+    assert game_pgn.pick_game([pragg], "Sindarov beat Praggnanandhaa.") == pragg
+
+
+def test_chess960_games_get_no_board(monkeypatch):
+    # 2026-10-31: a Freestyle Friday game broke the site build on "O-O".
+    import game_pgn
+    g960 = '[White "Movahed, Sina"]\n[Black "Yakubboev, Nodirbek"]\n[Variant "Chess960"]\n[SetUp "1"]\n\n1. d4 b5 4. O-O 1-0'
+    monkeypatch.setattr(game_pgn, "pgn_from_source_page", lambda url: g960)
+    assert game_pgn.find_game_pgn("u", "", "Movahed beat Yakubboev.") is None
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"
