@@ -23,7 +23,7 @@ import requests
 
 USER_AGENT = "Chess-Herald-Pipeline/1.0 (https://chessherald.com)"
 TIMEOUT = 30
-KEEP_HEADERS = ("Event", "Site", "Date", "Round", "White", "Black", "Result")
+KEEP_HEADERS = ("Event", "Site", "Date", "Round", "White", "Black", "Result", "Variant", "SetUp", "FEN")
 PGN_URL_RE = re.compile(r'data-url="([^"]+\.pgn)"', re.IGNORECASE)
 CHESSCOM_DIAGRAM_RE = re.compile(r"diagram_\d+_(\d+)")
 EMBED_RE = re.compile(r"lichess\.org/embed/broadcast/[^/]+/[^/]+/(\w{8})/(\w{8})")
@@ -168,11 +168,7 @@ def find_game_pgn(source_url: str | list[str], embed_url: str, body: str, player
     for raw in candidates:
         if not raw:
             continue
-        # Chess960 games start from a shuffled position our board can't
-        # replay (caught 2026-10-31: a Freestyle Friday game broke the
-        # site build on "O-O").
-        games = [g for g in split_games(raw) if not re.search(r'\[(Variant "[^"]*960|SetUp "1")', g, re.I)]
-        game = pick_game(games, body, player1, player2)
+        game = pick_game(split_games(raw), body, player1, player2)
         if game:
             return clean_game(game)
     return None

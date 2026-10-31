@@ -740,12 +740,14 @@ def test_single_game_needs_its_players_named():
     assert game_pgn.pick_game([pragg], "Sindarov beat Praggnanandhaa.") == pragg
 
 
-def test_chess960_games_get_no_board(monkeypatch):
-    # 2026-10-31: a Freestyle Friday game broke the site build on "O-O".
+def test_chess960_games_keep_their_start_position():
+    # 2026-10-31: the cleaner dropped a Freestyle Friday game's FEN, and the
+    # board couldn't replay "O-O". The start position now stays with the game.
     import game_pgn
-    g960 = '[White "Movahed, Sina"]\n[Black "Yakubboev, Nodirbek"]\n[Variant "Chess960"]\n[SetUp "1"]\n\n1. d4 b5 4. O-O 1-0'
-    monkeypatch.setattr(game_pgn, "pgn_from_source_page", lambda url: g960)
-    assert game_pgn.find_game_pgn("u", "", "Movahed beat Yakubboev.") is None
+    g960 = ('[White "Movahed, Sina"]\n[Black "Yakubboev, Nodirbek"]\n[Variant "Chess960"]\n[SetUp "1"]\n'
+            '[FEN "brqnnkrb/pppppppp/8/8/8/8/PPPPPPPP/BRQNNKRB w GBgb - 0 1"]\n\n1. d4 b5 1-0')
+    cleaned = game_pgn.clean_game(g960)
+    assert '[Variant "Chess960"]' in cleaned and '[FEN "brqnnkrb/' in cleaned
 
 
 def test_titles_never_use_semicolons():

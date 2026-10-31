@@ -161,8 +161,9 @@ Update after each batch review, once the user has responded.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
-- 2026-10-31: PR #86 clean (streak 0 -> 1, user's call). Minor, fixed: the
+- **Current streak: 0 consecutive clean batches.**
+- 2026-10-31: PR #86 reset (user's call: the Chess960 board that broke the
+  site build is a reset; first logged as clean, 0 -> 1 -> 0). Minor, fixed: the
   Myagmarsuren obituary's board was Papapostolou-Myagmarsuren 1960, a game
   the piece never mentions (now Fischer-Myagmarsuren, Sousse 1967) -- only
   the first game file on a ChessBase page was read, and a lone game was used
@@ -175,8 +176,11 @@ Update after each batch review, once the user has responded.
   Also caught while fixing: the Freestyle Friday draft's Chess960 board
   broke the site build ("Invalid move in PGN: O-O" -- the cleaner dropped
   the start FEN, and our board library can't play 960 anyway). Chess960
-  games now get no board, and the board renders nothing on an unreadable
-  game instead of failing the build.
+  games got no board, and the board renders nothing on an unreadable
+  game instead of failing the build. Then (user's call) Chess960 boards
+  work: the cleaner keeps Variant/SetUp/FEN and the board replays with
+  chessops (Lichess's library) instead of chess.js; the Movahed-Yakubboev
+  960 game is back on the Freestyle Friday piece.
   Noted: Commons has a small (351px) photo of Myagmarsuren under
   "Lkhamsuren", missed on spelling and size.
 - 2026-10-30: PR #85 reset (streak stays at 0). Reset: the Clutch final's
@@ -574,8 +578,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-29 (PR #84, see above).
-- Earlier resets: 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-10-31 (PR #86, see above).
+- Earlier resets: 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
