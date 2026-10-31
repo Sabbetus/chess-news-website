@@ -966,6 +966,48 @@ def bold_subheads(body: str) -> str:
     return _HEADING_LINE_RE.sub(lambda m: f"**{m.group(1).strip('* ')}**", body)
 
 
+_RETITLE_PROMPT = """You write the headline for a chess news article. The article's photo shows a \
+person the current headline doesn't name, and a reader looking at the photo and the headline \
+together should see why that person is there. Rewrite the headline so it names the person in \
+the photo, built around what the article says about them.
+
+Rules:
+- Use only facts stated in the article body. Never add a claim, a result or a description it \
+doesn't give, and keep every claim with the person it belongs to.
+- Keep the article's main story the headline's main story where you can.
+- 45-70 characters, title case like the current headline, no semicolon, no quotation marks.
+- Plain, everyday words.
+
+Respond with the headline only."""
+
+
+def match_title_to_photo(client, title: str, body: str, person: str) -> str:
+    """When the photo shows someone the headline doesn't name, a headline
+    that does (user's call, 2026-10-31: the Freestyle Friday photo was
+    runner-up Yakubboev under "Movahed Wins Freestyle Friday After Starting
+    1.5/3"). The old headline stays if the reply doesn't name the person,
+    is out of length, or the call fails."""
+    surname = person.split()[-1].lower()
+    if surname in title.lower():
+        return title
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=2048,
+            output_config={"effort": "low"},
+            system=_RETITLE_PROMPT,
+            messages=[{"role": "user", "content": f"PERSON IN THE PHOTO: {person}\n\nCURRENT HEADLINE: {title}\n\nARTICLE BODY:\n{body}"}],
+        )
+        new = "".join(b.text for b in response.content if b.type == "text").strip().strip('"').strip()
+    except Exception as exc:  # noqa: BLE001 -- the old headline is still a headline
+        print(f"  Headline/photo match failed: {exc}", file=sys.stderr)
+        return title
+    if surname not in new.lower() or not (30 <= len(new) <= 80) or "\n" in new:
+        return title
+    print(f"  Headline matched to photo ({person}): {title!r} -> {new!r}", file=sys.stderr)
+    return no_semicolons(new)
+
+
 def no_semicolons(title: str) -> str:
     """A semicolon in a headline reads oddly (user's rule, 2026-10-20); the
     prompts ask for a comma, and this makes sure of it."""
@@ -1838,6 +1880,8 @@ def draft_one(
             caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
             if caption:
                 frontmatter["image"] = {**localized, "caption": caption}
+                new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
+                frontmatter["title"] = parsed["title"] = new_title
     # Every article has a photo: a search hit whose download failed falls
     # back to the committed pool too, not to the site's SVG placeholder.
     if "image" not in frontmatter:

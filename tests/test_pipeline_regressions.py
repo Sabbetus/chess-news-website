@@ -750,6 +750,29 @@ def test_chess960_games_keep_their_start_position():
     assert '[Variant "Chess960"]' in cleaned and '[FEN "brqnnkrb/' in cleaned
 
 
+def test_headline_names_the_person_in_the_photo():
+    # 2026-10-31: runner-up Yakubboev's photo under "Movahed Wins Freestyle
+    # Friday After Starting 1.5/3".
+    class Block:
+        type = "text"
+        def __init__(self, text):
+            self.text = text
+
+    class Client:
+        def __init__(self, reply):
+            self.messages = self
+            self.reply = reply
+        def create(self, **kwargs):
+            return type("R", (), {"content": [Block(self.reply)]})()
+
+    old = "Movahed Wins Freestyle Friday After Starting 1.5/3"
+    new = "Movahed Beats Leader Yakubboev to Win Freestyle Friday"
+    assert draft.match_title_to_photo(Client(new), old, "body", "Nodirbek Yakubboev") == new
+    # Already named, or a reply that doesn't name him: the headline stays.
+    assert draft.match_title_to_photo(Client(new), new, "body", "Nodirbek Yakubboev") == new
+    assert draft.match_title_to_photo(Client("Movahed Wins Again"), old, "body", "Nodirbek Yakubboev") == old
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

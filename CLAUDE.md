@@ -181,6 +181,11 @@ Update after each batch review, once the user has responded.
   work: the cleaner keeps Variant/SetUp/FEN and the board replays with
   chessops (Lichess's library) instead of chess.js; the Movahed-Yakubboev
   960 game is back on the Freestyle Friday piece.
+  Follow-up (user's call): a photo of someone the headline doesn't name
+  needs a headline that does. Freestyle Friday retitled "Movahed Beats
+  Leader Yakubboev to Win Freestyle Friday"; after the photo pick, draft.py
+  asks for a headline naming the photographed person from the body's own
+  facts (kept only if it names them and fits 30-80 characters).
   Noted: Commons has a small (351px) photo of Myagmarsuren under
   "Lkhamsuren", missed on spelling and size.
 - 2026-10-30: PR #85 reset (streak stays at 0). Reset: the Clutch final's
