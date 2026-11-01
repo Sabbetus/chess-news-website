@@ -7,8 +7,8 @@ lens: "results"
 continent: "global"
 selectionScore: 70
 reviewStatus: "published"
-socialCopy: "Sindarov is 72 rating points and 22 places ahead of Gukesh on the November FIDE list. Nihal hits a career-best 19th, and Niemann falls out of the 2700 club."
-metaDescription: "On the November 2026 FIDE list, Sindarov leads champion Gukesh by 72 points and 22 places. Nihal reaches a career-best 19th, and Niemann drops below 2700."
+socialCopy: "Sindarov is 72 rating points and 22 places ahead of Gukesh on the November FIDE list. Nihal hits a career-best joint 18th, and Niemann falls out of the 2700 club."
+metaDescription: "On the November 2026 FIDE list, Sindarov leads champion Gukesh by 72 points and 22 places. Nihal reaches a career-best joint 18th, and Niemann drops below 2700."
 image:
   src: "./_images/Javokhir_Sindarov_chess_player.webp"
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
@@ -30,7 +30,7 @@ Ratings are a snapshot, not a forecast. A 72-point gap predicts a clear edge ove
 
 **Nihal's climb**
 
-The biggest mover near the top was Nihal Sarin. His 2859 performance at the European Club Cup lifted him to a career-best 19th in the world.
+The biggest mover near the top was Nihal Sarin. His 2859 performance at the European Club Cup lifted him to a career-best joint 18th in the world, level with Amin Tabatabaei on 2720.
 
 That came at the European Club Cup, which [Bayegan Pendik won](/articles/bayegan-pendik-win-club-cup-as-giri-crushes-abdusattorov/). The full picture is on our [FIDE Top 100](/rankings/) table.
 
@@ -40,9 +40,7 @@ Hans Niemann was the notable casualty, dropping out of the 2700 club after a dis
 
 **A quiet top of the list**
 
-Despite many top players being in action in October, the upper reaches barely moved. Wei Yi edged above Vincent Keymer into eighth after a strong European Club Cup.
-
-He has since dipped back below the German number one after three draws in the Chinese League. Eighth place is therefore effectively on loan between them, and the next update could easily swap them again.
+Despite many top players being in action in October, the upper reaches barely moved. Wei Yi edged above Vincent Keymer during a strong European Club Cup, then dipped back after three draws in the Chinese League. On the November list the two are level on 2761, sharing eighth.
 
 **Women's list: unchanged top ten, big swings below**
 

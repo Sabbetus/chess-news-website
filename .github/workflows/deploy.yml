@@ -85,6 +85,12 @@ jobs:
         continue-on-error: true
         run: |
           python scripts/fide_ratings.py
+          # FIDE publishes on the 1st; from the 3rd on, an old list is a
+          # visible warning on the run, not a silent success.
+          period=$(python -c "import json;print(json.load(open('data/fide-top100.json'))['period'])")
+          if [ "$(date -u +%d)" -ge 3 ] && [ "$period" != "$(date -u +%Y-%m)" ]; then
+            echo "::warning::The FIDE top 100 is still on $period."
+          fi
           if git diff --quiet -- data/fide-top100.json; then exit 0; fi
           git add data/fide-top100.json
           git commit -m "chore: update FIDE top 100"
