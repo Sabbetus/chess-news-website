@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/november-2026-fide-rating-list"
 lens: "results"
 continent: "global"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Sindarov is 72 rating points and 22 places ahead of Gukesh on the November FIDE list. Nihal hits a career-best 19th, and Niemann falls out of the 2700 club."
 metaDescription: "On the November 2026 FIDE list, Sindarov leads champion Gukesh by 72 points and 22 places. Nihal reaches a career-best 19th, and Niemann drops below 2700."
 image:
@@ -24,13 +24,15 @@ tweetEmbeds:
 
 The November FIDE rating list has [Javokhir Sindarov ahead of Gukesh Dommaraju by 72 points and 22 places](https://www.chess.com/news/view/november-2026-fide-rating-list) as the two head toward the 2026 Salesforce FIDE World Championship. Gukesh arrives as the reigning champion, but the numbers say the challenger comes in as the stronger player on current form.
 
+Sindarov is rated 2782 and fourth in the world, Gukesh 2710 and 26th. Chess.com notes the 22-place gap is a record for a world title match since the title was reunified in 2006.
+
 Ratings are a snapshot, not a forecast. A 72-point gap predicts a clear edge over a single game, yet a match between two elite players is decided by preparation, nerve and a handful of decisive games. For how the expected-score math works, our [explainer on what a rating measures](/articles/chess-ratings/) covers it.
 
 **Nihal's climb**
 
 The biggest mover near the top was Nihal Sarin. His 2859 performance at the European Club Cup lifted him to a career-best 19th in the world.
 
-That result came in a event where the [favourites swept early](/articles/favourites-sweep-as-grandelius-falls-on-day-one-of-the-european-club-cup/) and several top boards took losses later on. The full picture is on our [FIDE Top 100](/rankings/) table.
+That came at the European Club Cup, which [Bayegan Pendik won](/articles/bayegan-pendik-win-club-cup-as-giri-crushes-abdusattorov/). The full picture is on our [FIDE Top 100](/rankings/) table.
 
 **Niemann slips below 2700**
 
@@ -44,7 +46,9 @@ He has since dipped back below the German number one after three draws in the Ch
 
 **Women's list: unchanged top ten, big swings below**
 
-The top ten of the [FIDE Women's Top 25](/rankings/women/) stayed unchanged. The movement came from the U.S. Women's Championship.
+The top ten of the [FIDE Women's Top 25](/rankings/women/) stayed unchanged. Aleksandra Goryachkina and Koneru Humpy edged up slightly after their club, Cercle d'Echecs de Monte-Carlo, won the European Women's Club Cup.
+
+The bigger movement came from the U.S. Women's Championship.
 
 IM Alice Lee climbed to 14th and became the U.S. women's number one. IM Carissa Yip lost 31 points.
 

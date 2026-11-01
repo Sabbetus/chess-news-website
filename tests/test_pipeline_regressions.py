@@ -773,6 +773,17 @@ def test_headline_names_the_person_in_the_photo():
     assert draft.match_title_to_photo(Client("Movahed Wins Again"), old, "body", "Nodirbek Yakubboev") == old
 
 
+def test_photo_cooldown_leaves_room_for_this_runs_drafts(monkeypatch):
+    # 2026-11-01: a photo on a piece four new drafts would push off the
+    # front page still blocked Dubov's player-page photo.
+    monkeypatch.setattr(draft, "_session_used_urls", set())
+    monkeypatch.setattr(draft, "_batch_size", 0)
+    full = draft.used_image_source_urls()
+    monkeypatch.setattr(draft, "_batch_size", 4)
+    shorter = draft.used_image_source_urls()
+    assert shorter <= full and len(shorter) < len(full)
+
+
 def test_titles_never_use_semicolons():
     assert draft.no_semicolons("So and Liang Lead Open at 2/2; Bottom Seeds Top the Women") == \
         "So and Liang Lead Open at 2/2, Bottom Seeds Top the Women"

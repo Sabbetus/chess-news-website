@@ -85,7 +85,11 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 8.**
+- **Current review-acceptance streak: 9.**
+- 2026-11-01: PR #87/#88 review accepted (8 -> 9, user's call: minor
+  corrections). I called the recap's stale KazChess line a reset; user: the
+  round-6 news wasn't out at draft time, so not a reset. User also pointed
+  at the real photo bug (the cooldown, not only the photo date).
 - 2026-10-31: PR #86 review accepted (7 -> 8). User ruled the Fischer
   photo fine (he's in the headline) and the unrelated board minor.
 - 2026-10-30: PR #85 review accepted (6 -> 7). User ruled my two borderline
@@ -162,6 +166,19 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-01: PR #87 reset (streak stays at 0). Reset: the KazChess round 6
+  piece showed the crowded 2015 Berlin hall photo of Dubov again (Commons'
+  recorded date 2019) -- his player-page photo was blocked by the photo
+  cooldown, which counted a piece the batch's four drafts were about to push
+  off the front page. Borderline, fixed: calendar headline "Europe's
+  Classical Season Runs Long" (October was 694 rapid to 285 classical),
+  Humpy's Club Cup tweet with no matching line in the ratings piece,
+  "The Russian grandmaster" (Russia rule). Minor: "a event", ratings and the
+  record 22-place gap added, Carlsen "will meet in a field of 24". Weekly
+  recap (PR #88): the KazChess line was overtaken by round 6 (not a reset,
+  user's call), "side" -> "team". Fixed at the source: the cooldown counts
+  only the front-page slots this run's drafts leave; a file-name year
+  earlier than the recorded date wins.
 - 2026-10-31: PR #86 reset (user's call: the Chess960 board that broke the
   site build is a reset; first logged as clean, 0 -> 1 -> 0). Minor, fixed: the
   Myagmarsuren obituary's board was Papapostolou-Myagmarsuren 1960, a game

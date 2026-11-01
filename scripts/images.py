@@ -494,13 +494,12 @@ def _fetch_first_licensed_file(
             continue
 
         date = _photo_date(meta)
-        # No recorded date: a year in the file name will do (caught
-        # 2026-10-29: "...Blitzschach-WM 2015 in Berlin" passed the 8-year
-        # limit for a current story).
-        if date == "0000-00-00":
-            year = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", title)
-            if year:
-                date = f"{year.group(1)}-01-01"
+        # The earlier of the recorded date and a year in the file name
+        # (caught 2026-10-29 and again 2026-11-01: "...Blitzschach-WM 2015 in
+        # Berlin" has a recorded date of 2019, which passed the 8-year limit).
+        year = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", title)
+        if year and (date == "0000-00-00" or year.group(1) < date[:4]):
+            date = f"{year.group(1)}-01-01"
         # Profiles and history pieces are about players whose photos are
         # old or undated (caught 2026-10-18: Vaganian's are from 1983 or
         # undated, Fischer's from 1960, so both pieces got neutral photos).

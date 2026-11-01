@@ -4,8 +4,8 @@ type: "recap"
 publishDate: "2026-11-01"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
-socialCopy: "Sindarov came from 2½ points back to win Clutch Chess in Saint Louis. Also this week: an 11-year-old's second GM norm, Istanbul gets the World Rapid and Blitz, and a Hamburg club side at the European Club Cup."
+reviewStatus: "published"
+socialCopy: "Sindarov came from 2½ points back to win Clutch Chess in Saint Louis. Also this week: an 11-year-old's second GM norm, Istanbul gets the World Rapid and Blitz, and a Hamburg club team at the European Club Cup."
 image:
   src: "./_images/Javoxir_Sindarov.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
@@ -28,9 +28,9 @@ Then came the final session. Sindarov started Thursday tied for second with Caru
 
 Eleven-year-old Roman Shogdzhiev [earned his second grandmaster norm](/articles/shogdzhiev-11-beats-three-2600s-in-serbia-for-a-second-gm-norm/) at the Serbian Super Liga, playing top board for Partizan Belgrade. He scored 6/9 with four wins, four draws and one loss, a performance rating of 2662.
 
-At the European Club Cup, René Mandelbaum wrote a ChessBase account from the bottom of the table. His SK Weisse Dame Hamburg side, from the fourth-tier Landesliga, [finished 99th with an average rating of 1981](/articles/a-fourth-tier-hamburg-team-goes-to-the-european-club-cup/).
+At the European Club Cup, René Mandelbaum wrote a ChessBase account from the bottom of the table. His SK Weisse Dame Hamburg team, from the fourth-tier Landesliga, [finished 99th with an average rating of 1981](/articles/a-fourth-tier-hamburg-team-goes-to-the-european-club-cup/).
 
-In Almaty, two Kazakh grandmasters lead the KazChess Masters after three rounds. [Mamedov and Makhnev both have 2½ points](/articles/mamedov-16-and-makhnev-lead-the-kazchess-masters-on-2-3/), Makhnev drawing level by beating Aram Hakobyan in round three.
+In Almaty, Kazakh grandmasters [Mamedov and Makhnev led the KazChess Masters on 2½/3](/articles/mamedov-16-and-makhnev-lead-the-kazchess-masters-on-2-3/), but both have since lost. After six rounds [Daniil Dubov leads on 4½/6](/articles/dubov-takes-sole-lead-at-kazchess-masters-on-4-6/), half a point ahead of Vokhidov and Lazavik.
 
 GM Sina Movahed [won Freestyle Friday on October 30](/articles/movahed-wins-freestyle-friday-after-starting-1-5-3/), his second win in three weeks. He recovered from a shaky start, sitting on 1.5/3 after the opening rounds.
 

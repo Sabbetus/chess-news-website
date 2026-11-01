@@ -1,12 +1,12 @@
 ---
-title: "Bavarian Open Draws 555 Players as Europe's Classical Season Runs Long"
+title: "Bavarian Open Draws 555 Players to Close Europe's October"
 publishDate: "2026-11-01"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The 29th Bavarian international open at Gmund am Tegernsee has 555 players, the biggest field in our October Europe selection. Arco, Hvar and a NATO championship in Jurmala also made the list."
 metaDescription: "October 2026 in European chess: a 555-player Bavarian open, the 48th Arco open, the NATO Chess Championship in Jurmala and classical events from Hvar to Brno."
 aggregateKind: "calendar-biggest"
