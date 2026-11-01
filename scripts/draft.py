@@ -1066,6 +1066,11 @@ RECENT_IMAGE_COOLDOWN = FRONT_PAGE_SIZE
 _session_used_urls: set[str] = set()
 
 
+# How many articles this run is drafting (set by main); they all land on
+# the front page above the published ones.
+_batch_size = 0
+
+
 def used_image_source_urls() -> set[str]:
     """Commons page URLs to treat as recently used -- not a permanent,
     site-wide ban, just a cooldown so the same photo can't appear twice
@@ -1120,7 +1125,13 @@ def used_image_source_urls() -> set[str]:
     # piece still on the front page slipped out of the window (caught
     # 2026-10-16: Titled Tuesday's Caruana photo reused in round 6).
     dated_urls.sort(key=lambda row: (row[0], row[1]), reverse=True)
-    recent_on_disk = {url for _, _, url in dated_urls[:RECENT_IMAGE_COOLDOWN]}
+    # This run's own drafts go on top of the front page and push the oldest
+    # slots off it, so only what stays on the page counts (user's call,
+    # 2026-11-01: Dubov's player-page photo was blocked by a piece the
+    # batch's four drafts were about to push off, and the search fell back
+    # to a crowded 2015 hall shot).
+    window = max(0, RECENT_IMAGE_COOLDOWN - _batch_size)
+    recent_on_disk = {url for _, _, url in dated_urls[:window]}
     return recent_on_disk | _session_used_urls
 
 
@@ -2170,6 +2181,8 @@ def main() -> None:
         return
 
     client = track(anthropic.Anthropic(max_retries=BATCH_MAX_RETRIES))
+    global _batch_size
+    _batch_size = len(selected)
 
     written, failed, long_paragraphs, bad_link_articles = [], [], [], []
     for item in selected:

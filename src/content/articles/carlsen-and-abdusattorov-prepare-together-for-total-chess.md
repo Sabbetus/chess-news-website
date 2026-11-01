@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/carlsen-trains-with-abdusattorov-in-
 lens: "results"
 continent: "europe"
 selectionScore: 100
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen and Abdusattorov are training in Spain with David Howell and Peter Heine Nielsen before the Total Chess pilot in Budapest, November 10-20. 24 players, three time controls."
 metaDescription: "Magnus Carlsen and Nodirbek Abdusattorov are training in Spain with Howell and Nielsen before the Total Chess pilot in Budapest on November 10-20."
 image:
@@ -40,6 +40,6 @@ Howell is a strong, experienced grandmaster who adds another sparring partner, t
 
 **What to watch in Budapest**
 
-Both players will meet in a field of 24, so the pilot will show how the format rewards players who are strong at every speed. The ratings side of the project has already drawn attention, with a Total Chess rating [putting Carlsen at 2830, 51 points clear](/articles/total-chess-rating-puts-carlsen-at-2830-51-points-clear/).
+Both will be in the field of 24, so the pilot will show how the format rewards players who are strong at every speed. The ratings side of the project has already drawn attention, with a Total Chess rating [putting Carlsen at 2830, 51 points clear](/articles/total-chess-rating-puts-carlsen-at-2830-51-points-clear/).
 
 Whether training together makes them rivals or allies in Budapest is the open question. The pilot begins on November 10.

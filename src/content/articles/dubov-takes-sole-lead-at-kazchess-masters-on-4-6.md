@@ -6,18 +6,18 @@ sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r6"
 lens: "results"
 continent: "asia"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Daniil Dubov won rounds five and six in Almaty and leads the KazChess Masters on 4½/6, half a point ahead of Vokhidov and Lazavik. All three leaders have Black in round 7."
 metaDescription: "Daniil Dubov won twice to lead the KazChess Masters in Almaty on 4½/6, half a point clear of Shamsiddin Vokhidov and Denis Lazavik with three rounds left."
 image:
-  src: "./_images/P_ter_L_k___li__und_Daniil_Dubov__re__bei_der_Blitzschach-WM_2015_in_Berlin.webp"
-  credit: "Barnos, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AP%C3%A9ter_L%C3%A9k%C3%B3_%28li.%29_und_Daniil_Dubov_%28re.%29_bei_der_Blitzschach-WM_2015_in_Berlin.jpg"
+  src: "./_images/DaniilDubov19a.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADaniilDubov19a.jpg"
   caption: "Daniil Dubov"
 gamePgn: "dubov-takes-sole-lead-at-kazchess-masters-on-4-6.pgn"
 ---
 
-Daniil Dubov now has the sole lead at the KazChess Masters in Almaty. The Russian grandmaster [won rounds five and six](https://en.chessbase.com/post/kazchess-masters-almaty-2026-r6) and sits on 4½/6, half a point ahead of Shamsiddin Vokhidov and Denis Lazavik.
+Daniil Dubov now has the sole lead at the KazChess Masters in Almaty. He [won rounds five and six](https://en.chessbase.com/post/kazchess-masters-almaty-2026-r6) and sits on 4½/6, half a point ahead of Shamsiddin Vokhidov and Denis Lazavik.
 
 Dubov's score is unbeaten: one win and three draws before this pair of victories. For a player with his reputation for sharp, unorthodox play, a quiet start followed by a late surge is a useful shape in a nine-round event.
 
