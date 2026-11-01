@@ -5,7 +5,7 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/november-2026-fide-rating-list"
 lens: "results"
 continent: "global"
-selectionScore: 70
+selectionScore: 110
 reviewStatus: "published"
 socialCopy: "Sindarov is 72 rating points and 22 places ahead of Gukesh on the November FIDE list. Nihal hits a career-best joint 18th, and Niemann falls out of the 2700 club."
 metaDescription: "On the November 2026 FIDE list, Sindarov leads champion Gukesh by 72 points and 22 places. Nihal reaches a career-best joint 18th, and Niemann drops below 2700."
