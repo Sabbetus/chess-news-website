@@ -1,8 +1,8 @@
 {
- "period": "2026-10",
+ "period": "2026-11",
  "source": "FIDE standard rating list",
  "sourceUrl": "https://ratings.fide.com/",
- "fetchedAt": "2026-10-01",
+ "fetchedAt": "2026-11-01",
  "players": [
   {
    "fideId": "1503014",
@@ -37,10 +37,10 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1992,
-   "rating": 2784,
-   "games": 9,
+   "rating": 2783,
+   "games": 11,
    "rank": 3,
-   "change": -5,
+   "change": -1,
    "previousRank": 3
   },
   {
@@ -51,9 +51,9 @@
    "title": "GM",
    "birthYear": 2005,
    "rating": 2782,
-   "games": 10,
+   "games": 0,
    "rank": 4,
-   "change": 4,
+   "change": 0,
    "previousRank": 4
   },
   {
@@ -63,11 +63,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 2004,
-   "rating": 2780,
-   "games": 11,
+   "rating": 2772,
+   "games": 5,
    "rank": 5,
-   "change": 18,
-   "previousRank": 7
+   "change": -8,
+   "previousRank": 5
   },
   {
    "fideId": "5202213",
@@ -76,11 +76,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1993,
-   "rating": 2770,
-   "games": 9,
+   "rating": 2771,
+   "games": 11,
    "rank": 6,
-   "change": -4,
-   "previousRank": 5
+   "change": 1,
+   "previousRank": 6
   },
   {
    "fideId": "25059530",
@@ -90,10 +90,10 @@
    "title": "GM",
    "birthYear": 2005,
    "rating": 2763,
-   "games": 10,
+   "games": 0,
    "rank": 7,
-   "change": 2,
-   "previousRank": 8
+   "change": 0,
+   "previousRank": 7
   },
   {
    "fideId": "12940690",
@@ -103,10 +103,10 @@
    "title": "GM",
    "birthYear": 2004,
    "rating": 2761,
-   "games": 10,
+   "games": 0,
    "rank": 8,
-   "change": -3,
-   "previousRank": 6
+   "change": 0,
+   "previousRank": 8
   },
   {
    "fideId": "8603405",
@@ -115,11 +115,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1999,
-   "rating": 2758,
-   "games": 10,
-   "rank": 9,
-   "change": 6,
-   "previousRank": 12
+   "rating": 2761,
+   "games": 7,
+   "rank": 8,
+   "change": 3,
+   "previousRank": 9
   },
   {
    "fideId": "12573981",
@@ -141,8 +141,8 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1994,
-   "rating": 2752,
-   "games": 10,
+   "rating": 2747,
+   "games": 7,
    "rank": 11,
    "change": -5,
    "previousRank": 11
@@ -155,10 +155,10 @@
    "title": "GM",
    "birthYear": 2003,
    "rating": 2746,
-   "games": 10,
+   "games": 7,
    "rank": 12,
-   "change": -13,
-   "previousRank": 9
+   "change": 0,
+   "previousRank": 12
   },
   {
    "fideId": "1170546",
@@ -168,9 +168,9 @@
    "title": "GM",
    "birthYear": 1998,
    "rating": 2741,
-   "games": 10,
+   "games": 0,
    "rank": 13,
-   "change": -2,
+   "change": 0,
    "previousRank": 13
   },
   {
@@ -197,7 +197,7 @@
    "games": 0,
    "rank": 15,
    "change": 0,
-   "previousRank": 17
+   "previousRank": 15
   },
   {
    "fideId": "12401137",
@@ -210,46 +210,7 @@
    "games": 0,
    "rank": 15,
    "change": 0,
-   "previousRank": 18
-  },
-  {
-   "fideId": "44599790",
-   "name": "Yagiz Kaan Erdogmus",
-   "federation": "TUR",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2011,
-   "rating": 2731,
-   "games": 10,
-   "rank": 17,
-   "change": 15,
-   "previousRank": 26
-  },
-  {
-   "fideId": "12521213",
-   "name": "M. Amin Tabatabaei",
-   "federation": "IRI",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2001,
-   "rating": 2728,
-   "games": 14,
-   "rank": 18,
-   "change": -9,
-   "previousRank": 15
-  },
-  {
-   "fideId": "13300474",
-   "name": "Levon Aronian",
-   "federation": "USA",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1982,
-   "rating": 2725,
-   "games": 8,
-   "rank": 19,
-   "change": 0,
-   "previousRank": 20
+   "previousRank": 16
   },
   {
    "fideId": "8603677",
@@ -259,10 +220,62 @@
    "title": "GM",
    "birthYear": 1992,
    "rating": 2723,
+   "games": 0,
+   "rank": 17,
+   "change": 0,
+   "previousRank": 20
+  },
+  {
+   "fideId": "25092340",
+   "name": "Nihal Sarin",
+   "federation": "IND",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2004,
+   "rating": 2720,
+   "games": 6,
+   "rank": 18,
+   "change": 11,
+   "previousRank": 30
+  },
+  {
+   "fideId": "12521213",
+   "name": "M. Amin Tabatabaei",
+   "federation": "IRI",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2001,
+   "rating": 2720,
+   "games": 7,
+   "rank": 18,
+   "change": -8,
+   "previousRank": 18
+  },
+  {
+   "fideId": "13300474",
+   "name": "Levon Aronian",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1982,
+   "rating": 2719,
    "games": 11,
    "rank": 20,
-   "change": -10,
-   "previousRank": 16
+   "change": -6,
+   "previousRank": 19
+  },
+  {
+   "fideId": "44599790",
+   "name": "Yagiz Kaan Erdogmus",
+   "federation": "TUR",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2011,
+   "rating": 2719,
+   "games": 5,
+   "rank": 20,
+   "change": -12,
+   "previousRank": 17
   },
   {
    "fideId": "4168119",
@@ -273,35 +286,22 @@
    "birthYear": 1990,
    "rating": 2719,
    "games": 0,
-   "rank": 21,
+   "rank": 20,
    "change": 0,
-   "previousRank": 23
-  },
-  {
-   "fideId": "2093596",
-   "name": "Hans Moke Niemann",
-   "federation": "USA",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2003,
-   "rating": 2717,
-   "games": 11,
-   "rank": 22,
-   "change": -8,
    "previousRank": 21
   },
   {
-   "fideId": "623539",
-   "name": "Maxime Vachier-Lagrave",
-   "federation": "FRA",
+   "fideId": "738590",
+   "name": "Richard Rapport",
+   "federation": "HUN",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1990,
-   "rating": 2717,
+   "birthYear": 1996,
+   "rating": 2718,
    "games": 10,
-   "rank": 22,
-   "change": -1,
-   "previousRank": 25
+   "rank": 23,
+   "change": 7,
+   "previousRank": 27
   },
   {
    "fideId": "1039784",
@@ -310,11 +310,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1999,
-   "rating": 2716,
-   "games": 9,
+   "rating": 2715,
+   "games": 6,
    "rank": 24,
-   "change": 10,
-   "previousRank": 30
+   "change": -1,
+   "previousRank": 24
   },
   {
    "fideId": "4158814",
@@ -327,33 +327,7 @@
    "games": 0,
    "rank": 25,
    "change": 0,
-   "previousRank": 27
-  },
-  {
-   "fideId": "14203987",
-   "name": "Nodirbek Yakubboev",
-   "federation": "UZB",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2002,
-   "rating": 2712,
-   "games": 14,
-   "rank": 26,
-   "change": 27,
-   "previousRank": 39
-  },
-  {
-   "fideId": "738590",
-   "name": "Richard Rapport",
-   "federation": "HUN",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1996,
-   "rating": 2711,
-   "games": 9,
-   "rank": 27,
-   "change": -15,
-   "previousRank": 19
+   "previousRank": 25
   },
   {
    "fideId": "46616543",
@@ -363,10 +337,10 @@
    "title": "GM",
    "birthYear": 2006,
    "rating": 2710,
-   "games": 11,
-   "rank": 28,
-   "change": 7,
-   "previousRank": 32
+   "games": 0,
+   "rank": 26,
+   "change": 0,
+   "previousRank": 28
   },
   {
    "fideId": "13401319",
@@ -375,37 +349,24 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1985,
-   "rating": 2710,
-   "games": 10,
+   "rating": 2709,
+   "games": 7,
+   "rank": 27,
+   "change": -1,
+   "previousRank": 29
+  },
+  {
+   "fideId": "623539",
+   "name": "Maxime Vachier-Lagrave",
+   "federation": "FRA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1990,
+   "rating": 2707,
+   "games": 3,
    "rank": 28,
    "change": -10,
-   "previousRank": 22
-  },
-  {
-   "fideId": "25092340",
-   "name": "Nihal Sarin",
-   "federation": "IND",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2004,
-   "rating": 2709,
-   "games": 10,
-   "rank": 30,
-   "change": -9,
-   "previousRank": 24
-  },
-  {
-   "fideId": "2040506",
-   "name": "Samuel Sevian",
-   "federation": "USA",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2000,
-   "rating": 2708,
-   "games": 0,
-   "rank": 31,
-   "change": 0,
-   "previousRank": 29
+   "previousRank": 23
   },
   {
    "fideId": "12539929",
@@ -416,9 +377,9 @@
    "birthYear": 2000,
    "rating": 2705,
    "games": 0,
-   "rank": 32,
+   "rank": 29,
    "change": 0,
-   "previousRank": 31
+   "previousRank": 32
   },
   {
    "fideId": "8603820",
@@ -427,11 +388,37 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1994,
-   "rating": 2704,
-   "games": 9,
-   "rank": 33,
-   "change": -6,
-   "previousRank": 28
+   "rating": 2705,
+   "games": 4,
+   "rank": 29,
+   "change": 1,
+   "previousRank": 33
+  },
+  {
+   "fideId": "14203987",
+   "name": "Nodirbek Yakubboev",
+   "federation": "UZB",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2002,
+   "rating": 2701,
+   "games": 6,
+   "rank": 31,
+   "change": -11,
+   "previousRank": 26
+  },
+  {
+   "fideId": "2093596",
+   "name": "Hans Moke Niemann",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2003,
+   "rating": 2697,
+   "games": 11,
+   "rank": 32,
+   "change": -20,
+   "previousRank": 22
   },
   {
    "fideId": "2900084",
@@ -442,7 +429,7 @@
    "birthYear": 1975,
    "rating": 2695,
    "games": 0,
-   "rank": 34,
+   "rank": 33,
    "change": 0,
    "previousRank": 34
   },
@@ -455,7 +442,7 @@
    "birthYear": 1989,
    "rating": 2694,
    "games": 0,
-   "rank": 35,
+   "rank": 34,
    "change": 0,
    "previousRank": 35
   },
@@ -467,10 +454,23 @@
    "title": "GM",
    "birthYear": 1994,
    "rating": 2693,
-   "games": 3,
+   "games": 0,
+   "rank": 35,
+   "change": 0,
+   "previousRank": 36
+  },
+  {
+   "fideId": "13413937",
+   "name": "Aydin Suleymanli",
+   "federation": "AZE",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2005,
+   "rating": 2692,
+   "games": 9,
    "rank": 36,
-   "change": -4,
-   "previousRank": 33
+   "change": 13,
+   "previousRank": 41
   },
   {
    "fideId": "24130737",
@@ -506,10 +506,23 @@
    "title": "GM",
    "birthYear": 2003,
    "rating": 2685,
-   "games": 7,
+   "games": 11,
    "rank": 39,
-   "change": -8,
-   "previousRank": 36
+   "change": 0,
+   "previousRank": 39
+  },
+  {
+   "fideId": "2040506",
+   "name": "Samuel Sevian",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2000,
+   "rating": 2684,
+   "games": 11,
+   "rank": 40,
+   "change": -24,
+   "previousRank": 31
   },
   {
    "fideId": "24175439",
@@ -518,37 +531,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 2002,
-   "rating": 2680,
-   "games": 0,
-   "rank": 40,
-   "change": 0,
-   "previousRank": 40
-  },
-  {
-   "fideId": "13413937",
-   "name": "Aydin Suleymanli",
-   "federation": "AZE",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2005,
-   "rating": 2679,
-   "games": 17,
+   "rating": 2683,
+   "games": 11,
    "rank": 41,
-   "change": 15,
-   "previousRank": 51
-  },
-  {
-   "fideId": "5072786",
-   "name": "Chithambaram VR. Aravindh",
-   "federation": "IND",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1999,
-   "rating": 2677,
-   "games": 0,
-   "rank": 42,
-   "change": 0,
-   "previousRank": 41
+   "change": 3,
+   "previousRank": 40
   },
   {
    "fideId": "25060783",
@@ -557,10 +544,36 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 2006,
-   "rating": 2677,
-   "games": 0,
+   "rating": 2679,
+   "games": 10,
    "rank": 42,
-   "change": 0,
+   "change": 2,
+   "previousRank": 43
+  },
+  {
+   "fideId": "24133795",
+   "name": "Alexey Sarana",
+   "federation": "SRB",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2000,
+   "rating": 2679,
+   "games": 10,
+   "rank": 42,
+   "change": 8,
+   "previousRank": 45
+  },
+  {
+   "fideId": "5072786",
+   "name": "Chithambaram VR. Aravindh",
+   "federation": "IND",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1999,
+   "rating": 2673,
+   "games": 8,
+   "rank": 44,
+   "change": -4,
    "previousRank": 42
   },
   {
@@ -570,24 +583,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 2006,
-   "rating": 2674,
-   "games": 0,
+   "rating": 2673,
+   "games": 14,
    "rank": 44,
-   "change": 0,
+   "change": -1,
    "previousRank": 44
-  },
-  {
-   "fideId": "24133795",
-   "name": "Alexey Sarana",
-   "federation": "SRB",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2000,
-   "rating": 2671,
-   "games": 16,
-   "rank": 45,
-   "change": 5,
-   "previousRank": 45
   },
   {
    "fideId": "24651516",
@@ -596,11 +596,50 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1997,
-   "rating": 2666,
-   "games": 10,
+   "rating": 2671,
+   "games": 9,
    "rank": 46,
-   "change": 4,
-   "previousRank": 52
+   "change": 5,
+   "previousRank": 46
+  },
+  {
+   "fideId": "2047640",
+   "name": "Jeffery Xiong",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2000,
+   "rating": 2671,
+   "games": 11,
+   "rank": 46,
+   "change": 15,
+   "previousRank": 58
+  },
+  {
+   "fideId": "13306553",
+   "name": "Haik M. Martirosyan",
+   "federation": "ARM",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2000,
+   "rating": 2669,
+   "games": 13,
+   "rank": 48,
+   "change": 8,
+   "previousRank": 54
+  },
+  {
+   "fideId": "14102951",
+   "name": "Pavel Eljanov",
+   "federation": "UKR",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1983,
+   "rating": 2665,
+   "games": 9,
+   "rank": 49,
+   "change": 1,
+   "previousRank": 49
   },
   {
    "fideId": "410608",
@@ -611,35 +650,9 @@
    "birthYear": 1990,
    "rating": 2665,
    "games": 0,
-   "rank": 47,
-   "change": 0,
-   "previousRank": 47
-  },
-  {
-   "fideId": "14200244",
-   "name": "Rustam Kasimdzhanov",
-   "federation": "UZB",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1979,
-   "rating": 2665,
-   "games": 0,
-   "rank": 47,
-   "change": 0,
-   "previousRank": 48
-  },
-  {
-   "fideId": "14102951",
-   "name": "Pavel Eljanov",
-   "federation": "UKR",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1983,
-   "rating": 2664,
-   "games": 0,
    "rank": 49,
    "change": 0,
-   "previousRank": 49
+   "previousRank": 47
   },
   {
    "fideId": "703303",
@@ -649,10 +662,23 @@
    "title": "GM",
    "birthYear": 1979,
    "rating": 2663,
-   "games": 9,
-   "rank": 50,
-   "change": -13,
-   "previousRank": 43
+   "games": 0,
+   "rank": 51,
+   "change": 0,
+   "previousRank": 50
+  },
+  {
+   "fideId": "44155573",
+   "name": "Volodar Murzin",
+   "federation": "FID",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2006,
+   "rating": 2663,
+   "games": 4,
+   "rank": 51,
+   "change": 7,
+   "previousRank": 57
   },
   {
    "fideId": "4152956",
@@ -662,10 +688,10 @@
    "title": "GM",
    "birthYear": 1987,
    "rating": 2663,
-   "games": 10,
-   "rank": 50,
-   "change": -3,
-   "previousRank": 46
+   "games": 0,
+   "rank": 51,
+   "change": 0,
+   "previousRank": 51
   },
   {
    "fideId": "13409301",
@@ -675,101 +701,23 @@
    "title": "GM",
    "birthYear": 2003,
    "rating": 2662,
-   "games": 11,
-   "rank": 52,
-   "change": 9,
-   "previousRank": 65
-  },
-  {
-   "fideId": "12923044",
-   "name": "Frederik Svane",
-   "federation": "GER",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2004,
-   "rating": 2662,
-   "games": 18,
-   "rank": 52,
-   "change": 7,
-   "previousRank": 60
-  },
-  {
-   "fideId": "13306553",
-   "name": "Haik M. Martirosyan",
-   "federation": "ARM",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2000,
-   "rating": 2661,
-   "games": 9,
+   "games": 0,
    "rank": 54,
-   "change": -3,
-   "previousRank": 50
+   "change": 0,
+   "previousRank": 52
   },
   {
-   "fideId": "2023970",
-   "name": "Ray Robson",
-   "federation": "USA",
+   "fideId": "2285525",
+   "name": "David Anton Guijarro",
+   "federation": "ESP",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1994,
-   "rating": 2659,
-   "games": 0,
+   "birthYear": 1995,
+   "rating": 2661,
+   "games": 10,
    "rank": 55,
-   "change": 0,
-   "previousRank": 53
-  },
-  {
-   "fideId": "1118358",
-   "name": "Radoslaw Wojtaszek",
-   "federation": "POL",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1987,
-   "rating": 2658,
-   "games": 0,
-   "rank": 56,
-   "change": 0,
-   "previousRank": 54
-  },
-  {
-   "fideId": "3805662",
-   "name": "Jose Eduardo Martinez Alcantara",
-   "federation": "MEX",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1999,
-   "rating": 2657,
-   "games": 0,
-   "rank": 57,
-   "change": 0,
-   "previousRank": 55
-  },
-  {
-   "fideId": "44155573",
-   "name": "Volodar Murzin",
-   "federation": "FID",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2006,
-   "rating": 2656,
-   "games": 0,
-   "rank": 58,
-   "change": 0,
-   "previousRank": 58
-  },
-  {
-   "fideId": "2047640",
-   "name": "Jeffery Xiong",
-   "federation": "USA",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2000,
-   "rating": 2656,
-   "games": 0,
-   "rank": 58,
-   "change": 0,
-   "previousRank": 59
+   "change": 11,
+   "previousRank": 66
   },
   {
    "fideId": "1226380",
@@ -778,11 +726,76 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 2001,
-   "rating": 2654,
+   "rating": 2661,
+   "games": 13,
+   "rank": 55,
+   "change": 7,
+   "previousRank": 59
+  },
+  {
+   "fideId": "5007003",
+   "name": "Pentala Harikrishna",
+   "federation": "IND",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1986,
+   "rating": 2659,
+   "games": 6,
+   "rank": 57,
+   "change": 11,
+   "previousRank": 68
+  },
+  {
+   "fideId": "5074452",
+   "name": "Murali Karthikeyan",
+   "federation": "IND",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1999,
+   "rating": 2658,
+   "games": 17,
+   "rank": 58,
+   "change": 11,
+   "previousRank": 70
+  },
+  {
+   "fideId": "12923044",
+   "name": "Frederik Svane",
+   "federation": "GER",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2004,
+   "rating": 2657,
+   "games": 3,
+   "rank": 59,
+   "change": -5,
+   "previousRank": 53
+  },
+  {
+   "fideId": "24125890",
+   "name": "Grigoriy Oparin",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1997,
+   "rating": 2656,
    "games": 11,
    "rank": 60,
-   "change": 10,
-   "previousRank": 73
+   "change": 18,
+   "previousRank": 82
+  },
+  {
+   "fideId": "14200244",
+   "name": "Rustam Kasimdzhanov",
+   "federation": "UZB",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1979,
+   "rating": 2655,
+   "games": 3,
+   "rank": 61,
+   "change": -10,
+   "previousRank": 48
   },
   {
    "fideId": "24126055",
@@ -793,7 +806,20 @@
    "birthYear": 1996,
    "rating": 2654,
    "games": 0,
-   "rank": 60,
+   "rank": 62,
+   "change": 0,
+   "previousRank": 60
+  },
+  {
+   "fideId": "3805662",
+   "name": "Jose Eduardo Martinez Alcantara",
+   "federation": "MEX",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1999,
+   "rating": 2654,
+   "games": 0,
+   "rank": 62,
    "change": 0,
    "previousRank": 61
   },
@@ -806,9 +832,22 @@
    "birthYear": 1977,
    "rating": 2654,
    "games": 0,
-   "rank": 60,
+   "rank": 62,
    "change": 0,
    "previousRank": 62
+  },
+  {
+   "fideId": "1118358",
+   "name": "Radoslaw Wojtaszek",
+   "federation": "POL",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1987,
+   "rating": 2654,
+   "games": 3,
+   "rank": 62,
+   "change": -4,
+   "previousRank": 56
   },
   {
    "fideId": "24101605",
@@ -819,9 +858,9 @@
    "birthYear": 1998,
    "rating": 2653,
    "games": 0,
-   "rank": 63,
+   "rank": 66,
    "change": 0,
-   "previousRank": 64
+   "previousRank": 63
   },
   {
    "fideId": "8601445",
@@ -832,9 +871,9 @@
    "birthYear": 1985,
    "rating": 2651,
    "games": 0,
-   "rank": 64,
+   "rank": 67,
    "change": 0,
-   "previousRank": 66
+   "previousRank": 64
   },
   {
    "fideId": "14117908",
@@ -844,36 +883,36 @@
    "title": "GM",
    "birthYear": 1988,
    "rating": 2651,
-   "games": 10,
-   "rank": 64,
-   "change": 9,
-   "previousRank": 77
-  },
-  {
-   "fideId": "14204223",
-   "name": "Shamsiddin Vokhidov",
-   "federation": "UZB",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2002,
-   "rating": 2649,
-   "games": 13,
-   "rank": 66,
-   "change": -5,
-   "previousRank": 63
-  },
-  {
-   "fideId": "5007003",
-   "name": "Pentala Harikrishna",
-   "federation": "IND",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1986,
-   "rating": 2648,
    "games": 0,
    "rank": 67,
    "change": 0,
-   "previousRank": 67
+   "previousRank": 65
+  },
+  {
+   "fideId": "44507356",
+   "name": "Ediz Gurel",
+   "federation": "TUR",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2008,
+   "rating": 2649,
+   "games": 5,
+   "rank": 69,
+   "change": 7,
+   "previousRank": 75
+  },
+  {
+   "fideId": "2023970",
+   "name": "Ray Robson",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1994,
+   "rating": 2649,
+   "games": 11,
+   "rank": 69,
+   "change": -10,
+   "previousRank": 55
   },
   {
    "fideId": "13306766",
@@ -883,23 +922,23 @@
    "title": "GM",
    "birthYear": 2002,
    "rating": 2648,
-   "games": 11,
-   "rank": 67,
-   "change": 18,
-   "previousRank": 96
+   "games": 0,
+   "rank": 71,
+   "change": 0,
+   "previousRank": 69
   },
   {
-   "fideId": "5074452",
-   "name": "Murali Karthikeyan",
-   "federation": "IND",
+   "fideId": "2004887",
+   "name": "Sam Shankland",
+   "federation": "USA",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1999,
-   "rating": 2647,
-   "games": 0,
-   "rank": 69,
-   "change": 0,
-   "previousRank": 68
+   "birthYear": 1991,
+   "rating": 2648,
+   "games": 11,
+   "rank": 71,
+   "change": 2,
+   "previousRank": 73
   },
   {
    "fideId": "1510045",
@@ -909,10 +948,10 @@
    "title": "GM",
    "birthYear": 1999,
    "rating": 2647,
-   "games": 6,
-   "rank": 69,
+   "games": 0,
+   "rank": 73,
    "change": 0,
-   "previousRank": 69
+   "previousRank": 71
   },
   {
    "fideId": "5084423",
@@ -923,22 +962,9 @@
    "birthYear": 2001,
    "rating": 2646,
    "games": 0,
-   "rank": 71,
+   "rank": 74,
    "change": 0,
-   "previousRank": 70
-  },
-  {
-   "fideId": "2004887",
-   "name": "Sam Shankland",
-   "federation": "USA",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1991,
-   "rating": 2646,
-   "games": 0,
-   "rank": 71,
-   "change": 0,
-   "previousRank": 71
+   "previousRank": 72
   },
   {
    "fideId": "35093487",
@@ -948,36 +974,49 @@
    "title": "GM",
    "birthYear": 2005,
    "rating": 2645,
-   "games": 0,
-   "rank": 73,
+   "games": 7,
+   "rank": 75,
    "change": 0,
-   "previousRank": 72
+   "previousRank": 74
   },
   {
-   "fideId": "44507356",
-   "name": "Ediz Gurel",
-   "federation": "TUR",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2008,
-   "rating": 2642,
-   "games": 10,
-   "rank": 74,
-   "change": 6,
-   "previousRank": 84
-  },
-  {
-   "fideId": "13302507",
-   "name": "Robert Hovhannisyan",
+   "fideId": "13306677",
+   "name": "Aram Hakobyan",
    "federation": "ARM",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1991,
-   "rating": 2642,
-   "games": 9,
-   "rank": 74,
-   "change": 0,
-   "previousRank": 76
+   "birthYear": 2001,
+   "rating": 2644,
+   "games": 5,
+   "rank": 76,
+   "change": 6,
+   "previousRank": 81
+  },
+  {
+   "fideId": "30920019",
+   "name": "Abhimanyu Mishra",
+   "federation": "USA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2009,
+   "rating": 2644,
+   "games": 11,
+   "rank": 76,
+   "change": 8,
+   "previousRank": 86
+  },
+  {
+   "fideId": "36083534",
+   "name": "MarcAndria Maurizzi",
+   "federation": "FRA",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 2007,
+   "rating": 2641,
+   "games": 7,
+   "rank": 78,
+   "change": 17,
+   "previousRank": null
   },
   {
    "fideId": "2805677",
@@ -986,24 +1025,11 @@
    "sex": "M",
    "title": "GM",
    "birthYear": 1968,
-   "rating": 2641,
-   "games": 0,
-   "rank": 76,
-   "change": 0,
-   "previousRank": 78
-  },
-  {
-   "fideId": "4135539",
-   "name": "Kirill Alekseenko",
-   "federation": "AUT",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1997,
    "rating": 2640,
-   "games": 10,
-   "rank": 77,
-   "change": -16,
-   "previousRank": 56
+   "games": 5,
+   "rank": 79,
+   "change": -1,
+   "previousRank": 77
   },
   {
    "fideId": "14101025",
@@ -1014,7 +1040,7 @@
    "birthYear": 1975,
    "rating": 2639,
    "games": 0,
-   "rank": 78,
+   "rank": 80,
    "change": 0,
    "previousRank": 79
   },
@@ -1026,49 +1052,36 @@
    "title": "GM",
    "birthYear": 2000,
    "rating": 2639,
-   "games": 10,
-   "rank": 78,
-   "change": 6,
-   "previousRank": 88
-  },
-  {
-   "fideId": "13306677",
-   "name": "Aram Hakobyan",
-   "federation": "ARM",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2001,
-   "rating": 2638,
    "games": 0,
    "rank": 80,
    "change": 0,
    "previousRank": 80
   },
   {
-   "fideId": "24125890",
-   "name": "Grigoriy Oparin",
-   "federation": "USA",
+   "fideId": "4135539",
+   "name": "Kirill Alekseenko",
+   "federation": "AUT",
    "sex": "M",
    "title": "GM",
    "birthYear": 1997,
-   "rating": 2638,
-   "games": 0,
-   "rank": 80,
-   "change": 0,
-   "previousRank": 81
+   "rating": 2637,
+   "games": 3,
+   "rank": 82,
+   "change": -3,
+   "previousRank": 78
   },
   {
-   "fideId": "4162722",
-   "name": "Ernesto Inarkiev",
-   "federation": "RUS",
+   "fideId": "13302507",
+   "name": "Robert Hovhannisyan",
+   "federation": "ARM",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1985,
+   "birthYear": 1991,
    "rating": 2637,
-   "games": 0,
+   "games": 3,
    "rank": 82,
-   "change": 0,
-   "previousRank": 82
+   "change": -5,
+   "previousRank": 76
   },
   {
    "fideId": "8603332",
@@ -1081,7 +1094,7 @@
    "games": 0,
    "rank": 82,
    "change": 0,
-   "previousRank": 83
+   "previousRank": 84
   },
   {
    "fideId": "13515110",
@@ -1091,36 +1104,36 @@
    "title": "GM",
    "birthYear": 2006,
    "rating": 2636,
-   "games": 10,
-   "rank": 84,
-   "change": 15,
-   "previousRank": null
+   "games": 0,
+   "rank": 85,
+   "change": 0,
+   "previousRank": 85
   },
   {
-   "fideId": "30920019",
-   "name": "Abhimanyu Mishra",
-   "federation": "USA",
+   "fideId": "14100010",
+   "name": "Vasyl Ivanchuk",
+   "federation": "UKR",
    "sex": "M",
    "title": "GM",
-   "birthYear": 2009,
-   "rating": 2636,
+   "birthYear": 1969,
+   "rating": 2635,
    "games": 9,
-   "rank": 84,
-   "change": 6,
+   "rank": 86,
+   "change": 7,
    "previousRank": 95
   },
   {
-   "fideId": "2285525",
-   "name": "David Anton Guijarro",
-   "federation": "ESP",
+   "fideId": "30953499",
+   "name": "Andy Woodward",
+   "federation": "USA",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1995,
-   "rating": 2634,
-   "games": 9,
+   "birthYear": 2010,
+   "rating": 2635,
+   "games": 11,
    "rank": 86,
-   "change": 2,
-   "previousRank": 89
+   "change": 16,
+   "previousRank": null
   },
   {
    "fideId": "4107012",
@@ -1130,10 +1143,10 @@
    "title": "GM",
    "birthYear": 1997,
    "rating": 2633,
-   "games": 3,
-   "rank": 87,
-   "change": 5,
-   "previousRank": 99
+   "games": 0,
+   "rank": 88,
+   "change": 0,
+   "previousRank": 87
   },
   {
    "fideId": "1512668",
@@ -1143,10 +1156,10 @@
    "title": "GM",
    "birthYear": 1998,
    "rating": 2633,
-   "games": 10,
-   "rank": 87,
-   "change": -23,
-   "previousRank": 57
+   "games": 0,
+   "rank": 88,
+   "change": 0,
+   "previousRank": 88
   },
   {
    "fideId": "13401653",
@@ -1156,36 +1169,10 @@
    "title": "GM",
    "birthYear": 1988,
    "rating": 2632,
-   "games": 7,
-   "rank": 89,
-   "change": 1,
-   "previousRank": 92
-  },
-  {
-   "fideId": "14103320",
-   "name": "Ruslan Ponomariov",
-   "federation": "UKR",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1983,
-   "rating": 2632,
-   "games": 0,
-   "rank": 89,
+   "games": 4,
+   "rank": 90,
    "change": 0,
-   "previousRank": 90
-  },
-  {
-   "fideId": "2905540",
-   "name": "Ivan Cheparinov",
-   "federation": "BUL",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1986,
-   "rating": 2631,
-   "games": 0,
-   "rank": 91,
-   "change": 0,
-   "previousRank": 91
+   "previousRank": 89
   },
   {
    "fideId": "409561",
@@ -1195,23 +1182,23 @@
    "title": "GM",
    "birthYear": 1987,
    "rating": 2630,
-   "games": 9,
-   "rank": 92,
-   "change": -3,
-   "previousRank": 85
+   "games": 2,
+   "rank": 91,
+   "change": 0,
+   "previousRank": 92
   },
   {
-   "fideId": "35028561",
-   "name": "Leon Luke Mendonca",
-   "federation": "IND",
+   "fideId": "14508150",
+   "name": "Ivan Saric",
+   "federation": "CRO",
    "sex": "M",
    "title": "GM",
-   "birthYear": 2006,
-   "rating": 2629,
+   "birthYear": 1990,
+   "rating": 2630,
    "games": 9,
-   "rank": 93,
-   "change": -4,
-   "previousRank": 86
+   "rank": 91,
+   "change": 9,
+   "previousRank": null
   },
   {
    "fideId": "4126025",
@@ -1222,21 +1209,8 @@
    "birthYear": 1983,
    "rating": 2628,
    "games": 0,
-   "rank": 94,
+   "rank": 93,
    "change": 0,
-   "previousRank": 100
-  },
-  {
-   "fideId": "14100010",
-   "name": "Vasyl Ivanchuk",
-   "federation": "UKR",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 1969,
-   "rating": 2628,
-   "games": 23,
-   "rank": 94,
-   "change": -2,
    "previousRank": 94
   },
   {
@@ -1247,23 +1221,10 @@
    "title": "GM",
    "birthYear": 1999,
    "rating": 2628,
-   "games": 8,
-   "rank": 94,
-   "change": -3,
-   "previousRank": 93
-  },
-  {
-   "fideId": "1444948",
-   "name": "Jonas Buhl Bjerre",
-   "federation": "DEN",
-   "sex": "M",
-   "title": "GM",
-   "birthYear": 2004,
-   "rating": 2627,
-   "games": 9,
-   "rank": 97,
-   "change": 12,
-   "previousRank": null
+   "games": 0,
+   "rank": 93,
+   "change": 0,
+   "previousRank": 96
   },
   {
    "fideId": "30901561",
@@ -1273,23 +1234,23 @@
    "title": "GM",
    "birthYear": 2003,
    "rating": 2627,
-   "games": 7,
-   "rank": 97,
-   "change": -17,
-   "previousRank": 74
+   "games": 0,
+   "rank": 95,
+   "change": 0,
+   "previousRank": 98
   },
   {
-   "fideId": "1000268",
-   "name": "Loek Van Wely",
-   "federation": "NED",
+   "fideId": "14204223",
+   "name": "Shamsiddin Vokhidov",
+   "federation": "UZB",
    "sex": "M",
    "title": "GM",
-   "birthYear": 1972,
+   "birthYear": 2002,
    "rating": 2627,
    "games": 9,
-   "rank": 97,
-   "change": -16,
-   "previousRank": 75
+   "rank": 95,
+   "change": -22,
+   "previousRank": 67
   },
   {
    "fideId": "2293307",
@@ -1299,10 +1260,49 @@
    "title": "GM",
    "birthYear": 1996,
    "rating": 2626,
+   "games": 0,
+   "rank": 97,
+   "change": 0,
+   "previousRank": 100
+  },
+  {
+   "fideId": "1000268",
+   "name": "Loek Van Wely",
+   "federation": "NED",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1972,
+   "rating": 2626,
    "games": 10,
-   "rank": 100,
-   "change": 11,
+   "rank": 97,
+   "change": -1,
+   "previousRank": 99
+  },
+  {
+   "fideId": "4675789",
+   "name": "Georg Meier",
+   "federation": "URU",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1987,
+   "rating": 2625,
+   "games": 3,
+   "rank": 99,
+   "change": 5,
    "previousRank": null
+  },
+  {
+   "fideId": "14103320",
+   "name": "Ruslan Ponomariov",
+   "federation": "UKR",
+   "sex": "M",
+   "title": "GM",
+   "birthYear": 1983,
+   "rating": 2625,
+   "games": 2,
+   "rank": 99,
+   "change": -7,
+   "previousRank": 90
   }
  ],
  "women": [
@@ -1327,10 +1327,10 @@
    "title": "GM",
    "birthYear": 2002,
    "rating": 2559,
-   "games": 9,
+   "games": 0,
    "rank": 2,
-   "change": 9,
-   "previousRank": 4
+   "change": 0,
+   "previousRank": 2
   },
   {
    "fideId": "8603006",
@@ -1343,7 +1343,7 @@
    "games": 0,
    "rank": 3,
    "change": 0,
-   "previousRank": 2
+   "previousRank": 3
   },
   {
    "fideId": "8605114",
@@ -1356,7 +1356,7 @@
    "games": 0,
    "rank": 4,
    "change": 0,
-   "previousRank": 3
+   "previousRank": 4
   },
   {
    "fideId": "4147103",
@@ -1365,11 +1365,11 @@
    "sex": "F",
    "title": "GM",
    "birthYear": 1998,
-   "rating": 2536,
-   "games": 0,
+   "rating": 2540,
+   "games": 6,
    "rank": 5,
-   "change": 0,
-   "previousRank": 6
+   "change": 4,
+   "previousRank": 5
   },
   {
    "fideId": "8603642",
@@ -1380,9 +1380,9 @@
    "birthYear": 1991,
    "rating": 2536,
    "games": 0,
-   "rank": 5,
+   "rank": 6,
    "change": 0,
-   "previousRank": 7
+   "previousRank": 6
   },
   {
    "fideId": "13708694",
@@ -1392,10 +1392,10 @@
    "title": "GM",
    "birthYear": 2004,
    "rating": 2532,
-   "games": 10,
+   "games": 0,
    "rank": 7,
-   "change": -4,
-   "previousRank": 5
+   "change": 0,
+   "previousRank": 7
   },
   {
    "fideId": "14111330",
@@ -1417,10 +1417,10 @@
    "sex": "F",
    "title": "GM",
    "birthYear": 1987,
-   "rating": 2518,
-   "games": 10,
+   "rating": 2520,
+   "games": 6,
    "rank": 9,
-   "change": 9,
+   "change": 2,
    "previousRank": 9
   },
   {
@@ -1430,10 +1430,10 @@
    "sex": "F",
    "title": "IM",
    "birthYear": 2001,
-   "rating": 2509,
-   "games": 0,
+   "rating": 2514,
+   "games": 6,
    "rank": 10,
-   "change": 0,
+   "change": 5,
    "previousRank": 10
   },
   {
@@ -1457,23 +1457,10 @@
    "title": "GM",
    "birthYear": 2005,
    "rating": 2488,
-   "games": 10,
+   "games": 0,
    "rank": 12,
-   "change": -2,
-   "previousRank": 13
-  },
-  {
-   "fideId": "2090732",
-   "name": "Carissa Yip",
-   "federation": "USA",
-   "sex": "F",
-   "title": "IM",
-   "birthYear": 2003,
-   "rating": 2484,
-   "games": 10,
-   "rank": 13,
-   "change": 16,
-   "previousRank": 17
+   "change": 0,
+   "previousRank": 12
   },
   {
    "fideId": "4128125",
@@ -1482,11 +1469,11 @@
    "sex": "F",
    "title": "GM",
    "birthYear": 1984,
-   "rating": 2481,
-   "games": 9,
-   "rank": 14,
-   "change": -14,
-   "previousRank": 12
+   "rating": 2478,
+   "games": 2,
+   "rank": 13,
+   "change": -3,
+   "previousRank": 14
   },
   {
    "fideId": "4198026",
@@ -1497,9 +1484,22 @@
    "birthYear": 1993,
    "rating": 2474,
    "games": 0,
-   "rank": 15,
+   "rank": 14,
    "change": 0,
    "previousRank": 15
+  },
+  {
+   "fideId": "30941822",
+   "name": "Alice Lee",
+   "federation": "USA",
+   "sex": "F",
+   "title": "IM",
+   "birthYear": 2009,
+   "rating": 2474,
+   "games": 11,
+   "rank": 14,
+   "change": 7,
+   "previousRank": 17
   },
   {
    "fideId": "13601903",
@@ -1509,23 +1509,10 @@
    "title": "GM",
    "birthYear": 1987,
    "rating": 2467,
-   "games": 19,
+   "games": 0,
    "rank": 16,
-   "change": -11,
-   "previousRank": 14
-  },
-  {
-   "fideId": "30941822",
-   "name": "Alice Lee",
-   "federation": "USA",
-   "sex": "F",
-   "title": "IM",
-   "birthYear": 2009,
-   "rating": 2467,
-   "games": 10,
-   "rank": 16,
-   "change": 14,
-   "previousRank": 25
+   "change": 0,
+   "previousRank": 16
   },
   {
    "fideId": "8614300",
@@ -1535,10 +1522,23 @@
    "title": "IM",
    "birthYear": 2005,
    "rating": 2465,
-   "games": 11,
+   "games": 0,
+   "rank": 17,
+   "change": 0,
+   "previousRank": 18
+  },
+  {
+   "fideId": "13602993",
+   "name": "Nino Batsiashvili",
+   "federation": "GEO",
+   "sex": "F",
+   "title": "GM",
+   "birthYear": 1987,
+   "rating": 2463,
+   "games": 12,
    "rank": 18,
-   "change": 8,
-   "previousRank": 21
+   "change": 4,
+   "previousRank": 22
   },
   {
    "fideId": "14114550",
@@ -1549,9 +1549,9 @@
    "birthYear": 1992,
    "rating": 2463,
    "games": 0,
-   "rank": 19,
+   "rank": 18,
    "change": 0,
-   "previousRank": 20
+   "previousRank": 19
   },
   {
    "fideId": "14198339",
@@ -1561,10 +1561,10 @@
    "title": "WFM",
    "birthYear": 2010,
    "rating": 2462,
-   "games": 10,
+   "games": 0,
    "rank": 20,
-   "change": -1,
-   "previousRank": 19
+   "change": 0,
+   "previousRank": 20
   },
   {
    "fideId": "13729390",
@@ -1574,36 +1574,36 @@
    "title": "IM",
    "birthYear": 2007,
    "rating": 2460,
-   "games": 10,
-   "rank": 21,
-   "change": 5,
-   "previousRank": 22
-  },
-  {
-   "fideId": "13602993",
-   "name": "Nino Batsiashvili",
-   "federation": "GEO",
-   "sex": "F",
-   "title": "GM",
-   "birthYear": 1987,
-   "rating": 2459,
-   "games": 9,
-   "rank": 22,
-   "change": -7,
-   "previousRank": 18
-  },
-  {
-   "fideId": "5015197",
-   "name": "Harika Dronavalli",
-   "federation": "IND",
-   "sex": "F",
-   "title": "GM",
-   "birthYear": 1991,
-   "rating": 2453,
    "games": 0,
-   "rank": 23,
+   "rank": 21,
    "change": 0,
-   "previousRank": 24
+   "previousRank": 21
+  },
+  {
+   "fideId": "2090732",
+   "name": "Carissa Yip",
+   "federation": "USA",
+   "sex": "F",
+   "title": "IM",
+   "birthYear": 2003,
+   "rating": 2453,
+   "games": 11,
+   "rank": 22,
+   "change": -31,
+   "previousRank": 13
+  },
+  {
+   "fideId": "4264312",
+   "name": "Stavroula Tsolakidou",
+   "federation": "GRE",
+   "sex": "F",
+   "title": "IM",
+   "birthYear": 2000,
+   "rating": 2452,
+   "games": 16,
+   "rank": 23,
+   "change": 1,
+   "previousRank": 25
   },
   {
    "fideId": "5091756",
@@ -1613,22 +1613,22 @@
    "title": "GM",
    "birthYear": 2001,
    "rating": 2452,
-   "games": 6,
-   "rank": 24,
-   "change": -17,
-   "previousRank": 16
+   "games": 0,
+   "rank": 23,
+   "change": 0,
+   "previousRank": 24
   },
   {
-   "fideId": "4264312",
-   "name": "Stavroula Tsolakidou",
-   "federation": "GRE",
+   "fideId": "14210444",
+   "name": "Afruza Khamdamova",
+   "federation": "UZB",
    "sex": "F",
-   "title": "IM",
-   "birthYear": 2000,
-   "rating": 2451,
-   "games": 9,
+   "title": "WGM",
+   "birthYear": 2009,
+   "rating": 2447,
+   "games": 0,
    "rank": 25,
-   "change": 10,
+   "change": 0,
    "previousRank": null
   }
  ]
