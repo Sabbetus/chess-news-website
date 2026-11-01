@@ -7,7 +7,7 @@ lens: "tournament-db"
 continent: "europe"
 selectionScore: 23
 reviewStatus: "published"
-socialCopy: "The 29th Bavarian international open at Gmund am Tegernsee has 555 players, the biggest field in our October Europe selection. Arco, Hvar and a NATO championship in Jurmala also made the list."
+socialCopy: "The 29th Bavarian international open at Gmund am Tegernsee had 555 players registered, the biggest field in our October Europe selection. Arco, Hvar and a NATO championship in Jurmala also made the list."
 metaDescription: "October 2026 in European chess: a 555-player Bavarian open, the 48th Arco open, the NATO Chess Championship in Jurmala and classical events from Hvar to Brno."
 aggregateKind: "calendar-biggest"
 continentName: "Europe"
@@ -19,7 +19,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANMSLewisChessmen28.jpg"
 ---
 
-The largest field in our October selection for Europe belongs to the [29. Offene Internationale Bayerische Schachmeister](https://chesstournamentcalendar.com/tournament/29-offene-internationale-bayerische-schachmeister-1434293/), with 555 players registered. It is a classical open in Gmund am Tegernsee, Germany, running nine days from October 31 into November 8, so most of it falls in the following month.
+The largest field in our October selection for Europe was the [29. Offene Internationale Bayerische Schachmeister](https://chesstournamentcalendar.com/tournament/29-offene-internationale-bayerische-schachmeister-1434293/), with 555 players registered. It is a classical open in Gmund am Tegernsee, Germany, running nine days from October 31 into November 8, so most of it falls in the following month.
 
 **Arco and the long classical opens**
 
@@ -27,15 +27,15 @@ In Italy, the [48th International Chess Open Citta di Arco, section A](https://c
 
 Norway's [Fagernes International Autumn 2026 GM-group](https://chesstournamentcalendar.com/tournament/fagernes-international-autumn-2026-gm-group-fide-495349/) shared the October 3 to 11 dates, with an [ELO-group](https://chesstournamentcalendar.com/tournament/fagernes-international-autumn-2026-elo-group-fide-495350/) alongside it. Both ran nine days in Fagernes.
 
-The Netherlands had the [Hoogeveen Open 2026](https://chesstournamentcalendar.com/tournament/hoogeveen-open-2026-1509766/), also nine days, from October 10 to 18. It registered 63 players.
+The Netherlands had the [Hoogeveen Open 2026](https://chesstournamentcalendar.com/tournament/hoogeveen-open-2026-1509766/), also nine days, from October 10 to 18, and drew 63 players.
 
 **Military and coastal events**
 
-The [36th NATO Chess Championship 2026](https://chesstournamentcalendar.com/tournament/36th-nato-chess-championship-2026-1507624/) was held October 12 to 16 at the Baltic Beach Hotel in Jurmala, Latvia. Latvian National Armed Forces Sports Club organized the five-day event, which had 136 players.
+The [36th NATO Chess Championship 2026](https://chesstournamentcalendar.com/tournament/36th-nato-chess-championship-2026-1507624/) was held October 12 to 16 at the Baltic Beach Hotel in Jurmala, Latvia. The Latvian National Armed Forces Sports Club organized the five-day event, which had 136 players.
 
 Croatia's [5. Open Arsenal Hvar 2026](https://chesstournamentcalendar.com/tournament/5-open-arsenal-hvar-2026-1282073/) ran seven days, October 19 to 25, at Arsenal Hvar. Chess Club Hvar organized it, and 145 players signed up.
 
-**Shorter weekends in Germany and beyond**
+**Shorter events in Germany and beyond**
 
 Germany supplied several events of about four days. The [Wormser Nibelungenopen 2026](https://chesstournamentcalendar.com/tournament/wormser-nibelungenopen-2026-a-turnier-1377378/) A-Turnier had 104 players in Worms from October 8 to 11, and its [B-Turnier](https://chesstournamentcalendar.com/tournament/wormser-nibelungenopen-2026-b-turnier-1377379/) had 95.
 
@@ -51,4 +51,4 @@ The month ended with a run of openings on October 30 and 31. Brno hosted the [Br
 
 Romania's [Cupa Orasului Tasnad](https://chesstournamentcalendar.com/tournament/cupa-orasului-tasnad-memorialul-andrei-veron-edi-1456779/) drew 94 players for three days at a thermal-baths pavilion. Malta's [SCC Weekend Classics International Open October](https://chesstournamentcalendar.com/tournament/scc-weekend-classics-international-open-october-1508382/) at Swieqi Chess Club had 35.
 
-Elsewhere, the [Mistrovství Čech mládeže do 16 let Fide Open](https://chesstournamentcalendar.com/tournament/mistrovství-čech-mládeže-do-16-let-fide-open-1440496/) ran eight days at Hotel FitFun Harachov with 70 players. North Macedonia's [Carevi Kuli open](https://chesstournamentcalendar.com/tournament/medjunaroden-open-turnir-carevi-kuli-2026-turnir-1505852/) in Strumica had 69 players over four days.
+Elsewhere, the Czech under-16 youth championship's FIDE open, [Mistrovství Čech mládeže do 16 let Fide Open](https://chesstournamentcalendar.com/tournament/mistrovství-čech-mládeže-do-16-let-fide-open-1440496/) ran eight days at Hotel FitFun Harachov with 70 players. North Macedonia's [Carevi Kuli open](https://chesstournamentcalendar.com/tournament/medjunaroden-open-turnir-carevi-kuli-2026-turnir-1505852/) in Strumica had 69 players over four days.
