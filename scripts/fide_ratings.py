@@ -19,6 +19,7 @@ import io
 import json
 import re
 import sys
+import time
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -41,9 +42,16 @@ MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", 
 FAMILY_NAME_FIRST = {"CHN", "HKG", "TPE", "VIE", "KOR", "PRK", "MGL", "SGP"}
 
 
-def download_list(url: str) -> str:
-    resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=180)
-    resp.raise_for_status()
+def download_list(url: str, attempts: int = 3) -> str:
+    for attempt in range(attempts):
+        try:
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=180)
+            resp.raise_for_status()
+            break
+        except requests.RequestException:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(10 * (attempt + 1))
     with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
         name = next(n for n in zf.namelist() if n.endswith(".txt"))
         return zf.read(name).decode("latin-1")
@@ -141,7 +149,16 @@ def main() -> None:
         print(f"FIDE top 100 already current ({this_month}).")
         return
     try:
-        period, current = parse_list(download_list(CURRENT_URL))
+        try:
+            period, current = parse_list(download_list(CURRENT_URL))
+        except Exception as exc:  # noqa: BLE001 -- the dated file is the same list
+            # This month's dated archive file holds the same list (caught
+            # 2026-11-01: every deploy that day skipped the refresh while the
+            # same download worked from elsewhere).
+            print(f"Current-list download failed ({type(exc).__name__}: {exc}); trying this month's archive file.",
+                  file=sys.stderr)
+            now = datetime.now(timezone.utc)
+            period, current = parse_list(download_list(ARCHIVE_URL.format(mon=MONTHS[now.month - 1], yy=f"{now.year % 100:02d}")))
         if stored.get("period") == period_to_date(period).strftime("%Y-%m") and "--force" not in sys.argv:
             print(f"FIDE hasn't published a newer list yet (still {period}).")
             return
@@ -149,7 +166,9 @@ def main() -> None:
         _, previous = parse_list(download_list(ARCHIVE_URL.format(mon=prev[:3], yy=prev[3:])))
         table = build_table(period, current, previous)
     except Exception as exc:  # noqa: BLE001 -- best-effort, see module docstring
-        print(f"FIDE top 100 refresh skipped ({type(exc).__name__}: {exc}).", file=sys.stderr)
+        # A GitHub Actions warning, not a quiet log line: a skipped refresh
+        # left the October list on the site all of 1 November unnoticed.
+        print(f"::warning::FIDE top 100 refresh skipped ({type(exc).__name__}: {exc}).")
         return
     OUT_PATH.write_text(json.dumps(table, ensure_ascii=False, indent=1) + "\n")
     print(f"Wrote FIDE top 100 and women's top 25 for {table['period']}.")
