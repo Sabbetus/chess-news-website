@@ -821,3 +821,10 @@ def test_published_articles_respect_paragraph_limits():
         if offenders:
             problems.append(f"{path.stem}: {offenders}")
     assert not problems, "\n".join(problems)
+
+
+def test_rating_list_story_gets_score_bonus():
+    total, breakdown = selection.score_item(news("Sindarov Leads On November FIDE Rating List"))
+    assert breakdown["ratingList"] == selection.RATING_LIST_BONUS
+    _, other = selection.score_item(news("Carlsen and Abdusattorov prepare for Total Chess"))
+    assert other["ratingList"] == 0

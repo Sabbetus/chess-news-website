@@ -80,6 +80,12 @@ RATING_LIST_PATTERN = re.compile(
 MAX_RATING_LIST_ARTICLES_PER_DAY = 1
 
 
+# The list story also gets a score bonus, not just a guaranteed slot --
+# user's call 2026-11-01: the November list piece (70) was the day's most
+# interesting story but sat behind a Total Chess prep piece (100).
+RATING_LIST_BONUS = 40
+
+
 def is_rating_list_story(item: dict) -> bool:
     text = f"{item.get('title', '')} {item.get('summary', '')}"
     return bool(RATING_LIST_PATTERN.search(text))
@@ -716,6 +722,7 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
     breakdown["followUp"] = 0 if (feature or governance) else score_follow_up(item)
     breakdown["eliteField"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_elite_field(item)
+    breakdown["ratingList"] = RATING_LIST_BONUS if is_rating_list_story(item) else 0
 
     raw_total = sum(breakdown.values())
     total = _apply_priority_band(raw_total, breakdown, governance)
