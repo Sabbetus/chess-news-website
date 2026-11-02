@@ -1,14 +1,14 @@
 ---
-title: "Firouzja Ends Nakamura's Bullet Brawl Run With 170 Points"
+title: "Firouzja Ends Nakamura's Seven-Win Bullet Brawl Streak"
 publishDate: "2026-11-02"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/alireza-firouzja-wins-bullet-brawl-oct-31-2026"
 lens: "results"
 continent: "global"
 selectionScore: 76
-reviewStatus: "draft"
-socialCopy: "Alireza Firouzja won Bullet Brawl with 170 points, four clear of Hikaru Nakamura, whose record winning streak is over. Ediz Gurel was third, seven further back."
-metaDescription: "Alireza Firouzja won the 232-player Bullet Brawl on 170 points, four ahead of Hikaru Nakamura, ending Nakamura's record run of arena wins."
+reviewStatus: "published"
+socialCopy: "Nakamura led Saturday's Bullet Brawl by 16 points with a quarter to go, then joined a game outside the arena by mistake. Firouzja scored 13.5/15 down the stretch and won on 170, ending Nakamura's seven-week streak."
+metaDescription: "Alireza Firouzja won a Bullet Brawl with Carlsen in the field, scoring 13.5/15 in the last quarter to finish on 170, four ahead of Hikaru Nakamura."
 image:
   src: "./_images/Alireza_Firouzja_2026_Norway_Chess.webp"
   credit: "Ahmed0112, CC0, via Wikimedia Commons"
@@ -16,26 +16,32 @@ image:
   caption: "Alireza Firouzja"
 ---
 
-Hikaru Nakamura's run in the Bullet Brawl arena is over. GM Alireza Firouzja [stormed home to take first place](https://www.chess.com/news/view/alireza-firouzja-wins-bullet-brawl-oct-31-2026) in Saturday's 232-player Bullet Brawl, finishing on 170 points.
+Hikaru Nakamura's Bullet Brawl streak is over. GM Alireza Firouzja [won Saturday's arena](https://www.chess.com/news/view/alireza-firouzja-wins-bullet-brawl-oct-31-2026) on 170 points, four ahead of Nakamura, in what Chess.com called arguably the strongest field in the event's history.
 
-Nakamura took second, four points back. GM Ediz Gurel was a further seven behind Nakamura, and GM Matthias Bluebaum rounded out the top four.
+GM Ediz Gurel was third on 159 and GM Matthias Bluebaum fourth on 136. Nakamura had won the previous seven editions, the last of them [on 178 points](/articles/nakamura-wins-a-seventh-straight-bullet-brawl-with-178-points/).
 
-**How the streak ended**
+**A field with Carlsen in it**
 
-The streak had been record-breaking. The Chess Herald recently covered [Nakamura's seventh straight Bullet Brawl win, on 178 points](/articles/nakamura-wins-a-seventh-straight-bullet-brawl-with-178-points/), and the run has now ended. The source calls the streak a record, so Firouzja has stopped something unprecedented in this event.
+The 232 players included seven super-GMs: Magnus Carlsen, who made a rare appearance logging in from Spain, Nakamura, Firouzja, Maxime Vachier-Lagrave, Arjun Erigaisi, Amin Tabatabaei and Parham Maghsoodloo. Carlsen did not finish in the top 20.
 
-Firouzja's 170 would not have beaten that 178 total. Arena scores depend on field strength and how the points fall, so a lower winning number does not mean a weaker performance. Still, this time he was four ahead of the man who usually finishes first.
+GM Faustino Oro took 10th place, ahead of several of the super-GMs.
 
-The source says Firouzja finished strongly, "stormed home" in its words. That fits his reputation: he is among the best bullet players in the world, and an arena rewards exactly the stamina and nerve that format demands over a long session.
+**Nakamura's lead, and a misclick**
 
-**Why bullet arenas favour consistency**
+Nakamura started with 14/15, beating Firouzja twice along the way. In the first of those games he gave up his queen for a rook and bishop and outplayed him with his pieces. He also beat Bluebaum with the tactical shot 15.Bxe6!!.
 
-In an arena, players keep playing for a fixed period and collect points, so one bad game costs little but a long run of wins compounds. A four-point margin over a field of 232 is narrow in that setting. Nakamura was close enough that a few extra wins at the end might have kept his streak alive.
+By the start of the final quarter he led by 16 points. Then, at the 23-minute mark, he accidentally joined a bullet game outside the arena after refreshing his page, and only noticed when it was over. That cut his lead to 13, with Gurel and Firouzja still in range.
 
-Seven points separated second from third, which suggests the top two pulled clear of the rest. Gurel and Bluebaum are both grandmasters, so even the lower podium places went to strong players.
+**Firouzja's finish**
 
-**Other prizes and what is next**
+Firouzja then scored 13½/15 in the last quarter against top opposition. The decisive game was his last one against Nakamura. Playing the Caro-Kann as Black, he chose 2...d6 instead of the usual 2...d5, steering into an Old Indian setup, and won.
 
-WIM Melika Mohammadi captured the $100 best women's prize.
+An 11-move win over GM Haowen Xue and a 25-move draw with Gurel then gave him the cushion he needed. His final score was 55/73.
 
-The next edition of Bullet Brawl starts on Saturday, November 7, at 12 p.m. ET (18:00 CET, 10:30 p.m. IST). Nakamura will presumably be looking to start a new streak, and Firouzja has shown he can beat him when it counts.
+**The record books**
+
+It was Firouzja's third Bullet Brawl win, putting him equal ninth on the all-time list despite playing far fewer editions than most players around him. Nakamura, who was bidding for his 73rd title, still has 72, more than twice as many as anyone else.
+
+Firouzja took $400, Nakamura $250, Gurel $150 and Bluebaum $100. WIM Melika Mohammadi won the $100 prize for the best woman.
+
+The next Bullet Brawl starts on Saturday, November 7, at 12 p.m. ET (18:00 CET).

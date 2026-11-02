@@ -85,7 +85,10 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 9.**
+- **Current review-acceptance streak: 10.**
+- 2026-11-02: PR #89 review accepted (9 -> 10). User improved one proposed
+  fix: rather than a minimum-length check on Chess.com text, read the body
+  to its real end (the extractor stopped at the first nested </div>).
 - 2026-11-01: PR #87/#88 review accepted (8 -> 9, user's call: minor
   corrections). I called the recap's stale KazChess line a reset; user: the
   round-6 news wasn't out at draft time, so not a reset. User also pointed
@@ -166,6 +169,18 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-02: PR #89 reset (streak stays at 0). Resets: the Panov profile
+  gave the Panov Attack as "3.cxd5" (3.exd5) and had Keres flee to Finland
+  when the Red Army took Estonia "in 1945" (1944, by sea) -- both
+  ChessBase's slips. Borderline (not ruled): the Bullet Brawl piece was
+  drafted from 544 characters -- Chess.com's body was cut at the
+  standings table, missing Carlsen, Nakamura's misqueue and Firouzja's
+  13.5/15 finish (rewritten from the full report). Minor: "1.e4" in the
+  Panov line linked to a Ruy Lopez board, no game caption, Keres relief
+  caption. Fixed at the source: Chess.com text is read to the body's own
+  closing tag (tables kept as rows); a written line is linked only if
+  every move is the game's; lines from move 1 are replayed with
+  python-chess and illegal ones listed in the PR report.
 - 2026-11-01: PR #87 reset (streak stays at 0). Reset: the KazChess round 6
   piece showed the crowded 2015 Berlin hall photo of Dubov again (Commons'
   recorded date 2019) -- his player-page photo was blocked by the photo
@@ -600,8 +615,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-10-31 (PR #86, see above).
-- Earlier resets: 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-11-02 (PR #89, see above).
+- Earlier resets: 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

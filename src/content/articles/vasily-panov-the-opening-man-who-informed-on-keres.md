@@ -6,15 +6,16 @@ sourceUrl: "https://en.chessbase.com/post/vasily-panov-influential-theoretician-
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Vasily Panov gave his name to the Panov Attack. He also wrote a 1950 letter, later found in the KGB archives, accusing Paul Keres of \"anti-Marxist\" theories. Keres won the USSR title that year."
 metaDescription: "Born 1 November 1906, Vasily Panov gave chess the Panov Attack. A letter in the KGB archives shows he also denounced Paul Keres in 1950."
 image:
   src: "./_images/Paul_Keres_relief.webp"
   credit: "Christian David, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APaul_Keres_relief.jpg"
-  caption: "Paul Keres"
+  caption: "Relief of Paul Keres"
 gamePgn: "vasily-panov-the-opening-man-who-informed-on-keres.pgn"
+gameCaption: "Panov's win against Capablanca in a Moscow simultaneous exhibition, 1925"
 ---
 
 Vasily Panov was born on 1 November 1906 in Kozelsk, in the Kaluga region, and he never ranked among the Soviet Union's leading players. His lasting mark is on opening theory, where the Panov Attack still carries his name. [ChessBase's profile of him](https://en.chessbase.com/post/vasily-panov-influential-theoretician-dark-side) also dwells on a darker chapter that changes how his career reads.
@@ -31,9 +32,9 @@ Poor health limited him after 1957. He played his last tournament in 1963, thoug
 
 Panov's real influence came through print. He wrote instructional books and biographies of Chigorin, Capablanca and Alekhine. From 1942 to 1965 he was chess correspondent of Izvestia, and he also wrote for the youth magazine Pionerskaya Pravda.
 
-The Panov Attack arises in the Caro-Kann after [1.e4](#ply-1) c6 2.d4 d5 3.cxd5 cxd5 4.c4. He also studied a 6.g3 fianchetto setup against the Scheveningen Sicilian. The 6.g4 attack against the Scheveningen was originally his idea too, before Paul Keres adopted it in the 1940s and it became known as the Keres Attack.
+The Panov Attack arises in the Caro-Kann after 1.e4 c6 2.d4 d5 3.exd5 cxd5 4.c4. He also studied a 6.g3 fianchetto setup against the Scheveningen Sicilian. The 6.g4 attack against the Scheveningen was originally his idea too, before Paul Keres adopted it in the 1940s and it became known as the Keres Attack.
 
-That detail is worth pausing on. ChessBase suggests that Panov's dislike of Keres may have started there, which is a reading rather than a documented fact.
+ChessBase suggests that Panov's dislike of Keres may have started there, which is a reading rather than a documented fact.
 
 Other Panov work included a plan against the Alekhine Defence (4.Nf3 followed by h3) and a ...Bb7 setup in the Chigorin Variation of the Ruy Lopez. As Black against 1.d4, he backed a structure that later became known as the Czech Benoni.
 
@@ -47,7 +48,7 @@ In his newspaper pieces Panov also cast himself as a "chess inquisitor", attacki
 
 **What it cost Keres**
 
-The stakes were real. Keres had played tournaments in the German Reich during the Nazi era, and when the Red Army occupied Estonia in 1945 he tried to flee to Finland. He was arrested and narrowly avoided deportation to Siberia, then had to come to terms with the new rulers.
+The stakes were real. Keres had played tournaments in the German Reich during the Nazi era, and when the Red Army retook Estonia in 1944 he tried to escape by sea and failed. He narrowly avoided deportation to Siberia, then had to come to terms with the new rulers.
 
 The denunciation had no immediate consequences for him. As a world-class player he was too valuable to Soviet propaganda. He answered over the board by winning the 1950 USSR Championship.
 
