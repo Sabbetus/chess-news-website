@@ -1,5 +1,5 @@
 ---
-title: "Vasily Panov: The Opening Man Who Informed on Keres"
+title: "Vasily Panov: The Opening Theorist Who Denounced Keres"
 publishDate: "2026-11-02"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/vasily-panov-influential-theoretician-dark-side"
