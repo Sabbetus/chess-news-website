@@ -56,13 +56,80 @@ def link_moves(body: str, pgn: str) -> tuple[str, list[str]]:
 
     body = re.sub(r"\[([^\]]+)\]\(#game-embed\)", unwrap, body)
 
+    def link_part(part: str) -> str:
+        # Moves written as one line ("1.e4 c6 2.d4 d5 3.exd5") are linked
+        # only if every numbered move in the line is the game's -- caught
+        # 2026-11-02: the Panov Attack's "1.e4" was linked to a Ruy Lopez
+        # game because its first move happened to match.
+        matches = list(MOVE_RE.finditer(part))
+        runs: list[list[re.Match]] = []
+        for m in matches:
+            if runs and _SEQUENCE_GAP_RE.fullmatch(part[runs[-1][-1].end():m.start()]):
+                runs[-1].append(m)
+            else:
+                runs.append([m])
+        out, pos = [], 0
+        for run in runs:
+            ok = all(_played(m) for m in run)
+            for m in run:
+                out.append(part[pos:m.start()])
+                if ok:
+                    out.append(replace(m))
+                else:
+                    unmatched.append(m.group(0))
+                    out.append(m.group(0))
+                pos = m.end()
+        out.append(part[pos:])
+        return "".join(out)
+
+    def _played(m: re.Match) -> bool:
+        number, black, san = int(m.group(1)), bool(m.group(2)), m.group(3)
+        ply = 2 * number - (0 if black else 1)
+        return 1 <= ply <= len(sans) and _bare(sans[ply - 1]) == _bare(san)
+
     # Existing links are left alone: link text is skipped below.
     out_lines = []
     for line in body.split("\n"):
         # Skip text already inside [..](..) by splitting around links.
         parts = re.split(r"(\[[^\]]*\]\([^)]*\))", line)
-        out_lines.append("".join(p if p.startswith("[") and "](" in p else MOVE_RE.sub(replace, p) for p in parts))
+        out_lines.append("".join(p if p.startswith("[") and "](" in p else link_part(p) for p in parts))
     return "\n".join(out_lines), unmatched
+
+
+# Text between two numbered moves of one written line: nothing, or Black's
+# reply ("1.e4 c6 2.d4").
+_SAN = r"(?:[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|O-O(?:-O)?)[+#]?[!?]{0,2}"
+_SEQUENCE_GAP_RE = re.compile(rf"\s*(?:{_SAN}\s*)?")
+_LINE_START_RE = re.compile(r"(?<![\w.])1\.\s?(?=[KQRBNa-hO])")
+_LINE_TOKEN_RE = re.compile(rf"\s*(?:(\d{{1,3}})(?:\.\.\.|\u2026|\.)\s?)?({_SAN})")
+
+
+def illegal_lines(body: str) -> list[str]:
+    """Lines written from move 1 ("1.e4 c6 2.d4 d5 3.cxd5") that can't be
+    played on a board -- caught 2026-11-02: the Panov Attack given as
+    "3.cxd5" (ChessBase's slip) went into a draft. Returns each bad line
+    up to and including the first illegal move."""
+    import chess
+
+    text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", body)
+    bad = []
+    for start in _LINE_START_RE.finditer(text):
+        board, pos, played = chess.Board(), start.start() + 2, ["1."]
+        while True:
+            m = _LINE_TOKEN_RE.match(text, pos)
+            if not m:
+                break
+            san = re.sub(r"[!?]", "", m.group(2))
+            if m.group(1):
+                played.append(f"{m.group(1)}.")
+            played.append(m.group(2))
+            try:
+                board.push_san(san)
+            except ValueError:
+                bad.append(" ".join(played).replace(". ", ".").replace("1. ", "1."))
+                break
+            pos = m.end()
+    return bad
 
 
 def fix_embed_link(body: str, pgn: str) -> str:

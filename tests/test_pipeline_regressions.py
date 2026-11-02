@@ -828,3 +828,36 @@ def test_rating_list_story_gets_score_bonus():
     assert breakdown["ratingList"] == selection.RATING_LIST_BONUS
     _, other = selection.score_item(news("Carlsen and Abdusattorov prepare for Total Chess"))
     assert other["ratingList"] == 0
+
+
+# --- 2026-11-02: Chess.com body cut at a table; illegal written lines ---
+
+
+def test_chesscom_text_reads_past_nested_divs():
+    from article_text import extract_chesscom_text
+
+    page = (
+        '<div class="post-view-content"><p>Firouzja won on 170.</p>'
+        '<div class="table-content-responsive"><table><tr><td>1</td><td>Firouzja</td></tr></table></div>'
+        '<div class="chess-viewer"><script>x()</script></div>'
+        "<p>Carlsen also played, from Spain.</p></div><div><p>Footer</p></div>"
+    )
+    text = extract_chesscom_text(page)
+    assert "Carlsen also played" in text and "1 | Firouzja" in text
+    assert "Footer" not in text and "x()" not in text
+
+
+def test_written_line_is_linked_only_if_every_move_is_the_games():
+    import game_links
+
+    pgn = '[Event "?"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 *'
+    body, unmatched = game_links.link_moves("Caro-Kann: 1.e4 c6 2.d4 d5. Here 1.e4 e5 2.Nf3 came.", pgn)
+    assert "Caro-Kann: 1.e4 c6 2.d4" in body and "[2.Nf3](#ply-3)" in body
+    assert unmatched == ["1.e4", "2.d4"]
+
+
+def test_illegal_written_lines_are_reported():
+    from game_links import illegal_lines
+
+    assert illegal_lines("Panov: 1.e4 c6 2.d4 d5 3.cxd5 cxd5 4.c4.") == ["1.e4 c6 2.d4 d5 3.cxd5"]
+    assert illegal_lines("Panov: 1.e4 c6 2.d4 d5 3.exd5 cxd5 4.c4, and 1.d4 Nf6.") == []

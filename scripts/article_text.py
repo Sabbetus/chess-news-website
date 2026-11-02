@@ -22,8 +22,6 @@ REQUEST_TIMEOUT = 20
 USER_AGENT = "chess-herald-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
 MAX_ARTICLE_TEXT_CHARS = 12000
 
-_CHESSCOM_BODY_RE = re.compile(r'class="post-view-content">(.*?)</div>', re.DOTALL)
-
 _BLOCK_TAGS = {"p", "h1", "h2", "h3", "h4", "h5", "h6", "li", "blockquote", "tr", "br"}
 _SKIPPED_TAGS = {"script", "style", "iframe", "noscript"}
 # ChessBase embeds product ads inside the story itself (a "cbadsmaindiv"
@@ -93,13 +91,58 @@ def extract_chessbase_text(page_html: str) -> str | None:
     return text[:MAX_ARTICLE_TEXT_CHARS] if text else None
 
 
+class _ChessComBodyParser(HTMLParser):
+    """Text of Chess.com's <div class="post-view-content">, read to the div's
+    own closing tag. The old regex stopped at the first </div> inside the
+    body -- caught 2026-11-02: the Bullet Brawl report was cut at its
+    standings table (544 characters) and the draft missed Carlsen, the
+    misqueue and the whole final quarter. Table rows are kept as text;
+    game viewers and scripts are skipped."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.depth = 0
+        self.skipped = 0
+        self.blocks: list[list[str]] = [[]]
+
+    def _break(self) -> None:
+        if self.blocks[-1]:
+            self.blocks.append([])
+
+    def handle_starttag(self, tag, attrs) -> None:
+        if self.depth == 0:
+            if tag == "div" and "post-view-content" in (dict(attrs).get("class") or "").split():
+                self.depth = 1
+            return
+        if tag == "div":
+            self.depth += 1
+        if tag in _SKIPPED_TAGS:
+            self.skipped += 1
+        elif tag in _BLOCK_TAGS or tag == "div":
+            self._break()
+
+    def handle_endtag(self, tag) -> None:
+        if self.depth == 0:
+            return
+        if tag == "div":
+            self.depth -= 1
+        if tag in _SKIPPED_TAGS:
+            self.skipped = max(0, self.skipped - 1)
+        elif tag in _BLOCK_TAGS or tag == "div":
+            self._break()
+        elif tag in ("td", "th"):
+            self.blocks[-1].append(" | ")
+
+    def handle_data(self, data) -> None:
+        if self.depth and not self.skipped:
+            self.blocks[-1].append(data)
+
+
 def extract_chesscom_text(page_html: str) -> str | None:
-    match = _CHESSCOM_BODY_RE.search(page_html)
-    if not match:
-        return None
-    paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", match.group(1), re.DOTALL)
-    text = " ".join(html.unescape(re.sub(r"<[^>]+>", "", p)).replace("\xa0", " ").strip() for p in paragraphs)
-    text = re.sub(r"\s+", " ", text).strip()
+    parser = _ChessComBodyParser()
+    parser.feed(page_html)
+    paragraphs = [re.sub(r"\s+", " ", "".join(block).replace("\xa0", " ")).strip(" |") for block in parser.blocks]
+    text = "\n\n".join(p.strip() for p in paragraphs if p.strip(" |"))
     return text[:MAX_ARTICLE_TEXT_CHARS] if text else None
 
 
