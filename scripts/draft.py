@@ -39,7 +39,7 @@ from chess_results_standings import (
     standings_markdown_table,
 )
 from continents import CONTINENT_SLUGS
-from game_links import fix_embed_link, link_moves
+from game_links import fix_embed_link, illegal_lines, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import find_game_pgn
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
@@ -2022,6 +2022,9 @@ def draft_one(
     if not is_aggregate and is_rating_list_story(item) and "/rankings/" not in body_markdown:
         body_markdown = body_markdown.rstrip() + "\n\n" + RANKINGS_LINE
     bad_links = check_article_links(body_markdown)
+    bad_lines = illegal_lines(body_markdown)
+    if bad_lines:
+        ILLEGAL_LINE_NOTES.append((slugify(item["title"]), bad_lines))
 
     body_markdown = strip_editor_notes(body_markdown)
 
@@ -2128,6 +2131,8 @@ def game_caption(pgn: str, lens: str | None, this_year: int) -> str | None:
 # match the game, collected per article for the run report.
 GAMES_DIR = ARTICLES_DIR / "_games"
 GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
+# Written lines (from move 1) that can't be played, for the run report.
+ILLEGAL_LINE_NOTES: list[tuple[str, list[str]]] = []
 # Event pages updated from a final-result piece, for the run report.
 EVENT_PAGE_NOTES: list[str] = []
 
@@ -2153,6 +2158,9 @@ def write_run_report(
     if EVENT_PAGE_NOTES:
         lines += ["", "**Event and player pages updated from a final result** (check each page edit):", ""]
         lines += [f"- {note}" for note in EVENT_PAGE_NOTES]
+    if ILLEGAL_LINE_NOTES:
+        lines += ["", "**Illegal move in a written line** (fix before merging -- often the source's own typo):", ""]
+        lines += [f"- {slug} — {'; '.join(bad)}" for slug, bad in ILLEGAL_LINE_NOTES]
     if GAME_LINK_NOTES:
         lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
         lines += [f"- {slug} — {', '.join(moves)}" for slug, moves in GAME_LINK_NOTES]
