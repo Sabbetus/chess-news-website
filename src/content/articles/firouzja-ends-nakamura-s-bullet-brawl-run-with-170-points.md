@@ -14,6 +14,7 @@ image:
   credit: "Ahmed0112, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_2026_Norway_Chess.jpg"
   caption: "Alireza Firouzja"
+gamePgn: "firouzja-ends-nakamura-s-bullet-brawl-run-with-170-points.pgn"
 ---
 
 Hikaru Nakamura's Bullet Brawl streak is over. GM Alireza Firouzja [won Saturday's arena](https://www.chess.com/news/view/alireza-firouzja-wins-bullet-brawl-oct-31-2026) on 170 points, four ahead of Nakamura, in what Chess.com called arguably the strongest field in the event's history.
@@ -34,7 +35,7 @@ By the start of the final quarter he led by 16 points. Then, at the 23-minute ma
 
 **Firouzja's finish**
 
-Firouzja then scored 13½/15 in the last quarter against top opposition. The decisive game was his last one against Nakamura. Playing the Caro-Kann as Black, he chose 2...d6 instead of the usual 2...d5, steering into an Old Indian setup, and won.
+Firouzja then scored 13½/15 in the last quarter against top opposition. The decisive game was his last one against Nakamura. Playing the Caro-Kann as Black, he chose [2...d6](#ply-4) instead of the usual 2...d5, steering into an Old Indian setup, and won.
 
 An 11-move win over GM Haowen Xue and a 25-move draw with Gurel then gave him the cushion he needed. His final score was 55/73.
 

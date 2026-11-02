@@ -861,3 +861,13 @@ def test_illegal_written_lines_are_reported():
 
     assert illegal_lines("Panov: 1.e4 c6 2.d4 d5 3.cxd5 cxd5 4.c4.") == ["1.e4 c6 2.d4 d5 3.cxd5"]
     assert illegal_lines("Panov: 1.e4 c6 2.d4 d5 3.exd5 cxd5 4.c4, and 1.d4 Nf6.") == []
+
+
+def test_arena_game_picked_by_quoted_moves():
+    from game_pgn import pick_game
+
+    first = '[White "Alireza Firouzja"]\n[Black "Hikaru Nakamura"]\n[Result "0-1"]\n\n1. e4 e5 2. Nc3 Nc6 0-1'
+    decider = '[White "Hikaru Nakamura"]\n[Black "Alireza Firouzja"]\n[Result "0-1"]\n\n1. e4 c6 2. Nc3 d6 0-1'
+    body = "Firouzja beat Nakamura with the Caro-Kann, answering with 2...d6."
+    assert pick_game([first, decider], body) == decider
+

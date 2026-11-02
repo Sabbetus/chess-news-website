@@ -16,6 +16,7 @@ Only the main line and a few headers are kept: the source's annotations
 are its own work, not ours to republish.
 """
 
+import html
 import re
 import urllib.parse
 
@@ -26,6 +27,9 @@ TIMEOUT = 30
 KEEP_HEADERS = ("Event", "Site", "Date", "Round", "White", "Black", "Result", "Variant", "SetUp", "FEN")
 PGN_URL_RE = re.compile(r'data-url="([^"]+\.pgn)"', re.IGNORECASE)
 CHESSCOM_DIAGRAM_RE = re.compile(r"diagram_\d+_(\d+)")
+_PGN_TOKEN_RE = re.compile(
+    r"\d+\.|1-0|0-1|1/2-1/2|\*|(?:[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|O-O(?:-O)?|[PNBRQK]?@[a-h][1-8])[+#]?"
+)
 EMBED_RE = re.compile(r"lichess\.org/embed/broadcast/[^/]+/[^/]+/(\w{8})/(\w{8})")
 
 
@@ -64,7 +68,9 @@ def clean_game(game: str) -> str:
     # Annotation glyphs standing as their own token: "N" for a novelty
     # (Chess.com, caught live 2026-10-11 -- it shifted every later move by a
     # ply), and evaluation signs.
-    moves = " ".join(t for t in moves.split() if t not in {"N", "=", "+-", "-+", "+=", "=+", "\u00b1", "\u2213", "\u221e", "\u2a72", "\u2a71"})
+    # Anything else that isn't a move, a move number or the result goes
+    # too (Chess.com's diagram PGNs carry a "\u2612" glyph, caught 2026-11-02).
+    moves = " ".join(t for t in moves.split() if _PGN_TOKEN_RE.fullmatch(t))
     kept = "\n".join(f'[{k} "{head[k]}"]' for k in KEEP_HEADERS if k in head)
     return kept + "\n\n" + " ".join(moves.split()) + "\n"
 
@@ -108,7 +114,21 @@ def pick_game(games: list[str], body: str, player1: str = "", player2: str = "")
         return None
     # A round report names many games; the lead game is the one whose
     # players the article reaches first (2026-10-11, U.S. Championship).
-    return min(in_body, key=lambda pair: pair[0])[1]
+    first = min(spot for spot, _ in in_body)
+    lead = [g for spot, g in in_body if spot == first]
+    if len(lead) > 1:
+        # Several games between the same pair (an arena): the one the
+        # article quotes moves from -- caught 2026-11-02, Firouzja's
+        # 2...d6 win over Nakamura, not Nakamura's earlier win.
+        lead.sort(key=lambda g: -_quoted_in(g, body))
+    return lead[0]
+
+
+def _quoted_in(game: str, body: str) -> int:
+    from game_links import link_moves
+
+    linked, _ = link_moves(body, clean_game(game))
+    return linked.count("](#ply-")
 
 
 def pgn_from_lichess_embed(embed_url: str) -> str | None:
@@ -136,8 +156,43 @@ def _chesscom_diagram_pgns(page: str) -> str | None:
             continue
         for setup in data.get("setup") or []:
             if (setup.get("pgn") or "").strip().startswith("["):
-                games.append(setup["pgn"].strip())
+                games.append(_with_real_names(setup["pgn"].strip()))
+    # An online game's Event is just "Live Chess"; the report's own title
+    # names the event ("Bullet Brawl Oct 31, 2026: Firouzja Snaps...").
+    title = re.search(r"<title>\s*([^<:]+):", page)
+    if title:
+        event = html.unescape(title.group(1)).strip().replace('"', "'")
+        games = [re.sub(r'^\[Event "Live Chess"\]', f'[Event "{event}"]', g, flags=re.MULTILINE) for g in games]
     return "\n\n".join(games) or None
+
+
+_REAL_NAMES: dict[str, str] = {}
+
+
+def _real_name(username: str) -> str:
+    """A Chess.com username's profile name ("Firouzja2003" -> "Alireza
+    Firouzja"), or the username when the profile gives none. Caught
+    2026-11-02: Bullet Brawl games carry usernames only, so no game matched
+    the players the article names and the piece got no board."""
+    key = username.lower()
+    if key not in _REAL_NAMES:
+        name = ""
+        try:
+            response = requests.get(f"https://api.chess.com/pub/player/{urllib.parse.quote(key)}",
+                                    headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT)
+            if response.ok:
+                name = (response.json().get("name") or "").strip()
+        except (requests.RequestException, ValueError):
+            pass
+        _REAL_NAMES[key] = name or username
+    return _REAL_NAMES[key]
+
+
+def _with_real_names(pgn: str) -> str:
+    if '[Site "Chess.com"]' not in pgn:
+        return pgn
+    return re.sub(r'^\[(White|Black) "([^"]+)"\]', lambda m: f'[{m.group(1)} "{_real_name(m.group(2))}"]',
+                  pgn, flags=re.MULTILINE)
 
 
 def pgn_from_source_page(source_url: str) -> str | None:
