@@ -100,6 +100,9 @@ def is_rating_list_story(item: dict) -> bool:
 PROMO_TITLE_PATTERNS = [
     r"^play in\b", r"^get coached\b", r"^sign up\b", r"^register (for|now)\b",
     r"^enter the\b", r"^join (the|us)\b", r"^watch (the|as)\b", r"^try (the|our)\b",
+    # Site features: playable bot sets (caught 2026-11-03: "Challenge the
+    # Grand Chess Auto Bots", a reward promotion, was drafted).
+    r"^challenge (the|our)\b", r"\bbots\b",
     # Not anchored to the start -- this is a site-feature-update framing
     # ("Daily Puzzles Just Got More Exciting"), not something a real news
     # headline about a player/event/tournament result would ever say.

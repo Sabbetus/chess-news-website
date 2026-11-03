@@ -871,3 +871,8 @@ def test_arena_game_picked_by_quoted_moves():
     body = "Firouzja beat Nakamura with the Caro-Kann, answering with 2...d6."
     assert pick_game([first, decider], body) == decider
 
+
+
+def test_bot_promotions_are_skipped():
+    assert selection.is_promotional(news("Challenge the Grand Chess Auto Bots"))
+    assert selection.is_promotional(news("Meet Our New Halloween Bots"))
