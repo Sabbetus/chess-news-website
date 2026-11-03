@@ -40,8 +40,11 @@ const fmt = (iso?: string) =>
 </aside>
 
 <style>
+  /* Same measure as the story body and the game board -- without it the
+     box ran the full page width on desktop (caught 2026-11-03). */
   .tweet-quotes {
-    margin: 2.2em 0 0;
+    max-width: var(--content-width, 680px);
+    margin: 2.2em auto 0;
   }
   .tweet-quotes-label {
     margin: 0 0 12px;
