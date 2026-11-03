@@ -23,9 +23,9 @@ links:
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Javokhir_Sindarov"
 image:
-  src: "../articles/_images/Javoxir_Sindarov.webp"
-  credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavoxir_Sindarov.jpg"
+  src: "../articles/_images/Javokhir_Sindarov_chess_player.webp"
+  credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_chess_player.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
