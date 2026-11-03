@@ -75,6 +75,11 @@
   then the usual fixes/drops/held/pipeline/streak summary and the social
   copies with URLs. The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
+  The quarterly evergreen review works the same way (user's rule,
+  2026-11-03): it fixes, publishes and pushes. It adds a profile for every
+  player in the open top 100 or the women's top list who has none, and
+  never removes a profile (players who drop off the lists keep their
+  pages).
 
 ## Clean-review streak tracker
 
