@@ -60,6 +60,22 @@
   in the same PR (check the edit in review); its Titles list is built from
   the event pages, so it needs no edit.
 
+- **Morning batch: fix and publish** (user's rule, 2026-11-03). The
+  morning check no longer waits for approval. Review the draft PR as
+  always, apply the fixes judged appropriate, drop what existing rules
+  say to drop, publish the rest and push -- this is standing permission
+  for the morning batch only; any other push still needs the user's
+  go-ahead. Hold back (leave as draft) only an article that needs a
+  judgment call no rule covers (a new reason to drop or keep, allegations
+  or legal-sensitive claims, an unclear Russia-rule case). Pipeline fixes
+  for the problems found: small to medium work is done right away, only
+  very large work is left for the user. Tests and the site build must
+  pass before the push. The recap opens with a "please double-check" list
+  (anything not fully certain, with the exact sentence or photo and why),
+  then the usual fixes/drops/held/pipeline/streak summary and the social
+  copies with URLs. The review-acceptance streak now means the user had
+  nothing significant to correct after publishing.
+
 ## Clean-review streak tracker
 
 The user's long-term plan: once a full week of daily batches goes by with
