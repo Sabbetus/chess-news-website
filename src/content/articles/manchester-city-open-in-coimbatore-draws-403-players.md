@@ -1,12 +1,12 @@
 ---
-title: "Manchester City Open in Coimbatore draws 403 players"
+title: "Manchester City Open in Coimbatore Draws 403 Players"
 publishDate: "2026-11-03"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
 continent: "asia"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "A 403-player classical open in Coimbatore topped Asia's October list. Nexchess in New Delhi had 400, and 9-day events ran in Atyrau, Chennai and Bahrain."
 metaDescription: "October 2026 in Asia: the Manchester City Open in Coimbatore drew 403 players, ahead of Nexchess in Delhi, with Azerbaijan and Kazakhstan hosting week-long events."
 aggregateKind: "calendar-biggest"
@@ -47,7 +47,7 @@ The [7th SSS International Below 1800 Rated](https://chesstournamentcalendar.com
 
 Sri Lanka held two youth championships. The [Sri Lanka National Youth Chess Championship 2026](https://chesstournamentcalendar.com/tournament/sri-lanka-national-youth-chess-championship-2026-1518547/) in Mathugama drew 168 players on October 17 and 18. The [National Youth Chess Championship 2026](https://chesstournamentcalendar.com/tournament/national-youth-chess-championship-2026-monaragal-1528261/) in Monaragala started October 31 with 103.
 
-In Bangladesh, the [50th National Chess Championship - 2026, Zone](https://chesstournamentcalendar.com/tournament/50th-national-chess-championship-2026-zone-2-1508211/) was held in Chattogram from October 8 to 12 with 52 players.
+In Bangladesh, the [50th National Chess Championship - 2026, Zone 2](https://chesstournamentcalendar.com/tournament/50th-national-chess-championship-2026-zone-2-1508211/) was held in Chattogram from October 8 to 12 with 52 players.
 
 Iran's [Gilan Paeez Cup 1405](https://chesstournamentcalendar.com/tournament/gilan-paeez-cup-1405-1521068/) in Rasht ran October 27 to 30 with 170 players. In Malaysia, the [Sabah Elite Chess Championship 2026](https://chesstournamentcalendar.com/tournament/sabah-elite-chess-championship-2026-secc-2026-u2-1513257/) opened October 30 at the Sabah International Convention Centre in Kota Kinabalu with 118.
 

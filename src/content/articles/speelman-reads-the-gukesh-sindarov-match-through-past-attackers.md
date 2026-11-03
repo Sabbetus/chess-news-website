@@ -6,13 +6,14 @@ sourceUrl: "https://en.chessbase.com/post/speelman-agony-245"
 lens: "historical-parallel"
 continent: "europe"
 selectionScore: 86
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Jon Speelman picks Sindarov as likely winner in Geneva, and says top players can \"go Yahoo\" when pressed. His evidence: the Nakamura game in St. Louis and Yusupov's 1991 Candidates tiebreak."
 metaDescription: "Jon Speelman expects Sindarov to beat Gukesh in the 14-game Geneva World Championship match, and looks back at Kasparov-Anand 1995 and Yusupov."
 image:
   src: "./_images/Javoxir_Sindarov.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavoxir_Sindarov.jpg"
+  caption: "Javokhir Sindarov"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/2026-clutch-chess-champions-showdown/round-9/GhpkcmaD/uWajdLOz"
 ---
@@ -31,7 +32,7 @@ Speelman points to the twenty-game Kasparov-Anand match of 1995, where he was a 
 
 It came in the game after Anand had broken through against Kasparov's Sicilian Scheveningen.
 
-If a match twice as long as the coming one could go ten games before Kasparov scored with White, a fourteen-game match leaves little time for slow starts. That is one more reason a player who can recover from an early setback has an edge.
+If a 20-game match could go ten games before Kasparov won one with White, a 14-game match leaves little time for slow starts. That is one more reason a player who can recover from an early setback has an edge.
 
 **What the final tune-up showed**
 
@@ -47,4 +48,4 @@ Speelman recalls that Yusupov, a calm and reasonable positional player, could tr
 
 Speelman does not claim the St. Louis game predicts anything in Geneva, only that he is considering whether Sindarov's choices there might affect the match, "if at all". He calls both men brilliant tacticians and hopes that even under almost intolerable strain they produce fierce fighting games.
 
-Over the remaining weeks, he expects both camps to check analysis with human and computer helpers, possibly play training games behind closed doors, and work on physical condition. His next column is due in December, his sixth.
+Over the remaining weeks, he expects both camps to check analysis with human and computer helpers, possibly play training games behind closed doors, and work on physical condition. His next column is due on 6 December.
