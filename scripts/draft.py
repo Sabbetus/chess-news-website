@@ -981,6 +981,15 @@ doesn't give, and keep every claim with the person it belongs to.
 Respond with the headline only."""
 
 
+def photo_is_side_figure(title: str, body: str, person: str) -> bool:
+    """True when the photographed person is neither in the headline nor in
+    the article's opening paragraph -- a side figure the headline should not
+    be rewritten around."""
+    surname = person.split()[-1].lower()
+    opening = next((p for p in body.split("\n\n") if p.strip()), "")
+    return surname not in title.lower() and surname not in opening.lower()
+
+
 def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     """When the photo shows someone the headline doesn't name, a headline
     that does (user's call, 2026-10-31: the Freestyle Friday photo was
@@ -1354,7 +1363,11 @@ game and moves follow -- not to the last name mentioned before it. A description
 gives to someone else is corrected or removed, never kept. For any "defending", "reigning" or \
 "current" champion claim, also check it against OUR RECORDS below the sources: a mismatch \
 there means the claim is wrong. (Caught live 2026-10-22: Chess.com's "defending champion" \
-meant Caruana; the draft gave it to So, the player named just before.)
+meant Caruana; the draft gave it to So, the player named just before.) The same goes for facts \
+told about a description used in place of a name ("the world number-one, who beat X in the Final"): \
+the facts belong to whoever holds that description, so resolve it before writing them down. \
+(Caught 2026-11-04: Chess.com's "the world number-one, who beat Lazavik in the 2025 Semifinal" \
+meant Carlsen; the draft gave the wins to Nakamura.)
 - Event name: if the piece is about a tournament, match or league, the opening paragraph \
 of the body must name it in full (the headline alone doesn't count). If it doesn't, add the \
 name to that paragraph with the smallest possible edit ("Round four in Saint Louis" -> \
@@ -1891,8 +1904,17 @@ def draft_one(
             caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
             if caption:
                 frontmatter["image"] = {**localized, "caption": caption}
-                new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
-                frontmatter["title"] = parsed["title"] = new_title
+                if photo_is_side_figure(frontmatter["title"], parsed.get("bodyMarkdown", ""), caption):
+                    # A headline rewritten around someone the story only
+                    # mentions misleads (caught 2026-11-04: the Al Ain
+                    # opening-day report became "Eline Roebers Trails Girls'
+                    # Leaders..." because she was the only one with a photo).
+                    # Such a photo gives way to a neutral one instead.
+                    print(f"  Photo of side figure {caption} dropped for a neutral one", file=sys.stderr)
+                    frontmatter.pop("image")
+                else:
+                    new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
+                    frontmatter["title"] = parsed["title"] = new_title
     # Every article has a photo: a search hit whose download failed falls
     # back to the committed pool too, not to the site's SVG placeholder.
     if "image" not in frontmatter:

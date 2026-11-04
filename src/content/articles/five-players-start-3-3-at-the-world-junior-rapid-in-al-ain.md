@@ -1,19 +1,18 @@
 ---
-title: "Eline Roebers Trails Girls' Leaders by Half a Point in Al Ain"
+title: "Five Players Start 3/3 at the World Junior Rapid in Al Ain"
 publishDate: "2026-11-04"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/continental-chess-presidents-inaugurate-world-junior-rapid-blitz-championships-in-al-ain/"
 lens: "results"
 continent: "asia"
 selectionScore: 135
-reviewStatus: "draft"
-socialCopy: "Five players in the Open and three in the Girls' section opened with 3/3 at the FIDE World Junior Rapid & Blitz Championships in Al Ain. Nine rapid rounds end Nov. 4, then two blitz days."
+reviewStatus: "published"
+socialCopy: "Five players in the Open and three in the Girls' section opened with 3/3 on day one of the FIDE World Junior Rapid & Blitz Championships in Al Ain. The rapid ends Nov. 4, then two blitz days."
 metaDescription: "After three rapid rounds at the World Junior Rapid & Blitz Championships in Al Ain, five players lead the Open and three lead the Girls' section on 3/3."
 image:
-  src: "./_images/Eline_Roebers_at_the_Tata_Steel_Chess_Tournament_2024.webp"
-  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEline_Roebers_at_the_Tata_Steel_Chess_Tournament_2024.jpg"
-  caption: "Eline Roebers"
+  src: "./_images/Atypical_chess_pieces__3.webp"
+  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
 ---
 
 The fourth FIDE World Junior Rapid & Blitz Chess Championships opened in Al Ain, United Arab Emirates, and [five players in the Open section and three in the Girls' section finished the first day with perfect scores](https://www.fide.com/continental-chess-presidents-inaugurate-world-junior-rapid-blitz-championships-in-al-ain/) after three rapid rounds.
@@ -26,7 +25,7 @@ The Open leaders on 3/3 are Artem Uskov (playing under the FIDE flag), India's P
 
 In the Girls' section, Kazakhstan's Zarina Nurgaliyeva, Valeria Kleymenova (FIDE flag) and Uzbekistan's Umida Omonova share first, also on 3/3.
 
-Half a point back in the Girls' section sit Eline Roebers of the Netherlands, Aliaksandra Tarasenka of Belarus, and Marina Kuznetsova and Margarita Bendik, both playing under the FIDE flag. With six rounds still to play in the rapid, that group is well placed to catch the leaders.
+Half a point back in the Girls' section sit Eline Roebers of the Netherlands, Aliaksandra Tarasenka of Belarus, and Marina Kuznetsova and Margarita Bendik, both playing under the FIDE flag.
 
 **Home players**
 
@@ -35,8 +34,6 @@ Among the UAE players, Hamad Essa Al-Blooshi and Husain Ali Alhammadi each have 
 **Format and schedule**
 
 The rapid part is nine rounds and finishes on November 4. The blitz events follow on November 5 and 6. Because the rapid and blitz are separate competitions, a lead built in the rapid does not carry over to the blitz days.
-
-With only three rounds played in a nine-round rapid, five unbeaten players in the Open is unremarkable. Pairings will start putting the leaders against each other soon, and the number of perfect scores should shrink quickly.
 
 **The ceremony**
 
@@ -47,5 +44,3 @@ He also noted that the championships coincide with Al Ain's designation as the A
 Javier Ochoa, FIDE Honorary Vice-President and President of the Spanish Chess Federation, spoke on behalf of FIDE. Sheikh Sultan then declared the event open and made ceremonial first moves on the top Open and Girls' boards.
 
 Other guests included African Chess Confederation President Bernard Wanjala and José Antonio Carrillo Pujol, President of the Confederation of Chess for the Americas. Hulkar Tohirjonova, President of FIDE's Central Asian Zone, and FIDE Technical Delegate Özgür Solakoğlu also attended.
-
-Round four is the next test for the three-point groups.
