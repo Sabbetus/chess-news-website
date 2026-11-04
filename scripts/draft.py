@@ -283,6 +283,8 @@ same grammatical pattern (e.g. "X is Y." / "X's Z is W." / "X's A is B."). Do no
 default to three-item lists.
 - No false triads ("informs, entertains, and connects"). Say the specific thing.
 - Prefer plain, direct verbs and concrete nouns over hedge-y abstractions.
+- Write "Girls" without an apostrophe for a girls' section or event ("the Girls section", "Girls \
+leaders"), never "Girls'" (user's rule, 2026-11-04).
 - Keep paragraphs short: 2-3 sentences each, one idea per paragraph, hard cap at 3 \
 sentences with no exceptions, AND at most about 50 words (350 characters as a hard \
 ceiling -- move notation and names count in full). Tracking a running word count while you write is not \
