@@ -86,10 +86,13 @@
   copies with URLs. The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
-  2026-11-03): it fixes, publishes and pushes. It adds a profile for every
-  player in the open top 100 or the women's top list who has none, and
-  never removes a profile (players who drop off the lists keep their
-  pages).
+  2026-11-03): it fixes, publishes and pushes, and never removes a profile
+  (players who drop off the lists keep their pages).
+  Missing player pages are created MONTHLY, after each new FIDE list
+  (user's rule, 2026-11-04; scheduled task "Monthly missing player pages",
+  the 2nd of each month): every player in the open top 100 or the women's
+  top list without a page gets one, fact-checked, with a photo, published
+  and pushed. Checking and updating the existing pages stays quarterly.
 
 ## Clean-review streak tracker
 
