@@ -1,5 +1,5 @@
 ---
-title: "Five Players Start 3/3 at the World Junior Rapid in Al Ain"
+title: "Five Lead the Open in Al Ain, Roebers Half a Point Off in the Girls'"
 publishDate: "2026-11-04"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/continental-chess-presidents-inaugurate-world-junior-rapid-blitz-championships-in-al-ain/"
@@ -10,9 +10,10 @@ reviewStatus: "published"
 socialCopy: "Five players in the Open and three in the Girls' section opened with 3/3 on day one of the FIDE World Junior Rapid & Blitz Championships in Al Ain. The rapid ends Nov. 4, then two blitz days."
 metaDescription: "After three rapid rounds at the World Junior Rapid & Blitz Championships in Al Ain, five players lead the Open and three lead the Girls' section on 3/3."
 image:
-  src: "./_images/Atypical_chess_pieces__3.webp"
-  credit: "Tournasol7, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAtypical_chess_pieces_%283%29.jpg"
+  src: "./_images/Eline_Roebers_at_the_Tata_Steel_Chess_Tournament_2024.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AEline_Roebers_at_the_Tata_Steel_Chess_Tournament_2024.jpg"
+  caption: "Eline Roebers"
 ---
 
 The fourth FIDE World Junior Rapid & Blitz Chess Championships opened in Al Ain, United Arab Emirates, and [five players in the Open section and three in the Girls' section finished the first day with perfect scores](https://www.fide.com/continental-chess-presidents-inaugurate-world-junior-rapid-blitz-championships-in-al-ain/) after three rapid rounds.

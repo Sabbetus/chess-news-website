@@ -981,15 +981,6 @@ doesn't give, and keep every claim with the person it belongs to.
 Respond with the headline only."""
 
 
-def photo_is_side_figure(title: str, body: str, person: str) -> bool:
-    """True when the photographed person is neither in the headline nor in
-    the article's opening paragraph -- a side figure the headline should not
-    be rewritten around."""
-    surname = person.split()[-1].lower()
-    opening = next((p for p in body.split("\n\n") if p.strip()), "")
-    return surname not in title.lower() and surname not in opening.lower()
-
-
 def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     """When the photo shows someone the headline doesn't name, a headline
     that does (user's call, 2026-10-31: the Freestyle Friday photo was
@@ -1904,17 +1895,8 @@ def draft_one(
             caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
             if caption:
                 frontmatter["image"] = {**localized, "caption": caption}
-                if photo_is_side_figure(frontmatter["title"], parsed.get("bodyMarkdown", ""), caption):
-                    # A headline rewritten around someone the story only
-                    # mentions misleads (caught 2026-11-04: the Al Ain
-                    # opening-day report became "Eline Roebers Trails Girls'
-                    # Leaders..." because she was the only one with a photo).
-                    # Such a photo gives way to a neutral one instead.
-                    print(f"  Photo of side figure {caption} dropped for a neutral one", file=sys.stderr)
-                    frontmatter.pop("image")
-                else:
-                    new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
-                    frontmatter["title"] = parsed["title"] = new_title
+                new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
+                frontmatter["title"] = parsed["title"] = new_title
     # Every article has a photo: a search hit whose download failed falls
     # back to the committed pool too, not to the site's SVG placeholder.
     if "image" not in frontmatter:
