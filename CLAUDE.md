@@ -106,7 +106,12 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 11.**
+- **Current review-acceptance streak: 0.**
+- 2026-11-04: PR #91 (first fix-and-publish morning) corrected after
+  publishing (11 -> 0): I replaced the Al Ain Roebers photo with a neutral
+  one and changed the pipeline to do the same for side figures, undoing
+  the user's own rule (a photo of a named player, with a headline naming
+  them, beats a generic photo). Both reversed.
 - 2026-11-03: PR #90 review accepted in full (10 -> 11).
 - 2026-11-02: PR #89 review accepted (9 -> 10). User improved one proposed
   fix: rather than a minimum-length check on Chess.com text, read the body
@@ -195,18 +200,17 @@ Update after each batch review, once the user has responded.
   morning). Reset: the Speed Chess Championship XI piece gave Nakamura the
   2025 semi-final win over Lazavik and the 2024/2025 final wins over
   Firouzja -- Chess.com's "the world number-one, who beat..." meant Carlsen.
-  Fixed: the Al Ain opening-day report had been retitled "Eline Roebers
-  Trails Girls' Leaders..." around a side figure's photo (now the original
-  headline and a neutral photo), and its forward-looking lines ("round four
+  Fixed: the Al Ain opening-day report's forward-looking lines ("round four
   is the next test") had passed by publication (FIDE's report came a day
   after the opening day). Minor: Dubov "from Moscow" cut (Russia rule),
   Lazavik "two classical titles", Turlov piece's "carry weight in Turlov's
   circle" guess and a line about FIDE's report. Lazavik's new player page
   got the KazChess win and his Esports World Cup final. Fixed at the
-  source: a photo of someone in neither the headline nor the opening
-  paragraph gives way to a neutral one instead of a retitle; the fact
-  check resolves descriptions used in place of a name before assigning
-  their facts.
+  source: the fact check resolves descriptions used in place of a name
+  before assigning their facts. My swap of the Al Ain photo (Eline
+  Roebers) for a neutral one, and the pipeline change behind it, were
+  reversed (user's call): a named player's photo with a headline naming
+  them is the requested behaviour, to avoid generic photos.
 - 2026-11-03: PR #90 reset (streak stays at 0). Reset: Chess.com's
   "Challenge the Grand Chess Auto Bots" (a bot set with rewards, a site
   promotion) was drafted with the Chess.com logo (dropped). Borderline

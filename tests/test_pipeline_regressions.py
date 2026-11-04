@@ -877,9 +877,3 @@ def test_bot_promotions_are_skipped():
     assert selection.is_promotional(news("Challenge the Grand Chess Auto Bots"))
     assert selection.is_promotional(news("Meet Our New Halloween Bots"))
 
-
-def test_side_figure_photo_does_not_retitle():
-    body = "Five players lead the Open on 3/3 in Al Ain.\n\nHalf a point back sits Eline Roebers."
-    assert draft.photo_is_side_figure("Five Players Start 3/3 in Al Ain", body, "Eline Roebers")
-    assert not draft.photo_is_side_figure("Lazavik Wins KazChess", "Denis Lazavik won.", "Denis Lazavik")
-    assert not draft.photo_is_side_figure("Movahed Wins Freestyle Friday", "Movahed beat leader Nodirbek Yakubboev.", "Nodirbek Yakubboev")
