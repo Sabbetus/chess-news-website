@@ -25,6 +25,16 @@
   drafter adds are meant to be there; flag them only when they are wrong
   or misleading (user's rule, 2026-10-09).
 
+- **Avoiding generic photos outranks everything else in photo choice**
+  (user's rule, 2026-11-04, after I swapped a named player's photo for a
+  neutral pool photo). A real photo of a person in the story -- even a
+  side figure -- beats a generic/neutral image every time; the headline
+  is changed to name them rather than the photo dropped. Never replace a
+  person photo with a generic one, and never add pipeline logic that
+  does, unless the photo itself is wrong (wrong person, front-page
+  duplicate, too old under the 8-year rule, a cropped face). A neutral
+  photo is only for stories where no usable person photo exists.
+
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
