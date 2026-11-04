@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/announcing-speed-chess-championship-
 lens: "historical-parallel"
 continent: "global"
 selectionScore: 110
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen and Nakamura each hold five Speed Chess Championship titles. SCC XI brings Sindarov, Firouzja and Lazavik, a $250,000 fund and live finals in London in February 2027."
 metaDescription: "Chess.com announced Speed Chess Championship XI: 16 players, $250,000, live finals in London in February 2027, with Carlsen and Nakamura level on five titles."
 image:
@@ -30,7 +30,7 @@ Chess.com says they are likely to meet again. That is a reasonable expectation, 
 
 **The challengers**
 
-Two of the people who have beaten Nakamura in an SCC match are in the field: Alireza Firouzja and Denis Lazavik. Carlsen is the only other player to have done it. Nakamura beat Lazavik in the 2025 Semifinal and Firouzja in the Final in both 2024 and 2025.
+Two of the people who have beaten Nakamura in an SCC match are in the field: Alireza Firouzja and Denis Lazavik. Carlsen is the only other player to have done it, and he has stood in both their way: he beat Lazavik in the 2025 Semifinal and Firouzja in the Final in both 2024 and 2025.
 
 Hans Niemann, the 2024 finalist, is also entered. So are Praggnanandhaa Rameshbabu, Nihal Sarin and Turkish GM Yagiz Erdogmus.
 

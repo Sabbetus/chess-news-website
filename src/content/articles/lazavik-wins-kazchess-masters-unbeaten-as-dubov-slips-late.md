@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r9-2"
 lens: "results"
 continent: "asia"
 selectionScore: 97
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Denis Lazavik, 19, won the KazChess Masters in Almaty on 6½/9 without a loss, half a point ahead of Daniil Dubov. Mark Smirnov, 14, took a first GM norm."
 metaDescription: "Denis Lazavik won the KazChess Masters in Almaty on 6½/9, unbeaten, half a point ahead of Daniil Dubov. Mark Smirnov, 14, earned a first GM norm."
 image:
@@ -24,7 +24,7 @@ Daniil Dubov took second on 6/9. Shamsiddin Vokhidov and 14-year-old Kazakh IM M
 
 **How the lead changed hands**
 
-Dubov entered the last three rounds half a point clear of Lazavik and Vokhidov. The turning point came in round seven. Dubov, 30, from Moscow, did not make the most of a clearly better endgame and was held to a draw by Sauat Nurgaliyev.
+Dubov entered the last three rounds half a point clear of Lazavik and Vokhidov. The turning point came in round seven. Dubov, 30, did not make the most of a clearly better endgame and was held to a draw by Sauat Nurgaliyev.
 
 That same day Lazavik beat Alua Nurman with Black to join Dubov on 5/7. In round eight Lazavik beat Nurgaliyev with White and went ahead. Dubov drew with Hakobyan, and Vokhidov beat Nurman to reach 5½/8.
 
@@ -40,7 +40,7 @@ Hakobyan pressed for a while in a minor-piece endgame, aiming at Black's isolate
 
 The title follows his win at the 2025 Abu Dhabi Masters. Lazavik is best known as a formidable online blitz and bullet player, and he reached the final of this year's Esports World Cup, where he lost to Magnus Carlsen.
 
-Two classical titles suggest his game travels well to slower time controls. A clean, unbeaten run against a ten-player field that included Dubov and the top seed Muradli supports that reading.
+A clean, unbeaten run against a ten-player field that included Dubov and the top seed Muradli suggests his game travels well to slower time controls.
 
 **Smirnov's norm**
 

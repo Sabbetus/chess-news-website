@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fide-president-timur-turlov-meets-akaki-iashvil
 lens: "people"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE President Timur Turlov met Georgian federation head Akaki Iashvili: the 2027-28 calendar, a rebuilt Tbilisi Chess Palace, chess in kindergartens and a possible World Chess Championship for Miners."
 metaDescription: "FIDE President Timur Turlov met Georgian federation president Akaki Iashvili to discuss the 2027-28 calendar, Tbilisi's Chess Palace and a miners' championship."
 image:
@@ -18,13 +18,11 @@ image:
 
 FIDE President Timur Turlov [met Akaki Iashvili](https://www.fide.com/fide-president-timur-turlov-meets-akaki-iashvili-to-discuss-future-events-and-chess-development/), president of the Georgian Chess Federation and the FIDE President's Representative for Special Projects. The talks ranged over competition formats, the 2027-28 calendar and a handful of Georgian projects.
 
-Iashvili holds two hats here, which explains the mix. One is a national federation chief with local plans to pitch. The other is a representative tied to the president's own office, so his views on events carry some weight in Turlov's circle.
+His two roles explain the mix: national plans from the federation chief, and international events from the representative attached to the president's office.
 
 **Looking back at Samarkand**
 
 The two reviewed the recent FIDE elections in Uzbekistan and the Olympiad in Samarkand. FIDE's account says they paid particular attention to sporting results, organisational matters and how the event was run overall.
-
-No verdicts were published, so there is nothing to say about what they judged a success or a problem.
 
 **The 2027-28 calendar**
 
