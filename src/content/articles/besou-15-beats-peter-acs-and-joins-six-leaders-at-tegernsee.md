@@ -17,7 +17,7 @@ image:
 gamePgn: "besou-15-beats-peter-acs-and-joins-six-leaders-at-tegernsee.pgn"
 ---
 
-Round five of the 29th Open International Bavarian Chess Championship, a nine-round Swiss at Gut Kaltenbrunn on Lake Tegernsee, [left six players tied on 4½/5](https://en.chessbase.com/post/tegernsee-open-2026-r5). Three of them are Indian grandmasters. One is a 15-year-old German IM: Hussain Besou.
+Round five of the 29th [Open International Bavarian Chess Championship](/events/open-international-bavarian-chess-championship/), a nine-round Swiss at Gut Kaltenbrunn on Lake Tegernsee, [left six players tied on 4½/5](https://en.chessbase.com/post/tegernsee-open-2026-r5). Three of them are Indian grandmasters. One is a 15-year-old German IM: Hussain Besou.
 
 Besou, playing White, beat seventh seed Peter Acs. The Hungarian grandmaster is 45 and won the World Junior Championship in 2001, ten years before Besou was born.
 
