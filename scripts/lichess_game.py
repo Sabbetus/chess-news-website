@@ -120,6 +120,10 @@ def _tag_tokens(tag_value: str) -> set[str]:
     every individual word (comma stripped) rather than picking one
     position as "the surname" is what makes the caller's match tolerant of
     both without needing to know which format a given game used."""
+    # A team or region tag glued to the name ("Xiao, Tong(QD)") is dropped
+    # (caught 2026-11-05: "tong(qd)" never matched "tong", so the Ding-Xiao
+    # quarterfinal wasn't found on Lichess).
+    tag_value = re.sub(r"\([^)]*\)", " ", tag_value)
     return {t.strip(",").lower() for t in tag_value.replace(",", " ").split()}
 
 

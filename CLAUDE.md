@@ -209,6 +209,20 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-05: PR #92 reset (streak stays at 0). Reset: the Eugenio Torre
+  birthday piece said he "turns 75 today" on the 5th (his birthday is
+  4 November). Fixed: the Bavarian Championship headline had been retitled
+  around the Svane photo ("Top Seed Svane Draws Rithvik Raja...") and lost
+  the story -- photo kept, headline now names both ("Besou, 15, Joins the
+  Tegernsee Leaders, Top Seed Svane Half a Point Back"); the Chinese
+  Rapid board was a drawn rapid game, not the blitz tiebreak that knocked
+  Ding out. Minor: Titled Tuesday "split $400 apiece" ($400 each),
+  calendar "in San Jose" (San Pedro) and a "Mexico and Texas" heading over
+  a New Jersey event, Torre photo and game captions. Fixed at the source:
+  a photo retitle must keep the old headline's lead name (one retry); a
+  knockout or arena pair's board takes the quoted game, else the last
+  decisive one, on source PGNs too; Lichess name matching drops tags like
+  "(QD)".
 - 2026-11-04: PR #91 reset (streak stays at 0; first fix-and-publish
   morning). Reset: the Speed Chess Championship XI piece gave Nakamura the
   2025 semi-final win over Lazavik and the 2024/2025 final wins over
@@ -679,8 +693,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-11-04 (PR #91, see above).
-- Earlier resets: 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-11-05 (PR #92, see above).
+- Earlier resets: 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"
 continent: "north-america"
 selectionScore: 23
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "October in North America: IM and GM norm invitationals in Bellevue and Milpitas, a 142-player Thanksgiving open in Canada, and a nine-day Grand Prix in Costa Rica."
 metaDescription: "October 2026 in North America: norm invitationals in Washington and California, Canada's 142-player Chess4win Thanksgiving, and a nine-day event in Costa Rica."
 aggregateKind: "calendar-biggest"
@@ -39,11 +39,11 @@ Winnipeg hosted the [4th Maria Helena Classical Tournament-Open](https://chessto
 
 Costa Rica supplied the longest event of the month. The [Tercer Abierto Grand Prix 2026](https://chesstournamentcalendar.com/tournament/tercer-abierto-grand-prix-2026-lista-preliminar-1513182/) ran nine days, October 10 to 18, in Alajuela with 41 players.
 
-Two shorter Costa Rican events had big fields. The [Festival de Divisiones ASOAGO 2026](https://chesstournamentcalendar.com/tournament/festival-de-divisiones-asoago-2026-1509398/) in San José had 100 players over two days. The [Torneo Clasificatorio AGUA](https://chesstournamentcalendar.com/tournament/lista-inicial-torneo-clasificatorio-agua-202-1517143/) in Cartago had 95.
+Two shorter Costa Rican events had big fields. The [Festival de Divisiones ASOAGO 2026](https://chesstournamentcalendar.com/tournament/festival-de-divisiones-asoago-2026-1509398/) in San Pedro, near San José, had 100 players over two days. The [Torneo Clasificatorio AGUA](https://chesstournamentcalendar.com/tournament/lista-inicial-torneo-clasificatorio-agua-202-1517143/) in Cartago had 95.
 
 In Cuba, the [Copa Artemisa Open 2026](https://chesstournamentcalendar.com/tournament/copa-artemisa-open-2026-1520296/) ran five days with 39 players. The [Aruba Chess Challenge 2026 OPEN](https://chesstournamentcalendar.com/tournament/aruba-chess-challenge-2026-open-1511254/) at the Radisson Blu ran October 15 to 18 with 28.
 
-**Mexico and Texas**
+**Mexico and the United States**
 
 Mexico's [Festival Nacional e Internacional de Ajedrez](https://chesstournamentcalendar.com/tournament/festival-nacional-e-internacional-de-ajedrez-quer-1495103/) in Querétaro had 41 players over October 2 to 4. In Colima, the [LXVIII Nacional Deportivo TecNM](https://chesstournamentcalendar.com/tournament/lxviii-nacional-deportivo-tecnm-2026ajedrez-indivi-1513012/) ran five days with 32.
 

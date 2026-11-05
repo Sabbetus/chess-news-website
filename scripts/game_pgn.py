@@ -117,10 +117,19 @@ def pick_game(games: list[str], body: str, player1: str = "", player2: str = "")
     first = min(spot for spot, _ in in_body)
     lead = [g for spot, g in in_body if spot == first]
     if len(lead) > 1:
-        # Several games between the same pair (an arena): the one the
-        # article quotes moves from -- caught 2026-11-02, Firouzja's
-        # 2...d6 win over Nakamura, not Nakamura's earlier win.
-        lead.sort(key=lambda g: -_quoted_in(g, body))
+        # Several games between the same pair (an arena, a knockout match):
+        # the one the article quotes moves from -- caught 2026-11-02,
+        # Firouzja's 2...d6 win over Nakamura, not Nakamura's earlier win.
+        # When the moves don't tell them apart, the last decisive game, the
+        # one that settled it, like the Lichess lookup -- caught 2026-11-05:
+        # Ding's exit to Xiao Tong showed a drawn rapid game, not the blitz
+        # tiebreak Xiao won.
+        quoted = [_quoted_in(g, body) for g in lead]
+        best = max(quoted)
+        if best > 0:
+            return lead[quoted.index(best)]
+        decisive = [g for g in lead if headers(g).get("Result") in ("1-0", "0-1")]
+        return (decisive or lead)[-1]
     return lead[0]
 
 

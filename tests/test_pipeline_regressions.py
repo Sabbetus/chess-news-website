@@ -877,3 +877,20 @@ def test_bot_promotions_are_skipped():
     assert selection.is_promotional(news("Challenge the Grand Chess Auto Bots"))
     assert selection.is_promotional(news("Meet Our New Halloween Bots"))
 
+
+
+def test_lichess_name_tokens_drop_region_tags():
+    import lichess_game
+    assert "tong" in lichess_game._tag_tokens("Xiao, Tong(QD)")
+
+
+def test_knockout_board_takes_last_decisive_game():
+    from game_pgn import pick_game
+    g = lambda w, b, r: f'[White "{w}"]\n[Black "{b}"]\n[Result "{r}"]\n\n1. e4 e5 {r}'
+    games = [g("Xiao, Tong", "Ding, Liren", "1/2-1/2"), g("Ding, Liren", "Xiao, Tong", "1/2-1/2"), g("Xiao, Tong", "Ding, Liren", "1-0")]
+    assert pick_game(games, "Ding Liren lost to Xiao Tong in blitz.")[-30:].endswith("1-0")
+
+
+def test_retitle_keeps_headline_lead_name():
+    assert draft._headline_lead_name("Besou, 15, Beats Peter Acs", "Hussain Besou beat Acs.") == "Besou"
+    assert draft._headline_lead_name("Five Players Start 3/3", "Five players lead.") == ""

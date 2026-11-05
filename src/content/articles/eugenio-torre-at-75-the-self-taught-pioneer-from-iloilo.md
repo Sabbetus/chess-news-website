@@ -6,18 +6,19 @@ sourceUrl: "https://en.chessbase.com/post/eugenio-torre-75-years-birthday"
 lens: "people"
 continent: "asia"
 selectionScore: 86
-reviewStatus: "draft"
-socialCopy: "Eugenio Torre, Asia's first grandmaster, turns 75. Self-taught, a record 23 Olympiads, Fischer's second in 1992. A look at what his career built in the Philippines."
-metaDescription: "Eugenio Torre, Asia's first grandmaster, turns 75 on 4 November. A look at his self-taught rise, 23 Olympiads and his friendship with Bobby Fischer."
+reviewStatus: "published"
+socialCopy: "Eugenio Torre, Asia's first grandmaster, has turned 75. Self-taught, a record 23 Olympiads, Fischer's second in 1992. A look at what his career built in the Philippines."
+metaDescription: "Eugenio Torre, Asia's first grandmaster, turned 75 on 4 November. A look at his self-taught rise, 23 Olympiads and his friendship with Bobby Fischer."
 image:
   src: "./_images/GM_Torre_Eugenio_receives_his_medal__29800524832.webp"
   credit: "Andreas Kontokanis from Piraeus, Greece, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGM_Torre_Eugenio_receives_his_medal_%2829800524832%29.jpg"
-  caption: "Eugenio Torre"
+  caption: "Eugenio Torre (left) receives his board medal at the 2016 Olympiad in Baku"
 gamePgn: "eugenio-torre-at-75-the-self-taught-pioneer-from-iloilo.pgn"
+gameCaption: "Torre's win over Karpov in Manila, 1976"
 ---
 
-Eugenio Torre turns 75 today, and [ChessBase marks the birthday](https://en.chessbase.com/post/eugenio-torre-75-years-birthday) of the man who became the first Asian to earn the grandmaster title, in 1974. Born on 4 November 1951 in Iloilo City, on the island of Panay, he was the seventh of ten children.
+Eugenio Torre turned 75 on 4 November, and [ChessBase marked the birthday](https://en.chessbase.com/post/eugenio-torre-75-years-birthday) of the man who became the first Asian to earn the grandmaster title, in 1974. Born on 4 November 1951 in Iloilo City, on the island of Panay, he was the seventh of ten children.
 
 What stands out in the biography is how little formal help he had. His lawyer father taught all the children chess, and the family made pieces from leather scraps supplied by a shoemaker. Torre had no coach and learned from a few instructional books and from playing through games in Chess Informant.
 

@@ -1,12 +1,12 @@
 ---
-title: "Top Seed Svane Draws Rithvik Raja, Stays Half a Point Back"
+title: "Besou, 15, Joins the Tegernsee Leaders, Top Seed Svane Half a Point Back"
 publishDate: "2026-11-05"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r5"
 lens: "results"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "German IM Hussain Besou, 15, beat 2001 world junior champion Peter Acs and shares the lead on 4½/5 at the Bavarian Championship in Tegernsee with three Indian GMs, Piorun and Can."
 metaDescription: "Fifteen-year-old IM Hussain Besou beat Peter Acs in round five and shares the lead on 4½/5 at the Bavarian Championship in Tegernsee."
 image:
