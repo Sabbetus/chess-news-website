@@ -119,7 +119,11 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 0.**
+- **Current review-acceptance streak: 1.**
+- 2026-11-05: PR #92 accepted ("everything seems solid", 0 -> 1). User's
+  follow-ups were new requests, not corrections: a Bavarian Championship
+  event page, and scoring changes (an event-page bonus, a smaller
+  anniversary feature bonus).
 - 2026-11-04: PR #91 (first fix-and-publish morning) corrected after
   publishing (11 -> 0): I replaced the Al Ain Roebers photo with a neutral
   one and changed the pipeline to do the same for side figures, undoing

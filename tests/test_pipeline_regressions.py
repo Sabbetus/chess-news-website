@@ -894,3 +894,15 @@ def test_knockout_board_takes_last_decisive_game():
 def test_retitle_keeps_headline_lead_name():
     assert draft._headline_lead_name("Besou, 15, Beats Peter Acs", "Hussain Besou beat Acs.") == "Besou"
     assert draft._headline_lead_name("Five Players Start 3/3", "Five players lead.") == ""
+
+
+def test_event_page_bonus_for_events_with_a_page():
+    assert selection.score_event_page("Bavarian Championship: 15-year-old Besou joins the leaders") == selection.EVENT_PAGE_BONUS
+    assert selection.score_event_page("Rilton Cup: Xu Xiangyu wins") == selection.EVENT_PAGE_BONUS
+    assert selection.score_event_page("Firouzja wins Titled Tuesday") == 0
+
+
+def test_anniversary_features_get_the_smaller_bonus():
+    assert selection.is_anniversary_story(news("Eugenio Torre: Asia's first grandmaster turns 75"))
+    assert selection.is_anniversary_story(news("Vasily Panov", "Born on 1 November 1906, Vasily Panov was..."))
+    assert not selection.is_anniversary_story(news("Hou Yifan opens up about her return"))

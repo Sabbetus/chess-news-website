@@ -194,6 +194,21 @@ GOVERNANCE_TITLE_RE = re.compile(
 # testing: the Olympic winners' interview scored 127 against round reports'
 # 112-121).
 FEATURE_BONUS = 40
+# Birthday and anniversary pieces get a smaller bonus and skip the feature
+# band (user's call, 2026-11-05: ChessBase's Torre 75th-birthday portrait
+# scored 86 and outranked a live Bavarian Championship report, 67). They can
+# run any day; an event's news can't.
+FEATURE_ANNIVERSARY_BONUS = 20
+_ANNIVERSARY_RE = re.compile(
+    r"\bturns \d{2,3}\b|\bbirthday\b|\banniversary\b|\b\d{2,3} years ago\b|\bwould have (?:been|turned) \d{2,3}\b"
+    r"|\bborn (?:on )?\d{1,2} \w+ \d{4}\b",
+    re.IGNORECASE,
+)
+
+
+def is_anniversary_story(item: dict) -> bool:
+    lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:300]}"
+    return bool(_ANNIVERSARY_RE.search(lead))
 # Keyword hits in a feature's full text (thousands of characters, so nearly
 # every generic keyword lands) are capped lower so they can't lift it into
 # the results band.
@@ -696,6 +711,34 @@ def _elite_name_tokens() -> list[set[str]]:
     return _elite_tokens_cache
 
 
+# An event we gave its own event page is one we've judged notable (user's
+# call, 2026-11-05: the Bavarian Championship's round report got no event
+# bonus at all). A report naming one in its headline or opening gets this.
+EVENT_PAGE_BONUS = 25
+EVENTS_DIR = Path(__file__).resolve().parent.parent / "src" / "content" / "events"
+_EVENT_ALIASES: list[re.Pattern] | None = None
+
+
+def _event_page_patterns() -> list[re.Pattern]:
+    global _EVENT_ALIASES
+    if _EVENT_ALIASES is None:
+        names = set()
+        for path in EVENTS_DIR.glob("*.md"):
+            text = path.read_text(encoding="utf-8")
+            name = re.search(r'^name:\s*"([^"]+)"', text, re.MULTILINE)
+            if name:
+                names.add(name.group(1))
+            block = re.search(r"^aliases:\n((?:\s+- .*\n)+)", text, re.MULTILINE)
+            if block:
+                names.update(m.strip().strip('"') for m in re.findall(r"-\s*(.+)", block.group(1)))
+        _EVENT_ALIASES = [re.compile(r"(?<![\w])" + re.escape(n) + r"(?![\w])", re.IGNORECASE) for n in names if len(n) >= 4]
+    return _EVENT_ALIASES
+
+
+def score_event_page(lead: str) -> int:
+    return EVENT_PAGE_BONUS if any(p.search(lead) for p in _event_page_patterns()) else 0
+
+
 def score_elite_field(item: dict) -> int:
     lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:400]}".lower()
     words = set(re.findall(r"[a-z][\w'-]+", lead))
@@ -720,15 +763,17 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     if breakdown["majorTournament"] and PREVIEW_TITLE_RE.search(item.get("title", "")):
         breakdown["majorTournament"] = MAJOR_EVENT_PREVIEW_BONUS
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
-    breakdown["feature"] = FEATURE_BONUS if feature else 0
+    anniversary = feature and is_anniversary_story(item)
+    breakdown["feature"] = (FEATURE_ANNIVERSARY_BONUS if anniversary else FEATURE_BONUS) if feature else 0
     breakdown["specificity"] = score_specificity(item)
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
     breakdown["followUp"] = 0 if (feature or governance) else score_follow_up(item)
     breakdown["eliteField"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_elite_field(item)
     breakdown["ratingList"] = RATING_LIST_BONUS if is_rating_list_story(item) else 0
+    breakdown["eventPage"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_event_page(lead)
 
     raw_total = sum(breakdown.values())
-    total = _apply_priority_band(raw_total, breakdown, governance)
+    total = raw_total if anniversary else _apply_priority_band(raw_total, breakdown, governance)
     if total != raw_total:
         breakdown["bandAdjustment"] = total - raw_total
     return total, breakdown
