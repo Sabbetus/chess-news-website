@@ -5,7 +5,7 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r5"
 lens: "results"
 continent: "europe"
-selectionScore: 67
+selectionScore: 92
 reviewStatus: "published"
 socialCopy: "German IM Hussain Besou, 15, beat 2001 world junior champion Peter Acs and shares the lead on 4½/5 at the Bavarian Championship in Tegernsee with three Indian GMs, Piorun and Can."
 metaDescription: "Fifteen-year-old IM Hussain Besou beat Peter Acs in round five and shares the lead on 4½/5 at the Bavarian Championship in Tegernsee."

@@ -5,7 +5,7 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/eugenio-torre-75-years-birthday"
 lens: "people"
 continent: "asia"
-selectionScore: 86
+selectionScore: 72
 reviewStatus: "published"
 socialCopy: "Eugenio Torre, Asia's first grandmaster, has turned 75. Self-taught, a record 23 Olympiads, Fischer's second in 1992. A look at what his career built in the Philippines."
 metaDescription: "Eugenio Torre, Asia's first grandmaster, turned 75 on 4 November. A look at his self-taught rise, 23 Olympiads and his friendship with Bobby Fischer."
