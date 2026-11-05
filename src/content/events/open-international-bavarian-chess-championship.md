@@ -58,6 +58,11 @@ winners:
   - { year: 1999, names: ["Alexander Shabalov"] }
   - { year: 1998, names: ["Alexander Khalifman"] }
   - { year: 1997, names: ["Gerald Hertneck"], note: "1st edition" }
+image:
+  src: "../articles/_images/AminTabatabaei23.webp"
+  credit: "Stefan64, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAminTabatabaei23.jpg"
+  caption: "Amin Tabatabaei, champion 2025"
 reviewStatus: "published"
 updatedDate: "2026-11-05"
 ---
