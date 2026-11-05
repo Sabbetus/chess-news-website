@@ -35,6 +35,15 @@
   duplicate, too old under the 8-year rule, a cropped face). A neutral
   photo is only for stories where no usable person photo exists.
 
+- **Never publish an article, player page or event page without a photo**
+  (2026-11-05, after the Bavarian Championship event page went out bare
+  while two photos of its champion sat in our own image store). Check
+  src/content/articles/_images first (and how other pages of the same
+  kind are illustrated -- event pages show a recent champion), then
+  Commons. Only if both fail, say so plainly; a Commons rate limit is not
+  a reason to skip the local store. (Georg Meier's player page is the one
+  known gap: his only usable photo is blocked by Wikimedia rate limits.)
+
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
