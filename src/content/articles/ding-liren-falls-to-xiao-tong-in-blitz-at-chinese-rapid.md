@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/chinese-rapid-championship-2026-quarte
 lens: "results"
 continent: "asia"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Ding Liren and Wang Hao are out of the Chinese Rapid Championship. Xiao Tong beat Ding in a blitz tiebreak, and Yu Yangyi is the only higher-rated player left in the semifinals."
 metaDescription: "Ding Liren lost to Xiao Tong in blitz and Wang Hao fell to Xu Xiangyu in the Chinese Rapid quarterfinals. Yu Yangyi is the top seed left."
 image:
@@ -15,6 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADing_Liren_46th_fide_chess_olympiad.jpg"
   caption: "Ding Liren"
 gamePgn: "ding-liren-falls-to-xiao-tong-in-blitz-at-chinese-rapid.pgn"
+gameCaption: "The second blitz tiebreak, which Xiao won to knock Ding out"
 ---
 
 The fifth Chinese Rapid Championship, played in Shaoxing from 2 to 6 November, [lost two of its biggest names in the quarterfinals](https://en.chessbase.com/post/chinese-rapid-championship-2026-quarterfinals). Former world champion Ding Liren went out to Xiao Tong in a blitz tiebreak, and Wang Hao lost to Xu Xiangyu. Three of the four rating favourites failed to reach the last four.

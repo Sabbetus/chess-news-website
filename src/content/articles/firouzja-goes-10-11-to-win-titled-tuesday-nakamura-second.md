@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/firouzja-wins-titled-tuesday-novembe
 lens: "results"
 continent: "global"
 selectionScore: 66
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja won Titled Tuesday on 10/11, unbeaten, beating Nakamura in round 10. Eight players also locked up Speed Chess Championship XI spots, and the perfect-score bounty rises to $6,000."
 metaDescription: "Alireza Firouzja won Titled Tuesday on November 3 with an unbeaten 10/11, and eight players qualified for Speed Chess Championship XI."
 image:
@@ -39,7 +39,7 @@ Elsewhere, Caruana beat Niemann after a sudden endgame turnaround. That kept him
 
 Firouzja took $2,500 for first. Nakamura finished second on 9.5 after beating GM Maxim Matlakov, and collected $1,500.
 
-Niemann took third on 9 with a win over IM Aleksandr Usov, worth $1,000. Caruana was fourth on 9 for $700. Duda and FM Hamidreza Tahmasebi also scored 9 and split $400 apiece for fifth and sixth.
+Niemann took third on 9 with a win over IM Aleksandr Usov, worth $1,000. Caruana was fourth on 9 for $700. Duda and FM Hamidreza Tahmasebi also scored 9 and took $400 each for fifth and sixth.
 
 Nobody scored 11/11, so the perfect-score bounty rises again. It stood at $5,750 this week and moves to an even $6,000 next Tuesday.
 

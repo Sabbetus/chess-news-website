@@ -983,6 +983,19 @@ doesn't give, and keep every claim with the person it belongs to.
 Respond with the headline only."""
 
 
+_NOT_A_NAME = {"the", "a", "an", "five", "four", "three", "two", "six", "seven", "eight", "nine", "ten",
+               "weekly", "how", "why", "what", "who", "when", "top", "new", "first", "last"}
+
+
+def _headline_lead_name(title: str, body: str) -> str:
+    """The headline's opening name ("Besou" in "Besou, 15, Beats..."), when
+    it starts with one the body also uses; else ''."""
+    m = re.match(r"([A-Z][\w'-]+)", title)
+    if not m or m.group(1).lower() in _NOT_A_NAME:
+        return ""
+    return m.group(1) if m.group(1) in body else ""
+
+
 def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     """When the photo shows someone the headline doesn't name, a headline
     that does (user's call, 2026-10-31: the Freestyle Friday photo was
@@ -992,20 +1005,34 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     surname = person.split()[-1].lower()
     if surname in title.lower():
         return title
-    try:
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=2048,
-            output_config={"effort": "low"},
-            system=_RETITLE_PROMPT,
-            messages=[{"role": "user", "content": f"PERSON IN THE PHOTO: {person}\n\nCURRENT HEADLINE: {title}\n\nARTICLE BODY:\n{body}"}],
-        )
-        new = "".join(b.text for b in response.content if b.type == "text").strip().strip('"').strip()
-    except Exception as exc:  # noqa: BLE001 -- the old headline is still a headline
-        print(f"  Headline/photo match failed: {exc}", file=sys.stderr)
+    # The current headline's lead name stays in the new one (caught
+    # 2026-11-05: "Besou, 15, Beats Peter Acs and Joins Six Leaders..."
+    # became "Top Seed Svane Draws Rithvik Raja..." -- the photo was right,
+    # the story was lost).
+    keep = _headline_lead_name(title, body)
+    note = f"\n\nTHE NEW HEADLINE MUST ALSO NAME: {keep} (the story's main subject)" if keep else ""
+    candidate = None
+    for _ in range(2):
+        try:
+            response = client.messages.create(
+                model=MODEL,
+                max_tokens=2048,
+                output_config={"effort": "low"},
+                system=_RETITLE_PROMPT,
+                messages=[{"role": "user", "content": f"PERSON IN THE PHOTO: {person}\n\nCURRENT HEADLINE: {title}{note}\n\nARTICLE BODY:\n{body}"}],
+            )
+            new = "".join(b.text for b in response.content if b.type == "text").strip().strip('"').strip()
+        except Exception as exc:  # noqa: BLE001 -- the old headline is still a headline
+            print(f"  Headline/photo match failed: {exc}", file=sys.stderr)
+            break
+        if surname not in new.lower() or not (30 <= len(new) <= 80) or "\n" in new:
+            continue
+        candidate = new
+        if not keep or keep.lower() in new.lower():
+            break
+    if not candidate:
         return title
-    if surname not in new.lower() or not (30 <= len(new) <= 80) or "\n" in new:
-        return title
+    new = candidate
     print(f"  Headline matched to photo ({person}): {title!r} -> {new!r}", file=sys.stderr)
     return no_semicolons(new)
 
