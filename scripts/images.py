@@ -553,6 +553,7 @@ def _fetch_first_licensed_file(
                     "url": url,
                     "credit": f"{artist}, {license_name}, via Wikimedia Commons",
                     "sourceUrl": page_url,
+                    "photoDate": date,
                 },
             )
         )
@@ -979,7 +980,40 @@ def pick_image_for_item(
                 result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, historical)
                 if result:
                     return result
+    # No recent photo of anyone in the story: an older photo of them beats a
+    # generic image, captioned with its year (user's call, 2026-11-06: the
+    # Senior Worlds piece had no 2018+ photo of Gaprindashvili or Cramling,
+    # and "Pia Cramling in 2016" is better than a building or a board).
+    if not historical:
+        for subject in subjects:
+            result = player_page_photo(subject, exclude_source_urls, True)
+            if not result:
+                for query, strict, prefer_relevance, require_known_date in build_query_cascade(
+                    item, drafted_title, [subject], True
+                ):
+                    result = search_image(query, strict, exclude_source_urls, prefer_relevance, require_known_date, True)
+                    if result:
+                        break
+            if result:
+                year = photo_year(result)
+                if year and int(year) < time.gmtime().tm_year - RECENT_PHOTO_YEARS:
+                    result["olderYear"] = year
+                return result
     return fallback_image(drafted_title, exclude_source_urls) or fallback_image(item.get("title", ""), exclude_source_urls)
+
+
+def photo_year(image: dict) -> str:
+    """The year a photo was taken: its recorded date, or a year in its file
+    name, whichever is earlier; '' when neither is known."""
+    years = []
+    date = image.get("photoDate") or ""
+    if date[:4].isdigit() and date[:4] != "0000":
+        years.append(date[:4])
+    name = urllib.parse.unquote(image.get("sourceUrl") or image.get("src") or "")
+    found = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", name.rsplit("/", 1)[-1])
+    if found:
+        years.append(found.group(1))
+    return min(years) if years else ""
 
 
 # The only local master ever stored -- every on-site display size (lead,

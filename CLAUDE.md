@@ -32,8 +32,11 @@
   is changed to name them rather than the photo dropped. Never replace a
   person photo with a generic one, and never add pipeline logic that
   does, unless the photo itself is wrong (wrong person, front-page
-  duplicate, too old under the 8-year rule, a cropped face). A neutral
-  photo is only for stories where no usable person photo exists.
+  duplicate, too old under the 8-year rule, a cropped face). The 8-year
+  rule only applies while a recent photo of someone in the story exists;
+  otherwise an older person photo is used, captioned with its year ("Pia
+  Cramling in 2016"; user's call, 2026-11-06). A neutral photo is only for
+  stories where no usable person photo exists at all.
 
 - **Never publish an article, player page or event page without a photo**
   (2026-11-05, after the Bavarian Championship event page went out bare
@@ -128,7 +131,9 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 2.**
+- 2026-11-06: PR #93 accepted (1 -> 2; "pretty good"). The photo change
+  was a new rule on the 8-year limit, not a correction of a call I made.
 - 2026-11-05: PR #92 accepted ("everything seems solid", 0 -> 1). User's
   follow-ups were new requests, not corrections: a Bavarian Championship
   event page, and scoring changes (an event-page bonus, a smaller
@@ -225,10 +230,13 @@ Update after each batch review, once the user has responded.
 - 2026-11-06: PR #93 reset (streak stays at 0). Reset: the Senior Worlds
   piece showed the entrance of the Nona Gaprindashvili Chess Palace
   captioned "Nona Gaprindashvili", and its headline was rewritten around
-  her -- the photo was a building named after her. Kept (a real, related
-  photo; Commons downloads were blocked) with an honest caption and the
-  headline "Senior Worlds: Gaprindashvili Half a Point Back in the Women
-  65+". Fixed: the commentators piece showed Svidler from behind shaking
+  her -- the photo was a building named after her. First kept with an
+  honest caption; then (user's call) replaced by a real 2016 photo of her
+  at the board, captioned "Nona Gaprindashvili (right) in 2016, with Elena
+  Fatalibekova". Headline "Senior Worlds: Gaprindashvili Half a Point Back
+  in the Women 65+". Fixed at the source (user's call): when no recent
+  photo of anyone in the story exists, the 8-year limit gives way and the
+  newest older person photo is used, captioned "<Name> in <year>". Fixed: the commentators piece showed Svidler from behind shaking
   hands with Topalov (not in the story), captioned "Peter Svidler" (now
   Leko's 2025 photo, from our store); Russia rule -- Svidler's eight
   Russian titles, Suleymenov's Russian open win and the Aeroflot Open name

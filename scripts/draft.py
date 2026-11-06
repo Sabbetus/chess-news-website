@@ -1916,14 +1916,20 @@ def draft_one(
         # sibling article in this same run.
         _session_used_urls.add(image["sourceUrl"])
         # A fallback-pool photo is already a committed master ("src" set).
+        older_year = image.pop("olderYear", None)
+        image.pop("photoDate", None)
         localized = image if image.get("src") else localize_image(image)
         if localized:
+            localized = {k: v for k, v in localized.items() if k not in ("olderYear", "photoDate")}
             frontmatter["image"] = localized
             # A person's photo gets their name under it on the article page
             # (lesser-known players read as anyone without one).
             caption = person_caption(image["sourceUrl"], parsed.get("imageSubjects", []))
             if caption:
-                frontmatter["image"] = {**localized, "caption": caption}
+                # An older photo, used because no recent one exists, says so
+                # (user's call, 2026-11-06: "Pia Cramling in 2016").
+                shown = f"{caption} in {older_year}" if older_year else caption
+                frontmatter["image"] = {**localized, "caption": shown}
                 new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
                 frontmatter["title"] = parsed["title"] = new_title
     # Every article has a photo: a search hit whose download failed falls
