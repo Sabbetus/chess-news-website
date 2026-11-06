@@ -912,3 +912,8 @@ def test_place_named_after_a_person_is_not_their_photo():
     url = "https://commons.wikimedia.org/wiki/File%3A2024-07-20_Entrance_to_Nona_Gaprindashvili_Chess_Palace.jpg"
     assert images.person_caption(url, ["Nona Gaprindashvili"]) is None
     assert images.person_caption("https://commons.wikimedia.org/wiki/File%3APeter_Leko_2025.jpg", ["Peter Leko"]) == "Peter Leko"
+
+
+def test_photo_year_takes_the_earlier_of_date_and_file_name():
+    assert images.photo_year({"photoDate": "2019-04-01", "sourceUrl": "https://x/File%3APia_Cramling_2016.jpg"}) == "2016"
+    assert images.photo_year({"photoDate": "0000-00-00", "sourceUrl": "https://x/File%3ACramling.jpg"}) == ""
