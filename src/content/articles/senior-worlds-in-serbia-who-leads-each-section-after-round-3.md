@@ -7,7 +7,7 @@ lens: "results"
 continent: "europe"
 selectionScore: 67
 reviewStatus: "published"
-socialCopy: "Round 3 at the World Senior Championships in Vrnjačka Banja: Kostenko, Kekelidze and Kotsur lead the Open 50+ on 3/3, Khurtsilava leads Women 50+, Sturua is on 3/3 in the 65+ Open."
+socialCopy: "After round 3 of the World Senior Championships in Serbia, five players share the Open 50+ lead on 3/3, Khurtsilava leads the Women 50+, and Gaprindashvili is half a point back in the Women 65+."
 metaDescription: "After round 3 of the 2026 World Senior Championships in Serbia, see who leads the four sections, from Kostenko in the Open 50+ to Strutinskaia in Women 65+."
 image:
   src: "./_images/2024-07-20_Entrance_to_Nona_Gaprindashvili_Chess_Palace.webp"
