@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/alisher-suleymenov-interview-wch"
 lens: "people"
 continent: "asia"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Kazakh GM Alisher Suleymenov, who beat a 12-year-old Gukesh in 2019, says Sindarov is his pick for the World Championship match, citing psychology. He is playing the Chola GM Open in Chennai."
 metaDescription: "GM Alisher Suleymenov, playing the Chola GM Open in Chennai, says Sindarov is the World Championship favourite and recalls beating a 12-year-old Gukesh."
 image:
@@ -26,11 +26,11 @@ Suleymenov is the 21st seed in the Chola GM Open. Earlier this year he won the 1
 
 He praised the hotel and the conditions provided by the All India Chess Federation and Chola Chess. He also liked the Round Robin's idea of inviting young, motivated foreign players instead of older grandmasters who, in his words, have "sort of quit chess".
 
-That made a norm harder to earn, he said, but the long-term benefit mattered more to him. He went straight from Chennai to an open in Russia and won it.
+That made a norm harder to earn, he said, but the long-term benefit mattered more to him.
 
 **Gukesh at 12, and again in Samarkand**
 
-Suleymenov's history with Gukesh Dommaraju goes back to the 2019 Aeroflot Open. He was 19 and rated 2430, Gukesh was 12 and rated 2500, and he beat him.
+Suleymenov's history with Gukesh Dommaraju goes back to 2019. He was 19 and rated 2430, Gukesh was 12 and rated 2500, and he beat him.
 
 A first-day problem forced a double round, so they played in the afternoon. He suggested the boy may have been tired, but added that he played extremely well and is still proud of the game.
 

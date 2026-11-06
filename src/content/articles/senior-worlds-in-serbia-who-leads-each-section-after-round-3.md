@@ -1,20 +1,21 @@
 ---
-title: "Senior Worlds: Gaprindashvili, Ex-Champion, Chases Leader in 65+"
+title: "Senior Worlds: Gaprindashvili Half a Point Back in the Women 65+"
 publishDate: "2026-11-06"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-senior-championship-2026-r3"
 lens: "results"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Round 3 at the World Senior Championships in Vrnjačka Banja: Kostenko, Kekelidze and Kotsur lead the Open 50+ on 3/3, Khurtsilava leads Women 50+, Sturua is on 3/3 in the 65+ Open."
 metaDescription: "After round 3 of the 2026 World Senior Championships in Serbia, see who leads the four sections, from Kostenko in the Open 50+ to Strutinskaia in Women 65+."
 image:
   src: "./_images/2024-07-20_Entrance_to_Nona_Gaprindashvili_Chess_Palace.webp"
   credit: "Yuri Samoylov, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2024-07-20_Entrance_to_Nona_Gaprindashvili_Chess_Palace.jpg"
-  caption: "Nona Gaprindashvili"
+  caption: "The Nona Gaprindashvili Chess Palace in Tbilisi, named after her"
 gamePgn: "senior-worlds-in-serbia-who-leads-each-section-after-round-3.pgn"
+gameCaption: "Cramling's round 3 draw with Tereladze in the Women 50+"
 ---
 
 The 2026 FIDE World Senior Chess Championships are running in Vrnjačka Banja, Serbia, from 3 to 14 November, and [after three rounds](https://en.chessbase.com/post/world-senior-championship-2026-r3) each of the four sections already has perfect scores at the top. A total of 385 players from 65 federations are at the Hotel Zepter, including 44 grandmasters and eight women's grandmasters.
@@ -43,7 +44,7 @@ Igor Glek of Belgium (2433) and Silvio Danailov, who plays under the FIDE flag (
 
 **Women 65+: Gaprindashvili in the chasing group**
 
-WGM Galina Strutinskaia has the only perfect score in the 29-player section, with 3/3. Nona Gaprindashvili, the Georgian who held the women's world title from 1962 to 1978, has 2.5 as top seed at 2168.
+Galina Strutinskaia has the only perfect score in the 29-player section, with 3/3. Nona Gaprindashvili, the Georgian who held the women's world title from 1962 to 1978, has 2.5 as top seed at 2168.
 
 She is level with WIM Bagyashree Thipsay, WIM Elena Krasenkowa and WIM Ingrid Lauterbach. Lauterbach, rated 1948, is gaining 26.2 points.
 
