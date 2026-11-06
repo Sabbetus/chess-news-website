@@ -906,3 +906,9 @@ def test_anniversary_features_get_the_smaller_bonus():
     assert selection.is_anniversary_story(news("Eugenio Torre: Asia's first grandmaster turns 75"))
     assert selection.is_anniversary_story(news("Vasily Panov", "Born on 1 November 1906, Vasily Panov was..."))
     assert not selection.is_anniversary_story(news("Hou Yifan opens up about her return"))
+
+
+def test_place_named_after_a_person_is_not_their_photo():
+    url = "https://commons.wikimedia.org/wiki/File%3A2024-07-20_Entrance_to_Nona_Gaprindashvili_Chess_Palace.jpg"
+    assert images.person_caption(url, ["Nona Gaprindashvili"]) is None
+    assert images.person_caption("https://commons.wikimedia.org/wiki/File%3APeter_Leko_2025.jpg", ["Peter Leko"]) == "Peter Leko"

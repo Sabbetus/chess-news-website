@@ -188,7 +188,10 @@ _REJECTED_EXTENSIONS = (".pdf", ".djvu", ".tiff", ".tif")
 
 _BUSINESS_OR_STREET_RE = re.compile(
     r"\b(autos?|motors?|garage|road|street|avenue|lane|ltd|limited|plc|inc|shop|store|restaurant|pub"
-    r"|geograph)\b",
+    r"|geograph"
+    # Places and memorials named after a person (caught 2026-11-06: "Entrance
+    # to Nona Gaprindashvili Chess Palace" was captioned as Gaprindashvili).
+    r"|palace|entrance|museum|monument|statue|memorial|bust|plaque|gravestone|grave|tomb|square|stadium)\b",
     re.IGNORECASE,
 )
 
@@ -463,7 +466,7 @@ def _fetch_first_licensed_file(
         # A shop, firm or street named like the person (caught 2026-10-29:
         # "Chris Ward Autos in Tangier Road - geograph.org.uk" for GM Chris
         # Ward). geograph.org.uk files are street and landscape photos.
-        if _BUSINESS_OR_STREET_RE.search(title):
+        if _BUSINESS_OR_STREET_RE.search(re.sub(r"[_\W\d]+", " ", title)):
             continue
         # "(cropped)" re-uploads are tight face crops that our wide card
         # and hero slots zoom into badly; the uncropped original is almost
@@ -1143,6 +1146,8 @@ def person_caption(source_url: str, names: list) -> str | None:
     neutral board or a logo gets no caption (user's call, 2026-10-09: a
     lesser-known player's photo reads as anyone without one)."""
     stem = _fold(urllib.parse.unquote(source_url).rsplit("/", 1)[-1])
+    if _BUSINESS_OR_STREET_RE.search(re.sub(r"[^a-z]+", " ", stem)):
+        return None
     file_words = set(re.findall(r"[a-z]+", stem))
     for name in names or []:
         parts = re.findall(r"[a-z]+", _fold(name))

@@ -6,14 +6,14 @@ sourceUrl: "https://en.chessbase.com/post/world-championship-2026-commentators"
 lens: "people"
 continent: "europe"
 selectionScore: 92
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE has named Peter Leko and Peter Svidler as commentators for the Gukesh-Sindarov World Championship match in Geneva, starting 24 November. Here is what each brings to the desk."
 metaDescription: "FIDE named Peter Leko and Peter Svidler as commentators for the Gukesh v Sindarov World Championship match in Geneva, which starts 24 November."
 image:
-  src: "./_images/Peter_Svidler_and_Veselin_Topalov__Candidates_Tournament_2016.webp"
-  credit: "Этери Кублашвили, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APeter_Svidler_and_Veselin_Topalov%2C_Candidates_Tournament_2016.jpg"
-  caption: "Peter Svidler"
+  src: "./_images/Peter_Leko_2025__cropped.webp"
+  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3APeter_Leko_2025_%28cropped%29.jpg"
+  caption: "Peter Leko"
 ---
 
 On 2 November 2026, FIDE [announced on X](https://en.chessbase.com/post/world-championship-2026-commentators) that GMs Peter Leko and Peter Svidler will provide the official commentary for the Salesforce FIDE World Championship 2026. Gukesh Dommaraju defends his title against Javokhir Sindarov in Geneva, with the first game set for 24 November.
@@ -26,7 +26,7 @@ The pairing works because the two men bring different credentials. Leko has sat 
 
 He has since built a reputation as one of the most liked commentators in the game. ChessBase describes him as warm and honest, and as someone who explains a position so that even a club player can follow it.
 
-Svidler's credentials are of another sort. He has won the Russian Championship eight times, the first at 18 in 1994. His commentary is known for deep knowledge delivered with dry humour, which is a useful trait when a game drifts into a long manoeuvring phase.
+Svidler's credentials are of another sort: decades of top-level experience and a long-standing reputation as one of the most appreciated commentators in chess. His commentary is known for deep knowledge delivered with dry humour, which is a useful trait when a game drifts into a long manoeuvring phase.
 
 **Why the desk matters in a 14-game match**
 
