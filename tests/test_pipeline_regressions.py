@@ -917,3 +917,13 @@ def test_place_named_after_a_person_is_not_their_photo():
 def test_photo_year_takes_the_earlier_of_date_and_file_name():
     assert images.photo_year({"photoDate": "2019-04-01", "sourceUrl": "https://x/File%3APia_Cramling_2016.jpg"}) == "2016"
     assert images.photo_year({"photoDate": "0000-00-00", "sourceUrl": "https://x/File%3ACramling.jpg"}) == ""
+
+
+def test_logo_word_alone_does_not_match_unrelated_logo():
+    # 2026-11-07: "Facebook f logo (2019).svg" was picked for a Bavarian
+    # Championship piece on the word "logo" alone.
+    import images
+    assert not images._title_matches_query(
+        "File:Facebook f logo (2019).svg", "Bavarian Chess Championship logo", False
+    )
+    assert images._title_matches_query("File:FIDE text on white.svg", "FIDE logo", False)
