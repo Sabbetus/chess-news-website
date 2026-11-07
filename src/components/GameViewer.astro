@@ -134,13 +134,11 @@ const data = JSON.stringify(positions);
     const list = root.querySelector<HTMLElement>('.gv-moves')!;
     let current = 0;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     // Slide the moved piece from its old square instead of jumping
     // (user's call, 2026-11-07: instant moves were unnerving). Only for a
-    // single step forward or back; jumps to a far move stay instant.
+    // single step forward or back; jumps to a far move stay instant. Runs
+    // even with the system's reduced-motion setting (user's call, 2026-11-07).
     function slide(fromSq: string, toSq: string) {
-      if (reduceMotion) return;
       const img = squares.get(toSq)?.querySelector<HTMLImageElement>('img');
       const a = squares.get(fromSq)?.getBoundingClientRect();
       const b = squares.get(toSq)?.getBoundingClientRect();
@@ -149,7 +147,7 @@ const data = JSON.stringify(positions);
       img.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px)`;
       img.style.zIndex = '2';
       img.getBoundingClientRect();
-      img.style.transition = 'transform 180ms ease-out';
+      img.style.transition = 'transform 300ms ease-in-out';
       img.style.transform = '';
       img.addEventListener('transitionend', () => { img.style.zIndex = ''; }, { once: true });
     }
