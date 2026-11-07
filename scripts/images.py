@@ -312,7 +312,12 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     through with no filter at all. A query too weak to build a real
     filter from should fail closed and let the cascade move on to its
     next, more specific query, not accept whatever Commons hands back)."""
-    significant_words = [w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 4]
+    # "logo" is the kind of file wanted, not who it belongs to: on its own
+    # it matched "Facebook f logo (2019).svg" for a "... Chess Championship
+    # logo" query (caught 2026-11-07, Bavarian Championship round 6).
+    significant_words = [
+        w for w in _QUERY_WORD_PATTERN.findall(query) if len(w) >= 4 and w.lower() != "logo"
+    ]
     if not significant_words:
         return False
     title_lower = title.lower()

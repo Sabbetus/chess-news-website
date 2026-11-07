@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/yakubboev-wins-freestyle-friday-nove
 lens: "results"
 continent: "global"
 selectionScore: 115
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Yakubboev took Freestyle Friday on Nov. 6 with 9.5 points, a half-point clear of Nepomniachtchi. Four tournaments remain before the Freestyle World Championship field is set."
 metaDescription: "GM Nodirbek Yakubboev won Freestyle Friday on November 6 with 9.5 points, ahead of Ian Nepomniachtchi, and moved closer to a Freestyle World Championship spot."
 image:
@@ -23,23 +23,23 @@ The result also moves both men up the Freestyle Friday Championship (FFC) table,
 
 **A slow start for both**
 
-Neither leader began quickly. Yakubboev drew in round two, and Nepomniachtchi lost that round. Nepomniachtchi also later lost in round nine, so he was far from flawless.
+Neither leader began quickly. Yakubboev drew in round two, and Nepomniachtchi lost that round. Nepomniachtchi lost again in round nine, to Yakubboev.
 
 GMs Hans Niemann and Fabiano Caruana were the only players to open 4/4. Both escaped what GM Jan Gustafsson, commentating for Freestyle Chess, called "deep, deep trouble" in round four. Niemann then outplayed Caruana in round five and won a pawn ending Gustafsson called out as coming from a study.
 
 **The middle rounds**
 
-GM Arseniy Nesterov, who had already held Yakubboev to 3.5/5 in round five, beat Niemann in round six. In the same round Nepomniachtchi beat 13-year-old IM Sergey Sklokin-Bagiyan, who had entered on 4.5/5. GM Gata Kamsky beat Caruana, who dropped out of the group on five points.
+GM Arseniy Nesterov, who had beaten Yakubboev in round five to leave him on 3.5/5, beat Niemann in round six. In the same round Nepomniachtchi beat 13-year-old IM Sergey Sklokin-Bagiyan, who had entered on 4.5/5. GM Gata Kamsky beat Caruana, who dropped out of the group on five points.
 
 Nepomniachtchi beat Nesterov in round seven and then Niemann in round eight to take the sole lead.
 
 Against Niemann, who had not moved a piece on half the board by move 15, Nepomniachtchi was winning less than ten moves later.
 
-Yakubboev beat Kamsky with Black's pieces on the other side of that pairing, joining GMs Alexey Sarana and Nils Grandelius on 6.5/8.
+In the same round Yakubboev beat Kamsky, who had Black, joining GMs Alexey Sarana and Nils Grandelius on 6.5/8.
 
 **The decisive game**
 
-Round nine settled the tournament. Yakubboev, perfect at 6/6 after round five, got the better opening, and Nepomniachtchi made him work until a sudden blunder on move 43. Grandelius beat Sarana in the same round, which left several players level at the top.
+Round nine settled the tournament. Yakubboev, who won all six of his games after round five, got the better of the opening, and Nepomniachtchi made him work until a sudden blunder on move 43. Grandelius beat Sarana in the same round, which left Grandelius level with Yakubboev at the top.
 
 In round ten Nepomniachtchi recovered by beating Grandelius in 22 moves. Yakubboev kept his lead by beating Niemann, whose king ran for the edge of the board and was about to be mated when he resigned. FM Artin Ashraf ended GM Oleksandr Bortnyk's streak.
 

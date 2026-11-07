@@ -1,18 +1,19 @@
 ---
-title: "Gopal Beats Besou to Lead Bavarian Open on 5½/6"
+title: "Gopal Beats Besou to Lead Bavarian Open, Piorun Among 12 Half a Point Back"
 publishDate: "2026-11-07"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r6"
 lens: "results"
 continent: "europe"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "G.N. Gopal beat 15-year-old Hussain Besou to go clear on 5½/6 at the Bavarian Championship in Gmund. Twelve players sit half a point back, with three rounds left."
 metaDescription: "GM G.N. Gopal beat IM Hussain Besou in round 6 to lead the Bavarian Chess Championship on 5½/6, with twelve players half a point behind."
 image:
-  src: "./_images/Facebook_f_logo__2019.webp"
-  credit: "Facebook, Inc., Public domain, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFacebook_f_logo_%282019%29.svg"
+  src: "./_images/2021-Kacper-Piorun.webp"
+  credit: "Krzysztof Szeląg, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3A2021-Kacper-Piorun.JPG"
+  caption: "Kacper Piorun, the 2015 champion, in 2021"
 gamePgn: "gopal-beats-besou-to-lead-bavarian-open-on-5-6.pgn"
 ---
 
@@ -32,11 +33,11 @@ His performance rating after six rounds is 2734, well above his 2530 FIDE rating
 
 Besou had joined the leaders a day earlier by beating former world junior champion Peter Acs, a result we covered in [our report on his win over Acs](/articles/besou-15-beats-peter-acs-and-joins-six-leaders-at-tegernsee/). The loss to Gopal ended a run of 15 tournament games without a defeat.
 
-It also badly dented his hopes of a GM norm here. He stays on 4½/6, in the group a half point behind the next tier. For how norms work, see our explainer on [how a player becomes a grandmaster](/articles/chess-titles/).
+It also badly dented his hopes of a GM norm here. He stays on 4½/6, a point behind Gopal. For how norms work, see our explainer on [how a player becomes a grandmaster](/articles/chess-titles/).
 
 **Quiet draws on the top boards**
 
-Most clashes among the other leaders were peaceful. Kacper Piorun and Rithvik R Raja drew in just 13 moves. Sasikiran and Emre Can split the point after a symmetrical game.
+Most clashes among the other leaders were peaceful. Kacper Piorun, the 2015 winner here, and Rithvik R Raja drew in just 13 moves on the top board. Sasikiran and Emre Can split the point after a symmetrical game.
 
 Nijat Abasov and Sohum Lohia repeated moves after 19 moves. All six of those players finished the round on 5/6.
 

@@ -6,8 +6,8 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 23
-reviewStatus: "draft"
-socialCopy: "234 players registered for the VII South American Championship in Bogota, the largest field in October's selection of South American events. Manaus, Quito and Buenos Aires also ran multi-day events."
+reviewStatus: "published"
+socialCopy: "234 players registered for the VII South American Championship in Bogota, the largest field in October's selection of South American events. Long classical opens in Manaus, Quito and Argentina followed."
 metaDescription: "The VII South American Championship drew 234 players to Bogota's Palacio de los Deportes in October 2026, ahead of big classical opens in Brazil, Ecuador and Argentina."
 aggregateKind: "calendar-biggest"
 continentName: "South America"
@@ -49,4 +49,4 @@ In Medellin, the [XVI IRT Aficionados](https://chesstournamentcalendar.com/tourn
 
 Peru's [XVII Festival Internacional de Ajedrez Claretiano](https://chesstournamentcalendar.com/tournament/xvii-festival-internacional-de-ajedrez-claretiano-1473902/) filled the Coliseo Claret for three days with 86 players. In Merida, Venezuela, the FVA's Festival de Ajedrez Menor ran October 8 to 11 in age sections, including the [U14 event](https://chesstournamentcalendar.com/tournament/festival-de-ajedrez-menor-fva-2026-u14f7-11octu-1512158/) with 22 players.
 
-Bogota's championship field is the one to watch for what follows. At 234 players, it was more than 80 larger than anything else listed.
+At 234 players, Bogota's championship field was more than 80 larger than anything else listed.
