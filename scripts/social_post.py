@@ -124,6 +124,27 @@ def sync_queue(queue: list[dict], articles: list[dict]) -> list[dict]:
     return queue + new_entries
 
 
+def refresh_pending(queue: list[dict], articles: list[dict]) -> list[dict]:
+    """Pending entries follow the article as it is now, not as it was
+    queued (caught 2026-11-07: an Esports World Cup piece removed from the
+    site was still posted hours later, and the Bavarian post went out with
+    its old "half a point back" copy and old score). An entry whose article
+    is gone or unpublished is withdrawn and never posted; its copy, title
+    and score are re-read from the article on every run."""
+    current = {a["slug"]: a for a in articles}
+    for entry in queue:
+        if entry.get("withdrawn") or (entry["postedFacebookAt"] and entry["postedThreadsAt"]):
+            continue
+        article = current.get(entry["slug"])
+        if article is None:
+            entry["withdrawn"] = True
+            print(f"Withdrawn (no longer published): {entry['title']}")
+            continue
+        for key in ("title", "socialCopy", "selectionScore"):
+            entry[key] = article[key]
+    return queue
+
+
 def post_to_facebook(message: str, link: str) -> None:
     page_id = os.environ["FACEBOOK_PAGE_ID"]
     token = os.environ["FACEBOOK_PAGE_ACCESS_TOKEN"]
@@ -177,8 +198,12 @@ def post_to_threads(text: str) -> None:
 
 
 def main() -> None:
-    queue = sync_queue(load_queue(), load_published_articles())
-    pending = [e for e in queue if e["postedFacebookAt"] is None or e["postedThreadsAt"] is None]
+    articles = load_published_articles()
+    queue = refresh_pending(sync_queue(load_queue(), articles), articles)
+    pending = [
+        e for e in queue
+        if not e.get("withdrawn") and (e["postedFacebookAt"] is None or e["postedThreadsAt"] is None)
+    ]
 
     if not pending:
         print("Social queue empty -- nothing to post.")
