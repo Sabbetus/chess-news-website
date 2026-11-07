@@ -147,7 +147,7 @@ const data = JSON.stringify(positions);
       img.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px)`;
       img.style.zIndex = '2';
       img.getBoundingClientRect();
-      img.style.transition = 'transform 300ms ease-in-out';
+      img.style.transition = 'transform 250ms ease-in-out';
       img.style.transform = '';
       img.addEventListener('transitionend', () => { img.style.zIndex = ''; }, { once: true });
     }
