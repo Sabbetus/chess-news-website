@@ -413,12 +413,8 @@ def _tour_has_players(tour_id: str, player1: str, player2: str) -> int:
     return sum(1 for name in (player1, player2) if name and _surname(name) in text)
 
 
-def find_round_via_search(event: str, player1: str, player2: str, around: datetime | None = None) -> str | None:
-    """Lichess's own broadcast search, for events not in the known registry
-    and never covered before -- caught live 2026-10-06: the Fagernes Autumn
-    GM group was on Lichess, but the web-search finder answered NONE.
-    Returns a matched game's GameURL, or None."""
-    around = around or datetime.now(timezone.utc)
+def _search_tours(event: str, around: datetime) -> list[dict]:
+    """Broadcasts matching the event name and date, best name match first."""
     tours: list[dict] = []
     seen: set[str] = set()
     for query in _search_queries(event):
@@ -449,6 +445,16 @@ def find_round_via_search(event: str, player1: str, player2: str, around: dateti
         tours = [t for t in tours if year in (t.get("name", "") + t.get("slug", ""))]
     wanted = {w.lower() for w in re.findall(r"[a-zA-Z]{4,}", event)} - _SEARCH_STOPWORDS
     tours.sort(key=lambda t: -len(wanted & set(re.findall(r"[a-z]{4,}", (t.get("slug") or "").lower()))))
+    return tours
+
+
+def find_round_via_search(event: str, player1: str, player2: str, around: datetime | None = None) -> str | None:
+    """Lichess's own broadcast search, for events not in the known registry
+    and never covered before -- caught live 2026-10-06: the Fagernes Autumn
+    GM group was on Lichess, but the web-search finder answered NONE.
+    Returns a matched game's GameURL, or None."""
+    around = around or datetime.now(timezone.utc)
+    tours = _search_tours(event, around)
     if not tours:
         print(f"    lichess lookup: broadcast search found no tournament for event={event!r}", file=sys.stderr)
         return None
@@ -703,3 +709,71 @@ def add_embed_scroll_link(client, body_markdown: str, player1: str, player2: str
         return body_markdown
 
     return edited
+
+
+def find_player_game(event: str, players: list[str], around: datetime | None = None) -> tuple[str, str] | None:
+    """A game from the event's Lichess broadcast played by someone the
+    article names, for a results piece whose source quotes no game (user's
+    rule, 2026-11-07: the World Junior Rapid report had no board though
+    Begmuratov's games were on Lichess). Players are tried in the order
+    given (the story's main subject first); for the first one found, the
+    latest decisive game, else the latest game. Returns (PGN, caption)."""
+    around = around or datetime.now(timezone.utc)
+    tours = _search_tours(event, around)
+    if not tours:
+        print(f"    player game: no broadcast found for event={event!r}", file=sys.stderr)
+        return None
+    surnames = [_surname(p) for p in players if _surname(p)]
+    if len(tours) > _MAX_SEARCH_TOURS:
+        tours.sort(key=lambda t: -_tour_has_players(t["id"], players[0] if players else "", players[1] if len(players) > 1 else ""))
+    deadline = time.monotonic() + _SEARCH_TIME_BUDGET
+    for surname in surnames:
+        for tour in tours[:_MAX_SEARCH_TOURS]:
+            try:
+                response = requests.get(
+                    f"https://lichess.org/api/broadcast/{tour['id']}",
+                    headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+                    timeout=REQUEST_TIMEOUT,
+                )
+                response.raise_for_status()
+                rounds = response.json().get("rounds", [])
+            except (requests.RequestException, ValueError):
+                continue
+            games = []
+            for round_ in [r for r in rounds if r.get("finished") or r.get("ongoing")]:
+                if time.monotonic() > deadline:
+                    break
+                try:
+                    pgn = requests.get(
+                        f"https://lichess.org/api/broadcast/round/{round_['id']}.pgn",
+                        headers={"User-Agent": USER_AGENT},
+                        timeout=REQUEST_TIMEOUT,
+                    )
+                    pgn.raise_for_status()
+                except requests.RequestException:
+                    time.sleep(2)
+                    continue
+                for game in re.split(r"\n\n\n+", pgn.text.strip()):
+                    white = re.search(r'\[White\s+"([^"]+)"\]', game)
+                    black = re.search(r'\[Black\s+"([^"]+)"\]', game)
+                    result = re.search(r'\[Result\s+"([^"]+)"\]', game)
+                    if not (white and black and result) or result.group(1) == "*":
+                        continue
+                    if surname in _tag_tokens(white.group(1)) | _tag_tokens(black.group(1)):
+                        games.append((round_.get("name") or "", white.group(1), black.group(1), result.group(1), game))
+            if not games:
+                continue
+            decisive = [g for g in games if g[3] in ("1-0", "0-1")]
+            name, white, black, result, game = (decisive or games)[-1]
+            def _plain(tag: str) -> str:
+                last, _, first = (p.strip() for p in tag.partition(","))
+                # "Pranav, V" stays "Pranav V": an initial goes after the name.
+                return tag if not first else (f"{last} {first}" if len(first.strip(".")) <= 2 else f"{first} {last}")
+
+            caption = f"{name}: {_plain(white)} - {_plain(black)}, {result.replace('1/2-1/2', 'draw')}".strip(": ")
+            # The broadcast's Event tag is the pairing; the viewer shows the event.
+            game = re.sub(r'^\[Event "[^"]*"\]', lambda _m: f'[Event "{tour.get("name", "").split(" | ")[0]}"]', game, count=1, flags=re.M)
+            print(f"    player game: {tour.get('slug')!r} {caption}", file=sys.stderr)
+            return game, caption
+    print(f"    player game: no finished game found for {players!r} in event={event!r}", file=sys.stderr)
+    return None

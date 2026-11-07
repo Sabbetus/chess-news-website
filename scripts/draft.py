@@ -41,7 +41,7 @@ from chess_results_standings import (
 from continents import CONTINENT_SLUGS
 from game_links import fix_embed_link, illegal_lines, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
-from game_pgn import find_game_pgn
+from game_pgn import clean_game, find_game_pgn
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
@@ -49,6 +49,7 @@ from lichess_game import (
     add_embed_scroll_link,
     embed_game_pgn,
     find_game_embed,
+    find_player_game,
     recheck_game_lookup,
 )
 from selection import _has_result_signal, is_rating_list_story, tournament_has_round_context
@@ -2268,6 +2269,25 @@ def draft_one(
                 f"for '{item['title']}'",
                 file=sys.stderr,
             )
+        elif parsed.get("lens") == "results" or _has_result_signal(body_markdown):
+            # A results piece whose sources quote no game still gets one
+            # from the event's broadcast, played by someone it names (user's
+            # rule, 2026-11-07: the World Junior Rapid report had no board).
+            event_name = re.split(r":\s", item.get("title") or "", maxsplit=1)[0]
+            names = [n for n in parsed.get("imageSubjects", []) if len(n.split()) >= 2 and n.split()[-1].lower() in body_markdown.lower()]
+            found = None
+            if names:
+                try:
+                    found = find_player_game(event_name, names)
+                except Exception as exc:  # noqa: BLE001
+                    print(f"  Player game lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            if found:
+                game, caption = found
+                GAMES_DIR.mkdir(parents=True, exist_ok=True)
+                (GAMES_DIR / f"{out_path.stem}.pgn").write_text(clean_game(game))
+                fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
+                fm_lines.insert(len(fm_lines) - 1, f"gameCaption: {json.dumps(caption)}")
+                print(f"  game board: player game from the broadcast ({caption}) for '{item['title']}'", file=sys.stderr)
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
