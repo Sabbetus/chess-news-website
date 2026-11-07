@@ -968,3 +968,20 @@ def test_social_copy_phrase_check_ignores_scores():
     assert draft.repeated_headline_phrase(
         "Twelve players sit half a point back.", body, ["Gaprindashvili is half a point back in the 65+."]
     ) == "half a point back"
+
+
+def test_social_queue_withdraws_removed_and_refreshes_pending():
+    # 2026-11-07: a removed article was still posted, and a pending post
+    # used its old copy.
+    import social_post as sp
+    queue = [
+        {"slug": "gone", "title": "Gone", "socialCopy": "x", "publishDate": "2026-11-07", "selectionScore": 91,
+         "postedFacebookAt": None, "postedThreadsAt": None},
+        {"slug": "kept", "title": "Old", "socialCopy": "half a point back", "publishDate": "2026-11-07",
+         "selectionScore": 70, "postedFacebookAt": None, "postedThreadsAt": None},
+    ]
+    articles = [{"slug": "kept", "title": "New", "socialCopy": "half a point behind", "publishDate": "2026-11-07",
+                 "selectionScore": 125}]
+    out = sp.refresh_pending(queue, articles)
+    assert out[0]["withdrawn"] is True
+    assert out[1]["socialCopy"] == "half a point behind" and out[1]["selectionScore"] == 125
