@@ -452,8 +452,13 @@ _TITLE_AFTER_EVENT_RE = re.compile(r"\s+(?:chess\s+)?champion\b(?!ship)")
 def _mentions_major_event(text_lower: str) -> bool:
     for kw in MAJOR_TOURNAMENT_KEYWORDS:
         for m in re.finditer(re.escape(kw), text_lower):
-            if not _TITLE_AFTER_EVENT_RE.match(text_lower, m.end()):
-                return True
+            if _TITLE_AFTER_EVENT_RE.match(text_lower, m.end()):
+                continue
+            # "Esports World Cup" is not the FIDE World Cup (caught
+            # 2026-11-07: an EWC 2027 announcement took the full bonus).
+            if kw == "world cup" and re.search(r"e-?sports\s+$", text_lower[: m.start()]):
+                continue
+            return True
     return False
 
 
@@ -593,7 +598,7 @@ def _apply_priority_band(total: int, breakdown: dict, governance: bool) -> int:
         # stronger feature still outranks a weaker one.
         spread = FEATURE_SCORE_CEILING - FEATURE_SCORE_FLOOR
         return FEATURE_SCORE_FLOOR + min(spread, max(0, (total - FEATURE_RAW_LOW) * spread // (FEATURE_RAW_HIGH - FEATURE_RAW_LOW)))
-    if breakdown.get("majorTournament"):
+    if breakdown.get("majorTournament") == MAJOR_TOURNAMENT_BONUS:
         return max(total, RESULTS_SCORE_FLOOR)
     if governance:
         return min(total, ELECTION_SCORE_CEILING)
@@ -739,6 +744,54 @@ def score_event_page(lead: str) -> int:
     return EVENT_PAGE_BONUS if any(p.search(lead) for p in _event_page_patterns()) else 0
 
 
+# Events are not equal (user's call, 2026-11-07: a weekly online Freestyle
+# Friday topped the batch, and an Esports World Cup announcement for 2027
+# outscored a live round of the Bavarian Championship). A round or result of
+# a live over-the-board event -- one on the major list or with an event page
+# -- gets LIVE_EVENT_BONUS; a weekly online series gets WEEKLY_ONLINE_PENALTY
+# and none of the follow-up or elite-field bonuses (each week is a new,
+# small event, and the same elite names play every week).
+LIVE_EVENT_BONUS = 30
+WEEKLY_ONLINE_PENALTY = -15
+WEEKLY_ONLINE_RE = re.compile(
+    r"\b(titled tuesday|freestyle friday|bullet brawl|titled arena|blitz brawl|bullet chess championship qualifier)\b",
+    re.IGNORECASE,
+)
+_ONLINE_RE = re.compile(r"\b(online|e-?sports|chess\.com|lichess)\b", re.IGNORECASE)
+
+
+def is_weekly_online(lead: str) -> bool:
+    return bool(WEEKLY_ONLINE_RE.search(lead))
+
+
+def _event_page_matches(text: str) -> set[str]:
+    return {p.pattern for p in _event_page_patterns() if p.search(text)}
+
+
+def score_event_page_follow_up(lead: str, days: int = 7) -> int:
+    """A later round of an event-page event we covered in the last `days`
+    days (caught 2026-11-07: the Bavarian round 6 report got no follow-up
+    bonus -- yesterday's piece said "Tegernsee", today's "Bavarian
+    Championship", and the phrase match missed it). Aliases tie them."""
+    from datetime import date, timedelta
+
+    wanted = _event_page_matches(lead)
+    if not wanted:
+        return 0
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    today = date.today().isoformat()
+    for path in ARTICLES_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        published = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.M)
+        if 'reviewStatus: "published"' not in text or not published or not (cutoff <= published.group(1) < today):
+            continue
+        title = re.search(r'^title:\s*"(.*)"', text, re.M)
+        body = text.split("\n---\n", 1)[-1][:400]
+        if wanted & _event_page_matches(f"{title.group(1) if title else ''} {body}"):
+            return FOLLOW_UP_ONGOING_BONUS
+    return 0
+
+
 def score_elite_field(item: dict) -> int:
     lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:400]}".lower()
     words = set(re.findall(r"[a-z][\w'-]+", lead))
@@ -771,6 +824,24 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["eliteField"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_elite_field(item)
     breakdown["ratingList"] = RATING_LIST_BONUS if is_rating_list_story(item) else 0
     breakdown["eventPage"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_event_page(lead)
+    if breakdown["eventPage"] and not breakdown["followUp"]:
+        breakdown["followUp"] = score_event_page_follow_up(lead)
+    # An announcement of a later year's edition is not a follow-up of this
+    # year's (caught 2026-11-07: "Chess Returns To Esports World Cup In 2027").
+    from datetime import date as _date
+    if any(int(y) > _date.today().year for y in re.findall(r"\b(20\d\d)\b", item.get("title") or "")):
+        breakdown["followUp"] = 0
+    weekly = not feature and is_weekly_online(lead)
+    if weekly:
+        breakdown["followUp"] = 0
+        breakdown["eliteField"] = 0
+        breakdown["weeklyOnline"] = WEEKLY_ONLINE_PENALTY
+    live = (
+        not (feature or governance or weekly)
+        and (breakdown["eventPage"] or breakdown["majorTournament"] == MAJOR_TOURNAMENT_BONUS)
+        and not _ONLINE_RE.search(lead)
+    )
+    breakdown["liveEvent"] = LIVE_EVENT_BONUS if live else 0
 
     raw_total = sum(breakdown.values())
     total = raw_total if anniversary else _apply_priority_band(raw_total, breakdown, governance)

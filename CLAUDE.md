@@ -131,7 +131,17 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 2.**
+- **Current review-acceptance streak: 3.**
+- 2026-11-07: PR #94 accepted ("mostly ok", 2 -> 3). Follow-ups were new
+  rules, not corrections of my calls: headline wording variety ("Half a
+  Point Back" was on two front-page headlines; the new one now "Half a
+  Point Behind", and draft.py rewrites a headline sharing a 4+-word set
+  phrase with a recent one), and event-weighted scoring (live
+  over-the-board events +30, weekly online series -15 with no follow-up
+  or elite bonus, "Esports World Cup" no longer matches "world cup", a
+  later year's announcement gets no follow-up bonus, event-page aliases
+  count for follow-ups). Today's pieces rescored: Al Ain 160, Bavarian
+  125, Freestyle Friday 55, EWC 46.
 - 2026-11-06: PR #93 accepted (1 -> 2; "pretty good"). The photo change
   was a new rule on the 8-year limit, not a correction of a call I made.
 - 2026-11-05: PR #92 accepted ("everything seems solid", 0 -> 1). User's
