@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/world-junior-rapid-championship-2026-khumoyun-b
 lens: "results"
 continent: "asia"
 selectionScore: 110
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Khumoyun Begmuratov won the World Junior Rapid Open in Al Ain on 7.5/9 without a loss. Eline Roebers took the Girls title on 7/9, and silver and bronze in both sections came down to tiebreaks."
 metaDescription: "Khumoyun Begmuratov won the FIDE World Junior Rapid Open on 7.5/9 and Eline Roebers took the Girls title on 7/9 in Al Ain, UAE."
 image:
@@ -24,7 +24,7 @@ The championship ran from November 1 to 7 in Al Ain, UAE, and drew 185 players f
 
 Behind Begmuratov, two players finished level on 7/9. India's Pranav V. took silver and Azerbaijan's Raad Samadov took bronze, with [tiebreaks](/articles/swiss-system-tiebreaks/) separating them.
 
-Half a point is the margin that mattered. In a nine-round rapid event, an unbeaten score with three draws was enough to finish clear of two players who each finished half a point behind. Draws cost little here; a single loss can end a title bid.
+Half a point is the margin that mattered. An unbeaten run with three draws was enough to finish clear: in a nine-round rapid event, draws cost little, while a single loss can end a title bid.
 
 Roebers was already in the picture early on. [She sat half a point off the lead in the Girls section](/articles/five-players-start-3-3-at-the-world-junior-rapid-in-al-ain/) after the opening rounds, so her 7/9 finish was a climb rather than a wire-to-wire run.
 

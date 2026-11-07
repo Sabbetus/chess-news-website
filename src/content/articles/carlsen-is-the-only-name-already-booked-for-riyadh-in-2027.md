@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/chess-returns-esports-world-cup-2027
 lens: "results"
 continent: "asia"
 selectionScore: 91
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Chess is back at the 2027 Esports World Cup in Riyadh. Carlsen is the only player with a guaranteed spot, and everyone else must earn one through a reworked Champions Chess Tour."
 metaDescription: "Chess returns to the 2027 Esports World Cup in Riyadh. Defending champion Magnus Carlsen has a spot, and 12 more go through the Champions Chess Tour."
 image:
