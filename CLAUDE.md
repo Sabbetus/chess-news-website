@@ -53,10 +53,11 @@
   selection.py drops anything else under MIN_PUBLISH_SCORE before
   drafting; a review drops any draft below it.
 
-- **Headlines don't reuse set phrases from the last two weeks** (user's
-  rule, 2026-11-07: "Half a Point Back" twice). Regular readers remember
-  them. draft.py rewrites a headline sharing a 4+-word run of ordinary
-  words with any headline of the last 14 days; reviews check the same.
+- **Headlines and social copies don't reuse set phrases from the last two
+  weeks** (user's rule, 2026-11-07: "Half a Point Back" twice). Regular
+  readers remember them. draft.py rewrites a headline or social copy
+  sharing a run of 4+ ordinary words (not names or scores) with any
+  headline / social copy of the last 14 days; reviews check the same.
 
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),

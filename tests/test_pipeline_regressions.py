@@ -959,3 +959,12 @@ def test_quality_floor_and_headline_window():
     import selection
     assert selection.MIN_PUBLISH_SCORE == 50
     assert draft.RECENT_HEADLINE_DAYS == 14
+
+
+def test_social_copy_phrase_check_ignores_scores():
+    import draft
+    body = "Begmuratov won on 7.5/9. Twelve players are half a point back."
+    assert draft.repeated_headline_phrase("Begmuratov won on 7.5/9 without a loss.", body, ["Svane scored 6/9 without a loss."]) is None
+    assert draft.repeated_headline_phrase(
+        "Twelve players sit half a point back.", body, ["Gaprindashvili is half a point back in the 65+."]
+    ) == "half a point back"
