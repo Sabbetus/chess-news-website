@@ -927,3 +927,28 @@ def test_logo_word_alone_does_not_match_unrelated_logo():
         "File:Facebook f logo (2019).svg", "Bavarian Chess Championship logo", False
     )
     assert images._title_matches_query("File:FIDE text on white.svg", "FIDE logo", False)
+
+
+def test_event_scoring_weekly_online_vs_live_events():
+    # 2026-11-07 (user's call): Freestyle Friday (115) topped the batch and
+    # an Esports World Cup 2027 announcement (91) beat a live Bavarian
+    # Championship round (70).
+    import selection as s
+    assert s.is_weekly_online("Yakubboev Continues Freestyle Friday Championship Push")
+    assert not s._mentions_major_event("chess returns to esports world cup in 2027")
+    assert s._mentions_major_event("the fide world cup final")
+    weekly, _ = s.score_item({"title": "Yakubboev Wins Freestyle Friday", "summary": "GM Nodirbek Yakubboev won Freestyle Friday.", "sourceTier": "major"})
+    bavarian, b = s.score_item({"title": "Bavarian Championship: Gopal emerges as sole leader", "summary": "Gopal leads after round six.", "sourceTier": "major"})
+    assert b["liveEvent"] == s.LIVE_EVENT_BONUS
+    assert bavarian > weekly
+
+
+def test_repeated_headline_phrase():
+    import draft
+    body = "Gopal leads. Twelve players are half a point back, among them Piorun."
+    assert draft.repeated_headline_phrase(
+        "Gopal Leads, Piorun Among 12 Half a Point Back", body, ["Gaprindashvili Half a Point Back in the Women 65+"]
+    ) == "Half a Point Back"
+    assert draft.repeated_headline_phrase(
+        "Gopal Leads, Piorun Among 12 Half a Point Behind", body, ["Gaprindashvili Half a Point Back in the Women 65+"]
+    ) is None

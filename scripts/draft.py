@@ -1037,6 +1037,93 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     return no_semicolons(new)
 
 
+# Headlines of the last few days and of this run, to keep set phrases from
+# repeating across the front page (user's call, 2026-11-07: "Half a Point
+# Back" was on two front-page headlines at once).
+RECENT_HEADLINE_DAYS = 3
+_RUN_TITLES: list[str] = []
+_HEADLINE_WORD_RE = re.compile(r"[A-Za-z0-9½']+")
+
+
+def _recent_titles(days: int = RECENT_HEADLINE_DAYS) -> list[str]:
+    from datetime import date, timedelta
+
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    titles = []
+    for path in (Path(__file__).resolve().parent.parent / "src" / "content" / "articles").glob("*.md"):
+        text = path.read_text(encoding="utf-8")
+        published = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.M)
+        title = re.search(r'^title:\s*"(.*)"', text, re.M)
+        if title and published and published.group(1) >= cutoff and 'reviewStatus: "published"' in text:
+            titles.append(title.group(1))
+    return titles + _RUN_TITLES
+
+
+def repeated_headline_phrase(title: str, body: str, others: list[str]) -> str | None:
+    """A run of 4+ words this headline shares with another recent one, made
+    of ordinary words rather than names (a word the body capitalises
+    mid-sentence is a name: "Bavarian", "Junior"). Returns the phrase."""
+    words = _HEADLINE_WORD_RE.findall(title)
+    names = {w.lower() for w in re.findall(r"(?<=[a-z,;] )[A-Z][\w'-]+", body)}
+    other_text = [" " + " ".join(_HEADLINE_WORD_RE.findall(o)).lower() + " " for o in others]
+    for n in range(len(words), 3, -1):
+        for i in range(len(words) - n + 1):
+            gram = words[i:i + n]
+            if sum(1 for w in gram if w.lower() in names) > 1:
+                continue
+            phrase = " ".join(gram).lower()
+            if any(f" {phrase} " in o for o in other_text):
+                return " ".join(gram)
+    return None
+
+
+_VARY_PROMPT = """You edit a chess news headline. It repeats a set phrase that another recent \
+headline on the front page already uses. Rewrite it so it says the same thing in different \
+words, without that phrase.
+
+Rules:
+- Same facts, same people, same story; add nothing the headline or body doesn't say.
+- Keep every name in the current headline.
+- Title case like the current headline, 30-80 characters, no semicolon, no quotation marks.
+- Plain, everyday words that fit a chess news site.
+
+Respond with the headline only."""
+
+
+def vary_headline(client, title: str, body: str) -> str:
+    """Rewrite a headline that repeats a recent headline's set phrase; the
+    old one stays if the reply still repeats it, drops a name, or fails."""
+    phrase = repeated_headline_phrase(title, body, _recent_titles())
+    if not phrase:
+        _RUN_TITLES.append(title)
+        return title
+    names = [w for w in re.findall(r"\b[A-Z][\w'-]+", title) if w.lower() in
+             {n.lower() for n in re.findall(r"(?<=[a-z,;] )[A-Z][\w'-]+", body)}]
+    new_title = title
+    for _ in range(2):
+        try:
+            response = client.messages.create(
+                model=MODEL,
+                max_tokens=1024,
+                output_config={"effort": "low"},
+                system=_VARY_PROMPT,
+                messages=[{"role": "user", "content": f"CURRENT HEADLINE: {title}\n\nREPEATED PHRASE: {phrase}\n\nARTICLE BODY:\n{body}"}],
+            )
+            new = "".join(b.text for b in response.content if b.type == "text").strip().strip('"').strip()
+        except Exception as exc:  # noqa: BLE001
+            print(f"  Headline variety rewrite failed: {exc}", file=sys.stderr)
+            break
+        if (30 <= len(new) <= 80 and "\n" not in new and phrase.lower() not in new.lower()
+                and all(n.lower() in new.lower() for n in names)):
+            new_title = no_semicolons(new)
+            print(f"  Headline varied (repeated {phrase!r}): {title!r} -> {new_title!r}", file=sys.stderr)
+            break
+    else:
+        print(f"  Headline still repeats {phrase!r}: {title!r}", file=sys.stderr)
+    _RUN_TITLES.append(new_title)
+    return new_title
+
+
 def no_semicolons(title: str) -> str:
     """A semicolon in a headline reads oddly (user's rule, 2026-10-20); the
     prompts ask for a comma, and this makes sure of it."""
@@ -1932,6 +2019,8 @@ def draft_one(
                 frontmatter["image"] = {**localized, "caption": shown}
                 new_title = match_title_to_photo(client, frontmatter["title"], parsed.get("bodyMarkdown", ""), caption)
                 frontmatter["title"] = parsed["title"] = new_title
+    if not is_aggregate:
+        frontmatter["title"] = parsed["title"] = vary_headline(client, frontmatter["title"], parsed.get("bodyMarkdown", ""))
     # Every article has a photo: a search hit whose download failed falls
     # back to the committed pool too, not to the site's SVG placeholder.
     if "image" not in frontmatter:

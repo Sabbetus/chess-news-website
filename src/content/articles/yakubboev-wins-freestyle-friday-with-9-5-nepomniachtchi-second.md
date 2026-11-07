@@ -5,7 +5,7 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/yakubboev-wins-freestyle-friday-november-6-2026"
 lens: "results"
 continent: "global"
-selectionScore: 115
+selectionScore: 55
 reviewStatus: "published"
 socialCopy: "Yakubboev took Freestyle Friday on Nov. 6 with 9.5 points, a half-point clear of Nepomniachtchi. Four tournaments remain before the Freestyle World Championship field is set."
 metaDescription: "GM Nodirbek Yakubboev won Freestyle Friday on November 6 with 9.5 points, ahead of Ian Nepomniachtchi, and moved closer to a Freestyle World Championship spot."

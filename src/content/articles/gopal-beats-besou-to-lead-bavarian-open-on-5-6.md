@@ -1,11 +1,11 @@
 ---
-title: "Gopal Beats Besou to Lead Bavarian Open, Piorun Among 12 Half a Point Back"
+title: "Gopal Beats Besou to Lead Bavarian Open, Piorun Among 12 Half a Point Behind"
 publishDate: "2026-11-07"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r6"
 lens: "results"
 continent: "europe"
-selectionScore: 70
+selectionScore: 125
 reviewStatus: "published"
 socialCopy: "G.N. Gopal beat 15-year-old Hussain Besou to go clear on 5½/6 at the Bavarian Championship in Gmund. Twelve players sit half a point back, with three rounds left."
 metaDescription: "GM G.N. Gopal beat IM Hussain Besou in round 6 to lead the Bavarian Chess Championship on 5½/6, with twelve players half a point behind."

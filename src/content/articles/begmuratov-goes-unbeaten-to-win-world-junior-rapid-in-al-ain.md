@@ -5,7 +5,7 @@ sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/world-junior-rapid-championship-2026-khumoyun-begmuratov-and-eline-roebers-capture-titles/"
 lens: "results"
 continent: "asia"
-selectionScore: 110
+selectionScore: 160
 reviewStatus: "published"
 socialCopy: "Khumoyun Begmuratov won the World Junior Rapid Open in Al Ain on 7.5/9 without a loss. Eline Roebers took the Girls title on 7/9, and silver and bronze in both sections came down to tiebreaks."
 metaDescription: "Khumoyun Begmuratov won the FIDE World Junior Rapid Open on 7.5/9 and Eline Roebers took the Girls title on 7/9 in Al Ain, UAE."
