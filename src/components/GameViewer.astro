@@ -134,7 +134,28 @@ const data = JSON.stringify(positions);
     const list = root.querySelector<HTMLElement>('.gv-moves')!;
     let current = 0;
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Slide the moved piece from its old square instead of jumping
+    // (user's call, 2026-11-07: instant moves were unnerving). Only for a
+    // single step forward or back; jumps to a far move stay instant.
+    function slide(fromSq: string, toSq: string) {
+      if (reduceMotion) return;
+      const img = squares.get(toSq)?.querySelector<HTMLImageElement>('img');
+      const a = squares.get(fromSq)?.getBoundingClientRect();
+      const b = squares.get(toSq)?.getBoundingClientRect();
+      if (!img || !a || !b) return;
+      img.style.transition = 'none';
+      img.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px)`;
+      img.style.zIndex = '2';
+      img.getBoundingClientRect();
+      img.style.transition = 'transform 180ms ease-out';
+      img.style.transform = '';
+      img.addEventListener('transitionend', () => { img.style.zIndex = ''; }, { once: true });
+    }
+
     function render(ply: number) {
+      const previous = current;
       current = Math.max(0, Math.min(ply, positions.length - 1));
       const { fen, from, to } = positions[current];
       const placement = fen.split(' ')[0].split('/');
@@ -159,6 +180,9 @@ const data = JSON.stringify(positions);
         squares.get(from)?.classList.add('last');
         squares.get(to)?.classList.add('last');
       }
+      if (current === previous + 1 && from && to) slide(from, to);
+      const undone = positions[previous];
+      if (current === previous - 1 && undone.from && undone.to) slide(undone.to, undone.from);
       moveButtons.forEach((b) => {
         const active = Number(b.dataset.ply) === current;
         b.classList.toggle('active', active);

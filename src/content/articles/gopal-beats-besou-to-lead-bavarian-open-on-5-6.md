@@ -7,7 +7,7 @@ lens: "results"
 continent: "europe"
 selectionScore: 125
 reviewStatus: "published"
-socialCopy: "G.N. Gopal beat 15-year-old Hussain Besou to go clear on 5½/6 at the Bavarian Championship in Gmund. Twelve players sit half a point back, with three rounds left."
+socialCopy: "G.N. Gopal beat 15-year-old Hussain Besou to go clear on 5½/6 at the Bavarian Championship in Gmund. Twelve players sit half a point behind, with three rounds left."
 metaDescription: "GM G.N. Gopal beat IM Hussain Besou in round 6 to lead the Bavarian Chess Championship on 5½/6, with twelve players half a point behind."
 image:
   src: "./_images/2021-Kacper-Piorun.webp"

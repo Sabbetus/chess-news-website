@@ -1042,10 +1042,11 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
 # Back" was on two front-page headlines at once).
 RECENT_HEADLINE_DAYS = 14
 _RUN_TITLES: list[str] = []
+_RUN_SOCIAL: list[str] = []
 _HEADLINE_WORD_RE = re.compile(r"[A-Za-z0-9½']+")
 
 
-def _recent_titles(days: int = RECENT_HEADLINE_DAYS) -> list[str]:
+def _recent_titles(days: int = RECENT_HEADLINE_DAYS, field: str = "title") -> list[str]:
     from datetime import date, timedelta
 
     cutoff = (date.today() - timedelta(days=days)).isoformat()
@@ -1053,10 +1054,10 @@ def _recent_titles(days: int = RECENT_HEADLINE_DAYS) -> list[str]:
     for path in (Path(__file__).resolve().parent.parent / "src" / "content" / "articles").glob("*.md"):
         text = path.read_text(encoding="utf-8")
         published = re.search(r'^publishDate:\s*"(\d{4}-\d{2}-\d{2})"', text, re.M)
-        title = re.search(r'^title:\s*"(.*)"', text, re.M)
+        title = re.search(rf'^{field}:\s*"(.*)"', text, re.M)
         if title and published and published.group(1) >= cutoff and 'reviewStatus: "published"' in text:
             titles.append(title.group(1))
-    return titles + _RUN_TITLES
+    return titles + (_RUN_TITLES if field == "title" else _RUN_SOCIAL)
 
 
 def repeated_headline_phrase(title: str, body: str, others: list[str]) -> str | None:
@@ -1070,6 +1071,9 @@ def repeated_headline_phrase(title: str, body: str, others: list[str]) -> str | 
         for i in range(len(words) - n + 1):
             gram = words[i:i + n]
             if sum(1 for w in gram if w.lower() in names) > 1:
+                continue
+            # Numbers aren't wording ("7.5/9 without a loss" is a score).
+            if sum(1 for w in gram if w.isalpha()) < 4:
                 continue
             phrase = " ".join(gram).lower()
             if any(f" {phrase} " in o for o in other_text):
@@ -1122,6 +1126,50 @@ def vary_headline(client, title: str, body: str) -> str:
         print(f"  Headline still repeats {phrase!r}: {title!r}", file=sys.stderr)
     _RUN_TITLES.append(new_title)
     return new_title
+
+
+_VARY_SOCIAL_PROMPT = """You edit the social media post for a chess news article. It repeats a \
+set phrase another recent post of ours already used, and regular readers notice. Rewrite it so \
+it says the same thing in different words, without that phrase.
+
+Rules:
+- Same facts, same people; add nothing the post or the article body doesn't say.
+- Keep every name in the current post.
+- At most 220 characters, plain words, no hashtags, no quotation marks, no mention of Chess.com.
+
+Respond with the post only."""
+
+
+def vary_social(client, social: str, body: str) -> str:
+    """The headline rule for social copy (user's call, 2026-11-07): a post
+    sharing a 4+-word set phrase with one of the last 14 days is rewritten."""
+    phrase = repeated_headline_phrase(social, body, _recent_titles(field="socialCopy"))
+    new_social = social
+    if phrase:
+        names = [w for w in re.findall(r"\b[A-Z][\w'-]+", social) if w.lower() in
+                 {n.lower() for n in re.findall(r"(?<=[a-z,;] )[A-Z][\w'-]+", body)}]
+        for _ in range(2):
+            try:
+                response = client.messages.create(
+                    model=MODEL,
+                    max_tokens=1024,
+                    output_config={"effort": "low"},
+                    system=_VARY_SOCIAL_PROMPT,
+                    messages=[{"role": "user", "content": f"CURRENT POST: {social}\n\nREPEATED PHRASE: {phrase}\n\nARTICLE BODY:\n{body}"}],
+                )
+                new = " ".join("".join(b.text for b in response.content if b.type == "text").split()).strip('"')
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Social copy variety rewrite failed: {exc}", file=sys.stderr)
+                break
+            if (40 <= len(new) <= 220 and phrase.lower() not in new.lower()
+                    and all(n.lower() in new.lower() for n in names)):
+                new_social = new
+                print(f"  Social copy varied (repeated {phrase!r}): {social!r} -> {new!r}", file=sys.stderr)
+                break
+        else:
+            print(f"  Social copy still repeats {phrase!r}: {social!r}", file=sys.stderr)
+    _RUN_SOCIAL.append(new_social)
+    return new_social
 
 
 def no_semicolons(title: str) -> str:
@@ -1954,6 +2002,8 @@ def draft_one(
         # teaser is a worse failure mode than a slightly generic one.
         "socialCopy": fit_for_x(delink((parsed.get("socialCopy") or "").strip() or parsed["title"]))[0],
     }
+    if not is_aggregate:
+        frontmatter["socialCopy"] = fit_for_x(vary_social(client, frontmatter["socialCopy"], parsed.get("bodyMarkdown", "")))[0]
     # Optional: the article page falls back to a body excerpt, so a missing
     # or over-long answer is dropped rather than failing the draft.
     meta_description = " ".join((parsed.get("metaDescription") or "").split())
