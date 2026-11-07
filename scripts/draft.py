@@ -1037,10 +1037,10 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     return no_semicolons(new)
 
 
-# Headlines of the last few days and of this run, to keep set phrases from
-# repeating across the front page (user's call, 2026-11-07: "Half a Point
+# Headlines of the last two weeks and of this run, to keep set phrases from
+# repeating for regular readers (user's call, 2026-11-07: "Half a Point
 # Back" was on two front-page headlines at once).
-RECENT_HEADLINE_DAYS = 3
+RECENT_HEADLINE_DAYS = 14
 _RUN_TITLES: list[str] = []
 _HEADLINE_WORD_RE = re.compile(r"[A-Za-z0-9½']+")
 

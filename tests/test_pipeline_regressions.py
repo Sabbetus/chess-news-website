@@ -952,3 +952,10 @@ def test_repeated_headline_phrase():
     assert draft.repeated_headline_phrase(
         "Gopal Leads, Piorun Among 12 Half a Point Behind", body, ["Gaprindashvili Half a Point Back in the Women 65+"]
     ) is None
+
+
+def test_quality_floor_and_headline_window():
+    import draft
+    import selection
+    assert selection.MIN_PUBLISH_SCORE == 50
+    assert draft.RECENT_HEADLINE_DAYS == 14

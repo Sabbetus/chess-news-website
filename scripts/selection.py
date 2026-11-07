@@ -38,6 +38,7 @@ MAX_CALENDAR_ARTICLES_PER_DAY = 1
 SCORE_THRESHOLD_FOR_EXTRA = 60  # out of 100 -- above this, external articles 3-4 are allowed through
 
 CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
+MIN_PUBLISH_SCORE = 50
 
 # Higher-traffic / more clearly newsworthy outlets get a base bump.
 SOURCE_TIER_SCORE = {
@@ -1321,6 +1322,13 @@ def main() -> None:
 
     calendar_items = [item for item in scored if item["kind"] in CALENDAR_KINDS][:MAX_CALENDAR_ARTICLES_PER_DAY]
     external_items = [item for item in scored if item["kind"] not in CALENDAR_KINDS]
+    # A quality floor (user's rule, 2026-11-07, after an Esports World Cup
+    # 2027 announcement scoring 46 was published): below MIN_PUBLISH_SCORE
+    # nothing but the calendar pieces is drafted, even on a thin day.
+    for item in external_items:
+        if item["selectionScore"] < MIN_PUBLISH_SCORE:
+            print(f"  Below the quality floor ({item['selectionScore']} < {MIN_PUBLISH_SCORE}): {item['sourceName']}: {item['title']}")
+    external_items = [item for item in external_items if item["selectionScore"] >= MIN_PUBLISH_SCORE]
 
     rating_list_items = [item for item in external_items if is_rating_list_story(item)][:MAX_RATING_LIST_ARTICLES_PER_DAY]
     remaining_external = [item for item in external_items if item not in rating_list_items]
