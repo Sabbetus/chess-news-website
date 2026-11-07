@@ -47,6 +47,17 @@
   a reason to skip the local store. (Georg Meier's player page is the one
   known gap: his only usable photo is blocked by Wikimedia rate limits.)
 
+- **Quality floor: nothing below a score of 50 is published** (user's
+  rule, 2026-11-07, after an Esports World Cup 2027 announcement scoring
+  46 went out; it was removed). Calendar pieces are the only exception.
+  selection.py drops anything else under MIN_PUBLISH_SCORE before
+  drafting; a review drops any draft below it.
+
+- **Headlines don't reuse set phrases from the last two weeks** (user's
+  rule, 2026-11-07: "Half a Point Back" twice). Regular readers remember
+  them. draft.py rewrites a headline sharing a 4+-word run of ordinary
+  words with any headline of the last 14 days; reviews check the same.
+
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
@@ -141,7 +152,9 @@ Update after each batch review, once the user has responded.
   or elite bonus, "Esports World Cup" no longer matches "world cup", a
   later year's announcement gets no follow-up bonus, event-page aliases
   count for follow-ups). Today's pieces rescored: Al Ain 160, Bavarian
-  125, Freestyle Friday 55, EWC 46.
+  125, Freestyle Friday 55, EWC 46. Then (user's call) the EWC piece was
+  removed and a 50-point quality floor added, and the headline check
+  looks back 14 days, not 3.
 - 2026-11-06: PR #93 accepted (1 -> 2; "pretty good"). The photo change
   was a new rule on the 8-year limit, not a correction of a call I made.
 - 2026-11-05: PR #92 accepted ("everything seems solid", 0 -> 1). User's
