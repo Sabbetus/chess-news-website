@@ -14,6 +14,8 @@ image:
   credit: "Husniddin Ato, CC BY-SA 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AKhumoyun_Begmuratov_chess_player.jpg"
   caption: "Khumoyun Begmuratov"
+gamePgn: "begmuratov-goes-unbeaten-to-win-world-junior-rapid-in-al-ain.pgn"
+gameCaption: "Round 8: Pranav V - Khumoyun Begmuratov, 0-1"
 ---
 
 Uzbekistan's Khumoyun Begmuratov [won the Open section of the FIDE World Junior Rapid Championship 2026](https://www.fide.com/world-junior-rapid-championship-2026-khumoyun-begmuratov-and-eline-roebers-capture-titles/) at the Danat Al Ain Resort. He finished on 7.5/9 with six wins and three draws, and he did not lose a game. Eline Roebers of the Netherlands took the Girls title on 7/9.

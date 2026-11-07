@@ -47,6 +47,14 @@
   a reason to skip the local store. (Georg Meier's player page is the one
   known gap: his only usable photo is blocked by Wikimedia rate limits.)
 
+- **Results pieces get a board even when the source quotes no game**
+  (user's rule, 2026-11-07: the World Junior Rapid report had none). When
+  no source PGN or named game is found, draft.py searches the event's
+  Lichess broadcast for a game by a player the piece names (main subject
+  first; their latest decisive game, else latest game) and adds it with a
+  "Round N: White - Black, result" caption. Reviews check it is from the
+  right event and section.
+
 - **Quality floor: nothing below a score of 50 is published** (user's
   rule, 2026-11-07, after an Esports World Cup 2027 announcement scoring
   46 went out; it was removed). Calendar pieces are the only exception.
