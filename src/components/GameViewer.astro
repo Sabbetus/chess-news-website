@@ -33,8 +33,15 @@ try {
   positions.push({ fen: makeFen(pos.toSetup()) });
   for (const node of game.moves.mainline()) {
     const move = parseSan(pos, node.san);
-    if (!move || !('from' in move)) throw new Error(`Invalid move in PGN: ${node.san}`);
+    if (!move) throw new Error(`Invalid move in PGN: ${node.san}`);
     const san = makeSan(pos, move);
+    // A Crazyhouse drop ("N@f3") has no from-square (caught 2026-11-08:
+    // the Crazyhouse Championship final would have shown no board).
+    if (!('from' in move)) {
+      pos.play(move);
+      positions.push({ fen: makeFen(pos.toSetup()), to: makeSquare(move.to), san });
+      continue;
+    }
     // A castling move is stored as king takes rook; show the king's own
     // destination square instead.
     const castle = pos.board.get(move.from)?.role === 'king' && pos.board.get(move.to)?.role === 'rook'
@@ -156,7 +163,8 @@ const data = JSON.stringify(positions);
       const previous = current;
       current = Math.max(0, Math.min(ply, positions.length - 1));
       const { fen, from, to } = positions[current];
-      const placement = fen.split(' ')[0].split('/');
+      // Crazyhouse FENs add the pieces in hand as a ninth segment.
+      const placement = fen.split(' ')[0].split('/').slice(0, 8);
       squares.forEach((el) => {
         el.classList.remove('last');
         el.querySelector('img')?.remove();
@@ -174,10 +182,8 @@ const data = JSON.stringify(positions);
           f += 1;
         }
       });
-      if (from && to) {
-        squares.get(from)?.classList.add('last');
-        squares.get(to)?.classList.add('last');
-      }
+      if (from) squares.get(from)?.classList.add('last');
+      if (to) squares.get(to)?.classList.add('last');
       if (current === previous + 1 && from && to) slide(from, to);
       const undone = positions[previous];
       if (current === previous - 1 && undone.from && undone.to) slide(undone.to, undone.from);
