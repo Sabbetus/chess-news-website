@@ -41,7 +41,7 @@ from chess_results_standings import (
 from continents import CONTINENT_SLUGS
 from game_links import fix_embed_link, illegal_lines, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
-from game_pgn import clean_game, find_game_pgn
+from game_pgn import chesscom_numbered_game, clean_game, find_game_pgn, headline_game_number
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
@@ -2234,10 +2234,21 @@ def draft_one(
     # keeps the Lichess embed (user's call, 2026-10-06: it lets readers
     # switch to other games from the same event). Quoted moves link to
     # their positions; quoted moves that aren't in the game go in the PR.
+    numbered_caption = None
     if not is_aggregate and not embed:
         try:
             players = game_lookup or {}
-            pgn = find_game_pgn(
+            pgn = None
+            # The game a headline names ("Game 28") is the board, even when
+            # the source only annotates other games of the match (user's
+            # call, 2026-11-08: the Bullet Grandpa's one win over Dubov).
+            number = headline_game_number(parsed.get("title") or "")
+            if number and "chess.com" in item.get("sourceUrl", ""):
+                around = datetime.fromisoformat((item.get("publishedAt") or datetime.now(timezone.utc).isoformat()).replace("Z", "+00:00")).date()
+                found = chesscom_numbered_game(item.get("summary") or "", number, around)
+                if found:
+                    pgn, numbered_caption = found
+            pgn = pgn or find_game_pgn(
                 [item.get("sourceUrl", "")]
                 + [extra.get("sourceUrl", "") for extra in item.get("additionalSources") or []],
                 "",
@@ -2258,7 +2269,7 @@ def draft_one(
             GAMES_DIR.mkdir(parents=True, exist_ok=True)
             (GAMES_DIR / f"{out_path.stem}.pgn").write_text(pgn)
             fm_lines.insert(len(fm_lines) - 1, f'gamePgn: "{out_path.stem}.pgn"')
-            caption = game_caption(pgn, parsed.get("lens"), datetime.now(timezone.utc).year)
+            caption = numbered_caption or game_caption(pgn, parsed.get("lens"), datetime.now(timezone.utc).year)
             if caption:
                 fm_lines.insert(len(fm_lines) - 1, f"gameCaption: {json.dumps(caption)}")
             body_markdown = linked_body

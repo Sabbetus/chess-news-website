@@ -991,3 +991,9 @@ def test_press_release_credit_line_in_story():
     import article_text
     assert article_text.is_press_release_page('<div class="full-story"><p style="text-align: right;"><em>Press release by FIDE</em></p>')
     assert not article_text.is_press_release_page("<p>FIDE issued a press release on Monday.</p>")
+
+
+def test_headline_game_number():
+    import game_pgn
+    assert game_pgn.headline_game_number("Bullet Grandpa Wins Game 28 and Spoils Dubov's 100-0 Sweep") == 28
+    assert game_pgn.headline_game_number("Carlsen Wins the Final") is None
