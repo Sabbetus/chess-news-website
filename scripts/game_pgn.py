@@ -18,6 +18,7 @@ are its own work, not ours to republish.
 
 import html
 import re
+from datetime import date as datetime_date
 import urllib.parse
 
 import requests
@@ -235,4 +236,62 @@ def find_game_pgn(source_url: str | list[str], embed_url: str, body: str, player
         game = pick_game(split_games(raw), body, player1, player2)
         if game:
             return clean_game(game)
+    return None
+
+
+# "Game 28" in a headline names the one game the story is about; a source
+# that only annotates other games of the match doesn't give it (user's call,
+# 2026-11-08: the Bullet Grandpa's single win over Dubov, game 28 of 100,
+# was only a video clip, and the piece showed one of Dubov's wins).
+_GAME_NUMBER_RE = re.compile(r"\bgame\s+(\d{1,3})\b", re.IGNORECASE)
+_HANDLE_RE = re.compile(r"(?<![\w.])@([A-Za-z0-9_-]{3,25})\b")
+
+
+def headline_game_number(title: str) -> int | None:
+    m = _GAME_NUMBER_RE.search(title or "")
+    return int(m.group(1)) if m else None
+
+
+def chesscom_numbered_game(text: str, number: int, around: datetime_date) -> tuple[str, str] | None:
+    """Game `number` of a match between a Chess.com account named in the
+    source (@handle) and the opponent it played most often on one day within
+    three days before `around`, counted in the order the games ended.
+    Returns (PGN with real names, caption) or None."""
+    from datetime import datetime, timedelta, timezone
+
+    for handle in dict.fromkeys(h.lower() for h in _HANDLE_RE.findall(text or "")):
+        games = []
+        for month in {(around - timedelta(days=d)).strftime("%Y/%m") for d in (0, 3)}:
+            try:
+                response = requests.get(f"https://api.chess.com/pub/player/{handle}/games/{month}",
+                                        headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT)
+                if response.ok:
+                    games += response.json().get("games", [])
+            except (requests.RequestException, ValueError):
+                continue
+        days: dict[tuple[str, str], list[dict]] = {}
+        for game in games:
+            day = datetime.fromtimestamp(game.get("end_time", 0), timezone.utc).date()
+            if not (around - timedelta(days=3) <= day <= around):
+                continue
+            white, black = game["white"]["username"], game["black"]["username"]
+            opponent = black if white.lower() == handle else white
+            days.setdefault((day.isoformat(), opponent.lower()), []).append(game)
+        if not days:
+            continue
+        (day, _), match = max(days.items(), key=lambda kv: len(kv[1]))
+        if len(match) < number:
+            continue
+        match.sort(key=lambda g: g["end_time"])
+        game = match[number - 1]
+        pgn = game.get("pgn") or ""
+        white = _real_name(game["white"]["username"])
+        black = _real_name(game["black"]["username"])
+        pgn = re.sub(r'^\[White "[^"]*"\]', f'[White "{white}"]', pgn, flags=re.M)
+        pgn = re.sub(r'^\[Black "[^"]*"\]', f'[Black "{black}"]', pgn, flags=re.M)
+        pgn = re.sub(r'^\[Round "[^"]*"\]', f'[Round "{number}"]', pgn, flags=re.M)
+        result = re.search(r'^\[Result "([^"]+)"\]', pgn, re.M)
+        caption = f"Game {number}: {white} - {black}, {(result.group(1) if result else '').replace('1/2-1/2', 'draw')}"
+        print(f"  numbered game: {handle} v {black if white.lower() != handle else white}, {day}, {caption}")
+        return clean_game(pgn), caption.rstrip(", ")
     return None

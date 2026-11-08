@@ -55,6 +55,14 @@
   "Round N: White - Black, result" caption. Reviews check it is from the
   right event and section.
 
+- **A game named in the headline is the board** (user's call,
+  2026-11-08: the Bullet Grandpa piece showed one of Dubov's 99 wins, not
+  game 28, Smith's only win, which Chess.com's report gave only as a video
+  clip). For a Chess.com story whose headline names "Game N", draft.py
+  takes game N of the match from the Chess.com game archive of an @handle
+  the source names (the opponent it played most that day, in finishing
+  order), captioned "Game N: White - Black, result". Reviews check it.
+
 - **Quality floor: nothing below a score of 50 is published** (user's
   rule, 2026-11-07, after an Esports World Cup 2027 announcement scoring
   46 went out; it was removed). Calendar pieces are the only exception.
