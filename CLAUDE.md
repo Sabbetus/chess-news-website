@@ -151,7 +151,10 @@ call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded.
 
-- **Current review-acceptance streak: 3.**
+- **Current review-acceptance streak: 4.**
+- 2026-11-08: PR #95 accepted ("everything seems solid", 3 -> 4); minor
+  miss: I didn't review the weekly recap, which the morning check covers
+  too (reviewed and published after the user pointed it out).
 - 2026-11-07: PR #94 accepted ("mostly ok", 2 -> 3). Follow-ups were new
   rules, not corrections of my calls: headline wording variety ("Half a
   Point Back" was on two front-page headlines; the new one now "Half a
@@ -274,6 +277,10 @@ Update after each batch review, once the user has responded.
   release by/from" credit line in the story counts as a press release; the
   game board plays Crazyhouse drops (the final's board would have been
   blank).
+  Weekly recap (PR #96), missed in my first pass and caught by the user:
+  all 20 links and every claim checked against the linked pieces, clean;
+  opening reworded, today's Tegernsee round 7 and Bullet Grandpa lines
+  added.
 - 2026-11-07: PR #94 reset (streak stays at 0). Resets: the Bavarian
   round 6 piece showed the Facebook logo -- the photo search's "<event>
   logo" query matched on the word "logo" alone (now Kacper Piorun, 2021,

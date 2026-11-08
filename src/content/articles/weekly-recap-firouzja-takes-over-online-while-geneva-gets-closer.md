@@ -4,7 +4,7 @@ type: "recap"
 publishDate: "2026-11-08"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja ended Nakamura's Bullet Brawl streak and won Titled Tuesday. Plus Gukesh v Sindarov previews, junior rapid titles in Al Ain, and Ding Liren's early exit. This week's Chess Herald recap. #chess"
 image:
   src: "./_images/Alireza_Firouzja_2026_Norway_Chess.webp"
@@ -12,7 +12,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_2026_Norway_Chess.jpg"
 ---
 
-Alireza Firouzja won twice online against Hikaru Nakamura's field this week, and the World Championship match in Geneva kept pulling attention toward late November. Around those two threads, we ran junior titles in Al Ain, open events in Bavaria and Almaty, and a few birthdays and calendar items.
+Alireza Firouzja won two online events this week, both ahead of Hikaru Nakamura, and the World Championship match in Geneva kept pulling attention toward late November. Around those two threads, we ran junior titles in Al Ain, open events in Bavaria and Almaty, and a few birthdays and calendar items.
 
 **Firouzja on the online circuit**
 
@@ -21,6 +21,8 @@ Hikaru Nakamura's Bullet Brawl streak is over. [Firouzja won Saturday's arena on
 Days later, [Firouzja went 10/11 to win Titled Tuesday](/articles/firouzja-goes-10-11-to-win-titled-tuesday-nakamura-second/) outright and undefeated. He beat tournament leader Nakamura in round 10, then won the last game easily.
 
 Nodirbek Yakubboev took a different weekly event. He [won Freestyle Friday with 9.5 points](/articles/yakubboev-wins-freestyle-friday-with-9-5-nepomniachtchi-second/), half a point ahead of Ian Nepomniachtchi. Nobody else got past eight, and it was his second win in the event after April 24.
+
+On Saturday, amateur Josh Smith, the "Bullet Grandpa", [won game 28 against Daniil Dubov](/articles/bullet-grandpa-wins-game-28-and-spoils-dubov-s-100-0-sweep/) in their 100-game bullet match. Dubov won the other 99 but missed the bonus for a clean sweep.
 
 Chess.com also [announced Speed Chess Championship XI](/articles/speed-chess-championship-xi-carlsen-and-nakamura-tied-at-five-titles/), the tenth-anniversary edition. It starts in November with a $250,000 prize fund. The live finals are at 180 Studios in London from February 5 to 7, 2027.
 
@@ -45,6 +47,8 @@ Older players are busy in Serbia. At the World Senior Championships in Vrnjačka
 Denis Lazavik [won the KazChess Masters in Almaty](/articles/lazavik-wins-kazchess-masters-unbeaten-as-dubov-slips-late/) on 6½/9. The 19-year-old Belarusian GM stayed unbeaten, and a last-round draw with Aram Hakobyan secured outright first.
 
 At the Bavarian Championship on Lake Tegernsee, [six players were tied on 4½/5](/articles/besou-15-beats-peter-acs-and-joins-six-leaders-at-tegernsee/) after round five, among them 15-year-old German IM Hussain Besou. In round six, [G.N. Gopal beat Besou](/articles/gopal-beats-besou-to-lead-bavarian-open-on-5-6/) to lead alone on 5½/6, with Piorun among 12 players half a point behind.
+
+After round seven, [Krishnan Sasikiran caught Gopal on 6/7](/articles/sasikiran-wins-in-round-7-to-join-gopal-on-6-7-at-tegernsee/), with top seed Frederik Svane among 21 players on 5½.
 
 The Chinese Rapid in Shaoxing lost two big names early. [Ding Liren fell to Xiao Tong in a blitz tiebreak](/articles/ding-liren-falls-to-xiao-tong-in-blitz-at-chinese-rapid/) and Wang Hao lost to Xu Xiangyu. Three of the four rating favourites missed the semifinals.
 
