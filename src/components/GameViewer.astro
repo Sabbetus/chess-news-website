@@ -159,12 +159,29 @@ const data = JSON.stringify(positions);
       img.addEventListener('transitionend', () => { img.style.zIndex = ''; }, { once: true });
     }
 
+    // A Crazyhouse drop has no square to slide from: the piece settles in.
+    function dropIn(toSq: string) {
+      const img = squares.get(toSq)?.querySelector<HTMLImageElement>('img');
+      if (!img) return;
+      img.style.transition = 'none';
+      img.style.transform = 'scale(1.35)';
+      img.style.opacity = '0';
+      img.style.zIndex = '2';
+      img.getBoundingClientRect();
+      img.style.transition = 'transform 250ms ease-in-out, opacity 250ms ease-in-out';
+      img.style.transform = '';
+      img.style.opacity = '';
+      img.addEventListener('transitionend', () => { img.style.zIndex = ''; }, { once: true });
+    }
+
     function render(ply: number) {
       const previous = current;
       current = Math.max(0, Math.min(ply, positions.length - 1));
       const { fen, from, to } = positions[current];
-      // Crazyhouse FENs add the pieces in hand as a ninth segment.
-      const placement = fen.split(' ')[0].split('/').slice(0, 8);
+      // Crazyhouse FENs add the pieces in hand, as "[Nq]" after the last
+      // rank (chessops) or as a ninth segment; neither is a board square
+      // (caught 2026-11-08: "[]" broke every Crazyhouse move's render).
+      const placement = fen.split(' ')[0].replace(/\[.*\]$/, '').split('/').slice(0, 8);
       squares.forEach((el) => {
         el.classList.remove('last');
         el.querySelector('img')?.remove();
@@ -185,6 +202,7 @@ const data = JSON.stringify(positions);
       if (from) squares.get(from)?.classList.add('last');
       if (to) squares.get(to)?.classList.add('last');
       if (current === previous + 1 && from && to) slide(from, to);
+      else if (current === previous + 1 && to) dropIn(to);
       const undone = positions[previous];
       if (current === previous - 1 && undone.from && undone.to) slide(undone.to, undone.from);
       moveButtons.forEach((b) => {
