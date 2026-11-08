@@ -156,7 +156,10 @@ PRESS_RELEASE = "\x00press-release"
 # sign-up pitch).
 _PRESS_RELEASE_BYLINE_RE = re.compile(
     r'blog-author-line[^>]*>\s*by\s+(?:Press\s+release'
-    r'|[^<]*\b(?:Foundation|Academy|Federation|Association|Organi[sz]ers?|Festival)\b)',
+    r'|[^<]*\b(?:Foundation|Academy|Federation|Association|Organi[sz]ers?|Festival)\b)'
+    # A credit line at the top of the story (caught 2026-11-08: FIDE's
+    # Gukesh preview opened "<em>Press release by FIDE</em>").
+    r'|>\s*Press\s+release\s+(?:by|from)\b',
     re.IGNORECASE,
 )
 
