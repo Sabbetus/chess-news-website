@@ -1,12 +1,12 @@
 ---
-title: "Sasikiran Joins Gopal in Lead as Top Seed Svane Draws Back"
+title: "Sasikiran Catches Gopal on 6/7 at Tegernsee, Svane Among 21 on 5½"
 publishDate: "2026-11-08"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r7"
 lens: "results"
 continent: "europe"
 selectionScore: 125
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Sasikiran beat Rithvik Raja to draw level with Gopal on 6/7 in Tegernsee. Svane and 20 others are a half point behind with two rounds left at the Bavarian Championship."
 metaDescription: "Krishnan Sasikiran and G.N. Gopal share the lead on 6/7 at the Bavarian Chess Championship in Tegernsee, with 21 players on 5½ after round seven."
 image:
@@ -23,7 +23,7 @@ The first five boards all ended in draws this time, which let Gopal keep his edg
 
 **A tough path to the top**
 
-The tiebreaks are close. Sasikiran's opponents averaged 2413 and Gopal's 2411, and both have faced stronger opposition on average than anyone else in the field. Their performance ratings are nearly identical too, 2677 for Sasikiran and 2676 for Gopal.
+The tiebreaks are close. Sasikiran's opponents averaged 2413 and Gopal's 2411. Their performance ratings are nearly identical too, 2677 for Sasikiran and 2676 for Gopal.
 
 Both are seeded well below the top. Sasikiran is 13th at 2520 and Gopal 10th at 2530, while the top seed, Frederik Svane (2662), sits third on 5½. Rithvik Raja, seeded 14th at 2519, dropped to 5 points.
 
@@ -45,4 +45,4 @@ Svane showed patience in a complicated position. In the final position he could 
 
 The two highest-placed women are Maria Tsakona (47th) and Kateryna Dolzhykova (49th), both on 5 points. The field numbers 548 players.
 
-The penultimate round is on Saturday, with the final round to follow.
+The penultimate round was played on Saturday, and the ninth and final round is on Sunday, 8 November.

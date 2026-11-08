@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/bullet-grandpa-wins-2026-100-project
 lens: "results"
 continent: "north-america"
 selectionScore: 69
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Josh Smith, the \"Bullet Grandpa,\" won game 28 against Daniil Dubov and ended any chance of a 100-0 sweep. Dubov took the other 99 games. Season 2 brings Levon Aronian as final boss."
 metaDescription: "Amateur Josh Smith beat GM Daniil Dubov in game 28 of the 100-0 Project final, stopping the sweep. Dubov won 99-1 and earned $10,000."
 image:
@@ -19,19 +19,19 @@ gamePgn: "bullet-grandpa-wins-game-28-and-spoils-dubov-s-100-0-sweep.pgn"
 
 In the final match of the 100-0 Project Season 1, held on November 7 on Chess.com, Arizona amateur Josh Smith, known as @BulletGrandpa, [won game 28 against GM Daniil Dubov](https://www.chess.com/news/view/bullet-grandpa-wins-2026-100-project-season-1). That single point denied Dubov a perfect sweep. He finished 99-1.
 
-The match was 100 games at 1+0, the standard "pure" bullet control. Winning every game would have earned Dubov $20,000, while one draw or loss for Smith meant $10,000. Dubov collected the lower sum.
+The match was 100 games at 1+0, the standard "pure" bullet control. Winning every game would have earned Dubov $20,000, while a single draw or win for Smith meant $10,000. Dubov collected the lower sum.
 
-**A 800-point mismatch on paper**
+**An 800-point mismatch on paper**
 
 Smith, who is 49 and estimates he has played over 250,000 bullet games, set a personal best of 2579 on October 6. He began the match at 2424.
 
-Dubov sat at 3225, a gap of about 800 points. For a sense of what such a gap means, see our explainer on [what a rating actually measures](/articles/chess-ratings/).
+Dubov's bullet rating was 3225, a gap of about 800 points. For a sense of what such a gap means, see our explainer on [what a rating actually measures](/articles/chess-ratings/).
 
 Dubov won the first 27 games. Game three ended in the opening, a Czech Benoni where [9.Bb5+](#ply-17) left Black with no good reply. In game six he won in 16 moves as Black, opening the white king with 7...e3!
 
 **The sacrifices**
 
-In the game after game six, 40.f3 was a clean conversion, and mate came one move later. Game 10 was Smith's closest early brush with a draw, but Dubov took over a knight endgame with the more active king.
+In game seven, 40.f3 was a clean conversion, and mate came one move later. Game 10 was Smith's closest early brush with a draw, but Dubov took over a knight endgame with the more active king.
 
 Game 15 produced one of the day's best moves, the queen sacrifice 27.Qc6!!, since 28.Rb8 would be mate if the queen were taken. In game 24 Smith briefly outplayed Dubov before losing control in a rook and opposite-color bishop ending. Dubov finished it with a rare mate delivered by a king move.
 
