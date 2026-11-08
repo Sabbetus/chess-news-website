@@ -15,6 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADaniilDubov19a.jpg"
   caption: "Daniil Dubov"
 gamePgn: "bullet-grandpa-wins-game-28-and-spoils-dubov-s-100-0-sweep.pgn"
+gameCaption: "Game 28: Josh Smith - Daniil Dubov, 1-0, the one game Smith won"
 ---
 
 In the final match of the 100-0 Project Season 1, held on November 7 on Chess.com, Arizona amateur Josh Smith, known as @BulletGrandpa, [won game 28 against GM Daniil Dubov](https://www.chess.com/news/view/bullet-grandpa-wins-2026-100-project-season-1). That single point denied Dubov a perfect sweep. He finished 99-1.
@@ -27,7 +28,7 @@ Smith, who is 49 and estimates he has played over 250,000 bullet games, set a pe
 
 Dubov's bullet rating was 3225, a gap of about 800 points. For a sense of what such a gap means, see our explainer on [what a rating actually measures](/articles/chess-ratings/).
 
-Dubov won the first 27 games. Game three ended in the opening, a Czech Benoni where [9.Bb5+](#ply-17) left Black with no good reply. In game six he won in 16 moves as Black, opening the white king with 7...e3!
+Dubov won the first 27 games. Game three ended in the opening, a Czech Benoni where 9.Bb5+ left Black with no good reply. In game six he won in 16 moves as Black, opening the white king with 7...e3!
 
 **The sacrifices**
 
