@@ -985,3 +985,9 @@ def test_social_queue_withdraws_removed_and_refreshes_pending():
     out = sp.refresh_pending(queue, articles)
     assert out[0]["withdrawn"] is True
     assert out[1]["socialCopy"] == "half a point behind" and out[1]["selectionScore"] == 125
+
+
+def test_press_release_credit_line_in_story():
+    import article_text
+    assert article_text.is_press_release_page('<div class="full-story"><p style="text-align: right;"><em>Press release by FIDE</em></p>')
+    assert not article_text.is_press_release_page("<p>FIDE issued a press release on Monday.</p>")
