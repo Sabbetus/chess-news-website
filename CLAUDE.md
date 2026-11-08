@@ -259,6 +259,21 @@ Update after each batch review, once the user has responded.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-08: PR #95 reset (streak stays at 0). Resets: a FIDE press
+  release (Gukesh preview, "Press release by FIDE" as an italic line at the
+  top of ChessBase's story) was drafted -- dropped under the no-exceptions
+  press-release rule; the Bullet Grandpa piece said "one draw or loss for
+  Smith" ended the $20,000 bonus (a draw or win). Fixed: Tegernsee piece
+  claimed the leaders "faced stronger opposition than anyone else" (Raja's
+  2430 is higher), "penultimate round is on Saturday" (already played),
+  headline "...Svane Draws Back" (now "Sasikiran Catches Gopal on 6/7 at
+  Tegernsee, Svane Among 21 on 5½"). Minor: Crazyhouse social copy named
+  "Chesscom" (no Chess.com in social copy), "Bxd4" invented for "grabbed
+  the bishop on d4"; Bullet Grandpa "A 800-point", "the game after game
+  six", Dubov's 3225 is a bullet rating. Fixed at the source: a "Press
+  release by/from" credit line in the story counts as a press release; the
+  game board plays Crazyhouse drops (the final's board would have been
+  blank).
 - 2026-11-07: PR #94 reset (streak stays at 0). Resets: the Bavarian
   round 6 piece showed the Facebook logo -- the photo search's "<event>
   logo" query matched on the word "logo" alone (now Kacper Piorun, 2021,
@@ -773,8 +788,8 @@ Update after each batch review, once the user has responded.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-11-07 (PR #94, see above).
-- Earlier resets: 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-11-08 (PR #95, see above).
+- Earlier resets: 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

@@ -6,8 +6,8 @@ sourceUrl: "https://www.chess.com/news/view/2026-crazyhouse-chess-championship-a
 lens: "results"
 continent: "north-america"
 selectionScore: 69
-reviewStatus: "draft"
-socialCopy: "NM Janak Awatramani swept GM Guillermo Vazquez 3-0 to win the 2026 Chesscom Crazyhouse Championship, after beating partner Isaac Chiu 3-1 in the Winners Final. He took $750 and a 3D-printed piece set."
+reviewStatus: "published"
+socialCopy: "NM Janak Awatramani swept GM Guillermo Vazquez 3-0 to win the 2026 Crazyhouse Championship online, after beating partner Isaac Chiu 3-1 in the Winners Final. He took $750 and a 3D-printed piece set."
 metaDescription: "NM Janak Awatramani beat GM Guillermo Vazquez 3-0 in the Grand Final to win the 2026 Chess.com Crazyhouse Championship, his second title after 2024."
 image:
   src: "./_images/Guillermo_Vazquez_2026_Olympiad.webp"
@@ -43,7 +43,7 @@ He won the next two games, lost again, then won the bullet decider with White.
 
 Elsewhere, Chiu came back from 2-0 down against Justin Tan in the Quarterfinals, winning the next two games and then the bullet decider. Tan, the "JannLee" widely regarded as the game's "first world champion", fought on through the Losers bracket.
 
-He beat Brendan Cater 3-0 but lost 3-2 to Aroesti. In that bullet decider Tan had mate in two with under two seconds left and missed it: Bxd4 with check, then dropping the bishop on a4 for mate.
+He beat Brendan Cater 3-0 but lost 3-2 to Aroesti. In that bullet decider Tan had mate in two with under two seconds left and missed it: taking the bishop on d4 with check, then dropping it on a4 for mate.
 
 **Format and what's next**
 
