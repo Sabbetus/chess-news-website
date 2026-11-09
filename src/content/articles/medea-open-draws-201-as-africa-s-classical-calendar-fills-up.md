@@ -1,13 +1,13 @@
 ---
-title: "Medea Open Draws 201 as Africa's Classical Calendar Fills Up"
+title: "Medea Open Draws 201 to Top Africa's October List"
 publishDate: "2026-11-09"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
 continent: "africa"
 selectionScore: 23
-reviewStatus: "draft"
-socialCopy: "201 players registered for the Open 1er Novembre in Medea, the biggest field in our October list for Africa. Three week-long festivals ran in Morocco and Tunisia too."
+reviewStatus: "published"
+socialCopy: "201 players registered for the Open 1er Novembre in Medea, the largest entry on our African list for October. Week-long festivals in Chefchaouen and Monastir ran too."
 metaDescription: "October's notable African chess events: Medea's 201-player Open 1er Novembre, week-long festivals in Chefchaouen and Monastir, and national opens in Nigeria and Kenya."
 aggregateKind: "calendar-biggest"
 continentName: "Africa"

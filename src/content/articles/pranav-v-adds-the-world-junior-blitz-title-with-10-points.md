@@ -6,8 +6,8 @@ sourceUrl: "https://www.fide.com/world-junior-blitz-championship-2026-pranav-v-a
 lens: "results"
 continent: "asia"
 selectionScore: 90
-reviewStatus: "draft"
-socialCopy: "Pranav V of India, already World Junior classical champion, added the blitz crown in Al Ain with 10½ points. Russia's Valeria Kleymenova won the Girls championship with 10."
+reviewStatus: "published"
+socialCopy: "Pranav V of India, already World Junior classical champion, added the blitz crown in Al Ain with 10½ points. Valeria Kleymenova won the Girls championship with 10."
 metaDescription: "Pranav V won the World Junior Blitz Championship in Al Ain with 10½ points, and Valeria Kleymenova took the Girls title with 10, in a 185-player field."
 image:
   src: "./_images/PranavVenkatesh_2022.webp"
@@ -24,7 +24,7 @@ Eldiyar Orozbaev of Kyrgyzstan took silver on 9½. Robert Piliposyan of Armenia 
 
 **The Girls title**
 
-Russia's Valeria Kleymenova won the World Junior Girls' Blitz Championship, the under-20 title, with 10 points. Afruza Khamdamova of Uzbekistan took silver on 9½. Veronika Iudina of Russia was third, also on 9½.
+Valeria Kleymenova won the World Junior Girls Blitz Championship, the under-20 title, with 10 points. Afruza Khamdamova of Uzbekistan took silver on 9½. Veronika Iudina was third, also on 9½.
 
 Kleymenova's half-point margin over the two chasers was thinner than Pranav's in the Open, but it was enough for gold.
 

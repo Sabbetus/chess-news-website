@@ -1,12 +1,12 @@
 ---
-title: "Strutinskaya Leads Senior Worlds, Cramling Unbeaten in Women 50+"
+title: "Strutinskaya Perfect on 5/5 at Senior Worlds, Cramling Unbeaten in Women 50+"
 publishDate: "2026-11-09"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-world-senior-championships-2026-six-rounds-left-four-titles-at-stake/"
 lens: "results"
 continent: "europe"
 selectionScore: 83
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "WGM Galina Strutinskaya is the only player on 5/5 at the World Senior Championships in Vrnjačka Banja. The Open 65+ has a five-way tie on 4.5, and the Open 50+ a three-way tie. Six rounds remain."
 metaDescription: "After five rounds in Vrnjačka Banja, Galina Strutinskaya has a perfect score in the Women 65+, while the Open 65+ has five co-leaders on 4.5."
 image:
@@ -54,4 +54,4 @@ Because the leaders play each other as the Swiss pairings tighten, the tie shoul
 
 Alongside the championship, the Vrnjačka Banja Trophy 2026 open rapid was held on November 8, with 293 players from 40 countries, including 17 grandmasters. Many Senior Worlds participants played.
 
-GM Mikhail Bryakin of Serbia won with 8/9. IM Miodrag Perunović (Serbia) and GM Evgeny Vorobiov (Russia) also scored 8 and were separated on tie-breaks. IM Danila Sutormin (Serbia) took fourth on 7.5, with GM Rogelio Antonio Jr. (Philippines) and GM Goran Todorović (Serbia) also on 7.5.
+GM Mikhail Bryakin of Serbia won with 8/9. IM Miodrag Perunović (Serbia) and GM Evgeny Vorobiov also scored 8 and were separated on tie-breaks. IM Danila Sutormin (Serbia) took fourth on 7.5, with GM Rogelio Antonio Jr. (Philippines) and GM Goran Todorović (Serbia) also on 7.5.

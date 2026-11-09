@@ -997,3 +997,10 @@ def test_headline_game_number():
     import game_pgn
     assert game_pgn.headline_game_number("Bullet Grandpa Wins Game 28 and Spoils Dubov's 100-0 Sweep") == 28
     assert game_pgn.headline_game_number("Carlsen Wins the Final") is None
+
+
+def test_strip_russia_labels():
+    import draft
+    assert draft.strip_russia_labels("Russia's Valeria Kleymenova won. Veronika Iudina of Russia was third.") == "Valeria Kleymenova won. Veronika Iudina was third."
+    assert draft.strip_russia_labels("GM Evgeny Vorobiov (Russia) scored 8") == "GM Evgeny Vorobiov scored 8"
+    assert draft.strip_russia_labels("He left Russia in 2022.") == "He left Russia in 2022."
