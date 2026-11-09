@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/chinese-rapid-championship-2026-final"
 lens: "results"
 continent: "asia"
 selectionScore: 62
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Yu Yangyi kept his Chinese Rapid title in Shaoxing, beating 18-year-old Xiao Tong 4-3 after an Armageddon decider. Xiao had knocked out Ding Liren and Lu Shanglei on the way to the final."
 metaDescription: "Yu Yangyi defended his Chinese Rapid Championship title in Shaoxing, beating 18-year-old Xiao Tong 4-3 in an Armageddon decider after six games."
 image:

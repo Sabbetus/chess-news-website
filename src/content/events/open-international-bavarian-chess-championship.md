@@ -19,17 +19,14 @@ aliases:
   - "Bavarian Open"
   - "Offene Internationale Bayerische Schachmeister"
 nextEdition:
-  label: "29th edition, under way"
-  start: 2026-10-31
-  end: 2026-11-08
-  location: "Gut Kaltenbrunn, Gmund am Tegernsee"
-  sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r5"
-  checked: 2026-11-05
+  label: "30th edition, autumn 2027 (dates not yet announced)"
+  sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r9"
+  checked: 2026-11-09
 winnersSource:
   label: "chess-results.com, ChessBase, the organisers and published winner lists"
   url: "https://chess-results.com/tnr1434293.aspx?lan=1"
 winners:
-  - { year: 2026, names: ["Krishnan Sasikiran"] }
+  - { year: 2026, names: ["Krishnan Sasikiran"], note: "29th edition, 7½/9, on tiebreak" }
   - { year: 2025, names: ["Amin Tabatabaei"], note: "28th edition, 8/9" }
   - { year: 2024, names: ["Titas Stremavicius"], note: "27th edition" }
   - { year: 2023, names: ["Jiri Stocek"], note: "26th edition, on tiebreak" }
@@ -80,4 +77,4 @@ It draws one of the largest fields of any tournament in Germany, more than 500 p
 
 **What is at stake.** The overall title and prize money, with further prizes for rating classes. For ambitious juniors and title hopefuls, a field this strong also offers norm chances: Roven Vogel completed his grandmaster title at Tegernsee in 2023.
 
-*Last checked 5 November 2026 against the 29th edition. Winners from 2021 on are checked against the final standings and reports; earlier years come from published winner lists.*
+*Last checked 9 November 2026, after the 29th edition (won by Krishnan Sasikiran on tiebreak). Winners from 2021 on are checked against the final standings and reports; earlier years come from published winner lists.*

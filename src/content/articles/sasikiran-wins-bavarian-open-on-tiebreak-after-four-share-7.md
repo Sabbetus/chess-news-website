@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r9"
 lens: "results"
 continent: "europe"
 selectionScore: 133
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Four players finished on 7½/9 at the Bavarian Championship, and Black won on the top four boards in round nine. Krishnan Sasikiran took the title on opponents' average rating."
 metaDescription: "Krishnan Sasikiran won the 29th Bavarian Open on tiebreaks after four players ended on 7½/9, with Black winning the top four boards in round nine."
 image:
@@ -49,7 +49,7 @@ A rook endgame with passed pawns on both sides followed. Kilic erred in the pawn
 
 Vogel, 26 and a former world under-16 champion, beat Donchenko in a King's Indian structure. Donchenko declined a repetition shortly before the time control despite being short of time. The complications that followed favoured Vogel.
 
-Daakshin, 17 and rated 2341 at the start, beat reigning German champion Leonardo Costa on board three. Costa's ambitious kingside play let him plant a strong knight in the centre, and he then opened lines on the queenside. His performance rating of 2589 and a gain of 22.6 rating points were the biggest of the four co-leaders.
+Daakshin, 17 and rated 2341 at the start, beat reigning German champion Leonardo Costa on board three. Costa's ambitious kingside play let Daakshin plant a strong knight in the centre, and Daakshin then opened lines against the white king on the queenside.
 
 **Below the top four**
 
