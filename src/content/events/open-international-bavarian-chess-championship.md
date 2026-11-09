@@ -29,6 +29,7 @@ winnersSource:
   label: "chess-results.com, ChessBase, the organisers and published winner lists"
   url: "https://chess-results.com/tnr1434293.aspx?lan=1"
 winners:
+  - { year: 2026, names: ["Krishnan Sasikiran"] }
   - { year: 2025, names: ["Amin Tabatabaei"], note: "28th edition, 8/9" }
   - { year: 2024, names: ["Titas Stremavicius"], note: "27th edition" }
   - { year: 2023, names: ["Jiri Stocek"], note: "26th edition, on tiebreak" }
@@ -64,7 +65,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAminTabatabaei23.jpg"
   caption: "Amin Tabatabaei, champion 2025"
 reviewStatus: "published"
-updatedDate: "2026-11-05"
+updatedDate: "2026-11-09"
 ---
 
 The Open International Bavarian Chess Championship, known in German as the OIBM, is a Swiss open played every autumn in the Tegernsee valley south of Munich. The first edition, in 1997, was won by Gerald Hertneck. For many years it was played in Bad Wiessee, and it now takes place at the Gut Kaltenbrunn estate on the northern shore of the lake, in Gmund.
