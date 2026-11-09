@@ -641,7 +641,7 @@ character -- there is no escaping to worry about, just write normal prose:
 @@TITLE@@
 a clear, specific headline for this piece (not a generic restatement). Aim for 45-65 characters -- name the one real hook, don't restate every detail in the headline. Never put a semicolon in a title: join two parts with a comma instead (a semicolon is fine in body text). Write it in plain, everyday words, the way a chess news site would naturally put it: no wording that is understandable but out of place in a chess headline ("informed on" reads like a crime report -- "denounced" fits), no sports-journalism slang ("side" for a team, "outfit") and no uncommon words (user's rule, 2026-11-02).
 
-Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time.
+Never use these words in a title, in any form -- already overused across the site and banned outright: "echoes"/"echoing", "dominates"/"dominance"/"dominant", "playbook", "packed" (as in "a packed calendar"), "leads"/"lead" used as the headline verb (as in "X Leads [Continent]'s Calendar"). Also avoid the "[Region] in [Month]: [Detail]" colon template and the "X's Y Leads/Dominates Z" template specifically -- both have already been used repeatedly for this same calendar-aggregate lens. Vary the construction: a direct statement naming who did what, or a headline anchored on a single concrete number (a player count, a record, a margin) reads fresher than reaching for the same leader-verb template every time. The headline and social copy are about events on the list, never about the continent's month or calendar as a whole: the list is a notability selection, so no "the classical calendar fills up", "a busy month", "the season runs long", "X ran on classical chess" (user's call, 2026-11-09, after "Medea Open Draws 201 as Africa's Classical Calendar Fills Up"). Anchor on the biggest event, a standout number, or a named place, e.g. "Medea Open Draws 201 to Top Africa's October List".
 @@SOCIAL_COPY@@
 a single short social post of at most 220 characters, counting every character (it must fit on X with the link added) teasing the piece, no hashtags spam, at most one relevant hashtag. Write it in plain, everyday words a general reader knows: no sports-journalism slang ("side" for a team, "outfit", "skipper") and no uncommon words ("peering", "vaunted") -- say "team", "looking at" (user's rule, 2026-10-27).
 @@META_DESCRIPTION@@
@@ -791,6 +791,10 @@ def aggregate_facts(tournaments: list, month_formats: dict | None = None, total:
         f"- Entries in this list: {len(tournaments)}",
         "- By format: " + ", ".join(f"{fmt} {n}" for fmt, n in formats.most_common()),
     ]
+    lines.append(
+        "- This list is a notability selection, not the whole month: never describe the month's chess or "
+        "calendar as a whole (its format, size or busyness) in the title, social copy or body."
+    )
     if month_formats:
         # Caught live 2026-10-07: a list ranked toward classical events was
         # written up as "every event this month was classical" when 514 of
