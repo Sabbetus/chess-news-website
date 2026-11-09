@@ -1173,6 +1173,22 @@ def vary_social(client, social: str, body: str) -> str:
     return new_social
 
 
+# Russia rule (user's rule, 2026-10-19): players aren't presented as
+# Russia's. FIDE's reports still label them "(Russia)" (caught 2026-11-08:
+# the World Junior Blitz and Senior Worlds pieces copied it).
+_RUSSIA_LABEL_RES = [
+    (re.compile(r"\s*\(Russia\)"), ""),
+    (re.compile(r"\bRussia's (?=[A-Z][a-z])"), ""),
+    (re.compile(r",? (?:of|from) Russia\b(?! [A-Z])"), ""),
+]
+
+
+def strip_russia_labels(text: str) -> str:
+    for pattern, repl in _RUSSIA_LABEL_RES:
+        text = pattern.sub(repl, text)
+    return text
+
+
 def no_semicolons(title: str) -> str:
     """A semicolon in a headline reads oddly (user's rule, 2026-10-20); the
     prompts ask for a comma, and this makes sure of it."""
@@ -2001,7 +2017,7 @@ def draft_one(
         # string despite the prompt -- happened once in practice (a
         # calendar aggregate with a blank socialCopy), and a blank social
         # teaser is a worse failure mode than a slightly generic one.
-        "socialCopy": fit_for_x(delink((parsed.get("socialCopy") or "").strip() or parsed["title"]))[0],
+        "socialCopy": fit_for_x(strip_russia_labels(delink((parsed.get("socialCopy") or "").strip() or parsed["title"])))[0],
     }
     if not is_aggregate:
         frontmatter["socialCopy"] = fit_for_x(vary_social(client, frontmatter["socialCopy"], parsed.get("bodyMarkdown", "")))[0]
@@ -2227,7 +2243,7 @@ def draft_one(
     # nor internal links to validate) and only for ordinary news items --
     # calendar aggregates aren't tournament-results stories.
     if not is_aggregate:
-        body_markdown = attach_standings_table(item, body_markdown)
+        body_markdown = strip_russia_labels(attach_standings_table(item, body_markdown))
 
     # Our own board (GameViewer) for games that aren't on Lichess, from a
     # PGN file the source page itself loads (ChessBase). A Lichess game
