@@ -1,5 +1,5 @@
-Drafted 4 of 4 selected item(s).
+Drafted 5 of 5 selected item(s).
 
-**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):
+**Event and player pages updated from a final result** (check each page edit):
 
-- bullet-grandpa-wins-game-28-and-spoils-dubov-s-100-0-sweep — 7...e3!, 40.f3, 27.Qc6!!, 28.Rb8
+- sasikiran-wins-bavarian-open-on-tiebreak-after-four-share-7 -- open-international-bavarian-chess-championship: added Krishnan Sasikiran as the 2026 winner
