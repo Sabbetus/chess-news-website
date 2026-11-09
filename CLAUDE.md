@@ -157,13 +157,15 @@ verdicts, reset calls) without needing to correct or overrule it. A
 significant correction from the user (a missed problem, a wrong reset
 call, a fix they reject) resets it to 0; minor corrections (dropping a
 small flag, rewording a fix) don't count (user's rule, 2026-10-24).
-Update after each batch review, once the user has responded.
+Update after each batch review, once the user has responded. A
+disagreement only over whether something was a reset is minor when the
+user approves the fixes themselves (user's rule, 2026-11-09).
 
-- **Current review-acceptance streak: 0.**
-- 2026-11-09: PR #97 review overruled (4 -> 0): I called the Senior Worlds
-  headline and the Daakshin figures resets; user ruled both minor (a
-  leader of any equal-standing section can be said to lead the event).
-  Calendar headline fix stood; the calendar prompt now bars describing the
+- **Current review-acceptance streak: 5.**
+- 2026-11-09: PR #97 accepted (4 -> 5). User approved every fix; my two
+  reset calls (Senior Worlds headline, Daakshin figures) were ruled minor,
+  and disagreeing over a reset call is itself minor when the fixes stand
+  (user's rule, 2026-11-09). The calendar prompt now bars describing the
   continent's month or calendar as a whole in title and social copy.
 - 2026-11-08: PR #95 accepted ("everything seems solid", 3 -> 4); minor
   miss: I didn't review the weekly recap, which the morning check covers
