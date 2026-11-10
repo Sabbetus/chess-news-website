@@ -1,13 +1,13 @@
 ---
-title: "Vincent Keymer Joins 24 Players in Total Chess Budapest Pilot"
+title: "Keymer Among 24 as Total Chess Starts Its Budapest Pilot"
 publishDate: "2026-11-10"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/total-chess-budapest-2026-format"
 lens: "results"
 continent: "europe"
 selectionScore: 67
-reviewStatus: "draft"
-socialCopy: "Total Chess opens in Budapest on 10 November: 24 players, three time controls, an Armageddon decider and $650,000 in prizes. Here is how the format works and where it gets strange."
+reviewStatus: "published"
+socialCopy: "Total Chess opens in Budapest today: blitz, rapid and 45-minute games, an Armageddon decider and $650,000 in prizes for a field of 24. How the format works, and where it gets strange."
 metaDescription: "The Total Chess pilot in Budapest runs 10 to 20 November with 24 players, blitz, rapid and Fast Classic, and a $650,000 prize fund."
 image:
   src: "./_images/Vincent_Keymer_2026_Norway_Chess.webp"

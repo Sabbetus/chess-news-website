@@ -6,15 +6,16 @@ sourceUrl: "https://en.chessbase.com/post/remembering-mikhail-tal"
 lens: "people"
 continent: "europe"
 selectionScore: 72
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Mikhail Tal was born 90 years ago today. A portrait of the Riga genius: no wallet, six Soviet titles, an 86-game unbeaten run, and a win over Lautier two months before he died."
 metaDescription: "On the 90th anniversary of Mikhail Tal's birth, a look at the Riga-born world champion's life, his rise, his health and his last games."
 image:
-  src: "./_images/Mikhail_Botvinnik_-_Mikhail_Tal_-_World_Championship_23th_Moscovo__6__1960-03-26_-_wood_handicraft_chess_board.webp"
-  credit: "Eugenio Hansen, OFS, CC BY-SA 3.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMikhail_Botvinnik_-_Mikhail_Tal_-_World_Championship_23th_Moscovo_%286%29%2C_1960-03-26_-_wood_handicraft_chess_board.JPG"
-  caption: "Mikhail Tal"
+  src: "./_images/Bundesarchiv_Bild_183-76052-0335__Schacholympiade__Tal__UdSSR__gegen_Fischer__USA.webp"
+  credit: "Ulrich Kohls, CC BY-SA 3.0 de, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ABundesarchiv_Bild_183-76052-0335%2C_Schacholympiade%2C_Tal_%28UdSSR%29_gegen_Fischer_%28USA%29.jpg"
+  caption: "Mikhail Tal (right), then world champion, against Bobby Fischer at the 1960 Olympiad in Leipzig"
 gamePgn: "mikhail-tal-at-90-the-genius-who-gave-away-everything.pgn"
+gameCaption: "Tal - Lautier, Barcelona 1992, two months before Tal died"
 ---
 
 Mikhail Tal was born in Riga on 9 November 1936, so today is his 90th birthday. ChessBase marked it by [reprinting a portrait from the magazine Karl](https://en.chessbase.com/post/remembering-mikhail-tal), and the picture it draws is of a man who seems to have been built for attacking chess.
@@ -33,7 +34,7 @@ Tal learned the game at seven and was good, but not a prodigy. In 1949 he met Al
 
 He was not even a full-time player at first. In 1958 he passed his state examination in Russian Language and Literature and briefly worked as a trainee teacher.
 
-In 1960 he qualified on his first attempt as challenger to Mikhail Botvinnik, the disciplined patriarch of Soviet chess. Tal won the match 12½-8½ and became the youngest world champion in history.
+In 1960 he qualified on his first attempt as challenger to Mikhail Botvinnik, the disciplined patriarch of Soviet chess. Tal won the match 12½-8½ and became the youngest world champion up to that time.
 
 **The return match**
 

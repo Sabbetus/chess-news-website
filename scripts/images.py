@@ -191,7 +191,11 @@ _BUSINESS_OR_STREET_RE = re.compile(
     r"|geograph"
     # Places and memorials named after a person (caught 2026-11-06: "Entrance
     # to Nona Gaprindashvili Chess Palace" was captioned as Gaprindashvili).
-    r"|palace|entrance|museum|monument|statue|memorial|bust|plaque|gravestone|grave|tomb|square|stadium)\b",
+    r"|palace|entrance|museum|monument|statue|memorial|bust|plaque|gravestone|grave|tomb|square|stadium"
+    # Objects made after a game or a player (caught 2026-11-10: "Botvinnik -
+    # Tal ... wood handicraft chess board" captioned "Mikhail Tal"; 2026-10-06
+    # the same for Larsen).
+    r"|handicraft|handcraft|chessboard|stamp|stamps|postage|coin|banknote|figurine)\b",
     re.IGNORECASE,
 )
 
