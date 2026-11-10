@@ -1698,7 +1698,16 @@ def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict
         for marker, key in (("TITLE", "title"), ("SOCIAL_COPY", "socialCopy"), ("META_DESCRIPTION", "metaDescription"))
     )
     article_text = f"{fields}\n@@BODY_MARKDOWN@@\n{body_markdown}"
-    user_prompt = f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE TO FACT-CHECK:\n\n{article_text}"
+    # The article publishes today; "today", "yesterday" and birthday or
+    # anniversary claims must fit this date (caught twice: Torre "turns 75
+    # today" on the 5th, born the 4th; Tal "today is his 90th birthday" on
+    # the 10th, born the 9th).
+    published = datetime.now(timezone.utc).strftime("%A %d %B %Y")
+    user_prompt = (
+        f"PUBLICATION DATE: {published}. Any 'today', 'yesterday', 'this week' or birthday/anniversary "
+        "claim in the article must be true on this date; fix it if not (e.g. 'turned 90 on Monday').\n\n"
+        f"SOURCE MATERIAL:\n\n{source_text}\n\nARTICLE TO FACT-CHECK:\n\n{article_text}"
+    )
 
     try:
         response = client.messages.create(
@@ -1967,7 +1976,10 @@ def draft_one(
 ) -> tuple[Path, list[tuple[int, int]]]:
     is_aggregate = item["kind"] in CALENDAR_KINDS
     system_prompt = build_aggregate_system_prompt(item["continentCode"]) if is_aggregate else NEWS_SYSTEM_PROMPT
-    user_prompt = build_user_prompt(item)
+    user_prompt = (
+        f"PUBLICATION DATE: {datetime.now(timezone.utc).strftime('%A %d %B %Y')} -- write 'today', "
+        "'yesterday' and birthdays/anniversaries relative to this date.\n\n" + build_user_prompt(item)
+    )
     day = publish_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if not is_aggregate and history_lens_used_on(day):
         user_prompt += HISTORY_CAP_NOTE

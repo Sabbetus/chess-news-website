@@ -288,7 +288,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   "Keymer Among 24 as Total Chess Starts Its Budapest Pilot"), its social
   copy repeated "24 players, three time controls" from September. Also
   caught after the first push: Tal's piece said "today is his 90th
-  birthday" a day late (born 9 November, published the 10th). Russia
+  birthday" a day late (born 9 November, published the 10th). Fixed at the
+  source: the drafting and fact-check prompts get the publication date and
+  must make "today"/birthday claims fit it. Russia
   rule (my call, flagged): Russia taken out of the Anuj piece's federation
   GM comparison. Anuj rescored 110 -> 70 (a false +40 rating-list bonus).
   Fixed at the source: craft objects (handicraft, chessboard, stamps,
