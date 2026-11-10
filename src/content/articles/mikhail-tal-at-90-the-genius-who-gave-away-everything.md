@@ -7,7 +7,7 @@ lens: "people"
 continent: "europe"
 selectionScore: 72
 reviewStatus: "published"
-socialCopy: "Mikhail Tal was born 90 years ago today. A portrait of the Riga genius: no wallet, six Soviet titles, an 86-game unbeaten run, and a win over Lautier two months before he died."
+socialCopy: "Mikhail Tal was born 90 years ago this week. A portrait of the Riga genius: no wallet, six Soviet titles, an 86-game unbeaten run, and a win over Lautier two months before he died."
 metaDescription: "On the 90th anniversary of Mikhail Tal's birth, a look at the Riga-born world champion's life, his rise, his health and his last games."
 image:
   src: "./_images/Bundesarchiv_Bild_183-76052-0335__Schacholympiade__Tal__UdSSR__gegen_Fischer__USA.webp"
@@ -18,7 +18,7 @@ gamePgn: "mikhail-tal-at-90-the-genius-who-gave-away-everything.pgn"
 gameCaption: "Tal - Lautier, Barcelona 1992, two months before Tal died"
 ---
 
-Mikhail Tal was born in Riga on 9 November 1936, so today is his 90th birthday. ChessBase marked it by [reprinting a portrait from the magazine Karl](https://en.chessbase.com/post/remembering-mikhail-tal), and the picture it draws is of a man who seems to have been built for attacking chess.
+Mikhail Tal was born in Riga on 9 November 1936, so Monday was his 90th birthday. ChessBase marked it by [reprinting a portrait from the magazine Karl](https://en.chessbase.com/post/remembering-mikhail-tal), and the picture it draws is of a man who seems to have been built for attacking chess.
 
 **A life without conventions**
 
