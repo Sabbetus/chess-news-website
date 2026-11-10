@@ -40,6 +40,7 @@ jobs:
           # version changed and no older cache was restored (2026-10-06).
 
       - name: Post pending articles
+        id: post
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -67,3 +68,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy.yml --ref main
+
+      # Last, so the queue is still committed and the site rebuilt: a failed
+      # post fails the run, and GitHub emails a failed scheduled run to the
+      # repo owner (user's call, 2026-11-10: Facebook's expired token failed
+      # silently for two days because the run still showed green).
+      - name: Fail the run if any post failed
+        if: steps.post.outputs.failed == 'true'
+        run: |
+          echo "::error::One or more social posts failed -- see the 'Post pending articles' log (an expired token, most likely)."
+          exit 1

@@ -219,6 +219,7 @@ def main() -> None:
         return
 
     now = datetime.now(timezone.utc).isoformat()
+    failures = 0
     for entry in facebook:
         link = f"{SITE_URL}/articles/{entry['slug']}/"
         print(f"Posting to Facebook: {entry['title']}")
@@ -232,6 +233,7 @@ def main() -> None:
             # so the queue is committed).
             print(f"::error title=Facebook post failed::{exc.code} {body[:300]}")
             print(f"  Facebook post failed: {exc.code} {body}", file=sys.stderr)
+            failures += 1
 
     for entry in threads:
         link = f"{SITE_URL}/articles/{entry['slug']}/"
@@ -243,11 +245,18 @@ def main() -> None:
             body = exc.read().decode()
             print(f"::error title=Threads post failed::{exc.code} {body[:300]}")
             print(f"  Threads post failed: {exc.code} {body}", file=sys.stderr)
+            failures += 1
         except RuntimeError as exc:
             print(f"::error title=Threads post failed::{exc}")
             print(f"  Threads post failed: {exc}", file=sys.stderr)
+            failures += 1
 
     save_queue(queue)
+    # The workflow fails the run at its very end when this is set, after
+    # the queue is committed (see .github/workflows/social.yml).
+    if failures and os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+            out.write("failed=true\n")
 
 
 if __name__ == "__main__":
