@@ -197,45 +197,55 @@ def post_to_threads(text: str) -> None:
         response.read()
 
 
+def _next_for(queue: list[dict], key: str) -> list[dict]:
+    """The POSTS_PER_RUN highest-scoring entries still missing `key`. Each
+    platform has its own line (caught 2026-11-10: Facebook's token expired,
+    the top entry kept failing on Facebook, and because both platforms took
+    the same entry, nothing else went out on Threads either for a day)."""
+    waiting = [e for e in queue if not e.get("withdrawn") and e.get(key) is None]
+    waiting.sort(key=lambda e: (-e.get("selectionScore", 0), e["publishDate"]))
+    return waiting[:POSTS_PER_RUN]
+
+
 def main() -> None:
     articles = load_published_articles()
     queue = refresh_pending(sync_queue(load_queue(), articles), articles)
-    pending = [
-        e for e in queue
-        if not e.get("withdrawn") and (e["postedFacebookAt"] is None or e["postedThreadsAt"] is None)
-    ]
+    facebook = _next_for(queue, "postedFacebookAt")
+    threads = _next_for(queue, "postedThreadsAt")
 
-    if not pending:
+    if not facebook and not threads:
         print("Social queue empty -- nothing to post.")
         save_queue(queue)
         return
 
-    pending.sort(key=lambda e: (-e.get("selectionScore", 0), e["publishDate"]))
-    to_post = pending[:POSTS_PER_RUN]
     now = datetime.now(timezone.utc).isoformat()
-
-    for entry in to_post:
+    for entry in facebook:
         link = f"{SITE_URL}/articles/{entry['slug']}/"
-        message = f"{entry['socialCopy']}\n\n{link}"
-        print(f"Posting: {entry['title']}")
+        print(f"Posting to Facebook: {entry['title']}")
+        try:
+            post_to_facebook(entry["socialCopy"], link)
+            entry["postedFacebookAt"] = now
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode()
+            # An annotation shows on the run page, so an expired token is
+            # visible without reading the log (the run itself still succeeds,
+            # so the queue is committed).
+            print(f"::error title=Facebook post failed::{exc.code} {body[:300]}")
+            print(f"  Facebook post failed: {exc.code} {body}", file=sys.stderr)
 
-        # Each platform is tracked independently so a failure on one
-        # doesn't cause the next run to re-post to the other.
-        if entry["postedFacebookAt"] is None:
-            try:
-                post_to_facebook(entry["socialCopy"], link)
-                entry["postedFacebookAt"] = now
-            except urllib.error.HTTPError as exc:
-                print(f"  Facebook post failed: {exc.code} {exc.read().decode()}", file=sys.stderr)
-
-        if entry["postedThreadsAt"] is None:
-            try:
-                post_to_threads(message)
-                entry["postedThreadsAt"] = now
-            except urllib.error.HTTPError as exc:
-                print(f"  Threads post failed: {exc.code} {exc.read().decode()}", file=sys.stderr)
-            except RuntimeError as exc:
-                print(f"  Threads post failed: {exc}", file=sys.stderr)
+    for entry in threads:
+        link = f"{SITE_URL}/articles/{entry['slug']}/"
+        print(f"Posting to Threads: {entry['title']}")
+        try:
+            post_to_threads(f"{entry['socialCopy']}\n\n{link}")
+            entry["postedThreadsAt"] = now
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode()
+            print(f"::error title=Threads post failed::{exc.code} {body[:300]}")
+            print(f"  Threads post failed: {exc.code} {body}", file=sys.stderr)
+        except RuntimeError as exc:
+            print(f"::error title=Threads post failed::{exc}")
+            print(f"  Threads post failed: {exc}", file=sys.stderr)
 
     save_queue(queue)
 

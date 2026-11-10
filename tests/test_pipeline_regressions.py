@@ -1014,3 +1014,13 @@ def test_craft_object_not_a_person_photo_and_rating_list_needs_lead():
     assert images._BUSINESS_OR_STREET_RE.search(re.sub(r"[_\W\d]+", " ", title))
     assert not selection.is_rating_list_story({"title": "Gukesh Heads to Geneva", "summary": "x " * 200 + "26th on the FIDE rating list"})
     assert selection.is_rating_list_story({"title": "FIDE Ratings - November 2026", "summary": ""})
+
+
+def test_social_platforms_have_separate_queues():
+    import social_post as sp
+    q = [
+        {"slug": "a", "selectionScore": 133, "publishDate": "2026-11-09", "postedFacebookAt": None, "postedThreadsAt": "x"},
+        {"slug": "b", "selectionScore": 90, "publishDate": "2026-11-09", "postedFacebookAt": None, "postedThreadsAt": None},
+    ]
+    assert [e["slug"] for e in sp._next_for(q, "postedThreadsAt")] == ["b"]
+    assert [e["slug"] for e in sp._next_for(q, "postedFacebookAt")] == ["a"]
