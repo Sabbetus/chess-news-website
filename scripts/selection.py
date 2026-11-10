@@ -88,7 +88,10 @@ RATING_LIST_BONUS = 40
 
 
 def is_rating_list_story(item: dict) -> bool:
-    text = f"{item.get('title', '')} {item.get('summary', '')}"
+    # The headline or opening only (caught 2026-11-08/10: a Gukesh profile
+    # and the Anuj 100th-GM story took the +40 list bonus from a passing
+    # "26th on the FIDE rating list" deep in the text).
+    text = f"{item.get('title', '')} {(item.get('summary') or '')[:200]}"
     return bool(RATING_LIST_PATTERN.search(text))
 
 # Chess.com's RSS feed mixes real news with site-feature/product promotion

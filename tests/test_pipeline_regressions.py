@@ -1004,3 +1004,13 @@ def test_strip_russia_labels():
     assert draft.strip_russia_labels("Russia's Valeria Kleymenova won. Veronika Iudina of Russia was third.") == "Valeria Kleymenova won. Veronika Iudina was third."
     assert draft.strip_russia_labels("GM Evgeny Vorobiov (Russia) scored 8") == "GM Evgeny Vorobiov scored 8"
     assert draft.strip_russia_labels("He left Russia in 2022.") == "He left Russia in 2022."
+
+
+def test_craft_object_not_a_person_photo_and_rating_list_needs_lead():
+    import re
+    import images
+    import selection
+    title = "Mikhail Botvinnik - Mikhail Tal - World Championship 23th Moscovo (6), 1960-03-26 - wood handicraft chess board.JPG"
+    assert images._BUSINESS_OR_STREET_RE.search(re.sub(r"[_\W\d]+", " ", title))
+    assert not selection.is_rating_list_story({"title": "Gukesh Heads to Geneva", "summary": "x " * 200 + "26th on the FIDE rating list"})
+    assert selection.is_rating_list_story({"title": "FIDE Ratings - November 2026", "summary": ""})
