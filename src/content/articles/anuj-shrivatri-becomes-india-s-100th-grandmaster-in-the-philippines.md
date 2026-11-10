@@ -7,7 +7,7 @@ lens: "historical-parallel"
 continent: "asia"
 selectionScore: 70
 reviewStatus: "published"
-socialCopy: "IM Anuj Shrivatri won the 7th ASEAN+ Open on 7/9 and became India's 100th GM, 38 years after Anand became the first. India is fourth by total GMs and level with Russia and Germany among active ones."
+socialCopy: "IM Anuj Shrivatri won the 7th ASEAN+ Open on 7/9 and became India's 100th GM, 38 years after Anand became the first. India is fourth by total GMs and level with Germany for the most active ones."
 metaDescription: "IM Anuj Shrivatri won the 7th ASEAN+ Open with 7/9 and became India's 100th grandmaster, 38 years after Viswanathan Anand became the first."
 image:
   src: "./_images/Viswanathan_Anand__2016.webp"
