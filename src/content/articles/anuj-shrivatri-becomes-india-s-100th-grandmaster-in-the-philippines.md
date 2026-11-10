@@ -7,7 +7,7 @@ lens: "historical-parallel"
 continent: "asia"
 selectionScore: 70
 reviewStatus: "published"
-socialCopy: "IM Anuj Shrivatri won the 7th ASEAN+ Open on 7/9 and became India's 100th GM, 38 years after Anand became the first. India is fourth by total GMs and level with Germany for the most active ones."
+socialCopy: "IM Anuj Shrivatri won the 7th ASEAN+ Open on 7/9 and became India's 100th GM, 38 years after Anand became the first. India is fourth by total GMs and level with Russia and Germany among active ones."
 metaDescription: "IM Anuj Shrivatri won the 7th ASEAN+ Open with 7/9 and became India's 100th grandmaster, 38 years after Viswanathan Anand became the first."
 image:
   src: "./_images/Viswanathan_Anand__2016.webp"
@@ -42,11 +42,11 @@ Wins in the last two rounds secured first place, half a point ahead of GM Duc Ho
 
 FIDE's November list shows 97 Indian grandmasters. Anuj, IM Ethan Vaz and IM Rathanvel V S are awaiting formal confirmation, which is how the count reaches 100. Pending titles are excluded from the list figures below.
 
-India is fourth among federations by total GMs, with the United States (115) and Germany (103) among those ahead of it.
+India is fourth by total GMs, behind Russia (184), the United States (115) and Germany (103).
 
-Among active grandmasters, India already shares the lead on 74, level with Germany. The United States has 73. Chess.com notes India could pass Germany in 2027 if its recent pace holds.
+Among active grandmasters, India already shares the lead on 74 with Russia and Germany. The United States has 73. Chess.com notes India could pass Germany in 2027 if its recent pace holds.
 
-The active figure is the telling one, because India's pool is young: 36 of its 74 active GMs were born in 2000 or later, against 17 born before 1990.
+The active figure is the telling one. Russia's total includes many names from an earlier era, while India's pool is young: 36 of its 74 active GMs were born in 2000 or later, against 17 born before 1990.
 
 The mean age of active Indian GMs is 29.4, and the youngest, GM-elect Ethan Vaz, is 15.2. You can see where today's players sit in [The Chess Herald's FIDE Top 100](/rankings/) and, for the women, the [FIDE Women's Top 25](/rankings/women/).
 
