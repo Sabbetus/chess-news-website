@@ -86,7 +86,9 @@
   anything else clearly represents Russia (Russian national teams, Russian
   events, players presented as Russia's). Russian-born players competing
   under the FIDE flag or for foreign clubs are ordinary subjects (e.g.
-  Murzin playing for Bayegan Pendik at the Club Cup).
+  Murzin playing for Bayegan Pendik at the Club Cup). Neutral statistics
+  that include Russia's federation (e.g. GM counts by federation) are fine
+  (user's call, 2026-11-10).
 
 - **Bold claims the source reasonably supports are fine** (user's call,
   2026-10-24). Don't flag or soften strong wording of what the source
@@ -161,7 +163,10 @@ Update after each batch review, once the user has responded. A
 disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
 
-- **Current review-acceptance streak: 5.**
+- **Current review-acceptance streak: 6.**
+- 2026-11-10: PR #98 accepted ("seems fine", 5 -> 6); minor correction:
+  the Russia federation statistic I removed from the Anuj piece was put
+  back (federation statistics are fine).
 - 2026-11-09: PR #97 accepted (4 -> 5). User approved every fix; my two
   reset calls (Senior Worlds headline, Daakshin figures) were ruled minor,
   and disagreeing over a reset call is itself minor when the fixes stand
@@ -291,8 +296,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   birthday" a day late (born 9 November, published the 10th). Fixed at the
   source: the drafting and fact-check prompts get the publication date and
   must make "today"/birthday claims fit it. Russia
-  rule (my call, flagged): Russia taken out of the Anuj piece's federation
-  GM comparison. Anuj rescored 110 -> 70 (a false +40 rating-list bonus).
+  rule: I took Russia out of the Anuj piece's federation GM comparison;
+  user restored it -- federation statistics (GM counts and the like) are
+  fine to show. Anuj rescored 110 -> 70 (a false +40 rating-list bonus).
   Fixed at the source: craft objects (handicraft, chessboard, stamps,
   coins, figurines) are never person photos; the rating-list bonus needs
   "rating list" in the headline or opening, not anywhere in the text.
