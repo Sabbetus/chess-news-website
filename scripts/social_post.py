@@ -14,7 +14,7 @@ Run on a schedule (see .github/workflows/social.yml). Each run:
 Highest-score-first, with publishDate ascending as the tiebreak: the day's
 lead story should hit social fastest rather than wait behind older,
 lower-rated backlog entries. The tiebreak still drains ties oldest-first
-so nothing gets stuck behind same-scored newer arrivals. At 12 runs/day
+so nothing gets stuck behind same-scored newer arrivals. At 24 runs/day
 against ~3-5 articles/day, the backlog empties same-day in practice, so
 this doesn't starve lower-scored older entries the way it would if supply
 regularly outpaced posting slots.
