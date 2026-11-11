@@ -1,23 +1,12 @@
 name: Post to social media
 
 on:
-  # 12x/day, every 2 hours, so a newly published article doesn't sit long
-  # before it goes out. Times are UTC, offset to :07 rather than the top
-  # of the hour -- GitHub queues scheduled runs against global load, and
-  # :00 is the most contested minute, so runs land closer to on-time here.
+  # Hourly, at :07 UTC rather than the top of the hour -- GitHub queues
+  # scheduled runs against global load, and :00 is the most contested
+  # minute. One post per platform per run (user's call, 2026-11-11: hourly
+  # posting, with the site rebuild kept to every two hours -- see below).
   schedule:
-    - cron: '7 1 * * *'
-    - cron: '7 3 * * *'
-    - cron: '7 5 * * *'
-    - cron: '7 7 * * *'
-    - cron: '7 9 * * *'
-    - cron: '7 11 * * *'
-    - cron: '7 13 * * *'
-    - cron: '7 15 * * *'
-    - cron: '7 17 * * *'
-    - cron: '7 19 * * *'
-    - cron: '7 21 * * *'
-    - cron: '7 23 * * *'
+    - cron: '7 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -67,7 +56,14 @@ jobs:
       - name: Trigger a site rebuild (refreshes Most Popular)
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy.yml --ref main
+        # Every two hours only (odd UTC hours, as before the switch to hourly
+        # posting); a manual run always rebuilds.
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ] || [ $(( 10#$(date -u +%H) % 2 )) -eq 1 ]; then
+            gh workflow run deploy.yml --ref main
+          else
+            echo "Even hour: skipping the site rebuild (it runs every two hours)."
+          fi
 
       # Last, so the queue is still committed and the site rebuilt: a failed
       # post fails the run, and GitHub emails a failed scheduled run to the
