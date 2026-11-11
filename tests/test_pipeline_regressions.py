@@ -1024,3 +1024,10 @@ def test_social_platforms_have_separate_queues():
     ]
     assert [e["slug"] for e in sp._next_for(q, "postedThreadsAt")] == ["b"]
     assert [e["slug"] for e in sp._next_for(q, "postedFacebookAt")] == ["a"]
+
+
+def test_future_edition_is_a_preview():
+    import selection
+    total, b = selection.score_item({"title": "Abdusattorov, Sindarov Top Tata Steel Chess 2027 Field", "summary": "Defending champion Abdusattorov tops the field for Tata Steel Chess 2027.", "sourceTier": "major"})
+    assert b["majorTournament"] == selection.MAJOR_EVENT_PREVIEW_BONUS
+    assert b["liveEvent"] == 0
