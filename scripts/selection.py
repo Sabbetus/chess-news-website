@@ -819,6 +819,14 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text, lead)
     if breakdown["majorTournament"] and PREVIEW_TITLE_RE.search(item.get("title", "")):
         breakdown["majorTournament"] = MAJOR_EVENT_PREVIEW_BONUS
+    # A later year's edition hasn't been played: a field announcement, not a
+    # result (caught 2026-11-11: "Abdusattorov, Sindarov Top Tata Steel Chess
+    # 2027 Field" took the results bonus and the live-event bonus, 150).
+    from datetime import date as _today
+    if breakdown["majorTournament"] and any(
+        int(y) > _today.today().year for y in re.findall(r"\b(20\d\d)\b", item.get("title") or "")
+    ):
+        breakdown["majorTournament"] = MAJOR_EVENT_PREVIEW_BONUS
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
     anniversary = feature and is_anniversary_story(item)
     breakdown["feature"] = (FEATURE_ANNIVERSARY_BONUS if anniversary else FEATURE_BONUS) if feature else 0
