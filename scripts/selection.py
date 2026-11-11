@@ -111,6 +111,9 @@ PROMO_TITLE_PATTERNS = [
     # ("Daily Puzzles Just Got More Exciting"), not something a real news
     # headline about a player/event/tournament result would ever say.
     r"just got (more|better|easier|faster)\b",
+    # The site announcing its own deals (user's call, 2026-11-11: "Hikaru
+    # Nakamura Renews With Chess.com" was dropped as self-promotion).
+    r"\b(renews?|re-?signs?|signs?|extends?|joins?)\b.{0,40}\bwith chess\.com\b",
 ]
 
 
