@@ -1031,3 +1031,11 @@ def test_future_edition_is_a_preview():
     total, b = selection.score_item({"title": "Abdusattorov, Sindarov Top Tata Steel Chess 2027 Field", "summary": "Defending champion Abdusattorov tops the field for Tata Steel Chess 2027.", "sourceTier": "major"})
     assert b["majorTournament"] == selection.MAJOR_EVENT_PREVIEW_BONUS
     assert b["liveEvent"] == 0
+
+
+def test_chesscom_own_deal_is_promotion():
+    import re
+    import selection
+    pats = [re.compile(p, re.I) for p in selection.PROMO_TITLE_PATTERNS]
+    assert any(p.search("Hikaru Nakamura Renews With Chess.com") for p in pats)
+    assert not any(p.search("Nakamura Wins Bullet Brawl On Chess.com") for p in pats)
