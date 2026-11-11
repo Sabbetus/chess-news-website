@@ -1,13 +1,13 @@
 ---
-title: "Darling Downs Open Opens Oceania's October With Two Sections"
+title: "Toowoomba's Darling Downs Open Heads Oceania's October List"
 publishDate: "2026-11-11"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"
 continent: "oceania"
 selectionScore: 23
-reviewStatus: "draft"
-socialCopy: "The Byron Capital Darling Downs Open in Toowoomba ran Premier and Major sections over the October long weekend. Looking at the biggest classical events in Oceania last month."
+reviewStatus: "published"
+socialCopy: "The Byron Capital Darling Downs Open in Toowoomba ran Premier and Major sections over the October long weekend. Plus state titles in Brisbane and Geelong and several Melbourne club events."
 metaDescription: "A look back at October's notable Oceania classical events: the Darling Downs Open in Toowoomba, the Greg Hjorth Open in Melbourne, state titles and more."
 aggregateKind: "calendar-biggest"
 continentName: "Oceania"

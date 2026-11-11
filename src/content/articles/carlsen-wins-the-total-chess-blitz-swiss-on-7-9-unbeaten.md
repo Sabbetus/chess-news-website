@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "results"
 continent: "europe"
 selectionScore: 120
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen won the opening blitz Swiss at the Total Chess Pilot in Budapest on 7/9 without a loss. MVL took second on 6.5, Aronian third on 6. Why a warm-up event still matters:"
 metaDescription: "Magnus Carlsen won the Total Chess Pilot's nine-round blitz Swiss in Budapest on 7/9, ahead of Vachier-Lagrave and Aronian, and it sets tiebreaks."
 additionalSources:
@@ -32,7 +32,9 @@ He told TV 2: "Whenever I could play on instinct, it was pretty good. Whenever I
 
 The round-two win over Rapport was the clearest example. Rapport, who had beaten Fabiano Caruana in round one, outplayed Carlsen from the black side of a King's Indian, but Carlsen turned the position around in the time scramble.
 
-In round four he beat Erigaisi after judging that 28...Rh6?? was a "paper tiger", a threat with no real teeth, and took the free knight. Erigaisi's only other notable moment came later, when he beat Caruana in round 8.
+In round four he beat Erigaisi after judging that 28...Rh6?? was a "paper tiger", a threat with no real teeth, and took the free knight.
+
+Erigaisi still had a big evening: he was the only player to beat Vachier-Lagrave, and his round-eight win over Caruana put him half a point off the lead before Aronian beat him in the last round.
 
 **The last-round decider**
 
@@ -50,4 +52,6 @@ Five players tied for fourth on 5.5: Erigaisi, Firouzja, Caruana, Niemann and Ra
 
 The groups were drawn before play. Carlsen is in Group C with Giri, Nepomniachtchi, Mamedyarov, Martirosyan and Abhimanyu Mishra. Group D holds So, Erigaisi, Vachier-Lagrave, Niemann, Assaubayeva and Vaishali, while Group B has Caruana, Praggnanandhaa, Keymer and Rapport.
 
-The group stage is a double round-robin at 45+30, two rounds a day over five days, starting today, Wednesday, November 11. Only group winners reach the top knockout bracket, which carries the maximum 30 points. The event runs through November 21 and has a $650,000 prize fund.
+The group stage is a double round-robin at 45+30, two rounds a day over five days, starting today, Wednesday, November 11.
+
+Only group winners reach the title bracket. In the 2027 Tour legs, winning that bracket will be worth the maximum 30 Tour points; this pilot awards none. The event runs through November 21 and has a $650,000 prize fund.
