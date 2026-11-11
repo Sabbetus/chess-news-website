@@ -5,8 +5,8 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/abdusattorov-sindarov-top-tata-steel-chess-2027-field"
 lens: "results"
 continent: "europe"
-selectionScore: 150
-reviewStatus: "draft"
+selectionScore: 95
+reviewStatus: "published"
 socialCopy: "Tata Steel Chess 2027 fields are out: defending champion Abdusattorov, Sindarov, Aronian, Giri, Keymer and Firouzja in Wijk aan Zee, with one Masters spot still open. Jan 15-31."
 metaDescription: "Tata Steel Chess 2027 announces its Masters and Challengers fields, led by Abdusattorov and Sindarov, with one Masters place still unnamed."
 image:
