@@ -299,7 +299,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   classical events" with no player counts. Held (not published, user to
   decide): Chess.com's own announcement of Nakamura's renewed deal --
   Chess.com promoting its own partnership, with "Chesscom" in the social
-  copy. Tata Steel 2027 rescored 150 -> 95. Fixed at the source: a
+  copy (user's call afterwards: dropped -- a source announcing its own
+  deals with players is self-promotion; such headlines are now skipped).
+  Tata Steel 2027 rescored 150 -> 95. Fixed at the source: a
   headline naming a later year's edition gets the preview bonus, not the
   results and live-event bonuses.
 - 2026-11-10: PR #98 reset (streak 1 -> 0). Reset: the Tal 90th-birthday
