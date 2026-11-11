@@ -163,7 +163,9 @@ Update after each batch review, once the user has responded. A
 disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
 
-- **Current review-acceptance streak: 6.**
+- **Current review-acceptance streak: 7.**
+- 2026-11-11: PR #99 accepted in full (6 -> 7). The held Nakamura renewal
+  piece stays a draft.
 - 2026-11-10: PR #98 accepted ("seems fine", 5 -> 6); minor correction:
   the Russia federation statistic I removed from the Anuj piece was put
   back (federation statistics are fine).
