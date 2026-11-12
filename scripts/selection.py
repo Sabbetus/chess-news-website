@@ -134,6 +134,9 @@ CHESSBASE_PROMO_TITLE_PATTERNS = [
     # ChessBase's video columns that sell the author's courses (caught
     # 2026-10-29: "Dragons of the Olympiad 2026 - The Monthly Dragon").
     r"\bmonthly dragon\b", r"\bmonthly\s+\w+\s*$",
+    # Reviews of ChessBase Magazine issues (caught 2026-11-12: "CBM 233:
+    # Aronian and Pragg shine", a product review, scored 92).
+    r"^cbm\b", r"\bcbm\s*\d{2,3}\b", r"\bchessbase magazine\b",
 ]
 
 

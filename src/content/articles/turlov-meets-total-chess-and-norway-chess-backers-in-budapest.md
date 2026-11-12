@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fide-president-timur-turlov-holds-meetings-in-b
 lens: "money-angle"
 continent: "europe"
 selectionScore: 65
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE President Timur Turlov used a Budapest trip for the Total Chess pilot to meet a university rector, the Hungarian Paralympic chief, a minister and Norway Chess's founder. The talks were preliminary."
 metaDescription: "FIDE President Timur Turlov held meetings in Budapest on education, Paralympic chess and school chess, and met Total Chess and Norway Chess figures."
 image:
@@ -26,7 +26,7 @@ Turlov met Tamás Sterbenz, Rector of the Hungarian University of Sports Science
 
 Special attention went to training specialists in sports management. The sides also considered a separate educational program tailored to the international chess community, and both expressed interest in continuing the dialogue.
 
-A program like that would address a practical gap. Chess federations and event organizers need administrators as much as they need arbiters and coaches, and FIDE has few ready-made routes for producing them. That is my reading, not something FIDE has said.
+A program like that would address a practical gap. Chess federations and event organizers need administrators as much as they need arbiters and coaches,, and FIDE has few ready-made routes for producing them.
 
 **Paralympics and schools**
 

@@ -669,6 +669,8 @@ def test_ongoing_event_gets_the_follow_up_bonus():
 def test_chessbase_shop_columns_are_promotional():
     # 2026-10-29: "Dragons of the Olympiad 2026 - The Monthly Dragon".
     assert selection.is_promotional({"title": "Dragons of the Olympiad 2026 - The Monthly Dragon", "sourceName": "ChessBase"})
+    # 2026-11-12: a ChessBase Magazine issue review is a product review.
+    assert selection.is_promotional({"title": "CBM 233: Aronian and Pragg shine", "sourceName": "ChessBase"})
     assert selection.is_promotional({"title": "Some column", "summary": "his three FritzTrainers in our ChessBase shop"})
 
 
