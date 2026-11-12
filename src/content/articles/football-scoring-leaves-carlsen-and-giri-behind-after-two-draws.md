@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "results"
 continent: "europe"
 selectionScore: 135
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Two draws now count for less than a win and a loss. At the Total Chess Pilot in Budapest, Carlsen and Giri sit on 2/6 while Van Foreest and Martirosyan, who both lost round one, have 3."
 metaDescription: "Day 2 of the Total Chess Pilot in Budapest: six players lead on four points, and Carlsen and Giri trail after two fighting draws."
 additionalSources:
@@ -51,10 +51,10 @@ Alireza Firouzja and Jan-Krzysztof Duda lead Group A on 4. Firouzja beat Nodirbe
 
 Fabiano Caruana and Le Quang Liem lead Group B. Caruana beat Richard Rapport with Black, then could not convert pressure in game two.
 
-Le drew Vladislav Artemiev and then won after Artemiev ended up 40 minutes down on the clock and allowed 22.Nd5!!. Praggnanandhaa Rameshbabu and Vincent Keymer drew both games to share 2 points, according to FIDE's report.
+Le drew Vladislav Artemiev and then won after Artemiev ended up 40 minutes down on the clock and allowed 22.Nd5!!. Praggnanandhaa Rameshbabu and Vincent Keymer drew both games for 2 points each, Praggnanandhaa surviving time trouble in both.
 
 Maxime Vachier-Lagrave leads Group D by two points. He beat Vaishali Rameshbabu in game one, then had an extra pawn and a big time edge in game two but let her draw a rook endgame. Bibisara Assaubayeva held Wesley So twice, and Arjun Erigaisi and Hans Niemann also drew both.
 
 **What comes next**
 
-Day three brings rounds three and four on Thursday, November 12, starting at 9 a.m. ET / 15:00 CET. With 45+30 games played in doubles, the draws that looked like honourable results on Wednesday already read as lost ground. The pilot runs November 10-21 as a trial for the 2027 event that will crown the first FIDE World Combined Champion.
+Day three brings rounds three and four today, Thursday, November 12, from 15:00 CET. With two 45+30 games a day against the same opponent, the draws that looked like honourable results on Wednesday already read as lost ground. The pilot runs November 10-21 as a trial for the 2027 event that will crown the first FIDE World Combined Champion.

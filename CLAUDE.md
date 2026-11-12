@@ -284,6 +284,16 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-12: PR (drafts/2026-11-12) reset (streak stays at 0). Reset:
+  ChessBase's "CBM 233: Aronian and Pragg shine", a review of ChessBase
+  Magazine (a product review), scored 92 and was drafted (dropped). Total
+  Chess day 2 checked game by game against the Lichess broadcast (clean;
+  Chess.com's "outplayed with the black pieces" for Martirosyan was its
+  slip, FIDE, ChessBase and the PGN give both wins to Black). Minor: a
+  dangling "according to FIDE's report", "Thursday" for today, an
+  awkward "45+30 games played in doubles"; Turlov piece's first-person
+  "That is my reading" line. Fixed at the source: "CBM <n>" and
+  "ChessBase Magazine" headlines are ChessBase product promotion.
 - 2026-11-11: PR #99 reset (streak stays at 0). Resets: the predictions
   piece called Praggnanandhaa someone "who has worked with Gukesh" (the
   source: Svidler seconded Pragg at the Candidates), and credited Svidler
@@ -876,8 +886,8 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-11-11 (PR #99, see above).
-- Earlier resets: 2026-11-10 (PR #98); 2026-11-08 (PR #95); 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-11-12 (see above).
+- Earlier resets: 2026-11-11 (PR #99); 2026-11-10 (PR #98); 2026-11-08 (PR #95); 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying
