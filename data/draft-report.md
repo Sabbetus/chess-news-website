@@ -1,5 +1,5 @@
-Drafted 5 of 5 selected item(s).
+Drafted 3 of 3 selected item(s).
 
-**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):
+**1 article(s) have a paragraph over 350 characters or 3 sentences:**
 
-- carlsen-wins-the-total-chess-blitz-swiss-on-7-9-unbeaten — 28...Rh6??, 43...Nd4?
+- cbm-233-reviewed-aronian-s-biel-win-and-pragg-s-norway-run — paragraph #15 (222 chars, 4 sentences)
