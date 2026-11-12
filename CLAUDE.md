@@ -125,7 +125,8 @@
   pass before the push. The recap opens with a "please double-check" list
   (anything not fully certain, with the exact sentence or photo and why),
   then the usual fixes/drops/held/pipeline/streak summary and the social
-  copies with URLs. The review-acceptance streak now means the user had
+  copies with URLs (each copy's text first, its URL on the line after;
+  user's call, 2026-11-12). The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
   2026-11-03): it fixes, publishes and pushes, and never removes a profile
