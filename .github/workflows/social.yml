@@ -5,8 +5,35 @@ on:
   # scheduled runs against global load, and :00 is the most contested
   # minute. One post per platform per run (user's call, 2026-11-11: hourly
   # posting, with the site rebuild kept to every two hours -- see below).
+  # One cron line per hour, not a single '7 * * * *': with the single
+  # line GitHub ran the job only every ~6-8 hours (11-12 November: 06:47,
+  # 15:53, 22:10), while the old twelve separate lines each got their own
+  # slot and ran far more often. Each line is scheduled on its own.
   schedule:
-    - cron: '7 * * * *'
+    - cron: '7 0 * * *'
+    - cron: '7 1 * * *'
+    - cron: '7 2 * * *'
+    - cron: '7 3 * * *'
+    - cron: '7 4 * * *'
+    - cron: '7 5 * * *'
+    - cron: '7 6 * * *'
+    - cron: '7 7 * * *'
+    - cron: '7 8 * * *'
+    - cron: '7 9 * * *'
+    - cron: '7 10 * * *'
+    - cron: '7 11 * * *'
+    - cron: '7 12 * * *'
+    - cron: '7 13 * * *'
+    - cron: '7 14 * * *'
+    - cron: '7 15 * * *'
+    - cron: '7 16 * * *'
+    - cron: '7 17 * * *'
+    - cron: '7 18 * * *'
+    - cron: '7 19 * * *'
+    - cron: '7 20 * * *'
+    - cron: '7 21 * * *'
+    - cron: '7 22 * * *'
+    - cron: '7 23 * * *'
   workflow_dispatch:
 
 permissions:
