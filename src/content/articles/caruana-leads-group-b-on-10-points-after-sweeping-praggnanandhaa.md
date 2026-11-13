@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "results"
 continent: "europe"
 selectionScore: 145
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana swept Praggnanandhaa to lead Group B on 10 points, Niemann beat Vaishali twice, and Assaubayeva upset Arjun on day three of the Total Chess Pilot in Budapest."
 metaDescription: "Caruana and Niemann won both games on day three of the Total Chess Pilot in Budapest, while Assaubayeva beat 2746-rated Arjun Erigaisi."
 additionalSources:
@@ -26,7 +26,7 @@ At the Total Chess World Championship Tour Pilot 2026 in Budapest, [Fabiano Caru
 
 Caruana beat Praggnanandhaa Rameshbabu twice and now leads Group B with 10 points and a 3077 performance. Niemann beat Vaishali Rameshbabu twice to join Maxime Vachier-Lagrave on eight points atop Group D.
 
-The format is what makes this so lopsided. Each pairing plays two games with colours reversed, and a win is worth three points against one for a draw. A 3-3 split beats two draws, which is why a double win opens a gap that the other results in a group can't easily close.
+The format is what makes this so lopsided. Each pairing plays two games with colours reversed, and a win is worth three points against one for a draw. A win and a loss (3 points) beats two draws (2), and a double win is worth six, a gap two draws can't close.
 
 **Caruana's day**
 
@@ -64,4 +64,4 @@ Martirosyan lost game one to Anish Giri, who won in 26 moves and then entered th
 
 Magnus Carlsen is still winless after four draws. He was down two pawns against Abhimanyu Mishra in game two before holding an opposite-color bishop endgame. Mishra said, "not winning hurts a lot."
 
-Only four of the 10 group games have been played. Rounds five and six come on Friday, November 13, at 9 a.m. ET, and Carlsen will meet Martirosyan for the first time in classical.
+Only four of the 10 group games have been played. Rounds five and six are today, Friday, November 13, from 15:00 CET, and Carlsen will meet Martirosyan for the first time in classical.

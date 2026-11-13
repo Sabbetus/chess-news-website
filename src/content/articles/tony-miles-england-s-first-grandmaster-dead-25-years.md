@@ -6,14 +6,14 @@ sourceUrl: "https://en.chessbase.com/post/anthony-miles-25-years-death"
 lens: "people"
 continent: "europe"
 selectionScore: 87
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "25 years after his death on 12 November 2001, a look at Tony Miles: England's first grandmaster, the man who beat Karpov with 1...a6, and a career shaped by an illness diagnosed too late."
 metaDescription: "Tony Miles, England's first grandmaster, died 25 years ago. A look at his 1...a6 win over Karpov, his struggles and the diabetes diagnosed late."
 image:
   src: "./_images/Tony_Miles_John_Nunn_1988.webp"
   credit: "Rob Bogaerts for Anefo, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATony_Miles_John_Nunn_1988.jpg"
-  caption: "Tony Miles"
+  caption: "Tony Miles (left) with John Nunn in 1988"
 gamePgn: "tony-miles-england-s-first-grandmaster-dead-25-years.pgn"
 ---
 
@@ -49,8 +49,8 @@ The conflicts took a heavy toll. He suffered a nervous breakdown, and in Septemb
 
 **Years abroad, then home**
 
-Miles left the English federation and played for the US federation for a time. From 1988 he lived for a while near Cologne. In 1990 he won the US Championship, and he also spent some time in Australia.
+Miles left the English federation and played for the US federation for a time. From 1988 he lived for a while near Cologne. He also spent some time in Australia.
 
 He returned to England in 1991 and got good tournament results again in the mid-1990s. He also served for ten years as president of his Birmingham chess club, where members remembered a friendly, humorous and generous organiser. He gave lessons too, and did not think himself above teaching beginners, children included.
 
-One of his last photographed games was against Lawrence Trent at Scarborough in 2001.
+He was still playing in his final year, at Scarborough in 2001, where he faced Lawrence Trent.
