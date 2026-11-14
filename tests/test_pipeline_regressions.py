@@ -730,6 +730,29 @@ def test_pair_lookup_prefers_the_last_decisive_game(monkeypatch):
     assert lichess_game.find_game_in_round("r", "Hikaru Nakamura", "Javokhir Sindarov") == "u/win"
 
 
+def test_mini_match_over_two_rounds_prefers_the_decisive_game(monkeypatch):
+    # 2026-11-14: "Carlsen lost to Haik Martirosyan" (round 5) got the round 6
+    # draw, which held the article's one quoted move (8.g4), and round 5 was
+    # never looked at once round 6 matched.
+    import lichess_game
+
+    loss = '[White "Martirosyan, Haik M."]\n[Black "Carlsen, Magnus"]\n[Result "1-0"]\n[GameURL "u/r5"]\n\n1. d4 Nf6 1-0'
+    draw = ('[White "Carlsen, Magnus"]\n[Black "Martirosyan, Haik M."]\n[Result "1/2-1/2"]\n[GameURL "u/r6"]\n\n'
+            '1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nd7 5. Nf3 Ngf6 6. Nxf6+ Nxf6 7. c3 Bf5 8. g4 1/2-1/2')
+    texts = {"r6": draw, "r5": loss}
+
+    class R:
+        def __init__(self, url):
+            self.text = texts[url.rsplit("/", 1)[1].split(".")[0]]
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(lichess_game.requests, "get", lambda url, *a, **k: R(url))
+    monkeypatch.setattr(lichess_game, "_article_body", "Carlsen tried 8.g4!? in the second game.")
+    rounds = [{"id": "r6"}, {"id": "r5"}]
+    assert lichess_game.find_game_near_round(rounds, 0, "Magnus Carlsen", "Haik Martirosyan") == "u/r5"
+
+
 def test_single_game_needs_its_players_named():
     # 2026-10-31: the only game read (the page's first file) was used though
     # the article never names Papapostolou.

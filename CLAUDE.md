@@ -164,7 +164,10 @@ Update after each batch review, once the user has responded. A
 disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
 
-- **Current review-acceptance streak: 9.**
+- **Current review-acceptance streak: 10.**
+- 2026-11-14: accepted ("All seems good", 9 -> 10). User ruled the board a
+  reset and Maghsoodloo's placing minor (a reset disagreement only), and
+  asked for the board pipeline fix (done).
 - 2026-11-13: accepted ("It's solid", 8 -> 9); my reset call on the
   Miles US Championship slip was ruled minor (a reset disagreement only).
 - 2026-11-12: drafts/2026-11-12 accepted in full ("All good here", 7 -> 8).
@@ -288,18 +291,20 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
-- 2026-11-14: drafts/2026-11-14 reset (streak 1 -> 0). Resets: the Total
+- 2026-11-14: drafts/2026-11-14 reset (streak 1 -> 0). Reset: the Total
   Chess day 4 piece linked "Carlsen lost to Haik Martirosyan" to the
   round 6 draw (the board took the game with the quoted 8.g4; now the
-  round 5 loss, Martirosyan-Carlsen 1-0); the 3 0 Thursday piece had
-  Maghsoodloo "second in the first event" (tied for second, fourth on
-  tiebreaks) and "started slowly after the first round" (he joined after
-  round 1). Minor: "Saturday" for today (rounds 7-8 now with their
+  round 5 loss, Martirosyan-Carlsen 1-0). Minor (user's call): the 3 0
+  Thursday piece had Maghsoodloo "second in the first event" (tied for
+  second, fourth on tiebreaks) and "started slowly after the first round"
+  (he joined after round 1); "Saturday" for today (rounds 7-8 now with their
   pairings), board caption added (Andreikin-Oro, tournament one round
   11), calendar "in Sant Vicent del Raspeig" (the data gives a street
   address, no town). Calendar: all 20 entries' dates, counts and
-  lengths checked. No pipeline change: the quoted-move rule for the
-  board is the user's (2026-10-28); flagged instead.
+  lengths checked. Fixed at the source (user's call): when a pair also
+  met in the previous round (a mini-match over two rounds), both rounds'
+  games are weighed together, and a decisive game beats a draw before the
+  quoted-moves and last-game rules apply.
 - 2026-11-13: drafts/2026-11-13 clean (streak 0 -> 1, user's call: the
   errors were minor, not a reset). Fixed: the
   Tony Miles anniversary piece said "In 1990 he won the US Championship"
