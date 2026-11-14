@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/andreikin-nearly-sweeps-3-0-thursday
 lens: "results"
 continent: "global"
 selectionScore: 56
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "GM Dmitry Andreikin won two of the three 3 0 Thursday events on November 12 and took second in the third, just behind Jeffery Xiong. Faustino Oro, 13, nearly won the first."
 metaDescription: "Dmitry Andreikin won the first two 3 0 Thursday tournaments on November 12 and took second in the third, half a point behind Jeffery Xiong."
 image:
@@ -15,6 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAndreikin%2CDmitry_2018_Karlsruhe.jpg"
   caption: "Dmitry Andreikin"
 gamePgn: "andreikin-wins-two-3-0-thursdays-xiong-stops-the-sweep.pgn"
+gameCaption: "Tournament one, round 11: Andreikin - Oro, 1-0"
 ---
 
 GM Dmitry Andreikin [came within half a point of sweeping all three 3 0 Thursday tournaments](https://www.chess.com/news/view/andreikin-nearly-sweeps-3-0-thursday-tournaments) on November 12. He won the first two and finished second, just behind GM Jeffery Xiong, in the third. No one has ever won more than two Thursday events in the same week, so he matched that ceiling and missed the hat trick by the narrowest margin.
@@ -25,7 +26,7 @@ The format is three weekly 11-round Swiss tournaments at 3+0 for verified titled
 
 The first event was nearly a landmark for 13-year-old Faustino Oro, the youngest GM in the world. He won his first five games, then held GM Hikaru Nakamura, the highest-rated player in the field, to a draw in round six. He entered the last round on 8.5 points, ahead of Andreikin on tiebreaks.
 
-Andreikin kept pace by beating GM Parham Maghsoodloo in round 10. That was Maghsoodloo's only loss of the event. He had started slowly after the first round and then scored 9/10, which was enough to tie for second.
+Andreikin kept pace by beating GM Parham Maghsoodloo in round 10. That was Maghsoodloo's only loss of the event. He had joined only after the first round and then scored 9/10, enough to tie for second.
 
 The final round paired Oro and Andreikin for first place. Oro survived a dangerous attack and reached an equal endgame, but he missed a fork, and Andreikin won the tournament.
 
@@ -49,4 +50,4 @@ Andreikin ended on 8.5 with strong tiebreaks. Xiong drew his last two games to f
 
 Andreikin's timing is useful for him. Next week he plays GM Denis Lazavik in the first round of the Speed Chess Championship, and he has just shown he can handle a long day of 3+0 against Nakamura-level opposition. Lazavik, [who recently won KazChess Masters unbeaten](/articles/lazavik-wins-kazchess-masters-unbeaten-as-dubov-slips-late/), will be a different test, a one-on-one match rather than a Swiss.
 
-Maghsoodloo's day is also worth noting. He was second in the first event, second in the second and held Andreikin in the third, which makes him the most consistent presence behind the winner.
+Maghsoodloo's day is also worth noting. He tied for second in the first event (fourth on tiebreaks), took second in the second and held Andreikin in the third, the most consistent presence behind the winner.

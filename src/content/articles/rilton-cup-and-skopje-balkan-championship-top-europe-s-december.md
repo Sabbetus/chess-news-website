@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"
 continent: "europe"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "December in Europe: a 168-player open in Sant Boi, the Balkan Championship in Skopje, Groningen's festival, and the 10-day Rilton Cup in Stockholm starting December 27. 284 events are tracked."
 metaDescription: "Europe's December chess preview: the Rilton Cup in Stockholm, the Karposh Skopje Open Balkan Championship, Groningen and Basel, among 284 tracked events."
 aggregateKind: "calendar-comingup"
@@ -43,7 +43,7 @@ The [Compact](https://chesstournamentcalendar.com/tournament/chessfestival-groni
 
 Basel's Mövenpick Hotel hosts two sections of the Basel Xmas Festival from December 26 to 30. The [Expert section, capped at 2100 Elo,](https://chesstournamentcalendar.com/tournament/basel-xmas-festival-2026-expertmax-2100-elo-fid-1329759/) has 59 players. The [Master section, for 2000 Elo and up,](https://chesstournamentcalendar.com/tournament/basel-xmas-festival-2026-mastermin-2000-elo-fid-1329748/) has 46.
 
-Spain has more events. The [II Open Internacional de Ajedrez Ciudad de Irun](https://chesstournamentcalendar.com/tournament/ii-open-internacional-de-ajedrez-ciudad-de-irun-20-1460884/) runs December 4 to 8 with 55 players. The [VII Open Internacional de Ajedrez Dama Negra](https://chesstournamentcalendar.com/tournament/vii-open-internacional-de-ajedrez-dama-negra-1418723/) in Sant Vicent del Raspeig is December 26 to 30, with 40.
+Spain has more events. The [II Open Internacional de Ajedrez Ciudad de Irun](https://chesstournamentcalendar.com/tournament/ii-open-internacional-de-ajedrez-ciudad-de-irun-20-1460884/) runs December 4 to 8 with 55 players. The [VII Open Internacional de Ajedrez Dama Negra](https://chesstournamentcalendar.com/tournament/vii-open-internacional-de-ajedrez-dama-negra-1418723/) runs December 26 to 30, with 40.
 
 Germany has two four-day opens starting December 27.
 

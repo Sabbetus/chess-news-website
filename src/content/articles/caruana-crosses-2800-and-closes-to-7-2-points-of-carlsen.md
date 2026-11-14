@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "results"
 continent: "europe"
 selectionScore: 160
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Caruana is at 2800.0 on the live list and 7.2 points behind Carlsen after day four in Budapest. Carlsen lost to Martirosyan, and his 15-year run at No. 1 is in real danger."
 metaDescription: "Fabiano Caruana reached 2800.0 live after beating Keymer in Budapest, while Magnus Carlsen's loss to Martirosyan left him 7.2 points ahead at No. 1."
 image:
@@ -15,7 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFabiano_Caruana_at_the_Candidates_Tournament_2024_03.jpg"
   caption: "Fabiano Caruana"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-group-stage-combined/round-6/KDiibS77/wfJsMrw6"
+  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-group-stage-combined/round-5/b0x503yv/Oids9TK1"
 tweetEmbeds:
   - url: "https://x.com/LevAronian/status/2121228534442041493"
     author: "Levon Aronian"
@@ -58,4 +58,4 @@ He said it does not feel right to equate a 5-6 hour game with a 2.5 hour one. Wi
 
 [Our explainer on ratings](/articles/chess-ratings/) covers how that factor drives movement.
 
-Carlsen needs results, and not only for the Total Chess standings: he sits at the bottom of Group C and is winless. The next games come on Saturday, 14 November, with rounds seven and eight starting at 9 a.m. ET / 15:00 CET.
+Carlsen needs results, and not only for the Total Chess standings: he sits at the bottom of Group C and is winless. Rounds seven and eight are today, Saturday 14 November, from 15:00 CET, with Carlsen facing Mamedyarov and Caruana meeting Le.
