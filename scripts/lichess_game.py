@@ -208,6 +208,70 @@ def _quoted_moves_in(game_pgn: str, body: str) -> int:
     return count
 
 
+def _choose_pair_game(matches: list[tuple[str, str]]) -> str:
+    """Picks one of several (GameURL, PGN) games between the same two
+    players -- a match or tiebreak round, or a mini-match spread over two
+    rounds (see find_game_near_round).
+
+    Decisive games come first: a piece about a pair that produced a result
+    is about that result (caught 2026-11-14: "Carlsen lost to Haik
+    Martirosyan" got the next round's draw, because the draw held the
+    article's one quoted move, 8.g4). Among those, the game with the most of
+    the article's quoted moves (user's call, 2026-10-28: Clutch Chess game 1
+    vs game 2), else the last one (the decider: 2026-10-13 Shenzhen's
+    Armageddon, 2026-10-30 the Clutch final's game 17)."""
+    decisive = [m for m in matches if re.search(r'\[Result "(1-0|0-1)"\]', m[1])]
+    pool = decisive or matches
+    scores = [_quoted_moves_in(pgn, _article_body) for _, pgn in pool]
+    if scores and max(scores) > 0 and scores.count(max(scores)) == 1:
+        best = scores.index(max(scores))
+        print(
+            f"    lichess lookup: {len(matches)} games between the pair, taking the "
+            f"{'decisive ' if decisive else ''}one with {scores[best]} of the article's quoted moves",
+            file=sys.stderr,
+        )
+        return pool[best][0]
+    print(
+        f"    lichess lookup: {len(matches)} games between the pair, taking the last "
+        f"{'decisive one' if decisive else 'one'}",
+        file=sys.stderr,
+    )
+    return pool[-1][0]
+
+
+def _pair_games(round_id: str, player1: str, player2: str) -> list[tuple[str, str]]:
+    """Every (GameURL, PGN) between the two players in one round; empty on
+    any failure."""
+    global _collect_only
+    _collect_only = []
+    try:
+        find_game_in_round(round_id, player1, player2)
+        return list(_collect_only)
+    finally:
+        _collect_only = None
+
+
+def find_game_near_round(rounds_newest_first: list[dict], index: int, player1: str, player2: str) -> str | None:
+    """find_game_in_round for rounds_newest_first[index], except that when
+    the pair also met in the round before (a two-game mini-match spread over
+    consecutive rounds, as at the Total Chess pilot) both rounds' games are
+    weighed together, so a decisive first game isn't lost behind a drawn
+    return game (caught 2026-11-14)."""
+    matches = _pair_games(rounds_newest_first[index]["id"], player1, player2)
+    if not matches:
+        return None
+    if index + 1 < len(rounds_newest_first):
+        matches = _pair_games(rounds_newest_first[index + 1]["id"], player1, player2) + matches
+    if len(matches) == 1:
+        return matches[0][0]
+    return _choose_pair_game(matches)
+
+
+# Set by _pair_games: when a list, find_game_in_round only collects the
+# round's matching games into it.
+_collect_only: list | None = None
+
+
 def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     """Fetches the round's PGN from Lichess's broadcast API and returns the
     matched game's own GameURL tag if exactly one game's White/Black pair
@@ -246,38 +310,14 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
         if matched:
             matches.append((game_url.group(1), game_pgn))
 
+    if _collect_only is not None:
+        _collect_only.extend(matches)
+        return None
     if len(matches) == 1:
         print(f"    lichess lookup: matched exactly 1 game of {games_seen} in round {round_id!r}", file=sys.stderr)
         return matches[0][0]
     if len(matches) > 1:
-        # The game the article actually quotes, when its moves tell them
-        # apart (user's call, 2026-10-28: Clutch Chess pairs two players
-        # twice per round, and the decider rule embedded game 2 for a piece
-        # built around game 1's blunder).
-        scores = [_quoted_moves_in(pgn, _article_body) for _, pgn in matches]
-        if max(scores) > 0 and scores.count(max(scores)) == 1:
-            best = scores.index(max(scores))
-            print(
-                f"    lichess lookup: {len(matches)} games between the same pair in round {round_id!r}, "
-                f"taking game {best + 1}, which has {scores[best]} of the article's quoted moves",
-                file=sys.stderr,
-            )
-            return matches[best][0]
-        # Several games between the same two players in one round are a
-        # tiebreak or match round; the last one is the decider -- caught
-        # live 2026-10-13: Shenzhen's three-game tiebreak round was skipped
-        # and the piece got a drawn rapid game instead of the Armageddon.
-        # The last DECISIVE one (caught 2026-10-30: the Clutch final's
-        # King's Indian win was game 17, and game 18 between the same pair
-        # was a draw, so "the last game" embedded the draw).
-        decisive = [m for m in matches if re.search(r'\[Result "(1-0|0-1)"\]', m[1])]
-        chosen = (decisive or matches)[-1]
-        print(
-            f"    lichess lookup: {len(matches)} games between the same pair in round {round_id!r}, "
-            f"taking the last {'decisive one' if decisive else 'one'}",
-            file=sys.stderr,
-        )
-        return chosen[0]
+        return _choose_pair_game(matches)
     print(
         f"    lichess lookup: {len(matches)} game(s) matched surnames "
         f"{surname1!r}/{surname2!r} out of {games_seen} in round {round_id!r} "
@@ -334,8 +374,8 @@ def find_round_via_known_tournament(event: str, player1: str, player2: str) -> s
     passes = (slice(0, _RECENT_ROUNDS_TO_CHECK), slice(_RECENT_ROUNDS_TO_CHECK, None))
     for window in passes:
         for tour_id, finished in rounds_by_tour.items():
-            for round_ in finished[window]:
-                game_url = find_game_in_round(round_["id"], player1, player2)
+            for offset, round_ in enumerate(finished[window]):
+                game_url = find_game_near_round(finished, (window.start or 0) + offset, player1, player2)
                 if game_url:
                     print(
                         f"    lichess lookup: known-tournament fast path matched "
@@ -481,11 +521,11 @@ def find_round_via_search(event: str, player1: str, player2: str, around: dateti
             print(f"    lichess lookup: tournament fetch failed for {tour.get('slug')!r}: {exc}", file=sys.stderr)
             continue
         played = [r for r in reversed(rounds) if r.get("finished") or r.get("ongoing")][:_MAX_ROUNDS_PER_TOUR]
-        for round_ in played:
+        for index, round_ in enumerate(played):
             if time.monotonic() > deadline:
                 print(f"    lichess lookup: broadcast search time budget used up for event={event!r}", file=sys.stderr)
                 return None
-            game_url = find_game_in_round(round_["id"], player1, player2)
+            game_url = find_game_near_round(played, index, player1, player2)
             if game_url:
                 print(
                     f"    lichess lookup: broadcast search matched {tour.get('slug')!r} {round_.get('name')!r}",
