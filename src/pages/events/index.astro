@@ -34,15 +34,15 @@ const description =
               <li>
                 <a class="event-thumb" href={`/events/${e.slug}/`} tabindex="-1" aria-hidden="true">
                   {e.data.image && (
-                    <Image src={e.data.image.src} alt="" width={640} height={480} widths={[256, 480, 640]} sizes="(max-width: 640px) 75vw, 240px" loading="lazy" />
+                    <Image src={e.data.image.src} alt="" width={640} height={480} widths={[256, 480, 640]} sizes="(max-width: 640px) 85vw, 240px" loading="lazy" />
                   )}
                 </a>
                 <div class="event-text">
                   <a class="event-name" href={`/events/${e.slug}/`}>{e.data.name}</a>
                   <p class="event-summary">{e.data.summary}</p>
                   <p class="note">
-                    {e.data.nextEdition && <>Next: {dateRange(e.data.nextEdition.start, e.data.nextEdition.end)}</>}
-                    {latest && <>{e.data.nextEdition && ' · '}Champion: {latest.names.join(', ')} ({latest.year})</>}
+                    {e.data.nextEdition && <span class="note-line">Next: {dateRange(e.data.nextEdition.start, e.data.nextEdition.end)}</span>}
+                    {latest && <span class="note-line">Champion: {latest.names.join(', ')} ({latest.year})</span>}
                   </p>
                 </div>
               </li>
@@ -118,6 +118,9 @@ const description =
   .note {
     margin: 0;
   }
+  .note-line {
+    display: block;
+  }
   /* Phone: the text needs the full width, so the photo goes on top, also
      full width, instead of beside it. */
   @media (max-width: 640px) {
@@ -127,7 +130,7 @@ const description =
     }
     .event-thumb {
       flex: none;
-      width: 72%;
+      width: 82%;
       height: auto;
       aspect-ratio: 16 / 9;
       margin-top: 0;
