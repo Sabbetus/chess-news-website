@@ -559,6 +559,12 @@ nav.sub-sections a.on {
      two-column list (without JavaScript the list simply stays open). */
   .js-nav .nav-toggle {
     display: flex;
+    padding-bottom: 4px;
+  }
+  /* Every page opens with ~34px of top padding, meant for the desktop
+     masthead; on the phone it left too much air under the Menu button. */
+  #main-content > :first-child {
+    margin-top: -8px;
   }
   .js-nav nav.sections {
     display: none;
