@@ -533,7 +533,7 @@ nav.sub-sections a.on {
     scrollbar-width: none;
     /* Clear of the Menu button above: a stray tap landed on it. */
     margin-top: 14px;
-    padding-bottom: 14px;
+    padding-bottom: 6px;
   }
   nav.sub-sections a {
     flex: 0 0 auto;
