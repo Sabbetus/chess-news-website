@@ -549,19 +549,73 @@ nav.sub-sections a.on {
   .eyebrow-short {
     display: inline;
   }
-  /* Wrapped onto a few centred rows, not a sideways scroller: with eight
-     sections a scroller hid Money, Controversy, OTB Tournaments and All
-     Articles off the right edge with nothing to hint they existed. */
+  /* Eight sections don't fit one phone row, and a sideways scroller hid
+     Money, Controversy, OTB Tournaments and All Articles with nothing to
+     hint they existed. So: one "Menu" button that opens the sections as a
+     two-column list (without JavaScript the list simply stays open). */
+  .js-nav .nav-toggle {
+    display: flex;
+  }
+  .js-nav nav.sections {
+    display: none;
+  }
+  .js-nav nav.sections.open {
+    display: grid;
+  }
   nav.sections {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px 18px;
-    padding: 10px 0;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+    padding: 0 0 6px;
   }
   nav.sections a {
+    padding: 11px 2px;
+    border-bottom: 1px solid var(--rule-faint);
     white-space: nowrap;
-    padding: 6px 2px;
   }
+  nav.sections a.on {
+    border-bottom: 2px solid var(--accent);
+  }
+  nav.sections .has-sub {
+    display: flex;
+  }
+  nav.sections .has-sub > a {
+    flex: 1;
+  }
+  nav.sections .sub-menu {
+    display: none;
+  }
+}
+
+/* The phone-only menu button, hidden elsewhere. */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.nav-toggle-menu {
+  color: var(--ink-soft);
+}
+.nav-toggle-current {
+  color: var(--accent);
+  font-weight: 500;
+}
+.nav-toggle .caret {
+  font-size: 10px;
+  transition: transform 0.15s ease;
+}
+.nav-toggle[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
 }
 
 /* ---- byline ---- */

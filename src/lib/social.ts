@@ -1,9 +1,9 @@
 // The site's own profiles, shown in the footer. A platform with an empty URL
 // is left out, so a link only appears once it is filled in.
 export const SOCIAL: { id: string; label: string; url: string }[] = [
-  { id: 'facebook', label: 'Facebook', url: '' },
-  { id: 'threads', label: 'Threads', url: '' },
-  { id: 'x', label: 'X', url: '' },
+  { id: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61594374146070' },
+  { id: 'threads', label: 'Threads', url: 'https://www.threads.com/@chessherald' },
+  { id: 'x', label: 'X', url: 'https://x.com/chessherald' },
 ];
 
 // Share links for a page (plain links: nothing is loaded from these sites

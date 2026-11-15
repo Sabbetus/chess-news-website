@@ -79,6 +79,9 @@ const RESULTS_CHILDREN = [
   { id: 'players', label: 'Players', href: '/players/' },
 ];
 const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
+// The section shown on the phone's menu button.
+const currentLabel =
+  sections.find((s) => s.id === activeSection)?.label ?? (inResults ? 'Results' : activeSection === 'continent' ? 'Regions' : 'Menu');
 ---
 
 <!doctype html>
@@ -231,6 +234,18 @@ const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
          never display:none, which would hide it from screen readers too and
          defeat the point. -->
     <a href="#main-content" class="skip-link">Skip to content</a>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function () {
+        var button = document.getElementById('navToggle');
+        var nav = document.getElementById('siteNav');
+        if (!button || !nav) return;
+        document.documentElement.classList.add('js-nav');
+        button.addEventListener('click', function () {
+          var open = nav.classList.toggle('open');
+          button.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+    </script>
     <div class="wrap">
       <div class="masthead-top">
         <a href="/" class="eyebrow">
@@ -251,7 +266,14 @@ const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
         </div>
       </header>
 
-      <nav class="sections">
+      <!-- Phones only (see global.css): the eight sections live behind one
+           button instead of a sideways scroller, which hid half of them. -->
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
+        <span class="nav-toggle-menu">Menu</span>
+        <span class="nav-toggle-current">{currentLabel}</span>
+        <span class="caret" aria-hidden="true">▾</span>
+      </button>
+      <nav class="sections" id="siteNav">
         {
           sections.map((s) =>
             s.id === 'results' ? (
