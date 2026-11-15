@@ -34,7 +34,7 @@ const description =
               <li>
                 <a class="event-thumb" href={`/events/${e.slug}/`} tabindex="-1" aria-hidden="true">
                   {e.data.image && (
-                    <Image src={e.data.image.src} alt="" width={640} height={480} widths={[256, 640]} sizes="(max-width: 640px) 100vw, 176px" loading="lazy" />
+                    <Image src={e.data.image.src} alt="" width={640} height={480} widths={[256, 480, 640]} sizes="(max-width: 640px) 75vw, 240px" loading="lazy" />
                   )}
                 </a>
                 <div class="event-text">
@@ -83,8 +83,8 @@ const description =
     border-top: 0;
   }
   .event-thumb {
-    flex: 0 0 176px;
-    height: 132px;
+    flex: 0 0 240px;
+    height: 180px;
     border-radius: 4px;
     overflow: hidden;
     background: var(--paper-raised);
@@ -127,9 +127,9 @@ const description =
     }
     .event-thumb {
       flex: none;
-      width: 100%;
+      width: 72%;
       height: auto;
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 16 / 9;
       margin-top: 0;
     }
     .event-text {
