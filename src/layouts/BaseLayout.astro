@@ -79,9 +79,12 @@ const RESULTS_CHILDREN = [
   { id: 'players', label: 'Players', href: '/players/' },
 ];
 const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
-// The section shown on the phone's menu button.
+// The section shown on the phone's menu button. Nothing on the front page:
+// naming the page you are obviously on just reads oddly.
 const currentLabel =
-  sections.find((s) => s.id === activeSection)?.label ?? (inResults ? 'Results' : activeSection === 'continent' ? 'Regions' : 'Menu');
+  activeSection === 'front-page'
+    ? ''
+    : (sections.find((s) => s.id === activeSection)?.label ?? (inResults ? 'Results' : activeSection === 'continent' ? 'Regions' : ''));
 ---
 
 <!doctype html>
@@ -270,7 +273,7 @@ const currentLabel =
            button instead of a sideways scroller, which hid half of them. -->
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
         <span class="nav-toggle-menu">Menu</span>
-        <span class="nav-toggle-current">{currentLabel}</span>
+        {currentLabel && <span class="nav-toggle-current">{currentLabel}</span>}
         <span class="caret" aria-hidden="true">▾</span>
       </button>
       <nav class="sections" id="siteNav">
