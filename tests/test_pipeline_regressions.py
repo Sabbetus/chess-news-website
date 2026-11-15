@@ -1143,3 +1143,29 @@ def test_promotion_check_drops_promos_and_keeps_news():
     items = [{"sourceName": "ChessBase", "title": "CBM 233 review"}, {"sourceName": "FIDE", "title": "Round 5 report"}]
     assert [i["title"] for i in selection.drop_promotions(C, items, 3)] == ["Round 5 report"]
     assert selection.drop_promotions(None, items, 3) == items
+
+
+def test_board_is_swapped_to_the_game_the_sentence_describes(monkeypatch):
+    # 2026-11-15 (user's call): fix the board, don't just flag it. "Giri beat
+    # Mishra" linked to the round 8 draw; the round 7 win is swapped in.
+    import json
+    import board_fix
+
+    draw = '[White "Mishra, Abhimanyu"]\n[Black "Giri, Anish"]\n[Result "1/2-1/2"]\n[GameURL "https://lichess.org/broadcast/t/round-8/R8/g8"]\n\n1. e4 1/2-1/2'
+    win = '[White "Giri, Anish"]\n[Black "Mishra, Abhimanyu"]\n[Result "1-0"]\n[GameURL "https://lichess.org/broadcast/t/round-7/R7/g7"]\n\n1. e4 1-0'
+    pages = {
+        "https://lichess.org/api/broadcast/-/-/R8": json.dumps({"tour": {"id": "T"}}),
+        "https://lichess.org/api/broadcast/T": json.dumps({"rounds": [{"id": "R7"}, {"id": "R8"}, {"id": "R9"}]}),
+        "https://lichess.org/api/broadcast/round/R7.pgn": win,
+        "https://lichess.org/api/broadcast/round/R8.pgn": draw,
+        "https://lichess.org/api/broadcast/round/R9.pgn": "",
+    }
+
+    class R:
+        def __init__(self, text): self.text = text
+        def json(self): return json.loads(self.text)
+
+    monkeypatch.setattr(board_fix, "_get", lambda url, accept=None: R(pages[url]))
+    body = "Anish Giri [beat Abhimanyu Mishra](#game-embed) in the day's Game of the Day."
+    url, pgn = board_fix.matching_pair_game("https://lichess.org/embed/broadcast/t/round-8/R8/g8", draw, body)
+    assert url == "https://lichess.org/embed/broadcast/t/round-7/R7/g7" and '"1-0"' in pgn

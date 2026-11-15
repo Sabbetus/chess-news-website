@@ -38,6 +38,7 @@ from chess_results_standings import (
     fetch_team_standings,
     standings_markdown_table,
 )
+from board_fix import matching_pair_game
 from broadcast_facts import broadcast_facts
 from continents import CONTINENT_SLUGS
 from game_links import check_embed_sentence, fix_embed_link, illegal_lines, link_moves
@@ -2273,10 +2274,26 @@ def draft_one(
             embed_pgn = embed_game_pgn(embed["url"] if isinstance(embed, dict) else embed)
             if embed_pgn:
                 body_markdown = fix_embed_link(body_markdown, embed_pgn)
-                body_markdown, board_note = check_embed_sentence(body_markdown, embed_pgn)
+                unlinked, board_note = check_embed_sentence(body_markdown, embed_pgn)
                 if board_note:
-                    BOARD_MISMATCH_NOTES.append((out_path.stem, board_note))
-                    print(f"  {board_note} for '{item['title']}'", file=sys.stderr)
+                    # Fix it first (user's call, 2026-11-15): the game the
+                    # sentence means is usually the pair's other game in the
+                    # same or a neighbouring round. Only when there's none
+                    # is the link removed and flagged.
+                    embed_url = embed["url"] if isinstance(embed, dict) else embed
+                    swap = matching_pair_game(embed_url, embed_pgn, body_markdown)
+                    if swap:
+                        new_url, _ = swap
+                        fm_lines = [
+                            f'  url: "{new_url}"' if line.strip() == f'url: "{embed_url}"' else line
+                            for line in fm_lines
+                        ]
+                        embed = {"url": new_url}
+                        print(f"  board swapped to the game the text describes: {new_url} for '{item['title']}'", file=sys.stderr)
+                    else:
+                        body_markdown = unlinked
+                        BOARD_MISMATCH_NOTES.append((out_path.stem, board_note + "; no matching game found"))
+                        print(f"  {board_note} for '{item['title']}'", file=sys.stderr)
         except Exception as exc:
             print(f"  Game embed scroll-link failed for '{item['title']}': {exc}", file=sys.stderr)
 

@@ -301,9 +301,12 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   fact check now gets the event's Lichess broadcast record (last rounds'
   results with colours, next round's pairings; all sections of a sectioned
   event) and must correct the article where it disagrees on who played
-  whom, colours, results or pairings; a "#game-embed" link whose sentence
-  contradicts the board's game (wrong winner, or a draw described as a
-  win) is removed and listed in the PR report; a model check drops
+  whom, colours, results or pairings; when the sentence carrying the
+  "#game-embed" link contradicts the board's game (wrong winner, or a draw
+  described as a win), the board is swapped for the pair's game in the
+  same or a neighbouring round that matches the sentence (user's call:
+  fix, not flag); only when none exists is the link removed and listed in
+  the PR report; a model check drops
   promotions the title patterns miss (products, site features, sign-ups,
   notices, press releases, a source's own deals); weekday/date pairs and
   "today/tomorrow/yesterday, <weekday>" that don't fit the publication
