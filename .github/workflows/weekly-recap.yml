@@ -1,22 +1,18 @@
 name: Draft weekly recap
 
 on:
-  # Sundays, 10 minutes after the daily pipeline's own nominal time (see
-  # pipeline.yml) -- this doesn't need a bigger gap than that: it only
-  # pulls in articles already reviewStatus: "published" (i.e. previously
-  # merged), never that same day's still-unreviewed pipeline PR, so
-  # there's no real ordering dependency to leave room for.
-  #
-  # Aiming for both this and the daily pipeline's PR to be ready by
-  # ~10:00 Finnish time (EEST, UTC+3), when the reviewer wakes up -- an
-  # hour earlier than the previous ~11:00 EEST target. Like the daily
-  # pipeline, this cron has run ~5h late in practice (GitHub
-  # deprioritizing scheduled runs on a low-traffic public repo), so
-  # 01:17 UTC nominal is aimed at landing around 06:00-07:00 UTC actual.
-  # :07/:17 rather than :00 avoids the single most contested GitHub
-  # Actions scheduling minute.
+  # Sunday afternoon, after the morning batch has been reviewed and
+  # published (user's call, 2026-11-15: a recap drafted at 01:17 UTC ran
+  # before Sunday's own pieces were out, and summarised mid-week pieces a
+  # later one had overtaken). Several tries an hour apart: the "Wait for
+  # the morning batch" step below skips a run while that day's draft PR is
+  # still open, and the last try goes ahead regardless. :17 avoids the
+  # most contested scheduling minute.
   schedule:
-    - cron: '17 1 * * 0'
+    - cron: '17 11 * * 0'
+    - cron: '17 12 * * 0'
+    - cron: '17 13 * * 0'
+    - cron: '17 14 * * 0'
   workflow_dispatch:
 
 permissions:
@@ -41,7 +37,36 @@ jobs:
           # to the same single fetched commit, breaking that entirely.
           fetch-depth: 0
 
+      - name: Wait for the morning batch
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          # Already drafted this week (an earlier try, or a manual run).
+          if git ls-remote --heads origin "drafts/weekly-recap-$TODAY-*" | grep -q . \
+             || grep -lq "^publishDate: \"$TODAY\"" $(grep -l '^type: "recap"' src/content/articles/*.md) 2>/dev/null; then
+            echo "Recap already drafted today -- skipping."
+            echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # Manual runs and the last scheduled try go ahead regardless.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%H)" -ge 14 ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # The morning batch must be published first: no draft PR from
+          # today still open, and the daily pipeline has run today.
+          if [ -n "$(gh pr list --state open --search "\"Draft batch: $TODAY\" in:title" --json number --jq '.[].number')" ]; then
+            echo "Today's draft batch is still open -- waiting for the next try."
+            echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if ! git ls-remote --heads origin "drafts/$TODAY-*" | grep -q .; then
+            echo "Today's pipeline hasn't run yet -- waiting for the next try."
+            echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "go=true" >> "$GITHUB_OUTPUT"
+
       - name: Set up Python
+        if: steps.gate.outputs.go == 'true'
         uses: actions/setup-python@v5.6.0
         with:
           python-version: '3.12'
@@ -49,14 +74,17 @@ jobs:
           cache-dependency-path: scripts/requirements.txt
 
       - name: Install dependencies
+        if: steps.gate.outputs.go == 'true'
         run: pip install -r scripts/requirements.txt
 
       - name: Draft this week's recap with Claude
+        if: steps.gate.outputs.go == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/weekly_recap.py
 
       - name: Open review PR
+        if: steps.gate.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

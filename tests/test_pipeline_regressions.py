@@ -1090,3 +1090,19 @@ def test_chesscom_own_deal_is_promotion():
     pats = [re.compile(p, re.I) for p in selection.PROMO_TITLE_PATTERNS]
     assert any(p.search("Hikaru Nakamura Renews With Chess.com") for p in pats)
     assert not any(p.search("Nakamura Wins Bullet Brawl On Chess.com") for p in pats)
+
+
+def test_same_round_reports_merge_without_the_model():
+    # 2026-11-15: Chess.com's "day 5" and FIDE's "Day 4" of the Total Chess
+    # pilot (the same rounds) were both drafted after the model said
+    # "different stories".
+    a = {"title": "Firouzja, Caruana, Giri, MVL Lead Before Final Day", "publishedAt": "2026-11-14T21:56:00+00:00",
+         "summary": "GM Magnus Carlsen can no longer win the Total Chess World Championship Tour Pilot 2026. Day six starts on Sunday."}
+    b = {"title": "Giri takes Group C lead as So wins twice on Day 4 in Budapest", "publishedAt": "2026-11-14T22:15:03+00:00",
+         "summary": "Three players share the Group D lead. " + "x " * 40 + "The Total Chess World Championship Tour Pilot continues."}
+    assert selection._same_round_reports(a, b)
+    # The next day's report of the same event is a different story.
+    later = dict(b, publishedAt="2026-11-15T22:15:03+00:00")
+    assert not selection._same_round_reports(a, later)
+    # No dates: left to the model check.
+    assert not selection._same_round_reports(a, dict(b, publishedAt=None))

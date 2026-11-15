@@ -126,7 +126,12 @@
   (anything not fully certain, with the exact sentence or photo and why),
   then the usual fixes/drops/held/pipeline/streak summary and the social
   copies with URLs (each copy's text first, its URL on the line after;
-  user's call, 2026-11-12). The review-acceptance streak now means the user had
+  user's call, 2026-11-12). Weekly recap (user's call, 2026-11-15): it
+  drafts on Sunday afternoon, after that morning's batch is published, so
+  it covers the whole week and nothing in it is already overtaken; the
+  morning check no longer reviews it, the scheduled task "Sunday weekly
+  recap review" (15:41 UTC) does, under the same fix-and-publish rule.
+  The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
   2026-11-03): it fixes, publishes and pushes, and never removes a profile

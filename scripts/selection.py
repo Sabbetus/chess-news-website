@@ -1252,6 +1252,51 @@ def _same_major_event(a: dict, b: dict) -> bool:
     return bool(_lead_event_phrases(a) & _lead_event_phrases(b))
 
 
+_ROUND_REPORT_LEAD_CHARS = 700
+
+
+def _lead_event_phrases_wide(item: dict) -> set[str]:
+    lead = f"{item.get('title', '')}. {(item.get('summary') or '').strip()}"
+    out = set()
+    for phrase in _EVENT_PHRASE_RE.findall(lead):
+        words = re.sub(r"[:.]", " ", phrase.lower()).split()
+        words = [w for w in words if w not in {"the", "chess", "2025", "2026", "2027"}]
+        if len(words) >= 2:
+            out.add(" ".join(words))
+    return out
+
+
+def _same_round_reports(a: dict, b: dict) -> bool:
+    """Two round/day reports of the same named event in one batch are one
+    story: they merge without the model's veto (user's call, 2026-11-15,
+    after Chess.com's "day 5" and FIDE's "Day 4" of the Total Chess pilot,
+    the same rounds 7-8, were both drafted because the model check said
+    "different stories" -- the sixth same-event pair drafted twice since
+    October). Both must open on a round/day label or scoreline, and be
+    published within 12 hours of each other (dates required; daily reports of
+    consecutive days come about 24 hours apart)."""
+    # A wider opening than the major-event check: FIDE's report named the
+    # event only in its second paragraph.
+    def phrases(item: dict) -> set[str]:
+        wide = dict(item, summary=(item.get("summary") or "")[:_ROUND_REPORT_LEAD_CHARS])
+        return {p for p in _lead_event_phrases_wide(wide)}
+
+    if not (_same_major_event(a, b) or phrases(a) & phrases(b)):
+        return False
+    for item in (a, b):
+        lead = f"{item.get('title', '')} {(item.get('summary') or '')[:_ROUND_REPORT_LEAD_CHARS]}".lower()
+        if not (_ROUND_LABEL_RE.search(lead) or _SCORELINE_RE.search(lead)):
+            return False
+    try:
+        da = datetime.fromisoformat(str(a.get("publishedAt")).replace("Z", "+00:00"))
+        db = datetime.fromisoformat(str(b.get("publishedAt")).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return False  # no dates: leave it to the model check
+    # Daily reports of consecutive days land about 24 hours apart; two
+    # outlets' reports of the same day, within a few hours.
+    return abs((da - db).total_seconds()) <= 12 * 3600
+
+
 def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
     """scored is sorted by selectionScore descending, so the first member
     of any same-story group encountered is already the highest-scoring
@@ -1292,7 +1337,7 @@ def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
                 and (_is_same_story(item, existing) or _same_major_event(item, existing))
                 and item["sourceName"] != existing["sourceName"]
                 and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
-                and confirm_same_story(client, existing, item)
+                and (_same_round_reports(existing, item) or confirm_same_story(client, existing, item))
             ),
             None,
         )
