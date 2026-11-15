@@ -753,6 +753,32 @@ def test_mini_match_over_two_rounds_prefers_the_decisive_game(monkeypatch):
     assert lichess_game.find_game_near_round(rounds, 0, "Magnus Carlsen", "Haik Martirosyan") == "u/r5"
 
 
+def test_round_fetch_retries_after_a_rate_limit(monkeypatch):
+    # 2026-11-15: a 429 on round 7 hid Giri's win over Mishra; only the
+    # round 8 draw was seen.
+    import lichess_game
+
+    win = '[White "Giri, Anish"]\n[Black "Mishra, Abhimanyu"]\n[Result "1-0"]\n[GameURL "u/r7"]\n\n1. e4 e5 1-0'
+    calls = []
+
+    class R:
+        def __init__(self, code):
+            self.status_code, self.text = code, win
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise lichess_game.requests.HTTPError("429")
+
+    def fake_get(url, *a, **k):
+        calls.append(url)
+        return R(429 if len(calls) == 1 else 200)
+
+    monkeypatch.setattr(lichess_game.requests, "get", fake_get)
+    monkeypatch.setattr(lichess_game.time, "sleep", lambda s: None)
+    monkeypatch.setattr(lichess_game, "_article_body", "")
+    assert lichess_game.find_game_in_round("r7", "Anish Giri", "Abhimanyu Mishra") == "u/r7"
+    assert len(calls) == 2
+
+
 def test_single_game_needs_its_players_named():
     # 2026-10-31: the only game read (the page's first file) was used though
     # the article never names Papapostolou.

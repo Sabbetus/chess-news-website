@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/world-senior-chess-champions-2026-crowned-in-vr
 lens: "results"
 continent: "europe"
 selectionScore: 64
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Senior Worlds ended in Vrnjačka Banja: Strutinskaya won Women 65+ on 10/11, Cramling took Women 50+ on 9, and the Open 65+ had a three-way tie on 8.5. Full podiums inside."
 metaDescription: "The World Senior Championship ended in Vrnjačka Banja with four champions crowned among 385 players from 65 countries. Full podiums for all four categories."
 image:
@@ -24,7 +24,7 @@ The closing ceremony opened with a minute of silence for Israeli International M
 
 **The four podiums**
 
-Galina Strutinskaya won the Women 65+ with 10/11, the biggest margin of any category. Irina Chelushkina of Serbia took silver on 7.5, and Elena Krasenkova of Poland took bronze, also on 7.5. Strutinskaya had been [perfect through the first five rounds](/articles/strutinskaya-is-5-5-at-senior-worlds-while-open-sections-bunch-up/), and she lost only a point and a half over the full distance.
+Galina Strutinskaya won the Women 65+ with 10/11, the biggest margin of any category. Irina Chelushkina of Serbia took silver on 7.5, and Elena Krasenkova of Poland took bronze, also on 7.5. Strutinskaya had been [perfect through the first five rounds](/articles/strutinskaya-is-5-5-at-senior-worlds-while-open-sections-bunch-up/), and she dropped just one point over the full distance.
 
 Pia Cramling won the Women 50+ on 9/11. Monica Calzetta Ruiz of Spain was second on 8.5, and Maritza Arribas Robaina of Cuba third on 7.5.
 

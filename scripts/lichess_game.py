@@ -267,6 +267,9 @@ def find_game_near_round(rounds_newest_first: list[dict], index: int, player1: s
     return _choose_pair_game(matches)
 
 
+# Lichess's documented pause after a 429.
+_RATE_LIMIT_WAIT = 60
+
 # Set by _pair_games: when a list, find_game_in_round only collects the
 # round's matching games into it.
 _collect_only: list | None = None
@@ -281,6 +284,14 @@ def find_game_in_round(round_id: str, player1: str, player2: str) -> str | None:
     url = f"https://lichess.org/api/broadcast/round/{round_id}.pgn"
     try:
         response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
+        # Lichess answers bursts of requests with 429 and asks for a minute's
+        # pause; one retry after it (caught 2026-11-15: round 7 hit a 429, so
+        # only round 8 was seen and "Giri beat Mishra" got the drawn return
+        # game).
+        if getattr(response, "status_code", 200) == 429:
+            print(f"    lichess lookup: rate-limited on round {round_id!r}, waiting {_RATE_LIMIT_WAIT}s", file=sys.stderr)
+            time.sleep(_RATE_LIMIT_WAIT)
+            response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
     except requests.RequestException as exc:
         print(f"    lichess lookup: round PGN fetch failed for round {round_id!r}: {exc}", file=sys.stderr)

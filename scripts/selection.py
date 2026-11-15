@@ -1184,9 +1184,17 @@ def confirm_same_story(client, a: dict, b: dict) -> bool:
         "enough. But two reports on the same round (or day) of the same "
         "tournament ARE the same event, even when one headline leads on a "
         "single player's result or a rating milestone from that round. "
+        # Caught 2026-11-15: Chess.com's "day 5" and FIDE's "Day 4" of the
+        # Total Chess pilot were the same rounds (FIDE counted days of the
+        # group stage, Chess.com days of the event) and were judged
+        # different stories, so both were drafted.
+        "Sources number days and rounds differently (one may count days of "
+        "the whole event, another days of one stage), so a different day or "
+        "round number alone does not make them different events: judge by "
+        "the games, results and leaders each one reports, and the dates. "
         "Answer only YES or NO.\n\n"
-        f"A: {a.get('title')}\n{(a.get('summary') or '')[:800]}\n\n"
-        f"B: {b.get('title')}\n{(b.get('summary') or '')[:800]}"
+        f"A ({a.get('publishedAt') or 'date unknown'}): {a.get('title')}\n{(a.get('summary') or '')[:800]}\n\n"
+        f"B ({b.get('publishedAt') or 'date unknown'}): {b.get('title')}\n{(b.get('summary') or '')[:800]}"
     )
     try:
         response = client.messages.create(
