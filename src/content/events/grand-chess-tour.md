@@ -27,10 +27,10 @@ winners:
   - { year: 2016, names: ["Wesley So"] }
   - { year: 2015, names: ["Magnus Carlsen"] }
 image:
-  src: "../articles/_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
-  credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
-  caption: "Magnus Carlsen at the 2025 Rapid & Blitz in Zagreb"
+  src: "../articles/_images/Rameshbabu_Praggnanandhaa_in_2023__52638384854.webp"
+  credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ARameshbabu_Praggnanandhaa_in_2023_%2852638384854%29.jpg"
+  caption: "Rameshbabu Praggnanandhaa in 2023, who won the 2026 Grand Chess Tour"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---
