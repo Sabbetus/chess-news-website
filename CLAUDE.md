@@ -297,6 +297,18 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-15, pipeline (user's call, after asking how to cut resets): the
+  fact check now gets the event's Lichess broadcast record (last rounds'
+  results with colours, next round's pairings; all sections of a sectioned
+  event) and must correct the article where it disagrees on who played
+  whom, colours, results or pairings; a "#game-embed" link whose sentence
+  contradicts the board's game (wrong winner, or a draw described as a
+  win) is removed and listed in the PR report; a model check drops
+  promotions the title patterns miss (products, site features, sign-ups,
+  notices, press releases, a source's own deals); weekday/date pairs and
+  "today/tomorrow/yesterday, <weekday>" that don't fit the publication
+  date are listed in the PR report. Plus the same-round merge without the
+  model's veto and the Sunday-afternoon recap (above).
 - 2026-11-15: PR #103 + weekly recap reset (streak stays at 0). Resets:
   Chess.com's Total Chess "day 5" and FIDE's "Day 4" (the same rounds 7-8)
   were both drafted (FIDE's dropped, its points folded in as a second

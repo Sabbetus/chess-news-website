@@ -1106,3 +1106,40 @@ def test_same_round_reports_merge_without_the_model():
     assert not selection._same_round_reports(a, later)
     # No dates: left to the model check.
     assert not selection._same_round_reports(a, dict(b, publishedAt=None))
+
+
+def test_board_link_sentence_must_match_the_game():
+    # 2026-11-14/15: "Carlsen lost to Haik Martirosyan" and "Giri beat
+    # Mishra" both linked to the drawn return game.
+    from game_links import check_embed_sentence
+    loss = '[White "Martirosyan, Haik M."]\n[Black "Carlsen, Magnus"]\n[Result "1-0"]\n\n1. e4 1-0'
+    draw = '[White "Carlsen, Magnus"]\n[Black "Martirosyan, Haik M."]\n[Result "1/2-1/2"]\n\n1. e4 1/2-1/2'
+    text = "He was rattled. [Carlsen lost to Haik Martirosyan](#game-embed) of Armenia. Then more."
+    assert check_embed_sentence(text, loss) == (text, None)
+    body, note = check_embed_sentence(text, draw)
+    assert note and "(#game-embed)" not in body and "Carlsen lost to Haik Martirosyan" in body
+    drew = "Carlsen [drew with Martirosyan](#game-embed) in the return."
+    assert check_embed_sentence(drew, draw)[1] is None
+    assert check_embed_sentence(drew, loss)[1]
+
+
+def test_time_words_must_fit_the_publication_date():
+    from datetime import date
+    pub = date(2026, 11, 15)  # a Sunday
+    assert draft.check_time_words("The final round is today, Sunday, November 15. It resumes Friday, 4 December.", pub) == []
+    notes = draft.check_time_words("Rounds five and six come on Friday, November 12, and today, Saturday.", pub)
+    assert any("is a Thursday" in n for n in notes)
+    assert any("today is Sunday" in n for n in notes)
+
+
+def test_promotion_check_drops_promos_and_keeps_news():
+    class Msg:
+        def __init__(self, t): self.content = [type("B", (), {"type": "text", "text": t})()]
+    class C:
+        class messages:
+            @staticmethod
+            def create(**k):
+                return Msg("PROMO" if "CBM" in k["messages"][0]["content"] else "NEWS")
+    items = [{"sourceName": "ChessBase", "title": "CBM 233 review"}, {"sourceName": "FIDE", "title": "Round 5 report"}]
+    assert [i["title"] for i in selection.drop_promotions(C, items, 3)] == ["Round 5 report"]
+    assert selection.drop_promotions(None, items, 3) == items

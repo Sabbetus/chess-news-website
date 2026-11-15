@@ -170,3 +170,53 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+_WIN_VERBS = r"(?:beat|beats|defeated|defeats|outplayed|downed|won against|overcame|took down|ground down)"
+_LOSE_VERBS = r"(?:lost to|loses to|fell to|was beaten by|went down to|resigned (?:to|against))"
+_DRAW_VERBS = r"(?:drew|draws|held|holds|split the point|drawn)"
+
+
+def _surname(name: str) -> str:
+    name = name.split(",")[0] if "," in name else name.split()[-1] if name.split() else name
+    return name.strip().lower()
+
+
+def check_embed_sentence(body: str, pgn: str) -> tuple[str, str | None]:
+    """The sentence carrying the "#game-embed" link must agree with the game
+    it points to: its players and its result. Caught 2026-11-14 and
+    2026-11-15: "Carlsen lost to Haik Martirosyan" and "Giri beat Mishra"
+    both linked to the drawn return game of the same pair. On a mismatch
+    the link is removed (the board stays) and a note goes to the PR report.
+    Returns (body, note or None)."""
+    m = re.search(r"\[([^\]]+)\]\(#game-embed\)", body)
+    if not m:
+        return body, None
+    white = re.search(r'\[White\s+"([^"]+)"\]', pgn)
+    black = re.search(r'\[Black\s+"([^"]+)"\]', pgn)
+    result = re.search(r'\[Result\s+"([^"]+)"\]', pgn)
+    if not (white and black and result):
+        return body, None
+    w, b, res = _surname(white.group(1)), _surname(black.group(1)), result.group(1)
+    # The sentence around the link.
+    start = max(body.rfind(". ", 0, m.start()), body.rfind("\n", 0, m.start())) + 1
+    end_candidates = [i for i in (body.find(". ", m.end()), body.find("\n", m.end())) if i != -1]
+    end = min(end_candidates) if end_candidates else len(body)
+    sentence = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body[start:end]).lower()
+    if w not in sentence and b not in sentence:
+        return body, None  # the sentence names neither player: nothing to compare
+    problem = None
+    winner = w if res == "1-0" else b if res == "0-1" else None
+    loser = b if res == "1-0" else w if res == "0-1" else None
+    for x, y in ((w, b), (b, w)):
+        if re.search(rf"{re.escape(x)}\b[^.]{{0,60}}?\b{_WIN_VERBS}\b[^.]{{0,40}}?\b{re.escape(y)}", sentence) or re.search(
+            rf"{re.escape(y)}\b[^.]{{0,60}}?\b{_LOSE_VERBS}\b[^.]{{0,40}}?\b{re.escape(x)}", sentence
+        ):
+            if winner != x:
+                problem = f"says {x.title()} beat {y.title()}, but the board's game ended {res}"
+    if problem is None and winner and re.search(rf"\b{_DRAW_VERBS}\b", sentence) and not re.search(rf"\b{_WIN_VERBS}\b|\b{_LOSE_VERBS}\b", sentence):
+        problem = f"describes a draw, but the board's game ended {res}"
+    if problem is None:
+        return body, None
+    unlinked = body[: m.start()] + m.group(1) + body[m.end():]
+    return unlinked, f"board link removed: the linked sentence {problem} ({white.group(1)} - {black.group(1)})"

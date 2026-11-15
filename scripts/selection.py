@@ -1355,6 +1355,54 @@ def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
     return result
 
 
+PROMO_CHECK_MODEL = "claude-sonnet-5-5"
+
+_PROMO_CHECK_PROMPT = (
+    "Is this item from a chess news feed actual NEWS (a result, a game, an "
+    "interview, a profile, an event announcement, a rating list, a ruling, "
+    "a history piece) -- or is it the outlet or an organisation promoting "
+    "something: a product or product review (magazines, DVDs, courses, "
+    "software, books), a site feature or bot, a sign-up, ticket or "
+    "registration notice, an accreditation or other administrative notice, "
+    "a press release, a sponsorship or partnership deal the outlet itself "
+    "announces, or a shop column? Event announcements, prize funds and "
+    "player transfers are news. Answer only NEWS or PROMO.\n\n"
+)
+
+
+def drop_promotions(client, items: list[dict], need: int) -> list[dict]:
+    """A model check on top of the title patterns (is_promotional): those
+    catch only the kinds seen before, and each new kind got through once
+    before it got a pattern -- the CBM 233 review (2026-11-12), the bot
+    challenge, ticket sales, KCF Academy's sign-up pitch. Run on the
+    highest-scoring items only, until `need` news items are kept, so the
+    cost stays a few calls a day. Without a client (local runs) nothing is
+    dropped; a failed check keeps the item."""
+    if client is None:
+        return items
+    kept: list[dict] = []
+    for index, item in enumerate(items):
+        if len(kept) >= need:
+            return kept + items[index:]
+        prompt = _PROMO_CHECK_PROMPT + f"{item['sourceName']}: {item.get('title')}\n{(item.get('summary') or '')[:1200]}"
+        try:
+            response = client.messages.create(
+                model=PROMO_CHECK_MODEL,
+                max_tokens=1024,
+                output_config={"effort": "low"},
+                messages=[{"role": "user", "content": prompt}],
+            )
+            verdict = "".join(b.text for b in response.content if b.type == "text").strip().upper()
+        except Exception as exc:  # noqa: BLE001 -- keep the item on a failed check
+            print(f"  Promotion check failed ({type(exc).__name__}: {exc}) -- keeping: {item['title']}", file=sys.stderr)
+            verdict = "NEWS"
+        if verdict.startswith("PROMO"):
+            print(f"  Skipping promotion (model check): {item['sourceName']}: {item['title']}")
+            continue
+        kept.append(item)
+    return kept
+
+
 def main() -> None:
     if not CANDIDATES_PATH.exists():
         print("No candidates.json found -- run ingest.py first.")
@@ -1399,6 +1447,8 @@ def main() -> None:
         if item["selectionScore"] < MIN_PUBLISH_SCORE:
             print(f"  Below the quality floor ({item['selectionScore']} < {MIN_PUBLISH_SCORE}): {item['sourceName']}: {item['title']}")
     external_items = [item for item in external_items if item["selectionScore"] >= MIN_PUBLISH_SCORE]
+
+    external_items = drop_promotions(client, external_items, MAX_EXTERNAL_ARTICLES + MAX_RATING_LIST_ARTICLES_PER_DAY)
 
     rating_list_items = [item for item in external_items if is_rating_list_story(item)][:MAX_RATING_LIST_ARTICLES_PER_DAY]
     remaining_external = [item for item in external_items if item not in rating_list_items]

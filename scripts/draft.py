@@ -38,8 +38,9 @@ from chess_results_standings import (
     fetch_team_standings,
     standings_markdown_table,
 )
+from broadcast_facts import broadcast_facts
 from continents import CONTINENT_SLUGS
-from game_links import fix_embed_link, illegal_lines, link_moves
+from game_links import check_embed_sentence, fix_embed_link, illegal_lines, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import chesscom_numbered_game, clean_game, find_game_pgn, headline_game_number
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
@@ -1687,6 +1688,14 @@ def verify_claims(client: anthropic.Anthropic, parsed: dict, item: dict) -> dict
                 source_parts.append(f"ADDITIONAL SOURCE ({extra['sourceName']}):\n{extra['summary']}")
         if item.get("finnishClubsFacts"):
             source_parts.append(f"ADDITIONAL SOURCE (chess-results.com, Finnish clubs):\n{item['finnishClubsFacts']}")
+        if item.get("broadcastFacts"):
+            source_parts.append(
+                "OFFICIAL BROADCAST RECORD (Lichess; the games as actually played). It outranks the "
+                "sources above on who played whom, colours, results and next-round pairings: where "
+                "the article or a source disagrees with it on those, correct the article to match it. "
+                "Rounds not listed here are not covered by it; do not infer standings or scores from "
+                "it beyond what it shows.\n" + item["broadcastFacts"]
+            )
         source_parts.append(
             "OUR RECORDS (latest winner of each event; only for checking \"defending\", "
             "\"reigning\" or \"current\" champion claims, not a source of news):\n" + title_holders_note()
@@ -1999,6 +2008,18 @@ def draft_one(
         raise RuntimeError(f"No text content returned for: {item['title']}")
 
     parsed = parse_response(text_blocks[-1])
+    if not is_aggregate and not item.get("broadcastFacts"):
+        # The event's own results and next pairings, as ground truth for the
+        # fact check (user's call, 2026-11-15).
+        lookup = parse_game_lookup(parsed.get("gameLookup") or "")
+        if lookup and lookup.get("event"):
+            try:
+                facts = broadcast_facts(lookup["event"])
+            except Exception as exc:  # noqa: BLE001 -- never fail a draft over this
+                print(f"  Broadcast facts failed for '{item['title']}': {exc}", file=sys.stderr)
+                facts = None
+            if facts:
+                item["broadcastFacts"] = facts
     if item["kind"] in CALENDAR_KINDS or item.get("summary"):
         parsed = verify_claims(client, parsed, item)
 
@@ -2252,6 +2273,10 @@ def draft_one(
             embed_pgn = embed_game_pgn(embed["url"] if isinstance(embed, dict) else embed)
             if embed_pgn:
                 body_markdown = fix_embed_link(body_markdown, embed_pgn)
+                body_markdown, board_note = check_embed_sentence(body_markdown, embed_pgn)
+                if board_note:
+                    BOARD_MISMATCH_NOTES.append((out_path.stem, board_note))
+                    print(f"  {board_note} for '{item['title']}'", file=sys.stderr)
         except Exception as exc:
             print(f"  Game embed scroll-link failed for '{item['title']}': {exc}", file=sys.stderr)
 
@@ -2332,6 +2357,12 @@ def draft_one(
                 fm_lines.insert(len(fm_lines) - 1, f"gameCaption: {json.dumps(caption)}")
                 print(f"  game board: player game from the broadcast ({caption}) for '{item['title']}'", file=sys.stderr)
 
+    for note in check_time_words(
+        "\n".join([parsed.get("title") or "", parsed.get("socialCopy") or "", body_markdown]),
+        datetime.strptime(day, "%Y-%m-%d").date(),
+    ):
+        TIME_WORD_NOTES.append((out_path.stem, note))
+        print(f"  time word: {note} for '{item['title']}'", file=sys.stderr)
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
 
@@ -2376,6 +2407,59 @@ GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
 ILLEGAL_LINE_NOTES: list[tuple[str, list[str]]] = []
 # Event pages updated from a final-result piece, for the run report.
 EVENT_PAGE_NOTES: list[str] = []
+# A "#game-embed" link whose sentence disagrees with the game (players or
+# result), and date/time words that don't fit the publication date.
+BOARD_MISMATCH_NOTES: list[tuple[str, str]] = []
+TIME_WORD_NOTES: list[tuple[str, str]] = []
+
+_WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+_MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august",
+           "september", "october", "november", "december"]
+
+
+def check_time_words(text: str, published) -> list[str]:
+    """Deterministic backstop for the fact check's date rule: a weekday
+    written next to a date must be that date's weekday, and "today",
+    "tomorrow" or "yesterday" next to a weekday must fit the publication
+    date. Caught repeatedly: "Thursday" for today, "Saturday" for a round
+    already played, birthdays a day late. `published` is a date. Returns
+    notes for the run report; nothing is changed."""
+    from datetime import date, timedelta
+
+    notes = []
+    low = text.lower()
+    wd = "|".join(_WEEKDAYS)
+    mo = "|".join(_MONTHS)
+
+    def year_for(month: int) -> int:
+        # A December piece about January is next year, and the reverse.
+        if published.month >= 11 and month <= 2:
+            return published.year + 1
+        if published.month <= 2 and month >= 11:
+            return published.year - 1
+        return published.year
+
+    patterns = [
+        rf"\b({wd}),?\s+(\d{{1,2}})(?:st|nd|rd|th)?\s+({mo})\b",
+        rf"\b({wd}),?\s+({mo})\s+(\d{{1,2}})(?:st|nd|rd|th)?\b",
+    ]
+    for i, pattern in enumerate(patterns):
+        for m in re.finditer(pattern, low):
+            day_s, month_s = (m.group(2), m.group(3)) if i == 0 else (m.group(3), m.group(2))
+            month = _MONTHS.index(month_s) + 1
+            try:
+                actual = date(year_for(month), month, int(day_s))
+            except ValueError:
+                continue
+            if _WEEKDAYS[actual.weekday()] != m.group(1):
+                notes.append(f"\"{m.group(0)}\": {day_s} {month_s.title()} is a {_WEEKDAYS[actual.weekday()].title()}")
+    for word, offset in (("today", 0), ("tomorrow", 1), ("yesterday", -1)):
+        expected = _WEEKDAYS[(published + timedelta(days=offset)).weekday()]
+        for m in re.finditer(rf"\b{word},?\s+({wd})\b|\b({wd}),?\s+{word}\b", low):
+            named = m.group(1) or m.group(2)
+            if named != expected:
+                notes.append(f"\"{m.group(0)}\": {word} is {expected.title()}")
+    return notes
 
 
 def write_run_report(
@@ -2405,6 +2489,12 @@ def write_run_report(
     if GAME_LINK_NOTES:
         lines += ["", "**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):", ""]
         lines += [f"- {slug} — {', '.join(moves)}" for slug, moves in GAME_LINK_NOTES]
+    if BOARD_MISMATCH_NOTES:
+        lines += ["", "**Board and text disagree** (check which game the piece means and fix the board):", ""]
+        lines += [f"- {slug} — {note}" for slug, note in BOARD_MISMATCH_NOTES]
+    if TIME_WORD_NOTES:
+        lines += ["", "**Date or time words that don't fit the publication date** (check each):", ""]
+        lines += [f"- {slug} — {note}" for slug, note in TIME_WORD_NOTES]
     if bad_link_articles:
         lines += [
             "",
