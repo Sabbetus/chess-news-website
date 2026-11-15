@@ -1,6 +1,7 @@
 ---
 title: "Strutinskaya Perfect on 5/5 at Senior Worlds, Cramling Unbeaten in Women 50+"
 publishDate: "2026-11-09"
+publishedAt: "2026-11-09T08:08:14Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-world-senior-championships-2026-six-rounds-left-four-titles-at-stake/"
 lens: "results"

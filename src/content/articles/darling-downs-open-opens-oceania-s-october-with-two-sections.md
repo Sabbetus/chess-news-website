@@ -1,6 +1,7 @@
 ---
 title: "Toowoomba's Darling Downs Open Heads Oceania's October List"
 publishDate: "2026-11-11"
+publishedAt: "2026-11-11T07:56:24Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"

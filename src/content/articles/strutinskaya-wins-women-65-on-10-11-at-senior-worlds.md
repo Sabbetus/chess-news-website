@@ -1,6 +1,7 @@
 ---
 title: "Strutinskaya Wins Women 65+ While Pia Cramling Takes Women 50+"
 publishDate: "2026-11-15"
+publishedAt: "2026-11-15T07:58:58Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/world-senior-chess-champions-2026-crowned-in-vrnjacka-banja-serbia/"
 lens: "results"

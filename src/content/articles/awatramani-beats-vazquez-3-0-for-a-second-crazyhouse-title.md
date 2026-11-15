@@ -1,6 +1,7 @@
 ---
 title: "Awatramani Beats Vazquez 3-0 for a Second Crazyhouse Title"
 publishDate: "2026-11-08"
+publishedAt: "2026-11-08T07:55:41Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-crazyhouse-chess-championship-awatramani"
 lens: "results"

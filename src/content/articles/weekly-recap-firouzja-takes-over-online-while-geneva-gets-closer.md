@@ -2,6 +2,7 @@
 title: "Weekly Recap: Firouzja Takes Over Online While Geneva Gets Closer"
 type: "recap"
 publishDate: "2026-11-08"
+publishedAt: "2026-11-08T09:02:23Z"
 continent: "global"
 selectionScore: 0
 reviewStatus: "published"

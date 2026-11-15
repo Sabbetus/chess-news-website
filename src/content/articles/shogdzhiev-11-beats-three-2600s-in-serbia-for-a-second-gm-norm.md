@@ -1,6 +1,7 @@
 ---
 title: "Shogdzhiev, 11, Beats Three 2600s in Serbia for a Second GM Norm"
 publishDate: "2026-10-28"
+publishedAt: "2026-10-29T10:20:58Z"
 updatedDate: "2026-10-29"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/roman-shogdzhiev-second-gm-norm"

@@ -1169,3 +1169,27 @@ def test_board_is_swapped_to_the_game_the_sentence_describes(monkeypatch):
     body = "Anish Giri [beat Abhimanyu Mishra](#game-embed) in the day's Game of the Day."
     url, pgn = board_fix.matching_pair_game("https://lichess.org/embed/broadcast/t/round-8/R8/g8", draw, body)
     assert url == "https://lichess.org/embed/broadcast/t/round-7/R7/g7" and '"1-0"' in pgn
+
+
+def test_publication_time_is_stamped_only_when_plausible(tmp_path, monkeypatch):
+    # 2026-11-15: publishedAt gives feeds a real time instead of midnight UTC;
+    # a git time far from publishDate is a bulk edit's, not the publication's.
+    import stamp_publish_times as sp
+    from datetime import datetime, timezone
+
+    def article(date):
+        p = tmp_path / f"a-{date}.md"
+        p.write_text(f'---\ntitle: "x"\npublishDate: "{date}"\nreviewStatus: "published"\n---\n\nBody\n')
+        return p
+
+    now = datetime(2026, 11, 15, 9, 30, tzinfo=timezone.utc)
+    monkeypatch.setattr(sp, "git_publish_time", lambda path: None)
+    fresh = article("2026-11-15")
+    assert sp.stamp(fresh, now, dry_run=False) == "2026-11-15T09:30:00Z"
+    assert 'publishedAt: "2026-11-15T09:30:00Z"' in fresh.read_text()
+    assert sp.stamp(fresh, now, dry_run=False) is None  # idempotent
+    old = article("2026-10-01")
+    assert sp.stamp(old, now, dry_run=False) is None  # no believable time: left alone
+    assert "publishedAt" not in old.read_text()
+    monkeypatch.setattr(sp, "git_publish_time", lambda path: datetime(2026, 10, 1, 7, 55, tzinfo=timezone.utc))
+    assert sp.stamp(old, now, dry_run=False) == "2026-10-01T07:55:00Z"

@@ -1,6 +1,7 @@
 ---
 title: "Nakamura Leads Clutch Chess on 4/6 After Day One in Saint Louis"
 publishDate: "2026-10-28"
+publishedAt: "2026-10-29T10:20:58Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/clutch-chess-showdown-2026-1"
 additionalSources:

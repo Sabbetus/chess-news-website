@@ -1,7 +1,10 @@
 ---
 // Client-side search: fetches the small static index at /search-index.json
-// once (there's no backend to query on a static site) and filters it
-// locally by substring match against title/excerpt as the visitor types.
+// once (there's no backend to query on a static site) and ranks it locally as
+// the visitor types: every word of the query must start a word in the
+// title, the names an article mentions or its opening (two of three words
+// for longer queries), accents ignored, and player and event pages are
+// results too, listed first.
 ---
 
 <div class="search-box" id="searchBox">
@@ -11,7 +14,7 @@
     class="search-input"
     placeholder="Search"
     autocomplete="off"
-    aria-label="Search articles"
+    aria-label="Search articles, players and events"
   />
   <div class="search-results" id="searchResults" hidden></div>
 </div>
@@ -68,6 +71,30 @@
       results.style.top = rect.bottom + 8 + 'px';
     }
 
+    function plain(text) {
+      return text
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+    function words(text) {
+      return plain(text).match(/[a-z0-9]+/g) || [];
+    }
+    // How many of the query's words start a word in `ws` (a word of two
+    // letters or fewer must match whole -- "us" is not "used").
+    function hits(tokens, ws) {
+      var n = 0;
+      tokens.forEach(function (t) {
+        if (
+          ws.some(function (w) {
+            return t.length <= 2 ? w === t : w.indexOf(t) === 0;
+          })
+        )
+          n++;
+      });
+      return n;
+    }
+
     function render(matches, query) {
       results.innerHTML = '';
       if (!query) {
@@ -77,19 +104,24 @@
       if (matches.length === 0) {
         var empty = document.createElement('div');
         empty.className = 'search-empty';
-        empty.textContent = 'No matching articles.';
+        empty.textContent = 'No matches.';
         results.appendChild(empty);
       } else {
         matches.slice(0, 8).forEach(function (item) {
           var a = document.createElement('a');
           a.className = 'search-result';
-          a.href = '/articles/' + item.slug + '/';
+          a.href = item.u;
           var title = document.createElement('span');
           title.className = 'search-result-title';
-          title.textContent = item.title;
+          title.textContent = item.t;
           var meta = document.createElement('span');
           meta.className = 'search-result-meta';
-          meta.textContent = item.sourceName + ' · ' + formatDate(item.publishDate);
+          if (item.k === 'a') {
+            var parts = item.m.split('|');
+            meta.textContent = parts[0] + ' · ' + formatDate(parts[1]);
+          } else {
+            meta.textContent = item.m;
+          }
           a.appendChild(title);
           a.appendChild(meta);
           results.appendChild(a);
@@ -100,16 +132,33 @@
     }
 
     function search(query) {
-      var q = query.trim().toLowerCase();
-      if (!q) {
+      var tokens = words(query);
+      if (tokens.length === 0) {
         render([], '');
         return;
       }
+      var need = tokens.length >= 3 ? Math.ceil(tokens.length * 0.67) : tokens.length;
       loadIndex().then(function (data) {
-        var matches = data.filter(function (item) {
-          return item.title.toLowerCase().indexOf(q) !== -1 || item.excerpt.toLowerCase().indexOf(q) !== -1;
+        var scored = [];
+        data.forEach(function (item, order) {
+          var inTitle = hits(tokens, words(item.t));
+          var inText = hits(tokens, words(item.t + ' ' + item.x));
+          if (inText < need) return;
+          // Words in the title count most; a player or event page whose
+          // title matches outranks articles; newer articles come first
+          // among equals (the index is newest-first).
+          var score = inText * 10 + inTitle * 5 + (item.k !== 'a' && inText === tokens.length ? 40 : 0);
+          scored.push({ item: item, score: score, order: order });
         });
-        render(matches, q);
+        scored.sort(function (x, y) {
+          return y.score - x.score || x.order - y.order;
+        });
+        render(
+          scored.map(function (r) {
+            return r.item;
+          }),
+          tokens.join(' ')
+        );
       });
     }
 

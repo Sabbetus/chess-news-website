@@ -15,6 +15,11 @@ const articles = defineCollection({
     // index.astro and recaps.astro).
     type: z.enum(['article', 'recap']).default('article'),
     publishDate: z.coerce.date(),
+    // When the piece actually went live (ISO timestamp), stamped by
+    // scripts/stamp_publish_times.py on the first deploy after publishing.
+    // Feeds structured data, RSS and the news sitemap; absent on older
+    // pieces, which fall back to publishDate (midnight UTC).
+    publishedAt: z.coerce.date().optional(),
     // Set by hand when a published piece is substantively corrected, so
     // search engines see a real dateModified rather than assuming the
     // article has never been touched. Absent on anything unchanged since

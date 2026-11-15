@@ -1,6 +1,7 @@
 ---
 title: "Gopal Beats Besou to Lead Bavarian Open, Piorun Among 12 Half a Point Behind"
 publishDate: "2026-11-07"
+publishedAt: "2026-11-07T07:56:40Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r6"
 lens: "results"

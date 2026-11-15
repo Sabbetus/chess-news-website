@@ -1,24 +1,30 @@
 ---
+import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ArticleThumb from '../../components/ArticleThumb.astro';
-import TagRow from '../../components/TagRow.astro';
-import { excerptFrom } from '../../lib/excerpt';
-import { estimateReadMinutes } from '../../lib/reading';
-import { sourceLabel } from '../../lib/sources';
-import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../../lib/continent';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleThumb from '../../../components/ArticleThumb.astro';
+import TagRow from '../../../components/TagRow.astro';
+import Pager from '../../../components/Pager.astro';
+import { excerptFrom } from '../../../lib/excerpt';
+import { estimateReadMinutes } from '../../../lib/reading';
+import { sourceLabel } from '../../../lib/sources';
+import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../../../lib/continent';
 
-export async function getStaticPaths() {
-  return CONTINENT_ORDER.map((continent) => ({ params: { continent } }));
-}
+// 24 a page (Europe and Asia had passed 60 stories on one page). Page 1
+// stays at /continent/<x>/.
+export const getStaticPaths = (async ({ paginate }) => {
+  const all = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
+  return CONTINENT_ORDER.flatMap((continent) => {
+    const articles = all
+      .filter((a) => a.data.continent === continent)
+      .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+    return paginate(articles, { params: { continent }, props: { continent }, pageSize: 24 });
+  });
+}) satisfies GetStaticPaths;
 
-const { continent } = Astro.params as { continent: Continent };
+const { page, continent } = Astro.props as { page: any; continent: Continent };
 const meta = CONTINENT_META[continent];
-
-const allArticles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
-const articles = allArticles
-  .filter((a) => a.data.continent === continent)
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const articles = page.data;
 
 const description =
   meta.label === 'Global'
@@ -28,10 +34,14 @@ const description =
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
-<BaseLayout title={`${meta.label} | The Chess Herald`} description={description} activeSection="continent">
+<BaseLayout
+  title={page.currentPage === 1 ? `${meta.label} | The Chess Herald` : `${meta.label} - Page ${page.currentPage} | The Chess Herald`}
+  description={description}
+  activeSection="continent"
+>
   <header class="section-head">
     <h1>{meta.label}</h1>
-    <p>{articles.length} {articles.length === 1 ? 'story' : 'stories'}</p>
+    <p>{page.total} {page.total === 1 ? 'story' : 'stories'}</p>
   </header>
 
   {
@@ -72,6 +82,8 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
       </section>
     )
   }
+
+  <Pager page={page} label={`${meta.label} pages`} />
 </BaseLayout>
 
 <style>

@@ -1,6 +1,7 @@
 ---
 title: "Mikhail Tal at 90: The Genius Who Gave Away Everything"
 publishDate: "2026-11-10"
+publishedAt: "2026-11-10T08:16:43Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/remembering-mikhail-tal"
 lens: "people"

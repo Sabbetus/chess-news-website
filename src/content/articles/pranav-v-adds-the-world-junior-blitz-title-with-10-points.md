@@ -1,6 +1,7 @@
 ---
 title: "Pranav V Wins the World Junior Blitz Title With 10½ Points"
 publishDate: "2026-11-09"
+publishedAt: "2026-11-09T08:08:14Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/world-junior-blitz-championship-2026-pranav-v-and-kleymenova-claim-titles-in-al-ain/"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Firouzja Goes 10/11 to Win Titled Tuesday, Nakamura Second"
 publishDate: "2026-11-05"
+publishedAt: "2026-11-05T08:00:19Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/firouzja-wins-titled-tuesday-november-3-2026"
 lens: "results"

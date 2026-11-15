@@ -1,6 +1,7 @@
 ---
 title: "Keymer Among 24 as Total Chess Starts Its Budapest Pilot"
 publishDate: "2026-11-10"
+publishedAt: "2026-11-10T08:16:43Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/total-chess-budapest-2026-format"
 lens: "results"

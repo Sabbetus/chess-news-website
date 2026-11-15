@@ -1,6 +1,7 @@
 ---
 title: "Eugenio Torre at 75: The Self-Taught Pioneer From Iloilo"
 publishDate: "2026-11-05"
+publishedAt: "2026-11-05T08:00:19Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/eugenio-torre-75-years-birthday"
 lens: "people"

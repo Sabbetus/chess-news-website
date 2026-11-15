@@ -1,6 +1,7 @@
 ---
 title: "Carlsen Wins the Total Chess Blitz Swiss on 7/9, Unbeaten"
 publishDate: "2026-11-11"
+publishedAt: "2026-11-11T07:56:24Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-1"
 lens: "results"

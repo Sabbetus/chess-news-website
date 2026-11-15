@@ -1,6 +1,7 @@
 ---
 title: "Movahed Beats Leader Yakubboev to Win Freestyle Friday"
 publishDate: "2026-10-31"
+publishedAt: "2026-10-31T12:31:24Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/movahed-wins-freestyle-friday-october-30-2026"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Lhamsuren Myagmarsuren, Mongolian Geologist Who Met Fischer, Dies at 88"
 publishDate: "2026-10-31"
+publishedAt: "2026-10-31T12:31:24Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/lhamsuren-myagmarsuren-1938-2026"
 lens: "people"

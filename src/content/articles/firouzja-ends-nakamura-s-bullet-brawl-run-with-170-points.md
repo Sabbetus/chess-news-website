@@ -1,6 +1,7 @@
 ---
 title: "Firouzja Ends Nakamura's Seven-Win Bullet Brawl Streak"
 publishDate: "2026-11-02"
+publishedAt: "2026-11-02T11:14:21Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/alireza-firouzja-wins-bullet-brawl-oct-31-2026"
 lens: "results"

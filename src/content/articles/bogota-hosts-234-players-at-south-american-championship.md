@@ -1,6 +1,7 @@
 ---
 title: "Bogota Hosts 234 Players at South American Championship"
 publishDate: "2026-11-07"
+publishedAt: "2026-11-07T07:56:40Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"

@@ -1,6 +1,7 @@
 ---
 title: "Sindarov Leads Gukesh by 72 Points on the November FIDE List"
 publishDate: "2026-11-01"
+publishedAt: "2026-11-01T09:38:09Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/november-2026-fide-rating-list"
 lens: "results"

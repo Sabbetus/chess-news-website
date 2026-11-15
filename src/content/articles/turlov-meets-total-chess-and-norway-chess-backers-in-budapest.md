@@ -1,6 +1,7 @@
 ---
 title: "Turlov Meets Total Chess and Norway Chess Backers in Budapest"
 publishDate: "2026-11-12"
+publishedAt: "2026-11-12T08:33:16Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-president-timur-turlov-holds-meetings-in-budapest/"
 lens: "money-angle"

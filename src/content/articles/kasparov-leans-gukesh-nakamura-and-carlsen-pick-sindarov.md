@@ -1,6 +1,7 @@
 ---
 title: "Kasparov Leans Toward Gukesh, Nakamura and Carlsen Back Sindarov"
 publishDate: "2026-11-11"
+publishedAt: "2026-11-11T07:56:24Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/gukesh-sindarov-predictions-kasparov-nakamura"
 lens: "people"

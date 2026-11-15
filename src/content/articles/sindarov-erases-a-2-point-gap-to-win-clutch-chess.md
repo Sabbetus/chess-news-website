@@ -1,6 +1,7 @@
 ---
 title: "Sindarov Erases a 2½-Point Gap to Win Clutch Chess"
 publishDate: "2026-10-30"
+publishedAt: "2026-10-30T10:10:24Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/clutch-chess-showdown-2026-3"
 lens: "results"

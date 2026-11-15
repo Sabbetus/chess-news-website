@@ -1,6 +1,7 @@
 ---
 title: "Speed Chess Championship XI: Carlsen and Nakamura Tied at Five Titles"
 publishDate: "2026-11-04"
+publishedAt: "2026-11-04T07:55:35Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/announcing-speed-chess-championship-2026"
 lens: "historical-parallel"

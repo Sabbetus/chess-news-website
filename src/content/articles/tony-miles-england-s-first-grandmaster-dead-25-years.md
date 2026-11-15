@@ -1,6 +1,7 @@
 ---
 title: "Tony Miles, England's First Grandmaster, Dead 25 Years"
 publishDate: "2026-11-13"
+publishedAt: "2026-11-13T07:54:41Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/anthony-miles-25-years-death"
 lens: "people"

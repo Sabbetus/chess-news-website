@@ -1,6 +1,7 @@
 ---
 title: "Istanbul Gets the 2026 World Rapid and Blitz, Carlsen Holds Both Titles"
 publishDate: "2026-10-30"
+publishedAt: "2026-10-30T10:10:24Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/istanbul-to-host-2026-world-rapid-blitz-championships"
 lens: "results"

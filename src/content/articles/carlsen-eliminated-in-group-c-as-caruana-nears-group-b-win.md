@@ -1,6 +1,7 @@
 ---
 title: "Carlsen Eliminated in Group C as Caruana Nears Group B Win"
 publishDate: "2026-11-15"
+publishedAt: "2026-11-15T07:58:58Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-5"
 lens: "results"
@@ -65,4 +66,4 @@ Maxime Vachier-Lagrave still tops the group only because of his second place in 
 
 Wesley So beat Vaishali Rameshbabu twice and is not quite out of it. He also criticized the 45+30 time control on social media, writing that it feels "more like blitz game than classical chess." The final-round pairings are Assaubayeva against Vachier-Lagrave, Arjun against Vaishali, and Niemann against So.
 
-The final group round starts today, Sunday, November 15, at 9 a.m. ET. The event runs through November 21 as a trial for the 2027 event that will crown the first FIDE World Combined Champion.
+The final group round starts today, Sunday, November 15, at 9 a.m. ET. The event runs through November 20 as a trial for the 2027 event that will crown the first FIDE World Combined Champion.

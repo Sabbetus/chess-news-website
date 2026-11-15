@@ -1,6 +1,7 @@
 ---
 title: "Manchester City Open in Coimbatore Draws 403 Players"
 publishDate: "2026-11-03"
+publishedAt: "2026-11-03T09:50:27Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"

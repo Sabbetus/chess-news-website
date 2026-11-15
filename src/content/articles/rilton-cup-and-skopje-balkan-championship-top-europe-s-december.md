@@ -1,6 +1,7 @@
 ---
 title: "Rilton Cup and Skopje Balkan Championship Top Europe's December"
 publishDate: "2026-11-14"
+publishedAt: "2026-11-14T07:55:43Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"

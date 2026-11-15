@@ -1,6 +1,7 @@
 ---
 title: "Carlsen and Abdusattorov Prepare Together for Total Chess"
 publishDate: "2026-11-01"
+publishedAt: "2026-11-01T09:38:09Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/carlsen-trains-with-abdusattorov-in-spain-ahead-of-total-chess-debut"
 lens: "results"

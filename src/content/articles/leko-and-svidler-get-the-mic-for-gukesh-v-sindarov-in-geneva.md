@@ -1,6 +1,7 @@
 ---
 title: "Leko and Svidler Get the Mic for Gukesh v Sindarov in Geneva"
 publishDate: "2026-11-06"
+publishedAt: "2026-11-06T07:57:33Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-commentators"
 lens: "people"

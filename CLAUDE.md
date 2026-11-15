@@ -297,6 +297,21 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-15, site (user's call, from the audit): footer "Follow" row (the
+  profile URLs live in src/lib/social.ts; a platform with an empty URL is
+  left out) and RSS link; share buttons (Facebook, X, Threads, copy link,
+  the phone's share sheet) on every article; `publishedAt` stamped on
+  publish by scripts/stamp_publish_times.py (run by deploy.yml before each
+  build) and used by JSON-LD, RSS and the news sitemap; search ranks words
+  across title, mentioned player/event names and the opening, and lists
+  player and event pages; lens and continent pages paginate at 24;
+  the mobile top menu wraps instead of scrolling sideways. The Total Chess
+  World Championship Tour has an event page (src/content/events): the
+  morning review keeps its "Next" box current (the Budapest pilot ends
+  20 November; the official site says 10-20, Chess.com said 21), adds the
+  pilot's winner when we publish the final result, and sets the next
+  edition when dates are announced. Also: the request User-Agent headers no
+  longer carry a personal email (the site's contact page instead).
 - 2026-11-15, pipeline (user's call, after asking how to cut resets): the
   fact check now gets the event's Lichess broadcast record (last rounds'
   results with colours, next round's pairings; all sections of a sectioned

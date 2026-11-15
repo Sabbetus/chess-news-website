@@ -4,6 +4,7 @@ import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
 import SearchBox from '../components/SearchBox.astro';
 import { LENS_META, LENS_ORDER, LENS_SLUGS, type Lens } from '../lib/lens';
+import { SOCIAL } from '../lib/social';
 
 interface Props {
   title: string;
@@ -301,6 +302,10 @@ const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
           <a href="/about/">About</a><span class="sep">&middot;</span><a href="/privacy/">Privacy</a><span
             class="sep">&middot;</span
           ><a href="/contact/">Contact</a>
+        </span>
+        <span class="footer-follow">
+          Follow:
+          {SOCIAL.filter((s) => s.url).map((s) => <><a href={s.url} target="_blank" rel="noopener me">{s.label}</a><span class="sep">&middot;</span></>)}<a href="/rss.xml" type="application/rss+xml">RSS</a>
         </span>
       </footer>
     </div>

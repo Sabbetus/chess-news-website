@@ -1,6 +1,7 @@
 ---
 title: "Vasily Panov: The Opening Theorist Who Denounced Keres"
 publishDate: "2026-11-02"
+publishedAt: "2026-11-02T11:14:21Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/vasily-panov-influential-theoretician-dark-side"
 lens: "historical-parallel"

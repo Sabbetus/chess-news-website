@@ -1,6 +1,7 @@
 ---
 title: "Andreikin Wins Two 3 0 Thursdays, Xiong Stops the Sweep"
 publishDate: "2026-11-14"
+publishedAt: "2026-11-14T07:55:43Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/andreikin-nearly-sweeps-3-0-thursday-tournaments"
 lens: "results"

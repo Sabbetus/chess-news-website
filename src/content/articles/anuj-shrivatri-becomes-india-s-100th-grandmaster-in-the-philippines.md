@@ -1,6 +1,7 @@
 ---
 title: "Anuj Shrivatri Becomes India's 100th GM, 38 Years After Anand"
 publishDate: "2026-11-10"
+publishedAt: "2026-11-10T08:16:43Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/anuj-shrivatri-india-100th-grandmaster"
 lens: "historical-parallel"

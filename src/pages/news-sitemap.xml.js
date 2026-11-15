@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { publishedAt } from '../lib/publishedAt';
 
 // Google News sitemap: articles published in the last 48 hours only (Google's
 // rule). Built with the site, and the site rebuilds at least daily when the
@@ -11,8 +12,8 @@ const escape = (s) =>
 export async function GET(context) {
   const cutoff = Date.now() - WINDOW_MS;
   const articles = (await getCollection('articles', ({ data }) => data.reviewStatus === 'published'))
-    .filter((a) => a.data.publishDate.valueOf() >= cutoff)
-    .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+    .filter((a) => publishedAt(a).valueOf() >= cutoff)
+    .sort((a, b) => publishedAt(b).valueOf() - publishedAt(a).valueOf());
 
   const urls = articles
     .map(
@@ -20,7 +21,7 @@ export async function GET(context) {
     <loc>${new URL(`/articles/${a.slug}/`, context.site).toString()}</loc>
     <news:news>
       <news:publication><news:name>The Chess Herald</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>${a.data.publishDate.toISOString()}</news:publication_date>
+      <news:publication_date>${publishedAt(a).toISOString()}</news:publication_date>
       <news:title>${escape(a.data.title)}</news:title>
     </news:news>
   </url>`

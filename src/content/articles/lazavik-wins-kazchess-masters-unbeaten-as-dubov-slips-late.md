@@ -1,6 +1,7 @@
 ---
 title: "Lazavik Wins KazChess Masters Unbeaten as Dubov Slips Late"
 publishDate: "2026-11-04"
+publishedAt: "2026-11-04T07:55:35Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r9-2"
 lens: "results"

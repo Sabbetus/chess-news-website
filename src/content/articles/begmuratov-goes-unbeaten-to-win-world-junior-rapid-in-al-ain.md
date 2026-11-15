@@ -1,6 +1,7 @@
 ---
 title: "Begmuratov Goes Unbeaten to Win World Junior Rapid in Al Ain"
 publishDate: "2026-11-07"
+publishedAt: "2026-11-07T07:56:40Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/world-junior-rapid-championship-2026-khumoyun-begmuratov-and-eline-roebers-capture-titles/"
 lens: "results"

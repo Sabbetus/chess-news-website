@@ -50,7 +50,7 @@ Nakamura and Abdusattorov show the opposite pattern: modest rapid ratings (2738 
 
 The rating arrives alongside the Total Chess World Championship Tour, built by Norway Chess and approved by FIDE, which aims to crown a FIDE World Combined Champion across fast classic, rapid and blitz. Erling Haaland joined as a strategic investor in Norway Chess through Chess Mates, a company set up with businessman Morten Borge.
 
-A 24-player pilot runs in Budapest from 10 to 21 November, with Carlsen, Caruana, So, Vincent Keymer, Abdusattorov, Firouzja and Praggnanandhaa among the field. It starts with four groups of six playing double round-robins at 45 minutes plus 30 seconds per move.
+A 24-player pilot runs in Budapest from 10 to 20 November, with Carlsen, Caruana, So, Vincent Keymer, Abdusattorov, Firouzja and Praggnanandhaa among the field. It starts with four groups of six playing double round-robins at 45 minutes plus 30 seconds per move.
 
 The knockout stage mixes four blitz games, two rapid games and one fast classic game per match, with weighted scoring. The first full season is planned for 2027, with four tournaments.
 

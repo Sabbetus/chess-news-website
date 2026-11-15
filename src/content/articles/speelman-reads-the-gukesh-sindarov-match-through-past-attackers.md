@@ -1,6 +1,7 @@
 ---
 title: "Speelman Reads the Gukesh-Sindarov Match Through Past Attackers"
 publishDate: "2026-11-03"
+publishedAt: "2026-11-03T09:50:27Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/speelman-agony-245"
 lens: "historical-parallel"

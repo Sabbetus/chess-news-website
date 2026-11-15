@@ -1,6 +1,7 @@
 ---
 title: "Norm Invitationals and a 142-Player Thanksgiving Open in October"
 publishDate: "2026-11-05"
+publishedAt: "2026-11-05T08:00:19Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"

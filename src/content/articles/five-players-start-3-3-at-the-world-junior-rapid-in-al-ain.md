@@ -1,6 +1,7 @@
 ---
 title: "Five Lead the Open in Al Ain, Roebers Half a Point Off in the Girls Section"
 publishDate: "2026-11-04"
+publishedAt: "2026-11-04T07:55:35Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/continental-chess-presidents-inaugurate-world-junior-rapid-blitz-championships-in-al-ain/"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Dubov Takes Sole Lead at KazChess Masters on 4½/6"
 publishDate: "2026-11-01"
+publishedAt: "2026-11-01T09:38:09Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r6"
 lens: "results"

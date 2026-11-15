@@ -2,6 +2,7 @@
 title: "Weekly Recap: Total Chess Takes Over Budapest as Sindarov and Gukesh Near Geneva"
 type: "recap"
 publishDate: "2026-11-15"
+publishedAt: "2026-11-15T07:58:58Z"
 continent: "global"
 selectionScore: 0
 reviewStatus: "published"

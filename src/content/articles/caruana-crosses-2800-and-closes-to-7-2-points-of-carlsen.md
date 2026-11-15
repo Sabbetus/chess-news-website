@@ -1,6 +1,7 @@
 ---
 title: "Caruana Crosses 2800 and Closes to 7.2 Points of Carlsen"
 publishDate: "2026-11-14"
+publishedAt: "2026-11-14T07:55:43Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-4"
 lens: "results"

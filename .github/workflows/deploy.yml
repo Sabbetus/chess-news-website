@@ -97,6 +97,21 @@ jobs:
           git push
           echo "refreshed=true" >> "$GITHUB_OUTPUT"
 
+      # Records when each newly published article went live, so structured
+      # data, the RSS feed and the news sitemap carry a real time instead of
+      # midnight UTC (scripts/stamp_publish_times.py). Idempotent, and a
+      # no-op on all but the first deploy after an article is published.
+      - name: Stamp publication times
+        run: |
+          python scripts/stamp_publish_times.py
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/content/articles/; then exit 0; fi
+          git add src/content/articles/
+          git commit -m "chore: stamp publication times"
+          git pull --rebase --autostash -q || true
+          git push || echo "::warning::Could not push the publication-time stamps; they are in this build only."
+
       - name: Build Astro site
         run: npm run build
 

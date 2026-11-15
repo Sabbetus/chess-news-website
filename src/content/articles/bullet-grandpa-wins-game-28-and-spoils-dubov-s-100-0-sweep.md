@@ -1,6 +1,7 @@
 ---
 title: "Bullet Grandpa Wins Game 28 and Spoils Dubov's 100-0 Sweep"
 publishDate: "2026-11-08"
+publishedAt: "2026-11-08T07:55:41Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/bullet-grandpa-wins-2026-100-project-season-1"
 lens: "results"

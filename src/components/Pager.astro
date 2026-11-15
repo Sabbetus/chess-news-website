@@ -1,0 +1,67 @@
+---
+// Newer / Older links under a paginated list (Astro's paginate() page object).
+interface Props {
+  page: { url: { prev?: string; next?: string }; currentPage: number; lastPage: number };
+  label: string;
+}
+const { page, label } = Astro.props;
+---
+
+{
+  page.lastPage > 1 && (
+    <nav class="pager" aria-label={label}>
+      {page.url.prev ? (
+        <a class="pager-link" href={page.url.prev} rel="prev">&larr; Newer</a>
+      ) : (
+        <span class="pager-link disabled">&larr; Newer</span>
+      )}
+      <span class="pager-status">Page {page.currentPage} of {page.lastPage}</span>
+      {page.url.next ? (
+        <a class="pager-link" href={page.url.next} rel="next">Older &rarr;</a>
+      ) : (
+        <span class="pager-link disabled">Older &rarr;</span>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 40px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+  .pager-link {
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+  .pager-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .pager-link.disabled {
+    color: var(--ink-soft);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .pager-status {
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 11.5px;
+  }
+  @media (max-width: 640px) {
+    .pager {
+      padding: 24px 0 34px;
+    }
+    .pager-link {
+      padding: 8px 12px;
+    }
+  }
+</style>

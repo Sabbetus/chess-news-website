@@ -1,6 +1,7 @@
 ---
 title: "Ding Liren Falls to Xiao Tong in Blitz at Chinese Rapid"
 publishDate: "2026-11-05"
+publishedAt: "2026-11-05T08:00:19Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/chinese-rapid-championship-2026-quarterfinals"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Football Scoring Leaves Carlsen and Giri Behind After Two Draws"
 publishDate: "2026-11-12"
+publishedAt: "2026-11-12T08:33:16Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-2"
 lens: "results"

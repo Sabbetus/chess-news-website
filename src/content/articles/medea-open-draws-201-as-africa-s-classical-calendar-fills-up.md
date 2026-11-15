@@ -1,6 +1,7 @@
 ---
 title: "Medea Open Draws 201 to Top Africa's October List"
 publishDate: "2026-11-09"
+publishedAt: "2026-11-09T08:08:14Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"

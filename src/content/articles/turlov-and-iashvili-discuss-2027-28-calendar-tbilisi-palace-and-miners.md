@@ -1,6 +1,7 @@
 ---
 title: "Turlov and Iashvili Discuss 2027-28 Calendar, Tbilisi Palace and Miners"
 publishDate: "2026-11-04"
+publishedAt: "2026-11-04T07:55:35Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-president-timur-turlov-meets-akaki-iashvili-to-discuss-future-events-and-chess-development/"
 lens: "people"

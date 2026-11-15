@@ -1,6 +1,7 @@
 ---
 title: "Besou, 15, Joins the Tegernsee Leaders, Top Seed Svane Half a Point Back"
 publishDate: "2026-11-05"
+publishedAt: "2026-11-05T08:00:19Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r5"
 lens: "results"

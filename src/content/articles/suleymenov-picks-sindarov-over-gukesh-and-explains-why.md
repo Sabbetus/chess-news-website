@@ -1,6 +1,7 @@
 ---
 title: "Suleymenov Picks Sindarov Over Gukesh, and Explains Why"
 publishDate: "2026-11-06"
+publishedAt: "2026-11-06T07:57:33Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/alisher-suleymenov-interview-wch"
 lens: "people"

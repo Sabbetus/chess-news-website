@@ -1,0 +1,114 @@
+---
+import { shareLinks } from '../lib/social';
+
+interface Props {
+  url: string;
+  title: string;
+}
+const { url, title } = Astro.props;
+const links = shareLinks(url, title);
+---
+
+<div class="share" data-share-url={url} data-share-title={title}>
+  <span class="share-label">Share</span>
+  {
+    links.map((l) => (
+      <a class="share-btn" href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${l.label}`}>
+        {l.label}
+      </a>
+    ))
+  }
+  <button type="button" class="share-btn share-native" hidden>Share…</button>
+  <button type="button" class="share-btn share-copy">Copy link</button>
+  <span class="share-done" role="status" aria-live="polite"></span>
+</div>
+
+<script is:inline>
+  (function () {
+    var box = document.querySelector('.share');
+    if (!box) return;
+    var url = box.getAttribute('data-share-url');
+    var title = box.getAttribute('data-share-title');
+    var done = box.querySelector('.share-done');
+    var native = box.querySelector('.share-native');
+    var copy = box.querySelector('.share-copy');
+    function say(msg) {
+      done.textContent = msg;
+      setTimeout(function () {
+        done.textContent = '';
+      }, 2200);
+    }
+    // The phone's own share sheet, where the browser has one.
+    if (navigator.share) {
+      native.hidden = false;
+      native.addEventListener('click', function () {
+        navigator.share({ title: title, url: url }).catch(function () {});
+      });
+    }
+    copy.addEventListener('click', function () {
+      function fallback() {
+        var input = document.createElement('input');
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        try {
+          document.execCommand('copy');
+          say('Link copied');
+        } catch (e) {
+          say('Press and hold to copy');
+        }
+        document.body.removeChild(input);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () {
+          say('Link copied');
+        }, fallback);
+      } else {
+        fallback();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .share {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 30px 0 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .share-label {
+    margin-right: 4px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 11.5px;
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 13px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--paper-raised);
+    color: var(--ink);
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .share-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .share-btn[hidden] {
+    display: none;
+  }
+  .share-done {
+    color: var(--ink-soft);
+    font-size: 11.5px;
+  }
+</style>

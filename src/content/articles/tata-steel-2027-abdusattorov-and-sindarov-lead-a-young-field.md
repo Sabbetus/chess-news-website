@@ -1,6 +1,7 @@
 ---
 title: "Tata Steel 2027: Abdusattorov and Sindarov Lead a Young Field"
 publishDate: "2026-11-11"
+publishedAt: "2026-11-11T07:56:24Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/abdusattorov-sindarov-top-tata-steel-chess-2027-field"
 lens: "results"

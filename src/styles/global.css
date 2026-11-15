@@ -549,20 +549,18 @@ nav.sub-sections a.on {
   .eyebrow-short {
     display: inline;
   }
+  /* Wrapped onto a few centred rows, not a sideways scroller: with eight
+     sections a scroller hid Money, Controversy, OTB Tournaments and All
+     Articles off the right edge with nothing to hint they existed. */
   nav.sections {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 18px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  nav.sections::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 18px;
+    padding: 10px 0;
   }
   nav.sections a {
-    flex: 0 0 auto;
     white-space: nowrap;
+    padding: 6px 2px;
   }
 }
 
@@ -613,6 +611,27 @@ footer.site-footer .partners .sep,
 footer.site-footer .footer-contact .sep {
   color: var(--rule);
   margin: 0 0.6em;
+}
+footer.site-footer .footer-follow {
+  flex-basis: 100%;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  footer.site-footer .footer-follow {
+    text-align: left;
+  }
+}
+footer.site-footer .footer-follow .sep {
+  color: var(--rule);
+  margin: 0 0.6em;
+}
+footer.site-footer .footer-follow a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+footer.site-footer .footer-follow a:hover {
+  border-color: var(--accent);
 }
 footer.site-footer .footer-contact a {
   color: var(--accent);

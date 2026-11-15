@@ -1,6 +1,7 @@
 ---
 title: "Caruana Leads Group B on 10 Points After Sweeping Praggnanandhaa"
 publishDate: "2026-11-13"
+publishedAt: "2026-11-13T07:54:41Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-3"
 lens: "results"

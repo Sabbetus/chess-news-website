@@ -7,12 +7,14 @@ import TagRow from '../../components/TagRow.astro';
 import LichessGame from '../../components/LichessGame.astro';
 import GameViewer from '../../components/GameViewer.astro';
 import TweetQuotes from '../../components/TweetQuotes.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
 import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
 import { CONTINENT_META } from '../../lib/continent';
 import { similarArticles } from '../../lib/similar';
 import { articleEntities } from '../../lib/hubs';
+import { publishedAt } from '../../lib/publishedAt';
 
 // Our own PGN files for GameViewer, keyed by file name (see gamePgn in config.ts).
 const GAMES: Record<string, string> = Object.fromEntries(
@@ -112,12 +114,12 @@ const jsonLd = [
     ...(entities.about.length ? { about: entities.about } : {}),
     ...(entities.mentions.length ? { mentions: entities.mentions } : {}),
     description,
-    datePublished: article.data.publishDate.toISOString(),
+    datePublished: publishedAt(article).toISOString(),
     // Falls back to the publish date rather than being omitted: for a piece
     // never corrected since publication, those genuinely are the same
     // moment, and search engines treat a missing dateModified as unknown
     // freshness rather than inferring it.
-    dateModified: (article.data.updatedDate ?? article.data.publishDate).toISOString(),
+    dateModified: (article.data.updatedDate ?? publishedAt(article)).toISOString(),
     mainEntityOfPage: pageURL,
     url: pageURL,
     ...(jsonLdImage ? { image: [new URL(jsonLdImage.src, Astro.site).toString()] } : {}),
@@ -176,7 +178,7 @@ const jsonLd = [
   description={description}
   activeSection={activeSection}
   articleMeta={{
-    publishedTime: article.data.publishDate.toISOString(),
+    publishedTime: publishedAt(article).toISOString(),
     source: article.data.sourceName,
   }}
   image={ogImageUrl}
@@ -218,6 +220,8 @@ const jsonLd = [
     )}
 
     {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
+
+    <ShareButtons url={pageURL} title={article.data.title} />
 
     <p class="source-callout">
       <span class="byline-credit">By <a href="/about/#ai-and-people">Claude Henry</a></span><br />

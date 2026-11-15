@@ -1,6 +1,7 @@
 ---
 title: "Yakubboev Wins Freestyle Friday With 9.5, Nepomniachtchi Second"
 publishDate: "2026-11-07"
+publishedAt: "2026-11-07T07:56:40Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/yakubboev-wins-freestyle-friday-november-6-2026"
 lens: "results"

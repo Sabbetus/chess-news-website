@@ -1,6 +1,7 @@
 ---
 title: "Praggnanandhaa Goes From Last to First on Day Two of Clutch Chess"
 publishDate: "2026-10-29"
+publishedAt: "2026-10-29T10:29:15Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-clutch-chess-champions-showdown-day-2"
 lens: "results"

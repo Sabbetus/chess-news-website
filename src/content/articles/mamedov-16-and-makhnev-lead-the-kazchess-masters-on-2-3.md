@@ -1,6 +1,7 @@
 ---
 title: "Mamedov, 16, and Makhnev Lead the KazChess Masters on 2½/3"
 publishDate: "2026-10-29"
+publishedAt: "2026-10-29T10:29:15Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/kazchess-masters-almaty-2026-r3"
 lens: "results"

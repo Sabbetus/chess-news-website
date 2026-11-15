@@ -1,6 +1,7 @@
 ---
 title: "Yu Yangyi Wins Armageddon to Keep Chinese Rapid Title"
 publishDate: "2026-11-09"
+publishedAt: "2026-11-09T08:08:14Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/chinese-rapid-championship-2026-final"
 lens: "results"

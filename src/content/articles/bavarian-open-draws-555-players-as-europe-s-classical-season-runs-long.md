@@ -1,6 +1,7 @@
 ---
 title: "Bavarian Open Draws 555 Players to Close Europe's October"
 publishDate: "2026-11-01"
+publishedAt: "2026-11-01T09:38:09Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/europe/"
 lens: "tournament-db"

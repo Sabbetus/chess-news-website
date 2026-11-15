@@ -1,6 +1,7 @@
 ---
 title: "Sasikiran Wins Bavarian Open as Svane Takes Second on Tiebreak"
 publishDate: "2026-11-09"
+publishedAt: "2026-11-09T08:08:14Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r9"
 lens: "results"

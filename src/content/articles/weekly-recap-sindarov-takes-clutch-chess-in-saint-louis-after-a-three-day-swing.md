@@ -2,6 +2,7 @@
 title: "Weekly Recap: Sindarov Takes Clutch Chess in Saint Louis After a Three-Day Swing"
 type: "recap"
 publishDate: "2026-11-01"
+publishedAt: "2026-11-01T09:38:09Z"
 continent: "global"
 selectionScore: 0
 reviewStatus: "published"

@@ -1,6 +1,7 @@
 ---
 title: "Sasikiran Catches Gopal on 6/7 at Tegernsee, Svane Among 21 on 5½"
 publishDate: "2026-11-08"
+publishedAt: "2026-11-08T07:55:41Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/tegernsee-open-2026-r7"
 lens: "results"
