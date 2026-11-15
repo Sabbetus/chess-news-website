@@ -531,9 +531,13 @@ nav.sub-sections a.on {
     justify-content: flex-start;
     overflow-x: auto;
     scrollbar-width: none;
+    /* Clear of the Menu button above: a stray tap landed on it. */
+    margin-top: 14px;
+    padding-bottom: 14px;
   }
   nav.sub-sections a {
     flex: 0 0 auto;
+    padding: 8px 4px;
     white-space: nowrap;
   }
 }
@@ -599,7 +603,7 @@ nav.sub-sections a.on {
   cursor: pointer;
   color: var(--ink);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-size: 14.5px;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -611,7 +615,7 @@ nav.sub-sections a.on {
   font-weight: 500;
 }
 .nav-toggle .caret {
-  font-size: 10px;
+  font-size: 14px;
   transition: transform 0.15s ease;
 }
 .nav-toggle[aria-expanded='true'] .caret {
@@ -668,24 +672,34 @@ footer.site-footer .footer-contact .sep {
 }
 footer.site-footer .footer-follow {
   flex-basis: 100%;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
 }
 @media (max-width: 640px) {
   footer.site-footer .footer-follow {
-    text-align: left;
+    justify-content: flex-start;
   }
 }
-footer.site-footer .footer-follow .sep {
-  color: var(--rule);
-  margin: 0 0.6em;
-}
 footer.site-footer .footer-follow a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--ink-soft);
 }
 footer.site-footer .footer-follow a:hover {
+  color: var(--accent);
   border-color: var(--accent);
+}
+footer.site-footer .footer-follow svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
 }
 footer.site-footer .footer-contact a {
   color: var(--accent);

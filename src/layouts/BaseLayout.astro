@@ -4,7 +4,7 @@ import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
 import SearchBox from '../components/SearchBox.astro';
 import { LENS_META, LENS_ORDER, LENS_SLUGS, type Lens } from '../lib/lens';
-import { SOCIAL } from '../lib/social';
+import { SOCIAL, ICON_PATHS } from '../lib/social';
 
 interface Props {
   title: string;
@@ -316,7 +316,6 @@ const currentLabel =
       </main>
 
       <footer class="site-footer">
-        <span>The Chess Herald</span>
         <span class="partners">
           Partners:
           <a href="https://nordicchess.fi" target="_blank" rel="noopener">Nordic Chess Festival</a><span class="sep"
@@ -328,9 +327,15 @@ const currentLabel =
             class="sep">&middot;</span
           ><a href="/contact/">Contact</a>
         </span>
-        <span class="footer-follow">
-          Follow:
-          {SOCIAL.filter((s) => s.url).map((s) => <><a href={s.url} target="_blank" rel="noopener me">{s.label}</a><span class="sep">&middot;</span></>)}<a href="/rss.xml" type="application/rss+xml">RSS</a>
+        <span class="footer-follow" aria-label="Follow The Chess Herald">
+          {SOCIAL.filter((s) => s.url).map((s) => (
+            <a href={s.url} target="_blank" rel="noopener me" aria-label={s.label} title={s.label}>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d={ICON_PATHS[s.id]} /></svg>
+            </a>
+          ))}
+          <a href="/rss.xml" type="application/rss+xml" aria-label="RSS feed" title="RSS feed">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d={ICON_PATHS.rss} /></svg>
+          </a>
         </span>
       </footer>
     </div>

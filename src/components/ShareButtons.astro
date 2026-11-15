@@ -1,25 +1,25 @@
 ---
-import { shareLinks } from '../lib/social';
-
 interface Props {
   url: string;
   title: string;
 }
 const { url, title } = Astro.props;
-const links = shareLinks(url, title);
 ---
 
 <div class="share" data-share-url={url} data-share-title={title}>
-  <span class="share-label">Share</span>
-  {
-    links.map((l) => (
-      <a class="share-btn" href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${l.label}`}>
-        {l.label}
-      </a>
-    ))
-  }
-  <button type="button" class="share-btn share-native" hidden>Share…</button>
-  <button type="button" class="share-btn share-copy">Copy link</button>
+  <button type="button" class="share-btn share-native" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+    </svg>
+    Share
+  </button>
+  <button type="button" class="share-btn share-copy">
+    <svg class="ic-link" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" />
+    </svg>
+    <svg class="ic-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+    <span class="share-copy-text">Copy</span>
+  </button>
   <span class="share-done" role="status" aria-live="polite"></span>
 </div>
 
@@ -32,9 +32,16 @@ const links = shareLinks(url, title);
     var done = box.querySelector('.share-done');
     var native = box.querySelector('.share-native');
     var copy = box.querySelector('.share-copy');
-    function say(msg) {
-      done.textContent = msg;
-      setTimeout(function () {
+    var label = copy.querySelector('.share-copy-text');
+    var timer;
+    function say(ok) {
+      clearTimeout(timer);
+      copy.classList.toggle('copied', ok);
+      label.textContent = ok ? 'Copied' : 'Copy';
+      done.textContent = ok ? 'Link copied' : 'Press and hold the address bar to copy';
+      timer = setTimeout(function () {
+        copy.classList.remove('copied');
+        label.textContent = 'Copy';
         done.textContent = '';
       }, 2200);
     }
@@ -51,17 +58,16 @@ const links = shareLinks(url, title);
         input.value = url;
         document.body.appendChild(input);
         input.select();
+        var ok = false;
         try {
-          document.execCommand('copy');
-          say('Link copied');
-        } catch (e) {
-          say('Press and hold to copy');
-        }
+          ok = document.execCommand('copy');
+        } catch (e) {}
         document.body.removeChild(input);
+        say(ok);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function () {
-          say('Link copied');
+          say(true);
         }, fallback);
       } else {
         fallback();
@@ -75,40 +81,68 @@ const links = shareLinks(url, title);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    margin: 30px 0 4px;
+    gap: 10px;
+    margin: 26px 0 0;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-  }
-  .share-label {
-    margin-right: 4px;
-    color: var(--ink-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 11.5px;
+    font-size: 12.5px;
   }
   .share-btn {
     display: inline-flex;
     align-items: center;
-    min-height: 34px;
-    padding: 0 13px;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 16px;
     border: 1px solid var(--rule);
-    border-radius: 4px;
+    border-radius: 999px;
     background: var(--paper-raised);
     color: var(--ink);
     font: inherit;
-    text-decoration: none;
+    letter-spacing: 0.04em;
     cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
-  .share-btn:hover {
+  .share-native {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .share-native:hover {
+    filter: brightness(1.08);
+  }
+  .share-copy:hover {
     color: var(--accent);
     border-color: var(--accent);
+  }
+  .share-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   .share-btn[hidden] {
     display: none;
   }
+  .ic-check {
+    display: none;
+  }
+  .share-copy.copied {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .share-copy.copied .ic-link {
+    display: none;
+  }
+  .share-copy.copied .ic-check {
+    display: block;
+  }
   .share-done {
-    color: var(--ink-soft);
-    font-size: 11.5px;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
   }
 </style>
