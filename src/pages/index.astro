@@ -240,7 +240,8 @@ const jsonLd = [
   .lead {
     padding: 34px 0 24px;
   }
-  /* flex + space-between, not grid -- deliberately: lead-main and
+  /* lead-main 620px (was 671; user's call 2026-11-16: the photo ran far
+     below the Latest box). flex + space-between, not grid -- deliberately: lead-main and
      issue-index both get a FIXED desktop width (671px / 330px, the exact
      sizes the earlier "shrink the photo" and "widen the sidebar" changes
      landed on), so narrowing .wrap can only eat into the space BETWEEN
@@ -253,7 +254,7 @@ const jsonLd = [
     align-items: flex-start;
   }
   .lead-main {
-    width: 671px;
+    width: 620px;
   }
   .lead-main :global(.thumb) {
     margin-bottom: 22px;
