@@ -34,11 +34,11 @@ The semifinals are Vachier-Lagrave vs. Giri and Caruana vs. Firouzja, starting T
 
 **Group D: Vaishali decides it**
 
-Three players were tied for first going into the final day, but only Vachier-Lagrave controlled his own fate, thanks to the best blitz tiebreak. He drew the first game with Bibisara Assaubayeva, then won the second with White in an endgame.
+Three players were tied for first going into the final day, but only Vachier-Lagrave controlled his own fate: any tie at the top would go to him on his blitz tiebreak. He drew the first game with Bibisara Assaubayeva, then won the second with White in an endgame.
 
 That left the result to Vaishali Rameshbabu and Arjun Erigaisi. Arjun won the first game, which put him in sole lead. [Vaishali won the return game](#game-embed) after it swung both ways, and Arjun slipped to third on 16 points.
 
-Vachier-Lagrave finished on 17. Hans Niemann took second on 16, ahead of Arjun on the blitz tiebreak. He had lost the first game to Wesley So after blundering with 59...f4?, then beat So with White in the return.
+Vachier-Lagrave finished on 17, a point clear. Hans Niemann took second on 16, ahead of Arjun on the blitz tiebreak. He had lost the first game to Wesley So after blundering with 59...f4?, then beat So with White in the return.
 
 So, now fourth on 13, offered an apology for calling Niemann "the most disrespectful teenager in chess" years ago at the U.S. Championship, adding "He's a good kid!" He then criticized the knockout format, tweeting that eight games a day at different time controls over four days is "maximum absurdity."
 

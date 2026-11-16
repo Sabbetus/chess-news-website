@@ -101,13 +101,16 @@ const { url, title } = Astro.props;
     cursor: pointer;
     transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
+  /* Tinted, not filled: it should read as the main action without
+     shouting over the article (user's call, 2026-11-16). */
   .share-native {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
+    background: color-mix(in srgb, var(--accent) 9%, var(--paper-raised));
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--rule));
+    color: var(--accent);
   }
   .share-native:hover {
-    filter: brightness(1.08);
+    background: color-mix(in srgb, var(--accent) 15%, var(--paper-raised));
+    border-color: var(--accent);
   }
   .share-copy:hover {
     color: var(--accent);
