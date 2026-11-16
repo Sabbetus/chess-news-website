@@ -291,7 +291,9 @@ const jsonLd = [
      section below) -- both are list-style sidebar widgets, so they read
      as one consistent pattern rather than two different styles. */
   .issue-index {
-    width: 330px;
+    /* 381px (was 330): widened by what the lead column lost (671 -> 620),
+       so the gap between them stays its natural size. */
+    width: 381px;
     flex-shrink: 0;
     padding: 22px 24px;
     border: 1px solid var(--rule);
