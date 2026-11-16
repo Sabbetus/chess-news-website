@@ -986,8 +986,41 @@ doesn't give, and keep every claim with the person it belongs to.
 - Keep the article's main story the headline's main story where you can.
 - 45-70 characters, title case like the current headline, no semicolon, no quotation marks.
 - Plain, everyday words.
+- Say how something happened only as the body says it happened: a tiebreak, a condition or a \
+scenario the body mentions as background is not how the result came about.
 
 Respond with the headline only."""
+
+
+_RETITLE_CHECK_PROMPT = """You check a chess news headline against the article it heads. Every \
+fact in the headline (who, what result, how it happened, placings, scores, opponents) must be \
+stated by the article body, with the same person and the same meaning. A headline that turns \
+background into the cause (e.g. "wins on tiebreak" when the body has him winning outright and \
+mentions the tiebreak only as what would have decided a tie) is wrong.
+
+Answer with one word: YES if every fact is supported, NO otherwise."""
+
+
+def headline_supported(client, title: str, body: str) -> bool:
+    """A second look at a rewritten headline (caught 2026-11-16: the photo
+    retitle turned "only Vachier-Lagrave controlled his own fate, thanks to
+    the best blitz tiebreak" into "Vachier-Lagrave Wins Group D on Blitz
+    Tiebreak" -- he won outright on 17). Runs after the fact check, which
+    has already passed by the time the headline changes. A failed call
+    counts as unsupported, so the checked headline stays."""
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=1024,
+            output_config={"effort": "low"},
+            system=_RETITLE_CHECK_PROMPT,
+            messages=[{"role": "user", "content": f"HEADLINE: {title}\n\nARTICLE BODY:\n{body}"}],
+        )
+        answer = "".join(b.text for b in response.content if b.type == "text").strip().upper()
+    except Exception as exc:  # noqa: BLE001
+        print(f"  Headline check failed: {exc}", file=sys.stderr)
+        return False
+    return answer.startswith("YES")
 
 
 _NOT_A_NAME = {"the", "a", "an", "five", "four", "three", "two", "six", "seven", "eight", "nine", "ten",
@@ -1033,6 +1066,9 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
             print(f"  Headline/photo match failed: {exc}", file=sys.stderr)
             break
         if surname not in new.lower() or not (30 <= len(new) <= 80) or "\n" in new:
+            continue
+        if not headline_supported(client, new, body):
+            print(f"  Headline/photo match rejected (not supported by the body): {new!r}", file=sys.stderr)
             continue
         candidate = new
         if not keep or keep.lower() in new.lower():

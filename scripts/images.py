@@ -905,6 +905,7 @@ def fallback_image(seed_text: str, exclude_source_urls: set | None = None) -> di
 
 
 HISTORICAL_LENSES = {"people", "historical-parallel"}
+_IMAGES_DIR = Path(__file__).resolve().parent.parent / "src" / "content" / "articles" / "_images"
 
 
 def player_page_photo(subject: str, exclude_source_urls: set | None, historical: bool = False) -> dict | None:
@@ -931,8 +932,18 @@ def player_page_photo(subject: str, exclude_source_urls: set | None, historical:
         year = re.search(r"(?<!\d)(19[5-9]\d|20[0-4]\d)(?!\d)", src)
         if year and not historical and int(year.group(1)) < time.gmtime().tm_year - RECENT_PHOTO_YEARS:
             return None
+        name = src.rsplit("/", 1)[-1]
+        # A "(cropped)" face crop suits the player page's portrait box but
+        # zooms into eyes and nose in an article's wide hero (caught
+        # 2026-11-16: Vachier-Lagrave's page photo). The uncropped original,
+        # when it is in our store too, goes on articles instead; the crop is
+        # still used when it is the only photo (better than a generic one).
+        uncropped = re.sub(r"_+cropped(?:_v\d+)?(?=\.\w+$)", "", name, flags=re.I)
+        if uncropped != name and (_IMAGES_DIR / uncropped).exists():
+            name = uncropped
+            source_url = re.sub(r"_?%28cropped%29|_?\(cropped\)", "", source_url, flags=re.I)
         return {
-            "src": "./_images/" + src.rsplit("/", 1)[-1],
+            "src": "./_images/" + name,
             "credit": fields.get("credit", ""),
             "sourceUrl": source_url,
         }

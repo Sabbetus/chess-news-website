@@ -810,11 +810,13 @@ def test_headline_names_the_person_in_the_photo():
             self.text = text
 
     class Client:
-        def __init__(self, reply):
+        def __init__(self, reply, check="YES"):
             self.messages = self
             self.reply = reply
+            self.check = check
         def create(self, **kwargs):
-            return type("R", (), {"content": [Block(self.reply)]})()
+            text = self.check if kwargs.get("system") == draft._RETITLE_CHECK_PROMPT else self.reply
+            return type("R", (), {"content": [Block(text)]})()
 
     old = "Movahed Wins Freestyle Friday After Starting 1.5/3"
     new = "Movahed Beats Leader Yakubboev to Win Freestyle Friday"
@@ -822,6 +824,9 @@ def test_headline_names_the_person_in_the_photo():
     # Already named, or a reply that doesn't name him: the headline stays.
     assert draft.match_title_to_photo(Client(new), new, "body", "Nodirbek Yakubboev") == new
     assert draft.match_title_to_photo(Client("Movahed Wins Again"), old, "body", "Nodirbek Yakubboev") == old
+    # 2026-11-16: a rewrite the body doesn't support ("Wins Group D on Blitz
+    # Tiebreak" for an outright win) is rejected and the checked headline stays.
+    assert draft.match_title_to_photo(Client(new, check="NO"), old, "body", "Nodirbek Yakubboev") == old
 
 
 def test_photo_cooldown_leaves_room_for_this_runs_drafts(monkeypatch):
@@ -1193,3 +1198,11 @@ def test_publication_time_is_stamped_only_when_plausible(tmp_path, monkeypatch):
     assert "publishedAt" not in old.read_text()
     monkeypatch.setattr(sp, "git_publish_time", lambda path: datetime(2026, 10, 1, 7, 55, tzinfo=timezone.utc))
     assert sp.stamp(old, now, dry_run=False) == "2026-10-01T07:55:00Z"
+
+
+def test_player_page_crop_uses_uncropped_original_on_articles():
+    # 2026-11-16: Vachier-Lagrave's "(cropped)" page photo zoomed into eyes
+    # and nose in the article hero; the uncropped original is in our store.
+    import images
+    photo = images.player_page_photo("Maxime Vachier-Lagrave", set())
+    assert photo and "cropped" not in photo["src"].lower() and "cropped" not in photo["sourceUrl"].lower()
