@@ -1,0 +1,31 @@
+name: Site checks
+
+# Audit item 12 (2026-11-16): the pipeline had tests, the site had none.
+# Builds the site exactly as deploy.yml does and fails on any broken
+# internal link or missing asset, so a bad article, slug or image can't
+# reach main unnoticed. Draft PRs from the pipeline run it too.
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths-ignore: ['data/**']
+  workflow_dispatch:
+
+concurrency:
+  group: site-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build the site
+        run: npm run build
+      - name: Check internal links and assets
+        run: python3 scripts/check_site_links.py
