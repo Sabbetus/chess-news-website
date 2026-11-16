@@ -975,6 +975,9 @@ def bold_subheads(body: str) -> str:
     return _HEADING_LINE_RE.sub(lambda m: f"**{m.group(1).strip('* ')}**", body)
 
 
+# Photo retitles that couldn't be verified, for the run report.
+RETITLE_NOTES: list[tuple[str, str]] = []
+
 _RETITLE_PROMPT = """You write the headline for a chess news article. The article's photo shows a \
 person the current headline doesn't name, and a reader looking at the photo and the headline \
 together should see why that person is there. Rewrite the headline so it names the person in \
@@ -998,16 +1001,17 @@ stated by the article body, with the same person and the same meaning. A headlin
 background into the cause (e.g. "wins on tiebreak" when the body has him winning outright and \
 mentions the tiebreak only as what would have decided a tie) is wrong.
 
-Answer with one word: YES if every fact is supported, NO otherwise."""
+Answer YES if every fact is supported. Otherwise answer NO, a colon, and one short sentence \
+saying which fact is unsupported and what the body actually says."""
 
 
-def headline_supported(client, title: str, body: str) -> bool:
+def headline_supported(client, title: str, body: str) -> tuple[bool, str]:
     """A second look at a rewritten headline (caught 2026-11-16: the photo
     retitle turned "only Vachier-Lagrave controlled his own fate, thanks to
     the best blitz tiebreak" into "Vachier-Lagrave Wins Group D on Blitz
     Tiebreak" -- he won outright on 17). Runs after the fact check, which
-    has already passed by the time the headline changes. A failed call
-    counts as unsupported, so the checked headline stays."""
+    has already passed by the time the headline changes. Returns whether
+    it holds and, when not, the checker's reason (fed back to the rewrite)."""
     try:
         response = client.messages.create(
             model=MODEL,
@@ -1016,11 +1020,13 @@ def headline_supported(client, title: str, body: str) -> bool:
             system=_RETITLE_CHECK_PROMPT,
             messages=[{"role": "user", "content": f"HEADLINE: {title}\n\nARTICLE BODY:\n{body}"}],
         )
-        answer = "".join(b.text for b in response.content if b.type == "text").strip().upper()
+        answer = "".join(b.text for b in response.content if b.type == "text").strip()
     except Exception as exc:  # noqa: BLE001
         print(f"  Headline check failed: {exc}", file=sys.stderr)
-        return False
-    return answer.startswith("YES")
+        return True, ""  # no verdict: don't block the rule-required rewrite
+    if answer.upper().startswith("YES"):
+        return True, ""
+    return False, answer.split(":", 1)[1].strip() if ":" in answer else answer
 
 
 _NOT_A_NAME = {"the", "a", "an", "five", "four", "three", "two", "six", "seven", "eight", "nine", "ten",
@@ -1040,8 +1046,8 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     """When the photo shows someone the headline doesn't name, a headline
     that does (user's call, 2026-10-31: the Freestyle Friday photo was
     runner-up Yakubboev under "Movahed Wins Freestyle Friday After Starting
-    1.5/3"). The old headline stays if the reply doesn't name the person,
-    is out of length, or the call fails."""
+    1.5/3"). The old headline stays only when no reply names the person or
+    the call fails, and then the PR report lists the mismatch."""
     surname = person.split()[-1].lower()
     if surname in title.lower():
         return title
@@ -1051,29 +1057,44 @@ def match_title_to_photo(client, title: str, body: str, person: str) -> str:
     # the story was lost).
     keep = _headline_lead_name(title, body)
     note = f"\n\nTHE NEW HEADLINE MUST ALSO NAME: {keep} (the story's main subject)" if keep else ""
-    candidate = None
-    for _ in range(2):
+    # Naming the photographed person is a hard rule (user's call,
+    # 2026-11-16): a rewrite the body doesn't support is retried with the
+    # checker's reason, never answered by keeping a headline that leaves the
+    # person out. If no attempt passes, the last one that names them is used
+    # and listed in the PR report for the review to fix by hand.
+    candidate, unsupported, feedback = None, None, ""
+    for _ in range(4):
+        retry = f"\n\nYOUR LAST HEADLINE WAS REJECTED: {feedback}\nWrite a new one that avoids this." if feedback else ""
         try:
             response = client.messages.create(
                 model=MODEL,
                 max_tokens=2048,
                 output_config={"effort": "low"},
                 system=_RETITLE_PROMPT,
-                messages=[{"role": "user", "content": f"PERSON IN THE PHOTO: {person}\n\nCURRENT HEADLINE: {title}{note}\n\nARTICLE BODY:\n{body}"}],
+                messages=[{"role": "user", "content": f"PERSON IN THE PHOTO: {person}\n\nCURRENT HEADLINE: {title}{note}\n\nARTICLE BODY:\n{body}{retry}"}],
             )
             new = "".join(b.text for b in response.content if b.type == "text").strip().strip('"').strip()
         except Exception as exc:  # noqa: BLE001 -- the old headline is still a headline
             print(f"  Headline/photo match failed: {exc}", file=sys.stderr)
             break
         if surname not in new.lower() or not (30 <= len(new) <= 80) or "\n" in new:
+            feedback = f"it must name {person} and be 45-70 characters"
             continue
-        if not headline_supported(client, new, body):
-            print(f"  Headline/photo match rejected (not supported by the body): {new!r}", file=sys.stderr)
+        if keep and keep.lower() not in new.lower():
+            feedback = f"it must also name {keep}"
+            unsupported = unsupported or new
             continue
-        candidate = new
-        if not keep or keep.lower() in new.lower():
+        ok, reason = headline_supported(client, new, body)
+        if ok:
+            candidate = new
             break
+        print(f"  Headline/photo match rejected ({reason}): {new!r}", file=sys.stderr)
+        unsupported, feedback = new, reason or "a fact in it is not in the body"
+    if not candidate and unsupported:
+        candidate = unsupported
+        RETITLE_NOTES.append((title, f"{unsupported!r} -- {feedback}"))
     if not candidate:
+        RETITLE_NOTES.append((title, f"no headline naming {person} could be written; the photo and headline disagree"))
         return title
     new = candidate
     print(f"  Headline matched to photo ({person}): {title!r} -> {new!r}", file=sys.stderr)
@@ -2545,6 +2566,9 @@ def write_run_report(
     if BOARD_MISMATCH_NOTES:
         lines += ["", "**Board and text disagree** (check which game the piece means and fix the board):", ""]
         lines += [f"- {slug} — {note}" for slug, note in BOARD_MISMATCH_NOTES]
+    if RETITLE_NOTES:
+        lines += ["", "**Photo headline rewrites that failed the check against the body** (fix by hand, keeping the photographed person named):", ""]
+        lines += [f"- {old} — {note}" for old, note in RETITLE_NOTES]
     if TIME_WORD_NOTES:
         lines += ["", "**Date or time words that don't fit the publication date** (check each):", ""]
         lines += [f"- {slug} — {note}" for slug, note in TIME_WORD_NOTES]

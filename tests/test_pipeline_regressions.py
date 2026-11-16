@@ -812,10 +812,15 @@ def test_headline_names_the_person_in_the_photo():
     class Client:
         def __init__(self, reply, check="YES"):
             self.messages = self
-            self.reply = reply
-            self.check = check
+            self.replies = reply if isinstance(reply, list) else [reply]
+            self.checks = check if isinstance(check, list) else [check]
+            self.prompts = []
         def create(self, **kwargs):
-            text = self.check if kwargs.get("system") == draft._RETITLE_CHECK_PROMPT else self.reply
+            if kwargs.get("system") == draft._RETITLE_CHECK_PROMPT:
+                text = self.checks.pop(0) if len(self.checks) > 1 else self.checks[0]
+            else:
+                self.prompts.append(kwargs["messages"][0]["content"])
+                text = self.replies.pop(0) if len(self.replies) > 1 else self.replies[0]
             return type("R", (), {"content": [Block(text)]})()
 
     old = "Movahed Wins Freestyle Friday After Starting 1.5/3"
@@ -824,9 +829,17 @@ def test_headline_names_the_person_in_the_photo():
     # Already named, or a reply that doesn't name him: the headline stays.
     assert draft.match_title_to_photo(Client(new), new, "body", "Nodirbek Yakubboev") == new
     assert draft.match_title_to_photo(Client("Movahed Wins Again"), old, "body", "Nodirbek Yakubboev") == old
-    # 2026-11-16: a rewrite the body doesn't support ("Wins Group D on Blitz
-    # Tiebreak" for an outright win) is rejected and the checked headline stays.
-    assert draft.match_title_to_photo(Client(new, check="NO"), old, "body", "Nodirbek Yakubboev") == old
+    # 2026-11-16: a rewrite the body doesn't support is retried with the
+    # checker's reason; naming the photographed person is a hard rule, so
+    # when no attempt passes the last one is still used and reported.
+    bad = "Yakubboev Wins Freestyle Friday on Tiebreak"
+    client = Client([bad, new], check=["NO: he won outright", "YES"])
+    assert draft.match_title_to_photo(client, old, "body", "Nodirbek Yakubboev") == new
+    assert "he won outright" in client.prompts[1]
+    draft.RETITLE_NOTES.clear()
+    assert draft.match_title_to_photo(Client(bad, check="NO: he won outright"), old, "body", "Nodirbek Yakubboev") == bad
+    assert draft.RETITLE_NOTES and "he won outright" in draft.RETITLE_NOTES[0][1]
+    draft.RETITLE_NOTES.clear()
 
 
 def test_photo_cooldown_leaves_room_for_this_runs_drafts(monkeypatch):

@@ -312,7 +312,10 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   quotes, 59...f4?, 26...Bd8?! 27.Rh2), board Vaishali-Arjun round 10 1-0
   (the linked win); all 20 calendar entries' dates, counts, venues and
   organisers. Fixed at the source: a photo-driven headline rewrite goes
-  through a second check against the body and is dropped when unsupported;
+  through a second check against the body; an unsupported one is retried
+  with the checker's reason, and since naming the photographed person is a
+  hard rule (user's call), the last attempt is used and listed in the PR
+  report when none passes -- never dropped;
   a player-page "(cropped)" photo is swapped for its uncropped original
   from our store on articles.
 - 2026-11-15, site (user's call, from the audit): footer "Follow" row (the
