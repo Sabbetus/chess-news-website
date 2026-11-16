@@ -1,6 +1,7 @@
 ---
 title: "Vachier-Lagrave Takes Group D as Vaishali Beats Arjun, Faces Giri Next"
 publishDate: "2026-11-16"
+publishedAt: "2026-11-16T07:58:17Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-6"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Singapore Age-Group Championships Top Asia's December Fields at 706"
 publishDate: "2026-11-16"
+publishedAt: "2026-11-16T07:58:17Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/asia/"
 lens: "tournament-db"
