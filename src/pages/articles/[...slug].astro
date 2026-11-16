@@ -216,7 +216,7 @@ const jsonLd = [
     {article.data.gamePgn && GAMES[article.data.gamePgn] ? (
       <GameViewer pgn={GAMES[article.data.gamePgn]} caption={article.data.gameCaption} />
     ) : (
-      article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} />
+      article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} caption={article.data.gameCaption} />
     )}
 
     {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
@@ -234,7 +234,7 @@ const jsonLd = [
           <br />
         </>
       )}
-      <span class="correction-note">Noticed an error in the article? Report it from <a class="correction-link" href={correctionHref}>here</a>.</span>
+      <span class="correction-note">Noticed a mistake? <a class="correction-link" href={correctionHref}>Report an error in this article</a>.</span>
     </p>
 
     {

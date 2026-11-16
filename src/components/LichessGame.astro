@@ -4,8 +4,11 @@
 // full https://lichess.org/embed/broadcast/... form.
 interface Props {
   url: string;
+  caption?: string;
 }
-const { url } = Astro.props;
+const { url, caption } = Astro.props;
+// Named for screen readers by its game when the article gives one.
+const label = caption ? `Chess board: ${caption}` : 'Interactive chess board';
 
 // Server-rendered default: "system" so the board still matches the
 // visitor's OS preference with JS disabled. The inline script below
@@ -20,7 +23,7 @@ const initialSrc = `${url}?bg=system`;
     class="lichess-embed-frame"
     src={initialSrc}
     data-embed-base={url}
-    title="Interactive chess board"
+    title={label}
     loading="lazy"
     allowtransparency="true"
     frameborder="0"

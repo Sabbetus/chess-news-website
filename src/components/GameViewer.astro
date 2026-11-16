@@ -82,7 +82,7 @@ const data = JSON.stringify(positions);
   {caption && <p class="gv-caption">{caption}</p>}
   <div class="gv-main">
     <div class="gv-board-wrap">
-      <div class="gv-board" role="img" aria-live="polite">
+      <div class="gv-board" role="img" aria-label={`Board position, ${white} vs ${black}`} aria-live="polite">
         {
           Array.from({ length: 64 }, (_, i) => {
             const rank = 8 - Math.floor(i / 8);

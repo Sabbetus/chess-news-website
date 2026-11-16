@@ -5,15 +5,19 @@
 // shortening the real headline, give the <title> tag its own, possibly
 // truncated, version with the site name appended.
 const SITE_SUFFIX = ' | The Chess Herald';
-const MAX_LENGTH = 70;
+// 65, not 70 (audit, 2026-11-16): search results cut titles at about 60
+// characters. The site name is the part to lose -- a headline that fits on
+// its own goes without it rather than being cut short.
+const MAX_LENGTH = 65;
 
 export function seoTitle(pageTitle: string): string {
   const withSuffix = `${pageTitle}${SITE_SUFFIX}`;
   if (withSuffix.length <= MAX_LENGTH) return withSuffix;
+  if (pageTitle.length <= MAX_LENGTH) return pageTitle;
 
-  const budget = MAX_LENGTH - SITE_SUFFIX.length - 1; // -1 for the ellipsis
+  const budget = MAX_LENGTH - 1; // -1 for the ellipsis
   const cut = pageTitle.slice(0, budget);
   const lastSpace = cut.lastIndexOf(' ');
   const truncated = lastSpace > 0 ? cut.slice(0, lastSpace) : cut;
-  return `${truncated}…${SITE_SUFFIX}`;
+  return `${truncated}…`;
 }
