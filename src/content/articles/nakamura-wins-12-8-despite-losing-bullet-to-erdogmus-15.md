@@ -1,6 +1,7 @@
 ---
 title: "Nakamura Wins 12-8 Despite Losing Bullet to Erdogmus, 15"
 publishDate: "2026-11-17"
+publishedAt: "2026-11-17T08:45:47Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-speed-chess-championship-r16-nakamura-erdogmus"
 lens: "results"

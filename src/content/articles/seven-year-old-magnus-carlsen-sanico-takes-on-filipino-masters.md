@@ -1,6 +1,7 @@
 ---
 title: "Seven-Year-Old Magnus Carlsen Sanico Takes On Filipino Masters"
 publishDate: "2026-11-17"
+publishedAt: "2026-11-17T08:45:47Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/magnus-carlsen-sanico-7-year-old-grandmaster-dream"
 lens: "people"
