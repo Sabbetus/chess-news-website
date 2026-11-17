@@ -18,7 +18,7 @@ const { Content } = await player.render();
 const ranked = TOP100.players.find((p) => p.fideId === d.fideId);
 const rankedWomen = TOP100.women.find((p) => p.fideId === d.fideId);
 const rated = ranked ?? rankedWomen;
-const coverage = await articlesMentioning([d.name, ...d.aliases]);
+const coverage = await articlesMentioning([d.name, ...d.aliases], true);
 const titles = await titlesFor([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
 const pageURL = new URL(`/players/${player.slug}/`, Astro.site).toString();

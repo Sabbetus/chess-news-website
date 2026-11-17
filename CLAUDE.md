@@ -75,6 +75,11 @@
   sharing a run of 4+ ordinary words (not names or scores) with any
   headline / social copy of the last 14 days; reviews check the same.
 
+- **Reviews check the built page's automatic player/event links too**
+  (2026-11-17: "Magnus Carlsen Sanico", a namesake, linked to Carlsen's
+  page). The build links full names to our player and event pages; each
+  link must point at the person or event the sentence means.
+
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
@@ -171,6 +176,8 @@ disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-17: user found a missed problem after publishing (stays 0):
+  the Magnus Carlsen Sanico namesake auto-linked to Carlsen's page.
 - 2026-11-16: drafts/2026-11-16 review corrected (11 -> 0): my pipeline
   guard dropped a photo retitle the body didn't support, which left the
   photographed person out of the headline -- a hard rule (user's call:
@@ -303,8 +310,16 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
-- 2026-11-17: drafts/2026-11-17 clean (streak 0 -> 1; one borderline
+- **Current streak: 0 consecutive clean batches.**
+- 2026-11-17: drafts/2026-11-17 reset after publishing (streak 1 -> 0,
+  user caught it): the Sanico piece's "named the boy Magnus Carlsen
+  Sanico" auto-linked "Magnus Carlsen" to Carlsen's player page -- the
+  wrong person. My review missed it (I checked the written links, not the
+  auto-links the build adds). Fixed at the source: a player's full name
+  followed by another capitalised name is never linked or counted as a
+  mention of that player (link-hubs, player coverage lists, JSON-LD,
+  search). Reviews now look at the built page's player/event links too.
+  First logged as clean (streak 0 -> 1; one borderline
   photo for the user to rule on). Run started by hand (the 01:03 cron
   hadn't fired by 08:30); a scheduled run now skips when today's draft
   branch exists. Borderline: the Magnus Carlsen Sanico piece (a
@@ -1015,8 +1030,8 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-11-16 (see above).
-- Earlier resets: 2026-11-15; 2026-11-14; 2026-11-12; 2026-11-11 (PR #99); 2026-11-10 (PR #98); 2026-11-08 (PR #95); 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
+- Last reset: 2026-11-17 (see above).
+- Earlier resets: 2026-11-16; 2026-11-15; 2026-11-14; 2026-11-12; 2026-11-11 (PR #99); 2026-11-10 (PR #98); 2026-11-08 (PR #95); 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
   piece, an article with zero actual round results. Fixed the underlying

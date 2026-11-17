@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import { excerptFrom } from '../lib/excerpt';
 import { sourceNames } from '../lib/sources';
-import { eventPages, playerPages, federationName } from '../lib/hubs';
+import { eventPages, playerPages, federationName, NOT_LONGER_NAME } from '../lib/hubs';
 import { publishedAt } from '../lib/publishedAt';
 
 // A small, static search index built at deploy time -- there's no backend
@@ -12,7 +12,8 @@ import { publishedAt } from '../lib/publishedAt';
 // player and event pages are results of their own (kind "p" and "e").
 // Fields: k kind, t title, u path, m meta line, x extra searchable text.
 const esc = (a) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const matcher = (aliases) => new RegExp(`(?<![\\p{L}])(?:${aliases.map(esc).join('|')})(?![\\p{L}])`, 'u');
+const matcher = (aliases, person = false) =>
+  new RegExp(`(?<![\\p{L}])(?:${aliases.map(esc).join('|')})(?![\\p{L}])${person ? NOT_LONGER_NAME : ''}`, 'u');
 
 export async function GET() {
   const articles = (await getCollection('articles', ({ data }) => data.reviewStatus === 'published')).sort(
@@ -22,7 +23,7 @@ export async function GET() {
   const events = await eventPages();
 
   const hubs = [
-    ...players.map((p) => ({ name: p.data.name, re: matcher([p.data.name, ...(p.data.aliases ?? [])]) })),
+    ...players.map((p) => ({ name: p.data.name, re: matcher([p.data.name, ...(p.data.aliases ?? [])], true) })),
     ...events.map((e) => ({ name: e.data.name, re: matcher([e.data.name, ...(e.data.aliases ?? [])]) })),
   ];
 

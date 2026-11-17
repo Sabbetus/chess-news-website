@@ -37,6 +37,10 @@ function loadEntities(dir, base) {
 // "World Junior Championship".
 const NOT_BEFORE = /(?:Online|Junior|Youth|Senior|Disability|Disabilities|Amateur|Schools?|U\d+)\s+$/i;
 const NOT_AFTER = /^\s+(?:for\s+People|for\s+the\s+Disabled|Juniors?\b)/i;
+// A player's full name followed by another capitalised name is someone
+// else's longer name (caught 2026-11-17: "Magnus Carlsen Sanico", a boy
+// named after Carlsen, linked to Carlsen's page). Not a person: skipped.
+export const LONGER_NAME_AFTER = /^\s+\p{Lu}\p{Ll}/u;
 
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/'/g, "['’]");
 
@@ -113,6 +117,7 @@ export default function linkHubs() {
         for (const hit of text.matchAll(m.re)) {
           const entity = m.lookup(hit[0]);
           if (!entity || used.has(entity.href)) continue;
+          if (kind === 'player' && LONGER_NAME_AFTER.test(text.slice(hit.index + hit[0].length))) continue;
           if (kind === 'event' && (NOT_BEFORE.test(text.slice(0, hit.index)) || NOT_AFTER.test(text.slice(hit.index + hit[0].length)))) continue;
           if (!best || hit.index < best.index || (hit.index === best.index && hit[0].length > best.text.length)) {
             best = { index: hit.index, text: hit[0], entity, kind };

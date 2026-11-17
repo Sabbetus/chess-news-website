@@ -68,10 +68,14 @@ export async function titlesFor(names: string[]) {
 // Published articles that mention any of the given full names in their title
 // or body, newest first. Full names only -- a bare surname collides (the
 // Javokhir/Komil Sindarov case in scripts/draft.py).
-export async function articlesMentioning(aliases: string[]): Promise<CollectionEntry<'articles'>[]> {
+// A person's full name followed by another capitalised name is someone else
+// ("Magnus Carlsen Sanico", 2026-11-17); `person` adds that guard.
+export const NOT_LONGER_NAME = '(?!\\s+\\p{Lu}\\p{Ll})';
+
+export async function articlesMentioning(aliases: string[], person = false): Promise<CollectionEntry<'articles'>[]> {
   if (aliases.length === 0) return [];
   const escaped = aliases.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const pattern = new RegExp(`(?<![\\p{L}])(?:${escaped.join('|')})(?![\\p{L}])`, 'u');
+  const pattern = new RegExp(`(?<![\\p{L}])(?:${escaped.join('|')})(?![\\p{L}])${person ? NOT_LONGER_NAME : ''}`, 'u');
   const articles = await getCollection('articles', ({ data }) => data.reviewStatus === 'published');
   return articles
     .filter((a) => pattern.test(a.data.title) || pattern.test(a.body))
@@ -122,7 +126,7 @@ export async function articleEntities(article: CollectionEntry<'articles'>, site
   const title = article.data.title;
   for (const h of hubs) {
     const escaped = h.aliases.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    const re = new RegExp(`(?<![\\p{L}])(?:${escaped.join('|')})(?![\\p{L}])`, 'u');
+    const re = new RegExp(`(?<![\\p{L}])(?:${escaped.join('|')})(?![\\p{L}])${h.type === 'Person' ? NOT_LONGER_NAME : ''}`, 'u');
     const node = { '@type': h.type, name: h.name, url: new URL(h.path, site).toString() };
     const bodyHit = article.body.search(re);
     // Headlines use surnames ("Sindarov Within Two Points of Caruana"), so a
