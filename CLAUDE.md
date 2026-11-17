@@ -170,7 +170,13 @@ Update after each batch review, once the user has responded. A
 disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
 
-- **Current review-acceptance streak: 11.**
+- **Current review-acceptance streak: 0.**
+- 2026-11-16: drafts/2026-11-16 review corrected (11 -> 0): my pipeline
+  guard dropped a photo retitle the body didn't support, which left the
+  photographed person out of the headline -- a hard rule (user's call:
+  retry with the checker's reason, never drop). The user also questioned
+  the headline fix itself; it stood (he won Group D outright on 17), and
+  the body's tiebreak sentence was reworded so it can't be misread.
 - 2026-11-15: PR #103 + recap accepted ("Seems solid", 10 -> 11).
 - 2026-11-14: accepted ("All seems good", 9 -> 10). User ruled the board a
   reset and Maghsoodloo's placing minor (a reset disagreement only), and
@@ -297,7 +303,22 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-11-17: drafts/2026-11-17 clean (streak 0 -> 1; one borderline
+  photo for the user to rule on). Run started by hand (the 01:03 cron
+  hadn't fired by 08:30); a scheduled run now skips when today's draft
+  branch exists. Borderline: the Magnus Carlsen Sanico piece (a
+  7-year-old named after Carlsen) shows the world champion -- he is in the
+  story, and the caption now says so ("The world champion Magnus Carlsen,
+  after whom the boy was named, in 2019"), but the front-page card has no
+  caption and can read as the boy. No photo of the boy is licensed. Minor:
+  board caption added to the Nakamura-Erdogmus piece (5+1 game 6,
+  Erdogmus-Nakamura 0-1, the rook-down win the 43...Qf4+ link points to),
+  a 4-sentence paragraph trimmed. Checked: every Nakamura line against
+  Chess.com (segment scores, games 2-7, 43...Ng1 mate, prize split,
+  Nov 20 Lazavik-Andreikin, Movahed-Carlsen Dec 16), and every Sanico line
+  (ages, dates, 4/9 with 3W 2D, ratings 1495/1755); both internal links
+  resolve and say what is claimed.
 - 2026-11-16: drafts/2026-11-16 reset (streak stays at 0; borderline,
   user to rule). Reset call: the photo retitle turned the Total Chess
   group-stage piece's headline into "Vachier-Lagrave Wins Group D on Blitz
