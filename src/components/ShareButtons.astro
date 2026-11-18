@@ -82,7 +82,9 @@ const { url, title } = Astro.props;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
-    margin: 26px 0 0;
+    /* Same column as the article text (it sits outside the prose wrapper). */
+    max-width: var(--content-width);
+    margin: 26px auto 0;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
   }
