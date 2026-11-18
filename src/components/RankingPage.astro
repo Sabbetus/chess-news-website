@@ -71,10 +71,11 @@ const META: Record<ListKey, { path: string; h1: string; title: string; lede: str
 };
 const meta = META[list];
 
+// Time control first (Classical is the default), then the classical
+// list's categories as a submenu (user's call, 2026-11-18).
+const CLASSICAL: ListKey[] = ['players', 'women', 'juniors', 'girls'];
 const TABS: { key: ListKey; label: string }[] = [
-  { key: 'players', label: 'Classical' },
-  { key: 'rapid', label: 'Rapid' },
-  { key: 'blitz', label: 'Blitz' },
+  { key: 'players', label: 'Open' },
   { key: 'women', label: 'Women' },
   { key: 'juniors', label: 'Juniors' },
   { key: 'girls', label: 'Girls' },
@@ -112,24 +113,24 @@ const jsonLd = [
       <p class="hub-lede">{meta.lede} It updates each month when FIDE publishes a new list.</p>
     </header>
 
-    <nav class="rank-switch" aria-label="Rankings">
-      <div class="rank-group" role="group" aria-label="Open">
-        <span class="rank-group-label">Open</span>
-        {TABS.slice(0, 3).map((t) => (
-          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
-            {t.label}
-          </a>
-        ))}
-      </div>
-      <div class="rank-group" role="group" aria-label="Classical">
-        <span class="rank-group-label">Classical</span>
-        {TABS.slice(3).map((t) => (
-          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
-            {t.label}
-          </a>
-        ))}
-      </div>
+    <nav class="rank-switch" aria-label="Time control">
+      {[
+        { label: 'Classical', path: '/rankings/', on: CLASSICAL.includes(list) },
+        { label: 'Rapid', path: '/rankings/rapid/', on: list === 'rapid' },
+        { label: 'Blitz', path: '/rankings/blitz/', on: list === 'blitz' },
+      ].map((t) => (
+        <a href={t.path} class={t.on ? 'on' : ''} aria-current={t.on ? 'page' : undefined}>{t.label}</a>
+      ))}
     </nav>
+    {CLASSICAL.includes(list) && (
+      <nav class="rank-sub" aria-label="Classical lists">
+        {TABS.filter((t) => CLASSICAL.includes(t.key)).map((t) => (
+          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
+            {t.label}
+          </a>
+        ))}
+      </nav>
+    )}
 
     <section class="hub-section top100">
       <RankingTable rows={rows} pageById={pageById} />
@@ -153,28 +154,17 @@ const jsonLd = [
   }
   .rank-switch {
     max-width: var(--content-width);
-    margin: 0 auto 12px;
+    margin: 0 auto 18px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px 22px;
+    gap: 6px;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.07em;
     text-transform: uppercase;
   }
-  .rank-group {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-  }
-  .rank-group-label {
-    margin-right: 4px;
-    font-size: 11px;
-    color: var(--ink-soft);
-  }
   .rank-switch a {
-    padding: 7px 14px;
+    flex: 0 1 auto;
+    padding: 9px 20px;
     border: 1px solid var(--rule);
     border-radius: 3px;
     color: var(--ink-soft);
@@ -188,5 +178,33 @@ const jsonLd = [
     background: var(--blue);
     border-color: var(--blue);
     color: var(--paper);
+  }
+  /* The classical list's categories, under the time-control tabs. */
+  .rank-sub {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    margin-top: -4px;
+    padding: 0 2px 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .rank-sub a {
+    padding: 6px 0;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+  .rank-sub a:hover {
+    color: var(--ink);
+  }
+  .rank-sub a.on {
+    color: var(--blue);
+    font-weight: 500;
+    border-bottom-color: var(--blue);
   }
 </style>
