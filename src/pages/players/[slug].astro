@@ -37,6 +37,13 @@ const ranking = RANK_LISTS.map(([key, control, label, href, phrase]) => {
 }).find(Boolean) ?? null;
 const rated = ranking?.entry;
 const pageRating: Record<string, number> = ((TOP100 as any).pageRatings ?? {})[d.fideId] ?? {};
+// One rating, from the ranking's time control; off every list, classical
+// first, then rapid, then blitz (user's call, 2026-11-18).
+const rankedKind = ranking ? (ranking.control.toLowerCase() || 'standard') : null;
+const shownKind = rankedKind ?? (['standard', 'rapid', 'blitz'] as const).find((k) => pageRating[k]);
+const shownRating = shownKind
+  ? { kind: shownKind, value: rankedKind ? rated.rating : pageRating[shownKind], change: rankedKind ? rated.change : 0 }
+  : null;
 const coverage = await articlesMentioning([d.name, ...d.aliases], true);
 const titles = await titlesFor([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
@@ -94,20 +101,15 @@ const jsonLd = [
       <Portrait name={d.name} image={d.image} shape="portrait" />
       <dl class="facts">
         {ranking && (<><dt>{ranking.label}</dt><dd><a href={ranking.href}><strong>No. {ranking.entry.rank}</strong></a> ({month})</dd></>)}
-        {(['standard', 'rapid', 'blitz'] as const).map((kind) => {
-          const value = pageRating[kind] ?? (rated && ranking && (ranking.control.toLowerCase() || 'standard') === kind ? rated.rating : undefined);
-          if (!value) return null;
-          const change = rated && ranking && (ranking.control.toLowerCase() || 'standard') === kind ? rated.change : 0;
-          return (
-            <>
-              <dt>{kind === 'standard' ? 'Classical rating' : kind === 'rapid' ? 'Rapid rating' : 'Blitz rating'}</dt>
-              <dd>
-                <strong>{value}</strong>
-                {change ? ` (${change > 0 ? '+' : '−'}${Math.abs(change)} this month)` : ''}
-              </dd>
-            </>
-          );
-        })}
+        {shownRating && (
+          <>
+            <dt>{shownRating.kind === 'standard' ? 'Rating' : shownRating.kind === 'rapid' ? 'Rapid rating' : 'Blitz rating'}</dt>
+            <dd>
+              <strong>{shownRating.value}</strong>
+              {shownRating.change ? ` (${shownRating.change > 0 ? '+' : '−'}${Math.abs(shownRating.change)} this month)` : ''}
+            </dd>
+          </>
+        )}
         {d.peakRating && (<><dt>Peak rating</dt><dd>{d.peakRating.rating} ({d.peakRating.month})</dd></>)}
         <dt>Title</dt>
         <dd>{d.title === 'GM' ? 'Grandmaster' : d.title}{d.titleYear ? ` (${d.titleYear})` : ''}</dd>
@@ -138,7 +140,6 @@ const jsonLd = [
             <li><a href={`/events/${t.slug}/`}>{t.name}</a>: {t.years.join(', ')}</li>
           ))}
         </ul>
-        <p class="note">From the winners lists on our event pages.</p>
       </section>
     )}
 
