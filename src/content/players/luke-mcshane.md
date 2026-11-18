@@ -5,6 +5,9 @@ born: "1984-01-07"
 federation: "ENG"
 title: "GM"
 titleYear: 2000
+peakRating:
+  rating: 2713
+  month: "July 2012"
 aliases:
   - "Luke McShane"
   - "Luke J McShane"

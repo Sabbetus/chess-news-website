@@ -5,6 +5,9 @@ born: "2005-08-03"
 federation: "KAZ"
 title: "IM"
 titleYear: 2024
+peakRating:
+  rating: 2427
+  month: "March 2022"
 aliases:
   - "Meruert Kamalidenova"
 highlights:

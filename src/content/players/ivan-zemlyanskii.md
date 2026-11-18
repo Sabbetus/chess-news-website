@@ -6,6 +6,9 @@ birthplace: "Tyumen"
 federation: "RUS"
 title: "GM"
 titleYear: 2024
+peakRating:
+  rating: 2599
+  month: "July 2025"
 aliases:
   - "Ivan Zemlyanskii"
   - "Ivan Zemlyansky"

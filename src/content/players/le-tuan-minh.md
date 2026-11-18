@@ -5,6 +5,9 @@ born: "1996-10-21"
 federation: "VIE"
 title: "GM"
 titleYear: 2022
+peakRating:
+  rating: 2598
+  month: "October 2024"
 aliases:
   - "Lê Tuấn Minh"
   - "Le Tuan Minh"

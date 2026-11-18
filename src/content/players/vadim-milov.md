@@ -5,6 +5,9 @@ born: "1972-08-01"
 federation: "SUI"
 title: "GM"
 titleYear: 1993
+peakRating:
+  rating: 2705
+  month: "July 2008"
 aliases:
   - "Vadim Milov"
 highlights:

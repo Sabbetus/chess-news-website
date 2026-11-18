@@ -5,6 +5,9 @@ born: "1991-07-08"
 federation: "PER"
 title: "GM"
 titleYear: 2008
+peakRating:
+  rating: 2660
+  month: "December 2016"
 aliases:
   - "Emilio Córdova"
   - "Emilio Cordova"

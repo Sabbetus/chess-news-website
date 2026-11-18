@@ -6,6 +6,9 @@ birthplace: "Woerden, Netherlands"
 federation: "NED"
 title: "GM"
 titleYear: 2005
+peakRating:
+  rating: 2651
+  month: "May 2014"
 aliases:
   - "Erwin l'Ami"
   - "Erwin L'Ami"

@@ -5,6 +5,9 @@ born: "1974-06-02"
 birthplace: "Novokuznetsk"
 federation: "FRA"
 title: "GM"
+peakRating:
+  rating: 2763
+  month: "July 2013"
 aliases:
   - "Gata Kamsky"
 highlights:

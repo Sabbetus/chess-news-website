@@ -5,6 +5,9 @@ born: "1995-08-24"
 federation: "SRB"
 title: "GM"
 titleYear: 2013
+peakRating:
+  rating: 2661
+  month: "June 2025"
 aliases:
   - "Aleksandar Inđić"
   - "Aleksandar Indjic"

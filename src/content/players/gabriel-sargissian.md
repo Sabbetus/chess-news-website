@@ -5,6 +5,9 @@ born: "1983-09-03"
 birthplace: "Yerevan"
 federation: "ARM"
 title: "GM"
+peakRating:
+  rating: 2711
+  month: "August 2022"
 aliases:
   - "Gabriel Sargissian"
   - "Gabriel Sargsyan"

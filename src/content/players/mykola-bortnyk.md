@@ -4,6 +4,9 @@ fideId: "14120836"
 born: "1994-01-13"
 federation: "UKR"
 title: "IM"
+peakRating:
+  rating: 2504
+  month: "February 2020"
 aliases:
   - "Mykola Bortnyk"
 highlights:

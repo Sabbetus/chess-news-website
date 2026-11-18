@@ -5,6 +5,9 @@ born: "1971-11-17"
 birthplace: "Truro, Cornwall, England"
 federation: "ENG"
 title: "GM"
+peakRating:
+  rating: 2761
+  month: "September 2013"
 aliases:
   - "Michael Adams"
 highlights:

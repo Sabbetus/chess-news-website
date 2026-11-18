@@ -3,6 +3,9 @@ name: "Mukhammadzokhid Suyarov"
 fideId: "14210495"
 federation: "UZB"
 title: "GM"
+peakRating:
+  rating: 2555
+  month: "July 2026"
 aliases:
   - "Mukhammadzokhid Suyarov"
 highlights:

@@ -4,6 +4,9 @@ fideId: "34254854"
 born: "2010-03-23"
 federation: "FID"
 title: "GM"
+peakRating:
+  rating: 2552
+  month: "April 2026"
 aliases:
   - "Artem Uskov"
 highlights:

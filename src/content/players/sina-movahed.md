@@ -6,6 +6,9 @@ birthplace: "Ahvaz, Iran"
 federation: "IRI"
 title: "GM"
 titleYear: 2024
+peakRating:
+  rating: 2597
+  month: "June 2026"
 aliases:
   - "Sina Movahed"
 highlights:

@@ -4,6 +4,9 @@ fideId: "54180058"
 born: "2009-05-06"
 federation: "FID"
 title: "IM"
+peakRating:
+  rating: 2456
+  month: "May 2026"
 aliases:
   - "Anna Shukhman"
 highlights:

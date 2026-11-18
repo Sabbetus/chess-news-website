@@ -6,6 +6,9 @@ birthplace: "Sharjah, United Arab Emirates"
 federation: "UAE"
 title: "GM"
 titleYear: 2009
+peakRating:
+  rating: 2690
+  month: "October 2021"
 aliases:
   - "Salem Saleh"
   - "A.R. Saleh Salem"

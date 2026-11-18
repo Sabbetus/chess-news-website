@@ -6,6 +6,9 @@ birthplace: "Krepcha, Bulgaria"
 federation: "BUL"
 title: "IM"
 titleYear: 2019
+peakRating:
+  rating: 2449
+  month: "June 2024"
 aliases:
   - "Nurgyul Salimova"
 highlights:

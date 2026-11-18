@@ -5,6 +5,9 @@ born: "1985-03-27"
 federation: "CZE"
 title: "GM"
 titleYear: 2002
+peakRating:
+  rating: 2751
+  month: "May 2015"
 aliases:
   - "David Navara"
 highlights:

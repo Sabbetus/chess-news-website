@@ -6,6 +6,9 @@ birthplace: "Chennai, India"
 federation: "IND"
 title: "GM"
 titleYear: 2022
+peakRating:
+  rating: 2605
+  month: "September 2026"
 aliases:
   - "Bharath Subramaniyam"
   - "Bharath Subramaniyam H"

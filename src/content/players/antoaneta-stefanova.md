@@ -5,6 +5,9 @@ born: "1979-04-19"
 birthplace: "Sofia, Bulgaria"
 federation: "BUL"
 title: "GM"
+peakRating:
+  rating: 2560
+  month: "January 2003"
 aliases:
   - "Antoaneta Stefanova"
 highlights:

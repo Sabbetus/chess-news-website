@@ -4,6 +4,9 @@ fideId: "8601283"
 born: "1985-04-06"
 federation: "CHN"
 title: "GM"
+peakRating:
+  rating: 2579
+  month: "September 2013"
 aliases:
   - "Zhao Xue"
 highlights:

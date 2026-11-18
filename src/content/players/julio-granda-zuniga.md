@@ -5,6 +5,9 @@ born: "1967-02-25"
 birthplace: "Camaná, Peru"
 federation: "PER"
 title: "GM"
+peakRating:
+  rating: 2699
+  month: "June 2016"
 aliases:
   - "Julio Granda Zúñiga"
   - "Julio Granda"

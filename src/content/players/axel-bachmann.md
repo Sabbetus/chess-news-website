@@ -4,6 +4,9 @@ fideId: "3700488"
 born: "1989-11-04"
 federation: "PAR"
 title: "GM"
+peakRating:
+  rating: 2662
+  month: "July 2017"
 aliases:
   - "Axel Bachmann"
   - "Axel Bachmann Schiavo"

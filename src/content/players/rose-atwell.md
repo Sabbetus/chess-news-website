@@ -4,6 +4,9 @@ fideId: "30951011"
 born: "2009-01-28"
 federation: "USA"
 title: "IM"
+peakRating:
+  rating: 2410
+  month: "June 2026"
 aliases:
   - "Rose Atwell"
 highlights:

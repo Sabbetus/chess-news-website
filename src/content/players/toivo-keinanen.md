@@ -5,6 +5,9 @@ born: "2002-10-02"
 federation: "FIN"
 title: "IM"
 titleYear: 2019
+peakRating:
+  rating: 2557
+  month: "October 2024"
 aliases:
   - "Toivo Keinänen"
   - "Toivo Keinanen"

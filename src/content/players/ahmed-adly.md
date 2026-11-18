@@ -6,6 +6,9 @@ birthplace: "Cairo, Egypt"
 federation: "EGY"
 title: "GM"
 titleYear: 2005
+peakRating:
+  rating: 2643
+  month: "March 2018"
 aliases:
   - "Ahmed Adly"
 highlights:

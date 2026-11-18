@@ -5,6 +5,9 @@ born: "1985-06-25"
 birthplace: "Mezhdurechensk"
 federation: "UKR"
 title: "GM"
+peakRating:
+  rating: 2723
+  month: "January 2014"
 aliases:
   - "Anton Korobov"
 highlights:

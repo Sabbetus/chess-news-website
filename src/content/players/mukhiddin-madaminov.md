@@ -5,6 +5,9 @@ born: "2006-11-02"
 federation: "UZB"
 title: "GM"
 titleYear: 2024
+peakRating:
+  rating: 2612
+  month: "October 2026"
 aliases:
   - "Mukhiddin Madaminov"
   - "Muhiddin Madaminov"

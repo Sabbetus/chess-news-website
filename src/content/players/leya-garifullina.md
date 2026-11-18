@@ -4,6 +4,9 @@ fideId: "34127035"
 born: "2004-11-05"
 federation: "FID"
 title: "IM"
+peakRating:
+  rating: 2477
+  month: "August 2025"
 aliases:
   - "Leya Garifullina"
 highlights:

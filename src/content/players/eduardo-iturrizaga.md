@@ -5,6 +5,9 @@ born: "1989-11-01"
 federation: "ESP"
 title: "GM"
 titleYear: 2008
+peakRating:
+  rating: 2673
+  month: "March 2017"
 aliases:
   - "Eduardo Iturrizaga"
   - "Eduardo Iturrizaga Bonelli"

@@ -6,6 +6,9 @@ birthplace: "Ivano-Frankivsk, Ukraine"
 federation: "UKR"
 title: "GM"
 titleYear: 2012
+peakRating:
+  rating: 2669
+  month: "May 2015"
 aliases:
   - "Volodymyr Onyshchuk"
 highlights:

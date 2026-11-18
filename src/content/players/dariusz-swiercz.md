@@ -6,6 +6,9 @@ birthplace: "Tarnowskie Góry, Poland"
 federation: "USA"
 title: "GM"
 titleYear: 2009
+peakRating:
+  rating: 2670
+  month: "August 2019"
 aliases:
   - "Dariusz Świercz"
   - "Dariusz Swiercz"

@@ -4,6 +4,9 @@ fideId: "44144474"
 born: "2009-02-09"
 federation: "FID"
 title: "GM"
+peakRating:
+  rating: 2572
+  month: "January 2026"
 aliases:
   - "Savva Vetokhin"
 highlights:

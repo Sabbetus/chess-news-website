@@ -4,6 +4,9 @@ fideId: "30941849"
 born: "2009-04-22"
 federation: "USA"
 title: "GM"
+peakRating:
+  rating: 2544
+  month: "January 2026"
 aliases:
   - "Brewington Hardaway"
 highlights:

@@ -5,6 +5,9 @@ born: "1993-06-03"
 federation: "SWE"
 title: "GM"
 titleYear: 2010
+peakRating:
+  rating: 2694
+  month: "March 2019"
 aliases:
   - "Nils Grandelius"
 highlights:

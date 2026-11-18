@@ -5,6 +5,9 @@ born: "1971-12-07"
 birthplace: "Baku"
 federation: "USA"
 title: "GM"
+peakRating:
+  rating: 2713
+  month: "July 2006"
 aliases:
   - "Vladimir Akopian"
 highlights:

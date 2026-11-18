@@ -4,6 +4,9 @@ fideId: "4657101"
 born: "1997-05-21"
 federation: "GER"
 title: "GM"
+peakRating:
+  rating: 2651
+  month: "April 2022"
 aliases:
   - "Rasmus Svane"
 highlights:

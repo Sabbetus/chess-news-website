@@ -163,6 +163,16 @@
   .hide-mobile {
     display: none;
   }
+  /* Narrow screens: less padding and gap so facts fit on one line. */
+  .facts {
+    gap: 6px 12px;
+    padding: 12px 12px;
+    font-size: 15px;
+  }
+  .facts dt {
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
 }
 .show-all summary {
   cursor: pointer;

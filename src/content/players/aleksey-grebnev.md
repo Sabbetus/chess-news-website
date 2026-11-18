@@ -4,6 +4,9 @@ fideId: "34189030"
 born: "2006-07-26"
 federation: "FID"
 title: "GM"
+peakRating:
+  rating: 2627
+  month: "April 2026"
 aliases:
   - "Aleksey Grebnev"
   - "Alexey Grebnev"

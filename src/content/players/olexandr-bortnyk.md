@@ -5,6 +5,9 @@ born: "1996-10-18"
 federation: "UKR"
 title: "GM"
 titleYear: 2015
+peakRating:
+  rating: 2610
+  month: "December 2017"
 aliases:
   - "Olexandr Bortnyk"
   - "Oleksandr Bortnyk"

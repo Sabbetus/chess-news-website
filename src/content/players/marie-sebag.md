@@ -4,6 +4,9 @@ fideId: "617822"
 born: "1986-10-15"
 federation: "FRA"
 title: "GM"
+peakRating:
+  rating: 2537
+  month: "March 2013"
 aliases:
   - "Marie Sebag"
 highlights:

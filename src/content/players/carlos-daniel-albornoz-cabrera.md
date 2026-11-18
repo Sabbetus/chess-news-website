@@ -5,6 +5,9 @@ born: "2000-12-26"
 federation: "CUB"
 title: "GM"
 titleYear: 2019
+peakRating:
+  rating: 2612
+  month: "April 2024"
 aliases:
   - "Carlos Daniel Albornoz Cabrera"
   - "Carlos Albornoz"

@@ -5,6 +5,9 @@ born: "1978-02-25"
 birthplace: "Kyiv"
 federation: "UKR"
 title: "GM"
+peakRating:
+  rating: 2656
+  month: "October 2014"
 aliases:
   - "Vladimir Baklan"
   - "Volodymyr Baklan"

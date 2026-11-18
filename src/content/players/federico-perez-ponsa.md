@@ -6,6 +6,9 @@ birthplace: "Buenos Aires, Argentina"
 federation: "ARG"
 title: "GM"
 titleYear: 2011
+peakRating:
+  rating: 2594
+  month: "October 2017"
 aliases:
   - "Federico Perez Ponsa"
   - "Federico Pérez Ponsa"

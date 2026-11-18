@@ -5,6 +5,9 @@ born: "1973-02-14"
 federation: "NED"
 title: "GM"
 titleYear: 1991
+peakRating:
+  rating: 2699
+  month: "October 2005"
 aliases:
   - "Sergei Tiviakov"
 highlights:

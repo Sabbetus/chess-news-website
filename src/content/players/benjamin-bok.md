@@ -6,6 +6,9 @@ birthplace: "Lelystad, Netherlands"
 federation: "NED"
 title: "GM"
 titleYear: 2014
+peakRating:
+  rating: 2645
+  month: "July 2019"
 aliases:
   - "Benjamin Bok"
 highlights:

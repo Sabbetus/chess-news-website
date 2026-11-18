@@ -6,6 +6,9 @@ birthplace: "Qingdao, China"
 federation: "CHN"
 title: "GM"
 titleYear: 2024
+peakRating:
+  rating: 2599
+  month: "July 2026"
 aliases:
   - "Xiao Tong"
   - "Tong Xiao"

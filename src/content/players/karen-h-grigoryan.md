@@ -6,6 +6,9 @@ birthplace: "Yerevan, Armenia"
 federation: "ARM"
 title: "GM"
 titleYear: 2013
+peakRating:
+  rating: 2666
+  month: "January 2021"
 aliases:
   - "Karen H. Grigoryan"
   - "Karen Grigoryan"

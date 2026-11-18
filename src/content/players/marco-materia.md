@@ -4,6 +4,9 @@ fideId: "45150451"
 born: "2009-03-24"
 federation: "FRA"
 title: "IM"
+peakRating:
+  rating: 2530
+  month: "September 2026"
 aliases:
   - "Marco Materia"
 highlights:

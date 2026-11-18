@@ -5,6 +5,9 @@ born: "1978-11-03"
 federation: "ARM"
 title: "GM"
 titleYear: 1997
+peakRating:
+  rating: 2751
+  month: "January 2009"
 aliases:
   - "Sergei Movsesian"
 highlights:

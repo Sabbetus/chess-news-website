@@ -6,6 +6,9 @@ birthplace: "Thiruvananthapuram, Kerala, India"
 federation: "IND"
 title: "GM"
 titleYear: 2015
+peakRating:
+  rating: 2695
+  month: "February 2024"
 aliases:
   - "S. L. Narayanan"
   - "Narayanan S L"

@@ -5,6 +5,9 @@ born: "2006-06-21"
 birthplace: "Rasht, Iran"
 federation: "IRI"
 title: "GM"
+peakRating:
+  rating: 2640
+  month: "June 2025"
 aliases:
   - "Bardiya Daneshvar"
 highlights:

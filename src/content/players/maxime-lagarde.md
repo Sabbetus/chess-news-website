@@ -5,6 +5,9 @@ born: "1994-03-16"
 federation: "FRA"
 title: "GM"
 titleYear: 2013
+peakRating:
+  rating: 2659
+  month: "February 2020"
 aliases:
   - "Maxime Lagarde"
 highlights:

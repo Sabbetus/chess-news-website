@@ -5,6 +5,9 @@ born: "1972-07-04"
 federation: "ESP"
 title: "GM"
 titleYear: 1990
+peakRating:
+  rating: 2755
+  month: "July 1994"
 aliases:
   - "Alexei Shirov"
   - "Aleksejs Širovs"

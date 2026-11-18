@@ -4,6 +4,9 @@ fideId: "20000197"
 born: "2013-10-14"
 federation: "ARG"
 title: "GM"
+peakRating:
+  rating: 2560
+  month: "October 2026"
 aliases:
   - "Faustino Oro"
 highlights:

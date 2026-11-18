@@ -5,6 +5,9 @@ born: "1987-03-31"
 federation: "CHN"
 title: "GM"
 titleYear: 2004
+peakRating:
+  rating: 2756
+  month: "November 2010"
 aliases:
   - "Wang Yue"
 highlights:

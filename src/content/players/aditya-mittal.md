@@ -6,6 +6,9 @@ birthplace: "Medhauli, Madhya Pradesh, India"
 federation: "IND"
 title: "GM"
 titleYear: 2023
+peakRating:
+  rating: 2624
+  month: "October 2025"
 aliases:
   - "Aditya Mittal"
 highlights:

@@ -4,6 +4,9 @@ fideId: "3802272"
 born: "1995-07-30"
 federation: "PER"
 title: "GM"
+peakRating:
+  rating: 2689
+  month: "November 2018"
 aliases:
   - "Jorge Cori"
 highlights:

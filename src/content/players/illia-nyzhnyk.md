@@ -6,6 +6,9 @@ birthplace: "Vinnytsia, Ukraine"
 federation: "UKR"
 title: "GM"
 titleYear: 2011
+peakRating:
+  rating: 2692
+  month: "April 2022"
 aliases:
   - "Illia Nyzhnyk"
   - "Ilya Nyzhnyk"

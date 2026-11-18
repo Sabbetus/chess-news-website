@@ -6,6 +6,9 @@ birthplace: "Paris, France"
 federation: "FRA"
 title: "GM"
 titleYear: 2016
+peakRating:
+  rating: 2686
+  month: "August 2022"
 aliases:
   - "Jules Moussard"
 highlights:

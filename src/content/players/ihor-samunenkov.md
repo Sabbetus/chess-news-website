@@ -5,6 +5,9 @@ born: "2009-06-15"
 birthplace: "Kyiv, Ukraine"
 federation: "UKR"
 title: "GM"
+peakRating:
+  rating: 2616
+  month: "July 2026"
 aliases:
   - "Ihor Samunenkov"
   - "Igor Samunenkov"

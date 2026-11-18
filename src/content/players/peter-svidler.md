@@ -4,6 +4,9 @@ fideId: "4102142"
 born: "1976-06-17"
 federation: "FID"
 title: "GM"
+peakRating:
+  rating: 2769
+  month: "May 2013"
 aliases:
   - "Peter Svidler"
   - "Pyotr Svidler"

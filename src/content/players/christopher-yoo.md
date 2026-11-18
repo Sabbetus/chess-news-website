@@ -6,6 +6,9 @@ birthplace: "Fremont, California, United States"
 federation: "USA"
 title: "GM"
 titleYear: 2022
+peakRating:
+  rating: 2616
+  month: "July 2024"
 aliases:
   - "Christopher Yoo"
   - "Christopher Woojin Yoo"

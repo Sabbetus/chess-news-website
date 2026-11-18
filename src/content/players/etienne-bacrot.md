@@ -6,6 +6,9 @@ birthplace: "Lille, France"
 federation: "FRA"
 title: "GM"
 titleYear: 1997
+peakRating:
+  rating: 2749
+  month: "November 2013"
 aliases:
   - "Étienne Bacrot"
   - "Etienne Bacrot"

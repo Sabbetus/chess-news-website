@@ -5,6 +5,9 @@ born: "2005-10-01"
 federation: "BEL"
 title: "GM"
 titleYear: 2021
+peakRating:
+  rating: 2665
+  month: "March 2025"
 aliases:
   - "Daniel Dardha"
 highlights:

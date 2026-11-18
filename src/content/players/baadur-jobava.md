@@ -5,6 +5,9 @@ born: "1983-11-26"
 birthplace: "Gali, Georgia"
 federation: "GEO"
 title: "GM"
+peakRating:
+  rating: 2734
+  month: "September 2012"
 aliases:
   - "Baadur Jobava"
 highlights:

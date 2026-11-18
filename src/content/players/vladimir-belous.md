@@ -5,6 +5,9 @@ born: "1993-07-29"
 federation: "RUS"
 title: "GM"
 titleYear: 2013
+peakRating:
+  rating: 2587
+  month: "May 2017"
 aliases:
   - "Vladimir Belous"
 highlights:

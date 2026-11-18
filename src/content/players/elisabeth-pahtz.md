@@ -6,6 +6,9 @@ birthplace: "Erfurt, Germany"
 federation: "GER"
 title: "GM"
 titleYear: 2022
+peakRating:
+  rating: 2513
+  month: "September 2018"
 aliases:
   - "Elisabeth Pähtz"
   - "Elisabeth Paehtz"

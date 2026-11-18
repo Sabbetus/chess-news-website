@@ -4,6 +4,9 @@ fideId: "1188062"
 born: "2001-12-22"
 federation: "POL"
 title: "GM"
+peakRating:
+  rating: 2625
+  month: "August 2026"
 aliases:
   - "Szymon Gumularz"
 highlights:

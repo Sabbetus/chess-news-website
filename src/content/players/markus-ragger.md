@@ -4,6 +4,9 @@ fideId: "1610856"
 born: "1988-02-05"
 federation: "AUT"
 title: "GM"
+peakRating:
+  rating: 2703
+  month: "February 2017"
 aliases:
   - "Markus Ragger"
 highlights:
