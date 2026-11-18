@@ -314,6 +314,16 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 1 consecutive clean batch.**
+- 2026-11-18, site (user's call): new rankings -- open rapid and blitz
+  top 100 (/rankings/rapid/, /rankings/blitz/) and junior and girls
+  classical top 25 (/rankings/juniors/, /rankings/girls/; born in the
+  list's year minus 20 or later), next to the open classical top 100 and
+  women's top 25. scripts/fide_ratings.py builds all six from FIDE's
+  standard, rapid and blitz lists each month (a failed rapid/blitz
+  download keeps last month's list); all pages share
+  src/components/RankingPage.astro. Players without a page show unlinked;
+  the monthly player-pages task still covers only the open and women's
+  lists.
 - 2026-11-18: drafts/2026-11-18 clean (streak 0 -> 1, user's call: the
   source sentence is ambiguous enough that neither of us was sure, so it
   can't be a reset). Fixed: the

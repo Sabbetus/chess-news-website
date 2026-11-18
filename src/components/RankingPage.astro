@@ -1,0 +1,192 @@
+---
+// One rankings page. Every list (open classical, rapid and blitz top 100;
+// women's, junior and girls classical top 25) is built from FIDE's monthly
+// lists by scripts/fide_ratings.py into data/fide-top100.json and shares
+// this layout, table and tab row (user's call, 2026-11-18).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/hubs.css';
+import RankingTable from './RankingTable.astro';
+import { TOP100, periodLabel, playerPages, longDate, type RankedPlayer } from '../lib/hubs';
+
+export type ListKey = 'players' | 'rapid' | 'blitz' | 'women' | 'juniors' | 'girls';
+
+interface Props {
+  list: ListKey;
+}
+const { list } = Astro.props;
+
+const month = periodLabel(TOP100.period);
+const cutoff = (TOP100 as { juniorCutoff?: number }).juniorCutoff;
+const rows = ((TOP100 as Record<string, unknown>)[list] ?? []) as RankedPlayer[];
+
+const META: Record<ListKey, { path: string; h1: string; title: string; lede: string; who: string; source: string }> = {
+  players: {
+    path: '/rankings/',
+    h1: 'FIDE Top 100',
+    title: `FIDE Top 100 Chess Players, ${month}`,
+    lede: "The world's 100 highest-rated active players in classical chess, from FIDE's official standard rating list.",
+    who: "top 100 active chess players",
+    source: 'FIDE standard rating list',
+  },
+  rapid: {
+    path: '/rankings/rapid/',
+    h1: 'FIDE Rapid Top 100',
+    title: `FIDE Rapid Top 100 Chess Players, ${month}`,
+    lede: "The world's 100 highest-rated active players in rapid chess, from FIDE's official rapid rating list.",
+    who: 'top 100 active rapid players',
+    source: 'FIDE rapid rating list',
+  },
+  blitz: {
+    path: '/rankings/blitz/',
+    h1: 'FIDE Blitz Top 100',
+    title: `FIDE Blitz Top 100 Chess Players, ${month}`,
+    lede: "The world's 100 highest-rated active players in blitz chess, from FIDE's official blitz rating list.",
+    who: 'top 100 active blitz players',
+    source: 'FIDE blitz rating list',
+  },
+  women: {
+    path: '/rankings/women/',
+    h1: "FIDE Women's Top 25",
+    title: `FIDE Women's Top 25 Chess Players, ${month}`,
+    lede: "The 25 highest-rated active women in classical chess, from FIDE's official standard rating list.",
+    who: 'top 25 active women chess players',
+    source: 'FIDE standard rating list',
+  },
+  juniors: {
+    path: '/rankings/juniors/',
+    h1: 'FIDE Junior Top 25',
+    title: `FIDE Junior Top 25 Chess Players (Under 20), ${month}`,
+    lede: `The 25 highest-rated active juniors in classical chess: players born in ${cutoff} or later, from FIDE's official standard rating list.`,
+    who: 'top 25 active junior chess players (under 20)',
+    source: 'FIDE standard rating list',
+  },
+  girls: {
+    path: '/rankings/girls/',
+    h1: 'FIDE Girls Top 25',
+    title: `FIDE Girls Top 25 Chess Players (Under 20), ${month}`,
+    lede: `The 25 highest-rated active girls in classical chess: players born in ${cutoff} or later, from FIDE's official standard rating list.`,
+    who: 'top 25 active girls chess players (under 20)',
+    source: 'FIDE standard rating list',
+  },
+};
+const meta = META[list];
+
+const TABS: { key: ListKey; label: string }[] = [
+  { key: 'players', label: 'Classical' },
+  { key: 'rapid', label: 'Rapid' },
+  { key: 'blitz', label: 'Blitz' },
+  { key: 'women', label: 'Women' },
+  { key: 'juniors', label: 'Juniors' },
+  { key: 'girls', label: 'Girls' },
+];
+
+const pages = await playerPages();
+const pageById = new Map(pages.map((p) => [p.data.fideId, p]));
+const leader = rows[0];
+const description = `The world's ${meta.who} on FIDE's ${month} list, with each player's rating, monthly change and federation.${
+  leader ? ` ${leader.name} leads on ${leader.rating}.` : ''
+}`;
+const siteURL = new URL(meta.path, Astro.site).toString();
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: meta.title,
+    url: siteURL,
+    numberOfItems: rows.length,
+    itemListElement: rows.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      ...(pageById.has(p.fideId) ? { url: new URL(`/players/${pageById.get(p.fideId)!.slug}/`, Astro.site).toString() } : {}),
+    })),
+  },
+];
+---
+
+<BaseLayout title={`${meta.title} | The Chess Herald`} description={description} activeSection="rankings" jsonLd={jsonLd}>
+  <div class="hub">
+    <header class="hub-head">
+      <h1>{meta.h1}</h1>
+      <p class="list-month">{month} rating list</p>
+      <p class="hub-lede">{meta.lede} It updates each month when FIDE publishes a new list.</p>
+    </header>
+
+    <nav class="rank-switch" aria-label="Rankings">
+      <div class="rank-group" role="group" aria-label="Open">
+        <span class="rank-group-label">Open</span>
+        {TABS.slice(0, 3).map((t) => (
+          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
+            {t.label}
+          </a>
+        ))}
+      </div>
+      <div class="rank-group" role="group" aria-label="Classical">
+        <span class="rank-group-label">Classical</span>
+        {TABS.slice(3).map((t) => (
+          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
+            {t.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <section class="hub-section top100">
+      <RankingTable rows={rows} pageById={pageById} />
+      <p class="note">
+        Source: <a href={TOP100.sourceUrl} target="_blank" rel="noopener">{meta.source}</a>, {month}. Active players
+        only. +/− is the change from the previous month's list; age is approximate (birth year only). Updated
+        {longDate(new Date(`${TOP100.fetchedAt}T00:00:00Z`))}.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .list-month {
+    margin: -4px 0 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .rank-switch {
+    max-width: var(--content-width);
+    margin: 0 auto 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .rank-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .rank-group-label {
+    margin-right: 4px;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .rank-switch a {
+    padding: 7px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .rank-switch a:hover {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+  .rank-switch a.on {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--paper);
+  }
+</style>

@@ -31,9 +31,16 @@ OUT_PATH = ROOT / "data" / "fide-top100.json"
 
 CURRENT_URL = "https://ratings.fide.com/download/standard_rating_list.zip"
 ARCHIVE_URL = "https://ratings.fide.com/download/standard_{mon}{yy}frl.zip"
+# Rapid and blitz lists come in the same format (user's call, 2026-11-18:
+# open rapid and blitz top 100, plus junior and girls classical top 25).
+SPEED_CURRENT_URL = "https://ratings.fide.com/download/{kind}_rating_list.zip"
+SPEED_ARCHIVE_URL = "https://ratings.fide.com/download/{kind}_{mon}{yy}frl.zip"
 USER_AGENT = "ChessHeraldBot/1.0 (+https://chessherald.com/about/)"
 TOP_N = 100
 WOMEN_TOP_N = 25
+JUNIOR_TOP_N = 25
+# FIDE's junior lists: players who are 20 or younger in the list's year.
+JUNIOR_MAX_AGE = 20
 MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 
 # Federations whose players FIDE lists family name first and English-language
@@ -58,6 +65,8 @@ def download_list(url: str, attempts: int = 3) -> str:
 
 
 def display_name(fide_name: str, federation: str) -> str:
+    # FIDE tags some names with a status in brackets ("Xiao, Tong(QD)").
+    fide_name = re.sub(r"\s*\([A-Z]{1,4}\)\s*$", "", fide_name.strip())
     if "," not in fide_name:
         return fide_name.strip()
     family, given = (part.strip() for part in fide_name.split(",", 1))
@@ -127,19 +136,50 @@ def ranked(current: list[dict], previous: list[dict], top_n: int) -> list[dict]:
     return rows
 
 
-def build_table(period: str, current: list[dict], previous: list[dict]) -> dict:
-    """The open top 100, plus the women's top 25 (FIDE's women's list is the
-    same rating list filtered to female players)."""
+def is_junior(player: dict, list_year: int) -> bool:
+    return player["birthYear"] is not None and player["birthYear"] >= list_year - JUNIOR_MAX_AGE
+
+
+def build_table(period: str, current: list[dict], previous: list[dict], speed: dict | None = None) -> dict:
+    """The open top 100, the women's top 25 (FIDE's women's list is the same
+    rating list filtered to female players), the junior and girls top 25
+    (the same list filtered by birth year), and the open rapid and blitz
+    top 100 from their own lists (`speed`: kind -> (current, previous))."""
+    year = period_to_date(period).year
     women_now = [p for p in current if p["sex"] == "F"]
     women_prev = [p for p in previous if p["sex"] == "F"]
-    return {
+    # The previous month's juniors use this list's cutoff, so a January
+    # list doesn't show last year's 20-year-olds as rank movement.
+    juniors_now = [p for p in current if is_junior(p, year)]
+    juniors_prev = [p for p in previous if is_junior(p, year)]
+    table = {
         "period": period_to_date(period).strftime("%Y-%m"),
         "source": "FIDE standard rating list",
         "sourceUrl": "https://ratings.fide.com/",
         "fetchedAt": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "players": ranked(current, previous, TOP_N),
         "women": ranked(women_now, women_prev, WOMEN_TOP_N),
+        "juniors": ranked(juniors_now, juniors_prev, JUNIOR_TOP_N),
+        "girls": ranked([p for p in juniors_now if p["sex"] == "F"], [p for p in juniors_prev if p["sex"] == "F"], JUNIOR_TOP_N),
+        "juniorCutoff": year - JUNIOR_MAX_AGE,
     }
+    for kind, (now, prev) in (speed or {}).items():
+        table[kind] = ranked(now, prev, TOP_N)
+    return table
+
+
+def fetch_speed(kind: str, period: str) -> tuple[list[dict], list[dict]]:
+    """This month's and last month's rapid or blitz list (same period as
+    the standard list, or the step fails and the old data stays)."""
+    try:
+        got, now = parse_list(download_list(SPEED_CURRENT_URL.format(kind=kind)))
+    except Exception:  # noqa: BLE001 -- the dated file is the same list
+        got, now = parse_list(download_list(SPEED_ARCHIVE_URL.format(kind=kind, mon=period[:3].lower(), yy=period[3:])))
+    if got != period:
+        raise RuntimeError(f"{kind} list is {got}, standard list is {period}")
+    prev = previous_period(period)
+    _, before = parse_list(download_list(SPEED_ARCHIVE_URL.format(kind=kind, mon=prev[:3], yy=prev[3:])))
+    return now, before
 
 
 def main() -> None:
@@ -164,14 +204,25 @@ def main() -> None:
             return
         prev = previous_period(period)
         _, previous = parse_list(download_list(ARCHIVE_URL.format(mon=prev[:3], yy=prev[3:])))
-        table = build_table(period, current, previous)
+        speed = {}
+        for kind in ("rapid", "blitz"):
+            try:
+                speed[kind] = fetch_speed(kind, period)
+            except Exception as exc:  # noqa: BLE001 -- keep last month's speed list
+                print(f"::warning::FIDE {kind} list skipped ({type(exc).__name__}: {exc}).")
+                if kind in stored:
+                    speed.pop(kind, None)
+        table = build_table(period, current, previous, speed)
+        for kind in ("rapid", "blitz"):
+            if kind not in table and kind in stored:
+                table[kind] = stored[kind]
     except Exception as exc:  # noqa: BLE001 -- best-effort, see module docstring
         # A GitHub Actions warning, not a quiet log line: a skipped refresh
         # left the October list on the site all of 1 November unnoticed.
         print(f"::warning::FIDE top 100 refresh skipped ({type(exc).__name__}: {exc}).")
         return
     OUT_PATH.write_text(json.dumps(table, ensure_ascii=False, indent=1) + "\n")
-    print(f"Wrote FIDE top 100 and women's top 25 for {table['period']}.")
+    print(f"Wrote FIDE lists for {table['period']}: " + ", ".join(k for k in ("players", "women", "juniors", "girls", "rapid", "blitz") if k in table) + ".")
 
 
 if __name__ == "__main__":

@@ -1219,3 +1219,19 @@ def test_player_page_crop_uses_uncropped_original_on_articles():
     import images
     photo = images.player_page_photo("Maxime Vachier-Lagrave", set())
     assert photo and "cropped" not in photo["src"].lower() and "cropped" not in photo["sourceUrl"].lower()
+
+
+def test_fide_lists_juniors_and_names():
+    # 2026-11-18: junior and girls lists filter the standard list by birth
+    # year (20 or younger in the list's year); FIDE status tags are dropped.
+    import fide_ratings as f
+    assert f.display_name("Xiao, Tong(QD)", "CHN") == "Xiao Tong"
+    cur = [
+        {"fideId": "1", "name": "A", "sex": "M", "birthYear": 2006, "rating": 2700, "federation": "X", "title": "GM", "games": 0},
+        {"fideId": "2", "name": "B", "sex": "F", "birthYear": 2008, "rating": 2500, "federation": "X", "title": "IM", "games": 0},
+        {"fideId": "3", "name": "C", "sex": "M", "birthYear": 2005, "rating": 2800, "federation": "X", "title": "GM", "games": 0},
+    ]
+    t = f.build_table("NOV26", cur, cur)
+    assert [p["name"] for p in t["juniors"]] == ["A", "B"]
+    assert [p["name"] for p in t["girls"]] == ["B"]
+    assert t["juniorCutoff"] == 2006
