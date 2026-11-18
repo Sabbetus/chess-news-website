@@ -1,6 +1,7 @@
 ---
 title: "Lasker Memorial and Two Norm Invitationals Lead North America's December List"
 publishDate: "2026-11-18"
+publishedAt: "2026-11-18T08:51:46Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/north-america/"
 lens: "tournament-db"

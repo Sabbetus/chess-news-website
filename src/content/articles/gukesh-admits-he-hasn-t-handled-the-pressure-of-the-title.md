@@ -1,6 +1,7 @@
 ---
 title: "Gukesh Admits He Hasn't Handled the Pressure of the Title"
 publishDate: "2026-11-18"
+publishedAt: "2026-11-18T08:51:46Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/gukesh-pressure-sindarov-world-championship"
 lens: "people"

@@ -1,6 +1,7 @@
 ---
 title: "Firouzja and Giri Take Semifinal Leads at Total Chess"
 publishDate: "2026-11-18"
+publishedAt: "2026-11-18T08:51:46Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-7"
 lens: "results"
