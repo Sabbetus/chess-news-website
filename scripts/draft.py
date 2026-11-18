@@ -1602,7 +1602,12 @@ meant Caruana; the draft gave it to So, the player named just before.) The same 
 told about a description used in place of a name ("the world number-one, who beat X in the Final"): \
 the facts belong to whoever holds that description, so resolve it before writing them down. \
 (Caught 2026-11-04: Chess.com's "the world number-one, who beat Lazavik in the 2025 Semifinal" \
-meant Carlsen; the draft gave the wins to Nakamura.)
+meant Carlsen; the draft gave the wins to Nakamura.) Pronouns too: a "he"/"she" in the \
+source belongs to the subject of its sentence, not to the last name mentioned, so resolve \
+each one before moving its facts to a name. (Caught 2026-11-18: in "Caruana did well out of \
+the opening, with Firouzja admitting ..., but he found a narrow path to safety and then was \
+even winning before taking a draw that clinched the day", "he" is Firouzja; the draft had \
+Caruana winning.)
 - Event name: if the piece is about a tournament, match or league, the opening paragraph \
 of the body must name it in full (the headline alone doesn't count). If it doesn't, add the \
 name to that paragraph with the smallest possible edit ("Round four in Saint Louis" -> \
