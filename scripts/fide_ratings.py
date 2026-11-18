@@ -193,6 +193,39 @@ def fetch_speed(kind: str, period: str) -> tuple[list[dict], list[dict]]:
     return now, before
 
 
+def page_fide_ids() -> set[str]:
+    ids = set()
+    for path in (Path(__file__).resolve().parent.parent / "src/content/players").glob("*.md"):
+        m = re.search(r'^fideId:\s*"?(\d+)"?', path.read_text(), re.M)
+        if m:
+            ids.add(m.group(1))
+    return ids
+
+
+def page_ratings(current: list[dict], speed: dict, stored: dict) -> dict:
+    """Current standard/rapid/blitz ratings of every player with a page,
+    ranked or not (user's call, 2026-11-18: a profile off every list still
+    shows its rating). A speed list that failed keeps last month's value."""
+    ids = page_fide_ids()
+    lists = {"standard": current}
+    for kind in ("rapid", "blitz"):
+        if kind in speed:
+            lists[kind] = speed[kind][0]
+    out = {}
+    for fid in sorted(ids):
+        entry = {}
+        for kind, players in lists.items():
+            hit = next((p for p in players if p["fideId"] == fid), None)
+            if hit:
+                entry[kind] = hit["rating"]
+        for kind in ("rapid", "blitz"):
+            if kind not in lists and kind in stored.get(fid, {}):
+                entry[kind] = stored[fid][kind]
+        if entry:
+            out[fid] = entry
+    return out
+
+
 def main() -> None:
     stored = json.loads(OUT_PATH.read_text()) if OUT_PATH.exists() else {}
     this_month = datetime.now(timezone.utc).strftime("%Y-%m")
@@ -224,6 +257,7 @@ def main() -> None:
                 if kind in stored:
                     speed.pop(kind, None)
         table = build_table(period, current, previous, speed)
+        table["pageRatings"] = page_ratings(current, speed, stored.get("pageRatings", {}))
         for kind in ("rapid", "blitz"):
             for key in [kind] + [kind + suffix for suffix in SPEED_CATEGORIES]:
                 if key not in table and key in stored:

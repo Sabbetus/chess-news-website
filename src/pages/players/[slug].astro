@@ -36,6 +36,7 @@ const ranking = RANK_LISTS.map(([key, control, label, href, phrase]) => {
   return entry ? { entry, control, label, href, phrase } : null;
 }).find(Boolean) ?? null;
 const rated = ranking?.entry;
+const pageRating: Record<string, number> = ((TOP100 as any).pageRatings ?? {})[d.fideId] ?? {};
 const coverage = await articlesMentioning([d.name, ...d.aliases], true);
 const titles = await titlesFor([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
@@ -93,15 +94,20 @@ const jsonLd = [
       <Portrait name={d.name} image={d.image} shape="portrait" />
       <dl class="facts">
         {ranking && (<><dt>{ranking.label}</dt><dd><a href={ranking.href}><strong>No. {ranking.entry.rank}</strong></a> ({month})</dd></>)}
-        {rated && (
-          <>
-            <dt>{ranking.control ? `${ranking.control} rating` : 'Rating'}</dt>
-            <dd>
-              <strong>{rated.rating}</strong>
-              {rated.change ? ` (${rated.change > 0 ? '+' : '−'}${Math.abs(rated.change)} this month)` : ''}
-            </dd>
-          </>
-        )}
+        {(['standard', 'rapid', 'blitz'] as const).map((kind) => {
+          const value = pageRating[kind] ?? (rated && ranking && (ranking.control.toLowerCase() || 'standard') === kind ? rated.rating : undefined);
+          if (!value) return null;
+          const change = rated && ranking && (ranking.control.toLowerCase() || 'standard') === kind ? rated.change : 0;
+          return (
+            <>
+              <dt>{kind === 'standard' ? 'Classical rating' : kind === 'rapid' ? 'Rapid rating' : 'Blitz rating'}</dt>
+              <dd>
+                <strong>{value}</strong>
+                {change ? ` (${change > 0 ? '+' : '−'}${Math.abs(change)} this month)` : ''}
+              </dd>
+            </>
+          );
+        })}
         {d.peakRating && (<><dt>Peak rating</dt><dd>{d.peakRating.rating} ({d.peakRating.month})</dd></>)}
         <dt>Title</dt>
         <dd>{d.title === 'GM' ? 'Grandmaster' : d.title}{d.titleYear ? ` (${d.titleYear})` : ''}</dd>

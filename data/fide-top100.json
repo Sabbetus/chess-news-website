@@ -2,7 +2,7 @@
  "period": "2026-11",
  "source": "FIDE standard rating list",
  "sourceUrl": "https://ratings.fide.com/",
- "fetchedAt": "2026-11-01",
+ "fetchedAt": "2026-11-18",
  "players": [
   {
    "fideId": "1503014",
@@ -6852,5 +6852,1172 @@
    "change": 0,
    "previousRank": 23
   }
- ]
+ ],
+ "pageRatings": {
+  "1000268": {
+   "standard": 2626,
+   "rapid": 2556,
+   "blitz": 2556
+  },
+  "1007998": {
+   "standard": 2578,
+   "rapid": 2642
+  },
+  "1008013": {
+   "standard": 2545,
+   "rapid": 2608,
+   "blitz": 2637
+  },
+  "1017063": {
+   "standard": 2560,
+   "rapid": 2580,
+   "blitz": 2612
+  },
+  "1039784": {
+   "standard": 2715,
+   "rapid": 2601,
+   "blitz": 2659
+  },
+  "1051563": {
+   "standard": 2317,
+   "rapid": 2220
+  },
+  "1058401": {
+   "standard": 2429,
+   "rapid": 2366,
+   "blitz": 2428
+  },
+  "10601619": {
+   "standard": 2582,
+   "rapid": 2550,
+   "blitz": 2613
+  },
+  "1118358": {
+   "standard": 2654,
+   "rapid": 2611,
+   "blitz": 2584
+  },
+  "1126881": {
+   "rapid": 2646,
+   "blitz": 2577
+  },
+  "11618736": {
+   "standard": 2226,
+   "rapid": 2267,
+   "blitz": 2228
+  },
+  "1170546": {
+   "standard": 2741,
+   "rapid": 2685,
+   "blitz": 2704
+  },
+  "117927": {
+   "standard": 2546,
+   "rapid": 2593,
+   "blitz": 2621
+  },
+  "1188062": {
+   "standard": 2608,
+   "rapid": 2541,
+   "blitz": 2626
+  },
+  "1226380": {
+   "standard": 2661,
+   "rapid": 2609,
+   "blitz": 2650
+  },
+  "12401137": {
+   "standard": 2732,
+   "rapid": 2626,
+   "blitz": 2675
+  },
+  "12401153": {
+   "standard": 2585,
+   "rapid": 2506,
+   "blitz": 2620
+  },
+  "12521213": {
+   "standard": 2720,
+   "rapid": 2575,
+   "blitz": 2611
+  },
+  "12539929": {
+   "standard": 2705,
+   "rapid": 2689,
+   "blitz": 2638
+  },
+  "12573981": {
+   "standard": 2757,
+   "rapid": 2737,
+   "blitz": 2797
+  },
+  "12576468": {
+   "standard": 2563,
+   "rapid": 2532,
+   "blitz": 2549
+  },
+  "12923044": {
+   "standard": 2657,
+   "rapid": 2497,
+   "blitz": 2554
+  },
+  "12940690": {
+   "standard": 2761,
+   "rapid": 2635,
+   "blitz": 2628
+  },
+  "1304364": {
+   "standard": 2587,
+   "rapid": 2616
+  },
+  "13300032": {
+   "standard": 2562,
+   "rapid": 2590,
+   "blitz": 2645
+  },
+  "13300210": {
+   "standard": 2391,
+   "rapid": 2298,
+   "blitz": 2366
+  },
+  "13300474": {
+   "standard": 2719,
+   "rapid": 2738,
+   "blitz": 2714
+  },
+  "13300881": {
+   "standard": 2614,
+   "rapid": 2622,
+   "blitz": 2574
+  },
+  "13301004": {
+   "standard": 2464,
+   "rapid": 2622,
+   "blitz": 2619
+  },
+  "13301527": {
+   "rapid": 2588,
+   "blitz": 2613
+  },
+  "13302507": {
+   "standard": 2637,
+   "rapid": 2530,
+   "blitz": 2557
+  },
+  "13306553": {
+   "standard": 2669,
+   "rapid": 2625,
+   "blitz": 2686
+  },
+  "13306677": {
+   "standard": 2644,
+   "rapid": 2558,
+   "blitz": 2595
+  },
+  "13306766": {
+   "standard": 2648,
+   "rapid": 2622,
+   "blitz": 2578
+  },
+  "13400924": {
+   "standard": 2689,
+   "rapid": 2640,
+   "blitz": 2659
+  },
+  "13401319": {
+   "standard": 2709,
+   "rapid": 2663,
+   "blitz": 2612
+  },
+  "13401653": {
+   "standard": 2632,
+   "rapid": 2628,
+   "blitz": 2648
+  },
+  "13409301": {
+   "standard": 2662,
+   "rapid": 2553,
+   "blitz": 2559
+  },
+  "13413937": {
+   "standard": 2692,
+   "rapid": 2581,
+   "blitz": 2566
+  },
+  "13515110": {
+   "standard": 2636,
+   "rapid": 2624,
+   "blitz": 2644
+  },
+  "13601520": {
+   "standard": 2580,
+   "rapid": 2631,
+   "blitz": 2610
+  },
+  "13601903": {
+   "standard": 2467,
+   "rapid": 2391,
+   "blitz": 2316
+  },
+  "13602993": {
+   "standard": 2463,
+   "rapid": 2409,
+   "blitz": 2295
+  },
+  "13708694": {
+   "standard": 2532,
+   "rapid": 2441,
+   "blitz": 2424
+  },
+  "13712799": {
+   "standard": 2355,
+   "rapid": 2147,
+   "blitz": 2154
+  },
+  "13712802": {
+   "standard": 2400,
+   "rapid": 2381,
+   "blitz": 2192
+  },
+  "13715658": {
+   "standard": 2505,
+   "rapid": 2484,
+   "blitz": 2499
+  },
+  "13729390": {
+   "standard": 2460,
+   "rapid": 2306,
+   "blitz": 2272
+  },
+  "13730096": {
+   "standard": 2292,
+   "rapid": 2133,
+   "blitz": 2239
+  },
+  "13730169": {
+   "standard": 2383,
+   "rapid": 2292,
+   "blitz": 2189
+  },
+  "14100010": {
+   "standard": 2635,
+   "rapid": 2619,
+   "blitz": 2621
+  },
+  "14101025": {
+   "standard": 2639,
+   "rapid": 2617,
+   "blitz": 2629
+  },
+  "14102196": {
+   "standard": 2525,
+   "rapid": 2624
+  },
+  "14102951": {
+   "standard": 2665,
+   "rapid": 2605
+  },
+  "14103320": {
+   "standard": 2625,
+   "rapid": 2663,
+   "blitz": 2625
+  },
+  "14105730": {
+   "standard": 2621,
+   "rapid": 2622,
+   "blitz": 2647
+  },
+  "14107180": {
+   "blitz": 2663
+  },
+  "14109336": {
+   "standard": 2506,
+   "rapid": 2422,
+   "blitz": 2422
+  },
+  "14111330": {
+   "standard": 2524,
+   "rapid": 2399,
+   "blitz": 2430
+  },
+  "14113147": {
+   "rapid": 2635,
+   "blitz": 2694
+  },
+  "14114038": {
+   "standard": 2617,
+   "rapid": 2643
+  },
+  "14114550": {
+   "standard": 2463,
+   "rapid": 2419,
+   "blitz": 2372
+  },
+  "14116804": {
+   "rapid": 2622
+  },
+  "14117908": {
+   "standard": 2651,
+   "rapid": 2589,
+   "blitz": 2610
+  },
+  "14118084": {
+   "standard": 2527,
+   "rapid": 2633,
+   "blitz": 2572
+  },
+  "14120828": {
+   "standard": 2604,
+   "rapid": 2607,
+   "blitz": 2684
+  },
+  "14120836": {
+   "standard": 2451,
+   "rapid": 2518,
+   "blitz": 2635
+  },
+  "14187086": {
+   "standard": 2610,
+   "rapid": 2489,
+   "blitz": 2544
+  },
+  "14198339": {
+   "standard": 2462,
+   "rapid": 2143,
+   "blitz": 2249
+  },
+  "14199220": {
+   "standard": 2321,
+   "rapid": 2211,
+   "blitz": 2011
+  },
+  "14200244": {
+   "standard": 2655,
+   "rapid": 2630,
+   "blitz": 2549
+  },
+  "14203987": {
+   "standard": 2701,
+   "rapid": 2615,
+   "blitz": 2585
+  },
+  "14204118": {
+   "standard": 2772,
+   "rapid": 2704,
+   "blitz": 2819
+  },
+  "14204223": {
+   "standard": 2627,
+   "rapid": 2516,
+   "blitz": 2551
+  },
+  "14205483": {
+   "standard": 2782,
+   "rapid": 2755,
+   "blitz": 2725
+  },
+  "14210363": {
+   "standard": 2310,
+   "rapid": 2285,
+   "blitz": 2398
+  },
+  "14210444": {
+   "standard": 2447,
+   "rapid": 2322,
+   "blitz": 2282
+  },
+  "14210495": {
+   "standard": 2549,
+   "rapid": 2465,
+   "blitz": 2576
+  },
+  "14210703": {
+   "standard": 2612,
+   "rapid": 2492,
+   "blitz": 2596
+  },
+  "14508150": {
+   "standard": 2630,
+   "rapid": 2569,
+   "blitz": 2580
+  },
+  "14603853": {
+   "rapid": 2627
+  },
+  "1503014": {
+   "standard": 2823,
+   "rapid": 2801,
+   "blitz": 2860
+  },
+  "1510045": {
+   "standard": 2647,
+   "rapid": 2557,
+   "blitz": 2633
+  },
+  "1512668": {
+   "standard": 2633,
+   "rapid": 2492,
+   "blitz": 2546
+  },
+  "160911": {
+   "standard": 2266,
+   "rapid": 2211,
+   "blitz": 2304
+  },
+  "1610856": {
+   "standard": 2569,
+   "rapid": 2605,
+   "blitz": 2575
+  },
+  "1710400": {
+   "standard": 2596,
+   "rapid": 2611,
+   "blitz": 2592
+  },
+  "20000197": {
+   "standard": 2554,
+   "rapid": 2538,
+   "blitz": 2561
+  },
+  "2000024": {
+   "standard": 2586,
+   "rapid": 2639
+  },
+  "2004887": {
+   "standard": 2648,
+   "rapid": 2624
+  },
+  "2016192": {
+   "standard": 2792,
+   "rapid": 2718,
+   "blitz": 2800
+  },
+  "2020009": {
+   "standard": 2783,
+   "rapid": 2687,
+   "blitz": 2738
+  },
+  "2022036": {
+   "rapid": 2617,
+   "blitz": 2526
+  },
+  "2023970": {
+   "standard": 2649,
+   "rapid": 2639,
+   "blitz": 2622
+  },
+  "2040506": {
+   "standard": 2684,
+   "rapid": 2664,
+   "blitz": 2658
+  },
+  "2047640": {
+   "standard": 2671
+  },
+  "2056437": {
+   "standard": 2685,
+   "rapid": 2553,
+   "blitz": 2595
+  },
+  "2090732": {
+   "standard": 2453,
+   "rapid": 2347,
+   "blitz": 2300
+  },
+  "2093596": {
+   "standard": 2697,
+   "rapid": 2675,
+   "blitz": 2711
+  },
+  "21864080": {
+   "standard": 2598,
+   "rapid": 2420,
+   "blitz": 2429
+  },
+  "2209390": {
+   "standard": 2597,
+   "rapid": 2615,
+   "blitz": 2567
+  },
+  "2285525": {
+   "standard": 2661,
+   "rapid": 2620,
+   "blitz": 2560
+  },
+  "2293307": {
+   "standard": 2626,
+   "rapid": 2624,
+   "blitz": 2641
+  },
+  "240990": {
+   "standard": 2623,
+   "rapid": 2612,
+   "blitz": 2581
+  },
+  "24101605": {
+   "standard": 2653,
+   "rapid": 2707,
+   "blitz": 2712
+  },
+  "24116068": {
+   "standard": 2747,
+   "rapid": 2656,
+   "blitz": 2636
+  },
+  "24125890": {
+   "standard": 2656,
+   "rapid": 2611,
+   "blitz": 2655
+  },
+  "24126055": {
+   "standard": 2654,
+   "rapid": 2668,
+   "blitz": 2779
+  },
+  "24130737": {
+   "standard": 2691,
+   "rapid": 2701,
+   "blitz": 2726
+  },
+  "24133795": {
+   "standard": 2679,
+   "rapid": 2650,
+   "blitz": 2667
+  },
+  "24171760": {
+   "standard": 2514,
+   "rapid": 2423,
+   "blitz": 2382
+  },
+  "24174041": {
+   "standard": 2379,
+   "rapid": 2359,
+   "blitz": 2375
+  },
+  "24175439": {
+   "standard": 2683,
+   "rapid": 2658,
+   "blitz": 2645
+  },
+  "24249971": {
+   "standard": 2571,
+   "rapid": 2564,
+   "blitz": 2535
+  },
+  "24651516": {
+   "standard": 2671,
+   "rapid": 2583,
+   "blitz": 2608
+  },
+  "25059530": {
+   "standard": 2763,
+   "rapid": 2733,
+   "blitz": 2712
+  },
+  "25060783": {
+   "standard": 2679,
+   "rapid": 2592,
+   "blitz": 2582
+  },
+  "25092340": {
+   "standard": 2720,
+   "rapid": 2712,
+   "blitz": 2721
+  },
+  "25195425": {
+   "standard": 2335,
+   "rapid": 2082,
+   "blitz": 1956
+  },
+  "2805677": {
+   "standard": 2640,
+   "rapid": 2624,
+   "blitz": 2582
+  },
+  "2900084": {
+   "standard": 2695,
+   "rapid": 2607
+  },
+  "2902257": {
+   "standard": 2401,
+   "rapid": 2379,
+   "blitz": 2370
+  },
+  "2905540": {
+   "standard": 2609,
+   "rapid": 2612,
+   "blitz": 2553
+  },
+  "2915138": {
+   "standard": 2435,
+   "rapid": 2321,
+   "blitz": 2414
+  },
+  "30901561": {
+   "standard": 2627,
+   "rapid": 2502,
+   "blitz": 2527
+  },
+  "309095": {
+   "standard": 2619,
+   "rapid": 2598,
+   "blitz": 2628
+  },
+  "30909694": {
+   "standard": 2586,
+   "rapid": 2501,
+   "blitz": 2606
+  },
+  "30920019": {
+   "standard": 2644,
+   "rapid": 2585,
+   "blitz": 2541
+  },
+  "30929849": {
+   "standard": 2430,
+   "rapid": 2359,
+   "blitz": 2272
+  },
+  "30941822": {
+   "standard": 2474,
+   "rapid": 2410,
+   "blitz": 2406
+  },
+  "30941849": {
+   "standard": 2515,
+   "rapid": 2413,
+   "blitz": 2583
+  },
+  "30951011": {
+   "standard": 2319,
+   "blitz": 2230
+  },
+  "30952530": {
+   "standard": 2322,
+   "rapid": 2218,
+   "blitz": 2183
+  },
+  "30953499": {
+   "standard": 2635,
+   "rapid": 2542,
+   "blitz": 2540
+  },
+  "30973007": {
+   "standard": 2281,
+   "rapid": 2241,
+   "blitz": 2357
+  },
+  "310204": {
+   "standard": 2599,
+   "rapid": 2595,
+   "blitz": 2620
+  },
+  "3208923": {
+   "rapid": 2518,
+   "blitz": 2604
+  },
+  "33389454": {
+   "standard": 2349,
+   "rapid": 1888,
+   "blitz": 1806
+  },
+  "34109293": {
+   "standard": 2279,
+   "rapid": 2264,
+   "blitz": 2280
+  },
+  "34127035": {
+   "standard": 2437,
+   "rapid": 2315,
+   "blitz": 2414
+  },
+  "34189030": {
+   "standard": 2608,
+   "rapid": 2542,
+   "blitz": 2499
+  },
+  "34254854": {
+   "standard": 2537,
+   "rapid": 2513,
+   "blitz": 2545
+  },
+  "34378049": {
+   "standard": 2071,
+   "rapid": 2158,
+   "blitz": 2276
+  },
+  "35006916": {
+   "standard": 2488,
+   "rapid": 2400,
+   "blitz": 2345
+  },
+  "35009192": {
+   "standard": 2746,
+   "rapid": 2740,
+   "blitz": 2766
+  },
+  "35028561": {
+   "standard": 2617,
+   "rapid": 2548,
+   "blitz": 2520
+  },
+  "35028600": {
+   "standard": 2673,
+   "rapid": 2552,
+   "blitz": 2589
+  },
+  "3503240": {
+   "standard": 2732,
+   "rapid": 2641,
+   "blitz": 2604
+  },
+  "35042025": {
+   "standard": 2616,
+   "rapid": 2449,
+   "blitz": 2393
+  },
+  "35061887": {
+   "standard": 2405,
+   "rapid": 2350,
+   "blitz": 2233
+  },
+  "35080580": {
+   "standard": 2559,
+   "blitz": 2388
+  },
+  "35093487": {
+   "standard": 2645,
+   "rapid": 2592,
+   "blitz": 2678
+  },
+  "3518736": {
+   "standard": 2604,
+   "rapid": 2616,
+   "blitz": 2550
+  },
+  "358878": {
+   "standard": 2623,
+   "rapid": 2516
+  },
+  "36083534": {
+   "standard": 2641,
+   "rapid": 2589,
+   "blitz": 2590
+  },
+  "3700488": {
+   "standard": 2587,
+   "rapid": 2615,
+   "blitz": 2604
+  },
+  "3800024": {
+   "standard": 2606,
+   "blitz": 2606
+  },
+  "3801497": {
+   "standard": 2490,
+   "rapid": 2607,
+   "blitz": 2569
+  },
+  "3802272": {
+   "standard": 2572,
+   "rapid": 2612,
+   "blitz": 2592
+  },
+  "3805662": {
+   "standard": 2654,
+   "rapid": 2614,
+   "blitz": 2580
+  },
+  "3901211": {
+   "standard": 2580,
+   "rapid": 2587,
+   "blitz": 2620
+  },
+  "400041": {
+   "standard": 2597,
+   "rapid": 2607,
+   "blitz": 2695
+  },
+  "404853": {
+   "standard": 2606,
+   "rapid": 2610,
+   "blitz": 2588
+  },
+  "409561": {
+   "standard": 2630,
+   "rapid": 2602,
+   "blitz": 2601
+  },
+  "4102142": {
+   "rapid": 2686,
+   "blitz": 2684
+  },
+  "410608": {
+   "standard": 2665
+  },
+  "4107012": {
+   "standard": 2633
+  },
+  "4108116": {
+   "standard": 2622,
+   "rapid": 2587,
+   "blitz": 2507
+  },
+  "4116992": {
+   "standard": 2654
+  },
+  "4126025": {
+   "standard": 2628,
+   "rapid": 2671,
+   "blitz": 2697
+  },
+  "4128125": {
+   "standard": 2478,
+   "rapid": 2431,
+   "blitz": 2422
+  },
+  "4135539": {
+   "standard": 2637,
+   "rapid": 2595,
+   "blitz": 2620
+  },
+  "4147103": {
+   "standard": 2540,
+   "rapid": 2492,
+   "blitz": 2469
+  },
+  "4152956": {
+   "standard": 2663,
+   "rapid": 2616,
+   "blitz": 2586
+  },
+  "4158814": {
+   "standard": 2714,
+   "rapid": 2676,
+   "blitz": 2686
+  },
+  "4162722": {
+   "standard": 2617,
+   "rapid": 2623,
+   "blitz": 2487
+  },
+  "4168119": {
+   "standard": 2719,
+   "rapid": 2748,
+   "blitz": 2765
+  },
+  "4174003": {
+   "standard": 2452,
+   "rapid": 2612,
+   "blitz": 2457
+  },
+  "4198026": {
+   "standard": 2474,
+   "rapid": 2353,
+   "blitz": 2348
+  },
+  "42520835": {
+   "standard": 2576,
+   "rapid": 2446,
+   "blitz": 2524
+  },
+  "4262875": {
+   "standard": 2639,
+   "rapid": 2593,
+   "blitz": 2556
+  },
+  "4264312": {
+   "standard": 2452,
+   "rapid": 2419,
+   "blitz": 2421
+  },
+  "44144474": {
+   "standard": 2553,
+   "rapid": 2514,
+   "blitz": 2518
+  },
+  "44155573": {
+   "standard": 2663,
+   "rapid": 2631,
+   "blitz": 2670
+  },
+  "44507356": {
+   "standard": 2649,
+   "rapid": 2539,
+   "blitz": 2599
+  },
+  "44599790": {
+   "standard": 2719,
+   "rapid": 2536,
+   "blitz": 2579
+  },
+  "45075204": {
+   "standard": 2337,
+   "blitz": 1993
+  },
+  "45100446": {
+   "standard": 2287,
+   "rapid": 2275,
+   "blitz": 2265
+  },
+  "45150451": {
+   "standard": 2530,
+   "rapid": 2508,
+   "blitz": 2507
+  },
+  "4641833": {
+   "standard": 2413,
+   "rapid": 2403,
+   "blitz": 2371
+  },
+  "4657101": {
+   "standard": 2622,
+   "rapid": 2565,
+   "blitz": 2620
+  },
+  "46616543": {
+   "standard": 2710,
+   "rapid": 2686,
+   "blitz": 2659
+  },
+  "46626786": {
+   "standard": 2607,
+   "rapid": 2464,
+   "blitz": 2481
+  },
+  "46634827": {
+   "standard": 2595,
+   "rapid": 2475,
+   "blitz": 2546
+  },
+  "4675789": {
+   "standard": 2625,
+   "rapid": 2567,
+   "blitz": 2526
+  },
+  "4704703": {
+   "standard": 2060,
+   "rapid": 2139,
+   "blitz": 2239
+  },
+  "4904311": {
+   "standard": 2320,
+   "rapid": 2164,
+   "blitz": 2245
+  },
+  "497592": {
+   "standard": 2414,
+   "rapid": 2259,
+   "blitz": 2344
+  },
+  "5000017": {
+   "standard": 2739,
+   "rapid": 2694,
+   "blitz": 2706
+  },
+  "5007003": {
+   "standard": 2659,
+   "rapid": 2595,
+   "blitz": 2620
+  },
+  "5008123": {
+   "standard": 2520,
+   "rapid": 2431,
+   "blitz": 2386
+  },
+  "5015197": {
+   "standard": 2444,
+   "rapid": 2438,
+   "blitz": 2355
+  },
+  "5029465": {
+   "standard": 2693,
+   "rapid": 2625,
+   "blitz": 2677
+  },
+  "5058422": {
+   "standard": 2561,
+   "rapid": 2570,
+   "blitz": 2630
+  },
+  "5061245": {
+   "standard": 2616,
+   "rapid": 2531,
+   "blitz": 2554
+  },
+  "5072786": {
+   "standard": 2673,
+   "rapid": 2612,
+   "blitz": 2562
+  },
+  "5074452": {
+   "standard": 2658,
+   "rapid": 2524,
+   "blitz": 2528
+  },
+  "5084423": {
+   "standard": 2646,
+   "blitz": 2603
+  },
+  "5091756": {
+   "standard": 2452,
+   "rapid": 2396,
+   "blitz": 2345
+  },
+  "509825": {
+   "standard": 2508,
+   "rapid": 2563,
+   "blitz": 2605
+  },
+  "5202213": {
+   "standard": 2771,
+   "rapid": 2704,
+   "blitz": 2745
+  },
+  "54180058": {
+   "standard": 2421,
+   "rapid": 2369,
+   "blitz": 2335
+  },
+  "605506": {
+   "standard": 2616,
+   "rapid": 2645
+  },
+  "617822": {
+   "standard": 2402,
+   "rapid": 2386
+  },
+  "623539": {
+   "standard": 2707,
+   "rapid": 2712,
+   "blitz": 2734
+  },
+  "642908": {
+   "standard": 2620,
+   "rapid": 2642,
+   "blitz": 2653
+  },
+  "662399": {
+   "standard": 2597,
+   "rapid": 2563,
+   "blitz": 2605
+  },
+  "703303": {
+   "standard": 2663,
+   "rapid": 2700
+  },
+  "738590": {
+   "standard": 2718,
+   "rapid": 2680,
+   "blitz": 2616
+  },
+  "777765": {
+   "standard": 2349,
+   "rapid": 2246,
+   "blitz": 2234
+  },
+  "8601283": {
+   "standard": 2439,
+   "rapid": 2411
+  },
+  "8601429": {
+   "standard": 2619,
+   "rapid": 2615
+  },
+  "8601445": {
+   "standard": 2651,
+   "rapid": 2593,
+   "blitz": 2717
+  },
+  "8602883": {
+   "standard": 2694,
+   "rapid": 2628,
+   "blitz": 2649
+  },
+  "8602980": {
+   "standard": 2596,
+   "rapid": 2529,
+   "blitz": 2521
+  },
+  "8603006": {
+   "standard": 2553,
+   "rapid": 2488,
+   "blitz": 2445
+  },
+  "8603332": {
+   "standard": 2637,
+   "rapid": 2586,
+   "blitz": 2710
+  },
+  "8603405": {
+   "standard": 2761,
+   "rapid": 2704,
+   "blitz": 2709
+  },
+  "8603642": {
+   "standard": 2536,
+   "rapid": 2502,
+   "blitz": 2424
+  },
+  "8603677": {
+   "standard": 2723,
+   "rapid": 2689,
+   "blitz": 2736
+  },
+  "8603820": {
+   "standard": 2705,
+   "rapid": 2679,
+   "blitz": 2722
+  },
+  "8604002": {
+   "standard": 2375,
+   "rapid": 2401,
+   "blitz": 2342
+  },
+  "8605114": {
+   "standard": 2552,
+   "rapid": 2488,
+   "blitz": 2430
+  },
+  "8608059": {
+   "standard": 2559,
+   "rapid": 2444,
+   "blitz": 2410
+  },
+  "8608288": {
+   "standard": 2628,
+   "rapid": 2594,
+   "blitz": 2552
+  },
+  "8614300": {
+   "standard": 2465,
+   "rapid": 2325,
+   "blitz": 2407
+  },
+  "8622388": {
+   "standard": 2598,
+   "rapid": 2476,
+   "blitz": 2490
+  },
+  "8625492": {
+   "standard": 2556,
+   "rapid": 2482,
+   "blitz": 2422
+  },
+  "911925": {
+   "standard": 2588,
+   "rapid": 2569,
+   "blitz": 2657
+  },
+  "922900": {
+   "standard": 2381,
+   "rapid": 2614,
+   "blitz": 2524
+  },
+  "9301348": {
+   "standard": 2616,
+   "rapid": 2576,
+   "blitz": 2608
+  }
+ }
 }
