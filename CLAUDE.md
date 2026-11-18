@@ -38,14 +38,15 @@
   Cramling in 2016"; user's call, 2026-11-06). A neutral photo is only for
   stories where no usable person photo exists at all.
 
-- **Never publish an article, player page or event page without a photo**
+- **Never publish an article or event page without a photo**
   (2026-11-05, after the Bavarian Championship event page went out bare
   while two photos of its champion sat in our own image store). Check
   src/content/articles/_images first (and how other pages of the same
   kind are illustrated -- event pages show a recent champion), then
   Commons. Only if both fail, say so plainly; a Commons rate limit is not
-  a reason to skip the local store. (Georg Meier's player page is the one
-  known gap: his only usable photo is blocked by Wikimedia rate limits.)
+  a reason to skip the local store. Player pages are different (user's
+  call, 2026-11-18): try just as hard for a photo, but a page without one
+  is published.
 
 - **Results pieces get a board even when the source quotes no game**
   (user's rule, 2026-11-07: the World Junior Rapid report had none). When

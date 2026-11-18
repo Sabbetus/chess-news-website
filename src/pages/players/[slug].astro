@@ -15,9 +15,27 @@ export async function getStaticPaths() {
 const { player } = Astro.props;
 const d = player.data;
 const { Content } = await player.render();
-const ranked = TOP100.players.find((p) => p.fideId === d.fideId);
-const rankedWomen = TOP100.women.find((p) => p.fideId === d.fideId);
-const rated = ranked ?? rankedWomen;
+// One ranking per profile (user's call, 2026-11-18): classical before rapid
+// before blitz; within a time control open, women, juniors, girls.
+const RANK_LISTS = [
+  ['players', '', 'World rank', '/rankings/', "world No."],
+  ['women', '', "Women's rank", '/rankings/women/', "women's world No."],
+  ['juniors', '', 'Junior rank', '/rankings/juniors/', 'junior world No.'],
+  ['girls', '', 'Girls rank', '/rankings/girls/', 'girls world No.'],
+  ['rapid', 'Rapid', 'Rapid world rank', '/rankings/rapid/', 'rapid world No.'],
+  ['rapidWomen', 'Rapid', "Rapid women's rank", '/rankings/rapid/women/', "rapid women's world No."],
+  ['rapidJuniors', 'Rapid', 'Rapid junior rank', '/rankings/rapid/juniors/', 'rapid junior world No.'],
+  ['rapidGirls', 'Rapid', 'Rapid girls rank', '/rankings/rapid/girls/', 'rapid girls world No.'],
+  ['blitz', 'Blitz', 'Blitz world rank', '/rankings/blitz/', 'blitz world No.'],
+  ['blitzWomen', 'Blitz', "Blitz women's rank", '/rankings/blitz/women/', "blitz women's world No."],
+  ['blitzJuniors', 'Blitz', 'Blitz junior rank', '/rankings/blitz/juniors/', 'blitz junior world No.'],
+  ['blitzGirls', 'Blitz', 'Blitz girls rank', '/rankings/blitz/girls/', 'blitz girls world No.'],
+] as const;
+const ranking = RANK_LISTS.map(([key, control, label, href, phrase]) => {
+  const entry = ((TOP100 as any)[key] ?? []).find((p: any) => p.fideId === d.fideId);
+  return entry ? { entry, control, label, href, phrase } : null;
+}).find(Boolean) ?? null;
+const rated = ranking?.entry;
 const coverage = await articlesMentioning([d.name, ...d.aliases], true);
 const titles = await titlesFor([d.name, ...d.aliases]);
 const month = periodLabel(TOP100.period);
@@ -27,11 +45,7 @@ const ogImage = d.image
   ? new URL((await getImage({ src: d.image.src, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).toString()
   : undefined;
 
-const rankText = ranked
-  ? `, world No. ${ranked.rank} on ${ranked.rating}`
-  : rankedWomen
-    ? `, women's world No. ${rankedWomen.rank} on ${rankedWomen.rating}`
-    : '';
+const rankText = ranking ? `, ${ranking.phrase} ${ranking.entry.rank} on ${ranking.entry.rating}` : '';
 const description = `${d.name}: ${d.title} from ${federationName(d.federation)}${rankText}. Profile, key results and The Chess Herald's coverage.`;
 
 const jsonLd = [
@@ -78,11 +92,10 @@ const jsonLd = [
     <div class="player-top">
       <Portrait name={d.name} image={d.image} shape="portrait" />
       <dl class="facts">
-        {ranked && (<><dt>World rank</dt><dd><a href="/rankings/"><strong>No. {ranked.rank}</strong></a> ({month})</dd></>)}
-        {rankedWomen && (<><dt>Women's rank</dt><dd><a href="/rankings/women/"><strong>No. {rankedWomen.rank}</strong></a> ({month})</dd></>)}
+        {ranking && (<><dt>{ranking.label}</dt><dd><a href={ranking.href}><strong>No. {ranking.entry.rank}</strong></a> ({month})</dd></>)}
         {rated && (
           <>
-            <dt>Rating</dt>
+            <dt>{ranking.control ? `${ranking.control} rating` : 'Rating'}</dt>
             <dd>
               <strong>{rated.rating}</strong>
               {rated.change ? ` (${rated.change > 0 ? '+' : '−'}${Math.abs(rated.change)} this month)` : ''}
