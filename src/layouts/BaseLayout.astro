@@ -3,7 +3,7 @@ import '../styles/fonts.css';
 import '../styles/global.css';
 import ThemeSwitch from '../components/ThemeSwitch.astro';
 import SearchBox from '../components/SearchBox.astro';
-import { LENS_META, LENS_ORDER, LENS_SLUGS, type Lens } from '../lib/lens';
+import { LENS_SLUGS, type Lens } from '../lib/lens';
 import { SOCIAL, ICON_PATHS } from '../lib/social';
 
 interface Props {
@@ -63,43 +63,18 @@ const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
 // extension since the two cases use different formats (jpg vs png).
 const ogImageType = ogImageURL.toString().endsWith('.png') ? 'image/png' : 'image/jpeg';
 
-// Main menu (user's call, 2026-11-18): News, Rankings, Players, Events.
-// The article lenses moved under News; the calendar pieces (the OTB
-// Tournaments lens) are "Where to play" under Events, next to the major
-// events, since that's where a player looking for a tournament looks.
+// Main menu (user's call, 2026-11-18): Home, Rankings, Players, Major
+// events, Where to play. Lens pages are reached from articles' tags only;
+// the rankings pages link the rapid/blitz lists themselves. Where to play
+// is the calendar pieces (the OTB Tournaments lens).
 const path = Astro.url.pathname;
 type NavItem = { id: string; label: string; href: string; children?: { id: string; label: string; href: string }[] };
-const NEWS_LENSES = LENS_ORDER.filter((l) => l !== 'tournament-db');
 const sections: NavItem[] = [
-  {
-    id: 'news',
-    label: 'News',
-    href: '/archive/',
-    children: [
-      { id: 'archive', label: 'Latest', href: '/archive/' },
-      ...NEWS_LENSES.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
-    ],
-  },
-  {
-    id: 'rankings',
-    label: 'Rankings',
-    href: '/rankings/',
-    children: [
-      { id: 'rankings-classical', label: 'Classical', href: '/rankings/' },
-      { id: 'rankings-rapid', label: 'Rapid', href: '/rankings/rapid/' },
-      { id: 'rankings-blitz', label: 'Blitz', href: '/rankings/blitz/' },
-    ],
-  },
+  { id: 'front-page', label: 'Home', href: '/' },
+  { id: 'rankings', label: 'Rankings', href: '/rankings/' },
   { id: 'players', label: 'Players', href: '/players/' },
-  {
-    id: 'events',
-    label: 'Events',
-    href: '/events/',
-    children: [
-      { id: 'events', label: 'Major events', href: '/events/' },
-      { id: 'tournament-db', label: 'Where to play', href: `/lens/${LENS_SLUGS['tournament-db']}/` },
-    ],
-  },
+  { id: 'events', label: 'Major events', href: '/events/' },
+  { id: 'tournament-db', label: 'Where to play', href: `/lens/${LENS_SLUGS['tournament-db']}/` },
 ];
 // Which child is current: rankings by URL, the rest by activeSection.
 const childOn = (id: string) =>
@@ -314,7 +289,6 @@ const currentLabel =
         <span class="caret" aria-hidden="true">▾</span>
       </button>
       <nav class="sections" id="siteNav">
-        <a href="/" class={`nav-home${activeSection === 'front-page' ? ' on' : ''}`}>Home</a>
         {
           sections.map((s) =>
             s.children ? (
