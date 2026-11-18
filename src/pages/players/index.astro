@@ -33,6 +33,9 @@ for (const p of sorted) {
   groups.set(letter, [...(groups.get(letter) ?? []), p]);
 }
 
+// Lower-case, accents stripped: what the search box matches against.
+const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
 const description = `Profiles of ${pages.length} of the world's leading chess players: career highlights, current FIDE ranking, and The Chess Herald's coverage of each.`;
 ---
 
@@ -44,6 +47,11 @@ const description = `Profiles of ${pages.length} of the world's leading chess pl
         Profiles of the world's leading players, open and women, A–Z by surname. For the current order, see the
         <a href="/rankings/">FIDE rankings</a>.
       </p>
+      <div class="player-search" hidden>
+        <label for="playerSearch" class="visually-hidden">Search players</label>
+        <input id="playerSearch" type="search" placeholder="Search players by name" autocomplete="off" spellcheck="false" />
+        <p class="no-match" hidden>No player matches that name.</p>
+      </div>
       <p class="letters">
         {[...groups.keys()].map((l) => <a href={`#letter-${l}`}>{l}</a>)}
       </p>
@@ -55,7 +63,7 @@ const description = `Profiles of ${pages.length} of the world's leading chess pl
           <h2>{letter}</h2>
           <ul class="directory">
             {players.map((p) => (
-              <li>
+              <li data-names={fold([p.data.name, listName(p), ...p.data.aliases].join(' '))}>
                 <a href={`/players/${p.slug}/`}>
                   <Portrait name={p.data.name} image={p.data.image} size="small" />
                   <span class="who">
@@ -76,7 +84,73 @@ const description = `Profiles of ${pages.length} of the world's leading chess pl
   </div>
 </BaseLayout>
 
+<script>
+  // Filters the directory as you type (2026-11-18). Every word typed must
+  // start a word of the player's name or one of its spellings, accents
+  // ignored: "carl" finds Carlsen, "so we" finds Wesley So.
+  const box = document.querySelector<HTMLElement>('.player-search');
+  const input = document.querySelector<HTMLInputElement>('#playerSearch');
+  if (box && input) {
+    box.hidden = false;
+    const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const items = [...document.querySelectorAll<HTMLElement>('.directory li')].map((li) => ({
+      li,
+      words: (li.dataset.names ?? '').split(/[\s,.'-]+/).filter(Boolean),
+    }));
+    const sections = [...document.querySelectorAll<HTMLElement>('.hub-section')];
+    const letters = document.querySelector<HTMLElement>('.letters');
+    const none = box.querySelector<HTMLElement>('.no-match');
+    input.addEventListener('input', () => {
+      const terms = fold(input.value).split(/[\s,.'-]+/).filter(Boolean);
+      let shown = 0;
+      for (const { li, words } of items) {
+        const hit = terms.every((t) => words.some((w) => w.startsWith(t)));
+        li.hidden = !hit;
+        if (hit) shown++;
+      }
+      for (const s of sections) s.hidden = !s.querySelector('li:not([hidden])');
+      if (letters) letters.hidden = terms.length > 0;
+      if (none) none.hidden = shown > 0;
+    });
+  }
+</script>
+
 <style>
+  .letters[hidden],
+  .hub-section[hidden],
+  .directory li[hidden] {
+    display: none;
+  }
+  .player-search {
+    margin: 18px 0 0;
+  }
+  .player-search input {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .player-search input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .no-match {
+    margin: 14px 0 0;
+    color: var(--ink-soft);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
   .letters {
     display: flex;
     flex-wrap: wrap;

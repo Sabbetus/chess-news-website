@@ -28,7 +28,7 @@ export async function GET(context) {
     xmlns: { dc: 'http://purl.org/dc/elements/1.1/', media: 'http://search.yahoo.com/mrss/' },
     title: 'The Chess Herald',
     description:
-      'Curated chess news from around the world, with original analysis and tournament statistics. Every story linked back to its source.',
+      'Daily chess news from around the world, every story linked back to its source.',
     site: context.site,
     items: articles.map((article) => ({
       title: article.data.title,

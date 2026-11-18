@@ -29,7 +29,7 @@ const articles = page.data;
 const description =
   meta.label === 'Global'
     ? 'Chess news and analysis with no single regional angle, curated by The Chess Herald.'
-    : `Chess news, original analysis, and tournament coverage from ${meta.label}, curated by The Chess Herald.`;
+    : `Chess news and tournament coverage from ${meta.label}, curated by The Chess Herald.`;
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
