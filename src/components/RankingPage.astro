@@ -1,81 +1,61 @@
 ---
 // One rankings page. Every list (open classical, rapid and blitz top 100;
-// women's, junior and girls classical top 25) is built from FIDE's monthly
+// women's, junior and girls top 25 for each) is built from FIDE's monthly
 // lists by scripts/fide_ratings.py into data/fide-top100.json and shares
 // this layout, table and tab row (user's call, 2026-11-18).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/hubs.css';
 import RankingTable from './RankingTable.astro';
+import { seoTitle } from '../lib/seoTitle';
 import { TOP100, periodLabel, playerPages, longDate, type RankedPlayer } from '../lib/hubs';
 
-export type ListKey = 'players' | 'rapid' | 'blitz' | 'women' | 'juniors' | 'girls';
+// Every page is a time control x category: Classical/Rapid/Blitz, then
+// Open/Women/Juniors/Girls (user's call, 2026-11-18). Data keys in
+// data/fide-top100.json: "players", "women", "juniors", "girls" for classical,
+// "rapid"/"rapidWomen"/... and "blitz"/"blitzWomen"/... for the others.
+export type TimeControl = 'classical' | 'rapid' | 'blitz';
+export type Category = 'open' | 'women' | 'juniors' | 'girls';
 
 interface Props {
-  list: ListKey;
+  tc: TimeControl;
+  cat: Category;
 }
-const { list } = Astro.props;
+const { tc, cat } = Astro.props;
 
 const month = periodLabel(TOP100.period);
 const cutoff = (TOP100 as { juniorCutoff?: number }).juniorCutoff;
-const rows = ((TOP100 as Record<string, unknown>)[list] ?? []) as RankedPlayer[];
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+const dataKey = (t: TimeControl, c: Category) =>
+  t === 'classical' ? (c === 'open' ? 'players' : c) : c === 'open' ? t : t + cap(c);
+const pathOf = (t: TimeControl, c: Category) =>
+  `/rankings/${t === 'classical' ? '' : `${t}/`}${c === 'open' ? '' : `${c}/`}`;
+const rows = ((TOP100 as Record<string, unknown>)[dataKey(tc, cat)] ?? []) as RankedPlayer[];
 
-const META: Record<ListKey, { path: string; h1: string; title: string; lede: string; who: string; source: string }> = {
-  players: {
-    path: '/rankings/',
-    h1: 'FIDE Top 100',
-    title: `FIDE Top 100 Chess Players, ${month}`,
-    lede: "The world's 100 highest-rated active players in classical chess, from FIDE's official standard rating list.",
-    who: "top 100 active chess players",
-    source: 'FIDE standard rating list',
-  },
-  rapid: {
-    path: '/rankings/rapid/',
-    h1: 'FIDE Rapid Top 100',
-    title: `FIDE Rapid Top 100 Chess Players, ${month}`,
-    lede: "The world's 100 highest-rated active players in rapid chess, from FIDE's official rapid rating list.",
-    who: 'top 100 active rapid players',
-    source: 'FIDE rapid rating list',
-  },
-  blitz: {
-    path: '/rankings/blitz/',
-    h1: 'FIDE Blitz Top 100',
-    title: `FIDE Blitz Top 100 Chess Players, ${month}`,
-    lede: "The world's 100 highest-rated active players in blitz chess, from FIDE's official blitz rating list.",
-    who: 'top 100 active blitz players',
-    source: 'FIDE blitz rating list',
-  },
-  women: {
-    path: '/rankings/women/',
-    h1: "FIDE Women's Top 25",
-    title: `FIDE Women's Top 25 Chess Players, ${month}`,
-    lede: "The 25 highest-rated active women in classical chess, from FIDE's official standard rating list.",
-    who: 'top 25 active women chess players',
-    source: 'FIDE standard rating list',
-  },
-  juniors: {
-    path: '/rankings/juniors/',
-    h1: 'FIDE Junior Top 25',
-    title: `FIDE Junior Top 25 Chess Players (Under 20), ${month}`,
-    lede: `The 25 highest-rated active juniors in classical chess: players born in ${cutoff} or later, from FIDE's official standard rating list.`,
-    who: 'top 25 active junior chess players (under 20)',
-    source: 'FIDE standard rating list',
-  },
-  girls: {
-    path: '/rankings/girls/',
-    h1: 'FIDE Girls Top 25',
-    title: `FIDE Girls Top 25 Chess Players (Under 20), ${month}`,
-    lede: `The 25 highest-rated active girls in classical chess: players born in ${cutoff} or later, from FIDE's official standard rating list.`,
-    who: 'top 25 active girls chess players (under 20)',
-    source: 'FIDE standard rating list',
-  },
+const n = rows.length;
+const tcWord = tc === 'classical' ? '' : `${cap(tc)} `;
+const sourceName = `FIDE ${tc === 'classical' ? 'standard' : tc} rating list`;
+const CAT = {
+  open: { h1: `FIDE ${tcWord}Top ${n}`, noun: 'players', extra: '' },
+  women: { h1: `FIDE ${tcWord}Women's Top ${n}`, noun: 'women', extra: '' },
+  juniors: { h1: `FIDE ${tcWord}Junior Top ${n}`, noun: 'juniors', extra: `: players born in ${cutoff} or later` },
+  girls: { h1: `FIDE ${tcWord}Girls Top ${n}`, noun: 'girls', extra: `: players born in ${cutoff} or later` },
+}[cat];
+const meta = {
+  path: pathOf(tc, cat),
+  h1: CAT.h1,
+  title: `${CAT.h1} Chess Players${cat === 'juniors' || cat === 'girls' ? ' (Under 20)' : ''}, ${month}`,
+  lede: `The ${cat === 'open' ? "world's " : ''}${n} highest-rated active ${CAT.noun} in ${tc} chess${CAT.extra}, from FIDE's official ${tc === 'classical' ? 'standard' : tc} rating list.`,
+  who: `top ${n} active ${tc === 'classical' ? '' : `${tc} `}${cat === 'open' ? 'chess players' : cat === 'women' ? 'women chess players' : `${CAT.noun} (under 20)`}`,
+  source: sourceName,
 };
-const meta = META[list];
 
-// Time control first (Classical is the default), then the classical
-// list's categories as a submenu (user's call, 2026-11-18).
-const CLASSICAL: ListKey[] = ['players', 'women', 'juniors', 'girls'];
-const TABS: { key: ListKey; label: string }[] = [
-  { key: 'players', label: 'Open' },
+const TCS: { key: TimeControl; label: string }[] = [
+  { key: 'classical', label: 'Classical' },
+  { key: 'rapid', label: 'Rapid' },
+  { key: 'blitz', label: 'Blitz' },
+];
+const CATS: { key: Category; label: string }[] = [
+  { key: 'open', label: 'Open' },
   { key: 'women', label: 'Women' },
   { key: 'juniors', label: 'Juniors' },
   { key: 'girls', label: 'Girls' },
@@ -105,7 +85,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={`${meta.title} | The Chess Herald`} description={description} activeSection="rankings" jsonLd={jsonLd}>
+<BaseLayout title={seoTitle(meta.title)} description={description} activeSection="rankings" jsonLd={jsonLd}>
   <div class="hub">
     <header class="hub-head">
       <h1>{meta.h1}</h1>
@@ -114,23 +94,19 @@ const jsonLd = [
     </header>
 
     <nav class="rank-switch" aria-label="Time control">
-      {[
-        { label: 'Classical', path: '/rankings/', on: CLASSICAL.includes(list) },
-        { label: 'Rapid', path: '/rankings/rapid/', on: list === 'rapid' },
-        { label: 'Blitz', path: '/rankings/blitz/', on: list === 'blitz' },
-      ].map((t) => (
-        <a href={t.path} class={t.on ? 'on' : ''} aria-current={t.on ? 'page' : undefined}>{t.label}</a>
+      {TCS.map((t) => (
+        <a href={pathOf(t.key, 'open')} class={t.key === tc ? 'on' : ''} aria-current={t.key === tc && cat === 'open' ? 'page' : undefined}>
+          {t.label}
+        </a>
       ))}
     </nav>
-    {CLASSICAL.includes(list) && (
-      <nav class="rank-sub" aria-label="Classical lists">
-        {TABS.filter((t) => CLASSICAL.includes(t.key)).map((t) => (
-          <a href={META[t.key].path} class={t.key === list ? 'on' : ''} aria-current={t.key === list ? 'page' : undefined}>
-            {t.label}
-          </a>
-        ))}
-      </nav>
-    )}
+    <nav class="rank-sub" aria-label={`${cap(tc)} lists`}>
+      {CATS.map((c) => (
+        <a href={pathOf(tc, c.key)} class={c.key === cat ? 'on' : ''} aria-current={c.key === cat ? 'page' : undefined}>
+          {c.label}
+        </a>
+      ))}
+    </nav>
 
     <section class="hub-section top100">
       <RankingTable rows={rows} pageById={pageById} />

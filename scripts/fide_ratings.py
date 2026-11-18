@@ -140,6 +140,13 @@ def is_junior(player: dict, list_year: int) -> bool:
     return player["birthYear"] is not None and player["birthYear"] >= list_year - JUNIOR_MAX_AGE
 
 
+SPEED_CATEGORIES = {
+    "Women": lambda p, year: p["sex"] == "F",
+    "Juniors": lambda p, year: is_junior(p, year),
+    "Girls": lambda p, year: p["sex"] == "F" and is_junior(p, year),
+}
+
+
 def build_table(period: str, current: list[dict], previous: list[dict], speed: dict | None = None) -> dict:
     """The open top 100, the women's top 25 (FIDE's women's list is the same
     rating list filtered to female players), the junior and girls top 25
@@ -163,8 +170,12 @@ def build_table(period: str, current: list[dict], previous: list[dict], speed: d
         "girls": ranked([p for p in juniors_now if p["sex"] == "F"], [p for p in juniors_prev if p["sex"] == "F"], JUNIOR_TOP_N),
         "juniorCutoff": year - JUNIOR_MAX_AGE,
     }
+    # Rapid and blitz: open top 100 plus the same women's, junior and girls
+    # top 25 as classical (user's call, 2026-11-18), keyed e.g. "rapidWomen".
     for kind, (now, prev) in (speed or {}).items():
         table[kind] = ranked(now, prev, TOP_N)
+        for suffix, keep in SPEED_CATEGORIES.items():
+            table[kind + suffix] = ranked([p for p in now if keep(p, year)], [p for p in prev if keep(p, year)], JUNIOR_TOP_N)
     return table
 
 
@@ -214,15 +225,16 @@ def main() -> None:
                     speed.pop(kind, None)
         table = build_table(period, current, previous, speed)
         for kind in ("rapid", "blitz"):
-            if kind not in table and kind in stored:
-                table[kind] = stored[kind]
+            for key in [kind] + [kind + suffix for suffix in SPEED_CATEGORIES]:
+                if key not in table and key in stored:
+                    table[key] = stored[key]
     except Exception as exc:  # noqa: BLE001 -- best-effort, see module docstring
         # A GitHub Actions warning, not a quiet log line: a skipped refresh
         # left the October list on the site all of 1 November unnoticed.
         print(f"::warning::FIDE top 100 refresh skipped ({type(exc).__name__}: {exc}).")
         return
     OUT_PATH.write_text(json.dumps(table, ensure_ascii=False, indent=1) + "\n")
-    print(f"Wrote FIDE lists for {table['period']}: " + ", ".join(k for k in ("players", "women", "juniors", "girls", "rapid", "blitz") if k in table) + ".")
+    print(f"Wrote FIDE lists for {table['period']}: " + ", ".join(k for k in table if isinstance(table[k], list)) + ".")
 
 
 if __name__ == "__main__":

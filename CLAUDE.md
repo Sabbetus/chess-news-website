@@ -318,7 +318,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   top 100 (/rankings/rapid/, /rankings/blitz/) and junior and girls
   classical top 25 (/rankings/juniors/, /rankings/girls/; born in the
   list's year minus 20 or later), next to the open classical top 100 and
-  women's top 25. scripts/fide_ratings.py builds all six from FIDE's
+  women's top 25; then (user's call) women's, junior and girls top 25 for
+  rapid and blitz too (/rankings/rapid/women/ etc.). Menu: Classical,
+  Rapid, Blitz tabs, with Open/Women/Juniors/Girls as the submenu. scripts/fide_ratings.py builds all six from FIDE's
   standard, rapid and blitz lists each month (a failed rapid/blitz
   download keeps last month's list); all pages share
   src/components/RankingPage.astro. Players without a page show unlinked;

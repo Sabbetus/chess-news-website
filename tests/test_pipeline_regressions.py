@@ -1235,3 +1235,5 @@ def test_fide_lists_juniors_and_names():
     assert [p["name"] for p in t["juniors"]] == ["A", "B"]
     assert [p["name"] for p in t["girls"]] == ["B"]
     assert t["juniorCutoff"] == 2006
+    t = f.build_table("NOV26", cur, cur, {"rapid": (cur, cur)})
+    assert [p["name"] for p in t["rapidGirls"]] == ["B"] and len(t["rapid"]) == 3
