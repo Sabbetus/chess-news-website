@@ -1,15 +1,15 @@
 ---
-title: "Firouzja and Giri Take Semifinal Leads at Total Chess"
+title: "Carlsen Skips a Game With 2800 at Stake as Firouzja and Giri Lead Semifinals"
 publishDate: "2026-11-18"
 publishedAt: "2026-11-18T08:51:46Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-7"
-lens: "results"
+lens: "drama"
 continent: "europe"
 selectionScore: 200
 reviewStatus: "published"
-socialCopy: "Firouzja beat Caruana 12-8 after a 4-0 blitz start, and Giri crushed Vachier-Lagrave 14.5-5.5. Both need only a draw on Wednesday to reach the Total Chess final. Carlsen skipped his last game."
-metaDescription: "Firouzja beat Caruana 12-8 and Giri beat Vachier-Lagrave 14.5-5.5 on day one of the Total Chess semifinals in Budapest. Carlsen forfeited his last game."
+socialCopy: "Carlsen left Assaubayeva waiting 15 minutes and forfeited a game where a draw would have cost him 2800. Niemann cried favoritism. Meanwhile Firouzja and Giri took the first day of the Total Chess semifinals."
+metaDescription: "Carlsen forfeited a rated game at the Total Chess pilot with his 2800 rating at stake, drawing criticism from Niemann. Firouzja and Giri lead the semifinals."
 additionalSources:
   - sourceName: "FIDE"
     sourceUrl: "https://www.fide.com/giri-and-firouzja-take-first-day-leads-in-total-chess-semifinals/"
@@ -28,7 +28,25 @@ tweetEmbeds:
     date: "2026-11-17"
 ---
 
-On the first day of the semifinals of the Total Chess World Championship Tour Pilot in Budapest, [Alireza Firouzja beat Fabiano Caruana 12-8](https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-7) and Anish Giri beat Maxime Vachier-Lagrave 14.5-5.5. Both winners now need only a drawn day on Wednesday to reach the final. Their opponents must win outright to force an Armageddon game.
+Magnus Carlsen did not turn up for his last game on the first knockout day of the Total Chess World Championship Tour Pilot in Budapest, and [the forfeit became the talking point of the day](https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-7). Bibisara Assaubayeva sat at the board for 15 minutes before she was awarded the win.
+
+Carlsen had already won their match for places 17 to 20, scoring 11.5/12 with 3.5/4 in blitz and 8/8 in rapid. The Fast Classic game that remained was the one with real stakes: a draw would have dropped him below 2800 for the first time in 17 years, according to Chess.com, and his world number-one spot was on the line.
+
+The forfeit made the final score 11.5-8.5.
+
+**Rated or not?**
+
+FIDE normally doesn't rate games played after a match is decided, but the organizers had that rule waived and, Chess.com reports, told the players at the technical meeting that every game would be played and rated. Carlsen told Norway's TV 2 he had understood otherwise: "There will be no classical game as I understood, the match is over."
+
+Hans Niemann wasn't convinced. "Whether games could count even after the match was over was discussed and agreed upon in the technical meeting," he wrote, adding: "If Carlsen was playing someone with a higher rating, he might have been more inclined to play." He also called the handling favoritism.
+
+Total Chess founder and CEO Kjell Madland said Carlsen "didn't want to play the last game, and he didn't need to do it," and that "the rules are the same for everyone." Wesley So shrugged it off: "He has nothing to gain."
+
+Forfeits aren't rated, so Carlsen's 2800 rating and his number-one spot are untouched. Earlier in the day he had joked that he was "in a little bit of the wrong bracket."
+
+**The title race**
+
+In the bracket that decides the event, Alireza Firouzja beat Fabiano Caruana 12-8 and Anish Giri beat Maxime Vachier-Lagrave 14.5-5.5. Both winners now need only a drawn day on Wednesday to reach the final. Their opponents must win outright to force an Armageddon game.
 
 **How the day is scored**
 
@@ -57,14 +75,6 @@ Giri won the blitz 2.5-1.5 against the top seed. Three games were drawn, two of 
 Both rapid games were drawn, leaving Giri 6.5-5.5 up. In the Fast Classic game, Vachier-Lagrave said he "over-pushed," and Giri's hanging pawns turned from a weakness into a strength. The win took Giri up to world number eight.
 
 Asked what he would carry into Wednesday, Vachier-Lagrave said, "Hopefully I don't remember anything I've done from today!"
-
-**Carlsen skips the finale**
-
-Magnus Carlsen scored 11.5/12 against Bibisara Assaubayeva in the bracket for places 17 to 20: 3.5/4 in blitz, then 8/8 in rapid. That clinched the day before the last game, and he did not show up for it. Assaubayeva waited at the board until she was awarded the forfeit, making the final score 11.5-8.5.
-
-The game carried more weight than the match itself. A draw would have dropped Carlsen below 2800 for the first time in 17 years, according to Chess.com.
-
-His rating and the world number-one spot were on the line.
 
 **Elsewhere in the bracket**
 

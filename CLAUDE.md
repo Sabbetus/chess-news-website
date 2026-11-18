@@ -335,6 +335,13 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   entries; every automatic player/event link on the built pages. Fixed
   at the source: the fact check resolves "he"/"she" to the subject of the
   source's sentence before moving facts to a name.
+  Then (user's call): the semifinal piece re-angled as Controversy -- it
+  now leads with Carlsen's forfeit (Assaubayeva waited 15 minutes; the
+  game was rated by waiver; Carlsen told TV 2 he understood it wouldn't be
+  played; Niemann's criticism, Madland's and So's replies; forfeits aren't
+  rated) and keeps every result below. Drafting now gives a round report
+  whose source describes a controversy the drama lens, leading with the
+  controversy and still reporting the results in full.
 - 2026-11-17: drafts/2026-11-17 reset after publishing (streak 1 -> 0,
   user caught it): the Sanico piece's "named the boy Magnus Carlsen
   Sanico" auto-linked "Magnus Carlsen" to Carlsen's player page -- the
