@@ -20,6 +20,13 @@ on:
     - cron: '3 1 * * *'
   workflow_dispatch:
 
+# One run at a time (2026-11-18: the morning check now starts the run by
+# hand when the cron is late): a scheduled run arriving while that run is
+# drafting waits, then the guard below sees today's branch and skips.
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
