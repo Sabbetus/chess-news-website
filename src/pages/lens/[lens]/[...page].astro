@@ -25,19 +25,30 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page, lensKey } = Astro.props as { page: any; lensKey: keyof typeof LENS_META };
 const lens = lensKey;
 const meta = LENS_META[lens];
+// The calendar pieces are the menu's "Where to play" (2026-11-18).
+const isCalendar = lens === 'tournament-db';
+const heading = isCalendar ? 'Where to play' : meta.label;
 const articles = page.data;
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
 <BaseLayout
-  title={page.currentPage === 1 ? `${meta.label} | The Chess Herald` : `${meta.label} - Page ${page.currentPage} | The Chess Herald`}
+  title={page.currentPage === 1 ? `${heading} | The Chess Herald` : `${heading} - Page ${page.currentPage} | The Chess Herald`}
   description={meta.description}
   activeSection={lens}
 >
   <header class="section-head">
-    <h1>{meta.label}</h1>
-    <p class="desc">{meta.description}</p>
+    <h1>{heading}</h1>
+    {isCalendar ? (
+      <p class="desc">
+        Upcoming over-the-board classical and rapid tournaments, continent by continent, plus a look back at the past
+        month's. For every tournament, searchable by date and place, see
+        <a href="https://chesstournamentcalendar.com" target="_blank" rel="noopener">Chess Tournament Calendar</a>.
+      </p>
+    ) : (
+      <p class="desc">{meta.description}</p>
+    )}
     <p class="count">{page.total} {page.total === 1 ? 'story' : 'stories'}</p>
   </header>
 

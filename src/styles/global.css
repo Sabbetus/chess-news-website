@@ -464,6 +464,10 @@ nav.sections a.on {
 nav.sections a:hover {
   color: var(--ink);
 }
+/* The logo is the way home on wide screens; the phone list gets a link. */
+nav.sections .nav-home {
+  display: none;
+}
 
 /* Results sub-menu. Desktop: a dropdown on hover or keyboard focus. Every
    viewport also gets a second row (.sub-sections) while you're inside the
@@ -555,7 +559,7 @@ nav.sub-sections a.on {
   .eyebrow-short {
     display: inline;
   }
-  /* Eight sections don't fit one phone row, and a sideways scroller hid
+  /* The sections don't fit one phone row, and a sideways scroller hid
      Money, Controversy, OTB Tournaments and All Articles with nothing to
      hint they existed. So: one "Menu" button that opens the sections as a
      two-column list (without JavaScript the list simply stays open). */
@@ -574,9 +578,11 @@ nav.sub-sections a.on {
   .js-nav nav.sections.open {
     display: grid;
   }
+  /* Phone list: Home, then each section with its pages listed under it,
+     so Where to play or Rapid rankings are one tap from anywhere. */
   nav.sections {
-    grid-template-columns: 1fr 1fr;
-    gap: 0 18px;
+    grid-template-columns: 1fr;
+    gap: 0;
     padding: 0 0 6px;
   }
   nav.sections a {
@@ -587,13 +593,36 @@ nav.sub-sections a.on {
   nav.sections a.on {
     border-bottom: 2px solid var(--accent);
   }
+  nav.sections .nav-home {
+    display: block;
+  }
   nav.sections .has-sub {
-    display: flex;
+    display: block;
   }
   nav.sections .has-sub > a {
-    flex: 1;
+    display: block;
   }
   nav.sections .sub-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+    position: static;
+    transform: none;
+    min-width: 0;
+    padding: 0 0 0 14px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+  nav.sections .sub-menu a {
+    padding: 9px 2px;
+    font-size: 11px;
+  }
+  nav.sections .sub-menu a.on {
+    border-bottom: 2px solid var(--accent);
+  }
+  /* The list already shows the section's pages. */
+  nav.sub-sections {
     display: none;
   }
 }

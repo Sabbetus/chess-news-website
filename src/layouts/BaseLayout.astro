@@ -63,28 +63,65 @@ const ogImageURL = image ?? new URL('/og-image.png', Astro.site);
 // extension since the two cases use different formats (jpg vs png).
 const ogImageType = ogImageURL.toString().endsWith('.png') ? 'image/png' : 'image/jpeg';
 
-const sections = [
-  { id: 'front-page' as const, label: 'Front Page', href: '/' },
-  ...LENS_ORDER.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
-  { id: 'archive' as const, label: 'All Articles', href: '/archive/' },
-];
-// Results carries a sub-menu for the reference pages (events, rankings,
-// player profiles). They
-// aren't news lists like every other nav item, so they sit one level down
-// rather than changing what the top row means.
-const RESULTS_CHILDREN = [
-  { id: 'results', label: 'Latest', href: `/lens/${LENS_SLUGS.results}/` },
-  { id: 'events', label: 'Events', href: '/events/' },
-  { id: 'rankings', label: 'Rankings', href: '/rankings/' },
+// Main menu (user's call, 2026-11-18): News, Rankings, Players, Events.
+// The article lenses moved under News; the calendar pieces (the OTB
+// Tournaments lens) are "Where to play" under Events, next to the major
+// events, since that's where a player looking for a tournament looks.
+const path = Astro.url.pathname;
+type NavItem = { id: string; label: string; href: string; children?: { id: string; label: string; href: string }[] };
+const NEWS_LENSES = LENS_ORDER.filter((l) => l !== 'tournament-db');
+const sections: NavItem[] = [
+  {
+    id: 'news',
+    label: 'News',
+    href: '/archive/',
+    children: [
+      { id: 'archive', label: 'Latest', href: '/archive/' },
+      ...NEWS_LENSES.map((l) => ({ id: l, label: LENS_META[l].label, href: `/lens/${LENS_SLUGS[l]}/` })),
+    ],
+  },
+  {
+    id: 'rankings',
+    label: 'Rankings',
+    href: '/rankings/',
+    children: [
+      { id: 'rankings-classical', label: 'Classical', href: '/rankings/' },
+      { id: 'rankings-rapid', label: 'Rapid', href: '/rankings/rapid/' },
+      { id: 'rankings-blitz', label: 'Blitz', href: '/rankings/blitz/' },
+    ],
+  },
   { id: 'players', label: 'Players', href: '/players/' },
+  {
+    id: 'events',
+    label: 'Events',
+    href: '/events/',
+    children: [
+      { id: 'events', label: 'Major events', href: '/events/' },
+      { id: 'tournament-db', label: 'Where to play', href: `/lens/${LENS_SLUGS['tournament-db']}/` },
+    ],
+  },
 ];
-const inResults = RESULTS_CHILDREN.some((c) => c.id === activeSection);
+// Which child is current: rankings by URL, the rest by activeSection.
+const childOn = (id: string) =>
+  id.startsWith('rankings-')
+    ? activeSection === 'rankings' &&
+      (id === 'rankings-rapid' ? path.startsWith('/rankings/rapid') : id === 'rankings-blitz' ? path.startsWith('/rankings/blitz') : !/^\/rankings\/(rapid|blitz)/.test(path))
+    : id === activeSection;
+const groupOn = (s: NavItem) => s.id === activeSection || (s.children ?? []).some((c) => childOn(c.id));
+const currentGroup = sections.find(groupOn);
+// The second row of links, shown inside News and Events (Rankings has its
+// own Open/Women/Juniors/Girls tabs on the page).
+const subRow = currentGroup && currentGroup.id !== 'rankings' ? currentGroup.children : undefined;
 // The section shown on the phone's menu button. Nothing on the front page:
 // naming the page you are obviously on just reads oddly.
 const currentLabel =
   activeSection === 'front-page'
     ? ''
-    : (sections.find((s) => s.id === activeSection)?.label ?? (inResults ? 'Results' : activeSection === 'continent' ? 'Regions' : ''));
+    : currentGroup
+      ? currentGroup.label
+      : activeSection === 'continent'
+        ? 'Regions'
+        : '';
 ---
 
 <!doctype html>
@@ -277,21 +314,22 @@ const currentLabel =
         <span class="caret" aria-hidden="true">▾</span>
       </button>
       <nav class="sections" id="siteNav">
+        <a href="/" class={`nav-home${activeSection === 'front-page' ? ' on' : ''}`}>Home</a>
         {
           sections.map((s) =>
-            s.id === 'results' ? (
+            s.children ? (
               <span class="has-sub">
-                <a href={s.href} class={inResults ? 'on' : ''} aria-haspopup="true">
+                <a href={s.href} class={groupOn(s) ? 'on' : ''} aria-haspopup="true">
                   {s.label}<span class="caret" aria-hidden="true">▾</span>
                 </a>
                 <span class="sub-menu">
-                  {RESULTS_CHILDREN.map((c) => (
-                    <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+                  {s.children.map((c) => (
+                    <a href={c.href} class={childOn(c.id) ? 'on' : ''}>{c.label}</a>
                   ))}
                 </span>
               </span>
             ) : (
-              <a href={s.href} class={s.id === activeSection ? 'on' : ''}>
+              <a href={s.href} class={groupOn(s) ? 'on' : ''}>
                 {s.label}
               </a>
             )
@@ -299,10 +337,10 @@ const currentLabel =
         }
       </nav>
       {
-        inResults && (
-          <nav class="sub-sections" aria-label="Results">
-            {RESULTS_CHILDREN.map((c) => (
-              <a href={c.href} class={c.id === activeSection ? 'on' : ''}>{c.label}</a>
+        subRow && (
+          <nav class="sub-sections" aria-label={currentGroup!.label}>
+            {subRow.map((c) => (
+              <a href={c.href} class={childOn(c.id) ? 'on' : ''}>{c.label}</a>
             ))}
           </nav>
         )
