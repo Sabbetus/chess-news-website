@@ -565,6 +565,9 @@ def test_milestone_without_subject_photo_uses_next_person(monkeypatch):
 
     monkeypatch.setattr(images, "search_image", fake_search)
     monkeypatch.setattr(images, "fallback_image", lambda *a, **k: {"src": "pool"})
+    # Bodhana has a player page since 2026-11-18; this test is about the
+    # case where the subject has no photo anywhere.
+    monkeypatch.setattr(images, "player_page_photo", lambda *a, **k: None)
     item = {"kind": "news", "sourceName": "Chess.com", "title": "Bodhana, 11, Breaks Polgar's Record", "lens": "results", "summary": ""}
     got = images.pick_image_for_item(item, item["title"], ["Bodhana Sivanandan", "Judit Polgar"], set(), prefer_neutral=True)
     assert got == {"url": "u", "sourceUrl": "s"}
