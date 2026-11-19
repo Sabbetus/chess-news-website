@@ -582,14 +582,12 @@ nav.sub-sections a.on {
     gap: 0 18px;
     padding: 0 0 6px;
   }
+  /* No divider lines: the current item's word underline is the only line
+     (user's call, 2026-11-19: short and full-width lines mixed looked bad). */
   nav.sections a {
     padding: 11px 2px;
-    border-bottom: 1px solid var(--rule-faint);
+    border-bottom: 0;
     white-space: nowrap;
-  }
-  /* Only the word's underline, no divider line under it as well. */
-  nav.sections a.on {
-    border-bottom-color: transparent;
   }
   nav.sections .has-sub {
     display: block;
