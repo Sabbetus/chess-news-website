@@ -175,8 +175,12 @@ small flag, rewording a fix) don't count (user's rule, 2026-10-24).
 Update after each batch review, once the user has responded. A
 disagreement only over whether something was a reset is minor when the
 user approves the fixes themselves (user's rule, 2026-11-09).
+Silence counts as acceptance (user's rule, 2026-11-19): unless the user
+clearly corrects the review, the streak moves on as proposed in the recap.
 
-- **Current review-acceptance streak: 1.**
+- **Current review-acceptance streak: 2.**
+- 2026-11-19: accepted (silence/"Ok, good", 1 -> 2). The 9z Globant
+  explanation the user asked for was an addition, not a correction.
 - 2026-11-18: accepted ("All good otherwise", 0 -> 1); my reset call on
   the Firouzja/Caruana pronoun line was ruled not a reset (a reset
   disagreement only).
