@@ -1,6 +1,7 @@
 ---
 title: "Martinez and Oro Lead 9z Globant to a Third Straight Showdown Win"
 publishDate: "2026-11-19"
+publishedAt: "2026-11-19T08:02:42Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown"
 lens: "results"

@@ -1,6 +1,7 @@
 ---
 title: "Firouzja Beats Caruana in Armageddon to Reach Final Against Giri"
 publishDate: "2026-11-19"
+publishedAt: "2026-11-19T08:02:42Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-8"
 lens: "results"
