@@ -15,6 +15,8 @@ image:
   credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFaustinoOroTata2025.jpg"
   caption: "Faustino Oro in 2025"
+gamePgn: "9z-globant-beats-team-liquid-72-28-for-a-third-straight-showdown.pgn"
+gameCaption: "Final: Martinez - ScandiCandi, 1-0"
 ---
 
 9z Globant, the chess team of the Argentine esports organisation 9z, won the November Chess Club Showdown on November 18, [beating Team Liquid 72-28 in the finals](https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown). It was the team's third straight victory, which means it has won every showdown since the event debuted in September.
@@ -47,7 +49,7 @@ Team Liquid took it despite playing without GMs Magnus Carlsen, Fabiano Caruana 
 
 9z and Team Liquid met in the final for the third month running. Having 200+ rating points of edge on every board, 9z Globant made quick work of it.
 
-Martinez finished in a couple of minutes. He won his first game in 22 moves, and his FM opponent resigned immediately in the second.
+Martinez finished in a couple of minutes. He [won his first game in 22 moves](#game-embed), and his FM opponent resigned immediately in the second.
 
 Liquid's stars would have helped here, and their absence is the obvious reading of the result. Still, the team improved on October, when it lost 79-21. The gap closed by seven points even without three of its best players.
 
