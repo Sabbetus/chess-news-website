@@ -456,10 +456,13 @@ nav.sections a {
   text-decoration: none;
   padding: 4px 2px;
 }
+/* The current section is underlined under its word only, not the
+   whole tap area (user's call, 2026-11-19). */
 nav.sections a.on {
   color: var(--accent);
   font-weight: 500;
-  border-bottom: 2px solid var(--accent);
+  text-decoration: underline 2px var(--accent);
+  text-underline-offset: 6px;
 }
 nav.sections a:hover {
   color: var(--ink);
@@ -585,7 +588,7 @@ nav.sub-sections a.on {
     white-space: nowrap;
   }
   nav.sections a.on {
-    border-bottom: 2px solid var(--accent);
+    border-bottom: 1px solid var(--rule-faint);
   }
   nav.sections .has-sub {
     display: block;
