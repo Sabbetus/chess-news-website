@@ -587,8 +587,9 @@ nav.sub-sections a.on {
     border-bottom: 1px solid var(--rule-faint);
     white-space: nowrap;
   }
+  /* Only the word's underline, no divider line under it as well. */
   nav.sections a.on {
-    border-bottom: 1px solid var(--rule-faint);
+    border-bottom-color: transparent;
   }
   nav.sections .has-sub {
     display: block;
