@@ -17,7 +17,9 @@ image:
   caption: "Faustino Oro in 2025"
 ---
 
-9z Globant, the chess team of the Argentine esports organisation 9z, won the November Chess Club Showdown on November 18, [beating Team Liquid 72-28 in the finals](https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown). It was the team's third straight victory, which means it has won every showdown since the event debuted in September. In Chess.com's monthly event, the chess teams of esports organisations such as Team Liquid, Natus Vincere and Team Vitality play each other.
+9z Globant, the chess team of the Argentine esports organisation 9z, won the November Chess Club Showdown on November 18, [beating Team Liquid 72-28 in the finals](https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown). It was the team's third straight victory, which means it has won every showdown since the event debuted in September.
+
+In Chess.com's monthly event, the chess teams of esports organisations such as Team Liquid, Natus Vincere and Team Vitality play each other.
 
 GM Jose Martinez and Faustino Oro, billed as the world's youngest GM, led the way.
 
