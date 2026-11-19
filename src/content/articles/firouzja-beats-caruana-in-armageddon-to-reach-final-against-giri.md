@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "results"
 continent: "europe"
 selectionScore: 190
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja needed armageddon to get past Caruana at Total Chess in Budapest, while Giri swept Vachier-Lagrave. The two meet in the Knockout 1 Final on Thursday and Friday."
 metaDescription: "Alireza Firouzja won an armageddon against Fabiano Caruana and Anish Giri beat Vachier-Lagrave 2-0, setting up the Total Chess Pilot Knockout 1 Final."
 additionalSources:
@@ -20,7 +20,8 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_in_2024.jpg"
   caption: "Alireza Firouzja"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-semifinals/game-14-fast-classic/BFG6V9Kd/wx7me9eJ"
+  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-semifinals/armageddon/o7LXkpXS/i5ZyLvkB"
+gameCaption: "Armageddon: Firouzja - Caruana, 1-0"
 ---
 
 Alireza Firouzja and Anish Giri [won their semifinals on Wednesday](https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-8) and will meet in the Knockout 1 Final of the Total Chess World Championship Tour Pilot 2026 in Budapest. Giri swept Maxime Vachier-Lagrave in two sets. Firouzja needed an armageddon game to get past Fabiano Caruana.
@@ -53,7 +54,7 @@ In the second rapid game he had also found the winning counterblow 38...Rc2! in 
 
 Caruana's higher two-day total gave him the choice of colour in armageddon, and he took Black. Firouzja, with White, won a pawn early in an Italian Opening.
 
-Caruana lost his a-pawn and the position collapsed. David Howell's verdict on the broadcast was "The black position is cooked." [Caruana ran out of time after Firouzja's 44th move](#game-embed).
+Caruana lost his a-pawn and the position collapsed. David Howell's verdict on the broadcast was "The black position is cooked." [Firouzja converted it in 44 moves](#game-embed).
 
 Afterward Firouzja said the format's blitz value is the one thing he would change. "On the blitz point system it's really not fair that I won three games and after I lose one game in rapid you're down in the match," he said.
 
@@ -63,7 +64,7 @@ In Knockout 2, Hans Niemann swept Liem Le, and Jan-Krzysztof Duda beat Ian Nepom
 
 Arjun Erigaisi beat Jorden van Foreest in armageddon and meets Haik Martirosyan. Levon Aronian and Wesley So set up an all-American Final. Magnus Carlsen faces Vladislav Artemiev, and Praggnanandhaa Rameshbabu plays Abhimanyu Mishra.
 
-Carlsen, Richard Rapport and Mishra skipped their fast classical games after their matches were decided, extending [the forfeit row from Tuesday](/articles/firouzja-and-giri-take-semifinal-leads-at-total-chess/). A draw would have dropped Carlsen under 2800 for the first time in 17 years.
+Carlsen and Mishra skipped their fast classical games after clinching their matches, and Richard Rapport did not show up for his, extending [the forfeit row from Tuesday](/articles/firouzja-and-giri-take-semifinal-leads-at-total-chess/). A draw would have dropped Carlsen under 2800 for the first time in 17 years.
 
 Mishra, answering criticism from FIDE Enterprises CEO Emil Sutovsky, cited fatigue, the chief arbiter's permission and uncertainty over whether the games would be rated.
 

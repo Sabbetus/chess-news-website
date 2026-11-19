@@ -173,7 +173,7 @@ if __name__ == "__main__":
 
 
 _WIN_VERBS = r"(?:beat|beats|defeated|defeats|outplayed|downed|won against|overcame|took down|ground down)"
-_LOSE_VERBS = r"(?:lost to|loses to|fell to|was beaten by|went down to|resigned (?:to|against))"
+_LOSE_VERBS = r"(?:lost to|loses to|fell to|was beaten by|went down to|resigned (?:to|against)|(?:ran|runs) out of time (?:against|after|versus|vs\.?)|lost on time (?:to|against))"
 _DRAW_VERBS = r"(?:drew|draws|held|holds|split the point|drawn)"
 
 

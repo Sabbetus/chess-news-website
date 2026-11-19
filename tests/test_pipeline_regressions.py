@@ -1240,3 +1240,20 @@ def test_fide_lists_juniors_and_names():
     assert t["juniorCutoff"] == 2006
     t = f.build_table("NOV26", cur, cur, {"rapid": (cur, cur)})
     assert [p["name"] for p in t["rapidGirls"]] == ["B"] and len(t["rapid"]) == 3
+
+
+def test_name_inside_a_longer_name_is_someone_else():
+    # 2026-11-19: "Maria_Jose_Martinez_Sanchez" (tennis) matched GM Jose Martinez.
+    assert not images._title_matches_query("File:Neal_Skupski_&_Maria_Jose_Martinez_Sanchez_(50010024671).jpg", "Jose Martinez", True)
+    assert images._title_matches_query("File:Jose_Martinez_2023.jpg", "Jose Martinez", True)
+    assert images._title_matches_query("File:Tata_Steel_Magnus_Carlsen_Round_3.jpg", "Magnus Carlsen", True)
+    assert images._title_matches_query("File:Erwin_l_Ami_&_Peter_Leko_2025.jpg", "Peter Leko", True)
+
+
+def test_ran_out_of_time_sentence_checked_against_the_board():
+    # 2026-11-19: "Caruana ran out of time after Firouzja's 44th move" linked
+    # to the fast classical game Caruana won.
+    from game_links import check_embed_sentence
+    body = "[Caruana ran out of time after Firouzja's 44th move](#game-embed)."
+    pgn = '[White "Caruana, Fabiano"]\n[Black "Firouzja, Alireza"]\n[Result "1-0"]'
+    assert check_embed_sentence(body, pgn)[1]

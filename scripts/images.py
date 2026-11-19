@@ -284,6 +284,17 @@ def _is_high_enough_resolution(title: str, info: dict) -> bool:
 _QUERY_WORD_PATTERN = re.compile(r"[A-Za-z]+")
 
 
+# Words that may stand right before a person's name in a file name.
+_NAME_PREFIX_OK = {"file", "grandmaster", "chess", "player", "photo", "portrait", "the", "with", "and", "gm", "img", "dsc"}
+
+# ...and words that may follow it (events, rounds, prepositions).
+_NAME_SUFFIX_OK = {
+    "round", "game", "chess", "tournament", "olympiad", "candidates", "open", "cup", "championship", "world",
+    "in", "at", "vs", "versus", "playing", "simul", "blitz", "rapid", "and", "with", "during", "interview",
+    "grand", "masters", "classic", "steel", "norway", "speaking", "portrait", "photo", "cropped",
+}
+
+
 def _title_matches_query(title: str, query: str, strict: bool) -> bool:
     """Require the candidate's filename to actually contain part of the
     search query, not just something Commons' full-text search matched
@@ -351,6 +362,22 @@ def _title_matches_query(title: str, query: str, strict: bool) -> bool:
         # the user's call, so other searches keep the usual rule.
         if re.search(r"\bwesley so\b", query.lower()) and not re.search(r"(?<![a-z])so(?![a-z])", title_lower):
             return False
+        # The person's name in the middle of a longer name means someone
+        # else: "Maria_Jose_Martinez_Sanchez" (a tennis player) matched
+        # "Jose Martinez" (caught 2026-11-19). A capitalised word straight
+        # before AND after the name, joined only by spaces/underscores.
+        if len(significant_words) >= 2:
+            name_re = r"[\s_]+".join(re.escape(w) for w in significant_words)
+            for m in re.finditer(rf"(?<![A-Za-z])({name_re})(?![a-z])", title, re.I):
+                before = re.search(r"([A-Z][a-z\u00e0-\u024f]{2,})[\s_]+$", title[: m.start()])
+                after = re.match(r"[\s_]+([A-Z][a-z\u00e0-\u024f]{2,})", title[m.end():])
+                if (
+                    before
+                    and after
+                    and before.group(1).lower() not in _NAME_PREFIX_OK
+                    and after.group(1).lower() not in _NAME_SUFFIX_OK
+                ):
+                    return False
         if all(_word_present(word) for word in significant_words):
             return True
         # Names run together in the filename ("JonSpeelman24.jpg") -- caught

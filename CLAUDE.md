@@ -314,7 +314,29 @@ user approves the fixes themselves (user's rule, 2026-11-09).
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-11-19: drafts/2026-11-19 reset (streak 1 -> 0). First run started
+  by the morning check itself (workflow_dispatch at 07:52; the cron had
+  not arrived). Resets: the 9z Globant Chess Club Showdown piece showed a
+  tennis photo ("Neal Skupski & Maria Jose Martinez Sanchez") captioned
+  "Jose Martinez", with the headline rewritten around it (now Oro's 2025
+  Tata photo, "Martinez and Oro Lead 9z Globant to a Third Straight
+  Showdown Win"); the Total Chess semifinal piece's board was the
+  fast-classical Caruana-Firouzja 1-0 while the linked sentence described
+  the armageddon (now the armageddon, Firouzja-Caruana 1-0, captioned).
+  Minor: "Caruana ran out of time" (no source says so; now "Firouzja
+  converted it in 44 moves"), Rapport grouped with players who skipped
+  after clinching, 9z "down 2500 points of rating" (ambiguous in the
+  source, cut), and a closing line saying Carlsen's Group C exit explained
+  his absence from Liquid (he is still playing in Budapest). Checked:
+  every line of both pieces against Chess.com, ChessBase and FIDE (scores
+  15-5, 12-8, 14.5-5.5, 12.5-7.5; 21...Bxc3, 38...Rc2 with Firouzja on 16
+  seconds, 2...Qa5; Caruana 2794; colour choice from the two-day total;
+  every bracket), the built pages' automatic links, both photos. Fixed at
+  the source: a person's name inside a longer name ("Maria Jose Martinez
+  Sanchez") no longer matches; "ran out of time"/"lost on time" sentences
+  are checked against the board like "lost to", so the board swaps to the
+  pair's game in the neighbouring round.
 - 2026-11-18, site (user's call): new rankings -- open rapid and blitz
   top 100 (/rankings/rapid/, /rankings/blitz/) and junior and girls
   classical top 25 (/rankings/juniors/, /rankings/girls/; born in the

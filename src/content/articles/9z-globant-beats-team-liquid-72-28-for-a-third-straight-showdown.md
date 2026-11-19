@@ -1,19 +1,19 @@
 ---
-title: "GM Jose Martinez Tops Arena as 9z Globant Wins Third Straight"
+title: "Martinez and Oro Lead 9z Globant to a Third Straight Showdown Win"
 publishDate: "2026-11-19"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown"
 lens: "results"
 continent: "global"
 selectionScore: 70
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "9z Globant has won every Chess Club Showdown since September. Martinez and Oro led the 72-28 win over a Team Liquid missing Carlsen, Caruana and Praggnanandhaa."
 metaDescription: "9z Globant beat Team Liquid 72-28 in the November Chess Club Showdown, its third straight win, led by GM Jose Martinez and Faustino Oro."
 image:
-  src: "./_images/Neal_Skupski___Maria_Jose_Martinez_Sanchez__50010024671.webp"
-  credit: "Carine06 from UK, CC BY-SA 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANeal_Skupski_%26_Maria_Jose_Martinez_Sanchez_%2850010024671%29.jpg"
-  caption: "Jose Martinez"
+  src: "./_images/FaustinoOroTata2025.webp"
+  credit: "Frans Peeters from Roosendaal, The Netherlands, CC BY-SA 2.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFaustinoOroTata2025.jpg"
+  caption: "Faustino Oro in 2025"
 ---
 
 9z Globant won the November Chess Club Showdown on November 18, [beating Team Liquid 72-28 in the finals](https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown). It was the team's third straight victory, which means it has won every showdown since the event debuted in September.
@@ -30,7 +30,7 @@ Oro showed it early. In one of his first games he tried a dubious gambit against
 
 **Martinez on top**
 
-Martinez took the top individual spot in the arena, playing while reclining on pillows. Like Oro, he sometimes tried creative openings. It worked well overall, but one game nearly got away from him while he was down 2500 points of rating to his opponent.
+Martinez took the top individual spot in the arena, playing while reclining on pillows. Like Oro, he sometimes tried creative openings. It worked well overall, though one of them nearly cost him a game.
 
 His teammates filled the next three places: GM Dmitrij Kollars, GM Jose Carlos Ibarra Jerez and IM Yoseph Theolifus Taher.
 
@@ -50,4 +50,4 @@ Liquid's stars would have helped here, and their absence is the obvious reading 
 
 The Chess Club Showdown returns on Wednesday, December 23. GM Benjamin Bok and John Sargent hosted the broadcast.
 
-The Chess Herald has been following the same stars at Total Chess, including [Carlsen's elimination in Group C](/articles/carlsen-eliminated-in-group-c-as-caruana-nears-group-b-win/), which explains his absence from the Liquid lineup.
+Carlsen, Caruana and Praggnanandhaa are still playing at Total Chess in Budapest, where [Firouzja and Giri reached the final](/articles/firouzja-beats-caruana-in-armageddon-to-reach-final-against-giri/).
