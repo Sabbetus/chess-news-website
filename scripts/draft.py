@@ -2444,7 +2444,8 @@ def draft_one(
                 # (user's call, 2026-11-19: the Chess Club Showdown piece).
                 try:
                     found = chesscom_player_game(
-                        f"{item.get('title') or ''} {event_name}", names, datetime.strptime(day, "%Y-%m-%d").date()
+                        f"{item.get('title') or ''} {event_name}", names, datetime.strptime(day, "%Y-%m-%d").date(),
+                        body=body_markdown,
                     )
                 except Exception as exc:  # noqa: BLE001
                     print(f"  Chess.com game lookup failed for '{item['title']}': {exc}", file=sys.stderr)

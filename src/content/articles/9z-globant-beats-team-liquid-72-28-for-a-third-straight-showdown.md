@@ -16,7 +16,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AFaustinoOroTata2025.jpg"
   caption: "Faustino Oro in 2025"
 gamePgn: "9z-globant-beats-team-liquid-72-28-for-a-third-straight-showdown.pgn"
-gameCaption: "Final: Martinez - ScandiCandi, 1-0"
+gameCaption: "Final: Jose Martinez - Shaurya Chaudhary, 1-0"
 ---
 
 9z Globant, the chess team of the Argentine esports organisation 9z, won the November Chess Club Showdown on November 18, [beating Team Liquid 72-28 in the finals](https://www.chess.com/news/view/9z-wins-3rd-straight-chess-club-showdown). It was the team's third straight victory, which means it has won every showdown since the event debuted in September.

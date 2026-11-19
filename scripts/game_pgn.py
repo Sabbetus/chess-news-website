@@ -313,7 +313,7 @@ def _handles() -> dict[str, str]:
         return {}
 
 
-def chesscom_player_game(event_text: str, players: list[str], around: datetime_date) -> tuple[str, str] | None:
+def chesscom_player_game(event_text: str, players: list[str], around: datetime_date, body: str = "") -> tuple[str, str] | None:
     """A Chess.com game from the event by a player the article names, for a
     results piece about an event played only on Chess.com, which has no
     Lichess broadcast (user's call, 2026-11-19: the Chess Club Showdown
@@ -343,19 +343,29 @@ def chesscom_player_game(event_text: str, players: list[str], around: datetime_d
                     games += response.json().get("games", [])
             except (requests.RequestException, ValueError):
                 continue
-        picked = []
+        def _moves(g: dict) -> int:
+            return len(re.findall(r"\b\d+\.\s", re.sub(r"\{[^}]*\}", "", (g.get("pgn") or "").split("\n\n", 1)[-1])))
+
+        picked, untagged = [], []
         for game in games:
             day = datetime.fromtimestamp(game.get("end_time", 0), timezone.utc).date()
             if not (around - timedelta(days=3) <= day <= around):
                 continue
             slug = (game.get("tournament") or game.get("match") or "").rstrip("/").rsplit("/", 1)[-1]
+            if not slug:
+                untagged.append(game)
+                continue
             slug_words = {w for w in re.split(r"[-\d]+", slug.lower()) if len(w) >= 4}
-            if not slug_words & words:
-                continue
-            moves = len(re.findall(r"\b\d+\.\s", re.sub(r"\{[^}]*\}", "", (game.get("pgn") or "").split("\n\n", 1)[-1])))
-            if moves < 5:
-                continue
-            picked.append((game["end_time"], slug, game))
+            if slug_words & words and _moves(game) >= 5:
+                picked.append((game["end_time"], slug, game))
+        # A final or playoff after the arena is often filed under no
+        # tournament (2026-11-19: the Showdown final): games the player
+        # finished within three hours after their last event game count too.
+        if picked:
+            last_end, slug0 = max((p[0], p[1]) for p in picked)
+            for game in untagged:
+                if 0 < game["end_time"] - last_end <= 3 * 3600 and _moves(game) >= 5:
+                    picked.append((game["end_time"], slug0, game))
         if not picked:
             continue
         picked.sort(key=lambda t: t[0])
@@ -365,6 +375,12 @@ def chesscom_player_game(event_text: str, players: list[str], around: datetime_d
             return g[side].get("result") == "win"
 
         wins = [p for p in picked if _won(p[2])]
+        # The game the article describes, when it gives its length ("won his
+        # first game in 22 moves"): a win of exactly that many moves.
+        lengths = {int(n) for n in re.findall(r"\bin (\d{1,3}) moves\b", body or "")}
+        described = [p for p in wins if _moves(p[2]) in lengths]
+        if described:
+            wins = described
         decisive = [p for p in picked if '[Result "1/2-1/2"]' not in p[2].get("pgn", "")]
         _, slug, game = (wins or decisive or picked)[-1]
         event = " ".join(w.capitalize() for w in re.split(r"-", re.sub(r"-\d+$", "", slug)) if w)

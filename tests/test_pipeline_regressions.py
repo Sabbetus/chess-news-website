@@ -1286,3 +1286,11 @@ def test_chesscom_player_game_for_events_without_a_broadcast(monkeypatch):
     pgn, caption = game_pgn.chesscom_player_game("9z Wins Chess Club Showdown", ["Jose Martinez"], date(2026, 11, 19))
     assert caption == "Chess Club Showdown: Jose Martinez - a, 1-0"  # his win, not the later loss
     assert game_pgn.chesscom_player_game("Unrelated story", ["Jose Martinez"], date(2026, 11, 19)) is None
+    # The final, filed under no tournament, right after the arena; the body
+    # gives its length.
+    final = game("Jospem", "d", "win", "resigned", 1795025849, "", moves=" ".join(f"{i}. a3 a6" for i in range(1, 23)) + " 1-0")
+    final["tournament"] = ""
+    games.append(final)
+    _, caption = game_pgn.chesscom_player_game("Chess Club Showdown", ["Jose Martinez"], date(2026, 11, 19),
+                                                body="He won his first game in 22 moves.")
+    assert caption == "Chess Club Showdown: Jose Martinez - d, 1-0"
