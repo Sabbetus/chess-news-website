@@ -43,7 +43,7 @@ from broadcast_facts import broadcast_facts
 from continents import CONTINENT_SLUGS
 from game_links import check_embed_sentence, fix_embed_link, illegal_lines, link_moves
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
-from game_pgn import chesscom_numbered_game, clean_game, find_game_pgn, headline_game_number
+from game_pgn import chesscom_numbered_game, chesscom_player_game, clean_game, find_game_pgn, headline_game_number
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
@@ -2439,6 +2439,15 @@ def draft_one(
                     found = find_player_game(event_name, names)
                 except Exception as exc:  # noqa: BLE001
                     print(f"  Player game lookup failed for '{item['title']}': {exc}", file=sys.stderr)
+            if not found and names:
+                # No Lichess broadcast: an event played only on Chess.com
+                # (user's call, 2026-11-19: the Chess Club Showdown piece).
+                try:
+                    found = chesscom_player_game(
+                        f"{item.get('title') or ''} {event_name}", names, datetime.strptime(day, "%Y-%m-%d").date()
+                    )
+                except Exception as exc:  # noqa: BLE001
+                    print(f"  Chess.com game lookup failed for '{item['title']}': {exc}", file=sys.stderr)
             if found:
                 game, caption = found
                 GAMES_DIR.mkdir(parents=True, exist_ok=True)

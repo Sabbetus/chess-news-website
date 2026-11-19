@@ -17,7 +17,9 @@ are its own work, not ours to republish.
 """
 
 import html
+import json
 import re
+from pathlib import Path
 from datetime import date as datetime_date
 import urllib.parse
 
@@ -293,5 +295,87 @@ def chesscom_numbered_game(text: str, number: int, around: datetime_date) -> tup
         result = re.search(r'^\[Result "([^"]+)"\]', pgn, re.M)
         caption = f"Game {number}: {white} - {black}, {(result.group(1) if result else '').replace('1/2-1/2', 'draw')}"
         print(f"  numbered game: {handle} v {black if white.lower() != handle else white}, {day}, {caption}")
+        return clean_game(pgn), caption.rstrip(", ")
+    return None
+
+
+# Chess.com accounts of players we cover (data/chesscom-handles.json, each
+# checked: a titled account whose profile carries the player's name). Kept
+# internal for now (user's call, 2026-11-19), not shown on player pages.
+_HANDLES_PATH = Path(__file__).resolve().parent.parent / "data" / "chesscom-handles.json"
+_EVENT_STOP = {"chess", "the", "and", "with", "from", "into", "after", "wins", "lead", "leads", "beats", "straight", "third"}
+
+
+def _handles() -> dict[str, str]:
+    try:
+        return json.loads(_HANDLES_PATH.read_text())
+    except (OSError, ValueError):
+        return {}
+
+
+def chesscom_player_game(event_text: str, players: list[str], around: datetime_date) -> tuple[str, str] | None:
+    """A Chess.com game from the event by a player the article names, for a
+    results piece about an event played only on Chess.com, which has no
+    Lichess broadcast (user's call, 2026-11-19: the Chess Club Showdown
+    piece had no board though Martinez's games were in his archive). The
+    game must come from a Chess.com tournament whose name shares a word with
+    the event text; the player's latest win there, else latest decisive game, else the latest
+    (games under five moves skipped). Returns (PGN with real names, caption)."""
+    from datetime import datetime, timedelta, timezone
+
+    handles = {k.lower(): v for k, v in _handles().items()}
+    words = {w.lower() for w in re.findall(r"[A-Za-z]{4,}", event_text or "")} - _EVENT_STOP
+    if not words:
+        return None
+    for player in players:
+        handle = handles.get(player.lower())
+        if not handle:
+            surname = player.split()[-1].lower()
+            handle = next((h for n, h in handles.items() if n.split()[-1] == surname), None)
+        if not handle:
+            continue
+        games = []
+        for month in {(around - timedelta(days=d)).strftime("%Y/%m") for d in (0, 3)}:
+            try:
+                response = requests.get(f"https://api.chess.com/pub/player/{handle.lower()}/games/{month}",
+                                        headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT)
+                if response.ok:
+                    games += response.json().get("games", [])
+            except (requests.RequestException, ValueError):
+                continue
+        picked = []
+        for game in games:
+            day = datetime.fromtimestamp(game.get("end_time", 0), timezone.utc).date()
+            if not (around - timedelta(days=3) <= day <= around):
+                continue
+            slug = (game.get("tournament") or game.get("match") or "").rstrip("/").rsplit("/", 1)[-1]
+            slug_words = {w for w in re.split(r"[-\d]+", slug.lower()) if len(w) >= 4}
+            if not slug_words & words:
+                continue
+            moves = len(re.findall(r"\b\d+\.\s", re.sub(r"\{[^}]*\}", "", (game.get("pgn") or "").split("\n\n", 1)[-1])))
+            if moves < 5:
+                continue
+            picked.append((game["end_time"], slug, game))
+        if not picked:
+            continue
+        picked.sort(key=lambda t: t[0])
+        # The player's own latest win first: the story is about them.
+        def _won(g: dict) -> bool:
+            side = "white" if g["white"]["username"].lower() == handle.lower() else "black"
+            return g[side].get("result") == "win"
+
+        wins = [p for p in picked if _won(p[2])]
+        decisive = [p for p in picked if '[Result "1/2-1/2"]' not in p[2].get("pgn", "")]
+        _, slug, game = (wins or decisive or picked)[-1]
+        event = " ".join(w.capitalize() for w in re.split(r"-", re.sub(r"-\d+$", "", slug)) if w)
+        pgn = game.get("pgn") or ""
+        white = _real_name(game["white"]["username"])
+        black = _real_name(game["black"]["username"])
+        pgn = re.sub(r'^\[White "[^"]*"\]', f'[White "{white}"]', pgn, flags=re.M)
+        pgn = re.sub(r'^\[Black "[^"]*"\]', f'[Black "{black}"]', pgn, flags=re.M)
+        pgn = re.sub(r'^\[Event "[^"]*"\]', f'[Event "{event}"]', pgn, flags=re.M)
+        result = re.search(r'^\[Result "([^"]+)"\]', pgn, re.M)
+        caption = f"{event}: {white} - {black}, {(result.group(1) if result else '').replace('1/2-1/2', 'draw')}"
+        print(f"    chess.com game: {handle} {caption}")
         return clean_game(pgn), caption.rstrip(", ")
     return None

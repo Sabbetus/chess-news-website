@@ -1257,3 +1257,32 @@ def test_ran_out_of_time_sentence_checked_against_the_board():
     body = "[Caruana ran out of time after Firouzja's 44th move](#game-embed)."
     pgn = '[White "Caruana, Fabiano"]\n[Black "Firouzja, Alireza"]\n[Result "1-0"]'
     assert check_embed_sentence(body, pgn)[1]
+
+
+def test_chesscom_player_game_for_events_without_a_broadcast(monkeypatch):
+    # 2026-11-19: the Chess Club Showdown piece had no board; the event was
+    # played only on Chess.com.
+    import game_pgn
+
+    def game(white, black, wres, bres, end, slug, moves="1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 1-0"):
+        return {"white": {"username": white, "result": wres}, "black": {"username": black, "result": bres},
+                "end_time": end, "tournament": f"https://api.chess.com/pub/tournament/{slug}",
+                "pgn": f'[Event "Live Chess"]\n[Site "Chess.com"]\n[White "{white}"]\n[Black "{black}"]\n[Result "1-0"]\n\n{moves}'}
+
+    games = [
+        game("Jospem", "a", "win", "resigned", 1795017751, "chess-club-showdown-31194542"),
+        game("b", "Jospem", "win", "resigned", 1795024475, "chess-club-showdown-31194542"),
+        game("Jospem", "c", "win", "resigned", 1795020000, "titled-tuesday-blitz-1"),
+    ]
+
+    class R:
+        ok = True
+        def json(self):
+            return {"games": games}
+
+    monkeypatch.setattr(game_pgn.requests, "get", lambda *a, **k: R())
+    monkeypatch.setattr(game_pgn, "_real_name", lambda u: {"Jospem": "Jose Martinez"}.get(u, u))
+    from datetime import date
+    pgn, caption = game_pgn.chesscom_player_game("9z Wins Chess Club Showdown", ["Jose Martinez"], date(2026, 11, 19))
+    assert caption == "Chess Club Showdown: Jose Martinez - a, 1-0"  # his win, not the later loss
+    assert game_pgn.chesscom_player_game("Unrelated story", ["Jose Martinez"], date(2026, 11, 19)) is None
