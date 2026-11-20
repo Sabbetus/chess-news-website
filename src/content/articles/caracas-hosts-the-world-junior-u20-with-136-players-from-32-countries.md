@@ -20,11 +20,9 @@ The 2026 World Junior Chess Championship (U20) is under way in Caracas. [Venezue
 
 The field is 136 players from 32 countries, split between the Open and Girls sections. Each is an 11-round Swiss at classical time controls. The Venezuelan Chess Federation organizes it, with support from the country's sports ministry and under FIDE's auspices.
 
-**A broad but uneven field**
+**Who is playing**
 
-FIDE's list of the nations taking part is wide. Germany, India, China, Kazakhstan and the United States are on it, along with Azerbaijan, Belgium, Bosnia and Herzegovina, Lithuania and Nigeria.
-
-The Americas are heavily represented: Argentina, Aruba, Canada, Colombia, Costa Rica, Cuba, Curaçao, Ecuador, Honduras, Mexico, Nicaragua, Peru, Paraguay, Panama, Puerto Rico, Suriname, Trinidad and Tobago, Uruguay and the host nation.
+Most of the field comes from the Americas, with players from Europe, Asia and Africa as well.
 
 Rodríguez welcomed "participants from 32 nations across our continent, as well as from Europe, Asia, and Africa." That regional mix is a reminder of how junior world championships differ from the adult circuit.
 
