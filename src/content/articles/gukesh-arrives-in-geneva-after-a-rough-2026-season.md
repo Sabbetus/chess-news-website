@@ -1,6 +1,7 @@
 ---
 title: "Gukesh Dommaraju Heads to Geneva to Defend His Title Against Sindarov"
 publishDate: "2026-11-20"
+publishedAt: "2026-11-20T08:05:44Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/the-difficult-road-to-defending-his-title-gukesh-dommaraju"
 lens: "people"

@@ -1,6 +1,7 @@
 ---
 title: "Chile Hosts 405 Players at South American Youth Festival"
 publishDate: "2026-11-20"
+publishedAt: "2026-11-20T08:05:44Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
