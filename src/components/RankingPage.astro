@@ -44,7 +44,8 @@ const meta = {
   path: pathOf(tc, cat),
   h1: CAT.h1,
   title: `${CAT.h1} Chess Players${cat === 'juniors' || cat === 'girls' ? ' (Under 20)' : ''}, ${month}`,
-  lede: `The ${cat === 'open' ? "world's " : ''}${n} highest-rated active ${CAT.noun} in ${tc} chess${CAT.extra}, from FIDE's official ${tc === 'classical' ? 'standard' : tc} rating list.`,
+  // Kept to three lines on phones (user's call, 2026-11-20).
+  lede: `The ${cat === 'open' ? "world's " : ''}${n} highest-rated active ${CAT.noun}${cat === 'juniors' || cat === 'girls' ? ` (born ${cutoff} or later)` : ''} in ${tc} chess, from FIDE's ${tc === 'classical' ? 'standard' : tc} list.`,
   who: `top ${n} active ${tc === 'classical' ? '' : `${tc} `}${cat === 'open' ? 'chess players' : cat === 'women' ? 'women chess players' : `${CAT.noun} (under 20)`}`,
   source: sourceName,
 };
