@@ -94,7 +94,10 @@
   under the FIDE flag or for foreign clubs are ordinary subjects (e.g.
   Murzin playing for Bayegan Pendik at the Club Cup). Neutral statistics
   that include Russia's federation (e.g. GM counts by federation) are fine
-  (user's call, 2026-11-10).
+  (user's call, 2026-11-10). A complete list (every participating country
+  named) keeps Russia: leaving it out would make the list wrong. Only a
+  highlighted mention (Russia singled out, a team or player presented as
+  Russia's) is skipped (user's call, 2026-11-20).
 
 - **Bold claims the source reasonably supports are fine** (user's call,
   2026-10-24). Don't flag or soften strong wording of what the source
