@@ -1303,3 +1303,12 @@ def test_board_round_type_must_match_the_linked_sentence():
     pgn = '[White "Giri, Anish"]\n[Black "Firouzja, Alireza"]\n[Result "1-0"]'
     assert check_embed_sentence(body, pgn, "https://lichess.org/embed/broadcast/t/game-6-rapid/6x8Y9PvG/q9cI1jAo")[1]
     assert check_embed_sentence(body, pgn, "https://lichess.org/embed/broadcast/t/game-7-fast-classic/glKGdlBO/xU7HNTir")[1] is None
+
+
+def test_keywords_count_once_and_skip_world_title_for_age_groups():
+    # 2026-11-20: "hosting a world championship" in the World Junior opening
+    # report scored "world championship" and "world champion" (30 points).
+    import selection
+    assert selection.score_keywords("hosting a world championship") == selection.KEYWORD_WEIGHTS["world championship"]
+    assert selection.score_keywords("hosting a world championship", "World Junior U20 Chess Championship begins") == 0
+    assert selection.score_keywords("the world champion lost", "Carlsen loses") == selection.KEYWORD_WEIGHTS["world champion"]

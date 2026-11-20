@@ -442,13 +442,32 @@ def tournament_has_round_context(text_lower: str, tournament_key: str) -> bool:
     return False
 
 
-def score_keywords(text: str) -> int:
+# An age-group event is not the World Championship (2026-11-20: the World
+# Junior's opening report took "world championship" and "world champion").
+_AGE_GROUP_RE = re.compile(r"\b(junior|youth|cadet|senior|u-?\d{2}|under[- ]\d{2}|school|amateur|girls)\b", re.IGNORECASE)
+_WORLD_TITLE_KEYWORDS = {"world champion", "world championship"}
+
+
+def score_keywords(text: str, title: str = "") -> int:
+    """Each keyword once; one contained in a longer keyword that matched at
+    the same place doesn't count again ("world champion" inside "world
+    championship" -- caught 2026-11-20, 15 points twice from one phrase)."""
     text_lower = text.lower()
-    score = 0
-    for kw, weight in KEYWORD_WEIGHTS.items():
-        if kw in text_lower:
-            score += weight
-    return min(score, MAX_KEYWORD_SCORE)
+    spans = []
+    for kw in KEYWORD_WEIGHTS:
+        for m in re.finditer(re.escape(kw), text_lower):
+            spans.append((m.start(), m.end(), kw))
+    age_group = bool(_AGE_GROUP_RE.search(title or ""))
+    counted = set()
+    for start, end, kw in spans:
+        if kw in counted:
+            continue
+        if any(s <= start and end <= e and (e - s) > (end - start) for s, e, _ in spans):
+            continue
+        if age_group and kw in _WORLD_TITLE_KEYWORDS:
+            continue
+        counted.add(kw)
+    return min(sum(KEYWORD_WEIGHTS[kw] for kw in counted), MAX_KEYWORD_SCORE)
 
 
 
@@ -811,7 +830,11 @@ def score_elite_field(item: dict) -> int:
 
 def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, dict]:
     breakdown = {}
-    breakdown["sourceTier"] = SOURCE_TIER_SCORE.get(item.get("sourceTier"), 0)
+    # No base points for the source or the summary's length any more (user's
+    # call, 2026-11-20): every source got 20-25 and, with full texts
+    # ingested, nearly every story the full 15 for length, so neither
+    # separated anything.
+    breakdown["sourceTier"] = 0
 
     text = f"{item.get('title', '')} {item.get('summary', '')}"
     feature = is_feature_story(item)
@@ -820,7 +843,8 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     # bonus's own test -- caught in testing: the Turlov election piece scored
     # 150 against the round report's 153. Not a result; no bonus.
     governance = not feature and bool(GOVERNANCE_TITLE_RE.search(item.get("title") or ""))
-    breakdown["keywords"] = min(score_keywords(text), FEATURE_MAX_KEYWORD_SCORE) if feature else score_keywords(text)
+    kw_score = score_keywords(text, item.get("title", ""))
+    breakdown["keywords"] = min(kw_score, FEATURE_MAX_KEYWORD_SCORE) if feature else kw_score
     lead = f"{item.get('title', '')} {(item.get('summary') or '').strip()[:MAJOR_EVENT_LEAD_CHARS]}"
     breakdown["majorTournament"] = 0 if (feature or governance) else score_major_tournament(text, lead)
     if breakdown["majorTournament"] and PREVIEW_TITLE_RE.search(item.get("title", "")):
@@ -836,7 +860,7 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     breakdown["governanceElection"] = 0 if feature else score_governance_election(text)
     anniversary = feature and is_anniversary_story(item)
     breakdown["feature"] = (FEATURE_ANNIVERSARY_BONUS if anniversary else FEATURE_BONUS) if feature else 0
-    breakdown["specificity"] = score_specificity(item)
+    breakdown["specificity"] = 0
     breakdown["fanBuzz"] = score_fan_buzz(item, trend_titles)
     breakdown["followUp"] = 0 if (feature or governance) else score_follow_up(item)
     breakdown["eliteField"] = 0 if (feature or governance or breakdown["majorTournament"]) else score_elite_field(item)
