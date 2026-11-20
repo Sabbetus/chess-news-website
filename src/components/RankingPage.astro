@@ -112,7 +112,7 @@ const jsonLd = [
 <BaseLayout title={seoTitle(meta.title)} description={description} activeSection="rankings" jsonLd={jsonLd}>
   <div class="hub">
     <header class="hub-head">
-      <h1>{meta.h1}</h1>
+      <h1 style={`--len: ${meta.h1.length}`}>{meta.h1}</h1>
       <p class="list-month">{month} rating list</p>
       <p class="hub-lede">{meta.lede}</p>
     </header>
@@ -212,12 +212,26 @@ const jsonLd = [
 </script>
 
 <style>
+  /* A little less space above the list buttons, to make room for the
+     search box (user's call, 2026-11-20). */
+  .hub-head {
+    margin-bottom: 16px;
+  }
+  /* Phones: the list title stays on one line ("FIDE Blitz Women's Top 25"
+     is the longest), scaled down with the screen width. */
+  @media (max-width: 640px) {
+    .hub-head h1 {
+      white-space: nowrap;
+      /* up to about 0.6em per character in Fraunces at this weight */
+      font-size: min(30px, calc((100vw - 40px) / (var(--len) * 0.62)));
+    }
+  }
   .data-table tbody tr[hidden] {
     display: none;
   }
   .list-search {
     max-width: var(--content-width);
-    margin: 14px auto 18px;
+    margin: 14px auto 6px;
   }
   .list-search input {
     width: 100%;
