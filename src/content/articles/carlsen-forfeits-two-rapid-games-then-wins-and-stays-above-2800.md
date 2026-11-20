@@ -1,6 +1,7 @@
 ---
 title: "Carlsen Forfeits Two Rapid Games, Then Wins and Stays Above 2800"
 publishDate: "2026-11-20"
+publishedAt: "2026-11-20T08:05:44Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-9"
 lens: "drama"

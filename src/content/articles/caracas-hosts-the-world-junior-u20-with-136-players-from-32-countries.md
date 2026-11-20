@@ -1,6 +1,7 @@
 ---
 title: "FIDE President Timur Turlov Visits Caracas for World Junior Opening"
 publishDate: "2026-11-20"
+publishedAt: "2026-11-20T08:05:44Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/world-junior-u20-chess-championship-2026-begins-in-caracas-venezuela/"
 lens: "historical-parallel"
