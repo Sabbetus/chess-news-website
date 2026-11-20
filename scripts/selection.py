@@ -35,10 +35,10 @@ TRENDS_PATH = DATA_DIR / "trends.json"
 MIN_EXTERNAL_ARTICLES = 2
 MAX_EXTERNAL_ARTICLES = 4
 MAX_CALENDAR_ARTICLES_PER_DAY = 1
-SCORE_THRESHOLD_FOR_EXTRA = 60  # out of 100 -- above this, external articles 3-4 are allowed through
+SCORE_THRESHOLD_FOR_EXTRA = 20  # (60 before source and length points were removed, 2026-11-20) -- above this, external articles 3-4 are allowed through
 
 CALENDAR_KINDS = {"calendar-biggest", "calendar-comingup"}
-MIN_PUBLISH_SCORE = 50
+MIN_PUBLISH_SCORE = 15  # 50 before source and length points were removed (2026-11-20)
 
 # Higher-traffic / more clearly newsworthy outlets get a base bump.
 SOURCE_TIER_SCORE = {

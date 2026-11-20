@@ -1029,7 +1029,7 @@ def test_repeated_headline_phrase():
 def test_quality_floor_and_headline_window():
     import draft
     import selection
-    assert selection.MIN_PUBLISH_SCORE == 50
+    assert selection.MIN_PUBLISH_SCORE == 15  # 50 before 2026-11-20 rescaling
     assert draft.RECENT_HEADLINE_DAYS == 14
 
 

@@ -68,7 +68,12 @@
   rule, 2026-11-07, after an Esports World Cup 2027 announcement scoring
   46 went out; it was removed). Calendar pieces are the only exception.
   selection.py drops anything else under MIN_PUBLISH_SCORE before
-  drafting; a review drops any draft below it.
+  drafting; a review drops any draft below it. Rescaled
+  2026-11-20 (user's call): source and summary-length points were removed
+  from scoring (they gave every story 35-40 points), keywords count once
+  and age-group events no longer get the world-title keyword; the floor
+  moved from 50 to 15 and the extra-article threshold from 60 to 20, which
+  keep the same past stories in (checked on 144 items since mid-October).
 
 - **Headlines and social copies don't reuse set phrases from the last two
   weeks** (user's rule, 2026-11-07: "Half a Point Back" twice). Regular
