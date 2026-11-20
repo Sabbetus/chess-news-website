@@ -11,6 +11,9 @@ const groups = EVENT_CATEGORIES.map((c) => ({
   events: events.filter((e) => e.data.category === c.id).sort((a, b) => upcoming(a) - upcoming(b)),
 })).filter((g) => g.events.length > 0);
 
+// Lower-case, accents stripped: what the search box matches against.
+const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
 const description =
   "The major events on chess's annual calendar: world championship cycles, elite invitationals, big opens and team events. History, past winners, and when each is played next.";
 ---
@@ -22,6 +25,11 @@ const description =
       <p class="hub-lede">
         The tournaments that shape each chess year, with their history, past winners, and when each one is played next.
       </p>
+      <div class="list-search" hidden>
+        <label for="eventSearch" class="visually-hidden">Search events</label>
+        <input id="eventSearch" type="search" placeholder="Search events by name" autocomplete="off" spellcheck="false" />
+        <p class="no-match" hidden>No event matches that name.</p>
+      </div>
     </header>
 
     {groups.map((g) => (
@@ -31,7 +39,7 @@ const description =
           {g.events.map((e) => {
             const latest = e.data.winners.find((w) => w.names.length > 0);
             return (
-              <li>
+              <li data-names={fold([e.data.name, ...(e.data.aliases ?? [])].join(' '))}>
                 <a class="event-thumb" href={`/events/${e.slug}/`} tabindex="-1" aria-hidden="true">
                   {e.data.image && (
                     <Image src={e.data.image.src} alt="" width={640} height={480} widths={[256, 480, 640]} sizes="(max-width: 640px) 92vw, 240px" loading="lazy" />
@@ -54,7 +62,70 @@ const description =
   </div>
 </BaseLayout>
 
+<script>
+  // Filters the list as you type, like the players page (2026-11-20): every
+  // word typed must start a word of the event's name or one of its other
+  // names, accents ignored ("tata" finds Tata Steel Chess).
+  const box = document.querySelector<HTMLElement>('.list-search');
+  const input = document.querySelector<HTMLInputElement>('#eventSearch');
+  if (box && input) {
+    box.hidden = false;
+    const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const items = [...document.querySelectorAll<HTMLElement>('.event-list li')].map((li) => ({
+      li,
+      words: (li.dataset.names ?? '').split(/[\s,.'()-]+/).filter(Boolean),
+    }));
+    const sections = [...document.querySelectorAll<HTMLElement>('.hub-section')];
+    const none = box.querySelector<HTMLElement>('.no-match');
+    input.addEventListener('input', () => {
+      const terms = fold(input.value).split(/[\s,.'()-]+/).filter(Boolean);
+      let shown = 0;
+      for (const { li, words } of items) {
+        const hit = terms.every((t) => words.some((w) => w.startsWith(t)));
+        li.hidden = !hit;
+        if (hit) shown++;
+      }
+      for (const s of sections) s.hidden = !s.querySelector('li:not([hidden])');
+      if (none) none.hidden = shown > 0;
+    });
+  }
+</script>
+
 <style>
+  .hub-section[hidden],
+  .event-list li[hidden] {
+    display: none;
+  }
+  .list-search {
+    margin: 18px 0 0;
+  }
+  .list-search input {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .list-search input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .no-match {
+    margin: 14px 0 0;
+    color: var(--ink-soft);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
   /* Group headings are section labels, not titles: small caps in the mono
      face, so they don't compete with the serif event names below them. */
   .hub-section .group-label {
