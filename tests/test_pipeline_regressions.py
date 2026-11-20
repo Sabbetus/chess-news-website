@@ -1294,3 +1294,12 @@ def test_chesscom_player_game_for_events_without_a_broadcast(monkeypatch):
     _, caption = game_pgn.chesscom_player_game("Chess Club Showdown", ["Jose Martinez"], date(2026, 11, 19),
                                                 body="He won his first game in 22 moves.")
     assert caption == "Chess Club Showdown: Jose Martinez - d, 1-0"
+
+
+def test_board_round_type_must_match_the_linked_sentence():
+    # 2026-11-20: "The fast classic ... was the Game of the Day" linked to the rapid game.
+    from game_links import check_embed_sentence
+    body = "The fast classic, worth eight points, was the [Game of the Day](#game-embed)."
+    pgn = '[White "Giri, Anish"]\n[Black "Firouzja, Alireza"]\n[Result "1-0"]'
+    assert check_embed_sentence(body, pgn, "https://lichess.org/embed/broadcast/t/game-6-rapid/6x8Y9PvG/q9cI1jAo")[1]
+    assert check_embed_sentence(body, pgn, "https://lichess.org/embed/broadcast/t/game-7-fast-classic/glKGdlBO/xU7HNTir")[1] is None

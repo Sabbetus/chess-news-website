@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/world-junior-u20-chess-championship-2026-begins
 lens: "historical-parallel"
 continent: "south-america"
 selectionScore: 90
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "The 2026 World Junior U20 Championship opened in Caracas with 136 players from 32 countries in 11-round Swiss events. Venezuela's president made the first move, with FIDE's Timur Turlov in attendance."
 metaDescription: "The 2026 World Junior U20 Chess Championship opened in Caracas on November 18 with 136 players from 32 countries in Open and Girls Swiss events."
 image:
@@ -22,13 +22,13 @@ The field is 136 players from 32 countries, split between the Open and Girls sec
 
 **A broad but uneven field**
 
-The list of federations is wide. Germany, India, China, Kazakhstan, Russia and the United States are on it, along with Azerbaijan, Belgium, Bosnia and Herzegovina, Lithuania and Nigeria.
+FIDE's list of the nations taking part is wide. Germany, India, China, Kazakhstan and the United States are on it, along with Azerbaijan, Belgium, Bosnia and Herzegovina, Lithuania and Nigeria.
 
 The Americas are heavily represented: Argentina, Aruba, Canada, Colombia, Costa Rica, Cuba, Curaçao, Ecuador, Honduras, Mexico, Nicaragua, Peru, Paraguay, Panama, Puerto Rico, Suriname, Trinidad and Tobago, Uruguay and the host nation.
 
 Rodríguez welcomed "participants from 32 nations across our continent, as well as from Europe, Asia, and Africa." That regional mix is a reminder of how junior world championships differ from the adult circuit.
 
-Many of these federations send young players who rarely meet top European or Asian opposition, and an 11-round Swiss against a mixed-strength field is a rare chance for them to measure themselves. For an explanation of how pairings work in such events, see our guide to [Swiss tiebreaks](/articles/swiss-system-tiebreaks/).
+Many of these federations send young players who rarely meet top European or Asian opposition, and an 11-round Swiss against a mixed-strength field is a rare chance for them to measure themselves. Our [guide to Swiss tiebreaks](/articles/swiss-system-tiebreaks/) explains how such events separate players on equal points.
 
 **What the president said**
 

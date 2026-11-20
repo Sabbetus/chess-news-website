@@ -1,19 +1,19 @@
 ---
-title: "Gukesh Dommaraju Defends His World Title Against Sindarov"
+title: "Gukesh Dommaraju Heads to Geneva to Defend His Title Against Sindarov"
 publishDate: "2026-11-20"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/the-difficult-road-to-defending-his-title-gukesh-dommaraju"
 lens: "people"
 continent: "asia"
 selectionScore: 167
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Gukesh defends his world title against Javokhir Sindarov from 24 November in Geneva. His 2026 results were poor, but he says meditation has helped. A look at the champion's road there."
 metaDescription: "Defending champion Gukesh faces Javokhir Sindarov in Geneva from 24 November. A look at his rise, a weak 2026 season and his work on mental health."
 image:
   src: "./_images/Dommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.webp"
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADommaraju_Gukesh_v_Arjun_Erigaisi_Tata_2023_-_13.jpg"
-  caption: "Gukesh Dommaraju"
+  caption: "Gukesh Dommaraju (left) against Arjun Erigaisi at Tata Steel 2023"
 gamePgn: "gukesh-arrives-in-geneva-after-a-rough-2026-season.pgn"
 ---
 
@@ -29,9 +29,11 @@ Gukesh was born on 29 May 2006 in Chennai, the son of a microbiologist and an ea
 
 His school coach, Bhaskar V, spotted his comprehension and went to his parents. His father eventually gave up his own career to support the boy.
 
-Vishnu Prasanna took over his training in 2017, stressing independent thinking without engines. Grzegorz Gajewski later shaped his openings and title preparation. Other names on the list include Sandipan Chanda, Artur Jussupow, Boris Gelfand and Viswanathan Anand.
+From 2017 Vishnu Prasanna brought a more systematic approach to his training, stressing independent thinking without engines. Grzegorz Gajewski later shaped his openings and title preparation. Other names on the list include Sandipan Chanda, Artur Jussupow, Boris Gelfand and Viswanathan Anand.
 
-He became a grandmaster on 15 January 2019, at twelve years, seven months and 17 days. Only Sergey Karjakin had done it younger. ChessBase's Frederic Friedel met him that month, and later helped set up training camps with Vladimir Kramnik and Gelfand, attended by Gukesh, Praggnanandhaa and Arjun Erigaisi.
+He became a grandmaster on 15 January 2019, at twelve years, seven months and 17 days. Only Sergey Karjakin had done it younger.
+
+ChessBase's Frederic Friedel met him that month and suggested Vladimir Kramnik could train India's young talents. Sagar Shah organised the camps, later joined by Gelfand, and Gukesh, Praggnanandhaa and Arjun Erigaisi were among the players.
 
 **The climb**
 

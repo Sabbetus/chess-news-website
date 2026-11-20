@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-total-chess-world-championship-
 lens: "drama"
 continent: "europe"
 selectionScore: 190
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Carlsen skipped both rapid games against Artemiev, then won the fast classic on demand to keep his 2800. Caruana called it \"even worse\" than before. Giri leads Firouzja 11-9 in the Total Chess final."
 metaDescription: "Carlsen forfeited two rapid games, won the fast classic to beat Artemiev 11-9 and stay above 2800, while Giri leads Firouzja 11-9 in the Total Chess final."
 additionalSources:
@@ -20,7 +20,8 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
   caption: "Magnus Carlsen"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/game-6-rapid/6x8Y9PvG/q9cI1jAo"
+  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/game-7-fast-classic/glKGdlBO/xU7HNTir"
+gameCaption: "Final, fast classic: Firouzja - Giri, draw"
 ---
 
 At the Total Chess World Championship Tour Pilot in Budapest, Magnus Carlsen [forfeited both rapid games against Vladislav Artemiev](https://www.chess.com/news/view/2026-total-chess-world-championship-tour-pilot-day-9) on Thursday, then won the fast classic game on demand. The 11-9 set win kept his live rating at 2804 and extended a 17-year run above 2800.
@@ -47,7 +48,7 @@ As we noted when [Carlsen skipped a game with 2800 at stake](/articles/firouzja-
 
 In the final, Giri leads Alireza Firouzja 11-9 after the first set. Giri won two blitz games and drew two for a 3-1 lead. Firouzja won the first rapid game with White, and Giri answered by winning the second, using Firouzja's time trouble.
 
-Chess.com noted Firouzja missed 38.g5!!, with the idea of 39.Be6! and a rook sacrifice for a mating attack.
+In that game Giri, with White, could have played 38.g5!!, with the idea 39.Be6! and a rook sacrifice for a mating attack, Chess.com noted, but his win came more prosaically.
 
 The fast classic, worth eight points, was the [Game of the Day](#game-embed).
 

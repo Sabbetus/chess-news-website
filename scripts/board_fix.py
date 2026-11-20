@@ -67,6 +67,6 @@ def matching_pair_game(embed_url: str, embed_pgn: str, body: str) -> tuple[str, 
                 continue
             if _pair(game) != pair or re.search(r'\[Result\s+"\*"\]', game):
                 continue
-            if check_embed_sentence(body, game)[1] is None:
+            if check_embed_sentence(body, game, url.group(1))[1] is None:
                 return url.group(1).replace("lichess.org/broadcast/", "lichess.org/embed/broadcast/", 1), game
     return None

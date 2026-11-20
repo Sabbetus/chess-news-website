@@ -6,7 +6,7 @@ sourceUrl: "https://chesstournamentcalendar.com/continent/south-america/"
 lens: "tournament-db"
 continent: "south-america"
 selectionScore: 15
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "405 players are registered for the XXII Festival Sudamericano de Ajedrez in Chile from Dec. 3 to 8. Brazil's 92nd Absolute Championship in Teresina starts Dec. 5. Our December South America preview."
 metaDescription: "December in South America opens with a 405-player festival in Chile and the 92nd Brazilian Absolute Championship in Teresina, among 98 tracked events."
 aggregateKind: "calendar-comingup"
@@ -19,7 +19,9 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3APoertschach_Hans-Pruscha-Weg_Schachspiel_20062016_3362.jpg"
 ---
 
-Of the 98 South American tournaments tracked for December, the biggest by registration is the [XXII Festival Sudamericano de Ajedrez de la Juventud](https://chesstournamentcalendar.com/tournament/sudamericano-de-la-juventud-2026-1538903/) in Chile. It runs Dec. 3 to 8 at the Pontificia Universidad Católica de Chile campus on Av. Jaime Guzmán Errázuriz.
+Of the 98 South American tournaments tracked for December, the biggest by registration is the [XXII Festival Sudamericano de Ajedrez de la Juventud](https://chesstournamentcalendar.com/tournament/sudamericano-de-la-juventud-2026-1538903/) in Chile.
+
+It runs from 3 to 8 December at the Pontificia Universidad Católica de Chile campus on Av. Jaime Guzmán Errázuriz.
 
 The classical event has 405 players registered and is organized by FIDE America and the Chilean federation.
 
@@ -39,7 +41,7 @@ Peru has the [V Gran Clásico Armagedón](https://chesstournamentcalendar.com/to
 
 The [V Copa Campo Mourão de Xadrez](https://chesstournamentcalendar.com/tournament/v-copa-campo-mourão-de-xadrez-r-3000000-em-pr-1403888/) carries R$ 30.000,00 in its title. It runs Dec. 3 to 6 in Campo Mourão with 51 players registered.
 
-Two state championships close out the third weekend. The [Campeonato Alagoano Absoluto 2026](https://chesstournamentcalendar.com/tournament/campeonato-alagoano-absoluto-2026-1534507/) runs Dec. 18 to 20 at the Hall da Fama, Estádio Rei Pelé, with 42 players.
+A state championship and a city championship close out the third weekend. The [Campeonato Alagoano Absoluto 2026](https://chesstournamentcalendar.com/tournament/campeonato-alagoano-absoluto-2026-1534507/) runs Dec. 18 to 20 at the Hall da Fama, Estádio Rei Pelé, with 42 players.
 
 The [Campeonato Imperatrizense de Xadrez Absoluto](https://chesstournamentcalendar.com/tournament/campeonato-imperatrizense-de-xadrez-absoluto-std-2-1538331/) takes place the same days in Imperatriz, with 23 registered.
 
@@ -57,4 +59,4 @@ Bogotá's Liga de Ajedrez stages the [IRT Navideño Ciudad de Bogotá Clásico](
 
 Uruguay's [Torneo X Ajedrez Artigas](https://chesstournamentcalendar.com/tournament/torneo-x-ajedrez-artigas-premios-en-efectivo-1509525/) is a two-day event on Dec. 12 and 13 at the Club Deportivo Artigas, with 38 players.
 
-Anyone wanting to compare against the last big continental event can read [how the South American Championship in Bogotá turned out](/articles/bogota-hosts-234-players-at-south-american-championship/). The Chilean youth festival opens first, on Dec. 3.
+October's biggest South American event was [the South American Championship in Bogotá](/articles/bogota-hosts-234-players-at-south-american-championship/), with 234 players. The Chilean youth festival opens first, on Dec. 3.

@@ -1577,6 +1577,11 @@ was placed after 38.Re1+ and the resignation, describing pieces that had already
 draw. When the body says who won or lost a game, check which colour that player had and \
 that the result matches. (Caught live 2026-10-06: a caption "X played black against Y \
 (0-1)" was written up as X losing, when 0-1 means X won.)
+- Missed or possible moves: a move written "38.g5" is White's, "38...g5" is Black's. When the \
+body says a player missed, could have played or overlooked a move, check that it is that \
+player's colour's move in that game; a source's "the move wasn't played, but 38.g5!! would \
+have been a great find" belongs to the side who had White there. (Caught live 2026-11-20: \
+Giri's unplayed 38.g5!! was written up as a move Firouzja missed.)
 - Sections: in an event with separate sections (age groups, Open and Women's), every \
 standing must name its section, and nothing may count or group leaders across sections \
 (headline, body, social copy, meta). (Caught live 2026-10-17: "Three Perfect Scores Lead the \
@@ -2347,7 +2352,9 @@ def draft_one(
             embed_pgn = embed_game_pgn(embed["url"] if isinstance(embed, dict) else embed)
             if embed_pgn:
                 body_markdown = fix_embed_link(body_markdown, embed_pgn)
-                unlinked, board_note = check_embed_sentence(body_markdown, embed_pgn)
+                unlinked, board_note = check_embed_sentence(
+                    body_markdown, embed_pgn, embed["url"] if isinstance(embed, dict) else embed
+                )
                 if board_note:
                     # Fix it first (user's call, 2026-11-15): the game the
                     # sentence means is usually the pair's other game in the

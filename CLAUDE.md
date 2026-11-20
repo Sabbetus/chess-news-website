@@ -319,6 +319,31 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-20: drafts/2026-11-20 reset (streak stays at 0). Run started
+  by the morning check (07:52). Resets: the Total Chess final piece's board
+  was the rapid game 6 (Giri-Firouzja 1-0) while the linked sentence named
+  the fast classic as the Game of the Day (now the fast classic,
+  Firouzja-Giri draw, captioned); and it said "Firouzja missed 38.g5!!" --
+  Chess.com's unplayed 38.g5!! was Giri's, with White, in the rapid game he
+  won (rewritten). Minor: Gukesh headline "Defends His World Title Against
+  Sindarov" (the match starts 24 November; now "Heads to Geneva to Defend
+  His Title Against Sindarov"), its Tata 2023 board photo captioned as a
+  solo shot (now "(left) against Arjun Erigaisi"), Vishnu Prasanna "took
+  over" (brought a more systematic approach) and Friedel "helped set up"
+  the Kramnik camps (he suggested them; Sagar Shah organised); World Junior
+  piece listed Russia among the nations (Russia rule) and called FIDE's
+  partial list of nations "federations", a "pairings" link to the
+  tiebreaks guide; calendar "two state championships" (Imperatriz is a
+  city championship) and "how the South American Championship turned out"
+  for a calendar piece. Checked: every Gukesh claim against ChessBase,
+  every Total Chess claim against Chess.com and ChessBase (scores in all
+  matches, quotes, 2804/2799, move-21 clocks), every World Junior claim
+  against FIDE, all 20 calendar entries; the built pages' automatic links;
+  all four photos. Fixed at the source: a linked sentence naming a game
+  type (fast classic, rapid, blitz, armageddon) is checked against the
+  board's round, so the board swaps to the pair's game of that type; the
+  fact check now ties a missed or possible move to the colour whose move it
+  is (38.g5 is White's).
 - 2026-11-19: drafts/2026-11-19 reset (streak 1 -> 0). First run started
   by the morning check itself (workflow_dispatch at 07:52; the cron had
   not arrived). Resets: the 9z Globant Chess Club Showdown piece showed a

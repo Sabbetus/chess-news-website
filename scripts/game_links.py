@@ -182,7 +182,21 @@ def _surname(name: str) -> str:
     return name.strip().lower()
 
 
-def check_embed_sentence(body: str, pgn: str) -> tuple[str, str | None]:
+# Game types a sentence and a broadcast round name can both carry.
+_GAME_TYPES = {
+    "armageddon": r"armageddon",
+    "classical": r"fast[- ]classic(?:al)?|classical",
+    "rapid": r"rapid",
+    "blitz": r"blitz",
+}
+
+
+def _game_type(text: str) -> str | None:
+    found = [t for t, pat in _GAME_TYPES.items() if re.search(rf"\b(?:{pat})\b", text, re.I)]
+    return found[0] if len(found) == 1 else None
+
+
+def check_embed_sentence(body: str, pgn: str, url: str = "") -> tuple[str, str | None]:
     """The sentence carrying the "#game-embed" link must agree with the game
     it points to: its players and its result. Caught 2026-11-14 and
     2026-11-15: "Carlsen lost to Haik Martirosyan" and "Giri beat Mishra"
@@ -203,6 +217,15 @@ def check_embed_sentence(body: str, pgn: str) -> tuple[str, str | None]:
     end_candidates = [i for i in (body.find(". ", m.end()), body.find("\n", m.end())) if i != -1]
     end = min(end_candidates) if end_candidates else len(body)
     sentence = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body[start:end]).lower()
+    # The game type the sentence names must be the board's round's type
+    # (2026-11-20: "The fast classic ... was the Game of the Day" linked to
+    # the rapid game; the sentence names no player, so nothing else caught it).
+    if url:
+        round_slug = url.rstrip("/").split("/")[-3] if url.count("/") >= 3 else ""
+        said, board = _game_type(sentence), _game_type(round_slug.replace("-", " "))
+        if said and board and said != board:
+            unlinked = body[: m.start()] + m.group(1) + body[m.end():]
+            return unlinked, f"board link removed: the linked sentence describes a {said} game, but the board is from the {board} round ({white.group(1)} - {black.group(1)})"
     if w not in sentence and b not in sentence:
         return body, None  # the sentence names neither player: nothing to compare
     problem = None
