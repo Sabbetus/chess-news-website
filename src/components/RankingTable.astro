@@ -17,6 +17,8 @@ const movement = (rank: number, prev: number | null) => {
     : { label: `▼${rank - prev}`, cls: 'down', title: `Down from ${prev}` };
 };
 const thisYear = new Date().getUTCFullYear();
+// Lower-case, accents stripped: what the rankings search matches against.
+const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 ---
 
       <div class="table-wrap">
@@ -38,7 +40,7 @@ const thisYear = new Date().getUTCFullYear();
                 const page = pageById.get(p.fideId);
                 const move = movement(p.rank, p.previousRank);
                 return (
-                  <tr>
+                  <tr data-names={fold([p.name, page?.data.name ?? '', ...(page?.data.aliases ?? [])].join(' '))}>
                     <td class="num rank">
                       {p.rank}
                       <span class={`move-mobile ${move.cls}`} title={move.title}>{move.label}</span>

@@ -64,6 +64,30 @@ const CATS: { key: Category; label: string }[] = [
 const pages = await playerPages();
 const pageById = new Map(pages.map((p) => [p.data.fideId, p]));
 const leader = rows[0];
+// Every list's entries, for the search box's "ranked elsewhere" line: when a
+// name isn't in this list, the page says where the player is ranked.
+const foldName = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const rankIndex: { n: string; name: string; fid: string; list: string; href: string; rank: number }[] = [];
+for (const t of ['classical', 'rapid', 'blitz'] as TimeControl[]) {
+  for (const c of ['open', 'women', 'juniors', 'girls'] as Category[]) {
+    if (t === tc && c === cat) continue;
+    const list = ((TOP100 as Record<string, unknown>)[dataKey(t, c)] ?? []) as RankedPlayer[];
+    // "World No. 4", "Women's No. 3", "Rapid No. 41", "Blitz girls No. 7".
+    const catWord = c === 'open' ? '' : c === 'women' ? "women's" : c === 'juniors' ? 'junior' : 'girls';
+    const label = t === 'classical' ? (catWord ? cap(catWord) : 'World') : `${cap(t)}${catWord ? ` ${catWord}` : ''}`;
+    for (const p of list) {
+      const page = pageById.get(p.fideId);
+      rankIndex.push({
+        n: foldName([p.name, page?.data.name ?? '', ...(page?.data.aliases ?? [])].join(' ')),
+        name: page?.data.name ?? p.name,
+        fid: p.fideId,
+        list: label,
+        href: pathOf(t, c),
+        rank: p.rank,
+      });
+    }
+  }
+}
 const description = `The world's ${meta.who} on FIDE's ${month} list, with each player's rating, monthly change and federation.${
   leader ? ` ${leader.name} leads on ${leader.rating}.` : ''
 }`;
@@ -108,6 +132,13 @@ const jsonLd = [
       ))}
     </nav>
 
+    <div class="list-search" hidden>
+      <label for="rankSearch" class="visually-hidden">Search this list</label>
+      <input id="rankSearch" type="search" placeholder="Search players by name" autocomplete="off" spellcheck="false" />
+      <p class="no-match" hidden></p>
+    </div>
+    <script type="application/json" id="rankIndex" set:html={JSON.stringify(rankIndex)} />
+
     <section class="hub-section top100">
       <RankingTable rows={rows} pageById={pageById} />
       <p class="note">
@@ -119,7 +150,106 @@ const jsonLd = [
   </div>
 </BaseLayout>
 
+<script>
+  // Filters the table as you type (2026-11-20), like the players and events
+  // pages. When nobody in this list matches, says where matching players
+  // are ranked on the other lists ("Women's No. 3 · Rapid open No. 41").
+  const box = document.querySelector<HTMLElement>('.list-search');
+  const input = document.querySelector<HTMLInputElement>('#rankSearch');
+  if (box && input) {
+    box.hidden = false;
+    const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const split = (s: string) => s.split(/[\s,.'()-]+/).filter(Boolean);
+    const rows = [...document.querySelectorAll<HTMLElement>('.data-table tbody tr')].map((tr) => ({
+      tr,
+      words: split(tr.dataset.names ?? ''),
+    }));
+    type Entry = { n: string; name: string; fid: string; list: string; href: string; rank: number };
+    let index: Entry[] = [];
+    try {
+      index = JSON.parse(document.getElementById('rankIndex')?.textContent || '[]');
+    } catch {
+      index = [];
+    }
+    const none = box.querySelector<HTMLElement>('.no-match')!;
+    const matches = (words: string[], terms: string[]) => terms.every((t) => words.some((w) => w.startsWith(t)));
+    input.addEventListener('input', () => {
+      const terms = split(fold(input.value));
+      let shown = 0;
+      for (const { tr, words } of rows) {
+        const hit = matches(words, terms);
+        tr.hidden = !hit;
+        if (hit) shown++;
+      }
+      none.hidden = shown > 0 || terms.length === 0;
+      if (none.hidden) return;
+      const byPlayer = new Map<string, Entry[]>();
+      for (const e of index) {
+        if (!matches(split(e.n), terms)) continue;
+        byPlayer.set(e.fid, [...(byPlayer.get(e.fid) ?? []), e]);
+      }
+      none.replaceChildren();
+      if (byPlayer.size === 0) {
+        none.textContent = 'No player matches that name in any of our ranking lists.';
+        return;
+      }
+      none.append('Not in this list. ');
+      [...byPlayer.values()].slice(0, 5).forEach((entries, i) => {
+        if (i) none.append(document.createElement('br'));
+        const strong = document.createElement('strong');
+        strong.textContent = `${entries[0].name}: `;
+        none.append(strong);
+        entries.forEach((e, j) => {
+          if (j) none.append(' · ');
+          const a = document.createElement('a');
+          a.href = e.href;
+          a.textContent = `${e.list} No. ${e.rank}`;
+          none.append(a);
+        });
+      });
+    });
+  }
+</script>
+
 <style>
+  .data-table tbody tr[hidden] {
+    display: none;
+  }
+  .list-search {
+    max-width: var(--content-width);
+    margin: 14px auto 18px;
+  }
+  .list-search input {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .list-search input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .no-match {
+    margin: 14px 0 0;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .no-match a {
+    color: var(--accent);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
   .list-month {
     margin: -4px 0 14px;
     font-family: 'IBM Plex Mono', monospace;
