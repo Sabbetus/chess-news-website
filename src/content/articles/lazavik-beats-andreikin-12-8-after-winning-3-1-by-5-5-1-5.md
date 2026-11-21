@@ -1,6 +1,7 @@
 ---
 title: "Lazavik Beats Andreikin 12-8 After Winning 3+1 by 5.5-1.5"
 publishDate: "2026-11-21"
+publishedAt: "2026-11-21T08:02:36Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-speed-chess-championship-r16-lazavik-andreikin"
 lens: "results"
