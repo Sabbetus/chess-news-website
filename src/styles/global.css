@@ -566,6 +566,22 @@ nav.sub-sections a.on {
     display: flex;
     padding-bottom: 4px;
   }
+  /* A bigger tap target without more visible space (user's call,
+     2026-11-21): an invisible layer reaches into the empty strips above
+     and below the button (nothing tappable sits there on any page). */
+  .js-nav .nav-toggle {
+    position: relative;
+    z-index: 1;
+  }
+  .js-nav .nav-toggle::after {
+    content: '';
+    position: absolute;
+    inset: -12px 0 -16px;
+  }
+  /* Open, the first menu row sits right below: don't cover it. */
+  .js-nav .nav-toggle[aria-expanded='true']::after {
+    bottom: 0;
+  }
   /* Every page opens with ~34px of top padding, meant for the desktop
      masthead; on the phone it left too much air under the Menu button. */
   #main-content > :first-child {
