@@ -1,6 +1,7 @@
 ---
 title: "Six-Part Candidates Docuseries Starts Sunday, Two Days Before Gukesh's Title Defense"
 publishDate: "2026-11-21"
+publishedAt: "2026-11-21T08:02:36Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/candidates-indias-chess-story-documentary"
 lens: "people"

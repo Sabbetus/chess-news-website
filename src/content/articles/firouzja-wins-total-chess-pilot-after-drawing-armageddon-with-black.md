@@ -1,6 +1,7 @@
 ---
 title: "Firouzja Wins Total Chess Pilot After Drawing Armageddon With Black"
 publishDate: "2026-11-21"
+publishedAt: "2026-11-21T08:02:36Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/firouzja-wins-2026-total-chess-world-championship-tour-pilot"
 lens: "results"
