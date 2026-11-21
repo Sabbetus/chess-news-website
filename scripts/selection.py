@@ -235,7 +235,7 @@ FEATURE_KEYWORD_RE = re.compile(
 # Also "Firstname Lastname \u2013 ..." (2026-11-21: "Javokhir Sindarov \u2013 the
 # next World Champion?", a full ChessBase profile, got no feature bonus and
 # scored 30 against a docuseries teaser's 50).
-FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+){1,2}(?::| [\u2013\u2014-]) ")
+FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+){1,2}(?::| [\u2013\u2014]) ")
 
 # Announcements of films, docuseries, podcasts and the like tease content we
 # can't report on; naming top players in them is no sign of a strong story
