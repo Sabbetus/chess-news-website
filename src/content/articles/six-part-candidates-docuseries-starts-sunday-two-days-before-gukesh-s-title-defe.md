@@ -6,7 +6,7 @@ sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/candidates-indias-chess-story-documentary"
 lens: "people"
 continent: "asia"
-selectionScore: 50
+selectionScore: 30
 reviewStatus: "published"
 socialCopy: "\"Candidates: India's Chess Story,\" a six-part YouTube docuseries on Gukesh, Praggnanandhaa, Arjun, Vaishali and Vidit, starts Sunday. Game 1 of the World Championship is two days later."
 metaDescription: "A free six-part YouTube docuseries, Candidates: India's Chess Story, premieres November 22, following five Indian players at the 2024 Candidates."

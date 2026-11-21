@@ -5,7 +5,7 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/javokhir-sindarov-the-next-world-champion"
 lens: "people"
 continent: "asia"
-selectionScore: 30
+selectionScore: 80
 reviewStatus: "published"
 socialCopy: "Sindarov was a prodigy who stalled, then found a coach and a work ethic. Before the Geneva match with Gukesh, a look at how he got there, still with Counter-Strike on his evenings."
 metaDescription: "Javokhir Sindarov faces Gukesh for the World Championship in Geneva from 24 November. How a slow-developing prodigy became the favourite."
