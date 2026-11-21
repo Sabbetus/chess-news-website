@@ -186,7 +186,12 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
-- **Current review-acceptance streak: 2.**
+- **Current review-acceptance streak: 0.**
+- 2026-11-20: user rejected one fix (2 -> 0): I removed Russia from the
+  World Junior piece's complete list of nations; a complete list keeps
+  Russia, and leaving it out made the list wrong (rule clarified). The
+  user also asked for the country lists to go and for scoring changes
+  (new requests).
 - 2026-11-19: accepted (silence/"Ok, good", 1 -> 2). The 9z Globant
   explanation the user asked for was an addition, not a correction.
 - 2026-11-18: accepted ("All good otherwise", 0 -> 1); my reset call on
