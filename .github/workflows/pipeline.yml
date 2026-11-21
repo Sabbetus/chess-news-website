@@ -36,7 +36,7 @@ jobs:
   # (by hand, when the cron was hours late) would re-ingest the same stories:
   # data/seen.json only reaches main when the batch is published, so it
   # would open a second draft PR with duplicates (user's call, 2026-11-17).
-  # Scheduled runs stop here when today's drafts/<date>-* branch exists;
+  # Scheduled runs stop here when today's drafts/<date>-* branch or PR exists;
   # manual runs always go ahead.
   guard:
     runs-on: ubuntu-latest
@@ -51,6 +51,12 @@ jobs:
         run: |
           today=$(date -u +%Y-%m-%d)
           found=$(gh api "repos/$REPO/git/matching-refs/heads/drafts/$today-" --jq 'length')
+          # The branch is deleted once the morning check merges its PR, so also
+          # count today's draft PRs in any state (2026-11-21: the 08:07 cron
+          # came after the 08:02 merge and opened a second batch).
+          prs=$(gh api "repos/$REPO/pulls?state=all&per_page=30" \
+            --jq "[.[] | select(.head.ref | startswith(\"drafts/$today-\"))] | length")
+          found=$(( ${found:-0} + ${prs:-0} ))
           if [ "$EVENT" = "schedule" ] && [ "${found:-0}" -gt 0 ]; then
             echo "Today's batch already ran (drafts/$today-* exists) -- skipping this scheduled run."
             echo "skip=true" >> "$GITHUB_OUTPUT"
