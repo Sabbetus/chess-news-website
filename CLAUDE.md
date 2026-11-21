@@ -104,6 +104,13 @@
   highlighted mention (Russia singled out, a team or player presented as
   Russia's) is skipped (user's call, 2026-11-20).
 
+- **Top players' tweets about current events stay** (user's call,
+  2026-11-21, after I removed MVL's "crybaby" tweet from the Total Chess
+  final piece). A pointed or insulting tweet by a top player about recent
+  events is part of the story, even when it names no one; don't remove it
+  or ask for context. Allegations and legal-sensitive claims are still
+  held back for the user.
+
 - **Bold claims the source reasonably supports are fine** (user's call,
   2026-10-24). Don't flag or soften strong wording of what the source
   says ("the increment was his call" when the source has him designing
@@ -187,6 +194,9 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-21: user overruled one fix (stays 0): I removed MVL's
+  "crybaby" tweet as having no context; it belonged in the piece (rule
+  added above). Restored.
 - 2026-11-20: user rejected one fix (2 -> 0): I removed Russia from the
   World Junior piece's complete list of nations; a complete list keeps
   Russia, and leaving it out made the list wrong (rule clarified). The

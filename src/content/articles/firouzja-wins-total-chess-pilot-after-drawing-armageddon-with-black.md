@@ -19,6 +19,12 @@ image:
   caption: "Alireza Firouzja"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/armageddon/NP95wvlW/oYkfPVM7"
+tweetEmbeds:
+  - url: "https://x.com/Vachier_Lagrave/status/2123856357032145067"
+    author: "MVL"
+    handle: "Vachier_Lagrave"
+    text: "Correction: that a crybaby decided to make his own headlines."
+    date: "2026-11-20"
 eventResult: { event: "total-chess-world-championship-tour", year: 2026, winners: ["Alireza Firouzja"] }
 ---
 
