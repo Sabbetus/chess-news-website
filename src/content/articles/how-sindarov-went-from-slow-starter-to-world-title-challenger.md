@@ -1,6 +1,7 @@
 ---
 title: "How Sindarov Went From Slow Starter to World Title Challenger"
 publishDate: "2026-11-21"
+publishedAt: "2026-11-21T12:13:21Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/javokhir-sindarov-the-next-world-champion"
 lens: "people"
