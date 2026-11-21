@@ -1,13 +1,6 @@
-Drafted 4 of 4 selected item(s).
+Drafted 3 of 3 selected item(s).
 
-**1 article(s) have a paragraph over 350 characters or 3 sentences:**
+**Event and player pages updated from a final result** (check each page edit):
 
-- chile-hosts-405-players-at-south-american-youth-festival — paragraph #1 (262 chars, 4 sentences)
-
-**Quoted moves not in the game's main line** (side lines are expected; anything else is a typo to check):
-
-- gukesh-arrives-in-geneva-after-a-rough-2026-season — 55...Rf2
-
-**Photo headline rewrites that failed the check against the body** (fix by hand, keeping the photographed person named):
-
-- Gukesh Arrives in Geneva After a Rough 2026 Season — 'Gukesh Dommaraju Defends His World Title Against Sindarov' -- The article only says Gukesh begins his title defence against Sindarov on 24 November; the match hasn't been played, so it doesn't say he defended or won the title.
+- firouzja-wins-total-chess-pilot-after-drawing-armageddon-with-black -- total-chess-world-championship-tour: added Alireza Firouzja as the 2026 winner
+- firouzja-wins-total-chess-pilot-after-drawing-armageddon-with-black -- alireza-firouzja: player page highlights/summary updated for the 2026 Total Chess World Championship Tour

@@ -26,7 +26,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
   caption: "Magnus Carlsen, who won the pilot's opening blitz event"
 reviewStatus: "published"
-updatedDate: "2026-11-15"
+updatedDate: "2026-11-21"
 ---
 
 The Total Chess World Championship Tour is a new series from the people behind Norway Chess. Its founder, Kjell Madland, also founded Norway Chess, and the organisers describe it as a world championship approved by FIDE. For the first time the world's top players compete across three chess disciplines, Fast Classic, rapid and blitz, to decide a combined champion.
