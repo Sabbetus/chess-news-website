@@ -74,6 +74,11 @@
   and age-group events no longer get the world-title keyword; the floor
   moved from 50 to 15 and the extra-article threshold from 60 to 20, which
   keep the same past stories in (checked on 144 items since mid-October).
+  2026-11-21 (user's call: a full profile outranks a teaser): "Name – ..."
+  profile headlines get the feature bonus like "Name: ...", and film,
+  docuseries, podcast and trailer announcements get no elite-field bonus
+  (Sindarov profile 30 -> 80, Gukesh docuseries teaser 50 -> 30; no other
+  story of 162 since mid-October changed).
 
 - **Headlines and social copies don't reuse set phrases from the last two
   weeks** (user's rule, 2026-11-07: "Half a Point Back" twice). Regular

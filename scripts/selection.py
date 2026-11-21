@@ -232,7 +232,17 @@ FEATURE_KEYWORD_RE = re.compile(
 # signal than the keywords above: it also fits a plain news item about a
 # person ("Bodhana Sivanandan: Youngest-Ever WGM at 11"), so a keyword match
 # outranks it for the slot.
-FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+){1,2}: ")
+# Also "Firstname Lastname \u2013 ..." (2026-11-21: "Javokhir Sindarov \u2013 the
+# next World Champion?", a full ChessBase profile, got no feature bonus and
+# scored 30 against a docuseries teaser's 50).
+FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+){1,2}(?::| [\u2013\u2014-]) ")
+
+# Announcements of films, docuseries, podcasts and the like tease content we
+# can't report on; naming top players in them is no sign of a strong story
+# (user's call, 2026-11-21: the Gukesh docuseries teaser took the elite-field
+# bonus and outscored the Sindarov profile). No elite-field bonus.
+MEDIA_ANNOUNCEMENT_RE = re.compile(
+    r"\b(docu-?series|documentar(?:y|ies)|film|movie|trailer|podcast|episodes?)\b", re.IGNORECASE)
 FEATURE_EXCLUDE_TITLE_RE = re.compile(r"\bR\d{1,2}\b|\bround \d+|\bday \d+", re.IGNORECASE)
 
 
@@ -873,6 +883,8 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
     from datetime import date as _date
     if any(int(y) > _date.today().year for y in re.findall(r"\b(20\d\d)\b", item.get("title") or "")):
         breakdown["followUp"] = 0
+    if MEDIA_ANNOUNCEMENT_RE.search(item.get("title") or ""):
+        breakdown["eliteField"] = 0
     weekly = not feature and is_weekly_online(lead)
     if weekly:
         breakdown["followUp"] = 0

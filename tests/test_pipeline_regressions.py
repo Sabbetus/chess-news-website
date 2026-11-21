@@ -1327,3 +1327,16 @@ def test_keywords_count_once_and_skip_world_title_for_age_groups():
     assert selection.score_keywords("hosting a world championship") == selection.KEYWORD_WEIGHTS["world championship"]
     assert selection.score_keywords("hosting a world championship", "World Junior U20 Chess Championship begins") == 0
     assert selection.score_keywords("the world champion lost", "Carlsen loses") == selection.KEYWORD_WEIGHTS["world champion"]
+
+
+def test_dash_profile_headline_is_feature_and_media_teaser_gets_no_elite_bonus():
+    # 2026-11-21 (user's call): the Sindarov profile scored 30 against a
+    # docuseries teaser's 50.
+    import selection as S
+    prof = {"sourceName": "ChessBase", "title": "Javokhir Sindarov – the next World Champion?",
+            "summary": "Sindarov faces Gukesh in Geneva."}
+    assert S.is_feature_story(prof)
+    doc = {"sourceName": "Chess.com", "title": "Docuseries Featuring Gukesh, Other Top Indian GMs Begins November 22",
+           "summary": "Gukesh, Praggnanandhaa and Arjun Erigaisi feature in the series."}
+    assert S.score_item(doc)[1]["eliteField"] == 0
+    assert S.score_item(prof)[0] > S.score_item(doc)[0]
