@@ -12,6 +12,7 @@ import { estimateReadMinutes } from '../../lib/reading';
 import { excerptFrom } from '../../lib/excerpt';
 import { seoTitle } from '../../lib/seoTitle';
 import { CONTINENT_META } from '../../lib/continent';
+import { LENS_META, LENS_SLUGS } from '../../lib/lens';
 import { similarArticles } from '../../lib/similar';
 import { articleEntities } from '../../lib/hubs';
 import { publishedAt } from '../../lib/publishedAt';
@@ -158,8 +159,21 @@ const jsonLd = [
       {
         '@type': 'ListItem',
         position: 2,
-        name: continentMeta.label,
-        item: new URL(`/continent/${article.data.continent}/`, Astro.site).toString(),
+        // Only calendar pieces sit under a continent (2026-11-21).
+        name:
+          article.data.lens === 'tournament-db'
+            ? continentMeta.label
+            : article.data.lens
+              ? LENS_META[article.data.lens].label
+              : 'Weekly recaps',
+        item: new URL(
+          article.data.lens === 'tournament-db'
+            ? `/continent/${article.data.continent}/`
+            : article.data.lens
+              ? `/lens/${LENS_SLUGS[article.data.lens]}/`
+              : '/recaps/',
+          Astro.site,
+        ).toString(),
       },
       {
         '@type': 'ListItem',

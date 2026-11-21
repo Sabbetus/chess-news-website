@@ -1,0 +1,60 @@
+---
+// Continent buttons for "Where to play" (user's call, 2026-11-21): the
+// calendar pieces are the only ones that carry a continent, so each
+// /continent/<c>/ page lists that continent's calendar pieces.
+import { getCollection } from 'astro:content';
+import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../lib/continent';
+
+interface Props {
+  current?: Continent;
+}
+const { current } = Astro.props;
+const cals = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.lens === 'tournament-db');
+const shown = CONTINENT_ORDER.filter((c) => cals.some((a) => a.data.continent === c));
+---
+
+<nav class="continent-buttons" aria-label="Continents">
+  <a href="/lens/otb-tournaments/" class={current ? '' : 'on'} aria-current={current ? undefined : 'page'}>All</a>
+  {shown.map((c) => (
+    <a href={`/continent/${c}/`} class={c === current ? 'on' : ''} aria-current={c === current ? 'page' : undefined}>
+      {CONTINENT_META[c].label}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .continent-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 6px;
+  }
+  .continent-buttons a {
+    padding: 7px 13px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .continent-buttons a:hover {
+    border-color: var(--accent);
+  }
+  .continent-buttons a.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper, #fff);
+  }
+  @media (max-width: 640px) {
+    .continent-buttons {
+      gap: 6px;
+    }
+    .continent-buttons a {
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+  }
+</style>

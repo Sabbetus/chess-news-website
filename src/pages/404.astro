@@ -50,10 +50,10 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
       </div>
 
       <aside>
-        <span class="label">By continent</span>
+        <span class="label">Where to play</span>
         <ul class="continents">
           {
-            CONTINENT_ORDER.map((c) => (
+            CONTINENT_ORDER.filter((c) => c !== 'global').map((c) => (
               <li>
                 <a href={`/continent/${c}/`}>{CONTINENT_META[c].navLabel}</a>
               </li>

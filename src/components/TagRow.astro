@@ -15,7 +15,10 @@ const continentMeta = CONTINENT_META[continent];
   {lensMeta && lens && (
     <a class={`lens-tag ${lensMeta.className}`} href={`/lens/${LENS_SLUGS[lens]}/`}>{lensMeta.label}</a>
   )}
-  <a class="continent-tag" href={`/continent/${continent}/`}>{continentMeta.label}</a>
+  {/* Only calendar pieces show their continent (user's call, 2026-11-21). */}
+  {lens === 'tournament-db' && (
+    <a class="continent-tag" href={`/continent/${continent}/`}>{continentMeta.label}</a>
+  )}
 </div>
 
 <style>

@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../../components/ArticleThumb.astro';
 import TagRow from '../../../components/TagRow.astro';
+import ContinentButtons from '../../../components/ContinentButtons.astro';
 import Pager from '../../../components/Pager.astro';
 import { excerptFrom } from '../../../lib/excerpt';
 import { estimateReadMinutes } from '../../../lib/reading';
@@ -13,8 +14,9 @@ import { CONTINENT_META, CONTINENT_ORDER, type Continent } from '../../../lib/co
 // 24 a page (Europe and Asia had passed 60 stories on one page). Page 1
 // stays at /continent/<x>/.
 export const getStaticPaths = (async ({ paginate }) => {
-  const all = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap');
-  return CONTINENT_ORDER.flatMap((continent) => {
+  const all = await getCollection('articles', ({ data }) => data.reviewStatus === 'published' && data.type !== 'recap' && data.lens === 'tournament-db');
+  // No Global page: calendar pieces are always about one continent.
+  return CONTINENT_ORDER.filter((c) => c !== 'global').flatMap((continent) => {
     const articles = all
       .filter((a) => a.data.continent === continent)
       .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
@@ -26,28 +28,29 @@ const { page, continent } = Astro.props as { page: any; continent: Continent };
 const meta = CONTINENT_META[continent];
 const articles = page.data;
 
-const description =
-  meta.label === 'Global'
-    ? 'Chess news and analysis with no single regional angle, curated by The Chess Herald.'
-    : `Chess news and tournament coverage from ${meta.label}, curated by The Chess Herald.`;
+// Since 2026-11-21 only calendar pieces carry a continent, so these are
+// the "Where to play" pages for each continent.
+const heading = `Where to play: ${meta.label}`;
+const description = `Upcoming over-the-board tournaments in ${meta.label}, and a look back at the past month's, from The Chess Herald.`;
 
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
 <BaseLayout
-  title={page.currentPage === 1 ? `${meta.label} | The Chess Herald` : `${meta.label} - Page ${page.currentPage} | The Chess Herald`}
+  title={page.currentPage === 1 ? `${heading} | The Chess Herald` : `${heading} - Page ${page.currentPage} | The Chess Herald`}
   description={description}
-  activeSection="continent"
+  activeSection="tournament-db"
 >
   <header class="section-head">
-    <h1>{meta.label}</h1>
+    <h1>{heading}</h1>
+    <ContinentButtons current={continent} />
     <p>{page.total} {page.total === 1 ? 'story' : 'stories'}</p>
   </header>
 
   {
     articles.length === 0 && (
       <section class="empty-state">
-        <p>No {meta.label} stories published yet -- check back soon.</p>
+        <p>No tournament lists for {meta.label} yet -- check back soon.</p>
       </section>
     )
   }
