@@ -51,7 +51,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
       <p class="desc">{meta.description}</p>
     )}
     {isCalendar && <ContinentButtons />}
-    <p class="count">{page.total} {page.total === 1 ? 'story' : 'stories'}</p>
+    {!isCalendar && <p class="count">{page.total} {page.total === 1 ? 'story' : 'stories'}</p>}
   </header>
 
   {

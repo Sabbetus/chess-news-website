@@ -44,7 +44,6 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
   <header class="section-head">
     <h1>{heading}</h1>
     <ContinentButtons current={continent} />
-    <p>{page.total} {page.total === 1 ? 'story' : 'stories'}</p>
   </header>
 
   {
