@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/firouzja-wins-2026-total-chess-world
 lens: "results"
 continent: "europe"
 selectionScore: 150
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja was a set down to Giri, won the second set 12-8, then drew the armageddon with Black to win the Total Chess pilot and $80,000. Caruana took third, and MVL got the fourth tour spot."
 metaDescription: "Alireza Firouzja came back against Anish Giri to win the Total Chess World Championship Tour pilot in Budapest and $80,000, with Caruana third."
 additionalSources:
@@ -19,16 +19,10 @@ image:
   caption: "Alireza Firouzja"
 gameEmbed:
   url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/armageddon/NP95wvlW/oYkfPVM7"
-tweetEmbeds:
-  - url: "https://x.com/Vachier_Lagrave/status/2123856357032145067"
-    author: "MVL"
-    handle: "Vachier_Lagrave"
-    text: "Correction: that a crybaby decided to make his own headlines."
-    date: "2026-11-20"
 eventResult: { event: "total-chess-world-championship-tour", year: 2026, winners: ["Alireza Firouzja"] }
 ---
 
-Alireza Firouzja [came back from a set down to win the Total Chess World Championship Tour pilot](https://www.chess.com/news/view/firouzja-wins-2026-total-chess-world-championship-tour-pilot) in Budapest on its tenth and final day, taking $80,000. Anish Giri won Thursday's opening set 11-9, but Firouzja took Friday's 12-8 in the official count. That forced an armageddon decider, which he drew with Black to take the title.
+Alireza Firouzja [came back from a set down to win the Total Chess World Championship Tour pilot](https://www.chess.com/news/view/firouzja-wins-2026-total-chess-world-championship-tour-pilot) in Budapest on its tenth and final day, taking $80,000. Anish Giri won Thursday's opening set 11-9, but Firouzja took Friday's 12-8. That forced an armageddon decider, which he drew with Black to take the title.
 
 **How the final turned**
 
@@ -36,7 +30,7 @@ Each knockout day has seven games: four blitz, two rapid and one fast classic. A
 
 Giri won the first blitz game with White. Firouzja answered with two straight wins, and Giri leveled at 2-2 in game four.
 
-In the third game Giri was close to a draw in a rook endgame but had five seconds left, and 45...Rf2?? lost. In the fourth he hung a bishop.
+In the third game Giri was close to a draw in a rook endgame but had five seconds left, and 45...Rf2?? lost. In the fourth, Firouzja hung a bishop.
 
 Firouzja then won the first rapid game with Black, a King's Indian where Giri had the edge but let it slip, and a mating attack came long after the queens were off. A draw in the second rapid game gave him an 8-4 lead.
 
@@ -70,4 +64,4 @@ Carlsen [forfeited the fast classic game](/articles/carlsen-forfeits-two-rapid-g
 
 He told Norwegian TV 2 that he had wanted to be with his family. "I'd rather be home than be here," he said. He told Total Chess: "I wanted to play the games I wanted to play."
 
-Giri next has the World Rapid and Blitz Championships in Istanbul at the end of December, and said the confidence from this event will carry over.
+Giri next has the World Rapid and Blitz Championships in Istanbul at the end of December, and said he takes confidence from this event.

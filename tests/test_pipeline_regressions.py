@@ -506,6 +506,21 @@ def test_event_result_updates_the_page(tmp_path, monkeypatch):
     assert event_results.parse("") is None
 
 
+def test_event_result_on_a_page_without_winners_list(tmp_path, monkeypatch):
+    # 2026-11-21: the Total Chess page had no winners list and an unquoted
+    # nextEdition date; the winner was reported as added but nothing changed.
+    import event_results
+    page = tmp_path / "new-tour.md"
+    page.write_text(
+        '---\nname: "New Tour"\nnextEdition:\n  label: "Pilot"\n  start: 2026-11-10\n  end: 2026-11-20\n'
+        'reviewStatus: "published"\nupdatedDate: "2026-01-01"\n---\n'
+    )
+    monkeypatch.setattr(event_results, "EVENTS_DIR", tmp_path)
+    event_results.apply({"event": "new-tour", "year": 2026, "winners": ["C D"]}, "2026-11-21")
+    assert event_results.page_winners("new-tour") == {2026: ["C D"]}
+    assert "nextEdition" not in page.read_text()
+
+
 def test_final_result_updates_the_winners_player_page(tmp_path, monkeypatch):
     import types as _types
     import event_results

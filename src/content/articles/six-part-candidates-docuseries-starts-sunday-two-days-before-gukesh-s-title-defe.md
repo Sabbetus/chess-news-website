@@ -3,16 +3,17 @@ title: "Six-Part Candidates Docuseries Starts Sunday, Two Days Before Gukesh's T
 publishDate: "2026-11-21"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/candidates-indias-chess-story-documentary"
-lens: "results"
+lens: "people"
 continent: "asia"
 selectionScore: 50
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "\"Candidates: India's Chess Story,\" a six-part YouTube docuseries on Gukesh, Praggnanandhaa, Arjun, Vaishali and Vidit, starts Sunday. Game 1 of the World Championship is two days later."
 metaDescription: "A free six-part YouTube docuseries, Candidates: India's Chess Story, premieres November 22, following five Indian players at the 2024 Candidates."
 image:
-  src: "./_images/NZ9_0632_t_02.webp"
-  credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANZ9_0632_t_02.jpg"
+  src: "./_images/Gukesh_D_at_the_Candidates_2024_tournament_02.webp"
+  credit: "Eldar Azimov, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AGukesh_D_at_the_Candidates_2024_tournament_02.jpg"
+  caption: "Gukesh Dommaraju at the 2024 Candidates"
 ---
 
 Dopamine Media's documentary [Candidates: India's Chess Story](https://www.chess.com/news/view/candidates-indias-chess-story-documentary) premieres tomorrow, November 22, on YouTube, free to watch. It is a six-part series built around the five Indian players at the 2024 Candidates Tournaments: Praggnanandhaa Rameshbabu, Gukesh Dommaraju, Arjun Erigaisi, Vaishali Rameshbabu and Vidit Gujrathi.

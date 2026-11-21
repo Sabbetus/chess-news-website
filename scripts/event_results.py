@@ -80,12 +80,17 @@ def apply(result: dict, today: str) -> str:
             f"article says {', '.join(result['winners'])} -- check by hand"
         )
     entry = f"  - {{ year: {result['year']}, names: {json.dumps(result['winners'], ensure_ascii=False)} }}\n"
-    text = re.sub(r"^winners:\s*\n", lambda m: m.group(0) + entry, text, count=1, flags=re.MULTILINE)
+    if re.search(r"^winners:\s*\n", text, re.MULTILINE):
+        text = re.sub(r"^winners:\s*\n", lambda m: m.group(0) + entry, text, count=1, flags=re.MULTILINE)
+    else:
+        # A new event's page has no winners list yet (caught 2026-11-21: the
+        # Total Chess pilot's winner was reported as added but wasn't).
+        text = re.sub(r"^(reviewStatus:)", lambda m: "winners:\n" + entry + m.group(1), text, count=1, flags=re.MULTILINE)
     # The edition just finished: its dates are no longer the next edition.
     # The quarterly check fills in the next one once it's announced.
     block = re.search(r"^nextEdition:\n(?:[ \t]+.*\n)+", text, re.MULTILINE)
     if block:
-        start = re.search(r'^\s+start:\s*"(\d{4})-', block.group(0), re.MULTILINE)
+        start = re.search(r'^\s+start:\s*"?(\d{4})-', block.group(0), re.MULTILINE)
         if start and int(start.group(1)) <= result["year"]:
             text = text.replace(block.group(0), "", 1)
     text = re.sub(r'^updatedDate:\s*".*?"', f'updatedDate: "{today}"', text, count=1, flags=re.MULTILINE)

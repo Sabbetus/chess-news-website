@@ -327,6 +327,27 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-21: drafts/2026-11-21 reset (streak stays at 0). Run started
+  by the morning check (07:53); first batch on the rescaled scoring
+  (Total Chess final 150, Lazavik 50, docuseries 50). Reset: the Total
+  Chess final piece said "In the fourth he hung a bishop" right after a
+  sentence about Giri -- Firouzja hung it, and Giri won game four (now
+  named). Pipeline bug: the event page was reported as getting Firouzja as
+  2026 winner, but the page had no winners list and an unquoted
+  nextEdition date, so nothing changed (added by hand, page photo now
+  Firouzja, summary and body updated; player-page highlight now says
+  "pilot"). Minor: "12-8 in the official count" (Chess.com says 13-8,
+  FIDE 12-8; the arithmetic gives 12-8, phrase cut); MVL's "crybaby"
+  tweet embedded with no context and no named target (removed); Giri's
+  confidence "will carry over" (he said he takes confidence); Lazavik
+  piece "the other six 5+1 games" (games two to seven), "the other result
+  through so far" for Nakamura (not in the source), board caption added
+  (game 14, the 1.h4 game); docuseries lens results -> people, photo now
+  Gukesh at the 2024 Candidates. Checked: every claim in all three
+  pieces against Chess.com and FIDE, the armageddon board (Giri-Firouzja,
+  drawn on move 35), the built pages' automatic links, all photos.
+  Fixed at the source: event_results.py adds a winners list when a page
+  has none and clears an unquoted nextEdition date.
 - 2026-11-20: drafts/2026-11-20 reset (streak stays at 0). Run started
   by the morning check (07:52). Resets: the Total Chess final piece's board
   was the rapid game 6 (Giri-Firouzja 1-0) while the linked sentence named

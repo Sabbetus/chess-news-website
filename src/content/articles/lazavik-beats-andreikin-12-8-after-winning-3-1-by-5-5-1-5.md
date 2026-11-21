@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-speed-chess-championship-r16-la
 lens: "results"
 continent: "global"
 selectionScore: 50
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Lazavik drew his way through the 5+1 games, then won four in a row in 3+1 to beat Andreikin 12-8 at the Speed Chess Championship. Andreikin's first win came in game 16, a 133-move bullet game."
 metaDescription: "GM Denis Lazavik beat GM Dmitry Andreikin 12-8 in the Speed Chess Championship Round of 16 and now plays the So vs. Praggnanandhaa winner."
 image:
@@ -15,6 +15,7 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADenisLazavik23.jpg"
   caption: "Denis Lazavik"
 gamePgn: "lazavik-beats-andreikin-12-8-after-winning-3-1-by-5-5-1-5.pgn"
+gameCaption: "Game 14 (3+1): Andreikin - Lazavik, 0-1"
 ---
 
 In the Round of 16 of the Speed Chess Championship XI, GM Denis Lazavik [beat GM Dmitry Andreikin 12-8](https://www.chess.com/news/view/2026-speed-chess-championship-r16-lazavik-andreikin) and moved into the Quarterfinals. He will face the winner of GM Wesley So against GM Praggnanandhaa Rameshbabu. Lazavik earned $6,500 and Andreikin $1,625 by win percentage.
@@ -27,7 +28,7 @@ Lazavik won the first game, where a bishop sacrifice could not be accepted after
 
 Andreikin nearly won a rook endgame in game two, which was drawn. Game three was the wildest of the match. Andreikin broke through with a winning attack but could not find the knockout, and Lazavik then took a draw by repetition in a position where he had a simple winning move that was easy to miss.
 
-The other six 5+1 games were all drawn. Lazavik was candid about it: "when I don't play well I just try to make draws and usually, if you don't lose, you'll win at some point."
+Games two to seven, the rest of the 5+1 segment, were all drawn. Lazavik was candid about it: "when I don't play well I just try to make draws and usually, if you don't lose, you'll win at some point."
 
 **3+1: Lazavik 5.5-1.5**
 
@@ -49,6 +50,6 @@ Both players started the match third and fourth on the Champions Chess Tour lead
 
 He has also been improving over the board. He has climbed from under 2600 to 2650 on the classical list and says he performed around 2750 in three classical events this year. Chess.com's stats team made him the favorite and predicted 3+1 as his best segment, though not by this margin.
 
-Lazavik has a preference for the next round. "I think Wesley is a small favorite in general, so I would prefer to play against Pragg, and usually I do quite well against Indian players," he said, citing wins over GMs Arjun Erigaisi and Nihal Sarin. He joins GM Hikaru Nakamura, whose [12-8 win over Erdogmus](/articles/nakamura-wins-12-8-despite-losing-bullet-to-erdogmus-15/) was the other result through so far.
+Lazavik has a preference for the next round. "I think Wesley is a small favorite in general, so I would prefer to play against Pragg, and usually I do quite well against Indian players," he said, citing wins over GMs Arjun Erigaisi and Nihal Sarin. He joins GM Hikaru Nakamura, who [beat Erdogmus 12-8](/articles/nakamura-wins-12-8-despite-losing-bullet-to-erdogmus-15/), in the Quarterfinals.
 
 Quarterfinal winners earn a place in the Semifinals in London. The next Round of 16 match, GM Alireza Firouzja against GM Vladislav Artemiev, is on Friday, November 27 at 12:30 p.m. ET.

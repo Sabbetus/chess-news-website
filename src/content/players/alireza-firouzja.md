@@ -16,7 +16,7 @@ highlights:
   - "Won the 2021 Grand Swiss and the 2022 Grand Chess Tour"
   - "Played the 2022 and 2024 Candidates"
   - "Won GCT Super Rapid & Blitz Croatia and the Chennai Grand Masters in 2026"
-  - "Won the 2026 Total Chess World Championship Tour"
+  - "Won the 2026 Total Chess World Championship Tour pilot"
 links:
   - label: "FIDE profile"
     url: "https://ratings.fide.com/profile/12573981"
