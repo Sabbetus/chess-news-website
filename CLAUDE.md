@@ -121,10 +121,15 @@
   found by hand). scripts/x_watch.py reads the last 48 hours of posts from
   the accounts in data/x-accounts.json (via fxtwitter; best effort) --
   news relays that repost and quote reactions, officials, and people. For
-  each draft a model may add up to three quotable posts (a person's own
+  each draft a model may add up to two quotable posts (a person's own
   post, or an original reached through a repost or quote) with one
-  attributed sentence each, quoted right after it; a relay's paraphrase is
-  only a lead in the PR report. New reactions to the last two days'
+  attributed sentence each, quoted right after it -- only when the author
+  is a party to the story (a player, official, arbiter, organiser or body
+  the article is about, or someone it says was accused) and the post gives
+  their side, a decision or a new fact. Opinions by non-parties, however
+  famous, are never added automatically (user's call, 2026-11-22: an
+  opinion may be stupid or not relevant); the PR report lists the notable
+  ones, and a relay's paraphrase, for the review to add by hand. New reactions to the last two days'
   controversy pieces are listed for the morning review, which suggests a
   separate follow-up piece when one is due -- the published piece is not
   extended. Quoted posts sit after the paragraph about them

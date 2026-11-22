@@ -2307,7 +2307,7 @@ def draft_one(
             frontmatter["tweetEmbeds"] = quotes + x_embeds
         X_WATCH_NOTES.extend((parsed["title"], n) for n in x_notes)
         if x_notes:
-            print(f"  x watch: {len(x_embeds)} added, {len(x_notes) - len(x_embeds)} lead(s) for '{item['title']}'", file=sys.stderr)
+            print(f"  x watch: {len(x_embeds)} added, {len(x_notes) - len(x_embeds)} lead(s)/opinion(s) noted for '{item['title']}'", file=sys.stderr)
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():
@@ -2625,7 +2625,7 @@ def write_run_report(
         lines += ["", "**Board and text disagree** (check which game the piece means and fix the board):", ""]
         lines += [f"- {slug} — {note}" for slug, note in BOARD_MISMATCH_NOTES]
     if X_WATCH_NOTES:
-        lines += ["", "**Reactions from followed X accounts** (check each added sentence against its post; leads were not quoted):", ""]
+        lines += ["", "**Reactions from followed X accounts** (ADDED: check each sentence against its post and that the author is a party to the story; leads and opinions were not added -- add one by hand if it deserves it):", ""]
         lines += [f"- {title} — {note}" for title, note in X_WATCH_NOTES]
     if X_FOLLOWUP_NOTES:
         lines += ["", "**New on X about recent controversy pieces** (judge whether a follow-up piece is due):", ""]

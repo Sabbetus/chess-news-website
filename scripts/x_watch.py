@@ -42,7 +42,7 @@ STATUSES_URL = "https://api.fxtwitter.com/2/profile/{handle}/statuses"
 USER_AGENT = "chess-herald-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
 REQUEST_TIMEOUT = 20
 WINDOW_HOURS = 48
-MAX_ADDS = 3
+MAX_ADDS = 2
 MAX_CANDIDATES = 25
 PAUSE_SECONDS = 3  # between accounts: fxtwitter answers bursts with 404s
 
@@ -176,24 +176,38 @@ def paragraphs(body: str) -> list[str]:
     return [p for p in re.split(r"\n\s*\n", body.strip()) if p.strip()]
 
 
-_PICK_PROMPT = """You choose reactions on X to add to a chess news article.
+# User's call, 2026-11-22: not every opinion on a topic belongs in the
+# article. Only a party to the story giving their side, or a new fact or
+# decision, is added; everyone else's opinion is listed for the review.
+_PICK_PROMPT = """You choose posts on X to add to a chess news article. The bar is \
+high: an added post must move the story, not just comment on it.
 
-You get the article (numbered paragraphs) and recent posts from X. Pick at most \
-{max_adds} QUOTABLE posts that respond directly to this story (a statement, \
-defence, criticism or reply by someone involved or prominent) and add something \
-the article does not already say. Skip jokes, ads, live commentary, generic \
-congratulations, and posts about other events.
+You get the article (numbered paragraphs) and recent posts from X. A post may be \
+ADDED only if all of these hold:
+- it is QUOTABLE;
+- its author is a PARTY to this story: a player, official, arbiter, organiser or \
+body the article is about, someone whose decision or conduct the article reports, \
+or someone the article says was accused or criticised;
+- it is substantive: it answers an accusation, gives that party's own side or \
+explanation, or announces a decision or a new fact the article lacks.
+Never add an opinion, verdict, joke or hot take by someone who is not a party, \
+however famous; never add congratulations, promotion or live commentary. Add at \
+most {max_adds}. Adding nothing is the normal answer.
 
-For each pick write ONE sentence for the article, in its style, that attributes \
-the post to its author ("X answered on X that ...") and says only what the post \
-says -- no guesses about motives. Give the paragraph number it should follow.
+For each addition write ONE sentence for the article, in its style, that \
+attributes the post to its author ("X answered on X that ...") and says only what \
+the post says -- no guesses about motives. Give the paragraph number it should \
+follow and, in "why", which party they are and what the post adds.
 
-Separately list LEADS: relevant posts that are not quotable (a news account's \
-report of what someone said) and that report a development the article lacks.
+Separately, for the editor (nothing from these goes in the article):
+- LEADS: relevant posts that are not quotable (a news account's report of what \
+someone said) and report a development the article lacks;
+- OPINIONS: the few most notable opinions by non-parties (top players, \
+commentators), one line each, so the editor can decide.
 
 Answer with JSON only:
-{{"add": [{{"id": "...", "sentence": "...", "after_paragraph": 3}}], "leads": [{{"id": "...", "why": "..."}}]}}
-Empty lists are the normal answer when nothing fits."""
+{{"add": [{{"id": "...", "sentence": "...", "after_paragraph": 3, "why": "..."}}], \
+"leads": [{{"id": "...", "why": "..."}}], "opinions": [{{"id": "...", "why": "..."}}]}}"""
 
 
 def _ask(client, model: str, system: str, user: str) -> dict:
@@ -267,11 +281,18 @@ def reactions(client, model: str, title: str, body: str, existing: list[dict]) -
         )
         new_body, embeds = apply_adds(body, answer.get("add") or [], cands)
         by_id = {p["id"]: p for p in cands}
-        notes = [f"added @{e['handle']}: {e['url']}" for e in embeds]
-        for lead in answer.get("leads") or []:
-            p = by_id.get(str(lead.get("id")))
-            if p:
-                notes.append(f"lead (not quoted) @{p['handle']}: {lead.get('why', '')} -- {p['url']}")
+        why = {str(a.get("id")): a.get("why", "") for a in answer.get("add") or []}
+        added_urls = {e["url"] for e in embeds}
+        notes = [
+            f"ADDED @{p['handle']}: {why.get(p['id'], '')} -- {p['url']}"
+            for p in cands
+            if p["url"] in added_urls
+        ]
+        for key, label in (("leads", "lead, not quoted"), ("opinions", "opinion, not added")):
+            for entry in answer.get(key) or []:
+                p = by_id.get(str(entry.get("id")))
+                if p:
+                    notes.append(f"{label} @{p['handle']}: {entry.get('why', '')} -- {p['url']}")
         return new_body, embeds, notes
     except Exception as exc:  # noqa: BLE001 -- best effort, like the other lookups
         print(f"  x watch failed for '{title}': {exc}", file=sys.stderr)
