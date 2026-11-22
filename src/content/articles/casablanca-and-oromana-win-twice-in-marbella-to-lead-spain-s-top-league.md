@@ -1,6 +1,7 @@
 ---
 title: "Maghsoodloo Beats Eljanov as Oromana and Casablanca Both Win Twice"
 publishDate: "2026-11-22"
+publishedAt: "2026-11-22T08:04:27Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/spanish-team-ch-2026-r2"
 lens: "results"

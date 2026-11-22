@@ -1,6 +1,7 @@
 ---
 title: "FIDE Takes On Carlsen and the Arbiters, and the Chief Arbiter Hits Back"
 publishDate: "2026-11-22"
+publishedAt: "2026-11-22T08:04:27Z"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/"
 lens: "drama"
