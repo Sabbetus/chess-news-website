@@ -40,7 +40,13 @@ const latestRecap = allRecaps.sort((a, b) => b.data.publishDate.valueOf() - a.da
 // already excludes recaps from), "latest" is genuinely incomplete without
 // them, since a recap is real, freshly-published content too.
 const latestWithRecap = latestRecap
-  ? [...articles, latestRecap].sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  ? // A recap goes above the other pieces of its own day: it is published
+    // after them and draws on them (user's call, 2026-11-22).
+    [...articles, latestRecap].sort(
+      (a, b) =>
+        b.data.publishDate.valueOf() - a.data.publishDate.valueOf() ||
+        Number(b.data.type === 'recap') - Number(a.data.type === 'recap'),
+    )
   : articles;
 const latest = latestWithRecap.slice(0, 4);
 
