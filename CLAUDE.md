@@ -94,7 +94,9 @@
 - **Every review includes looking at every article photo**, not just its
   file name: right person (or a neutral image where that's the rule),
   not the same photo as another article on the front page, not a tight
-  "(cropped)" face crop. (Added 2026-10-02 after a repeated Turlov photo
+  "(cropped)" face crop. Weekly recaps are exempt from the front-page
+  duplicate check (user's call, 2026-11-22): the front page shows a
+  recap only as a text block, never its photo. (Added 2026-10-02 after a repeated Turlov photo
   slipped through a review that only read file names.)
 
 - **Russia: skip only what represents Russia** (user's rule, clarified
@@ -231,8 +233,10 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
-- 2026-11-22: morning batch and weekly recap pending the user's response
-  (silence counts as acceptance).
+- 2026-11-22: weekly recap review corrected (stays 0): I called its photo
+  a front-page duplicate and swapped it, but recaps' photos never show on
+  the front page (rule added above). The Vachier-Lagrave reset stood.
+  The morning batch is pending the user's response.
 - 2026-11-21: user overruled one fix (stays 0): I removed MVL's
   "crybaby" tweet as having no context; it belonged in the piece (rule
   added above). Restored.
@@ -383,10 +387,12 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - **Current streak: 0 consecutive clean batches.**
 - 2026-11-22: weekly recap (PR #113) reset (streak 1 -> 0). None of its
   four Sunday crons had run by 15:41, so the review started it by hand.
-  Resets: "Vaishali was set to face Giri next" (Vachier-Lagrave, the
-  Group D winner, played Giri), and the photo was the Carlsen Rapid &
-  Blitz 2025 shot still on the front page with the 20 November forfeits
-  piece (now Carlsen from our store, used once on 4 October). Fixed: a
+  Reset: "Vaishali was set to face Giri next" (Vachier-Lagrave, the
+  Group D winner, played Giri). I also called the photo a front-page
+  duplicate (the Carlsen Rapid & Blitz 2025 shot of the 20 November
+  piece) and swapped it -- wrong (user's call): recaps show on the front
+  page only as a text block, so their photo can't duplicate anything
+  there; the swap was unneeded but harmless and stayed. Fixed: a
   mangled link "/articles/gukesh-admits-he-hasn-t-handled-the-pressure-
   well/" (flagged in the PR report), the docuseries "premieres on
   November 22" (today), "which we summarized as" (a line about our own
