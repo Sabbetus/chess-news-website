@@ -193,6 +193,14 @@
   top list without a page gets one, fact-checked, with a photo, published
   and pushed. Checking and updating the existing pages stays quarterly.
 
+- **Fixes for clearly broken things may be pushed without asking**
+  (user's rule, 2026-11-22, after failing "Pipeline tests" emails waited
+  on a push go-ahead). A failing test or build, a failing workflow, a
+  broken page or a pipeline step that errors: fix it, and push once the
+  tests and the site build pass, then tell the user what was broken and
+  what was pushed. New features, content changes and judgment calls still
+  need the go-ahead.
+
 ## Clean-review streak tracker
 
 The user's long-term plan: once a full week of daily batches goes by with
