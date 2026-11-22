@@ -404,6 +404,25 @@ def check_recap_links(body_markdown: str, entries: list[dict]) -> list[str]:
     return sorted(f"/articles/{slug}/" for slug in bad)
 
 
+def repair_recap_links(body_markdown: str, entries: list[dict]) -> tuple[str, list[str]]:
+    """Fixes a mangled link only when exactly one real slug shares its first
+    four words (2026-11-22: "...-hasn-t-handled-the-pressure-well" for
+    "...-hasn-t-handled-the-pressure-of-the-title"; 2026-09-20 had the same
+    slip). Anything less certain stays broken for check_recap_links to
+    report. Returns the body and "bad -> fixed" notes."""
+    real = [e["slug"] for e in entries]
+    notes = []
+    for bad in sorted(set(_ARTICLE_LINK_RE.findall(body_markdown)) - set(real)):
+        head = bad.split("-")[:4]
+        if len(head) < 4:
+            continue
+        matches = [r for r in real if r.split("-")[:4] == head]
+        if len(matches) == 1:
+            body_markdown = body_markdown.replace(f"/articles/{bad}/", f"/articles/{matches[0]}/")
+            notes.append(f"/articles/{bad}/ -> /articles/{matches[0]}/")
+    return body_markdown, notes
+
+
 def main() -> None:
     entries = recent_published_articles(RECAP_WINDOW_DAYS)
     if not entries:
@@ -481,6 +500,7 @@ def main() -> None:
         body_markdown = fix_long_paragraphs(client, body_markdown, offenders)
         offenders = check_paragraph_lengths(body_markdown)
 
+    body_markdown, repaired_links = repair_recap_links(body_markdown, entries)
     bad_links = check_recap_links(body_markdown, entries)
 
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
@@ -490,6 +510,9 @@ def main() -> None:
     if offenders:
         spots = ", ".join(f"#{i} ({n})" for i, n in offenders)
         lines += ["", f"**Paragraph(s) over the style-guide limit (350 characters or 3 sentences):** {spots}"]
+    if repaired_links:
+        lines += ["", "**Mangled article link(s) repaired** (one real slug shared the first four words; check each):"]
+        lines += [f"- `{n}`" for n in repaired_links]
     if bad_links:
         lines += [
             "",

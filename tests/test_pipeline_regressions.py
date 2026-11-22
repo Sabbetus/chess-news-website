@@ -1409,3 +1409,15 @@ def test_x_watch_top_names():
     assert x_watch.is_top_name({"name": "Viswanathan Anand", "handle": "vishy64theking"}, tops)
     assert not x_watch.is_top_name({"name": "Wadim Rosenstein", "handle": "WadimRosenstein"}, tops)
     assert not x_watch.is_top_name({"name": "Anastasia Sorokina", "handle": "SorokinaChess"}, tops)
+
+
+def test_recap_repairs_a_mangled_slug_only_when_unambiguous():
+    # 2026-11-22: the recap linked "...-pressure-well" for "...-pressure-of-the-title".
+    import weekly_recap
+    entries = [{"slug": "gukesh-admits-he-hasn-t-handled-the-pressure-of-the-title"},
+               {"slug": "carlsen-forfeits-two-rapid-games"}, {"slug": "carlsen-forfeits-two-blitz-games"}]
+    body = "[a](/articles/gukesh-admits-he-hasn-t-handled-the-pressure-well/) [b](/articles/carlsen-forfeits-two-games/)"
+    fixed, notes = weekly_recap.repair_recap_links(body, entries)
+    assert "/articles/gukesh-admits-he-hasn-t-handled-the-pressure-of-the-title/" in fixed
+    assert "/articles/carlsen-forfeits-two-games/" in fixed  # two candidates: left for the review
+    assert len(notes) == 1

@@ -4,19 +4,20 @@ type: "recap"
 publishDate: "2026-11-22"
 continent: "global"
 selectionScore: 0
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja won the Total Chess pilot in Budapest, but Carlsen's forfeits drew a FIDE ethics referral. Plus Gukesh's title defense, Speed Chess R16 and December tournament lists. Our weekly recap."
 image:
-  src: "./_images/Magnus_Carlsen_at_Rapid___Blitz_2025.webp"
-  credit: "Miroslav.vajdic, CC BY 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
+  src: "./_images/MagnusCarlsen24.webp"
+  credit: "Stefan64, CC BY-SA 3.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnusCarlsen24.jpg"
+  caption: "Magnus Carlsen"
 ---
 
 Budapest owned the week. The Total Chess World Championship Tour Pilot ran from group stage to final, and Magnus Carlsen's forfeits ended up in front of FIDE's ethics body. Geneva was the other pull, with Gukesh's title defense starting on 24 November.
 
 **Total Chess in Budapest**
 
-The group stage [ended with Firouzja, Caruana, Giri and Vachier-Lagrave winning their groups](/articles/vaishali-s-last-gasp-win-hands-mvl-group-d-at-total-chess/). Vachier-Lagrave took Group D after Vaishali's late win over Arjun, and Vaishali was set to face Giri next.
+The group stage [ended with Firouzja, Caruana, Giri and Vachier-Lagrave winning their groups](/articles/vaishali-s-last-gasp-win-hands-mvl-group-d-at-total-chess/). Vachier-Lagrave took Group D after Vaishali's late win over Arjun, which set up his semifinal against Giri.
 
 On the first knockout day, [Carlsen skipped his last game with 2800 at stake](/articles/firouzja-and-giri-take-semifinal-leads-at-total-chess/). Bibisara Assaubayeva sat at the board for 15 minutes before she was awarded the win. Firouzja and Giri led their semifinals after that day.
 
@@ -30,13 +31,13 @@ FIDE issued a statement afterward. It [calls Carlsen's conduct "unacceptable" an
 
 **Gukesh and Sindarov in Geneva**
 
-Six days before his first defense, Gukesh [said he hasn't handled the pressure of the title](/articles/gukesh-admits-he-hasn-t-handled-the-pressure-well/) in the best possible way. He was speaking over dinner with Viswanathan Anand and ChessBase India's Sagar Shah.
+Six days before his first defense, Gukesh [said he hasn't handled the pressure of the title](/articles/gukesh-admits-he-hasn-t-handled-the-pressure-of-the-title/) in the best possible way. He was speaking over dinner with Viswanathan Anand and ChessBase India's Sagar Shah.
 
-ChessBase also ran a profile of the champion, which we summarized as [Gukesh heading to Geneva to face Sindarov](/articles/gukesh-arrives-in-geneva-after-a-rough-2026-season/). It traces his path from a Chennai school chess club to the throne, then through a bumpy first stretch as champion. The match begins on 24 November.
+A ChessBase profile of [Gukesh heading to Geneva to face Sindarov](/articles/gukesh-arrives-in-geneva-after-a-rough-2026-season/) traces his path from a Chennai school chess club to the throne, then through a bumpy first stretch as champion. The match begins on 24 November.
 
 The challenger has his own story. [Sindarov was a prodigy who stalled for years](/articles/how-sindarov-went-from-slow-starter-to-world-title-challenger/) before something clicked, an unusual route for his generation.
 
-A six-part documentary arrives two days before the match. [Candidates: India's Chess Story premieres on YouTube on November 22](/articles/six-part-candidates-docuseries-starts-sunday-two-days-before-gukesh-s-title-defe/), free to watch. It follows Praggnanandhaa, Gukesh, Arjun Erigaisi, Vaishali Rameshbabu and Vidit Gujrathi at the 2024 Candidates.
+A six-part documentary arrives two days before the match. [Candidates: India's Chess Story premieres on YouTube today](/articles/six-part-candidates-docuseries-starts-sunday-two-days-before-gukesh-s-title-defe/), free to watch. It follows Praggnanandhaa, Gukesh, Arjun Erigaisi, Vaishali Rameshbabu and Vidit Gujrathi at the 2024 Candidates.
 
 **Speed Chess Championship XI**
 

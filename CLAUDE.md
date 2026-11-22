@@ -231,7 +231,8 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
-- 2026-11-22: pending the user's response (silence counts as acceptance).
+- 2026-11-22: morning batch and weekly recap pending the user's response
+  (silence counts as acceptance).
 - 2026-11-21: user overruled one fix (stays 0): I removed MVL's
   "crybaby" tweet as having no context; it belonged in the piece (rule
   added above). Restored.
@@ -379,7 +380,21 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 0 consecutive clean batches.**
+- 2026-11-22: weekly recap (PR #113) reset (streak 1 -> 0). None of its
+  four Sunday crons had run by 15:41, so the review started it by hand.
+  Resets: "Vaishali was set to face Giri next" (Vachier-Lagrave, the
+  Group D winner, played Giri), and the photo was the Carlsen Rapid &
+  Blitz 2025 shot still on the front page with the 20 November forfeits
+  piece (now Carlsen from our store, used once on 4 October). Fixed: a
+  mangled link "/articles/gukesh-admits-he-hasn-t-handled-the-pressure-
+  well/" (flagged in the PR report), the docuseries "premieres on
+  November 22" (today), "which we summarized as" (a line about our own
+  piece). Checked: all 20 links resolve to published pieces and every
+  claim against its linked article; the three December list counts;
+  the built page's automatic links. Fixed at the source:
+  weekly_recap.py repairs a mangled link when exactly one real slug
+  shares its first four words, and lists the repair in the PR report.
 - 2026-11-22: drafts/2026-11-22 clean (streak 0 -> 1). Run started by
   the morning check (07:52); the cron arrived the same minute, waited on
   the concurrency group and its guard skipped it (one batch). FIDE
@@ -1224,7 +1239,7 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   links resolved to real published articles and every claim checked out
   sentence-by-sentence against its linked article's own body. No fixes
   needed.
-- Last reset: 2026-11-17 (see above).
+- Last reset: 2026-11-22, weekly recap (see above).
 - Earlier resets: 2026-11-16; 2026-11-15; 2026-11-14; 2026-11-12; 2026-11-11 (PR #99); 2026-11-10 (PR #98); 2026-11-08 (PR #95); 2026-11-07 (PR #94); 2026-11-06 (PR #93); 2026-11-05 (PR #92); 2026-11-04 (PR #91); 2026-11-03 (PR #90); 2026-11-02 (PR #89); 2026-11-01 (PR #87); 2026-10-31 (PR #86); 2026-10-30 (PR #85); 2026-10-29 (PR #84); 2026-10-28 (PR #83); 2026-10-27 (PR #82); 2026-10-24 (PR #78); 2026-10-22 (PR #76); 2026-10-21 (PR #75); 2026-10-20 (PR #74); 2026-10-18 (PR #71); 2026-10-17 (PR #70); 2026-10-16 (PR #69); 2026-10-15 (PR #68); 2026-10-14 (PR #67); 2026-10-13 (PR #66); 2026-10-11 (PR #63); 2026-10-10 (PR #62); 2026-10-08 (PR #60); 2026-10-07 (PR #59); 2026-10-06 (PR #58); 2026-10-04 (PR #55); 2026-10-03 (PR #54); 2026-10-02 (PR #53); 2026-10-01 (PR #52); 2026-09-30 (PR #51); 2026-09-29 (PR #50); 2026-09-27 (PR #47 -- a year range like "2024-2026" next to
   an "Olympiad" mention was misread as a match score, wrongly attaching a
   round-10 team-standings table to the FIDE Excellence Awards ceremony
