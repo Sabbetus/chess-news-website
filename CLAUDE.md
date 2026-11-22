@@ -182,8 +182,12 @@
   (it stayed open on 2026-11-16). Weekly recap (user's call, 2026-11-15): it
   drafts on Sunday afternoon, after that morning's batch is published, so
   it covers the whole week and nothing in it is already overtaken; the
-  morning check no longer reviews it, the scheduled task "Sunday weekly
-  recap review" (15:41 UTC) does, under the same fix-and-publish rule.
+  Sunday morning check starts it by hand right after that morning's batch
+  is pushed and reviews it in the same session, under the same
+  fix-and-publish rule (user's call, 2026-11-22: as early as possible,
+  as long as Sunday's articles are in; GitHub's Sunday crons didn't run
+  that day). The scheduled task "Sunday weekly recap review" (15:41 UTC)
+  is now only a backstop for a recap that is still missing.
   The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
