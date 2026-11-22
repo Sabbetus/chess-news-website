@@ -126,10 +126,14 @@
   attributed sentence each, quoted right after it -- only when the author
   is a party to the story (a player, official, arbiter, organiser or body
   the article is about, or someone it says was accused) and the post gives
-  their side, a decision or a new fact. Opinions by non-parties, however
-  famous, are never added automatically (user's call, 2026-11-22: an
-  opinion may be stupid or not relevant); the PR report lists the notable
-  ones, and a relay's paraphrase, for the review to add by hand. New reactions to the last two days'
+  their side, a decision or a new fact. Opinions by non-parties are not
+  added (user's call, 2026-11-22: an opinion may be stupid or not
+  relevant), with one exception (user's call, same day): at most one
+  considered opinion per article -- an argument, proposal or clear stance
+  with a reason, not a jab or one-liner -- by a top name, meaning the
+  current FIDE top 20 or a world champion past or present (decided in
+  code, x_watch.is_top_name). The PR report lists other notable opinions,
+  and a relay's paraphrase, for the review to add by hand. New reactions to the last two days'
   controversy pieces are listed for the morning review, which suggests a
   separate follow-up piece when one is due -- the published piece is not
   extended. Quoted posts sit after the paragraph about them

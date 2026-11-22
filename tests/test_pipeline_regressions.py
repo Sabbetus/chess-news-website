@@ -1398,3 +1398,14 @@ def test_x_watch_finds_reposted_original_and_inserts_sentence():
     paras = new_body.strip().split("\n\n")
     assert paras[2].startswith("Sorokina answered on X") and len(paras) == 4
     assert embeds[0]["handle"] == "SorokinaChess" and embeds[0]["after"].startswith("Sorokina answered")
+
+
+def test_x_watch_top_names():
+    # 2026-11-22 (user's call): a top name's considered opinion may be added
+    # even when they are not a party; "top" is decided in code.
+    import x_watch
+    tops = x_watch.top_names()
+    assert x_watch.is_top_name({"name": "Gukesh D", "handle": "DGukesh"}, tops)
+    assert x_watch.is_top_name({"name": "Viswanathan Anand", "handle": "vishy64theking"}, tops)
+    assert not x_watch.is_top_name({"name": "Wadim Rosenstein", "handle": "WadimRosenstein"}, tops)
+    assert not x_watch.is_top_name({"name": "Anastasia Sorokina", "handle": "SorokinaChess"}, tops)

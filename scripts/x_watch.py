@@ -154,6 +154,40 @@ def key_terms(title: str, body: str) -> set[str]:
     return terms
 
 
+# Top names whose considered opinion on a story may be added even when they
+# are not a party to it (user's call, 2026-11-22: "if some of the top names
+# comment on it ... it might still be interesting"): the current FIDE top 20
+# plus world champions, past and present. Decided here, not by the model.
+WORLD_CHAMPIONS = [
+    "Magnus Carlsen", "Viswanathan Anand", "Garry Kasparov", "Vladimir Kramnik", "Veselin Topalov",
+    "Ruslan Ponomariov", "Rustam Kasimdzhanov", "Ding Liren", "Gukesh", "Anatoly Karpov",
+    "Ju Wenjun", "Hou Yifan", "Tan Zhongyi", "Mariya Muzychuk", "Anna Ushenina", "Antoaneta Stefanova",
+    "Xie Jun", "Zhu Chen", "Maia Chiburdanidze", "Susan Polgar", "Alexandra Kosteniuk",
+]
+
+
+def _name_tokens(text: str) -> set[str]:
+    return {w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'-]+", text) if len(w) >= 3}
+
+
+def top_names() -> list[set[str]]:
+    names = list(WORLD_CHAMPIONS)
+    try:
+        data = json.loads((ROOT / "data" / "fide-top100.json").read_text())
+        names += [pl["name"] for pl in data.get("players", []) if pl.get("rank", 999) <= 20]
+    except (OSError, ValueError):
+        pass
+    return [_name_tokens(n) for n in names]
+
+
+def is_top_name(post: dict, tops: list[set[str]] | None = None) -> bool:
+    """Display name or handle ("DGukesh", "Vachier_Lagrave") matches a top name:
+    both words of a two-word name, or the one word of a one-word name."""
+    handle = re.sub(r"([a-z])([A-Z])", r"\1 \2", post.get("handle", "")).replace("_", " ")
+    mine = _name_tokens(post.get("name", "")) | _name_tokens(handle)
+    return any(len(t & mine) >= min(2, len(t)) for t in (tops if tops is not None else top_names()) if t)
+
+
 def candidates_for(title: str, body: str, posts: list[dict], skip_urls: set[str] = frozenset()) -> list[dict]:
     terms = key_terms(title, body)
     if not terms:
@@ -190,9 +224,14 @@ body the article is about, someone whose decision or conduct the article reports
 or someone the article says was accused or criticised;
 - it is substantive: it answers an accusation, gives that party's own side or \
 explanation, or announces a decision or a new fact the article lacks.
-Never add an opinion, verdict, joke or hot take by someone who is not a party, \
-however famous; never add congratulations, promotion or live commentary. Add at \
-most {max_adds}. Adding nothing is the normal answer.
+One exception: you may also add at most ONE opinion by a post marked TOP NAME \
+(a world champion or a current top-20 player) who is not a party, but only if it \
+is a considered position on this story -- an argument, a proposal, or a clear \
+stance with a reason. A jab, a one-liner, sarcasm or a vague reaction does not \
+count. Its sentence must present it as that person's view.
+Never add an opinion by anyone else, however well known; never add \
+congratulations, promotion or live commentary. Add at most {max_adds} in all. \
+Adding nothing is the normal answer.
 
 For each addition write ONE sentence for the article, in its style, that \
 attributes the post to its author ("X answered on X that ...") and says only what \
@@ -225,7 +264,8 @@ def _ask(client, model: str, system: str, user: str) -> dict:
 
 def _post_lines(posts: list[dict]) -> str:
     return "\n".join(
-        f"[{p['id']}] {'QUOTABLE' if p['quotable'] else 'LEAD ONLY'} @{p['handle']} ({p['name']})"
+        f"[{p['id']}] {'QUOTABLE' if p['quotable'] else 'LEAD ONLY'}{' TOP NAME' if p.get('top') else ''}"
+        f" @{p['handle']} ({p['name']})"
         f"{' via @' + p['via'] if p['via'] else ''}: {p['text'][:700]}"
         for p in posts
     )
@@ -272,6 +312,9 @@ def reactions(client, model: str, title: str, body: str, existing: list[dict]) -
         cands = candidates_for(title, body, posts, {e.get("url") for e in existing})
         if not cands:
             return body, [], []
+        tops = top_names()
+        for p in cands:
+            p["top"] = is_top_name(p, tops)
         numbered = "\n\n".join(f"({i}) {p}" for i, p in enumerate(paragraphs(body), 1))
         answer = _ask(
             client,
