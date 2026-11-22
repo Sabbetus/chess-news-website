@@ -1357,7 +1357,7 @@ def test_tweets_placed_after_the_paragraph_about_them():
     # author (a pairing) is not enough.
     import json, subprocess
     script = """
-import { tweetParagraphIndex } from './scripts/inline-tweets.mjs';
+import { tweetParagraphIndex } from './scripts/inline-tweets-core.mjs';
 const paras = [
   'The final-round pairings are Assaubayeva against Vachier-Lagrave and Niemann against So.',
   'Wesley So criticized the 45+30 time control on social media, writing it feels like blitz.',
