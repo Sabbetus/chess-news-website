@@ -1,5 +1,5 @@
 ---
-title: "FIDE Sends Carlsen's Forfeits to Ethics Commission"
+title: "FIDE Takes On Carlsen and the Arbiters, and the Chief Arbiter Hits Back"
 publishDate: "2026-11-22"
 sourceName: "FIDE"
 sourceUrl: "https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/"
@@ -7,8 +7,8 @@ lens: "drama"
 continent: "europe"
 selectionScore: 135
 reviewStatus: "published"
-socialCopy: "FIDE calls Carlsen's forfeits at the Total Chess pilot \"unacceptable\" and refers him to its Ethics Commission. It also accuses the arbiters, and chief arbiter Anastasia Sorokina demands a retraction."
-metaDescription: "FIDE will refer Magnus Carlsen's forfeits at the Total Chess pilot in Budapest to its Ethics Commission and will review the arbiters' conduct."
+socialCopy: "Two disputes out of Budapest. FIDE refers Carlsen's Total Chess forfeits to its Ethics Commission and says the arbiters failed to uphold the rules. Chief arbiter Anastasia Sorokina calls that unsubstantiated and demands a retraction."
+metaDescription: "FIDE refers Magnus Carlsen's Total Chess forfeits to its Ethics Commission and accuses the arbiters; chief arbiter Anastasia Sorokina demands a retraction."
 additionalSources:
   - sourceName: "Chess.com"
     sourceUrl: "https://www.chess.com/news/view/fide-carlsen-total-chess-forfeits-ethics-commission"
@@ -39,9 +39,11 @@ tweetEmbeds:
     date: "2026-11-21"
 ---
 
-FIDE has [issued a statement](https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/) on the Total Chess World Championship Tour Pilot 2026 in Budapest. It calls Magnus Carlsen's conduct in forfeiting games "unacceptable" and says it will refer them to the FIDE Ethics and Disciplinary Commission (EDC). The statement is signed by president Timur Turlov and deputy president Viswanathan Anand.
+FIDE has [issued a statement](https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/) on the Total Chess World Championship Tour Pilot 2026 in Budapest. It calls Magnus Carlsen's conduct in forfeiting games "unacceptable" and says it will refer the case to the FIDE Ethics and Disciplinary Commission (EDC). The statement is signed by president Timur Turlov and deputy president Viswanathan Anand.
 
-It also congratulates the medalists, Alireza Firouzja, Anish Giri and Fabiano Caruana. It thanks Kjell Madland, the Total Chess team and the Hungarian hosts, noting the pilot comes ahead of the Tour's first full season in 2027.
+It also accuses the tournament's arbiters of failing to uphold the rules. That opened a second dispute: the chief arbiter, Anastasia Sorokina, rejected the charge the same day and demanded a retraction.
+
+The statement also congratulates the medalists, Alireza Firouzja, Anish Giri and Fabiano Caruana. It thanks Kjell Madland, the Total Chess team and the Hungarian hosts, noting the pilot comes ahead of the Tour's first full season in 2027.
 
 **What FIDE objects to**
 
