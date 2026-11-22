@@ -2,6 +2,7 @@
 title: "Weekly Recap: Carlsen's Forfeits Overshadow Firouzja's Budapest Win as Geneva Looms"
 type: "recap"
 publishDate: "2026-11-22"
+publishedAt: "2026-11-22T15:47:13Z"
 continent: "global"
 selectionScore: 0
 reviewStatus: "published"
