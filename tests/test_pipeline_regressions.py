@@ -1369,3 +1369,32 @@ console.log(JSON.stringify([tweetParagraphIndex(paras, so), tweetParagraphIndex(
 """
     out = subprocess.run(["node", "--input-type=module", "-e", script], capture_output=True, text=True, check=True)
     assert json.loads(out.stdout) == [1, -1, 0]
+
+
+def test_x_watch_finds_reposted_original_and_inserts_sentence():
+    # 2026-11-22 (user's call): the chief arbiter's letter, reposted by a
+    # followed relay account, must come out quotable; a relay's own
+    # paraphrase is a lead only. The added sentence goes in as its own
+    # paragraph, with the post anchored to it.
+    import x_watch
+    x_watch.load_accounts = lambda: [{"handle": "davidllada", "kind": "relay"}, {"handle": "WesleySo_", "kind": "person"}]
+    now = 1795300000
+    results = [
+        {"id": "1", "text": "Dear Mr Turlov and Mr Anand, as Chief Arbiter I defend the ten arbiters.",
+         "author": {"screen_name": "SorokinaChess", "name": "Anastasia Sorokina"}, "created_timestamp": now},
+        {"id": "2", "text": "REPORT: Wesley So backed Chief Arbiter Sorokina against FIDE today.",
+         "author": {"screen_name": "davidllada", "name": "David Llada"}, "created_timestamp": now},
+    ]
+    posts = x_watch.normalize(results, {"handle": "davidllada", "kind": "relay"})
+    by_id = {p["id"]: p for p in posts}
+    assert by_id["1"]["quotable"] and by_id["1"]["via"] == "davidllada"
+    assert not by_id["2"]["quotable"]
+    body = "FIDE accused the arbiters of Total Chess.\n\nAnastasia Sorokina was the chief arbiter.\n\nThe end."
+    cands = x_watch.candidates_for("FIDE Takes On Carlsen", body, posts)
+    assert cands[0]["id"] == "1"
+    new_body, embeds = x_watch.apply_adds(
+        body, [{"id": "1", "sentence": "Sorokina answered on X that the arbiters followed the rules.", "after_paragraph": 2}], posts
+    )
+    paras = new_body.strip().split("\n\n")
+    assert paras[2].startswith("Sorokina answered on X") and len(paras) == 4
+    assert embeds[0]["handle"] == "SorokinaChess" and embeds[0]["after"].startswith("Sorokina answered")

@@ -116,6 +116,21 @@
   or ask for context. Allegations and legal-sensitive claims are still
   held back for the user.
 
+- **Reactions on X come from followed accounts** (user's call,
+  2026-11-22, after the chief arbiter's open letter answering FIDE was
+  found by hand). scripts/x_watch.py reads the last 48 hours of posts from
+  the accounts in data/x-accounts.json (via fxtwitter; best effort) --
+  news relays that repost and quote reactions, officials, and people. For
+  each draft a model may add up to three quotable posts (a person's own
+  post, or an original reached through a repost or quote) with one
+  attributed sentence each, quoted right after it; a relay's paraphrase is
+  only a lead in the PR report. New reactions to the last two days'
+  controversy pieces are listed for the morning review, which suggests a
+  separate follow-up piece when one is due -- the published piece is not
+  extended. Quoted posts sit after the paragraph about them
+  (scripts/inline-tweets.mjs), else in the end block. The quarterly
+  review keeps the account list current.
+
 - **Bold claims the source reasonably supports are fine** (user's call,
   2026-10-24). Don't flag or soften strong wording of what the source
   says ("the increment was his call" when the source has him designing

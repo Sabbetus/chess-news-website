@@ -56,6 +56,7 @@ from lichess_game import (
 )
 from selection import _has_result_signal, is_rating_list_story, tournament_has_round_context
 from tweets import tweet_quotes_for_item
+import x_watch
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -2296,6 +2297,17 @@ def draft_one(
         if quotes:
             frontmatter["tweetEmbeds"] = quotes
             print(f"  tweet quotes: attached {len(quotes)} for '{item['title']}'", file=sys.stderr)
+        # Reactions from the followed X accounts: a sentence in the body and
+        # the post quoted after it (user's call, 2026-11-22).
+        new_body, x_embeds, x_notes = x_watch.reactions(
+            client, MODEL, parsed["title"], parsed.get("bodyMarkdown") or "", quotes
+        )
+        if x_embeds:
+            parsed["bodyMarkdown"] = new_body
+            frontmatter["tweetEmbeds"] = quotes + x_embeds
+        X_WATCH_NOTES.extend((parsed["title"], n) for n in x_notes)
+        if x_notes:
+            print(f"  x watch: {len(x_embeds)} added, {len(x_notes) - len(x_embeds)} lead(s) for '{item['title']}'", file=sys.stderr)
 
     fm_lines = ["---"]
     for key, value in frontmatter.items():
@@ -2523,6 +2535,10 @@ GAME_LINK_NOTES: list[tuple[str, list[str]]] = []
 ILLEGAL_LINE_NOTES: list[tuple[str, list[str]]] = []
 # Event pages updated from a final-result piece, for the run report.
 EVENT_PAGE_NOTES: list[str] = []
+# Reactions found on followed X accounts (x_watch.py), per draft and for
+# recent controversy pieces.
+X_WATCH_NOTES: list[tuple[str, str]] = []
+X_FOLLOWUP_NOTES: list[str] = []
 # A "#game-embed" link whose sentence disagrees with the game (players or
 # result), and date/time words that don't fit the publication date.
 BOARD_MISMATCH_NOTES: list[tuple[str, str]] = []
@@ -2608,6 +2624,12 @@ def write_run_report(
     if BOARD_MISMATCH_NOTES:
         lines += ["", "**Board and text disagree** (check which game the piece means and fix the board):", ""]
         lines += [f"- {slug} — {note}" for slug, note in BOARD_MISMATCH_NOTES]
+    if X_WATCH_NOTES:
+        lines += ["", "**Reactions from followed X accounts** (check each added sentence against its post; leads were not quoted):", ""]
+        lines += [f"- {title} — {note}" for title, note in X_WATCH_NOTES]
+    if X_FOLLOWUP_NOTES:
+        lines += ["", "**New on X about recent controversy pieces** (judge whether a follow-up piece is due):", ""]
+        lines += [f"- {note}" for note in X_FOLLOWUP_NOTES]
     if RETITLE_NOTES:
         lines += ["", "**Photo headline rewrites that failed the check against the body** (fix by hand, keeping the photographed person named):", ""]
         lines += [f"- {old} — {note}" for old, note in RETITLE_NOTES]
@@ -2658,6 +2680,7 @@ def main() -> None:
             failed.append((item["title"], f"{type(exc).__name__}: {exc}"))
             print(f"FAILED to draft '{item['title']}': {exc}", file=sys.stderr)
 
+    X_FOLLOWUP_NOTES.extend(x_watch.followups(client, MODEL))
     write_run_report(written, failed, len(selected), long_paragraphs, bad_link_articles)
     print(f"Wrote {len(written)}/{len(selected)} draft(s).")
 
