@@ -180,7 +180,7 @@
   copies with URLs (each copy's text first, its URL on the line after;
   user's call, 2026-11-12). After the push, close the batch's draft PR
   (it stayed open on 2026-11-16). Weekly recap (user's call, 2026-11-15): it
-  drafts on Sunday afternoon, after that morning's batch is published, so
+  drafts on Sunday after that morning's batch is published, so
   it covers the whole week and nothing in it is already overtaken; the
   Sunday morning check starts it by hand right after that morning's batch
   is pushed and reviews it in the same session, under the same
