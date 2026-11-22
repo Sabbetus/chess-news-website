@@ -1,0 +1,143 @@
+// Places each quoted post on X right after the paragraph that discusses it,
+// instead of in a block at the end of the article (user's call, 2026-11-22:
+// "a bunch of tweets randomly at the end"). A tweet may name its paragraph
+// with `after` (a short phrase from it); otherwise it goes after the first
+// paragraph naming its author (surname or handle). A tweet no paragraph
+// matches stays in the end block (TweetQuotes.astro), which uses the same
+// test via tweetParagraphIndex.
+import { readFileSync } from 'node:fs';
+import yaml from 'js-yaml';
+
+const norm = (s) =>
+  String(s)
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase();
+
+function authorKeys(tweet) {
+  const words = String(tweet.author ?? '')
+    .split(/\s+/)
+    .filter((w) => w.length >= 3);
+  const keys = [];
+  if (words.length) keys.push(words[words.length - 1]);
+  // "Vachier_Lagrave" is written "Vachier-Lagrave" in the text.
+  if (tweet.handle) keys.push(tweet.handle, tweet.handle.replace(/_/g, '-'), tweet.handle.replace(/_/g, ' '));
+  return keys.map(norm);
+}
+
+const STOP = new Set(
+  ('the and for that this with from have was were are but not you all his her its our their they them about into over '
+    + 'after before when what which who will would there here just than then also more most some very been being has had '
+    + 'game games chess player players event').split(' '),
+);
+const words = (t) => new Set((t.match(/[a-z][a-z'-]{3,}/g) ?? []).filter((w) => !STOP.has(w)));
+// A paragraph that says a post was made is about the post.
+const POSTED = /\b(tweet(ed)?|posted|wrote|on x|social media|open letter)\b/;
+
+/** Index of the paragraph a tweet belongs after, or -1.
+ *  It must name the author and either say a post was made or share at
+ *  least two content words with the tweet (2026-11-22: a So tweet on the
+ *  format landed after a paragraph that only listed him in a pairing);
+ *  of those, the one sharing the most words wins. */
+export function tweetParagraphIndex(paragraphs, tweet) {
+  const texts = paragraphs.map(norm);
+  if (tweet.after) {
+    const i = texts.findIndex((t) => t.includes(norm(tweet.after)));
+    if (i >= 0) return i;
+  }
+  const keys = authorKeys(tweet);
+  const tw = words(norm(tweet.text));
+  let best = -1;
+  let bestScore = 0;
+  for (const [i, t] of texts.entries()) {
+    const named = keys.some((k) =>
+      new RegExp(`(^|[^a-z])${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`).test(t),
+    );
+    if (!named) continue;
+    const shared = [...words(t)].filter((w) => tw.has(w)).length;
+    if (!POSTED.test(t) && shared < 2) continue;
+    const score = shared + (POSTED.test(t) ? 2 : 0) + 1;
+    if (score > bestScore) {
+      best = i;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+/** Plain paragraphs of a markdown body (headings and blank lines skipped). */
+export function markdownParagraphs(body) {
+  return String(body)
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter((p) => p && !p.startsWith('#') && !/^\*\*[^*]+\*\*$/.test(p));
+}
+
+const textOf = (node) => (node.type === 'text' ? node.value : (node.children ?? []).map(textOf).join(''));
+
+function fmtDate(iso) {
+  if (!iso) return '';
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
+const el = (tagName, properties, children) => ({ type: 'element', tagName, properties, children });
+const txt = (value) => ({ type: 'text', value });
+
+function quoteNode(tweet) {
+  const footer = [
+    el('a', { href: tweet.url, target: '_blank', rel: 'noopener nofollow' }, [
+      txt(`${tweet.author} `),
+      el('span', { className: ['tweet-handle'] }, [txt(`@${tweet.handle}`)]),
+    ]),
+  ];
+  if (tweet.date) footer.push(el('span', { className: ['tweet-date'] }, [txt(` · ${fmtDate(tweet.date)}`)]));
+  const paras = String(tweet.text)
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => el('p', {}, [txt(p)]));
+  return el('blockquote', { className: ['tweet-quote', 'tweet-inline'], cite: tweet.url }, [
+    ...paras,
+    el('footer', {}, footer),
+  ]);
+}
+
+function tweetsOf(path) {
+  try {
+    const fm = readFileSync(path, 'utf-8').split(/^---$/m)[1] ?? '';
+    const data = yaml.load(fm) ?? {};
+    return Array.isArray(data.tweetEmbeds) ? data.tweetEmbeds : [];
+  } catch {
+    return [];
+  }
+}
+
+export default function inlineTweets() {
+  return (tree, file) => {
+    const path = file?.path ?? file?.history?.[0] ?? '';
+    if (!path.includes('/content/articles/')) return;
+    const tweets = tweetsOf(path);
+    if (!tweets.length) return;
+    // Top-level paragraphs only, in the same order markdownParagraphs sees
+    // them (a bold-only paragraph is a section heading there).
+    const paras = tree.children.filter(
+      (n) =>
+        n.type === 'element' &&
+        n.tagName === 'p' &&
+        !(n.children?.length === 1 && n.children[0].tagName === 'strong'),
+    );
+    const placed = new Map();
+    for (const tweet of tweets) {
+      const i = tweetParagraphIndex(paras.map(textOf), tweet);
+      if (i < 0) continue;
+      if (!placed.has(paras[i])) placed.set(paras[i], []);
+      placed.get(paras[i]).push(quoteNode(tweet));
+    }
+    tree.children = tree.children.flatMap((n) => (placed.has(n) ? [n, ...placed.get(n)] : [n]));
+  };
+}

@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
 import generateSocialImages from './scripts/generate-social-images.mjs';
 import linkHubs from './scripts/link-hubs.mjs';
+import inlineTweets from './scripts/inline-tweets.mjs';
 
 // Every link in an article body (whether hand-written or AI-drafted) points
 // off-site -- a source article, a tournament page, a Wikimedia Commons file.
@@ -93,6 +94,6 @@ export default defineConfig({
     },
   ],
   markdown: {
-    rehypePlugins: [linkHubs, externalLinksNewTab],
+    rehypePlugins: [linkHubs, inlineTweets, externalLinksNewTab],
   },
 });

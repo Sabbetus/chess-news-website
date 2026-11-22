@@ -1349,3 +1349,23 @@ def test_headline_verdict_read_from_last_line():
     assert draft._parse_headline_verdict("YES")[0]
     assert not draft._parse_headline_verdict("NO: the body says he drew.")[0]
     assert not draft._parse_headline_verdict("NO: unsupported.\nYES")[0]
+
+
+def test_tweets_placed_after_the_paragraph_about_them():
+    # 2026-11-22 (user's call): tweets go after the paragraph discussing
+    # them, not in a block at the end; a paragraph that only names the
+    # author (a pairing) is not enough.
+    import json, subprocess
+    script = """
+import { tweetParagraphIndex } from './scripts/inline-tweets.mjs';
+const paras = [
+  'The final-round pairings are Assaubayeva against Vachier-Lagrave and Niemann against So.',
+  'Wesley So criticized the 45+30 time control on social media, writing it feels like blitz.',
+];
+const so = { author: 'Wesley So', handle: 'GMWSO', text: 'To call 45+30 games classical is ridiculous, it feels like blitz.' };
+const mvl = { author: 'MVL', handle: 'Vachier_Lagrave', text: 'Correction: that a crybaby decided to make his own headlines.' };
+const anchored = { ...mvl, after: 'final-round pairings' };
+console.log(JSON.stringify([tweetParagraphIndex(paras, so), tweetParagraphIndex(paras, mvl), tweetParagraphIndex(paras, anchored)]));
+"""
+    out = subprocess.run(["node", "--input-type=module", "-e", script], capture_output=True, text=True, check=True)
+    assert json.loads(out.stdout) == [1, -1, 0]

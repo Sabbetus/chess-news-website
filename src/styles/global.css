@@ -840,3 +840,38 @@ footer.site-footer .footer-contact a:hover {
     line-height: 2.4;
   }
 }
+
+/* Quoted posts on X, at the end (TweetQuotes.astro) or inline after their
+   paragraph (scripts/inline-tweets.mjs). */
+.tweet-quote {
+  margin: 0 0 14px;
+  padding: 14px 18px;
+  background: var(--paper-raised);
+  border-left: 3px solid var(--brass);
+}
+.tweet-quote p {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.tweet-quote footer {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.tweet-quote footer a {
+  color: var(--ink-soft);
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+.tweet-handle {
+  font-weight: 400;
+}
+.story-body .tweet-inline {
+  font-style: normal;
+  margin: 1.4em 0;
+}
+.tweet-quote p + p {
+  margin-top: 0.6em;
+}

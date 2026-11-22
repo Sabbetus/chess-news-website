@@ -118,6 +118,9 @@ const articles = defineCollection({
           handle: z.string(),
           text: z.string(),
           date: z.string().optional(),
+          // A short phrase from the paragraph the quote goes after; without
+          // it, the first paragraph naming the author (inline-tweets.mjs).
+          after: z.string().optional(),
         })
       )
       .optional(),

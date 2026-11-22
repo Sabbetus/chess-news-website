@@ -4,6 +4,8 @@ import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleThumb from '../../components/ArticleThumb.astro';
 import TagRow from '../../components/TagRow.astro';
+// @ts-ignore -- plain .mjs shared with the markdown plugin
+import { tweetParagraphIndex, markdownParagraphs } from '../../../scripts/inline-tweets.mjs';
 import LichessGame from '../../components/LichessGame.astro';
 import GameViewer from '../../components/GameViewer.astro';
 import TweetQuotes from '../../components/TweetQuotes.astro';
@@ -184,6 +186,9 @@ const jsonLd = [
     ],
   },
 ];
+const endTweets = (article.data.tweetEmbeds ?? []).filter(
+  (t) => tweetParagraphIndex(markdownParagraphs(article.body), t) < 0,
+);
 ---
 
 <BaseLayout
@@ -233,7 +238,8 @@ const jsonLd = [
       article.data.gameEmbed && <LichessGame url={article.data.gameEmbed.url} caption={article.data.gameCaption} />
     )}
 
-    {article.data.tweetEmbeds && article.data.tweetEmbeds.length > 0 && <TweetQuotes tweets={article.data.tweetEmbeds} />}
+    {/* Tweets sit after the paragraph about them (scripts/inline-tweets.mjs); only unplaced ones come here. */}
+    {endTweets.length > 0 && <TweetQuotes tweets={endTweets} />}
 
     <ShareButtons url={pageURL} title={article.data.title} />
 
@@ -335,7 +341,7 @@ const jsonLd = [
     text-decoration-color: var(--rule);
     text-underline-offset: 3px;
   }
-  .story-body :global(blockquote) {
+  .story-body :global(blockquote:not(.tweet-quote)) {
     margin: 1.4em 0;
     padding-left: 20px;
     border-left: 3px solid var(--brass);
