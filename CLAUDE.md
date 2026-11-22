@@ -199,6 +199,7 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-22: pending the user's response (silence counts as acceptance).
 - 2026-11-21: user overruled one fix (stays 0): I removed MVL's
   "crybaby" tweet as having no context; it belonged in the piece (rule
   added above). Restored.
@@ -346,7 +347,24 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-11-22: drafts/2026-11-22 clean (streak 0 -> 1). Run started by
+  the morning check (07:52); the cron arrived the same minute, waited on
+  the concurrency group and its guard skipped it (one batch). FIDE
+  Ethics Commission piece (135) and Spanish Team Championship round 2
+  (18). Minor: Oro "on board 4" (board 3 in round 1), a muddled
+  Dzagnidze sentence (now Silla's 3-3 with Benalmadena); FIDE piece
+  "calls Carlsen's forfeits unacceptable" (FIDE: the conduct), Caruana's
+  general "you should just forfeit the match if you don't play" given as
+  a claim about Carlsen (now quoted), Rosenstein "deserved to be
+  informed" (he said Carlsen should have made sure she was told). Board
+  caption added (round 2, Maghsoodloo-Eljanov 1-0). Checked: every claim
+  in both pieces against ChessBase, FIDE and Chess.com (all 8 match
+  scores, standings, board by board), the armageddon board
+  (Artemiev-Carlsen 0-1), the built pages' automatic links, both photos.
+  Fixed at the source: the photo-headline check read its verdict only
+  from the start, so a check ending in a bare "YES" was listed in the PR
+  report as failed.
 - 2026-11-21: drafts/2026-11-21 reset (streak stays at 0). Run started
   by the morning check (07:53); first batch on the rescaled scoring
   (Total Chess final 150, Lazavik 50, docuseries 50). Reset: the Total

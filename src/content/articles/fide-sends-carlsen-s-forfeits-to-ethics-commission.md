@@ -6,7 +6,7 @@ sourceUrl: "https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-c
 lens: "drama"
 continent: "europe"
 selectionScore: 135
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "FIDE calls Carlsen's forfeits at the Total Chess pilot \"unacceptable\" and refers him to its Ethics Commission. It also sends the arbiters to a separate review. Caruana, Nepomniachtchi and Aronian all weighed in."
 metaDescription: "FIDE will refer Magnus Carlsen's forfeits at the Total Chess pilot in Budapest to its Ethics Commission and will review the arbiters' conduct."
 additionalSources:
@@ -37,7 +37,7 @@ tweetEmbeds:
     date: "2026-11-21"
 ---
 
-FIDE has [issued a statement](https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/) on the Total Chess World Championship Tour Pilot 2026 in Budapest. It calls Magnus Carlsen's forfeits "unacceptable" and says it will refer them to the FIDE Ethics and Disciplinary Commission (EDC). The statement is signed by president Timur Turlov and deputy president Viswanathan Anand.
+FIDE has [issued a statement](https://www.fide.com/fide-statement-on-the-conclusion-of-the-total-chess-world-championship-tour-pilot-2026/) on the Total Chess World Championship Tour Pilot 2026 in Budapest. It calls Magnus Carlsen's conduct in forfeiting games "unacceptable" and says it will refer them to the FIDE Ethics and Disciplinary Commission (EDC). The statement is signed by president Timur Turlov and deputy president Viswanathan Anand.
 
 It also congratulates the medalists, Alireza Firouzja, Anish Giri and Fabiano Caruana. It thanks Kjell Madland, the Total Chess team and the Hungarian hosts, noting the pilot comes ahead of the Tour's first full season in 2027.
 
@@ -63,7 +63,7 @@ The arbiters are also in the frame. FIDE says they "effectively abdicated their 
 
 **The players weigh in**
 
-Caruana was blunt about the Artemiev match. "I don't think it's good at all," he told ChessBase India, adding that Carlsen should have forfeited the whole match if he wasn't going to play. He compared it to a tennis player dropping the second set and returning for the third.
+Caruana was blunt about the Artemiev match. "I don't think it's good at all," he told ChessBase India, adding: "I think you should just forfeit the match if you don't play." He compared it to a tennis player dropping the second set and returning for the third.
 
 Ian Nepomniachtchi went further: "I think the player has to be expelled from the tournament." Maxime Vachier-Lagrave said he was sad that some players "decided to make their own headlines," then sharpened that on X, apparently aimed at Carlsen.
 
@@ -73,6 +73,6 @@ Levon Aronian struck a different tone. He asked disappointed fans to see Carlsen
 
 Wadim Rosenstein, a former FIDE presidential candidate and tournament organizer, defended Carlsen. His argument is about incentives. A player who had already won a match could lose rating points by drawing the last game, while forfeiting cost nothing in rating.
 
-"Why did the tournament regulations create a situation in which not playing was more beneficial than playing?" he asked. Rosenstein also said Carlsen's opponent, Bibisara Assaubayeva, deserved to be informed.
+"Why did the tournament regulations create a situation in which not playing was more beneficial than playing?" he asked. Rosenstein also said Carlsen should have made sure Bibisara Assaubayeva, his opponent in Tuesday's forfeited game, was told of his decision.
 
 That point is close to where FIDE itself ends up. It says it will work with Total Chess to refine the forfeit rules, since Budapest was meant as a test. Whether a rule gap explains the Artemiev forfeits, which came while that match was undecided, is what the EDC may have to weigh.

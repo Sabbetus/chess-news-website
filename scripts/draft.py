@@ -1035,7 +1035,16 @@ def headline_supported(client, title: str, body: str) -> tuple[bool, str]:
     except Exception as exc:  # noqa: BLE001
         print(f"  Headline check failed: {exc}", file=sys.stderr)
         return True, ""  # no verdict: don't block the rule-required rewrite
-    if answer.upper().startswith("YES"):
+    return _parse_headline_verdict(answer)
+
+
+def _parse_headline_verdict(answer: str) -> tuple[bool, str]:
+    """The verdict can come first or, after some reasoning, as the last line
+    (2026-11-22: a check that ended in a bare "YES" was reported as failed)."""
+    lines = [ln.strip() for ln in answer.strip().splitlines() if ln.strip()]
+    first = lines[0].upper() if lines else ""
+    last = lines[-1].upper().strip(" .*") if lines else ""
+    if first.startswith("YES") or (last == "YES" and not first.startswith("NO")):
         return True, ""
     return False, answer.split(":", 1)[1].strip() if ":" in answer else answer
 

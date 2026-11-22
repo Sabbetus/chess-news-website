@@ -1340,3 +1340,12 @@ def test_dash_profile_headline_is_feature_and_media_teaser_gets_no_elite_bonus()
            "summary": "Gukesh, Praggnanandhaa and Arjun Erigaisi feature in the series."}
     assert S.score_item(doc)[1]["eliteField"] == 0
     assert S.score_item(prof)[0] > S.score_item(doc)[0]
+
+
+def test_headline_verdict_read_from_last_line():
+    # 2026-11-22: reasoning first, then a bare "YES", was reported as failed.
+    import draft
+    assert draft._parse_headline_verdict("Maghsoodloo beat Eljanov (body: yes).\n\nYES")[0]
+    assert draft._parse_headline_verdict("YES")[0]
+    assert not draft._parse_headline_verdict("NO: the body says he drew.")[0]
+    assert not draft._parse_headline_verdict("NO: unsupported.\nYES")[0]

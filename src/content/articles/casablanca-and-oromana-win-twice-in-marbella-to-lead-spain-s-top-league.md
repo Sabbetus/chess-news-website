@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/spanish-team-ch-2026-r2"
 lens: "results"
 continent: "europe"
 selectionScore: 18
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Two rounds into the Spanish Team Championship in Marbella, only MyInvestor Casablanca and Oromana Cen Solutions have won both matches. Casablanca lead on game points after a 5-1 win."
 metaDescription: "MyInvestor Casablanca and Oromana Cen Solutions are the only perfect teams after two rounds of the 2026 Spanish Team Championship in Marbella."
 image:
@@ -14,6 +14,7 @@ image:
   credit: "Frans Peeters Photography, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AParham_Maghsoodloo_Tata_2023_-_52.jpg"
   caption: "Parham Maghsoodloo"
+gameCaption: "Round 2: Maghsoodloo - Eljanov, 1-0"
 gamePgn: "casablanca-and-oromana-win-twice-in-marbella-to-lead-spain-s-top-league.pgn"
 ---
 
@@ -33,9 +34,9 @@ Casablanca opened with a 4-2 win over Filántropos Equigoma. Ediz Gürel beat Ed
 
 Round two was far more lopsided. Casablanca beat Silla Bosch Serinsys 5-1, with Gürel, Vallejo, Habans and Sabrina Vega all winning.
 
-Vallejo took down Nils Grandelius on board 3, and Vega beat Nana Dzagnidze on board 6. Dzagnidze had beaten Ann Matnadze Bujiashvili for Silla in the first round, though that was in a different match.
+Vallejo took down Nils Grandelius on board 3, and Vega beat Nana Dzagnidze on board 6. In the first round Dzagnidze had beaten Ann Matnadze Bujiashvili in Silla's 3-3 draw with Benalmádena.
 
-Faustino Oro, the young Argentine on board 4, has drawn both of his games, against Cristóbal Henríquez Villagra and Daniil Yuffa.
+Faustino Oro, the young Argentine, has drawn both of his games, against Cristóbal Henríquez Villagra and Daniil Yuffa.
 
 **Oromana squeak through twice**
 
