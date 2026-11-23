@@ -196,6 +196,14 @@
   as long as Sunday's articles are in; GitHub's Sunday crons didn't run
   that day). The scheduled task "Sunday weekly recap review" (15:41 UTC)
   is now only a backstop for a recap that is still missing.
+  Pending follow-up (user's go-ahead, 2026-11-23): on the first morning
+  whose batch has fewer than 3 articles, the morning check also drafts
+  the arbiter-dispute follow-up to the FIDE/Carlsen piece from what has
+  gathered (Sorokina's open letter, So backing her, Mastrokoukos's
+  critique, the relay report that German federation president
+  Meyer-Dunker backs the arbiters, plus anything new in the X watch's
+  follow-up list), checks every claim against its post or report,
+  publishes it with the batch, then deletes this note.
   The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
