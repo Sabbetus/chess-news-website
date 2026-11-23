@@ -1,6 +1,16 @@
 {
   "_note": "X accounts scripts/x_watch.py follows for reactions to the day's stories (user's call, 2026-11-22). relay = news accounts that repost and quote what people say (their own paraphrases are leads only, never quoted); official = federations and organisers; person = players, coaches, arbiters, commentators (quotable). Reviewed in the quarterly evergreen review: add people who comment on current stories, drop dead or silent accounts.",
   "reviewed": "2026-11-22",
+  "blocked": {
+    "_note": "Never shown, quoted or listed anywhere, whoever reposts or quotes them (user's call, 2026-11-23: Karjakin gets no visibility under any circumstances). Handles are matched on the author, names on the post text.",
+    "handles": [
+      "SergeyKaryakin"
+    ],
+    "names": [
+      "Karjakin",
+      "Karyakin"
+    ]
+  },
   "accounts": [
     {"handle": "BruvschessMedia", "kind": "relay"},
     {"handle": "chessbaseindia", "kind": "relay"},

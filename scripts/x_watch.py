@@ -70,11 +70,29 @@ def _fetch(handle: str) -> list[dict]:
     return []
 
 
+def blocked() -> tuple[set[str], list[str]]:
+    """Handles and names that get no visibility at all (data/x-accounts.json
+    "blocked"; user's call, 2026-11-23)."""
+    try:
+        b = json.loads(ACCOUNTS_PATH.read_text()).get("blocked") or {}
+    except (OSError, ValueError):
+        b = {}
+    return {h.lower() for h in b.get("handles", [])}, [n.lower() for n in b.get("names", [])]
+
+
+def is_blocked(handle: str, name: str, text: str) -> bool:
+    handles, names = blocked()
+    hay = f"{handle} {name} {text}".lower()
+    return handle.lower() in handles or any(n in hay for n in names)
+
+
 def _post(raw: dict, quotable: bool, via: str | None) -> dict | None:
     author = raw.get("author") or {}
     handle = author.get("screen_name") or ""
     text = (raw.get("text") or "").strip()
     if not handle or not raw.get("id") or len(text) < MIN_TEXT_CHARS:
+        return None
+    if is_blocked(handle, author.get("name") or "", text):
         return None
     ts = raw.get("created_timestamp") or 0
     return {
@@ -96,6 +114,13 @@ def normalize(results: list[dict], account: dict) -> list[dict]:
     me = account["handle"]
     out = []
     for raw in results:
+        quote = raw.get("quote")
+        if isinstance(quote, dict) and is_blocked(
+            (quote.get("author") or {}).get("screen_name") or "",
+            (quote.get("author") or {}).get("name") or "",
+            quote.get("text") or "",
+        ):
+            continue  # a post quoting a blocked author is dropped whole
         author = ((raw.get("author") or {}).get("screen_name") or "").lower()
         own_kind = kinds.get(author)
         # A repost shows the original author: quotable unless that author is

@@ -132,7 +132,11 @@
   attributed sentence each, quoted right after it -- only when the author
   is a party to the story (a player, official, arbiter, organiser or body
   the article is about, or someone it says was accused) and the post gives
-  their side, a decision or a new fact. Opinions by non-parties are not
+  their side, a decision or a new fact. Karjakin gets no visibility under any
+  circumstances (user's call, 2026-11-23): his posts, posts mentioning
+  him and posts quoting him are dropped before the model sees them
+  ("blocked" in data/x-accounts.json), so they never reach an article
+  or the PR report. Opinions by non-parties are not
   added (user's call, 2026-11-22: an opinion may be stupid or not
   relevant), with one exception (user's call, same day): at most one
   considered opinion per article -- an argument, proposal or clear stance
