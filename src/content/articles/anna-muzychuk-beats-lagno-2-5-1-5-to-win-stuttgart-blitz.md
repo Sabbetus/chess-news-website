@@ -50,7 +50,7 @@ Lagno lost game one to Garifullina, then won games two and three and drew the fo
 
 **The final**
 
-Muzychuk won the first two games against Lagno. The players did not shake hands.
+Muzychuk, from Ukraine, won the first two games against Lagno, from Russia. The players did not shake hands.
 
 In game one Lagno played an unsound pawn sacrifice. In game two's time scramble she [walked into a permanent pin and lost the exchange](#game-embed).
 

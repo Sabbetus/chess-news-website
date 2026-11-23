@@ -109,7 +109,11 @@
   (user's call, 2026-11-10). A complete list (every participating country
   named) keeps Russia: leaving it out would make the list wrong. Only a
   highlighted mention (Russia singled out, a team or player presented as
-  Russia's) is skipped (user's call, 2026-11-20).
+  Russia's) is skipped (user's call, 2026-11-20). Never take Russia out
+  where it carries the war or its fallout -- e.g. a Ukrainian and a
+  Russian player not shaking hands: the nationalities are the story
+  (user's call, 2026-11-23, after I cut "Lagno, from Russia" from the
+  Stuttgart blitz piece).
 
 - **Top players' tweets about current events stay** (user's call,
   2026-11-21, after I removed MVL's "crybaby" tweet from the Total Chess
@@ -237,6 +241,10 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-23: user rejected one fix (stays 0): I cut Lagno's and
+  Muzychuk's nationalities from the no-handshake line; with the war
+  behind it, they are the point (Russia rule clarified). Restored. The
+  follow-up piece on the arbiter dispute waits for a quieter day.
 - 2026-11-22: weekly recap review corrected (stays 0): I called its photo
   a front-page duplicate and swapped it, but recaps' photos never show on
   the front page (rule added above). The Vachier-Lagrave reset stood.
