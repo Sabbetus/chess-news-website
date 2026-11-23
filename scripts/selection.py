@@ -1454,7 +1454,10 @@ def main() -> None:
         if is_promotional(item):
             continue
         total, breakdown = score_item(item, trend_titles)
-        if total <= 0:
+        # Calendar pieces always run on their scheduled day, whatever they
+        # score: since source points were removed (2026-11-20) they score 0,
+        # and Africa's December preview was silently dropped on 22 November.
+        if total <= 0 and item.get("kind") not in CALENDAR_KINDS:
             continue
         scored.append({**item, "selectionScore": total, "scoreBreakdown": breakdown})
 
