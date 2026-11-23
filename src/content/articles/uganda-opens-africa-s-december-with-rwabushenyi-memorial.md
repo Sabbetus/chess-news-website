@@ -1,6 +1,7 @@
 ---
 title: "Uganda Opens Africa's December With Rwabushenyi Memorial"
 publishDate: "2026-11-23"
+publishedAt: "2026-11-23T14:39:02Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/africa/"
 lens: "tournament-db"
