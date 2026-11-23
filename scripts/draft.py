@@ -809,6 +809,11 @@ def aggregate_facts(tournaments: list, month_formats: dict | None = None, total:
         "- This list is a notability selection, not the whole month: never describe the month's chess or "
         "calendar as a whole (its format, size or busyness) in the title, social copy or body."
     )
+    lines.append(
+        "- The social copy opens by saying plainly what the piece is: the continent's tournaments for that "
+        "month, coming up or just played (e.g. \"Africa's chess tournaments in December: ...\", "
+        "\"October's biggest tournaments in Europe: ...\"), then the standout events (user's call, 2026-11-23)."
+    )
     if month_formats:
         # Caught live 2026-10-07: a list ranked toward classical events was
         # written up as "every event this month was classical" when 514 of

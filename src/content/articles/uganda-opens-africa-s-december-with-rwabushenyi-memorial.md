@@ -7,7 +7,7 @@ lens: "tournament-db"
 continent: "africa"
 selectionScore: 0
 reviewStatus: "published"
-socialCopy: "The Premier Bet Rwabushenyi Memorial starts December 3 at Sports View Hotel in Kampala. Also on the list: a Free State youth event and a U2100 open in Livingstone."
+socialCopy: "Africa's chess tournaments in December: the Premier Bet Rwabushenyi Memorial opens the month in Kampala on December 3, then a Free State youth championship and a U2100 open in Livingstone."
 metaDescription: "Africa's December chess previews: the Rwabushenyi Memorial in Kampala from December 3, a youth championship in Free State and a U2100 open in Livingstone."
 aggregateKind: "calendar-comingup"
 continentName: "Africa"
