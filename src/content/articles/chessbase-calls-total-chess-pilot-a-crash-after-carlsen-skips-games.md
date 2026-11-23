@@ -48,7 +48,9 @@ Other players, the commentary says, followed his lead and sat out the long games
 
 Against Artemiev on Thursday, Carlsen led after the blitz. According to the commentary, he calculated that [a win in the semi-classical game](#game-embed), worth 8 points, would be enough to win the match and would also help repair his classical rating. The commentary adds that Carlsen explained he wanted to save his energy for the longer game as well.
 
-The commentary says the rules "apparently still contain major loopholes," which Carlsen exploited. FIDE sees a breach: its statement after the event says the regulations required every scheduled game to be played, and it has [referred Carlsen's conduct to its Ethics and Disciplinary Commission](/articles/fide-sends-carlsen-s-forfeits-to-ethics-commission/).
+The commentary says the rules "apparently still contain major loopholes," which Carlsen exploited.
+
+FIDE sees a breach: its statement after the event says the regulations required every scheduled game to be played, and it has [referred Carlsen's conduct to its Ethics and Disciplinary Commission](/articles/fide-sends-carlsen-s-forfeits-to-ethics-commission/).
 
 **A format with "birth defects"**
 
@@ -72,4 +74,6 @@ The same risk applies here. If the qualification race narrows early, stars with 
 
 The commentary's closing view is that the organisers behind Norway Chess were right to hold a pilot, and can now investigate the crash and perhaps repair the format. It adds that it may simply be a total write-off. The organisers' response to the criticism is the open question.
 
-The same FIDE statement accused the tournament's arbiters. Chief Arbiter Anastasia Sorokina rejected FIDE's statement that the arbiters had "effectively abdicated their responsibility," writing on X in an open letter to Turlov and Anand that she "categorically" rejected what she called an unsubstantiated claim and was defending her ten arbiters' professional reputations.
+The same FIDE statement accused the tournament's arbiters.
+
+Chief Arbiter Anastasia Sorokina rejected FIDE's statement that the arbiters had "effectively abdicated their responsibility," writing on X in an open letter to Turlov and Anand that she "categorically" rejected what she called an unsubstantiated claim and was defending her ten arbiters' professional reputations.
