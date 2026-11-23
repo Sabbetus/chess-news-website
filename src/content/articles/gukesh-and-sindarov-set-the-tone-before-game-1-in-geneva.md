@@ -1,6 +1,7 @@
 ---
 title: "Gukesh and Sindarov Set the Tone Before Game 1 in Geneva"
 publishDate: "2026-11-23"
+publishedAt: "2026-11-23T08:10:11Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/live-the-world-championship-kicks-off-press-conference-and-opening-ceremony-today"
 lens: "people"

@@ -1,6 +1,7 @@
 ---
 title: "Anna Muzychuk Beats Lagno 2.5-1.5 to Win Stuttgart Blitz"
 publishDate: "2026-11-23"
+publishedAt: "2026-11-23T08:10:11Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-wr-womens-chess-tour-grand-final-day-1"
 lens: "results"

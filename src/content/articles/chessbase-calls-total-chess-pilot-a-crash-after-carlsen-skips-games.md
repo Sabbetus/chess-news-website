@@ -1,6 +1,7 @@
 ---
 title: "ChessBase Calls Total Chess Pilot a Crash After Carlsen Skips Games"
 publishDate: "2026-11-23"
+publishedAt: "2026-11-23T08:10:11Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/total-mess-in-budapest"
 lens: "drama"
