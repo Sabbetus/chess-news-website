@@ -12,3 +12,10 @@ def test_calendar_item_survives_zero_score(tmp_path, monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     selection.main()
     assert "Africa" in out.read_text()
+
+
+def test_test_listings_are_skipped():
+    import ingest
+    assert ingest.is_test_listing({"name": "TEST 1"})
+    assert not ingest.is_test_listing({"name": "Testa Open"})
+    assert not ingest.is_test_listing({"name": "Premier Bet Rwabushenyi Memorial"})

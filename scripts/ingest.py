@@ -303,6 +303,16 @@ CALENDAR_SCHEDULE = {
 }
 
 
+_TEST_LISTING_RE = re.compile(r"^\s*(test|testing|dummy|sample)\b", re.IGNORECASE)
+
+
+def is_test_listing(t: dict) -> bool:
+    """A placeholder an organiser left in the calendar ("TEST 1"): never
+    listed, counted or used for a photo search (2026-11-23: Africa's
+    December preview got a laboratory test-tube photo from it)."""
+    return bool(_TEST_LISTING_RE.match(t.get("name") or ""))
+
+
 def in_range(t: dict, start: date, end: date) -> bool:
     raw = t.get("startDate")
     if not raw:
@@ -320,7 +330,7 @@ def _build_biggest(code: str, today: date) -> dict | None:
     "calendar-biggest" name so dedupe keys and frontmatter stay stable."""
     archive_resp = requests.get(CALENDAR_ARCHIVE_URL, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
     archive_resp.raise_for_status()
-    concluded = [t for t in archive_resp.json() if t.get("status") == "concluded"]
+    concluded = [t for t in archive_resp.json() if t.get("status") == "concluded" and not is_test_listing(t)]
 
     last_month_first = _shift_month(date(today.year, today.month, 1), -1)
     last_month_start, last_month_end = _month_bounds(last_month_first.year, last_month_first.month)
@@ -361,7 +371,7 @@ def _build_comingup(code: str, today: date) -> dict | None:
     same for countries with and without reported player counts."""
     upcoming_resp = requests.get(CALENDAR_DATA_URL, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT})
     upcoming_resp.raise_for_status()
-    upcoming = upcoming_resp.json()
+    upcoming = [t for t in upcoming_resp.json() if not is_test_listing(t)]
 
     next_month_first = _shift_month(date(today.year, today.month, 1), 1)
     next_month_start, next_month_end = _month_bounds(next_month_first.year, next_month_first.month)
