@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/live-the-world-championship-kicks-off-
 lens: "people"
 continent: "europe"
 selectionScore: 55
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Gukesh says he's not in Geneva to defend anything but to \"win it all over again.\" Sindarov calls it 50:50 and has White in Game 1 on Tuesday. #GukeshSindarov"
 metaDescription: "Gukesh and Sindarov met the press in Geneva before their World Championship match. Sindarov has White in Game 1 on Tuesday, 24 November."
 additionalSources:
@@ -16,17 +16,14 @@ image:
   src: "./_images/NZ9_0632_t_02.webp"
   credit: "Frans Peeters, CC BY-SA 2.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ANZ9_0632_t_02.jpg"
+  caption: "Gukesh Dommaraju"
 tweetEmbeds:
   - url: "https://x.com/GMHikaru/status/2110779407325372641"
     author: "Hikaru Nakamura"
     handle: "GMHikaru"
+    after: "where he met Hikaru Nakamura"
     text: "Many astute observers have noted that @GMJSindarov and I are at the same hotel in Cyprus for the same dates, and they're questioning if I'm on Sindarov's World Championship Prep Team. While I'm not, I am advising him in a limited capacity about 2.Ke2. The OG prep was for an…"
     date: "2026-10-15"
-  - url: "https://x.com/LewisHamilton/status/2066183449195561232"
-    author: "Lewis Hamilton"
-    handle: "LewisHamilton"
-    text: "REMEMBER WHO YOU ARE"
-    date: "2026-06-14"
 ---
 
 The 2026 Salesforce FIDE World Championship opens in Geneva with a press conference and ceremony, and [Sindarov will have White in Game 1](https://www.chess.com/news/view/2026-fide-chess-world-championship-opening-ceremony) on Tuesday, 24 November, at 15:00 CET.
@@ -57,7 +54,7 @@ Neither player revealed a full team. Gukesh named Gaju and promised other names 
 
 On food, Gukesh is getting home-cooked Indian meals from people in Geneva. Sindarov said he eats any cuisine. He also recalled his October training camp in Cyprus, where he met Hikaru Nakamura.
 
-On engines, Sindarov said opening preparation has changed enormously over the last decade and long lines can feel boring to prepare. Gukesh argued computers raise everyone's level and make wins harder, but also "makes it more of a sport," since everyone has similar tools and has to find a small edge.
+On engines, Sindarov said they have changed a lot in the last six years, opening preparation is very different from matches ten years ago, and long lines can feel boring to prepare. Gukesh argued computers raise everyone's level and make wins harder, but also "makes it more of a sport," since everyone has similar tools and has to find a small edge.
 
 **The match setup**
 
@@ -65,4 +62,4 @@ The match is 14 classical games at the Fondation Martin Bodmer in Cologny, overl
 
 A player who reaches 7½ points ends the match early. Tiebreaks, if needed, are on 12 December. The [World Chess Championship guide](/events/world-chess-championship/#how-it-works) covers the format.
 
-Gukesh said he checked the hall the day before: the chairs, lighting and floors. He did not bother to look at what books surround the players. Peter Leko and Peter Svidler are the official commentators on FIDE's YouTube channel.
+Gukesh said he checked the hall the day before: the chairs, lighting and floors. He saw the many books around the players but didn't check which ones they are. Peter Leko and Peter Svidler are the official commentators on FIDE's YouTube channel.

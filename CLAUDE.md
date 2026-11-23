@@ -240,7 +240,7 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-11-22: weekly recap review corrected (stays 0): I called its photo
   a front-page duplicate and swapped it, but recaps' photos never show on
   the front page (rule added above). The Vachier-Lagrave reset stood.
-  The morning batch is pending the user's response.
+  The 2026-11-22 morning batch was accepted (silence); 2026-11-23 pending.
 - 2026-11-21: user overruled one fix (stays 0): I removed MVL's
   "crybaby" tweet as having no context; it belonged in the piece (rule
   added above). Restored.
@@ -389,6 +389,31 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-23: drafts/2026-11-23 reset (streak stays at 0). Run started
+  by the morning check (07:52). First live run of the X watch: 28
+  accounts read; it added Sorokina's letter and Niemann's format post to
+  the Total Chess commentary piece, and listed opinions (Giri, Nielsen,
+  So, Aronian, Firouzja) and relay leads. Resets: two wrong boards -- the
+  Stuttgart blitz piece's "game two's time scramble" linked to the
+  final's game 3, which Lagno won (now game 2, Muzychuk-Lagno 1-0), and
+  the Total Chess commentary's "a win in the semi-classical game" to
+  Carlsen's unplayed, forfeited game 14 vs Artemiev (now the Thursday
+  fast classic he won, Carlsen-Artemiev 1-0). Minor: "Lagno, who is
+  Russian" (Russia rule; the no-handshake line kept), "the rapid knockout
+  decides the overall winner" (combined points do), "Her 16.Qd2" (the
+  source doesn't say whose); commentary piece's "worth keeping the
+  writer's opinions apart" line, "if the regulations allow ... nothing
+  the rulebook forbids" (FIDE says they required every game; now says so,
+  linking our FIDE piece), Sorokina's reply with no FIDE context, her
+  quote cut mid-sentence; Gukesh piece's Lewis Hamilton "REMEMBER WHO YOU
+  ARE" tweet (Chess.com's embed, no link to the story; removed), photo
+  uncaptioned (Gukesh), engines "last decade" (six years), the books
+  line. Checked: every claim in all three pieces against Chess.com and
+  ChessBase, both boards against the Lichess broadcasts, every X post
+  added, the built pages' automatic links, all photos. Fixed at the
+  source: the board check compares a game number in the linked sentence
+  ("game two") with the board's round and swaps on a mismatch; games
+  tagged Termination "Unplayed" are never picked as a board.
 - 2026-11-22: weekly recap (PR #113) reset (streak 1 -> 0). None of its
   four Sunday crons had run by 15:41, so the review started it by hand.
   Reset: "Vaishali was set to face Giri next" (Vachier-Lagrave, the

@@ -196,6 +196,28 @@ def _game_type(text: str) -> str | None:
     return found[0] if len(found) == 1 else None
 
 
+def is_unplayed(pgn: str) -> bool:
+    """A forfeit recorded as a game (2026-11-23: Carlsen's forfeited fast
+    classic against Artemiev, "1. d4 1-0", Termination "Unplayed", became the
+    board for his fast-classic win). Never a board."""
+    return bool(re.search(r'\[Termination\s+"Unplayed"\]', pgn, re.I))
+
+
+_NUMBER_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
+                 "nine": 9, "ten": 10, "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
+                 "sixth": 6, "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10}
+
+
+def _game_number(sentence: str) -> int | None:
+    """"game two" / "game 2" / "the second game" in a sentence; one number only."""
+    found = set()
+    for m in re.finditer(r"\bgame\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten)\b", sentence):
+        found.add(int(m.group(1)) if m.group(1).isdigit() else _NUMBER_WORDS[m.group(1)])
+    for m in re.finditer(r"\b(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+game\b", sentence):
+        found.add(_NUMBER_WORDS[m.group(1)])
+    return found.pop() if len(found) == 1 else None
+
+
 def check_embed_sentence(body: str, pgn: str, url: str = "") -> tuple[str, str | None]:
     """The sentence carrying the "#game-embed" link must agree with the game
     it points to: its players and its result. Caught 2026-11-14 and
@@ -226,6 +248,18 @@ def check_embed_sentence(body: str, pgn: str, url: str = "") -> tuple[str, str |
         if said and board and said != board:
             unlinked = body[: m.start()] + m.group(1) + body[m.end():]
             return unlinked, f"board link removed: the linked sentence describes a {said} game, but the board is from the {board} round ({white.group(1)} - {black.group(1)})"
+    # A board that isn't a game at all (a forfeit) never matches.
+    if is_unplayed(pgn):
+        unlinked = body[: m.start()] + m.group(1) + body[m.end():]
+        return unlinked, f"board link removed: the board is an unplayed game ({white.group(1)} - {black.group(1)}, {res})"
+    # The game number the sentence names must be the board's round's
+    # (2026-11-23: "In game two's time scramble ..." linked to game 3).
+    if url:
+        said_n = _game_number(sentence)
+        board_n = re.search(r"game-(\d{1,2})\b", url.rstrip("/").split("/")[-3] if url.count("/") >= 3 else "")
+        if said_n and board_n and said_n != int(board_n.group(1)):
+            unlinked = body[: m.start()] + m.group(1) + body[m.end():]
+            return unlinked, f"board link removed: the linked sentence names game {said_n}, but the board is game {board_n.group(1)} ({white.group(1)} - {black.group(1)})"
     if w not in sentence and b not in sentence:
         return body, None  # the sentence names neither player: nothing to compare
     problem = None

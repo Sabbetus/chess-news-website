@@ -36,6 +36,8 @@ Two paths, tried in order:
 """
 
 import re
+
+from game_links import is_unplayed
 from datetime import datetime, timedelta, timezone
 import sys
 import time
@@ -197,7 +199,7 @@ _article_body = ""
 def _quoted_moves_in(game_pgn: str, body: str) -> int:
     """How many moves quoted in the body ("58...hxg5") were played at that
     point in this game."""
-    from game_links import MOVE_RE, _bare, mainline_sans
+    from game_links import MOVE_RE, _bare, mainline_sans, is_unplayed
 
     sans = mainline_sans(game_pgn)
     count = 0
@@ -220,6 +222,7 @@ def _choose_pair_game(matches: list[tuple[str, str]]) -> str:
     the article's quoted moves (user's call, 2026-10-28: Clutch Chess game 1
     vs game 2), else the last one (the decider: 2026-10-13 Shenzhen's
     Armageddon, 2026-10-30 the Clutch final's game 17)."""
+    matches = [m for m in matches if not is_unplayed(m[1])] or matches
     decisive = [m for m in matches if re.search(r'\[Result "(1-0|0-1)"\]', m[1])]
     pool = decisive or matches
     scores = [_quoted_moves_in(pgn, _article_body) for _, pgn in pool]
@@ -808,7 +811,7 @@ def find_player_game(event: str, players: list[str], around: datetime | None = N
                     white = re.search(r'\[White\s+"([^"]+)"\]', game)
                     black = re.search(r'\[Black\s+"([^"]+)"\]', game)
                     result = re.search(r'\[Result\s+"([^"]+)"\]', game)
-                    if not (white and black and result) or result.group(1) == "*":
+                    if not (white and black and result) or result.group(1) == "*" or is_unplayed(game):
                         continue
                     if surname in _tag_tokens(white.group(1)) | _tag_tokens(black.group(1)):
                         games.append((round_.get("name") or "", white.group(1), black.group(1), result.group(1), game))

@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 
 from broadcast_facts import _get
-from game_links import _surname, check_embed_sentence
+from game_links import _surname, check_embed_sentence, is_unplayed
 
 
 def _pair(pgn: str) -> frozenset[str] | None:
@@ -65,7 +65,7 @@ def matching_pair_game(embed_url: str, embed_pgn: str, body: str) -> tuple[str, 
             url = re.search(r'\[GameURL\s+"([^"]+)"\]', game)
             if not url or url.group(1).rstrip("/").endswith("/" + current_game):
                 continue
-            if _pair(game) != pair or re.search(r'\[Result\s+"\*"\]', game):
+            if _pair(game) != pair or re.search(r'\[Result\s+"\*"\]', game) or is_unplayed(game):
                 continue
             if check_embed_sentence(body, game, url.group(1))[1] is None:
                 return url.group(1).replace("lichess.org/broadcast/", "lichess.org/embed/broadcast/", 1), game

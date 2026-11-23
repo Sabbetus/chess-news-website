@@ -1421,3 +1421,18 @@ def test_recap_repairs_a_mangled_slug_only_when_unambiguous():
     assert "/articles/gukesh-admits-he-hasn-t-handled-the-pressure-of-the-title/" in fixed
     assert "/articles/carlsen-forfeits-two-games/" in fixed  # two candidates: left for the review
     assert len(notes) == 1
+
+
+def test_board_check_catches_game_number_and_unplayed_games():
+    # 2026-11-23: "In game two's time scramble she walked into a pin" linked
+    # to game 3; Carlsen's fast-classic win linked to his forfeited game.
+    from game_links import check_embed_sentence, is_unplayed
+    played = '[White "Muzychuk, Anna"]\n[Black "Lagno, Kateryna"]\n[Result "0-1"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 0-1'
+    body = "In game two's time scramble Lagno [walked into a pin](#game-embed) and lost."
+    url3 = "https://lichess.org/embed/broadcast/wr-final-blitz/finals-game-3/lk0Ka0Bn/cy2tj6Oz"
+    url2 = "https://lichess.org/embed/broadcast/wr-final-blitz/finals-game-2/ff2YiGIS/tNt6R94w"
+    assert check_embed_sentence(body, played, url3)[1] and "game 2" in check_embed_sentence(body, played, url3)[1]
+    assert check_embed_sentence(body, played, url2)[1] is None
+    forfeit = '[White "Artemiev, Vladislav"]\n[Black "Carlsen, Magnus"]\n[Result "1-0"]\n[Termination "Unplayed"]\n\n1. d4 { [%clk 0:03:02] } 1-0'
+    assert is_unplayed(forfeit) and not is_unplayed(played)
+    assert "unplayed" in check_embed_sentence("Carlsen [won the fast classic](#game-embed).", forfeit, "")[1]

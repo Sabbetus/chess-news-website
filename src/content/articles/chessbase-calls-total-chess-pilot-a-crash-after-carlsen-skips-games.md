@@ -6,7 +6,7 @@ sourceUrl: "https://en.chessbase.com/post/total-mess-in-budapest"
 lens: "drama"
 continent: "europe"
 selectionScore: 30
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "ChessBase's commentary says Carlsen's skipped games have crashed the Total Chess \"pilot\". Its author blames loopholes, a crowded format and a rating row. Here is what the argument rests on."
 metaDescription: "A ChessBase commentary says Carlsen's skipped games against Assaubayeva and Artemiev show the Total Chess pilot has crashed."
 image:
@@ -15,13 +15,14 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AMagnus_Carlsen_at_Rapid_%24_Blitz_2025.jpg"
   caption: "Magnus Carlsen"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/game-14-fast-classic/NHnAdMuJ/DotxVM3y"
+  url: "https://lichess.org/embed/broadcast/total-chess-world-championship-tour-pilot-2026-finals/game-7-fast-classic/glKGdlBO/tQtyuwsW"
+gameCaption: "Fast classic: Carlsen - Artemiev, 1-0"
 tweetEmbeds:
   - url: "https://x.com/SorokinaChess/status/2124208549290991920"
     author: "Anastasia Sorokina"
     handle: "SorokinaChess"
     after: "Chief Arbiter Anastasia Sorokina rejected FIDE's statement"
-    text: "Dear Mr Turlov and Mr Anand,\n\nAs Chief Arbiter of the Total Chess World Championship Tour Pilot 2026 in Budapest, I consider it my duty to defend the ten highly qualified arbiters whose professional reputations FIDE has publicly called into question.\n\nI categorically reject the following unsubstantiated statement published by FIDE today, 21 November 2026, on its official website and social media channels:\n\n“Furthermore, the officiating during the event fell short of fundamental standards, as th…"
+    text: "As Chief Arbiter of the Total Chess World Championship Tour Pilot 2026 in Budapest, I consider it my duty to defend the ten highly qualified arbiters whose professional reputations FIDE has publicly called into question. …\n\nNo participant appealed an arbiter's decision during the event, and I received no formal complaint about the team's conduct. …\n\nI therefore formally demand that FIDE immediately withdraw its public allegations, publish a retraction through the same official channels used for the original statement, and publicly apologise to the arbiters' team for the damage already caused to their professional reputations."
     date: "2026-11-21"
   - url: "https://x.com/HansMokeNiemann/status/2124190439263920507"
     author: "Hans Niemann"
@@ -33,7 +34,7 @@ tweetEmbeds:
 
 A ChessBase commentary titled "Total Chess: A false start" argues that the pilot of the Total Chess World Championship [has crashed](https://en.chessbase.com/post/total-mess-in-budapest). The trigger was Magnus Carlsen's match against Vladislav Artemiev, where he played the blitz games and the fast classic game but skipped the rapid games.
 
-The author's verdict is harsh, and it is worth keeping the writer's opinions apart from the facts. What follows is the commentary's case, with some context of our own.
+The author, ChessBase editor André Schulz, goes on to take apart the format itself.
 
 **The skipped games**
 
@@ -45,9 +46,9 @@ Other players, the commentary says, followed his lead and sat out the long games
 
 **The Artemiev match**
 
-Against Artemiev on Thursday, Carlsen led after the blitz. According to the commentary, he calculated that [a win in the semi-classical game](#game-embed), worth 8 points, would be enough to win the match and would also help repair his classical rating. Carlsen later explained that he wanted to save his energy for the longer game.
+Against Artemiev on Thursday, Carlsen led after the blitz. According to the commentary, he calculated that [a win in the semi-classical game](#game-embed), worth 8 points, would be enough to win the match and would also help repair his classical rating. The commentary adds that Carlsen explained he wanted to save his energy for the longer game as well.
 
-This is where the author's reading and the rules part ways. If the regulations allow a player to skip a segment, then Carlsen did nothing the rulebook forbids. The complaint is that the rulebook invites it.
+The commentary says the rules "apparently still contain major loopholes," which Carlsen exploited. FIDE sees a breach: its statement after the event says the regulations required every scheduled game to be played, and it has [referred Carlsen's conduct to its Ethics and Disciplinary Commission](/articles/fide-sends-carlsen-s-forfeits-to-ethics-commission/).
 
 **A format with "birth defects"**
 
@@ -71,4 +72,4 @@ The same risk applies here. If the qualification race narrows early, stars with 
 
 The commentary's closing view is that the organisers behind Norway Chess were right to hold a pilot, and can now investigate the crash and perhaps repair the format. It adds that it may simply be a total write-off. The organisers' response to the criticism is the open question.
 
-Chief Arbiter Anastasia Sorokina rejected FIDE's statement that the arbiters had "effectively abdicated their responsibility," writing on X in an open letter to Turlov and Anand that she "categorically" rejected what she called an unsubstantiated claim and was defending her ten arbiters' professional reputations.
+The same FIDE statement accused the tournament's arbiters. Chief Arbiter Anastasia Sorokina rejected FIDE's statement that the arbiters had "effectively abdicated their responsibility," writing on X in an open letter to Turlov and Anand that she "categorically" rejected what she called an unsubstantiated claim and was defending her ten arbiters' professional reputations.

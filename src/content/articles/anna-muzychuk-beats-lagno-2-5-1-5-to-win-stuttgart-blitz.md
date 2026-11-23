@@ -6,7 +6,7 @@ sourceUrl: "https://www.chess.com/news/view/2026-wr-womens-chess-tour-grand-fina
 lens: "results"
 continent: "europe"
 selectionScore: 31
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Anna Muzychuk beat her sister, Zhu Jiner and Kateryna Lagno to win the blitz knockout at the WR Women's Chess Tour Grand Final. She has a two-point lead before today's rapid day."
 metaDescription: "Anna Muzychuk won the blitz knockout at the WR Women's Chess Tour Grand Final in Stuttgart, beating Kateryna Lagno 2.5-1.5, and leads before the rapid day."
 image:
@@ -15,10 +15,11 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnna_Muzychuk_at_Gibraltar.png"
   caption: "Anna Muzychuk"
 gameEmbed:
-  url: "https://lichess.org/embed/broadcast/wr-womens-chess-tour-2026-grand-final-blitz/finals-game-3/lk0Ka0Bn/cy2tj6Oz"
+  url: "https://lichess.org/embed/broadcast/wr-womens-chess-tour-2026-grand-final-blitz/finals-game-2/ff2YiGIS/tNt6R94w"
+gameCaption: "Final, game 2: Muzychuk - Lagno, 1-0"
 ---
 
-GM Anna Muzychuk [won the blitz portion of the WR Women's Chess Tour Grand Final 2026](https://www.chess.com/news/view/2026-wr-womens-chess-tour-grand-final-day-1) in Stuttgart, beating GM Kateryna Lagno 2.5-1.5 in the final. That earns her 10 points and a two-point lead over Lagno. The rapid knockout, played today, Monday 23 November, still decides the overall winner.
+GM Anna Muzychuk [won the blitz portion of the WR Women's Chess Tour Grand Final 2026](https://www.chess.com/news/view/2026-wr-womens-chess-tour-grand-final-day-1) in Stuttgart, beating GM Kateryna Lagno 2.5-1.5 in the final. That earns her 10 points and a two-point lead over Lagno. The rapid knockout is played today, Monday 23 November, and the overall winner is the player with the most combined points from the two.
 
 **How the event works**
 
@@ -28,7 +29,7 @@ Day one was a single-elimination blitz at 3+2, with each match best of four game
 
 Points go 10 for first, 8 for second, 5 each for third and fourth, and 2 each for fifth through eighth, and the combined total picks the champion. The prize fund is $40,000, with $7,000 to the winner.
 
-One seat changed hands: GM Bibisara Assaubayeva, who qualified by winning the rapid section in France, declined her invitation to join GM Javokhir Sindarov for the 2026 World Championship. GM Mariya Muzychuk replaced her, so both Muzychuk sisters play.
+One seat changed hands: GM Bibisara Assaubayeva, who qualified by winning the rapid section in France, declined her invitation to the Grand Final to join GM Javokhir Sindarov at the 2026 World Championship. GM Mariya Muzychuk replaced her, so both Muzychuk sisters play.
 
 **Sisters first, then the top seed**
 
@@ -48,11 +49,11 @@ Lagno lost game one to Garifullina, then won games two and three and drew the fo
 
 **The final**
 
-Muzychuk, from Ukraine, won the first two games against Lagno, who is Russian. The players did not shake hands.
+Muzychuk won the first two games against Lagno. The players did not shake hands.
 
 In game one Lagno played an unsound pawn sacrifice. In game two's time scramble she [walked into a permanent pin and lost the exchange](#game-embed).
 
-Lagno pulled one back in game three. Muzychuk said she only thought about her own plan and didn't consider her opponent's, which happens in blitz. Her 16.Qd2 telegraphed the deadly bishop sacrifice.
+Lagno pulled one back in game three. Muzychuk said she only thought about her own plan and didn't consider her opponent's, which happens in blitz. 16.Qd2 telegraphed the deadly bishop sacrifice.
 
 In game four, Muzychuk only needed a draw and had White. They played the Four Knights, the queens came off by move 11, and she drew comfortably.
 
