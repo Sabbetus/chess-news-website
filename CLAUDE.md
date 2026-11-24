@@ -253,6 +253,7 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-24: pending (morning batch below).
 - 2026-11-23: user rejected one fix (stays 0): I cut Lagno's and
   Muzychuk's nationalities from the no-handshake line; with the war
   behind it, they are the point (Russia rule clarified). Restored. The
@@ -409,6 +410,30 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-24: drafts/2026-11-24 reset (streak stays at 0). Run started
+  by the morning check (07:53; no cron by then). Five pieces: Anand's
+  50-50 interview (130), ChessBase's 140 years of title matches (130),
+  Game 1 preview (55), Lagno's Grand Final win (46), Oceania December
+  calendar. Resets: the history piece's headline and opening called
+  Gukesh-Sindarov "Match No. 44" (ChessBase counts 44 matches through
+  2024, so this is the 45th; now "After 44 Title Matches in 140 Years"),
+  and the Game 1 piece read Chess.com's "$200,000 for a win" as a
+  $200,000 gap between match winner and loser (it is per game won;
+  rewritten). Minor: Karjakin's 2016 line cut from the history piece
+  (user's rule: no visibility), "Gukesh has been on both sides of this
+  pattern" (he won on Ding's mistake; reworded), the Berlin sentence's
+  "which" pointing at Kasparov's preparation; Anand social copy "a
+  20-year-old matchup" (two 20-year-olds), Anand photo uncaptioned (now
+  "(left) at Tata Steel Chess in 2023"); Gukesh Tata photo captioned solo
+  (now "(left) against Arjun Erigaisi in 2023"); Lagno board caption added
+  (Zhu-Yip armageddon 0-1), "Lagno's steady finishes, which came after"
+  reworded; Oceania headline "Opens" (12 December; now "Heads") and "how
+  the previous month played out" for the October look-back. Checked:
+  every claim in all five pieces against Chess.com, ChessBase and the
+  calendar data (all 15 Oceania entries), the Lagno and Ding-Gukesh
+  boards, all photos, the built pages' automatic links. Not drafted: the
+  arbiter follow-up (5 articles today; it waits for a day with fewer
+  than 3).
 - 2026-11-23: drafts/2026-11-23 reset (streak stays at 0). Run started
   by the morning check (07:52). First live run of the X watch: 28
   accounts read; it added Sorokina's letter and Niemann's format post to
