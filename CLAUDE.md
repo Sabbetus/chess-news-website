@@ -136,7 +136,9 @@
   circumstances (user's call, 2026-11-23): his posts, posts mentioning
   him and posts quoting him are dropped before the model sees them
   ("blocked" in data/x-accounts.json), so they never reach an article
-  or the PR report. Opinions by non-parties are not
+  or the PR report. The block is for X only: factual, historically
+  relevant mentions in articles (e.g. Carlsen's 2016 title match against
+  him) stay (user's call, 2026-11-24, after I cut that line). Opinions by non-parties are not
   added (user's call, 2026-11-22: an opinion may be stupid or not
   relevant), with one exception (user's call, same day): at most one
   considered opinion per article -- an argument, proposal or clear stance
@@ -253,7 +255,9 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
-- 2026-11-24: pending (morning batch below).
+- 2026-11-24: user rejected one fix (stays 0): I cut the Carlsen-Karjakin
+  2016 line from the 140-years piece; it is historical fact involving
+  Carlsen, and the Karjakin block is for X posts only. Restored.
 - 2026-11-23: user rejected one fix (stays 0): I cut Lagno's and
   Muzychuk's nationalities from the no-handshake line; with the war
   behind it, they are the point (Russia rule clarified). Restored. The
@@ -419,8 +423,7 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   2024, so this is the 45th; now "After 44 Title Matches in 140 Years"),
   and the Game 1 piece read Chess.com's "$200,000 for a win" as a
   $200,000 gap between match winner and loser (it is per game won;
-  rewritten). Minor: Karjakin's 2016 line cut from the history piece
-  (user's rule: no visibility), "Gukesh has been on both sides of this
+  rewritten). Minor: "Gukesh has been on both sides of this
   pattern" (he won on Ding's mistake; reworded), the Berlin sentence's
   "which" pointing at Kasparov's preparation; Anand social copy "a
   20-year-old matchup" (two 20-year-olds), Anand photo uncaptioned (now

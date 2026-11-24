@@ -56,6 +56,6 @@ A well-chosen weapon can win a match. So can a bold style: Tal's 21...Nf4! helpe
 
 Rematches also loom large. Euwe lost his title back to Alekhine two years after winning it, and Botvinnik regained his a year after Tal beat him. Titles were often hard to keep.
 
-Not every deciding moment was a mistake. In 2023, Ding took risks with 46...Rg6! to beat Nepomniachtchi and become the first Chinese world champion.
+Not every deciding moment was a mistake. Carlsen ended his 2016 match with Karjakin with the queen sacrifice 50.Qh6+ after winning the rapid tiebreak 3-1, on his birthday. In 2023, Ding took risks with 46...Rg6! to beat Nepomniachtchi and become the first Chinese world champion.
 
 For Gukesh and Sindarov, 14 classical games is the usual length. History says to watch the final rounds as closely as the first.
