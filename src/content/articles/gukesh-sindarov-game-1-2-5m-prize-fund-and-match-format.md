@@ -1,6 +1,7 @@
 ---
 title: "Gukesh-Sindarov Game 1: $2.5M Prize Fund and Match Format"
 publishDate: "2026-11-24"
+publishedAt: "2026-11-24T08:04:07Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-fide-world-chess-championship-game-1"
 lens: "money-angle"

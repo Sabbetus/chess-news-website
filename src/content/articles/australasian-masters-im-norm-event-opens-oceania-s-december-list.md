@@ -1,6 +1,7 @@
 ---
 title: "Australasian Masters IM Norm Event Heads Oceania's December List"
 publishDate: "2026-11-24"
+publishedAt: "2026-11-24T08:04:07Z"
 sourceName: "Chess Tournament Calendar"
 sourceUrl: "https://chesstournamentcalendar.com/continent/oceania/"
 lens: "tournament-db"

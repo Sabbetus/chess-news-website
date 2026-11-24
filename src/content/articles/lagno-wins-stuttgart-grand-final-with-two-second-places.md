@@ -1,6 +1,7 @@
 ---
 title: "Lagno Wins Stuttgart Grand Final With Two Second Places"
 publishDate: "2026-11-24"
+publishedAt: "2026-11-24T08:04:07Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/lagno-wins-2026-wr-womens-chess-tour-grand-final"
 lens: "results"

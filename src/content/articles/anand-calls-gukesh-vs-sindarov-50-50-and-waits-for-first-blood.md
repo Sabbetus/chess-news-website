@@ -1,6 +1,7 @@
 ---
 title: "Anand Calls Gukesh vs Sindarov 50-50 and Waits for First Blood"
 publishDate: "2026-11-24"
+publishedAt: "2026-11-24T08:04:07Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/vishy-anand-gukesh-sindarov-world-championship-predictions"
 lens: "people"

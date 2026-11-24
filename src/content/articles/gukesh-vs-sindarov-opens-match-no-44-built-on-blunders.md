@@ -1,6 +1,7 @@
 ---
 title: "Gukesh Dommaraju Faces Sindarov After 44 Title Matches in 140 Years"
 publishDate: "2026-11-24"
+publishedAt: "2026-11-24T08:04:07Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/wch-matches-highlights-140-years"
 lens: "historical-parallel"
