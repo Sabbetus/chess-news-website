@@ -24,9 +24,9 @@ links:
   - label: "Wikipedia"
     url: "https://en.wikipedia.org/wiki/Viswanathan_Anand"
 image:
-  src: "../articles/_images/TataSteelChess2023-30.webp"
-  credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2023-30.jpg"
+  src: "../articles/_images/Anand_2018_Karlsruhe.webp"
+  credit: "GFHund, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnand_2018_Karlsruhe.jpg"
 reviewStatus: "published"
 updatedDate: "2026-09-29"
 ---

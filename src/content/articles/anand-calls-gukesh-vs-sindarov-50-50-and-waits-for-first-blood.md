@@ -11,10 +11,10 @@ reviewStatus: "published"
 socialCopy: "Five-time World Champion Viswanathan Anand rates Gukesh and Sindarov as roughly 50-50 and says the first decisive game is when \"everybody wakes up.\" His read on a match between two 20-year-olds in Geneva."
 metaDescription: "Viswanathan Anand tells Chess.com the Gukesh-Sindarov World Championship match is roughly 50-50 and explains why the first decisive game matters."
 image:
-  src: "./_images/TataSteelChess2023-30.webp"
-  credit: "Vysotsky, CC BY-SA 4.0, via Wikimedia Commons"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File%3ATataSteelChess2023-30.jpg"
-  caption: "Viswanathan Anand (left) at Tata Steel Chess in 2023"
+  src: "./_images/Anand_2018_Karlsruhe.webp"
+  credit: "GFHund, CC BY-SA 4.0, via Wikimedia Commons"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAnand_2018_Karlsruhe.jpg"
+  caption: "Viswanathan Anand in 2018"
 ---
 
 The 2026 World Chess Championship match between Gukesh Dommaraju and Javokhir Sindarov starts today in Geneva, with games scheduled from November 24 to December 12. Ahead of the match, five-time World Champion Viswanathan Anand gave Chess.com an interview, conducted by CM Tickoo Sahil, in which he [put the two players at roughly 50-50](https://www.chess.com/news/view/vishy-anand-gukesh-sindarov-world-championship-predictions).
