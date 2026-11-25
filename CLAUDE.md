@@ -198,14 +198,8 @@
   as long as Sunday's articles are in; GitHub's Sunday crons didn't run
   that day). The scheduled task "Sunday weekly recap review" (15:41 UTC)
   is now only a backstop for a recap that is still missing.
-  Pending follow-up (user's go-ahead, 2026-11-23): on the first morning
-  whose batch has fewer than 3 articles, the morning check also drafts
-  the arbiter-dispute follow-up to the FIDE/Carlsen piece from what has
-  gathered (Sorokina's open letter, So backing her, Mastrokoukos's
-  critique, the relay report that German federation president
-  Meyer-Dunker backs the arbiters, plus anything new in the X watch's
-  follow-up list), checks every claim against its post or report,
-  publishes it with the batch, then deletes this note.
+  A "slow day" for held follow-up pieces is counted in articles
+  published, after drops -- not drafted (user's call, 2026-11-25).
   The review-acceptance streak now means the user had
   nothing significant to correct after publishing.
   The quarterly evergreen review works the same way (user's rule,
@@ -255,7 +249,10 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
-- 2026-11-25: pending (morning batch below).
+- 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
+  articles against the arbiter follow-up's "fewer than 3" rule, but only
+  2 were published after the World Junior drop; the published count is
+  what matters. The follow-up was then written and published.
 - 2026-11-24: user rejected one fix (stays 0): I cut the Carlsen-Karjakin
   2016 line from the 140-years piece; it is historical fact involving
   Carlsen, and the Karjakin block is for X posts only. Restored.
@@ -430,8 +427,12 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   Savitha Shri's only Commons photo is 363px (too small), so none was
   available. Fixed at the source: draft.py looks up the board's Lichess
   broadcast and lists in the PR report any piece naming round N when
-  later rounds are already finished. Not drafted: the arbiter follow-up
-  (3 articles; it waits for fewer than 3).
+  later rounds are already finished. The arbiter follow-up was added
+  after the user pointed out only 2 were published ("Wesley So and the
+  German Federation Back Chief Arbiter Sorokina Against FIDE": So's own
+  reply and his relayed quote, Meyer-Dunker's statement via BruvsChess
+  Media, Mastrokoukos's regulations argument, Praggnanandhaa's comment;
+  each checked against its post).
 - 2026-11-24: drafts/2026-11-24 reset (streak stays at 0). Run started
   by the morning check (07:53; no cron by then). Five pieces: Anand's
   50-50 interview (130), ChessBase's 140 years of title matches (130),
