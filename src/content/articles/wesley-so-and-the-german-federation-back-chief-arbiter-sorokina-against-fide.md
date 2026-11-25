@@ -1,6 +1,7 @@
 ---
 title: "Wesley So and the German Federation Back Chief Arbiter Sorokina Against FIDE"
 publishDate: "2026-11-25"
+publishedAt: "2026-11-25T10:15:27Z"
 sourceName: "X"
 sourceUrl: "https://x.com/SorokinaChess/status/2124208549290991920"
 lens: "drama"
