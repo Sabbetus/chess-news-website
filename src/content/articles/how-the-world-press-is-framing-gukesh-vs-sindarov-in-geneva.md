@@ -6,7 +6,7 @@ sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-press-review"
 lens: "people"
 continent: "europe"
-selectionScore: 110
+selectionScore: 30
 reviewStatus: "published"
 socialCopy: "From the Guardian to Al Jazeera, the Gukesh-Sindarov match has pushed chess into mainstream sports and culture pages. Here is which angles the international press is picking, and which it is leaving alone."
 metaDescription: "The Gukesh vs Sindarov World Championship match in Geneva has drawn coverage from major outlets. A look at the angles the international press chose."

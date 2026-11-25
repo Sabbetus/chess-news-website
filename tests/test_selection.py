@@ -26,3 +26,11 @@ def test_latest_round_named():
     assert lichess_game.latest_round_named("After round 6 of the event, and the sixth round") == 6
     assert lichess_game.latest_round_named("Following the eighth round, ...") == 8
     assert lichess_game.latest_round_named("No rounds here") == 0
+
+
+def test_press_roundup_gets_no_event_bonuses():
+    import selection
+    item = {"title": "World Chess Championship: A look at the international press", "summary": "Gukesh Sindarov Geneva",
+            "sourceName": "ChessBase", "kind": "rss", "url": "https://x/p"}
+    game = dict(item, title="World Championship Game 1: A draw in the Berlin, not without tension")
+    assert selection.score_item(item, [])[0] < selection.score_item(game, [])[0]

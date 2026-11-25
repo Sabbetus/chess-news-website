@@ -243,6 +243,14 @@ FEATURE_PROFILE_RE = re.compile(r"^[A-Z][\w'\u2019.\-]+(?: [A-Z][\w'\u2019.\-]+)
 # bonus and outscored the Sindarov profile). No elite-field bonus.
 MEDIA_ANNOUNCEMENT_RE = re.compile(
     r"\b(docu-?series|documentar(?:y|ies)|film|movie|trailer|podcast|episodes?)\b", re.IGNORECASE)
+# Press and media round-ups ("A look at the international press") are about
+# the coverage, not the event: they get none of the event bonuses (user's
+# call, 2026-11-25: the press review scored 110, level with the Game 1
+# report, while the arbiter dispute was the better story).
+PRESS_ROUNDUP_RE = re.compile(
+    r"\b(press (review|round-?up)|media (review|round-?up)|look at the (international |world )?(press|media)"
+    r"|what the (press|papers|media) (say|said|wrote)|in the (world )?press|press coverage|media coverage)\b",
+    re.IGNORECASE)
 FEATURE_EXCLUDE_TITLE_RE = re.compile(r"\bR\d{1,2}\b|\bround \d+|\bday \d+", re.IGNORECASE)
 
 
@@ -896,6 +904,9 @@ def score_item(item: dict, trend_titles: list[str] | None = None) -> tuple[int, 
         and not _ONLINE_RE.search(lead)
     )
     breakdown["liveEvent"] = LIVE_EVENT_BONUS if live else 0
+    if PRESS_ROUNDUP_RE.search(item.get("title") or ""):
+        for key in ("followUp", "eventPage", "liveEvent", "eliteField", "majorTournament"):
+            breakdown[key] = 0
 
     raw_total = sum(breakdown.values())
     total = raw_total if anniversary else _apply_priority_band(raw_total, breakdown, governance)

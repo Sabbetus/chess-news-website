@@ -79,6 +79,11 @@
   docuseries, podcast and trailer announcements get no elite-field bonus
   (Sindarov profile 30 -> 80, Gukesh docuseries teaser 50 -> 30; no other
   story of 162 since mid-October changed).
+  2026-11-25 (user's call: the press review was "borderline trash" at
+  110, level with the Game 1 report, while the arbiter dispute was the
+  better story): press and media round-ups get no follow-up, event-page,
+  live-event, elite or major-event bonus (selection.PRESS_ROUNDUP_RE; the
+  press review rescored 110 -> 30).
 
 - **Headlines and social copies don't reuse set phrases from the last two
   weeks** (user's rule, 2026-11-07: "Half a Point Back" twice). Regular
