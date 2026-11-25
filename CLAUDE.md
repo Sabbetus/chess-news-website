@@ -255,6 +255,7 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-25: pending (morning batch below).
 - 2026-11-24: user rejected one fix (stays 0): I cut the Carlsen-Karjakin
   2016 line from the 140-years piece; it is historical fact involving
   Carlsen, and the Karjakin block is for X posts only. Restored.
@@ -414,6 +415,23 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-25: drafts/2026-11-25 reset (streak stays at 0). Run started
+  by the morning check (07:52). Three pieces: Game 1 draw (110), the
+  ChessBase press review (110), FIDE's World Junior midpoint report (90).
+  Reset: the World Junior piece ("Ethan Vaz and Savitha Shri Both Hold
+  6/6") was two rounds stale -- FIDE's "after round 6" report came out
+  after round 8 (Vaz drew Ahmad in round 7 and beat Lopez in round 8;
+  7.5/8) -- dropped. Minor: press review's closing "Sindarov has white in
+  game one" (played; now links our Game 1 report); Game 1 link text "how
+  the match was set up" for the 140-years piece, a line about what the
+  players hadn't said. Checked: every claim in both published pieces
+  against ChessBase (schedule, quotes, 13.Ne4, 21.g4, clocks, Pragg's
+  post), the Game 1 board, both photos, the built pages' automatic links.
+  Savitha Shri's only Commons photo is 363px (too small), so none was
+  available. Fixed at the source: draft.py looks up the board's Lichess
+  broadcast and lists in the PR report any piece naming round N when
+  later rounds are already finished. Not drafted: the arbiter follow-up
+  (3 articles; it waits for fewer than 3).
 - 2026-11-24: drafts/2026-11-24 reset (streak stays at 0). Run started
   by the morning check (07:53; no cron by then). Five pieces: Anand's
   50-50 interview (130), ChessBase's 140 years of title matches (130),

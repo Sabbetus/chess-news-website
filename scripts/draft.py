@@ -45,6 +45,7 @@ from game_links import check_embed_sentence, fix_embed_link, illegal_lines, link
 from club_cup import FINNISH_SUBSECTION_INSTRUCTION, finnish_clubs_facts, is_club_cup
 from game_pgn import chesscom_numbered_game, chesscom_player_game, clean_game, find_game_pgn, headline_game_number
 from images import HISTORICAL_LENSES, fallback_image, localize_image, person_caption, pick_image_for_item
+import lichess_game
 from lichess_game import (
     GAME_LOOKUP_CRITERIA,
     SAN_MOVE_RE,
@@ -2496,6 +2497,15 @@ def draft_one(
     ):
         TIME_WORD_NOTES.append((out_path.stem, note))
         print(f"  time word: {note} for '{item['title']}'", file=sys.stderr)
+    # A round report the broadcast has already overtaken (stale-story rule).
+    board_ref = "\n".join(fm_lines)
+    pgn_file = GAMES_DIR / f"{out_path.stem}.pgn"
+    if pgn_file.exists():
+        board_ref += "\n" + pgn_file.read_text()
+    later = lichess_game.finished_rounds_after(board_ref, lichess_game.latest_round_named(body_markdown))
+    if later:
+        STALE_ROUND_NOTES.append((out_path.stem, f"names round {lichess_game.latest_round_named(body_markdown)} at most, but the broadcast has finished: {', '.join(later)}"))
+        print(f"  possibly overtaken: {later} for '{item['title']}'", file=sys.stderr)
     out_path.write_text("\n".join(fm_lines) + "\n\n" + body_markdown.strip() + "\n")
     return out_path, offenders, bad_links
 
@@ -2548,6 +2558,7 @@ X_FOLLOWUP_NOTES: list[str] = []
 # result), and date/time words that don't fit the publication date.
 BOARD_MISMATCH_NOTES: list[tuple[str, str]] = []
 TIME_WORD_NOTES: list[tuple[str, str]] = []
+STALE_ROUND_NOTES: list[tuple[str, str]] = []
 
 _WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 _MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august",
@@ -2638,6 +2649,9 @@ def write_run_report(
     if RETITLE_NOTES:
         lines += ["", "**Photo headline rewrites that failed the check against the body** (fix by hand, keeping the photographed person named):", ""]
         lines += [f"- {old} — {note}" for old, note in RETITLE_NOTES]
+    if STALE_ROUND_NOTES:
+        lines += ["", "**Possibly overtaken round reports** (later rounds are finished: update from the broadcast or drop as stale):", ""]
+        lines += [f"- {slug} — {note}" for slug, note in STALE_ROUND_NOTES]
     if TIME_WORD_NOTES:
         lines += ["", "**Date or time words that don't fit the publication date** (check each):", ""]
         lines += [f"- {slug} — {note}" for slug, note in TIME_WORD_NOTES]

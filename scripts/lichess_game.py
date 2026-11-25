@@ -831,3 +831,39 @@ def find_player_game(event: str, players: list[str], around: datetime | None = N
             return game, caption
     print(f"    player game: no finished game found for {players!r} in event={event!r}", file=sys.stderr)
     return None
+
+
+_ORDINALS = {w: i for i, w in enumerate(
+    "first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth thirteenth".split(), 1)}
+_BROADCAST_RE = re.compile(r"lichess\.org/(?:embed/)?broadcast/([^/\s\"]+)/([^/\s\"]+)/([A-Za-z0-9]{8})")
+
+
+def latest_round_named(body: str) -> int:
+    """The highest round number the text names ("round 6", "sixth round"); 0 if none."""
+    nums = [int(n) for n in re.findall(r"\b[Rr]ounds?\s+(\d{1,2})\b", body)]
+    nums += [_ORDINALS[w.lower()] for w in re.findall(r"\b(" + "|".join(_ORDINALS) + r")\s+round\b", body, re.I)]
+    return max(nums, default=0)
+
+
+def finished_rounds_after(text_with_board_url: str, named_round: int) -> list[str]:
+    """Names of finished rounds of the board's broadcast numbered above
+    `named_round` (2026-11-25: FIDE's "after round 6" World Junior report
+    was drafted when rounds 7 and 8 were already played). Empty on any
+    failure or when nothing later is finished."""
+    m = _BROADCAST_RE.search(text_with_board_url or "")
+    if not m or not named_round:
+        return []
+    try:
+        r = requests.get(f"https://lichess.org/api/broadcast/{m.group(1)}/{m.group(2)}/{m.group(3)}",
+                         headers={"User-Agent": USER_AGENT, "Accept": "application/json"}, timeout=REQUEST_TIMEOUT)
+        tour_id = r.json()["tour"]["id"]
+        rounds = requests.get(f"https://lichess.org/api/broadcast/{tour_id}",
+                              headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT).json().get("rounds", [])
+    except Exception:  # noqa: BLE001
+        return []
+    later = []
+    for rd in rounds:
+        n = re.search(r"(\d+)", rd.get("name", ""))
+        if rd.get("finished") and n and int(n.group(1)) > named_round:
+            later.append(rd["name"])
+    return later

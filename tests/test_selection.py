@@ -19,3 +19,10 @@ def test_test_listings_are_skipped():
     assert ingest.is_test_listing({"name": "TEST 1"})
     assert not ingest.is_test_listing({"name": "Testa Open"})
     assert not ingest.is_test_listing({"name": "Premier Bet Rwabushenyi Memorial"})
+
+
+def test_latest_round_named():
+    import lichess_game
+    assert lichess_game.latest_round_named("After round 6 of the event, and the sixth round") == 6
+    assert lichess_game.latest_round_named("Following the eighth round, ...") == 8
+    assert lichess_game.latest_round_named("No rounds here") == 0
