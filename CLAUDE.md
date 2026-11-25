@@ -140,11 +140,13 @@
   relevant mentions in articles (e.g. Carlsen's 2016 title match against
   him) stay (user's call, 2026-11-24, after I cut that line). Opinions by non-parties are not
   added (user's call, 2026-11-22: an opinion may be stupid or not
-  relevant), with one exception (user's call, same day): at most one
-  considered opinion per article -- an argument, proposal or clear stance
-  with a reason, not a jab or one-liner -- by a top name, meaning the
-  current FIDE top 20 or a world champion past or present (decided in
-  code, x_watch.is_top_name). The PR report lists other notable opinions,
+  relevant), with one exception (widened 2026-11-25, user's call: the
+  rule was too strict, 1-2 top players' views improve a piece): up to two
+  opinions per article that add value -- an argument, proposal, clear
+  stance with a reason, or an informed verdict on a game (its quality, a
+  critical moment, a risk for one side), not a jab or one-liner -- by top
+  names, meaning the current FIDE top 50 or a world champion past or
+  present (decided in code, x_watch.is_top_name). The PR report lists other notable opinions,
   and a relay's paraphrase, for the review to add by hand. New reactions to the last two days'
   controversy pieces are listed for the morning review, which suggests a
   separate follow-up piece when one is due -- the published piece is not

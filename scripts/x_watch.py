@@ -42,7 +42,7 @@ STATUSES_URL = "https://api.fxtwitter.com/2/profile/{handle}/statuses"
 USER_AGENT = "chess-herald-ingest/0.1 (+https://github.com/Sabbetus/chess-news-website)"
 REQUEST_TIMEOUT = 20
 WINDOW_HOURS = 48
-MAX_ADDS = 2
+MAX_ADDS = 3
 MAX_CANDIDATES = 25
 PAUSE_SECONDS = 3  # between accounts: fxtwitter answers bursts with 404s
 
@@ -183,6 +183,10 @@ def key_terms(title: str, body: str) -> set[str]:
 # are not a party to it (user's call, 2026-11-22: "if some of the top names
 # comment on it ... it might still be interesting"): the current FIDE top 20
 # plus world champions, past and present. Decided here, not by the model.
+# Widened 2026-11-25 (user's call: "the rule is too strict ... 1-2 would
+# improve the article"): FIDE top 50, up to two opinions per article, and an
+# informed verdict on a game counts.
+TOP_RANK = 50
 WORLD_CHAMPIONS = [
     "Magnus Carlsen", "Viswanathan Anand", "Garry Kasparov", "Vladimir Kramnik", "Veselin Topalov",
     "Ruslan Ponomariov", "Rustam Kasimdzhanov", "Ding Liren", "Gukesh", "Anatoly Karpov",
@@ -199,7 +203,7 @@ def top_names() -> list[set[str]]:
     names = list(WORLD_CHAMPIONS)
     try:
         data = json.loads((ROOT / "data" / "fide-top100.json").read_text())
-        names += [pl["name"] for pl in data.get("players", []) if pl.get("rank", 999) <= 20]
+        names += [pl["name"] for pl in data.get("players", []) if pl.get("rank", 999) <= TOP_RANK]
     except (OSError, ValueError):
         pass
     return [_name_tokens(n) for n in names]
@@ -249,11 +253,12 @@ body the article is about, someone whose decision or conduct the article reports
 or someone the article says was accused or criticised;
 - it is substantive: it answers an accusation, gives that party's own side or \
 explanation, or announces a decision or a new fact the article lacks.
-One exception: you may also add at most ONE opinion by a post marked TOP NAME \
-(a world champion or a current top-20 player) who is not a party, but only if it \
-is a considered position on this story -- an argument, a proposal, or a clear \
-stance with a reason. A jab, a one-liner, sarcasm or a vague reaction does not \
-count. Its sentence must present it as that person's view.
+One exception: you may also add up to TWO opinions by posts marked TOP NAME \
+(a world champion or a current top-50 player) who are not parties, when they \
+add value: a considered position on this story -- an argument, a proposal, a \
+clear stance with a reason, or an informed verdict on a game (its quality, a \
+critical moment, a risk for one side). A jab, a one-liner, sarcasm or a vague \
+reaction does not count. Its sentence must present it as that person's view.
 Never add an opinion by anyone else, however well known; never add \
 congratulations, promotion or live commentary. Add at most {max_adds} in all. \
 Adding nothing is the normal answer.

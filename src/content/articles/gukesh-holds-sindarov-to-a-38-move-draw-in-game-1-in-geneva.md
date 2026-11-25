@@ -16,6 +16,19 @@ image:
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3ADommaraju_Gukesh_in_2023.jpg"
   caption: "Gukesh Dommaraju"
 gamePgn: "gukesh-holds-sindarov-to-a-38-move-draw-in-game-1-in-geneva.pgn"
+tweetEmbeds:
+  - url: "https://x.com/viditchess/status/2125285952147046522"
+    author: "Vidit Gujrathi"
+    handle: "viditchess"
+    after: "Vidit Gujrathi called it"
+    text: "IMHO, a very high quality game considering the pressure of an opening round match. Sindarov showed a new opening idea but Gukesh found good moves, although he was dangerously low on time at some point."
+    date: "2026-11-24"
+  - url: "https://x.com/anishgiri/status/2125301605453152675"
+    author: "Anish Giri"
+    handle: "anishgiri"
+    after: "Anish Giri, the world number 11"
+    text: "Good game by both players, but even though he confidently brushed it off, the excessive time spending can backfire later on in the event for Gukesh.\n\nSomething to keep in mind.🧐"
+    date: "2026-11-24"
 ---
 
 The 2026 World Chess Championship match began on Tuesday at the Fondation Martin Bodmer in Cologny, near Geneva, and Game 1 ended [in a draw by threefold repetition on move 38](https://en.chessbase.com/post/world-championship-2026-1). Javokhir Sindarov had White and won the clock battle. Defending champion Gukesh Dommaraju still held the balance.
@@ -47,6 +60,10 @@ There was one side note. Sindarov incorrectly claimed a draw and was penalised b
 At the press conference, Gukesh said he felt he had things under control throughout and did not "really need to be worried". Sindarov acknowledged that his opponent had "defended very well".
 
 Praggnanandhaa Rameshbabu, the world number seven, wrote on X: "Incredible first game of World Championship match! High quality game from both! Gukesh found great moves under pressure!"
+
+Vidit Gujrathi called it a very high-quality game for the opening round of a match, noting Sindarov's new opening idea and that Gukesh was "dangerously low on time at some point."
+
+Anish Giri, the world number 11, sounded a warning: Gukesh brushed off his time spending, but Giri thinks it "can backfire later on in the event."
 
 **A young match with a birthday on it**
 
