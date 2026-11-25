@@ -1,6 +1,7 @@
 ---
 title: "How the World Press Is Framing Gukesh vs Sindarov in Geneva"
 publishDate: "2026-11-25"
+publishedAt: "2026-11-25T08:11:34Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-press-review"
 lens: "people"

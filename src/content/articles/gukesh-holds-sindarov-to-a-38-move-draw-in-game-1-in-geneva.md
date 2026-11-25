@@ -1,6 +1,7 @@
 ---
 title: "Defending Champion Gukesh Dommaraju Holds Sindarov in Game 1 Draw"
 publishDate: "2026-11-25"
+publishedAt: "2026-11-25T08:11:34Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-1"
 lens: "results"
