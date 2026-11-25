@@ -105,6 +105,26 @@ const overlap = (a: Set<string>, b: Set<string>) => {
   return n;
 };
 
+// How distinctive a name is across the archive (user's call, 2026-11-25:
+// "it needs to get better in the future"). A name in a handful of pieces
+// ("Sorokina", "Artemiev") ties two stories together far more than one in
+// hundreds ("Carlsen"), so shared names are weighted by rarity
+// (log of articles / articles naming it), not just counted.
+let rarity: Map<string, number> | null = null;
+function weight(name: string, all: Profile[]): number {
+  if (!rarity) {
+    const df = new Map<string, number>();
+    for (const p of all) for (const n of p.names) df.set(n, (df.get(n) ?? 0) + 1);
+    rarity = new Map([...df].map(([n, c]) => [n, Math.log((all.length + 1) / c)]));
+  }
+  return rarity.get(name) ?? 0;
+}
+const weightedOverlap = (a: Set<string>, b: Set<string>, all: Profile[]) => {
+  let s = 0;
+  for (const x of a) if (b.has(x)) s += weight(x, all);
+  return s;
+};
+
 export async function similarArticles(article: Article, count = 3): Promise<Article[]> {
   const all = await profiles();
   const self = all.find((p) => p.article.slug === article.slug);
@@ -117,11 +137,11 @@ export async function similarArticles(article: Article, count = 3): Promise<Arti
       // the other piece, more again if it's in that headline too. Shared
       // body mentions and player/event pages only break ties -- big events
       // like the Olympiad turn up in passing in half the archive.
-      score += 6 * overlap(titleNames, p.names);
-      score += 3 * overlap(titleNames, p.titleNames);
+      score += 2 * weightedOverlap(titleNames, p.names, all);
+      score += 1 * weightedOverlap(titleNames, p.titleNames, all);
       if (self) {
         score += 1 * overlap(self.hubs, p.hubs);
-        score += 1 * overlap(self.names, p.names);
+        score += 0.5 * weightedOverlap(self.names, p.names, all);
       }
       // A piece that links to the other is a follow-up or background to it
       // (user's call, 2026-11-25: the arbiter follow-up, which links the
