@@ -123,6 +123,15 @@ export async function similarArticles(article: Article, count = 3): Promise<Arti
         score += 1 * overlap(self.hubs, p.hubs);
         score += 1 * overlap(self.names, p.names);
       }
+      // A piece that links to the other is a follow-up or background to it
+      // (user's call, 2026-11-25: the arbiter follow-up, which links the
+      // FIDE piece, was missing from its Similar Articles behind other
+      // Carlsen pieces).
+      if (
+        p.article.body.includes(`/articles/${article.slug}/`) ||
+        article.body.includes(`/articles/${p.article.slug}/`)
+      )
+        score += 100;
       if (p.article.data.lens === article.data.lens) score += 1;
       if (p.article.data.continent === article.data.continent) score += 1;
       return { p, score };
