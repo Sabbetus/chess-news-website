@@ -34,3 +34,13 @@ def test_press_roundup_gets_no_event_bonuses():
             "sourceName": "ChessBase", "kind": "rss", "url": "https://x/p"}
     game = dict(item, title="World Championship Game 1: A draw in the Berlin, not without tension")
     assert selection.score_item(item, [])[0] < selection.score_item(game, [])[0]
+
+
+def test_same_game_number_merges_and_how_to_watch_skipped():
+    import selection
+    a = {"title": "World Championship Game 2: A London in Geneva", "summary": "Gukesh and Sindarov drew Game 2 of the World Championship",
+         "sourceName": "ChessBase", "kind": "rss"}
+    b = {"title": "Daniel King analyses: London System in Game 2", "summary": "World Championship Gukesh Sindarov",
+         "sourceName": "ChessBase", "kind": "rss"}
+    assert selection._same_game_number(a, b)
+    assert selection.is_promotional({"title": "How To Watch FIDE World Championship 2026 Game 3", "summary": "", "sourceName": "Chess.com"})

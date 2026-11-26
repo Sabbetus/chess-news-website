@@ -256,6 +256,7 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 0.**
+- 2026-11-26: pending (morning batch below).
 - 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
   articles against the arbiter follow-up's "fewer than 3" rule, but only
   2 were published after the World Junior drop; the published count is
@@ -419,6 +420,27 @@ clearly corrects the review, the streak moves on as proposed in the recap.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
 - **Current streak: 0 consecutive clean batches.**
+- 2026-11-26: drafts/2026-11-26 reset (streak stays at 0). Run started
+  by the morning check (07:52). Four drafts: ChessBase's Game 2 report
+  (130), its Daniel King analysis of Game 2 merged with Chess.com's report
+  (130), London Classic round 1 (78), Chess.com's "How To Watch ... Game
+  3" (55). Reset: two Game 2 pieces drafted (same outlet, so the merge
+  skipped them); the King/Chess.com piece kept, ChessBase's report folded
+  in as a third source, the other dropped. Dropped too: the Game 3
+  viewing notice. Minor: "That reads as a champion keeping a rating gap
+  in mind" (our reading stated as his motive; hedged), headline "a Worse
+  London System" (now "Gukesh Takes a 20-Move Draw as Sindarov Neutralises
+  His London"), Gukesh photo uncaptioned; London piece's "two youngest
+  players outside Royal" (Royal and Samunenkov are both 17; cut) and the
+  organiser's sponsor-credit ceremony post (removed). Added under the
+  widened X rule: Vidit's and Giri's Game 2 verdicts. Checked: every
+  claim in both pieces against Chess.com and ChessBase (quotes, 7...Qb6,
+  8.Qb3 8...Nh5!, 11...Qd8, 14...Nd7, 15...f5!, 16.f3, clocks, Ding-match
+  openings, ages, time control, dates), both boards (Game 2;
+  Abdusattorov-Royal 1-0), both photos, the built pages' automatic links.
+  Fixed at the source: two items naming the same game number of the same
+  major event merge even from one outlet; "How to watch" headlines are
+  skipped as notices.
 - 2026-11-25: drafts/2026-11-25 reset (streak stays at 0). Run started
   by the morning check (07:52). Three pieces: Game 1 draw (110), the
   ChessBase press review (110), FIDE's World Junior midpoint report (90).

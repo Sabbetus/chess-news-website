@@ -155,6 +155,9 @@ ADMIN_NOTICE_TITLE_PATTERNS = [
     # Fan side-event programmes (caught 2026-10-20: "Join side activities of
     # the ... World Championship Match", a sign-up notice).
     r"\bside (activities|events)\b", r"\bjoin (the )?(fan |side )?(activities|events)\b",
+    # Viewing notices ("How To Watch FIDE World Championship 2026 Game 3",
+    # 2026-11-26: drafted next to that day's game report and dropped).
+    r"^how to watch\b",
 ]
 
 # The same kind of notice can hide behind a neutral headline; its body sends
@@ -1313,6 +1316,19 @@ def _lead_event_phrases_wide(item: dict) -> set[str]:
     return out
 
 
+_GAME_NO_RE = re.compile(r"\bgame\s+(\d{1,2})\b", re.IGNORECASE)
+
+
+def _same_game_number(a: dict, b: dict) -> bool:
+    """Two items on the same numbered game of the same major event are one
+    story even from one outlet (2026-11-26: ChessBase's "World Championship
+    Game 2" report and its Daniel King analysis "London System in Game 2"
+    were both drafted -- the merge skipped same-source pairs)."""
+    na = {int(n) for n in _GAME_NO_RE.findall(a.get("title") or "")}
+    nb = {int(n) for n in _GAME_NO_RE.findall(b.get("title") or "")}
+    return bool(na & nb) and _same_major_event(a, b)
+
+
 def _same_round_reports(a: dict, b: dict) -> bool:
     """Two round/day reports of the same named event in one batch are one
     story: they merge without the model's veto (user's call, 2026-11-15,
@@ -1382,9 +1398,14 @@ def merge_duplicate_stories(scored: list[dict], client=None) -> list[dict]:
                 if existing["kind"] not in CALENDAR_KINDS
                 and _compatible_for_merge(item, existing)
                 and (_is_same_story(item, existing) or _same_major_event(item, existing))
-                and item["sourceName"] != existing["sourceName"]
-                and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
-                and (_same_round_reports(existing, item) or confirm_same_story(client, existing, item))
+                and (
+                    _same_game_number(item, existing)
+                    or (
+                        item["sourceName"] != existing["sourceName"]
+                        and item["sourceName"] not in {s["sourceName"] for s in existing.get("additionalSources", [])}
+                    )
+                )
+                and (_same_round_reports(existing, item) or _same_game_number(item, existing) or confirm_same_story(client, existing, item))
             ),
             None,
         )
