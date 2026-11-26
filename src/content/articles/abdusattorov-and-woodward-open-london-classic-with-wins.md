@@ -1,6 +1,7 @@
 ---
 title: "Abdusattorov and Woodward Open London Classic With Wins"
 publishDate: "2026-11-26"
+publishedAt: "2026-11-26T08:08:59Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-london-chess-classic-round-1"
 lens: "results"
