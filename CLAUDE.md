@@ -255,8 +255,8 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
-- **Current review-acceptance streak: 0.**
-- 2026-11-26: pending (morning batch below).
+- **Current review-acceptance streak: 1.**
+- 2026-11-26: accepted ("All good", 0 -> 1).
 - 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
   articles against the arbiter follow-up's "fewer than 3" rule, but only
   2 were published after the World Junior drop; the published count is
