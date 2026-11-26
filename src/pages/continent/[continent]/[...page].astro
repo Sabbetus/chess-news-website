@@ -43,9 +43,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
 >
   <header class="section-head">
     <h1>{heading}</h1>
-    <p class="section-intro">
+    <p class="desc">
       For every tournament, searchable by date and place, see
-      <a href="https://chesstournamentcalendar.com/">Chess Tournament Calendar</a>.
+      <a href="https://chesstournamentcalendar.com" target="_blank" rel="noopener">Chess Tournament Calendar</a>.
     </p>
     <ContinentButtons current={continent} />
   </header>
@@ -109,6 +109,14 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', mon
     color: var(--ink-soft);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+  .section-head .desc {
+    margin: 0 0 10px;
+    font-family: inherit;
+    font-size: 15.5px;
+    text-transform: none;
+    letter-spacing: normal;
+    max-width: 100%;
   }
 
   .empty-state {
