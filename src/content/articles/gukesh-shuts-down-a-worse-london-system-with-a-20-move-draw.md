@@ -1,6 +1,7 @@
 ---
 title: "Gukesh Takes a 20-Move Draw as Sindarov Neutralises His London"
 publishDate: "2026-11-26"
+publishedAt: "2026-11-26T08:08:59Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-analysis-daniel-king2"
 lens: "results"
