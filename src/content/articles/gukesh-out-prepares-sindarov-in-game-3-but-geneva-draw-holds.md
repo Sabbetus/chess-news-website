@@ -1,6 +1,7 @@
 ---
 title: "Gukesh Out-Prepares Sindarov in Game 3, but Sindarov Holds the Draw"
 publishDate: "2026-11-27"
+publishedAt: "2026-11-27T08:02:20Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-analysis-daniel-king-3"
 lens: "results"
