@@ -1,12 +1,12 @@
 ---
-title: "Gukesh Out-Prepares Sindarov in Game 3, but Geneva Draw Holds"
+title: "Gukesh Out-Prepares Sindarov in Game 3, but Sindarov Holds the Draw"
 publishDate: "2026-11-27"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/world-championship-2026-analysis-daniel-king-3"
 lens: "results"
 continent: "europe"
 selectionScore: 130
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Game 3 in Geneva was a third draw, but Gukesh finally won the opening battle and Sindarov survived on six seconds at move 40. The match stands at 1½-1½ before the rest day."
 metaDescription: "Gukesh out-prepared Sindarov in a Berlin Rio Variation, but Sindarov held a 60-move draw in Game 3. The World Championship match is level at 1½-1½."
 additionalSources:
@@ -16,7 +16,14 @@ image:
   src: "./_images/Javokhir_Sindarov_at_the_46th_FIDE_Chess_Olympiad__1___v2.webp"
   credit: "TheBoburshokh, CC BY 4.0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AJavokhir_Sindarov_at_the_46th_FIDE_Chess_Olympiad_%281%29_%28v2%29.jpg"
-  caption: "Javokhir Sindarov"
+  caption: "Javokhir Sindarov at the 2024 Chess Olympiad"
+tweetEmbeds:
+  - url: "https://x.com/anishgiri/status/2126009001448222822"
+    author: "Anish Giri"
+    handle: "anishgiri"
+    after: "Anish Giri suggested on X"
+    text: "23...g4! planning Be6 Rg8 setup was a little more precise probably and then 29.g4!? was a better try for white too, probably."
+    date: "2026-11-26"
 gamePgn: "gukesh-out-prepares-sindarov-in-game-3-but-geneva-draw-holds.pgn"
 ---
 
@@ -38,17 +45,19 @@ Sindarov's [14.a3](#ply-27) was a novelty, but he was already 40 minutes behind 
 
 **Gukesh presses, Sindarov counters**
 
-Gukesh gained space on the kingside and found several subtle manoeuvres. Sindarov, short of time, had to defend an uncomfortable position for the first time in the match.
+Gukesh gained space on the kingside and found several subtle manoeuvres. Sindarov, out-prepared for the first time in the match and well behind on the clock, had an uncomfortable position to defend.
 
 The turning point was [29.f4](#ply-57), a kingside break. Sindarov was critical of it at the press conference. Gukesh said he had overlooked the idea, even though he expected his opponent to seek counterplay on that wing.
 
-He spent over 15 minutes on his reply, his longest think of the game. Engines still rated the position as equal, but Black's active plans had become harder to find. If anything, Sindarov was slightly the more comfortable.
+Gukesh spent over 15 minutes on his reply, his longest think of the game. Engines still rated the position as equal, but Black's active plans had become harder to find.
+
+Anish Giri suggested on X that 23...g4, with Be6 and Rg8 to follow, was probably a little more precise for Black, and that 29.g4 was probably a better try for White than 29.f4. If anything, ChessBase judged, Sindarov had the slightly more promising position.
 
 **Six seconds at move 40**
 
 The clock became the story. Sindarov had to play roughly a minute per move, yet his accuracy barely dipped. He made his 40th move with only six seconds left.
 
-The game then reached an endgame with rooks and bishops of opposite colours. Defending took more precision, and the players kept going until move 60 before agreeing a draw.
+The game then reached an endgame with rooks and bishops of opposite colours. The players kept going until move 60 before agreeing a draw.
 
 **What it means**
 

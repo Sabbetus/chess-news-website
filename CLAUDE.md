@@ -256,6 +256,7 @@ Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
 - **Current review-acceptance streak: 1.**
+- 2026-11-27: pending (morning batch below).
 - 2026-11-26: accepted ("All good", 0 -> 1).
 - 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
   articles against the arbiter follow-up's "fewer than 3" rule, but only
@@ -419,7 +420,23 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 0 consecutive clean batches.**
+- **Current streak: 1 consecutive clean batch.**
+- 2026-11-27: drafts/2026-11-27 clean (streak 0 -> 1). Run started by
+  the morning check (07:52). One piece: Daniel King's Game 3 analysis
+  (130), merged with ChessBase's Game 3 report -- the same-game merge
+  from one outlet worked. Minor: "had to defend an uncomfortable
+  position for the first time in the match" (the first time was being
+  out-prepared), "slightly the more comfortable" given as our verdict
+  (ChessBase's), "He spent over 15 minutes" (Gukesh; the sentence
+  before was about him), an unsourced "Defending took more precision",
+  headline "but Geneva Draw Holds" (now "but Sindarov Holds the Draw"),
+  photo caption year added (2024 Olympiad). Added under the X rule:
+  Giri's 23...g4 / 29.g4 verdict. Checked: every claim against
+  ChessBase's report (8...Nf5 vs ~90% 8...Nb7, six and nine minutes,
+  Ljubojevic-Spassky Belfort 1988, 14.a3 with 40 minutes behind, queens
+  off by 17, 29.f4 and the 15-minute reply, six seconds at move 40,
+  draw on move 60, both quotes, schedule), the board (Game 3, 60
+  moves, 1/2-1/2), the photo, the built page's automatic links.
 - 2026-11-26: drafts/2026-11-26 reset (streak stays at 0). Run started
   by the morning check (07:52). Four drafts: ChessBase's Game 2 report
   (130), its Daniel King analysis of Game 2 merged with Chess.com's report
