@@ -255,8 +255,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
-- **Current review-acceptance streak: 1.**
-- 2026-11-27: pending (morning batch below).
+- **Current review-acceptance streak: 2.**
+- 2026-11-28: pending (morning batch below).
+- 2026-11-27: accepted (silence, 1 -> 2).
 - 2026-11-26: accepted ("All good", 0 -> 1).
 - 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
   articles against the arbiter follow-up's "fewer than 3" rule, but only
@@ -420,7 +421,26 @@ clearly corrects the review, the streak moves on as proposed in the recap.
   move commentary at the move the source attaches it to.
 - 2026-10-06: PR #58 review accepted as proposed (1).
 
-- **Current streak: 1 consecutive clean batch.**
+- **Current streak: 2 consecutive clean batches.**
+- 2026-11-28: drafts/2026-11-28 clean (streak 1 -> 2; borderline, user
+  to rule). Run started by the morning check (07:53); the new prompt
+  cache read 15k tokens. Two pieces: ChessBase's Swiss chess history
+  (110) and Chess.com's Speed Chess Championship Firouzja-Artemiev
+  (95). Borderline (ChessBase's own slips, like the Miles one ruled
+  minor): Zurich 1953 given as "16 players, 30 games each" (15 players,
+  28 games), and Karpov and Anand "both" through the Groningen knockout
+  (Karpov was seeded into the final); both corrected. Minor: Firouzja
+  match "decided in the first 75 minutes" (he essentially won it in the
+  75 minutes of 5+1), "He then drew a winning position" (Artemiev's
+  winning position), board caption added (5+1 game 2), photo captions
+  given years, Swiss headline reworded around Smyslov, Topalov match
+  placed in Elista, "the venue has seen" (Geneva hasn't). Checked: every
+  claim in both pieces against Chess.com and ChessBase (scores by
+  section, 28...Ra2, 37.Ng6, 21...e3?, quotes, 194/101/75 moves, prize
+  money, 93%, Dec 9 So-Pragg; every Swiss event, year and placing), the
+  board (game 2 moves match 28...Ra2), both photos, the built pages'
+  automatic links. Russia in the complete list of World Team winners
+  kept (complete list).
 - 2026-11-27: drafts/2026-11-27 clean (streak 0 -> 1). Run started by
   the morning check (07:52). One piece: Daniel King's Game 3 analysis
   (130), merged with ChessBase's Game 3 report -- the same-game merge

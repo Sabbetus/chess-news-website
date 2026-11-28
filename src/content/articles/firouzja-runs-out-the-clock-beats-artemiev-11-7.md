@@ -6,18 +6,19 @@ sourceUrl: "https://www.chess.com/news/view/2026-speed-chess-championship-r16-fi
 lens: "results"
 continent: "global"
 selectionScore: 95
-reviewStatus: "draft"
+reviewStatus: "published"
 socialCopy: "Firouzja led 6-1 after 5+1, then played a 194-move bullet game to kill the clock. Only four 1+1 games were played in 25 minutes as he beat Artemiev 11-7 at the Speed Chess Championship."
 metaDescription: "Alireza Firouzja beat Vladislav Artemiev 11-7 in the Speed Chess Championship Round of 16, using a 194-move bullet game to run down the clock."
 image:
   src: "./_images/Alireza_Firouzja_2026_Norway_Chess.webp"
   credit: "Ahmed0112, CC0, via Wikimedia Commons"
   sourceUrl: "https://commons.wikimedia.org/wiki/File%3AAlireza_Firouzja_2026_Norway_Chess.jpg"
-  caption: "Alireza Firouzja"
+  caption: "Alireza Firouzja at Norway Chess in 2026"
+gameCaption: "5+1 game 2: Artemiev - Firouzja, 0-1"
 gamePgn: "firouzja-runs-out-the-clock-beats-artemiev-11-7.pgn"
 ---
 
-In the Round of 16 of the 2026 Speed Chess Championship, GM Alireza Firouzja [beat GM Vladislav Artemiev 11-7](https://www.chess.com/news/view/2026-speed-chess-championship-r16-firouzja-artemiev) and booked a Quarterfinal against the winner of Javokhir Sindarov vs. Fabiano Caruana. The match was decided in the first 75 minutes, and what happened in the bullet section was stranger than the score.
+In the Round of 16 of the 2026 Speed Chess Championship, GM Alireza Firouzja [beat GM Vladislav Artemiev 11-7](https://www.chess.com/news/view/2026-speed-chess-championship-r16-firouzja-artemiev) and booked a Quarterfinal against the winner of Javokhir Sindarov vs. Fabiano Caruana. Firouzja essentially won the match in 75 minutes of 5+1, and what happened in the bullet section was stranger than the score.
 
 **A 6-1 start in 5+1**
 
@@ -25,7 +26,7 @@ Firouzja won five of the seven 5+1 games. Artemiev lost the first on time after 
 
 The third game, the Game of the Day, was closer. Artemiev gave up his queen for two rooks and had real winning chances, but Firouzja's trapped king marched up the board and he won.
 
-Artemiev got a draw in the next game. In the one after, he missed a chance, ran low on time and lost to 37.Ng6, since taking the knight allows Re8+. He then drew a winning position before Firouzja ground out the fifth win.
+Artemiev got a draw in the next game. In the one after, he missed a chance, ran low on time and lost to 37.Ng6, since taking the knight allows Re8+. Artemiev then got only a draw from a winning position before Firouzja ground out the fifth win.
 
 Firouzja said he stayed on the board rather than the clock: "I know his style from many years—he's always in time trouble; it's kind of a Grischuk style." He added that he had expected 5+1 to be closer than it was.
 
