@@ -1,6 +1,7 @@
 ---
 title: "Geneva Follows Smyslov's Zurich 1953 in a Long Line of Swiss Chess Events"
 publishDate: "2026-11-28"
+publishedAt: "2026-11-28T08:02:22Z"
 sourceName: "ChessBase"
 sourceUrl: "https://en.chessbase.com/post/switzerland-rich-chess-tournament-history"
 lens: "historical-parallel"

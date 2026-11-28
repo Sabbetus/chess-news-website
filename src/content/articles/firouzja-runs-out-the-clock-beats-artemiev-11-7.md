@@ -1,6 +1,7 @@
 ---
 title: "Firouzja Runs Out the Clock, Beats Artemiev 11-7"
 publishDate: "2026-11-28"
+publishedAt: "2026-11-28T08:02:22Z"
 sourceName: "Chess.com"
 sourceUrl: "https://www.chess.com/news/view/2026-speed-chess-championship-r16-firouzja-artemiev"
 lens: "results"
