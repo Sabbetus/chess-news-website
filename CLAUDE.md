@@ -255,8 +255,9 @@ user approves the fixes themselves (user's rule, 2026-11-09).
 Silence counts as acceptance (user's rule, 2026-11-19): unless the user
 clearly corrects the review, the streak moves on as proposed in the recap.
 
-- **Current review-acceptance streak: 2.**
-- 2026-11-28: pending (morning batch below).
+- **Current review-acceptance streak: 3.**
+- 2026-11-28: accepted ("All good", 2 -> 3). New request the same day:
+  a Speed Chess Championship event page (added).
 - 2026-11-27: accepted (silence, 1 -> 2).
 - 2026-11-26: accepted ("All good", 0 -> 1).
 - 2026-11-25: user corrected the review (stays 0): I counted 3 drafted
